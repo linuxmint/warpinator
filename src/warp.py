@@ -4,6 +4,9 @@ import sys
 import time
 import getpass
 import random
+import setproctitle
+import locale
+import gettext
 
 import socket
 import xmlrpc.server
@@ -16,6 +19,20 @@ gi.require_version('XApp', '1.0')
 from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 
 import util
+import config
+
+# Don't let warp run as root
+if os.getuid() == 0:
+    print("Warp should not be run as root. Please run it in user mode.")
+    sys.exit(1)
+
+# i18n
+locale.bindtextdomain(config.PACKAGE, config.localedir)
+gettext.bindtextdomain(config.PACKAGE, config.localedir)
+gettext.textdomain(config.PACKAGE)
+_ = gettext.gettext
+
+setproctitle.setproctitle("warp")
 
 class WarpServer(object):
     def __init__(self):
@@ -118,7 +135,7 @@ class StatusIcon(XApp.StatusIcon):
     def __init__(self):
         super(StatusIcon, self).__init__()
         print("StatusIcon init")
-        self.set_icon_name(os.path.join(os.getcwd(), "../data/warp.svg"))
+        self.set_icon_name("warp")
 
 class WarpApplication(Gtk.Application):
     def __init__(self):
@@ -136,11 +153,11 @@ class WarpApplication(Gtk.Application):
             self.setup_window()
 
     def setup_window(self):
-        self.builder = Gtk.Builder.new_from_file("warp-window.ui")
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.window =self.builder.get_object("window")
         self.box = self.builder.get_object("flowbox")
         self.above_toggle = self.builder.get_object("keep_above")
-        self.window.set_icon_name(os.path.join(os.getcwd(), "../data/warp.svg"))
+        self.window.set_icon_name("warp")
 
         self.window.connect("delete-event",
                             lambda widget, event: widget.hide_on_delete())

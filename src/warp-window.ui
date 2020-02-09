@@ -21,7 +21,6 @@
   </object>
   <object class="XAppGtkWindow" id="window">
     <property name="can_focus">False</property>
-    <property name="icon">../data/warp.svg</property>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Warp
+Comment=Transfer files from one computer to another on the local network
+Icon=warp
+Exec=warp
+NoDisplay=true
+X-GNOME-Autostart-Phase=Application

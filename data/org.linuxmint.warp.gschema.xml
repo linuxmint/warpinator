@@ -1,0 +1,38 @@
+<schemalist>
+  <schema id="com.linuxmint.warp" path="/com/linuxmint/warp/" gettext-domain="nemo">
+    <child name="preferences" schema="com.linuxmint.warp.preferences"/>
+    <child name="window-state" schema="com.linuxmint.warp.window-state"/>
+  </schema>
+
+  <schema id="com.linuxmint.warp.preferences" path="/com/linuxmint/warp/preferences/" gettext-domain="warp">
+    <key name="receiving-folder" type="s">
+      <default>''</default>
+      <summary>The folder received files will be saved to.</summary>
+      <description>If left empty, a folder called WarpBucket will be created in the user's home folder.</description>
+    </key>
+    <key name="broadcast-name" type="s">
+      <default>''</default>
+      <summary>The remote display name for this computer.</summary>
+      <description>If left empty, this computer's hostname will be used.</description>
+    </key>
+  </schema>
+
+  <schema id="com.linuxmint.warp.window-state" path="/com/linuxmint/warp/window-state/" gettext-domain="warp">
+    <key name="x" type="i">
+      <default>-1</default>
+      <summary>The saved window X position</summary>
+    </key>
+    <key name="y" type="i">
+      <default>-1</default>
+      <summary>The saved window Y position</summary>
+    </key>
+    <key name="width" type="i">
+      <default>-1</default>
+      <summary>The saved window width (this is not guaranteed, if the number of remotes changes)</summary>
+    </key>
+    <key name="height" type="i">
+      <default>-1</default>
+      <summary>The saved window height (this is not guaranteed, if the number of remotes changes)</summary>
+    </key>
+  </schema>
+</schemalist>

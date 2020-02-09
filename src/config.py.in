@@ -1,0 +1,11 @@
+# Generated file - DO NOT EDIT.  Edit config.py.in instead.
+
+prefix="@prefix@"
+datadir="@datadir@"
+localedir=datadir+"linuxmint/locale"
+pkgdatadir="@pkgdatadir@"
+libdir="@libdir@"
+libexecdir="@libexecdir@"
+PACKAGE="@PACKAGE@"
+VERSION="@VERSION@"
+GETTEXT_PACKAGE="@GETTEXT_PACKAGE@"
