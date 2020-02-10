@@ -47,13 +47,14 @@ class WarpServer(object):
         self.port = 8080
         self.my_ip = util.getmyip()
         self.save_location = GLib.get_home_dir()
-        self.myname = None
+        self.my_nick = None
+        self.service_name = "warp.%s._http._tcp.local." % self.my_ip
 
     def register_zeroconf(self):
         desc = {}
 
         self.info = ServiceInfo("_http._tcp.local.",
-                                "warp.%s._http._tcp.local." % self.my_ip,
+                                self.service_name,
                                 socket.inet_aton(self.my_ip), self.port, 0, 0,
                                 desc, "somehost.local.")
         self.zc = Zeroconf()
@@ -63,19 +64,19 @@ class WarpServer(object):
     def serve_forever(self):
         self.register_zeroconf()
         addr = ("0.0.0.0", self.port)
-        server = xmlrpc.server.SimpleXMLRPCServer(addr)
-        print("Listening on", addr)
-        server.register_function(self.get_name, "get_name")
-        server.register_function(self.receive_file, "receive_file")
-        server.serve_forever()
+        with xmlrpc.server.SimpleXMLRPCServer(addr) as server:
+            print("Listening on", addr)
+            server.register_function(self.get_nick, "get_nick")
+            server.register_function(self.receive_file, "receive_file")
+            server.serve_forever()
 
     def set_prefs(self, nick, path):
         self.save_location = path
-        self.myname = nick
+        self.my_nick = nick
 
-    def get_name(self):
-        if self.myname != None:
-            return self.myname
+    def get_nick(self):
+        if self.my_nick != None:
+            return self.my_nick
 
         return "%s@%s" % (getpass.getuser(), socket.gethostname())
 
@@ -88,13 +89,13 @@ class WarpServer(object):
 
     def close(self):
         self.zc.unregister_service(self.info)
-        self.zc.close()
 
 class ProxyItem(Gtk.EventBox):
     def __init__(self, name, proxy):
         super(ProxyItem, self).__init__(height_request=40)
         self.proxy = proxy
         self.name = name
+        self.nick = proxy.get_nick()
         self.dropping = False
         self.get_style_context().add_class("ebox")
 
@@ -104,7 +105,7 @@ class ProxyItem(Gtk.EventBox):
         self.layout = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         w.add(self.layout)
 
-        w = Gtk.Label(label=name)
+        w = Gtk.Label(label=self.nick)
         self.layout.pack_start(w, True, True, 6)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
@@ -144,12 +145,6 @@ class ProxyItem(Gtk.EventBox):
                 data = handle.read()
                 self.proxy.receive_file(self.name, f.get_basename(), xmlrpc.client.Binary(data))
 
-class StatusIcon(XApp.StatusIcon):
-    def __init__(self):
-        super(StatusIcon, self).__init__()
-        print("StatusIcon init")
-        self.set_icon_name("warp")
-
 class WarpApplication(Gtk.Application):
     def __init__(self):
         super(WarpApplication, self).__init__(application_id="com.linuxmint.warp",
@@ -157,16 +152,32 @@ class WarpApplication(Gtk.Application):
         self.window = None
         self.status_icon = None
         self.peers = {}
-
         self.nick = None
+
+        self.server = None
+        self.service_browser = None
+        self.zeroconf = None
+
+    def do_startup(self):
+        Gtk.Application.do_startup(self)
+        self.my_ip = util.getmyip()
+        print("Initializing Warp on %s\n" % self.my_ip)
+
+        self.prefs_settings = Gio.Settings(schema_id=util.PREFS_SCHEMA)
+        self.prefs_settings.connect("changed", self.on_prefs_changed)
+
+        self.server = WarpServer()
+        self.on_prefs_changed(self.prefs_settings, None, None)
+        self.server.serve_forever()
+
+        self.setup_browser()
+        self.activate()
 
     def do_activate(self):
         if self.status_icon == None:
-            self.status_icon = StatusIcon()
-            self.status_icon.connect("activate", self.on_tray_icon_activate)
+            self.setup_status_icon()
         if self.window == None:
-            if self.prefs_settings.get_boolean(util.START_WITH_WINDOW_KEY):
-                self.setup_window()
+            self.setup_window()
 
     def setup_window(self):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
@@ -202,7 +213,9 @@ class WarpApplication(Gtk.Application):
         self.open_location_button.connect("clicked", self.on_open_location_clicked)
 
         self.add_window(self.window)
-        self.window.present()
+
+        if self.prefs_settings.get_boolean(util.START_WITH_WINDOW_KEY):
+            self.window.present()
 
     def open_preferences(self, menuitem, data=None):
         w = prefs.Preferences()
@@ -217,25 +230,8 @@ class WarpApplication(Gtk.Application):
         self.window.set_keep_above(self.above_toggle.get_active())
 
     def exit_app(self, menuitem, data=None):
+        self.server.close()
         self.quit()
-
-    def do_startup(self):
-        Gtk.Application.do_startup(self)
-        self.my_ip = util.getmyip()
-
-        self.prefs_settings = Gio.Settings(schema_id=util.PREFS_SCHEMA)
-        self.prefs_settings.connect("changed", self.on_prefs_changed)
-
-        self.server = WarpServer()
-        self.on_prefs_changed(self.prefs_settings, None, None)
-
-        self.server.serve_forever()
-
-        print("\nSearching for others...\n")
-        zeroconf = Zeroconf()
-        browser = ServiceBrowser(zeroconf, "_http._tcp.local.", handlers=[self.on_service_state_change])
-
-        self.activate()
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
         file = Gio.File.new_for_uri(settings.get_string(util.FOLDER_NAME_KEY))
@@ -243,26 +239,37 @@ class WarpApplication(Gtk.Application):
 
         self.server.set_prefs(self.nick, file.get_path())
 
-    def on_service_state_change(self, zeroconf, service_type, name, state_change):
-        print("Service %s of type %s state changed: %s" % (name, service_type, state_change))
-        if state_change is ServiceStateChange.Added:
-            info = zeroconf.get_service_info(service_type, name)
-            # connect to the server
-            if info and name.count("warp"):
-                addrstr = "http://{}:{}".format(socket.inet_ntoa(info.address), info.port)
-                proxy = xmlrpc.client.ServerProxy(addrstr)
-                name = None
-                while name is None:
-                    time.sleep(1)
-                    name = proxy.get_name()
-                print(name, "on %s" % socket.inet_ntoa(info.address))
+    def on_open_location_clicked(self, widget, data=None):
+        app = Gio.AppInfo.get_default_for_type("inode/directory", True)
+        try:
+            file = Gio.File.new_for_uri(self.prefs_settings.get_string(util.FOLDER_NAME_KEY))
+            app.launch((file,), None)
+        except GLib.Error as e:
+            print("Could not open received files location: %s" % e.message)
 
-                if name == self.nick:
-                    print("Skipping myself")
-                    return
-                self.add_peer(name, proxy)
-        elif state_change is ServiceStateChange.Removed:
-            self.remove_peer(name)
+    ####  BROWSER ##############################################
+
+    def setup_browser(self):
+        print("\nSearching for others...\n")
+        self.zeroconf = Zeroconf()
+        self.browser = ServiceBrowser(self.zeroconf, "_http._tcp.local.", self)
+
+    def remove_service(self, zeroconf, _type, name):
+        print("\nService %s removed\n" % (name,))
+        self.remove_peer(name)
+
+    def add_service(self, zeroconf, _type, name):
+        info = zeroconf.get_service_info(_type, name)
+        print("\nService %s added, service info: %s\n" % (name, info))
+        if info and name.count("warp"):
+            addrstr = "http://{}:{}".format(socket.inet_ntoa(info.address), info.port)
+            proxy = xmlrpc.client.ServerProxy(addrstr)
+
+            if name == self.server.service_name:
+                print("Not adding my own service (%s)" % name)
+                return
+
+            self.add_peer(name, proxy)
 
     @util._idle
     def add_peer(self, name, proxy):
@@ -270,9 +277,9 @@ class WarpApplication(Gtk.Application):
             return False
 
         print("Add peer: %s" % name)
-        self.peers[name] = proxy
-
         button = ProxyItem(name, proxy)
+
+        self.peers[name] = button
         self.box.add(button)
         return False
 
@@ -280,12 +287,30 @@ class WarpApplication(Gtk.Application):
     def remove_peer(self, name):
         print("Remove peer: %s" % name)
 
-        children = self.box.get_children()
-        for child in children:
-            if child.name == name:
-                self.box.remove(child)
-                del self.peers[name]
-                break
+        try:
+            self.peers[name].destroy()
+            del self.peers[name]
+        except KeyError as e:
+            print("Existing proxy item not found, why not?")
+
+    # STATUS ICON ##########################################################################
+
+    def setup_status_icon(self):
+        self.status_icon = XApp.StatusIcon()
+        self.status_icon.set_icon_name("warp-symbolic")
+        self.status_icon.connect("activate", self.on_tray_icon_activate)
+
+        menu = Gtk.Menu()
+
+        item = Gtk.MenuItem(label=_("Open Warp folder"))
+        item.connect("activate", self.on_open_location_clicked)
+        menu.add(item)
+        item = Gtk.MenuItem(label=_("Quit"))
+        item.connect("activate", self.exit_app)
+        menu.add(item)
+        menu.show_all()
+
+        self.status_icon.set_secondary_menu(menu)
 
     def on_tray_icon_activate(self, icon, button, time=0):
         if self.window.is_active():
@@ -305,13 +330,6 @@ class WarpApplication(Gtk.Application):
                 self.window.get_window().raise_()
                 self.window.get_window().focus(time)
 
-    def on_open_location_clicked(self, widget, data=None):
-        app = Gio.AppInfo.get_default_for_type("inode/directory", True)
-        try:
-            file = Gio.File.new_for_uri(self.prefs_settings.get_string(util.FOLDER_NAME_KEY))
-            app.launch((file,), None)
-        except GLib.Error as e:
-            print("Could not open received files location: %s" % e.message)
 
 if __name__ == "__main__":
     w = WarpApplication()
