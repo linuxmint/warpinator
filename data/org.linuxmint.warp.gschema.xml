@@ -15,6 +15,15 @@
       <summary>The remote display name for this computer.</summary>
       <description>If left empty, this computer's hostname will be used.</description>
     </key>
+    <key name="start-with-window" type="b">
+      <default>true</default>
+      <summary>Show the main window at startup</summary>
+    </key>
+    <key name="default-pinned" type="b">
+      <default>false</default>
+      <summary>Pin the window (keep above) by default</summary>
+    </key>
+
   </schema>
 
   <schema id="com.linuxmint.warp.window-state" path="/com/linuxmint/warp/window-state/" gettext-domain="warp">

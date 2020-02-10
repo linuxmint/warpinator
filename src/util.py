@@ -2,6 +2,13 @@ import threading
 import socket
 from gi.repository import GLib
 
+PREFS_SCHEMA = "com.linuxmint.warp.preferences"
+
+BROADCAST_NAME_KEY = "broadcast-name"
+FOLDER_NAME_KEY = "receiving-folder"
+START_WITH_WINDOW_KEY = "start-with-window"
+START_PINNED_KEY = "default-pinned"
+
 # Used as a decorator to run things in the background
 def _async(func):
     def wrapper(*args, **kwargs):

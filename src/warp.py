@@ -20,6 +20,7 @@ from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 
 import util
 import config
+import prefs
 
 # Don't let warp run as root
 if os.getuid() == 0:
@@ -38,6 +39,8 @@ class WarpServer(object):
     def __init__(self):
         self.port = 8080
         self.my_ip = util.getmyip()
+        self.save_location = GLib.get_home_dir()
+        self.myname = None
 
     def register_zeroconf(self):
         desc = {}
@@ -56,20 +59,22 @@ class WarpServer(object):
         server = xmlrpc.server.SimpleXMLRPCServer(addr)
         print("Listening on", addr)
         server.register_function(self.get_name, "get_name")
-        server.register_function(self.click, "click")
         server.register_function(self.receive_file, "receive_file")
         server.serve_forever()
 
-    def get_name(self):
-        return "%s@%s" % (getpass.getuser(), socket.gethostname())
+    def set_prefs(self, nick, path):
+        self.save_location = path
+        self.myname = nick
 
-    def click(self, ip):
-        os.system("notify-send 'clicked by %s'" % ip)
-        return "OK"
+    def get_name(self):
+        if self.myname != None:
+            return self.myname
+
+        return "%s@%s" % (getpass.getuser(), socket.gethostname())
 
     def receive_file(self, sender, basename, binary_data):
         print("server received %s from %s" % (basename, sender))
-        with open(os.path.join(GLib.get_home_dir(), "bucket", basename), "wb") as handle:
+        with open(os.path.join(self.save_location, basename), "wb") as handle:
             handle.write(binary_data.data)
 
         return True
@@ -145,37 +150,67 @@ class WarpApplication(Gtk.Application):
         self.status_icon = None
         self.peers = {}
 
+        self.nick = None
+
     def do_activate(self):
         if self.status_icon == None:
             self.status_icon = StatusIcon()
             self.status_icon.connect("activate", self.on_tray_icon_activate)
         if self.window == None:
-            self.setup_window()
+            if self.prefs_settings.get_boolean(util.START_WITH_WINDOW_KEY):
+                self.setup_window()
 
     def setup_window(self):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.window =self.builder.get_object("window")
         self.box = self.builder.get_object("flowbox")
         self.above_toggle = self.builder.get_object("keep_above")
+        self.menu_button = self.builder.get_object("menu_button")
+
+        menu = Gtk.Menu()
+        item = Gtk.MenuItem(label=_("Preferences"))
+        item.connect("activate", self.open_preferences)
+        menu.add(item)
+
+        item = Gtk.MenuItem(label=_("Quit"))
+        item.connect("activate", self.exit_app)
+        menu.add(item)
+
+        menu.show_all()
+
+        self.menu_button.set_popup(menu)
+
         self.window.set_icon_name("warp")
 
         self.window.connect("delete-event",
                             lambda widget, event: widget.hide_on_delete())
         self.above_toggle.connect("toggled",
                                   lambda widget, window: window.set_keep_above(widget.props.active), self.window)
+        self.above_toggle.set_active(self.prefs_settings.get_boolean(util.START_PINNED_KEY))
 
         self.add_window(self.window)
         self.window.present()
 
+    def open_preferences(self, menuitem, data=None):
+        w = prefs.Preferences()
+        w.set_transient_for(self.window)
+
+        w.present()
+
+    def exit_app(self, menuitem, data=None):
+        self.quit()
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
         self.my_ip = util.getmyip()
 
-        self.server = WarpServer()
-        self.server.serve_forever()
+        self.prefs_settings = Gio.Settings(schema_id=util.PREFS_SCHEMA)
+        self.prefs_settings.connect("changed", self.on_prefs_changed)
 
-        self.my_name = "%s@%s" % (getpass.getuser(), socket.gethostname())
+        self.server = WarpServer()
+        self.on_prefs_changed(self.prefs_settings, None, None)
+
+        self.server.serve_forever()
 
         print("\nSearching for others...\n")
         zeroconf = Zeroconf()
@@ -183,8 +218,14 @@ class WarpApplication(Gtk.Application):
 
         self.activate()
 
+    def on_prefs_changed(self, settings, pspec=None, data=None):
+        file = Gio.File.new_for_uri(settings.get_string(util.FOLDER_NAME_KEY))
+        self.nick = settings.get_string(util.BROADCAST_NAME_KEY)
+
+        self.server.set_prefs(self.nick, file.get_path())
+
     def on_service_state_change(self, zeroconf, service_type, name, state_change):
-        # print("Service %s of type %s state changed: %s" % (name, service_type, state_change))
+        print("Service %s of type %s state changed: %s" % (name, service_type, state_change))
         if state_change is ServiceStateChange.Added:
             info = zeroconf.get_service_info(service_type, name)
             # connect to the server
@@ -197,20 +238,31 @@ class WarpApplication(Gtk.Application):
                     name = proxy.get_name()
                 print(name, "on %s" % socket.inet_ntoa(info.address))
 
+                if name == self.nick:
+                    print("Skipping myself")
+                    return
                 self.add_peer(name, proxy)
-                self.peers[name] = proxy
+        elif state_change is ServiceStateChange.Removed:
+            self.remove_peer(name)
 
     @util._idle
     def add_peer(self, name, proxy):
         print("Add peer: %s" % name)
+        self.peers[name] = proxy
+
         button = ProxyItem(name, proxy)
         self.box.add(button)
 
-    def on_button_clicked(self, widget, pwrapper):
-        pwrapper.click()
+    @util._idle
+    def remove_peer(self, name):
+        print("Remove peer: %s" % name)
 
-    def do_destroy(self, data=None):
-        XApp.GtkWindow.do_destroy(self)
+        children = self.box.get_children()
+        for child in children:
+            if child.name == name:
+                self.box.remove(child)
+                del self.peers[name]
+                break
 
     def on_tray_icon_activate(self, icon, button, time=0):
         if self.window.is_active():
