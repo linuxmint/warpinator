@@ -7,6 +7,8 @@ import random
 import setproctitle
 import locale
 import gettext
+import queue
+import threading
 
 import socket
 import xmlrpc.server
@@ -35,12 +37,28 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warp")
 
+TRANSFER_START = "start"
+TRANSFER_DATA = "data"
+TRANSFER_COMPLETE = "end"
+TRANSFER_ABORT = "aborted"
+
+RESPONSE_EXISTS = "exists"
+RESPONSE_OK = "ok"
+RESPONSE_DISKFULL = "diskfull"
+RESPONSE_ERROR = "error"
+
 dnd_string = """
 .ebox:drop(active) {
     background-image: linear-gradient(to top, grey, transparent);
     transition: 100ms;
 }
 """
+
+class Aborted(Exception):
+    pass
+
+class NeverStarted(Exception):
+    pass
 
 class WarpServer(object):
     def __init__(self):
@@ -49,6 +67,8 @@ class WarpServer(object):
         self.save_location = GLib.get_home_dir()
         self.my_nick = None
         self.service_name = "warp.%s._http._tcp.local." % self.my_ip
+
+        self.file_receiver = FileReceiver(self.save_location)
 
     def register_zeroconf(self):
         desc = {}
@@ -64,14 +84,15 @@ class WarpServer(object):
     def serve_forever(self):
         self.register_zeroconf()
         addr = ("0.0.0.0", self.port)
-        with xmlrpc.server.SimpleXMLRPCServer(addr) as server:
+        with xmlrpc.server.SimpleXMLRPCServer(addr, allow_none=True) as server:
             print("Listening on", addr)
             server.register_function(self.get_nick, "get_nick")
-            server.register_function(self.receive_file, "receive_file")
+            server.register_function(self.receive, "receive")
             server.serve_forever()
 
     def set_prefs(self, nick, path):
         self.save_location = path
+        self.file_receiver.save_path = path
         self.my_nick = nick
 
     def get_nick(self):
@@ -80,14 +101,18 @@ class WarpServer(object):
 
         return "%s@%s" % (getpass.getuser(), socket.gethostname())
 
-    def receive_file(self, sender, basename, binary_data):
-        print("server received %s from %s" % (basename, sender))
-        with open(os.path.join(self.save_location, basename), "wb") as handle:
-            handle.write(binary_data.data)
+    def receive(self, sender, basename, state, binary_data=None):
+        print("server received state %s for file %s from %s" % (state, basename, sender))
+        path = os.path.join(self.save_location, basename)
 
-        return True
+        if state == TRANSFER_START and GLib.file_test(path, GLib.FileTest.EXISTS):
+            print("FAIL")
+            return RESPONSE_EXISTS
+
+        return self.file_receiver.receive(basename, state, binary_data)
 
     def close(self):
+        self.file_receiver.stop()
         self.zc.unregister_service(self.info)
 
 class ProxyItem(Gtk.EventBox):
@@ -95,7 +120,10 @@ class ProxyItem(Gtk.EventBox):
         super(ProxyItem, self).__init__(height_request=40)
         self.proxy = proxy
         self.name = name
-        self.nick = proxy.get_nick()
+        self.nick = ""
+
+        self.file_sender = FileSender(self.name, proxy)
+
         self.dropping = False
         self.get_style_context().add_class("ebox")
 
@@ -105,8 +133,8 @@ class ProxyItem(Gtk.EventBox):
         self.layout = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         w.add(self.layout)
 
-        w = Gtk.Label(label=self.nick)
-        self.layout.pack_start(w, True, True, 6)
+        self.label = Gtk.Label(label=self.nick)
+        self.layout.pack_start(self.label, True, True, 6)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
         self.drag_dest_set(Gtk.DestDefaults.ALL,
@@ -115,35 +143,214 @@ class ProxyItem(Gtk.EventBox):
         self.connect("drag-drop", self.on_drag_drop)
         self.connect("drag-data-received", self.on_drag_data_received)
 
+        GLib.timeout_add_seconds(1, self.try_update_proxy_nick)
         self.show_all()
 
-    def on_click(self, data=None):
-        self.proxy.click("%s" % (self.name,))
+    def try_update_proxy_nick(self, data=None):
+        # Why does this happen?  Why can't there be some sort of ready
+        # callback for a ServerProxy being 'ready'?
+        try:
+            self.nick = self.proxy.get_nick()
+            self.label.set_label(self.nick)
+
+        except ConnectionRefusedError:
+            print("Retrying proxy check")
+            return True
+
+        return False
 
     def on_drag_drop(self, widget, context, x, y, time, data=None):
         atom =  widget.drag_dest_find_target(context, None)
         self.dropping = True
         widget.drag_get_data(context, atom, time)
 
-    def on_drag_data_received (self, widget, context, x, y, data, info, time, user_data=None):
+    def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
         if not self.dropping:
             Gdk.drag_status(context, Gdk.DragAction.COPY, time)
             return
         if data:
             if context.get_selected_action() == Gdk.DragAction.COPY:
                 uris = data.get_uris()
-                self.send_files(uris)
+                self.file_sender.send_files(uris)
 
         Gtk.drag_finish(context, True, False, time)
         self.dropping = False
 
+    def do_destroy(self):
+        self.file_sender.stop()
+
+        Gtk.Widget.do_destroy(self)
+
+class FileSender:
+    CHUNK_SIZE = 1024 * 1024
+    def __init__(self, name, proxy):
+        self.proxy = proxy
+        self.name = name
+
+        self.cancellable = None
+        self.queue = queue.Queue()
+        self.thread = threading.Thread(target=self._send_file_thread)
+        self.thread.start()
+
+    def _send_file_thread(self):
+        while True:
+            uri = self.queue.get()
+            if uri is None:
+                break
+            self._real_send(uri)
+            self.queue.task_done()
+
+    def _real_send(self, uri):
+        file = Gio.File.new_for_uri(uri)
+        self.cancellable = Gio.Cancellable()
+
+        try:
+            stream = file.read(self.cancellable)
+
+            if self.cancellable.is_cancelled():
+                stream.close()
+                raise NeverStarted("Cancelled while opening file");
+
+            response = self.proxy.receive(self.name,
+                                          file.get_basename(),
+                                          TRANSFER_START,
+                                          None)
+
+            if response == RESPONSE_EXISTS:
+                raise NeverStarted("File exists at remote location")
+
+            while True:
+                bytes = stream.read_bytes(self.CHUNK_SIZE, self.cancellable)
+
+                if self.cancellable.is_cancelled():
+                    stream.close()
+                    raise Aborted("Cancelled while reading file contents");
+
+                if (bytes.get_size() > 0):
+                    self.proxy.receive(self.name,
+                                       file.get_basename(),
+                                       TRANSFER_DATA,
+                                       xmlrpc.client.Binary(bytes.get_data()))
+                else:
+                    break
+
+            self.proxy.receive(self.name,
+                               file.get_basename(),
+                               TRANSFER_COMPLETE,
+                               None)
+
+            stream.close()
+        except Aborted as e:
+            self.proxy.receive(self.name,
+                               file.get_basename(),
+                               TRANSFER_ABORT,
+                               None)
+        except NeverStarted as e:
+            print("File %s already exists, skipping: %s" % (file.get_path(), str(e)))
+
     def send_files(self, uri_list):
         for uri in uri_list:
-            f = Gio.File.new_for_uri(uri)
-            print("Sending %s to %s" % (f.get_path(), self.name))
-            with open(f.get_path(), "rb") as handle:
-                data = handle.read()
-                self.proxy.receive_file(self.name, f.get_basename(), xmlrpc.client.Binary(data))
+            self.queue.put(uri)
+
+    def stop(self):
+        self.cancellable.cancel()
+        self.queue.put(None)
+        self.thread.join()
+
+
+class FileReceiver:
+    CHUNK_SIZE = 1024 * 1024
+    def __init__(self, save_path):
+        self.save_path = save_path
+        self.cancellable = None
+
+        # Packets from any source
+        self.request_queue = queue.Queue()
+        self.open_files = {}
+
+        self.thread = threading.Thread(target=self._receive_file_thread)
+        self.thread.start()
+
+    def receive(self, basename, status, data=None):
+        path = os.path.join(self.save_path, basename)
+
+        if status in (TRANSFER_DATA, TRANSFER_COMPLETE, TRANSFER_ABORT) and not self.open_files[path]:
+            return RESPONSE_ERROR
+
+        self.request_queue.put((basename, status, data))
+
+        return RESPONSE_OK
+
+    def _receive_file_thread(self):
+        while True:
+            packet = self.request_queue.get()
+            if packet == None:
+                break
+
+            self._real_receive(packet)
+
+            self.request_queue.task_done()
+
+    def _real_receive(self, packet):
+        (basename, status, data) = packet
+        self.cancellable = Gio.Cancellable()
+
+        path = os.path.join(self.save_path, basename)
+
+        if status == TRANSFER_START:
+            new_file = Gio.File.new_for_path(path)
+
+            try:
+                self.open_files[path] = new_file.create(Gio.FileCreateFlags.NONE,
+                                                        self.cancellable)
+            except GLib.Error as e:
+                print("Could not open file %s for writing: %s" % (path, e.message))
+
+            if self.cancellable.is_cancelled():
+                del self.open_files[path]
+
+            return
+        if status == TRANSFER_COMPLETE:
+            try:
+                self.open_files[path].close(self.cancellable)
+            except GLib.Error as e:
+                print("Could not close file %s from writing: %s" % (path, e.message))
+
+            del self.open_files[path]
+            return
+
+        if status == TRANSFER_ABORT:
+            aborted_file = Gio.File.new_for_path(path)
+
+            try:
+                self.open_files[path].close(self.cancellable)
+                aborted_file.delete(self.cancellable)
+            except GLib.Error as e:
+                print("Could not cleanly abort file %s from writing: %s" % (path, e.message))
+
+            del self.open_files[path]
+            return
+
+        if status == TRANSFER_DATA:
+            stream = self.open_files[path]
+
+            try:
+                stream.write(data.data, self.cancellable)
+            except GLib.Error as e:
+                print("Could not write data to file %s: %s" % (path, e.message))
+                try:
+                    stream.close()
+                    aborted_file = Gio.File.new_for_path(path)
+                    aborted_file.delete(self.cancellable)
+                except GLib.Error as e:
+                    print("Could not abort after write error: %s" % e.message)
+
+            return
+
+    def stop(self):
+        self.cancellable.cancel()
+        self.request_queue.put(None)
+        self.thread.join()
 
 class WarpApplication(Gtk.Application):
     def __init__(self):
@@ -263,7 +470,7 @@ class WarpApplication(Gtk.Application):
         print("\nService %s added, service info: %s\n" % (name, info))
         if info and name.count("warp"):
             addrstr = "http://{}:{}".format(socket.inet_ntoa(info.address), info.port)
-            proxy = xmlrpc.client.ServerProxy(addrstr)
+            proxy = xmlrpc.client.ServerProxy(addrstr, allow_none=True)
 
             if name == self.server.service_name:
                 print("Not adding my own service (%s)" % name)
