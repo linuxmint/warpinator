@@ -35,6 +35,13 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warp")
 
+dnd_string = """
+.ebox:drop(active) {
+    background-image: linear-gradient(to top, grey, transparent);
+    transition: 100ms;
+}
+"""
+
 class WarpServer(object):
     def __init__(self):
         self.port = 8080
@@ -89,6 +96,7 @@ class ProxyItem(Gtk.EventBox):
         self.proxy = proxy
         self.name = name
         self.dropping = False
+        self.get_style_context().add_class("ebox")
 
         w = Gtk.Frame()
         self.add(w)
@@ -166,6 +174,7 @@ class WarpApplication(Gtk.Application):
         self.box = self.builder.get_object("flowbox")
         self.above_toggle = self.builder.get_object("keep_above")
         self.menu_button = self.builder.get_object("menu_button")
+        self.open_location_button = self.builder.get_object("open_location")
 
         menu = Gtk.Menu()
         item = Gtk.MenuItem(label=_("Preferences"))
@@ -175,18 +184,22 @@ class WarpApplication(Gtk.Application):
         item = Gtk.MenuItem(label=_("Quit"))
         item.connect("activate", self.exit_app)
         menu.add(item)
-
         menu.show_all()
+
+        dnd_css = Gtk.CssProvider()
+
+        if dnd_css.load_from_data(dnd_string.encode()):
+            Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), dnd_css, 600)
 
         self.menu_button.set_popup(menu)
 
         self.window.set_icon_name("warp")
-
         self.window.connect("delete-event",
                             lambda widget, event: widget.hide_on_delete())
         self.above_toggle.connect("toggled",
                                   lambda widget, window: window.set_keep_above(widget.props.active), self.window)
         self.above_toggle.set_active(self.prefs_settings.get_boolean(util.START_PINNED_KEY))
+        self.open_location_button.connect("clicked", self.on_open_location_clicked)
 
         self.add_window(self.window)
         self.window.present()
@@ -247,11 +260,15 @@ class WarpApplication(Gtk.Application):
 
     @util._idle
     def add_peer(self, name, proxy):
+        if name in self.peers.keys():
+            return False
+
         print("Add peer: %s" % name)
         self.peers[name] = proxy
 
         button = ProxyItem(name, proxy)
         self.box.add(button)
+        return False
 
     @util._idle
     def remove_peer(self, name):
@@ -281,6 +298,14 @@ class WarpApplication(Gtk.Application):
 
                 self.window.get_window().raise_()
                 self.window.get_window().focus(time)
+
+    def on_open_location_clicked(self, widget, data=None):
+        app = Gio.AppInfo.get_default_for_type("inode/directory", True)
+        try:
+            file = Gio.File.new_for_uri(self.prefs_settings.get_string(util.FOLDER_NAME_KEY))
+            app.launch((file,), None)
+        except GLib.Error as e:
+            print("Could not open received files location: %s" % e.message)
 
 if __name__ == "__main__":
     w = WarpApplication()
