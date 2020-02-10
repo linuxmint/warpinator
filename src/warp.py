@@ -207,8 +207,14 @@ class WarpApplication(Gtk.Application):
     def open_preferences(self, menuitem, data=None):
         w = prefs.Preferences()
         w.set_transient_for(self.window)
-
+        w.connect("delete-event", self.on_prefs_closed)
+        # Disable keep above while the prefs window is displayed.  Otherwise you have a modal
+        # window underneath its parent.
+        self.window.set_keep_above(False)
         w.present()
+
+    def on_prefs_closed(self, widget, event, data=None):
+        self.window.set_keep_above(self.above_toggle.get_active())
 
     def exit_app(self, menuitem, data=None):
         self.quit()
