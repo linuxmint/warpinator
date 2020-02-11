@@ -475,6 +475,7 @@ class WarpApplication(Gtk.Application):
         self.server = None
         self.service_browser = None
         self.zeroconf = None
+        self.save_path = GLib.get_home_dir()
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
@@ -555,15 +556,18 @@ class WarpApplication(Gtk.Application):
         self.quit()
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
-        file = Gio.File.new_for_uri(settings.get_string(util.FOLDER_NAME_KEY))
         self.nick = settings.get_string(util.BROADCAST_NAME_KEY)
 
-        self.server.set_prefs(self.nick, file.get_path())
+        save_path = settings.get_string(util.FOLDER_NAME_KEY)
+        if save_path != "":
+            self.save_path = save_path
+            file = Gio.File.new_for_uri(save_path)
+            self.server.set_prefs(self.nick, save_path)
 
     def on_open_location_clicked(self, widget, data=None):
         app = Gio.AppInfo.get_default_for_type("inode/directory", True)
         try:
-            file = Gio.File.new_for_uri(self.prefs_settings.get_string(util.FOLDER_NAME_KEY))
+            file = Gio.File.new_for_uri(self.save_path)
             app.launch((file,), None)
         except GLib.Error as e:
             print("Could not open received files location: %s" % e.message)
