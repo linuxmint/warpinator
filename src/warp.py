@@ -102,7 +102,7 @@ class WarpServer(object):
         self.port = 8080
         self.my_ip = util.getmyip()
         self.save_location = GLib.get_home_dir()
-        self.my_nick = None
+        self.my_nick = "%s@%s" % (getpass.getuser(), socket.gethostname())
         self.service_name = "warp.%s._http._tcp.local." % self.my_ip
 
         self.file_receiver = FileReceiver(self.save_location)
@@ -128,16 +128,19 @@ class WarpServer(object):
             server.serve_forever()
 
     def set_prefs(self, nick, path):
-        print("SAVE", path)
         self.save_location = path
         self.file_receiver.save_path = path
-        self.my_nick = nick
+
+        if nick != "":
+            self.my_nick = nick
+
+        print("Save path: %s" % self.save_location)
+        print("Visible as '%s'" % self.my_nick)
 
     def get_nick(self):
         if self.my_nick != None:
             return self.my_nick
 
-        return "%s@%s" % (getpass.getuser(), socket.gethostname())
 
     def receive(self, sender, basename, state, binary_data=None):
         print("server received state %s for file %s from %s" % (state, basename, sender))
@@ -617,7 +620,7 @@ class WarpApplication(Gtk.Application):
     def do_startup(self):
         Gtk.Application.do_startup(self)
         self.my_ip = util.getmyip()
-        print("Initializing Warp on %s\n" % self.my_ip)
+        print("Initializing Warp on %s" % self.my_ip)
 
         self.prefs_settings = Gio.Settings(schema_id=util.PREFS_SCHEMA)
         self.prefs_settings.connect("changed", self.on_prefs_changed)
@@ -698,10 +701,9 @@ class WarpApplication(Gtk.Application):
         save_uri = settings.get_string(util.FOLDER_NAME_KEY)
         if save_uri != "":
             file = Gio.File.new_for_uri(save_uri)
-            path = file.get_path()
+            self.save_path = file.get_path()
 
-            self.save_path = path
-            self.server.set_prefs(self.nick, path)
+        self.server.set_prefs(self.nick, self.save_path)
 
     def on_open_location_clicked(self, widget, data=None):
         app = Gio.AppInfo.get_default_for_type("inode/directory", True)
