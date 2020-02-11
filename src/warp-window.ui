@@ -17,7 +17,7 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Warp</property>
     <property name="default_width">300</property>
-    <property name="default_height">100</property>
+    <property name="default_height">125</property>
     <property name="icon_name">warp</property>
     <child type="titlebar">
       <placeholder/>

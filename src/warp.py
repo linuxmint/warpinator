@@ -70,6 +70,33 @@ def relpath_from_uris(child_uri, base_uri):
     ret = child_uri.replace(base_uri + "/", "")
     return ret
 
+# adapted from nemo-file-operations.c: format_time()
+def format_time_span(seconds):
+    if seconds < 0:
+        seconds = 0
+
+    if (seconds < 10):
+        return _("A few seconds remaining")
+
+    if (seconds < 60):
+        return _("%d seconds remaining") % seconds
+
+    if (seconds < 60 * 60):
+        minutes = int(seconds / 60)
+        return gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
+
+    hours = seconds / (60 * 60)
+
+    if seconds < (60 * 60 * 4):
+        minutes = int((seconds - hours * 60 * 60) / 60)
+
+        h = gettext.ngettext ("%d hour", "%d hours", hours) % hours
+        m = gettext.ngettext ("%d minute", "%d minutes", minutes) % minutes
+        res = "%s, %s" % (h, m)
+        return res;
+
+    return getttext.ngettext("approximately %d hour", "approximately %d hours", hours) % hours
+
 class WarpServer(object):
     def __init__(self):
         self.port = 8080
@@ -127,11 +154,12 @@ class WarpServer(object):
 
 class ProxyItem(Gtk.EventBox):
     def __init__(self, name, proxy):
-        super(ProxyItem, self).__init__(height_request=40,
+        super(ProxyItem, self).__init__(height_request=60,
                                         margin=6)
         self.proxy = proxy
         self.name = name
         self.nick = ""
+        self.stat_delay_timer = 0
 
         self.file_sender = FileSender(self.name, self.proxy, self.progress_callback)
 
@@ -147,11 +175,23 @@ class ProxyItem(Gtk.EventBox):
 
         overlay = Gtk.Overlay()
 
-        self.progress = Gtk.ProgressBar(no_show_all=True)
+        self.progress = Gtk.ProgressBar(no_show_all=True,
+                                        valign=Gtk.Align.END)
         overlay.add(self.progress)
 
-        self.label = Gtk.Label(label=self.nick)
+        self.label = Gtk.Label(label=self.nick,
+                               halign=Gtk.Align.START,
+                               valign=Gtk.Align.START)
         overlay.add_overlay(self.label)
+
+        stats_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                            spacing=2,
+                            halign=Gtk.Align.END)
+        overlay.add_overlay(stats_box)
+        self.speed_label = Gtk.Label(xalign=1.0)
+        stats_box.pack_start(self.speed_label, False, False, 0)
+        self.time_left_label = Gtk.Label(xalign=1.0)
+        stats_box.pack_start(self.time_left_label, False, False, 0)
 
         self.layout.pack_start(overlay, True, True, 0)
 
@@ -164,6 +204,24 @@ class ProxyItem(Gtk.EventBox):
 
         GLib.timeout_add_seconds(1, self.try_update_proxy_nick)
         self.show_all()
+
+    def queue_showing_stats(self):
+        self.stat_delay_timer = GLib.timeout_add_seconds(2, self.show_stats_timeout)
+
+    def show_stats_timeout(self, data=None):
+        self.stat_delay_timer = 0
+
+        self.progress.show()
+        self.speed_label.show()
+        self.time_left_label.show()
+
+    def hide_stats(self):
+        self.progress.hide()
+        self.progress.set_fraction(0)
+        self.speed_label.hide()
+        self.speed_label.set_label("")
+        self.time_left_label.hide()
+        self.time_left_label.set_label("")
 
     def try_update_proxy_nick(self, data=None):
         # Why does this happen?  Why can't there be some sort of ready
@@ -191,16 +249,28 @@ class ProxyItem(Gtk.EventBox):
             if context.get_selected_action() == Gdk.DragAction.COPY:
                 uris = data.get_uris()
                 self.file_sender.send_files(uris)
+                self.queue_showing_stats()
 
         Gtk.drag_finish(context, True, False, time)
         self.dropping = False
 
-    def progress_callback(self, progress):
+    def progress_callback(self, progress, speed, time_left, finished=False):
         if progress > 1.0:
             progress = 1.0
 
         self.progress.set_fraction(progress)
-        self.progress.set_visible(progress != 0)
+
+        if speed:
+            self.speed_label.set_label(speed)
+        if time_left:
+            self.time_left_label.set_label(time_left)
+
+        if finished:
+            if self.stat_delay_timer > 0:
+                GLib.source_remove(self.stat_delay_timer)
+                self.stat_delay_timer = 0
+            else:
+                self.hide_stats()
 
     def do_destroy(self):
         self.file_sender.stop()
@@ -209,6 +279,8 @@ class ProxyItem(Gtk.EventBox):
 
 class FileSender:
     CHUNK_SIZE = 1024 * 1024
+    SPEED_CALC_SPAN = 4 * 1000 * 1000
+
     def __init__(self, name, proxy, progress_callback):
         self.proxy = proxy
         self.name = name
@@ -218,6 +290,9 @@ class FileSender:
         self.queue = queue.Queue()
         self.send_thread = threading.Thread(target=self._send_file_thread)
         self.send_thread.start()
+
+        self.speed_calc_start_time = 0
+        self.speed_calc_start_bytes = 0
 
         self.total_transfer_size = 0
         self.current_transfer_size = 0
@@ -293,12 +368,14 @@ class FileSender:
             new_total += size
 
         self.total_transfer_size = new_total
-        self.current_transfer_size = 0
 
         GLib.idle_add(self.queue_files, expanded_uri_list)
         exit()
 
     def queue_files(self, uri_list):
+        self.speed_calc_start_time = GLib.get_monotonic_time()
+        self.speed_calc_start_bytes = self.current_transfer_size
+
         for pair in uri_list:
             self.queue.put(pair)
 
@@ -310,7 +387,8 @@ class FileSender:
             self._real_send(pair)
             self.queue.task_done()
             if self.queue.empty():
-                GLib.timeout_add_seconds(1, self.progress_callback, 0)
+                self.current_transfer_size = 0
+                self._update_progress(True)
 
     def _real_send(self, pair):
         uri, relative_uri = pair
@@ -361,8 +439,7 @@ class FileSender:
                                        xmlrpc.client.Binary(bytes.get_data()))
                     self.current_transfer_size += bytes.get_size()
 
-                    progress =self.current_transfer_size / self.total_transfer_size
-                    GLib.idle_add(self.progress_callback, progress)
+                    self._update_progress(False)
                 else:
                     break
 
@@ -382,8 +459,32 @@ class FileSender:
         except NeverStarted as e:
             print("File %s already exists, skipping: %s" % (file.get_path(), str(e)))
 
-    def _report_progress(self, progress):
-        GLib.idle_add(self.progress_callback, progress)
+    def _update_progress(self, finished):
+        if finished:
+            GLib.idle_add(self.progress_callback, 0, "", "", finished)
+
+        progress =self.current_transfer_size / self.total_transfer_size
+
+        cur_time = GLib.get_monotonic_time()
+        elapsed = cur_time - self.speed_calc_start_time
+
+        if elapsed > self.SPEED_CALC_SPAN:
+            span_bytes = self.current_transfer_size - self.speed_calc_start_bytes
+            bytes_per_micro = span_bytes / elapsed
+            bytes_per_sec = int(bytes_per_micro * 1000 * 1000)
+
+            speed_str = _("%s/s") % GLib.format_size(bytes_per_sec)
+
+            bytes_left = self.total_transfer_size - self.current_transfer_size
+            time_left_sec = bytes_left / bytes_per_sec
+            time_left_str = format_time_span(time_left_sec)
+
+            self.speed_calc_start_bytes = self.current_transfer_size
+            self.speed_calc_start_time = cur_time
+
+            GLib.idle_add(self.progress_callback, progress, speed_str, time_left_str, finished)
+        else:
+            GLib.idle_add(self.progress_callback, progress, None, None, finished)
 
     def stop(self):
         if self.cancellable:
@@ -398,7 +499,7 @@ class FileReceiver:
         self.cancellable = None
 
         # Packets from any source
-        self.request_queue = queue.Queue()
+        self.request_queue = queue.Queue(maxsize=10)
         self.open_files = {}
 
         self.thread = threading.Thread(target=self._receive_file_thread)
