@@ -9,6 +9,7 @@ import locale
 import gettext
 import queue
 import threading
+import re
 
 import socket
 import xmlrpc.server
@@ -617,6 +618,8 @@ class WarpApplication(Gtk.Application):
         self.zeroconf = None
         self.save_path = GLib.get_home_dir()
 
+        self.ip_extractor = re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
+
     def do_startup(self):
         Gtk.Application.do_startup(self)
         self.my_ip = util.getmyip()
@@ -641,6 +644,8 @@ class WarpApplication(Gtk.Application):
     def setup_window(self):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.window =self.builder.get_object("window")
+        self.add_window(self.window)
+
         self.box = self.builder.get_object("proxy_box")
         self.above_toggle = self.builder.get_object("keep_above")
         self.menu_button = self.builder.get_object("menu_button")
@@ -670,8 +675,6 @@ class WarpApplication(Gtk.Application):
                                   lambda widget, window: window.set_keep_above(widget.props.active), self.window)
         self.above_toggle.set_active(self.prefs_settings.get_boolean(util.START_PINNED_KEY))
         self.open_location_button.connect("clicked", self.on_open_location_clicked)
-
-        self.add_window(self.window)
 
         if self.prefs_settings.get_boolean(util.START_WITH_WINDOW_KEY):
             self.window.present()
@@ -728,9 +731,8 @@ class WarpApplication(Gtk.Application):
         info = zeroconf.get_service_info(_type, name)
         print("\nService %s added, service info: %s\n" % (name, info))
         if info and name.count("warp"):
-            addrstr = "http://{}:{}".format(socket.inet_ntoa(info.address), info.port)
+            addrstr = "http://{}:{}".format(self.ip_extractor.search(name)[0], info.port)
             proxy = xmlrpc.client.ServerProxy(addrstr, allow_none=True)
-
             if name == self.server.service_name:
                 print("Not adding my own service (%s)" % name)
                 return

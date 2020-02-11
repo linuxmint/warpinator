@@ -2,4 +2,7 @@
 
 import subprocess
 
-subprocess.call("/usr/libexec/warp/warp.py")
+try:
+    subprocess.call("/usr/libexec/warp/warp.py")
+except KeyboardInterrupt:
+    exit(0)
