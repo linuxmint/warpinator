@@ -106,7 +106,6 @@ class WarpServer(object):
         path = os.path.join(self.save_location, basename)
 
         if state == TRANSFER_START and GLib.file_test(path, GLib.FileTest.EXISTS):
-            print("FAIL")
             return RESPONSE_EXISTS
 
         return self.file_receiver.receive(basename, state, binary_data)
@@ -206,11 +205,39 @@ class FileSender:
 
         self.cancellable = None
         self.queue = queue.Queue()
-        self.thread = threading.Thread(target=self._send_file_thread)
-        self.thread.start()
+        self.send_thread = threading.Thread(target=self._send_file_thread)
+        self.send_thread.start()
 
-        self.current_file_size = 0
-        self.chunk_count = 0
+        self.total_transfer_size = 0
+        self.current_transfer_size = 0
+        self.file_to_size_map = {}
+
+    def send_files(self, uri_list):
+        self._measure_files(uri_list)
+
+    @util._async
+    def _measure_files(self, uri_list):
+        for uri in uri_list:
+            file = Gio.File.new_for_uri(uri)
+            info = file.query_info("standard::size", Gio.FileQueryInfoFlags.NONE, None)
+
+            if info:
+                size = info.get_size()
+                self.file_to_size_map[uri] = size
+
+        new_total = 0
+        for size in self.file_to_size_map.values():
+            new_total += size
+
+        self.total_transfer_size = new_total
+        self.current_transfer_size = 0
+
+        GLib.idle_add(self.queue_files, uri_list)
+        exit()
+
+    def queue_files(self, uri_list):
+        for uri in uri_list:
+            self.queue.put(uri)
 
     def _send_file_thread(self):
         while True:
@@ -219,6 +246,8 @@ class FileSender:
                 break
             self._real_send(uri)
             self.queue.task_done()
+            if self.queue.empty():
+                GLib.timeout_add_seconds(1, self.progress_callback, 0)
 
     def _real_send(self, uri):
         file = Gio.File.new_for_uri(uri)
@@ -233,7 +262,7 @@ class FileSender:
 
             info = stream.query_info("standard::size", None)
             if info:
-                self.current_file_size = info.get_size()
+                self.file_to_size_map[uri] = info.get_size()
 
             response = self.proxy.receive(self.name,
                                           file.get_basename(),
@@ -255,11 +284,10 @@ class FileSender:
                                        file.get_basename(),
                                        TRANSFER_DATA,
                                        xmlrpc.client.Binary(bytes.get_data()))
-                    self.chunk_count += 1
+                    self.current_transfer_size += bytes.get_size()
 
-                    progress =(self.chunk_count * self.CHUNK_SIZE) / self.current_file_size
+                    progress =self.current_transfer_size / self.total_transfer_size
                     GLib.idle_add(self.progress_callback, progress)
-
                 else:
                     break
 
@@ -267,7 +295,8 @@ class FileSender:
                                file.get_basename(),
                                TRANSFER_COMPLETE,
                                None)
-            GLib.timeout_add_seconds(2, self.progress_callback, 0)
+
+            del self.file_to_size_map[file.get_uri()]
 
             stream.close()
         except Aborted as e:
@@ -281,15 +310,11 @@ class FileSender:
     def _report_progress(self, progress):
         GLib.idle_add(self.progress_callback, progress)
 
-    def send_files(self, uri_list):
-        for uri in uri_list:
-            self.queue.put(uri)
-
     def stop(self):
         if self.cancellable:
             self.cancellable.cancel()
         self.queue.put(None)
-        self.thread.join()
+        self.send_thread.join()
 
 
 class FileReceiver:
