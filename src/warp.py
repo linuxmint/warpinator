@@ -500,7 +500,7 @@ class WarpApplication(Gtk.Application):
     def setup_window(self):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.window =self.builder.get_object("window")
-        self.box = self.builder.get_object("flowbox")
+        self.box = self.builder.get_object("proxy_box")
         self.above_toggle = self.builder.get_object("keep_above")
         self.menu_button = self.builder.get_object("menu_button")
         self.open_location_button = self.builder.get_object("open_location")
