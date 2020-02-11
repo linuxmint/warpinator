@@ -117,24 +117,31 @@ class WarpServer(object):
 
 class ProxyItem(Gtk.EventBox):
     def __init__(self, name, proxy):
-        super(ProxyItem, self).__init__(height_request=40)
+        super(ProxyItem, self).__init__(height_request=40,
+                                        margin=6)
         self.proxy = proxy
         self.name = name
         self.nick = ""
 
-        self.file_sender = FileSender(self.name, proxy)
+        self.file_sender = FileSender(self.name, self.proxy, self.progress_callback)
 
         self.dropping = False
         self.get_style_context().add_class("ebox")
 
-        w = Gtk.Frame()
-        self.add(w)
+        frame = Gtk.Frame()
+        self.add(frame)
 
-        self.layout = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        w.add(self.layout)
+        self.layout = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                              border_width=4)
+        frame.add(self.layout)
 
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.progress = Gtk.ProgressBar()
+        vbox.pack_end(self.progress, False, False, 0)
         self.label = Gtk.Label(label=self.nick)
-        self.layout.pack_start(self.label, True, True, 6)
+        vbox.pack_start(self.label, True, True, 0)
+
+        self.layout.pack_start(vbox, True, True, 0)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
         self.drag_dest_set(Gtk.DestDefaults.ALL,
@@ -151,7 +158,7 @@ class ProxyItem(Gtk.EventBox):
         # callback for a ServerProxy being 'ready'?
         try:
             self.nick = self.proxy.get_nick()
-            self.label.set_label(self.nick)
+            self.label.set_markup("<b>%s</b>" % self.nick)
 
         except ConnectionRefusedError:
             print("Retrying proxy check")
@@ -176,6 +183,13 @@ class ProxyItem(Gtk.EventBox):
         Gtk.drag_finish(context, True, False, time)
         self.dropping = False
 
+    def progress_callback(self, progress):
+        if progress > 1.0:
+            progress = 1.0
+
+        print("progress", progress)
+        self.progress.set_fraction(progress)
+
     def do_destroy(self):
         self.file_sender.stop()
 
@@ -183,14 +197,18 @@ class ProxyItem(Gtk.EventBox):
 
 class FileSender:
     CHUNK_SIZE = 1024 * 1024
-    def __init__(self, name, proxy):
+    def __init__(self, name, proxy, progress_callback):
         self.proxy = proxy
         self.name = name
+        self.progress_callback = progress_callback
 
         self.cancellable = None
         self.queue = queue.Queue()
         self.thread = threading.Thread(target=self._send_file_thread)
         self.thread.start()
+
+        self.current_file_size = 0
+        self.chunk_count = 0
 
     def _send_file_thread(self):
         while True:
@@ -210,6 +228,10 @@ class FileSender:
             if self.cancellable.is_cancelled():
                 stream.close()
                 raise NeverStarted("Cancelled while opening file");
+
+            info = stream.query_info("standard::size", None)
+            if info:
+                self.current_file_size = info.get_size()
 
             response = self.proxy.receive(self.name,
                                           file.get_basename(),
@@ -231,6 +253,9 @@ class FileSender:
                                        file.get_basename(),
                                        TRANSFER_DATA,
                                        xmlrpc.client.Binary(bytes.get_data()))
+                    self.chunk_count += 1
+                    print("total: %d,  so far: %d" % (self.current_file_size, self.chunk_count * self.CHUNK_SIZE))
+                    self._report_progress((self.chunk_count * self.CHUNK_SIZE) / self.current_file_size)
                 else:
                     break
 
@@ -238,6 +263,7 @@ class FileSender:
                                file.get_basename(),
                                TRANSFER_COMPLETE,
                                None)
+            self._report_progress(0)
 
             stream.close()
         except Aborted as e:
@@ -248,12 +274,16 @@ class FileSender:
         except NeverStarted as e:
             print("File %s already exists, skipping: %s" % (file.get_path(), str(e)))
 
+    def _report_progress(self, progress):
+        GLib.idle_add(self.progress_callback, progress)
+
     def send_files(self, uri_list):
         for uri in uri_list:
             self.queue.put(uri)
 
     def stop(self):
-        self.cancellable.cancel()
+        if self.cancellable:
+            self.cancellable.cancel()
         self.queue.put(None)
         self.thread.join()
 
@@ -348,7 +378,8 @@ class FileReceiver:
             return
 
     def stop(self):
-        self.cancellable.cancel()
+        if self.cancellable:
+            self.cancellable.cancel()
         self.request_queue.put(None)
         self.thread.join()
 
@@ -436,8 +467,11 @@ class WarpApplication(Gtk.Application):
     def on_prefs_closed(self, widget, event, data=None):
         self.window.set_keep_above(self.above_toggle.get_active())
 
-    def exit_app(self, menuitem, data=None):
+    def exit_app(self, menuitem=None, data=None):
+        print("Shut down")
         self.server.close()
+        for item in self.peers.values():
+            item.destroy()
         self.quit()
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
@@ -539,5 +573,12 @@ class WarpApplication(Gtk.Application):
 
 
 if __name__ == "__main__":
+
     w = WarpApplication()
-    w.run(sys.argv)
+
+    try:
+        w.run(sys.argv)
+    except KeyboardInterrupt:
+        w.exit_app()
+
+    exit(0)
