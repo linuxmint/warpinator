@@ -135,13 +135,15 @@ class ProxyItem(Gtk.EventBox):
                               border_width=4)
         frame.add(self.layout)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.progress = Gtk.ProgressBar()
-        vbox.pack_end(self.progress, False, False, 0)
-        self.label = Gtk.Label(label=self.nick)
-        vbox.pack_start(self.label, True, True, 0)
+        overlay = Gtk.Overlay()
 
-        self.layout.pack_start(vbox, True, True, 0)
+        self.progress = Gtk.ProgressBar(no_show_all=True)
+        overlay.add(self.progress)
+
+        self.label = Gtk.Label(label=self.nick)
+        overlay.add_overlay(self.label)
+
+        self.layout.pack_start(overlay, True, True, 0)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
         self.drag_dest_set(Gtk.DestDefaults.ALL,
@@ -187,8 +189,8 @@ class ProxyItem(Gtk.EventBox):
         if progress > 1.0:
             progress = 1.0
 
-        print("progress", progress)
         self.progress.set_fraction(progress)
+        self.progress.set_visible(progress != 0)
 
     def do_destroy(self):
         self.file_sender.stop()
@@ -254,8 +256,10 @@ class FileSender:
                                        TRANSFER_DATA,
                                        xmlrpc.client.Binary(bytes.get_data()))
                     self.chunk_count += 1
-                    print("total: %d,  so far: %d" % (self.current_file_size, self.chunk_count * self.CHUNK_SIZE))
-                    self._report_progress((self.chunk_count * self.CHUNK_SIZE) / self.current_file_size)
+
+                    progress =(self.chunk_count * self.CHUNK_SIZE) / self.current_file_size
+                    GLib.idle_add(self.progress_callback, progress)
+
                 else:
                     break
 
@@ -263,7 +267,7 @@ class FileSender:
                                file.get_basename(),
                                TRANSFER_COMPLETE,
                                None)
-            self._report_progress(0)
+            GLib.timeout_add_seconds(2, self.progress_callback, 0)
 
             stream.close()
         except Aborted as e:
