@@ -40,12 +40,15 @@ setproctitle.setproctitle("warp")
 TRANSFER_START = "start"
 TRANSFER_DATA = "data"
 TRANSFER_COMPLETE = "end"
+TRANSFER_FOLDER = "folder"
 TRANSFER_ABORT = "aborted"
 
 RESPONSE_EXISTS = "exists"
 RESPONSE_OK = "ok"
 RESPONSE_DISKFULL = "diskfull"
 RESPONSE_ERROR = "error"
+
+FILE_INFOS = "standard::size,standard::name,standard::type"
 
 dnd_string = """
 .ebox:drop(active) {
@@ -213,17 +216,63 @@ class FileSender:
         self.file_to_size_map = {}
 
     def send_files(self, uri_list):
-        self._measure_files(uri_list)
+        self._process_files(uri_list)
 
     @util._async
-    def _measure_files(self, uri_list):
+    def _process_files(self, uri_list):
+        # expanded uri list will be (full_uri, relative_uri)
+        expanded_uri_list = []
+
+        def process_folder(top_dir):
+            top_dir_parent_uri = top_dir.get_parent().get_uri()
+
+            def process_subfolders_recursively(rec_dir):
+                rec_enumerator = rec_dir.enumerate_children(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
+                rec_info = rec_enumerator.next_file(None)
+
+                while rec_info:
+                    rec_child = rec_enumerator.get_child(rec_info)
+
+                    if rec_info.get_file_type() == Gio.FileType.DIRECTORY:
+                        process_subfolders_recursively(rec_child)
+                    else:
+                        size = rec_info.get_size()
+                        rec_child_uri = rec_child.get_uri()
+                        self.file_to_size_map[rec_child_uri] = size
+                        rec_pair = (rec_child_uri, os.path.relpath(rec_child_uri, top_dir_parent_uri))
+                        expanded_uri_list.append(rec_pair)
+
+                    rec_info = rec_enumerator.next_file(None)
+
+            enumerator = top_dir.enumerate_children(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
+            info = enumerator.next_file(None)
+
+            while info:
+                child = enumerator.get_child(info)
+
+                if info.get_file_type() == Gio.FileType.DIRECTORY:
+                    process_subfolders_recursively(child)
+                else:
+                    size = info.get_size()
+                    child_uri = child.get_uri()
+                    self.file_to_size_map[child_uri] = size
+                    sub_pair = (child_uri, os.path.relpath(child_uri, top_dir_parent_uri))
+                    expanded_uri_list.append(sub_pair)
+
+                info = enumerator.next_file(None)
+
+        # treat individual files as normal, somehow keep relative locations for dir children
         for uri in uri_list:
             file = Gio.File.new_for_uri(uri)
-            info = file.query_info("standard::size", Gio.FileQueryInfoFlags.NONE, None)
+            info = file.query_info(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
 
-            if info:
+            if info and info.get_file_type() == Gio.FileType.DIRECTORY:
+                process_folder(file)
+                continue
+            else:
                 size = info.get_size()
                 self.file_to_size_map[uri] = size
+                expanded_uri_list.append((uri, uri))
 
         new_total = 0
         for size in self.file_to_size_map.values():
@@ -232,25 +281,29 @@ class FileSender:
         self.total_transfer_size = new_total
         self.current_transfer_size = 0
 
-        GLib.idle_add(self.queue_files, uri_list)
+        GLib.idle_add(self.queue_files, expanded_uri_list)
         exit()
 
     def queue_files(self, uri_list):
-        for uri in uri_list:
-            self.queue.put(uri)
+        for pair in uri_list:
+            self.queue.put(pair)
 
     def _send_file_thread(self):
         while True:
-            uri = self.queue.get()
-            if uri is None:
+            pair = self.queue.get()
+            if pair is None:
                 break
-            self._real_send(uri)
+            self._real_send(pair)
             self.queue.task_done()
             if self.queue.empty():
                 GLib.timeout_add_seconds(1, self.progress_callback, 0)
 
-    def _real_send(self, uri):
+    def _real_send(self, pair):
+        uri, relative_uri = pair
+
         file = Gio.File.new_for_uri(uri)
+        dest_path = relative_uri if relative_uri else file.get_basename()
+
         self.cancellable = Gio.Cancellable()
 
         try:
@@ -260,12 +313,8 @@ class FileSender:
                 stream.close()
                 raise NeverStarted("Cancelled while opening file");
 
-            info = stream.query_info("standard::size", None)
-            if info:
-                self.file_to_size_map[uri] = info.get_size()
-
             response = self.proxy.receive(self.name,
-                                          file.get_basename(),
+                                          dest_path,
                                           TRANSFER_START,
                                           None)
 
@@ -281,7 +330,7 @@ class FileSender:
 
                 if (bytes.get_size() > 0):
                     self.proxy.receive(self.name,
-                                       file.get_basename(),
+                                       dest_path,
                                        TRANSFER_DATA,
                                        xmlrpc.client.Binary(bytes.get_data()))
                     self.current_transfer_size += bytes.get_size()
@@ -292,7 +341,7 @@ class FileSender:
                     break
 
             self.proxy.receive(self.name,
-                               file.get_basename(),
+                               dest_path,
                                TRANSFER_COMPLETE,
                                None)
 
@@ -301,7 +350,7 @@ class FileSender:
             stream.close()
         except Aborted as e:
             self.proxy.receive(self.name,
-                               file.get_basename(),
+                               dest_path,
                                TRANSFER_ABORT,
                                None)
         except NeverStarted as e:
@@ -331,6 +380,7 @@ class FileReceiver:
         self.thread.start()
 
     def receive(self, basename, status, data=None):
+
         path = os.path.join(self.save_path, basename)
 
         if status in (TRANSFER_DATA, TRANSFER_COMPLETE, TRANSFER_ABORT) and not self.open_files[path]:
@@ -360,6 +410,7 @@ class FileReceiver:
             new_file = Gio.File.new_for_path(path)
 
             try:
+                os.makedirs(new_file.get_parent().get_path(), exist_ok=True)
                 self.open_files[path] = new_file.create(Gio.FileCreateFlags.NONE,
                                                         self.cancellable)
             except GLib.Error as e:
