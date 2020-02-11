@@ -7,4 +7,5 @@ install_bindir = join_paths(get_option('prefix'), get_option('bindir'))
 
 subdir('data')
 subdir('src')
+subdir('bin')
 subdir('install-scripts')

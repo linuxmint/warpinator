@@ -32,12 +32,3 @@ data = [
 install_data(data,
   install_dir: install_datadir
 )
-
-meson.add_install_script('sh', '-c',
-    'mkdir -p "@0@"'.format(install_bindir))
-
-meson.add_install_script('sh', '-c',
-    'ln -sf "@0@" "@1@"'.format((join_paths(install_libdir, 'warp.py')),
-                                (join_paths(install_bindir, 'warp'))))
-
-meson.add_install_script('sh', '-c', 'python3 -m compileall "@0@"'.format(install_libdir))

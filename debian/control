@@ -1,0 +1,26 @@
+Source: warp
+Section: x11
+Priority: optional
+Maintainer: Linux Mint <root@linuxmint.com>
+Build-Depends:
+ debhelper (>= 10),
+ gnome-pkg-tools (>= 0.10),
+ meson (>= 0.45.0),
+Standards-Version: 3.9.6
+
+Package: warp
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+ gir1.2-glib-2.0,
+ gir1.2-gtk-3.0 (>= 3.20.0),
+ gir1.2-xapp-1.0 (>= 1.6.0),
+ python3,
+ python3-gi,
+ python3-setproctitle,
+ python3-xapp (>= 1.6.0),
+ python3-zeroconf,
+ ${misc:Depends},
+ ${python3:Depends},
+ ${shlibs:Depends},
+Description: Allows simple local network file sharing.

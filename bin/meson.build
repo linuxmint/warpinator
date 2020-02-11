@@ -1,0 +1,1 @@
+install_data('warp', install_dir: get_option('bindir'))
