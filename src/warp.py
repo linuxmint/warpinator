@@ -63,6 +63,13 @@ class Aborted(Exception):
 class NeverStarted(Exception):
     pass
 
+def relpath_from_uris(child_uri, base_uri):
+    child_uri = GLib.uri_unescape_string(child_uri)
+    base_uri = GLib.uri_unescape_string(base_uri)
+
+    ret = child_uri.replace(base_uri + "/", "")
+    return ret
+
 class WarpServer(object):
     def __init__(self):
         self.port = 8080
@@ -94,6 +101,7 @@ class WarpServer(object):
             server.serve_forever()
 
     def set_prefs(self, nick, path):
+        print("SAVE", path)
         self.save_location = path
         self.file_receiver.save_path = path
         self.my_nick = nick
@@ -232,14 +240,17 @@ class FileSender:
 
                 while rec_info:
                     rec_child = rec_enumerator.get_child(rec_info)
+                    rec_child_uri = rec_child.get_uri()
 
                     if rec_info.get_file_type() == Gio.FileType.DIRECTORY:
+                        sub_pair = (rec_child_uri, relpath_from_uris(rec_child_uri, top_dir_parent_uri))
+                        expanded_uri_list.append(sub_pair)
+
                         process_subfolders_recursively(rec_child)
                     else:
                         size = rec_info.get_size()
-                        rec_child_uri = rec_child.get_uri()
                         self.file_to_size_map[rec_child_uri] = size
-                        rec_pair = (rec_child_uri, os.path.relpath(rec_child_uri, top_dir_parent_uri))
+                        rec_pair = (rec_child_uri, relpath_from_uris(rec_child_uri, top_dir_parent_uri))
                         expanded_uri_list.append(rec_pair)
 
                     rec_info = rec_enumerator.next_file(None)
@@ -249,30 +260,33 @@ class FileSender:
 
             while info:
                 child = enumerator.get_child(info)
+                child_uri = child.get_uri()
 
                 if info.get_file_type() == Gio.FileType.DIRECTORY:
+                    sub_pair = (child_uri, relpath_from_uris(child_uri, top_dir_parent_uri))
+                    expanded_uri_list.append(sub_pair)
+
                     process_subfolders_recursively(child)
                 else:
                     size = info.get_size()
-                    child_uri = child.get_uri()
                     self.file_to_size_map[child_uri] = size
-                    sub_pair = (child_uri, os.path.relpath(child_uri, top_dir_parent_uri))
+                    sub_pair = (child_uri, relpath_from_uris(child_uri, top_dir_parent_uri))
                     expanded_uri_list.append(sub_pair)
 
                 info = enumerator.next_file(None)
 
-        # treat individual files as normal, somehow keep relative locations for dir children
         for uri in uri_list:
             file = Gio.File.new_for_uri(uri)
             info = file.query_info(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
 
             if info and info.get_file_type() == Gio.FileType.DIRECTORY:
+                expanded_uri_list.append((uri, None))
                 process_folder(file)
                 continue
             else:
                 size = info.get_size()
                 self.file_to_size_map[uri] = size
-                expanded_uri_list.append((uri, uri))
+                expanded_uri_list.append((uri, None))
 
         new_total = 0
         for size in self.file_to_size_map.values():
@@ -307,19 +321,31 @@ class FileSender:
         self.cancellable = Gio.Cancellable()
 
         try:
-            stream = file.read(self.cancellable)
+            info = file.query_info(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
 
-            if self.cancellable.is_cancelled():
-                stream.close()
-                raise NeverStarted("Cancelled while opening file");
+            if info and info.get_file_type() == Gio.FileType.DIRECTORY:
+                response = self.proxy.receive(self.name,
+                                              dest_path,
+                                              TRANSFER_FOLDER,
+                                              None)
+                if response == RESPONSE_EXISTS:
+                    raise NeverStarted("Folder %s exists at remote location" % relative_uri)
 
-            response = self.proxy.receive(self.name,
-                                          dest_path,
-                                          TRANSFER_START,
-                                          None)
+                return
+            else:
+                stream = file.read(self.cancellable)
 
-            if response == RESPONSE_EXISTS:
-                raise NeverStarted("File exists at remote location")
+                if self.cancellable.is_cancelled():
+                    stream.close()
+                    raise NeverStarted("Cancelled while opening file");
+
+                response = self.proxy.receive(self.name,
+                                              dest_path,
+                                              TRANSFER_START,
+                                              None)
+
+                if response == RESPONSE_EXISTS:
+                    raise NeverStarted("File %s exists at remote location" % relative_uri)
 
             while True:
                 bytes = stream.read_bytes(self.CHUNK_SIZE, self.cancellable)
@@ -365,7 +391,6 @@ class FileSender:
         self.queue.put(None)
         self.send_thread.join()
 
-
 class FileReceiver:
     CHUNK_SIZE = 1024 * 1024
     def __init__(self, save_path):
@@ -406,6 +431,16 @@ class FileReceiver:
 
         path = os.path.join(self.save_path, basename)
 
+        if status == TRANSFER_FOLDER:
+            new_file = Gio.File.new_for_path(path)
+
+            try:
+                os.makedirs(path, exist_ok=False)
+            except GLib.Error as e:
+                print("Could not create folder: %s" % (path, e.message))
+
+            return
+
         if status == TRANSFER_START:
             new_file = Gio.File.new_for_path(path)
 
@@ -420,6 +455,7 @@ class FileReceiver:
                 del self.open_files[path]
 
             return
+
         if status == TRANSFER_COMPLETE:
             try:
                 self.open_files[path].close(self.cancellable)
@@ -558,11 +594,13 @@ class WarpApplication(Gtk.Application):
     def on_prefs_changed(self, settings, pspec=None, data=None):
         self.nick = settings.get_string(util.BROADCAST_NAME_KEY)
 
-        save_path = settings.get_string(util.FOLDER_NAME_KEY)
-        if save_path != "":
-            self.save_path = save_path
-            file = Gio.File.new_for_uri(save_path)
-            self.server.set_prefs(self.nick, save_path)
+        save_uri = settings.get_string(util.FOLDER_NAME_KEY)
+        if save_uri != "":
+            file = Gio.File.new_for_uri(save_uri)
+            path = file.get_path()
+
+            self.save_path = path
+            self.server.set_prefs(self.nick, path)
 
     def on_open_location_clicked(self, widget, data=None):
         app = Gio.AppInfo.get_default_for_type("inode/directory", True)
