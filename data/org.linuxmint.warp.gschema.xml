@@ -27,6 +27,11 @@
       <default>false</default>
       <summary>Start automatically at login</summary>
     </key>
+    <key name="ask-for-send-permission" type="b">
+      <default>true</default>
+      <summary>Start transfers automatically or require permission</summary>
+      <description>If true, every transfer initiated must first be approved by the receiving user. If false, transfers start automatically.</description>
+    </key>
   </schema>
 
   <schema id="com.linuxmint.warp.window-state" path="/com/linuxmint/warp/window-state/" gettext-domain="warp">

@@ -2,13 +2,18 @@ import threading
 import socket
 from gi.repository import GLib
 
-PREFS_SCHEMA = "com.linuxmint.warp.preferences"
+TRANSFER_START = "start"
+TRANSFER_DATA = "data"
+TRANSFER_COMPLETE = "end"
+TRANSFER_FOLDER = "folder"
+TRANSFER_ABORT = "aborted"
+TRANSFER_REQUEST_PERM = "ask-permission"
 
-BROADCAST_NAME_KEY = "broadcast-name"
-FOLDER_NAME_KEY = "receiving-folder"
-START_WITH_WINDOW_KEY = "start-with-window"
-START_PINNED_KEY = "default-pinned"
-AUTOSTART_KEY = "autostart"
+RESPONSE_EXISTS = "exists"
+RESPONSE_OK = "ok"
+RESPONSE_DISKFULL = "diskfull"
+RESPONSE_ERROR = "error"
+RESPONSE_PERMISSION_GRANTED = "permission-granted"
 
 # Used as a decorator to run things in the background
 def _async(func):
