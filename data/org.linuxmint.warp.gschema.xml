@@ -23,7 +23,10 @@
       <default>false</default>
       <summary>Pin the window (keep above) by default</summary>
     </key>
-
+    <key name="autostart" type="b">
+      <default>false</default>
+      <summary>Start automatically at login</summary>
+    </key>
   </schema>
 
   <schema id="com.linuxmint.warp.window-state" path="/com/linuxmint/warp/window-state/" gettext-domain="warp">

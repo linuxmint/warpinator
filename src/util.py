@@ -8,6 +8,7 @@ BROADCAST_NAME_KEY = "broadcast-name"
 FOLDER_NAME_KEY = "receiving-folder"
 START_WITH_WINDOW_KEY = "start-with-window"
 START_PINNED_KEY = "default-pinned"
+AUTOSTART_KEY = "autostart"
 
 # Used as a decorator to run things in the background
 def _async(func):

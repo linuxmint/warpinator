@@ -41,4 +41,10 @@ class Preferences(Gtk.Window):
                                  util.PREFS_SCHEMA, util.START_PINNED_KEY)
 
         section.add_row(widget)
+
+        widget = GSettingsSwitch(_("Start automatically"),
+                                 util.PREFS_SCHEMA, util.AUTOSTART_KEY)
+
+        section.add_row(widget)
+
         self.show_all()
