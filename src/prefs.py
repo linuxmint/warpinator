@@ -21,6 +21,7 @@ START_WITH_WINDOW_KEY = "start-with-window"
 START_PINNED_KEY = "default-pinned"
 AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
+NO_OVERWRITE_KEY = "no-overwrite"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -41,11 +42,14 @@ def get_start_with_window():
 def get_start_pinned():
     return prefs_settings.get_boolean(START_PINNED_KEY)
 
-def get_ask_permission():
+def ask_permission_for_transfer():
     return prefs_settings.get_boolean(ASK_PERMISSION_KEY)
 
+def prevent_overwriting():
+    return prefs_settings.get_boolean(NO_OVERWRITE_KEY)
+
 class Preferences(Gtk.Window):
-    def __init__(self):
+    def __init__(self, transfer_active):
         super(Preferences, self).__init__(modal=True, title=_("Warp Preferences"))
 
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
@@ -58,6 +62,9 @@ class Preferences(Gtk.Window):
                                 PREFS_SCHEMA, BROADCAST_NAME_KEY,
                                 size_group=size_group)
         section.add_row(widget)
+        if transfer_active:
+            widget.set_sensitive(False)
+            widget.set_tooltip_text("Nickname changes are not allowed while there are active transfers")
 
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
@@ -77,8 +84,15 @@ class Preferences(Gtk.Window):
                                       PREFS_SCHEMA, FOLDER_NAME_KEY,
                                       size_group=size_group, dir_select=True)
         section.add_row(widget)
+        if transfer_active:
+            widget.set_sensitive(False)
+            widget.set_tooltip_text("Changes to the save location are not allowed while there are active transfers")
 
-        widget = GSettingsSwitch(_("Ask for permission before starting a file transfer"),
+        widget = GSettingsSwitch(_("Abort transfer if files exist"),
+                                 PREFS_SCHEMA, NO_OVERWRITE_KEY)
+        section.add_row(widget)
+
+        widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
         section.add_row(widget)
 
