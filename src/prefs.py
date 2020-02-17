@@ -7,10 +7,6 @@ from gi.repository import Gtk, Gio
 import config
 import util
 
-# i18n
-locale.bindtextdomain(config.PACKAGE, config.localedir)
-gettext.bindtextdomain(config.PACKAGE, config.localedir)
-gettext.textdomain(config.PACKAGE)
 _ = gettext.gettext
 
 PREFS_SCHEMA = "com.linuxmint.warp.preferences"
@@ -42,7 +38,7 @@ def get_start_with_window():
 def get_start_pinned():
     return prefs_settings.get_boolean(START_PINNED_KEY)
 
-def ask_permission_for_transfer():
+def require_permission_for_transfer():
     return prefs_settings.get_boolean(ASK_PERMISSION_KEY)
 
 def prevent_overwriting():

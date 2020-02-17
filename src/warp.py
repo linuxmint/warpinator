@@ -79,22 +79,6 @@ class WarpServer(GObject.Object):
         self.zc = Zeroconf()
         self.zc.register_service(self.info)
 
-    @util._async
-    def serve_forever(self):
-        self.register_zeroconf()
-        addr = ("0.0.0.0", self.port)
-        with xmlrpc.server.SimpleXMLRPCServer(addr, allow_none=True, logRequests=False) as server:
-            print("Listening on", addr)
-            server.register_function(self._get_nick, "get_nick")
-            server.register_function(self._files_exist, "files_exist")
-            server.register_function(self._receive, "receive")
-            server.register_function(self._check_needs_permission, "check_needs_permission")
-            server.register_function(self._get_permission, "get_permission")
-            server.register_function(self._abort_transfer, "abort_transfer")
-            server.register_function(self._update_progress, "update_progress")
-            server.register_function(self._update_my_info, "update_my_info")
-            server.serve_forever()
-
     def set_prefs(self, nick, path):
         self.save_location = path
         self.file_receiver.save_path = path
@@ -104,6 +88,26 @@ class WarpServer(GObject.Object):
 
         print("Save path: %s" % self.save_location)
         print("Visible as '%s'" % self.my_nick)
+
+    ########################### Server ###################
+    @util._async
+    def serve_forever(self):
+        self.register_zeroconf()
+        addr = ("0.0.0.0", self.port)
+
+        with xmlrpc.server.SimpleXMLRPCServer(addr, allow_none=True, logRequests=False) as server:
+            print("Listening on", addr)
+            server.register_function(self._get_nick, "get_nick")
+            server.register_function(self._update_my_info, "update_my_info")
+            server.register_function(self._files_exist, "files_exist")
+            server.register_function(self._receive, "receive")
+            server.register_function(self._permission_needed, "permission_needed")
+            server.register_function(self._get_permission, "get_permission")
+            server.register_function(self._prevent_overwriting, "prevent_overwriting")
+            server.register_function(self._abort_transfer, "abort_transfer")
+            server.register_function(self._abort_request, "abort_request")
+            server.register_function(self._update_progress, "update_progress")
+            server.serve_forever()
 
     def _get_nick(self):
         if self.my_nick != None:
@@ -133,8 +137,8 @@ class WarpServer(GObject.Object):
 
         return self.file_receiver.receive(basename, folder, symlink_target, serial, binary_data)
 
-    def _check_needs_permission(self):
-        return prefs.ask_permission_for_transfer()
+    def _permission_needed(self):
+        return prefs.require_permission_for_transfer()
 
     def _get_permission(self, name, nick, size, count, time_str):
         for req in self.permission_requests:
@@ -143,28 +147,44 @@ class WarpServer(GObject.Object):
                     if req.permission != util.TRANSFER_REQUEST_PENDING:
                         self.permission_requests.remove(req)
                     return req.permission
-                else:
-                    return util.TRANSFER_REQUEST_EXISTING
 
         request = PermissionRequest(name, nick, size, count, time_str)
         self.permission_requests.append(request)
 
         try:
             peer = self.peer_list[name]
-            peer.ask_user_permission(request)
+            peer.ask_my_permission(request)
         except KeyError:
             print("Received transfer request for unknown proxy - what's up: %s" % name)
             return False
 
         return util.TRANSFER_REQUEST_PENDING
 
+    def _prevent_overwriting(self):
+        return prefs.prevent_overwriting()
+
     def _abort_transfer(self, name):
         print("Server size: Abort transfer from", name)
         pass
 
+    def _abort_request(self, name, time_str):
+        for req in self.permission_requests:
+            if req.name == name:
+                if req.time_str == time_str:
+                    req.permission = util.TRANSFER_REQUEST_CANCELLED
+
+                    try:
+                        peer = self.peer_list[name]
+                        peer.receive_request_withdrawn(req)
+                    except KeyError:
+                        print("Received transfer request for unknown proxy - what's up: %s" % name)
+
+        return True
+
     def _update_progress(self, name, progress, speed, time_left, finished):
         GLib.idle_add(self._update_progress_at_idle, name, progress, speed, time_left, finished, priority=GLib.PRIORITY_DEFAULT)
         return True
+    ################################ / Server ################################
 
     def _update_progress_at_idle(self, name, progress, speed, time_left, finished):
         try:
@@ -188,26 +208,32 @@ class ProxyItem(object):
         self.nick = ""
         self.send_stat_delay_timer = 0
         self.receive_stat_delay_timer = 0
-        self.active_request = None
+        self.dropping = False
+
+        # Don't allow the local user to drop more files if we're already waiting on a previous request
+        self.blocking_new_sends = False
+
+        self.active_receive_request = None
 
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.widget =self.builder.get_object("proxy_widget")
         self.page_stack = self.builder.get_object("page_stack")
-
         self.status_page = self.builder.get_object("status_page")
         self.nick_label = self.builder.get_object("nick_label")
         self.progress_box = self.builder.get_object("progress_box")
         self.send_progress_bar = self.builder.get_object("send_progress_bar")
         self.receive_progress_bar = self.builder.get_object("receive_progress_bar")
         self.sender_awaiting_approval_label = self.builder.get_object("sender_awaiting_approval_label")
+        self.sender_awaiting_approval_cancel_button = self.builder.get_object("sender_awaiting_approval_cancel_button")
         self.req_transfer_label = self.builder.get_object("req_transfer_label")
         self.req_accept_button = self.builder.get_object("req_accept_button")
-        self.req_accept_button.connect("clicked", self.on_request_response, True)
         self.req_decline_button = self.builder.get_object("req_decline_button")
+
+        self.sender_awaiting_approval_cancel_button.connect("clicked", self.cancel_send_request)
+        self.req_accept_button.connect("clicked", self.on_request_response, True)
         self.req_decline_button.connect("clicked", self.on_request_response, False)
 
         self.file_sender = transfers.FileSender(self.my_name, self.name, self.nick, self.proxy, self.send_progress_callback)
-        self.dropping = False
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
         self.widget.drag_dest_set(Gtk.DestDefaults.ALL,
@@ -216,27 +242,14 @@ class ProxyItem(object):
         self.widget.connect("drag-drop", self.on_drag_drop)
         self.widget.connect("drag-data-received", self.on_drag_data_received)
 
-        self.update_proxy_info()
+        GLib.timeout_add_seconds(1, self.update_remote_info)
         self.hide_receive_stats()
         self.hide_send_stats()
         self.widget.show_all()
 
-    def send_changed_to_peer(self):
-        # Tells the server this proxy represents to refresh its info on us (this is called by WarpApplication,
-        # when something like our nick changes.
-        self.proxy.update_my_info(self.my_name)
-
-    def update_proxy_info(self):
-        # This is sent by our local server, telling us to grab new info from the remote server this proxy represents.
-        GLib.timeout_add_seconds(1, self.try_update_proxy_nick)
-
-    def transfer_active(self):
-        # FIXME: Make a more appropriate method of doing this.
-        return self.send_progress_bar.props.visible or self.receive_progress_bar.props.visible
-
-    def try_update_proxy_nick(self, data=None):
-        # Why does this happen?  Why can't there be some sort of ready
-        # callback for a ServerProxy being 'ready'?
+    # Get updated info from the remote (either for the first time when we're setting things up,
+    # or later, if the remote changes their nickname)
+    def update_remote_info(self, data=None):
         try:
             self.nick = self.proxy.get_nick()
             self.nick_label.set_markup("<b>%s</b>" % self.nick)
@@ -244,10 +257,27 @@ class ProxyItem(object):
 
         except ConnectionRefusedError:
             print("Retrying proxy check")
-            return True
+            GLib.timeout_add_seconds(1, self.update_remote_info)
 
         return False
 
+    def destroy(self):
+        self.widget.destroy()
+        self.file_sender.stop()
+
+    ###################### Application calls #######################
+
+    # Our local info has changed, (for now just our nick) - tell the remote server so our name on that end is updated
+    def send_changed_to_peer(self):
+        self.proxy.update_my_info(self.my_name)
+
+    # The application wants to know if we're currently in the middle of anything
+    def transfer_active(self):
+        # FIXME: Make a more appropriate method of doing this.
+        return self.send_progress_bar.props.visible or self.receive_progress_bar.props.visible
+    ###################### / Application calls #######################
+
+    #################### DND Handler ################
     def on_drag_drop(self, widget, context, x, y, time, data=None):
         atom =  widget.drag_dest_find_target(context, None)
         self.dropping = True
@@ -255,7 +285,10 @@ class ProxyItem(object):
 
     def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
         if not self.dropping:
-            Gdk.drag_status(context, Gdk.DragAction.COPY, time)
+            if self.blocking_new_sends:
+                Gdk.drag_status(context, 0, time)
+            else:
+                Gdk.drag_status(context, Gdk.DragAction.COPY, time)
             return
         if data:
             if context.get_selected_action() == Gdk.DragAction.COPY:
@@ -264,7 +297,12 @@ class ProxyItem(object):
 
         Gtk.drag_finish(context, True, False, time)
         self.dropping = False
+    #################### / DND Handler ####################
 
+    ##################### Progress widget management ##########################
+    # These methods control the visibility of the progress bars.  There's a delay for showing them
+    # because on short transfers, they don't last long enough to even report progress, so don't bother
+    # showing anything.
     def queue_send_showing_stats(self):
         if self.send_stat_delay_timer > 0:
             GLib.source_remove(self.send_stat_delay_timer)
@@ -277,10 +315,37 @@ class ProxyItem(object):
         self.send_progress_bar.show()
 
     def hide_send_stats(self):
+        if self.send_stat_delay_timer > 0:
+            GLib.source_remove(self.send_stat_delay_timer)
+            self.send_stat_delay_timer = 0
+
         self.send_progress_bar.set_fraction(0)
         self.send_progress_bar.set_text(_("Sending"))
         self.send_progress_bar.hide()
 
+    def queue_receive_showing_stats(self):
+        if self.receive_stat_delay_timer > 0:
+            GLib.source_remove(self.receive_stat_delay_timer)
+
+        self.receive_stat_delay_timer = GLib.timeout_add(500, self.show_receive_stats_timeout)
+
+    def show_receive_stats_timeout(self, data=None):
+        self.receive_stat_delay_timer = 0
+        self.receive_progress_bar.show()
+
+    def hide_receive_stats(self):
+        if self.receive_stat_delay_timer > 0:
+            GLib.source_remove(self.receive_stat_delay_timer)
+            self.receive_stat_delay_timer = 0
+        self.receive_progress_bar.set_fraction(0)
+        self.receive_progress_bar.set_text(_("Receiving"))
+        self.receive_progress_bar.hide()
+    ####################### /Progress widget management ##############
+
+    ####################### Local client calls #####################
+    # These calls are initiated locally, to keep the local representation of the peer up-to-date
+
+    # You are in the process of sending, or attempting to send, files.
     def send_progress_callback(self, data=util.ProgressCallbackInfo()):
         cb_info = data
 
@@ -295,39 +360,37 @@ class ProxyItem(object):
             cb_info.progress = 1.0
 
         self.send_progress_bar.set_fraction(cb_info.progress)
-
         if cb_info.speed and cb_info.time_left:
             self.send_progress_bar.set_text(_("Sending - %s - %s" % (cb_info.time_left, cb_info.speed)))
+            return
 
         if cb_info.finished:
-            if self.send_stat_delay_timer > 0:
-                GLib.source_remove(self.send_stat_delay_timer)
-                self.send_stat_delay_timer = 0
-            else:
-                self.hide_send_stats()
+            self.hide_send_stats()
+            return
 
         if cb_info.sender_awaiting_approval:
-            self.page_stack.set_visible_child_name("sender_awaiting_approval")
-            markup = gettext.ngettext("Waiting on approval to send %d file",
-                                      "Waiting on approval to send %d files", cb_info.count) \
-                                      % (cb_info.count,)
-            self.sender_awaiting_approval_label.set_markup(markup)
+            self.wait_for_server_approval(cb_info)
+            return
 
-    def queue_receive_showing_stats(self):
-        if self.receive_stat_delay_timer > 0:
-            GLib.source_remove(self.receive_stat_delay_timer)
+    def wait_for_server_approval(self, cb_info):
+        self.page_stack.set_visible_child_name("sender_awaiting_approval")
+        self.blocking_new_sends = True
 
-        self.receive_stat_delay_timer = GLib.timeout_add(500, self.show_receive_stats_timeout)
+        markup = gettext.ngettext("Waiting on approval to send %d file",
+                                  "Waiting on approval to send %d files", cb_info.count) \
+                                  % (cb_info.count,)
+        self.sender_awaiting_approval_label.set_markup(markup)
 
-    def show_receive_stats_timeout(self, data=None):
-        self.receive_stat_delay_timer = 0
-        self.receive_progress_bar.show()
+    def cancel_send_request(self, button, data=None):
+        self.file_sender.cancel_send_request()
+        self.page_stack.set_visible_child_name("status")
 
-    def hide_receive_stats(self):
-        self.receive_progress_bar.set_fraction(0)
-        self.receive_progress_bar.set_text(_("Receiving"))
-        self.receive_progress_bar.hide()
+    ####################### / Local client calls #####################
 
+    ############ Server calls (these are for interaction with the local user) ###############
+
+    # The remote peer has begun sending you files.  This is his periodic progress report so you
+    # can update the information on your local status widget for that peer
     def receive_progress_callback(self, progress, speed, time_left, finished=False):
         # print("Receive progress callback - server", progress, speed, time_left)
         if not self.receive_progress_bar.get_visible():
@@ -342,15 +405,13 @@ class ProxyItem(object):
             self.receive_progress_bar.set_text(_("Receiving - %s - %s" % (time_left, speed)))
 
         if finished:
-            if self.receive_stat_delay_timer > 0:
-                GLib.source_remove(self.receive_stat_delay_timer)
-                self.receive_stat_delay_timer = 0
-            else:
-                self.hide_receive_stats()
+            self.hide_receive_stats()
 
-    def ask_user_permission(self, request):
+    # The remote peer wants to send files, and your pref is to be able to approve every transfer
+    # This sets up the UI to let you know, switching to the query view with approve/disapprove buttons
+    def ask_my_permission(self, request):
         print("ask from ", request.nick)
-        self.active_request = request
+        self.active_receive_request = request
 
         self.page_stack.set_visible_child_name("transfer_request")
 
@@ -360,18 +421,29 @@ class ProxyItem(object):
 
         self.req_transfer_label.set_markup(markup)
 
+    # This records your reponse on the server's PermissionRequest object then returns to the normal status view
     def on_request_response(self, widget, approve):
         if approve:
-            self.active_request.permission = util.TRANSFER_REQUEST_GRANTED
+            self.active_receive_request.permission = util.TRANSFER_REQUEST_GRANTED
         else:
-            self.active_request.permission = util.TRANSFER_REQUEST_DECLINED
-        self.active_request = None
+            self.active_receive_request.permission = util.TRANSFER_REQUEST_DECLINED
+        self.active_receive_request = None
 
         self.page_stack.set_visible_child_name("status")
 
-    def destroy(self):
-        self.widget.destroy()
-        self.file_sender.stop()
+    # The remote that initiated a transfer request has canceled it
+    def receive_request_withdrawn(self, request):
+        if request != self.active_receive_request:
+            print("proxy: unknown request cancelled by remote")
+        self.active_receive_request = None
+        self.page_stack.set_visible_child_name("status")
+
+    # The remote peer has updated their info, and told our server about it, they
+    # want us to fetch the new info from the server
+    def update_proxy_info(self):
+        self.update_remote_info()
+
+    ######################## /Server Calls#####################################
 
 class WarpApplication(Gtk.Application):
     def __init__(self):

@@ -17,45 +17,7 @@ FILE_INFOS = "standard::size,standard::name,standard::type,standard::symlink-tar
 class Aborted(Exception):
     pass
 
-class NeverStarted(Exception):
-    pass
-
-def relpath_from_uris(child_uri, base_uri):
-    child_uri = GLib.uri_unescape_string(child_uri)
-    base_uri = GLib.uri_unescape_string(base_uri)
-
-    if child_uri.startswith(base_uri):
-        return child_uri.replace(base_uri + "/", "")
-    else:
-        return None
-
-# adapted from nemo-file-operations.c: format_time()
-def format_time_span(seconds):
-    if seconds < 0:
-        seconds = 0
-
-    if (seconds < 10):
-        return _("A few seconds remaining")
-
-    if (seconds < 60):
-        return _("%d seconds remaining") % seconds
-
-    if (seconds < 60 * 60):
-        minutes = int(seconds / 60)
-        return gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
-
-    hours = seconds / (60 * 60)
-
-    if seconds < (60 * 60 * 4):
-        minutes = int((seconds - hours * 60 * 60) / 60)
-
-        h = gettext.ngettext ("%d hour", "%d hours", hours) % hours
-        m = gettext.ngettext ("%d minute", "%d minutes", minutes) % minutes
-        res = "%s, %s" % (h, m)
-        return res;
-
-    return gettext.ngettext("approximately %d hour", "approximately %d hours", hours) % hours
-
+# This represents a file to be transferred (this is used by the sender)
 class QueuedFile:
     def __init__(self, uri, rel_uri, size, folder, symlink_target_path):
         self.uri = uri
@@ -64,6 +26,9 @@ class QueuedFile:
         self.is_folder = folder
         self.symlink_target_path = symlink_target_path
 
+# This represents the entirety of a single transfer 'task' - it contains info
+# on the task - size, file count, etc... as well as a list of QueuedFiles that make
+# up the task.
 class TransferRequest:
     def __init__(self):
         # (absolute uri, relative uri) tuples
@@ -72,6 +37,8 @@ class TransferRequest:
 
         self.transfer_size = 0
         self.transfer_count = 0
+
+        self.stamp = 0
 
     def add_file(self, basename, uri, base_uri, info):
         file_type = info.get_file_type()
@@ -88,7 +55,7 @@ class TransferRequest:
             if symlink_target:
                 if symlink_target[0] == "/":
                     symlink_file = Gio.File.new_for_path(symlink_target)
-                    relative_symlink_path = relpath_from_uris(symlink_file.get_uri(), base_uri)
+                    relative_symlink_path = util.relpath_from_uris(symlink_file.get_uri(), base_uri)
                     if not relative_symlink_path:
                         relative_symlink_path = symlink_target
                 else:
@@ -96,7 +63,7 @@ class TransferRequest:
             size = 0
 
         if base_uri:
-            relative_uri = relpath_from_uris(uri, base_uri)
+            relative_uri = util.relpath_from_uris(uri, base_uri)
         else:
             relative_uri = basename
 
@@ -107,6 +74,11 @@ class TransferRequest:
         self.transfer_size += size
         self.transfer_count += 1
 
+# This handles sending files, there is one for every proxy we discover on the network
+# It accepts a list of files from the ProxyItem, counts, gets their size, calculates their
+# relative paths, then 1) Checks with the remote to see if they exist already, 2) Asks permission to send,
+# and 3) Actually send the files and report progress to both its owner (The local ProxyItem) and the remote
+# server, whom the ProxyItem represents.
 class FileSender:
     CHUNK_UNIT = 1024 * 1024 # Starting at 1 mb
     CHUNK_MAX = 10 * 1024 * 1024 # Increase by 1mb each iteration to max 10mb (this resets for every file)
@@ -117,6 +89,8 @@ class FileSender:
         self.peer_proxy = peer_proxy
         self.peer_name = peer_name
         self.peer_nick = peer_nick
+
+        # This is ProxyItem:send_progress_callback, used to update the local widget's state.
         self.progress_callback = progress_callback
 
         self.cancellable = None
@@ -125,23 +99,38 @@ class FileSender:
         self.send_thread.start()
 
         self.start_time = 0
-        self.speed_calc_start_bytes = 0
 
         self.total_transfer_size = 0
         self.current_transfer_size = 0
-        self.file_to_size_map = {}
         self.interval_start_time = 0
 
+        # All files are added here, and removed as their send is completed. We keep track in this manner,
+        # so if more files are added while there's already a transfer in process, we can have a new, accurate
+        # total size for the transfer (so our progress can adjust accordingly).
+        self.file_to_size_map = {}
+        self.current_send_request = None
+
+    def cancel_send_request(self):
+        # handle return?
+        self.peer_proxy.abort_request(self.my_name, self.current_send_request.stamp)
+        self.current_send_request = None
+
+    # Entry point from the ProxyItem class - the list of uri's dragged onto the widget are sent here
     def send_files(self, uri_list):
         self._process_files(uri_list)
 
+    # This function creates a new TransferRequest, and begins crawling the files and adding them to the list.
+    # It will then communicate with the server, checking for existing files, as well as permission to send.
     @util._async
     def _process_files(self, uri_list):
-        # expanded uri list will be (full_uri, relative_uri)
-        request = TransferRequest()
-        top_dir_parent_uri = None
+        self.current_send_request = request = TransferRequest()
+
+        # These are the first-level base names (no path, just the filename) that we'll send to the server
+        # to check for pre-existence.  We know that if these files/folders don't exist, none of their children
+        # will.  This is a bit simple, but until we need more, it's fine.
         top_dir_basenames = []
 
+        # Recursive function for processing folders and their contents.
         def process_folder(folder_uri, top_dir):
             folder_file = Gio.File.new_for_uri(folder_uri)
 
@@ -166,6 +155,7 @@ class FileSender:
 
                 info = enumerator.next_file(None)
 
+        # Process the initial list.
         for uri in uri_list:
             file = Gio.File.new_for_uri(uri)
             top_dir_basenames.append(file.get_basename())
@@ -188,27 +178,30 @@ class FileSender:
             #what?
             exit()
 
-        if prefs.prevent_overwriting:
-            if self.peer_proxy.files_exist(top_dir_basenames):
-                print("can't overwrite!!!")
-                exit()
+        if self.peer_proxy.prevent_overwriting() and self.peer_proxy.files_exist(top_dir_basenames):
+            print("can't overwrite!!!")
+            # handle?
+            exit()
 
         permission = False
 
-        if self.peer_proxy.check_needs_permission():
-            #ask_permission
+        if self.peer_proxy.permission_needed():
+            #ask_permission - block for a response
             self._update_progress(sender_awaiting_approval=True, count=request.transfer_count)
-            stamp = str(GLib.get_monotonic_time())
+            request.stamp = str(GLib.get_monotonic_time())
             while True:
                 response = self.peer_proxy.get_permission(self.my_name,
                                                           self.peer_nick,
                                                           request.transfer_size,
                                                           request.transfer_count,
-                                                          stamp) # this is stupid
+                                                          request.stamp)
 
                 if response == util.TRANSFER_REQUEST_PENDING:
                     time.sleep(1)
                     continue
+                elif response == util.TRANSFER_REQUEST_CANCELLED:
+                    print("cancelled my own request")
+                    break
                 else:
                     permission = response == util.TRANSFER_REQUEST_GRANTED
                     break
@@ -227,12 +220,14 @@ class FileSender:
             self._update_progress(transfer_starting=True)
 
             print("Starting send: %d files (%s)" % (request.transfer_count, GLib.format_size(request.transfer_size)))
-            GLib.idle_add(self.queue_files, request, priority=GLib.PRIORITY_DEFAULT)
+            GLib.idle_add(self._queue_files, request, priority=GLib.PRIORITY_DEFAULT)
         else:
             self._update_progress(transfer_cancelled=True)
         exit()
 
-    def queue_files(self, request):
+    # Ready to start the transfer, all approved.  Mark down when we start, zero out the transmitted count, and
+    # add all the files to the queue.
+    def _queue_files(self, request):
         self.start_time = GLib.get_monotonic_time()
         self.interval_start_time = self.start_time
         self.current_transfer_size = 0
@@ -240,6 +235,7 @@ class FileSender:
         for queued_file in request.files:
             self.queue.put(queued_file)
 
+    # Send the files.
     def _send_file_thread(self):
         while True:
             queued_file = self.queue.get()
@@ -260,15 +256,18 @@ class FileSender:
         try:
             self.cancellable = Gio.Cancellable()
 
+            # For folders and symlinks, we don't actually transfer any data, we just
+            # send a block that has its filename, relative path, and what type of file it is.
             if queued_file.is_folder or queued_file.symlink_target_path:
                 if not self.peer_proxy.receive(self.my_name,
                                                queued_file.relative_uri,
                                                queued_file.is_folder,
                                                queued_file.symlink_target_path,
-                                               serial,
+                                               0,
                                                None):
-                    raise Aborted(_("Something went wrong with transfer of %s") % file.get_uri())
+                    raise Aborted(_("Something went wrong with transfer of symlink or folder: %s") % file.get_uri())
             else:
+                # Any other file, we open a stream, and read/transfer in chunks.
                 gfile = Gio.File.new_for_uri(queued_file.uri)
                 stream = gfile.read(self.cancellable)
 
@@ -276,6 +275,8 @@ class FileSender:
                     stream.close()
                     raise Aborted(_("Cancelled while opening file"));
 
+                # Start with a small chunk size.  We increase it by one CHUNK_UNIT each iteration until
+                # we've reached our max.
                 chunk_size = self.CHUNK_UNIT
 
                 while True:
@@ -296,6 +297,9 @@ class FileSender:
                                                    xmlrpc.client.Binary(bytes.get_data())):
                         raise Aborted(_("Something went wrong with the transfer of %s") % queued_file.uri)
 
+                    # As long as we read more than 0 bytes we keep repeating.
+                    # If we've just read (and sent) 0 bytes, that means the file is done, and the server
+                    # knows also, so break and return so we can get another file from the queue.
                     if (bytes.get_size() > 0):
                         self.current_transfer_size += bytes.get_size()
                         self._update_progress(finished=False)
@@ -306,6 +310,8 @@ class FileSender:
                     if chunk_size < self.CHUNK_MAX:
                         chunk_size += self.CHUNK_UNIT
 
+            # Remove our size mapping for this file.  If more files are added to the queue while this one
+            # is in process, we don't want to include completed files in the speed/time remaining calculations.
             del self.file_to_size_map[queued_file.uri]
         except Aborted as e:
             print("An error occurred during the transfer (our side): %s" % str(e))
@@ -315,6 +321,8 @@ class FileSender:
             self.clear_queue()
             self.send_abort_ml(e)
 
+    # This handles all communication with regard to state changes and progress.  It sends to both the local ProxyItem,
+    # as well as the remote server so receive progress can be updated for that user also.
     def _update_progress(self, finished=False, sender_awaiting_approval=False, transfer_starting=False, transfer_cancelled=False, count=0):
         if finished:
             self.peer_proxy.update_progress(self.my_name, 0, "", "", finished)
@@ -322,7 +330,7 @@ class FileSender:
                           util.ProgressCallbackInfo(finished=True),
                           priority=GLib.PRIORITY_DEFAULT)
 
-            print("finished: %s" % format_time_span((GLib.get_monotonic_time() - self.start_time) / 1000/1000))
+            print("finished: %s" % util.format_time_span((GLib.get_monotonic_time() - self.start_time) / 1000/1000))
             return
 
         if sender_awaiting_approval:
@@ -357,7 +365,7 @@ class FileSender:
 
             bytes_left = self.total_transfer_size - self.current_transfer_size
             time_left_sec = bytes_left / bytes_per_sec
-            time_left_str = format_time_span(time_left_sec)
+            time_left_str = util.format_time_span(time_left_sec)
 
             self.peer_proxy.update_progress(self.my_name, progress, speed_str, time_left_str, finished)
             GLib.idle_add(self.progress_callback,
@@ -380,14 +388,20 @@ class FileSender:
         self.queue.put(None)
         self.send_thread.join()
 
+# A block of file data received by the server
 class Chunk():
     def __init__(self, basename, folder, symlink_target_path, serial, data):
         self.basename = basename
         self.folder = folder
+
+        # This is the path a symlink once pointed to.  If this is not None, that means it's a symlink
         self.symlink_target_path = symlink_target_path
+
         self.serial = serial
         self.data = data
 
+# This is a file currently being written - there will usually be just one at a time, unless
+# more than one remote is sending files to you.
 class OpenFile():
     def __init__(self, path, cancellable):
         self.path = path
@@ -396,6 +410,8 @@ class OpenFile():
                                        cancellable)
         self.serial = 0
 
+# This handles receiving files, there is just one, attached to the local server.
+# It accepts Chunks of data and writes them, or creates folders and symlinks.
 class FileReceiver:
     def __init__(self, save_path):
         self.save_path = save_path
@@ -407,6 +423,9 @@ class FileReceiver:
         # OpenFiles
         self.open_files = {}
 
+        # The chunks are received here asynchronously. So if an error occurs here,
+        # we set a state so our server can respond to senders when they send their
+        # next chunk of data.
         self.error_state = False
 
         self.thread = threading.Thread(target=self._receive_file_thread)
@@ -435,7 +454,8 @@ class FileReceiver:
         self.cancellable = Gio.Cancellable()
 
         path = os.path.join(self.save_path, chunk.basename)
-        # folder
+
+        # Info was for a folder
         if chunk.folder:
             try:
                 os.makedirs(path, exist_ok=False)
@@ -444,6 +464,9 @@ class FileReceiver:
                 self.error_state = True
             return
         elif chunk.symlink_target_path:
+            # Info was for a symlink. This path might be relative or absolute.  Likely broken, if it
+            # pointed to something outside the tree we're copying.  Do we want to follow symbolic links
+            # and transfer the files they point to rather than the links themselves?
             absolute_symlink_target_path = os.path.join(self.save_path, chunk.symlink_target_path)
 
             try:
@@ -453,7 +476,8 @@ class FileReceiver:
                 print("Could not create symbolic link %s: %s" % (path, e.message))
                 self.error_state = True
             return
-        # not folder
+
+        # Normal files
         try:
             open_file =self.open_files[path]
         except KeyError as e:
@@ -464,6 +488,8 @@ class FileReceiver:
                 self.error_state = True
                 return
 
+        # As long as we have data, keep writing.  Receiving 0 length means the file is done
+        # and we can close it.
         if len(chunk.data.data) > 0:
             try:
                 open_file.stream.write(chunk.data.data, self.cancellable)
