@@ -10,6 +10,7 @@ import gettext
 import queue
 import threading
 import re
+from operator import attrgetter
 
 import socket
 import xmlrpc.server
@@ -118,7 +119,7 @@ class WarpServer(GObject.Object):
             peer = self.peer_list[sender]
             peer.update_proxy_info()
         except KeyError:
-            print("Received change notification for unknown proxy - what's up: %s" % name)
+            print("Received change notification for unknown proxy - what's up: %s" % sender)
             return False
 
         return True
@@ -199,16 +200,22 @@ class WarpServer(GObject.Object):
         self.file_receiver.stop()
         self.zc.unregister_service(self.info)
 
-class ProxyItem(object):
+class ProxyItem(GObject.Object):
+    __gsignals__ = {
+        'nick-changed': (GObject.SignalFlags.RUN_LAST, None, (str,))
+    }
+
     def __init__(self, my_name, name, proxy):
         super(ProxyItem, self).__init__()
         self.my_name = my_name
         self.proxy = proxy
         self.name = name
         self.nick = ""
+        self.sort_key = name
         self.send_stat_delay_timer = 0
         self.receive_stat_delay_timer = 0
         self.dropping = False
+        self.sort_order = 0
 
         # Don't allow the local user to drop more files if we're already waiting on a previous request
         self.blocking_new_sends = False
@@ -251,7 +258,12 @@ class ProxyItem(object):
     # or later, if the remote changes their nickname)
     def update_remote_info(self, data=None):
         try:
-            self.nick = self.proxy.get_nick()
+            new_nick = self.proxy.get_nick()
+            if new_nick != self.nick:
+                self.nick = new_nick
+                self.update_sort_key()
+                self.emit("nick-changed", new_nick)
+
             self.nick_label.set_markup("<b>%s</b>" % self.nick)
             self.file_sender.peer_nick = self.nick
 
@@ -260,6 +272,10 @@ class ProxyItem(object):
             GLib.timeout_add_seconds(1, self.update_remote_info)
 
         return False
+
+    def update_sort_key(self):
+        valid = GLib.utf8_make_valid(self.nick, -1)
+        self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
 
     def destroy(self):
         self.widget.destroy()
@@ -603,6 +619,7 @@ class WarpApplication(Gtk.Application):
 
         print("Add peer: %s" % name)
         item = ProxyItem(self.my_server_name, name, proxy)
+        item.connect("nick-changed", self.sort_proxies)
 
         self.peers[name] = item
         self.box.add(item.widget)
@@ -617,6 +634,19 @@ class WarpApplication(Gtk.Application):
             del self.peers[name]
         except KeyError as e:
             print("Existing proxy item not found, why not?")
+
+    def sort_proxies(self, proxy=None, nick=None):
+        print("Re-sorting")
+        proxies = self.peers.values()
+        sorted_list = sorted(proxies, key=attrgetter('sort_key'))
+
+        widgets = self.box.get_children()
+
+        for proxy in sorted_list:
+            for widget in widgets:
+                if proxy.widget == widget:
+                    self.box.reorder_child(widget, -1)
+                    break
 
     # STATUS ICON ##########################################################################
 
