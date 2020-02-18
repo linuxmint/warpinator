@@ -38,6 +38,7 @@ def create_file_and_folder_picker(parent=None):
                         parent=None)
     window.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL,
                        _("Send"), Gtk.ResponseType.ACCEPT)
+
     chooser.show_all()
     window.get_content_area().add(chooser)
 

@@ -58,17 +58,24 @@ class PermissionRequest():
         self.permission = util.TRANSFER_REQUEST_PENDING
 
 class WarpServer(GObject.Object):
-    def __init__(self, peers, service_name, ip):
+    __gsignals__ = {
+        'grab-attention': (GObject.SignalFlags.RUN_LAST, None, ())
+    }
+
+    def __init__(self, peers, service_name, app_nick, ip):
+        super(WarpServer, self).__init__()
         self.my_ip = ip
         self.service_name = service_name
         self.port = 8080
         self.peer_list = peers
         self.save_location = GLib.get_home_dir()
-        self.my_nick = "%s@%s" % (getpass.getuser(), socket.gethostname())
+        self.app_nick = app_nick
 
         self.permission_requests = []
 
         self.file_receiver = transfers.FileReceiver(self.save_location)
+
+        self.serve_forever()
 
     def register_zeroconf(self):
         desc = {}
@@ -80,15 +87,15 @@ class WarpServer(GObject.Object):
         self.zc = Zeroconf()
         self.zc.register_service(self.info)
 
-    def set_prefs(self, nick, path):
+    def set_prefs(self, app_nick, path):
         self.save_location = path
         self.file_receiver.save_path = path
 
-        if nick != "":
-            self.my_nick = nick
+        if app_nick != "":
+            self.app_nick = app_nick
 
         print("Save path: %s" % self.save_location)
-        print("Visible as '%s'" % self.my_nick)
+        print("Visible as '%s'" % self.app_nick)
 
     ########################### Server ###################
     @util._async
@@ -99,7 +106,7 @@ class WarpServer(GObject.Object):
         with xmlrpc.server.SimpleXMLRPCServer(addr, allow_none=True, logRequests=False) as server:
             print("Listening on", addr)
             server.register_function(self._get_nick, "get_nick")
-            server.register_function(self._update_my_info, "update_my_info")
+            server.register_function(self._update_remote_info, "update_remote_info")
             server.register_function(self._files_exist, "files_exist")
             server.register_function(self._receive, "receive")
             server.register_function(self._permission_needed, "permission_needed")
@@ -111,13 +118,13 @@ class WarpServer(GObject.Object):
             server.serve_forever()
 
     def _get_nick(self):
-        if self.my_nick != None:
-            return self.my_nick
+        if self.app_nick != None:
+            return self.app_nick
 
-    def _update_my_info(self, sender):
+    def _update_remote_info(self, sender, sender_nick):
         try:
             peer = self.peer_list[sender]
-            peer.update_proxy_info()
+            peer.update_proxy_nick(sender_nick)
         except KeyError:
             print("Received change notification for unknown proxy - what's up: %s" % sender)
             return False
@@ -162,6 +169,8 @@ class WarpServer(GObject.Object):
         except KeyError:
             print("Received transfer request for unknown proxy - what's up: %s" % name)
             return False
+
+        self.emit("grab-attention")
 
         return util.TRANSFER_REQUEST_PENDING
 
@@ -209,9 +218,10 @@ class ProxyItem(GObject.Object):
         'nick-changed': (GObject.SignalFlags.RUN_LAST, None, (str,))
     }
 
-    def __init__(self, my_name, name, proxy):
+    def __init__(self, app_name, app_nick, name, proxy):
         super(ProxyItem, self).__init__()
-        self.my_name = my_name
+        self.app_name = app_name
+        self.app_nick = app_nick
         self.proxy = proxy
         self.name = name
         self.nick = ""
@@ -245,7 +255,7 @@ class ProxyItem(GObject.Object):
         self.req_decline_button.connect("clicked", self.on_request_response, False)
         self.send_file_menu_button = self.builder.get_object("send_file_menu_button")
 
-        self.recent_menu = Gtk.RecentChooserMenu()
+        self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
         self.recent_menu.connect("item-activated", self.recent_item_selected)
         self.send_file_menu_button.set_popup(self.recent_menu)
         self.recent_menu.add(Gtk.SeparatorMenuItem(visible=True))
@@ -253,7 +263,7 @@ class ProxyItem(GObject.Object):
         picker.connect("activate", self.open_file_picker)
         self.recent_menu.add(picker)
 
-        self.file_sender = transfers.FileSender(self.my_name, self.name, self.nick, self.proxy, self.send_progress_callback)
+        self.file_sender = transfers.FileSender(self.app_name, self.name, self.nick, self.proxy, self.send_progress_callback)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
         self.widget.drag_dest_set(Gtk.DestDefaults.ALL,
@@ -262,27 +272,20 @@ class ProxyItem(GObject.Object):
         self.widget.connect("drag-drop", self.on_drag_drop)
         self.widget.connect("drag-data-received", self.on_drag_data_received)
 
-        GLib.timeout_add_seconds(1, self.update_remote_info)
+        GLib.timeout_add_seconds(1, self.get_initial_proxy_nick)
         self.hide_receive_stats()
         self.hide_send_stats()
         self.widget.show_all()
 
     # Get updated info from the remote (either for the first time when we're setting things up,
     # or later, if the remote changes their nickname)
-    def update_remote_info(self, data=None):
+    def get_initial_proxy_nick(self, data=None):
         try:
             new_nick = self.proxy.get_nick()
-            if new_nick != self.nick:
-                self.nick = new_nick
-                self.update_sort_key()
-                self.emit("nick-changed", new_nick)
-
-            self.nick_label.set_markup("<b>%s</b>" % self.nick)
-            self.file_sender.peer_nick = self.nick
-
+            self.update_proxy_nick(new_nick)
         except ConnectionRefusedError:
             print("Retrying proxy check")
-            GLib.timeout_add_seconds(1, self.update_remote_info)
+            return True
 
         return False
 
@@ -313,9 +316,10 @@ class ProxyItem(GObject.Object):
 
     ###################### Application calls #######################
 
-    # Our local info has changed, (for now just our nick) - tell the remote server so our name on that end is updated
-    def send_changed_to_peer(self):
-        self.proxy.update_my_info(self.my_name)
+    # Our local nick has changed, (for now just our nick) - tell the remote server so our name on that end is updated
+    def update_app_nick(self, app_nick):
+        self.app_nick = app_nick
+        self.proxy.update_remote_info(self.app_name, self.app_nick)
 
     # The application wants to know if we're currently in the middle of anything
     def transfer_active(self):
@@ -422,8 +426,8 @@ class ProxyItem(GObject.Object):
         self.page_stack.set_visible_child_name("sender_awaiting_approval")
         self.blocking_new_sends = True
 
-        markup = gettext.ngettext("Waiting on approval to send %d file",
-                                  "Waiting on approval to send %d files", cb_info.count) \
+        markup = gettext.ngettext("Waiting to send %d file",
+                                  "Waiting to send %d files", cb_info.count) \
                                   % (cb_info.count,)
         self.sender_awaiting_approval_label.set_markup(markup)
 
@@ -456,7 +460,7 @@ class ProxyItem(GObject.Object):
     # The remote peer wants to send files, and your pref is to be able to approve every transfer
     # This sets up the UI to let you know, switching to the query view with approve/disapprove buttons
     def ask_my_permission(self, request):
-        print("ask from ", request.nick)
+        print("ask from ", self.nick)
         self.active_receive_request = request
 
         self.page_stack.set_visible_child_name("transfer_request")
@@ -486,8 +490,16 @@ class ProxyItem(GObject.Object):
 
     # The remote peer has updated their info, and told our server about it, they
     # want us to fetch the new info from the server
-    def update_proxy_info(self):
-        self.update_remote_info()
+    def update_proxy_nick(self, proxy_nick):
+        new_nick = proxy_nick
+
+        if self.nick != new_nick:
+            self.nick = new_nick
+            self.update_sort_key()
+            self.emit("nick-changed", new_nick)
+
+            self.nick_label.set_markup("<b>%s</b>" % self.nick)
+            self.file_sender.peer_nick = self.nick
 
     ######################## /Server Calls#####################################
 
@@ -517,10 +529,11 @@ class WarpApplication(Gtk.Application):
         print("Initializing Warp on %s" % self.my_ip)
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
+        self.nick = prefs.get_nick()
+        self.save_path = prefs.get_save_path()
 
-        self.server = WarpServer(self.peers, self.my_server_name, self.my_ip)
-        self.on_prefs_changed(prefs.prefs_settings, None, None)
-        self.server.serve_forever()
+        self.server = WarpServer(self.peers, self.my_server_name, self.nick, self.my_ip)
+        self.server.connect("grab-attention", self.grab_user_attention)
 
         self.setup_browser()
         self.activate()
@@ -535,6 +548,8 @@ class WarpApplication(Gtk.Application):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.window =self.builder.get_object("window")
         self.add_window(self.window)
+
+        self.window.connect("focus-in-event", lambda window, event: window.set_urgency_hint(False))
 
         self.box = self.builder.get_object("proxy_box")
         self.above_toggle = self.builder.get_object("keep_above")
@@ -608,7 +623,7 @@ class WarpApplication(Gtk.Application):
 
         self.server.set_prefs(self.nick, self.save_path)
         for item in self.peers.values():
-            item.send_changed_to_peer()
+            item.update_app_nick(self.nick)
         return False
 
     def on_open_location_clicked(self, widget, data=None):
@@ -618,6 +633,9 @@ class WarpApplication(Gtk.Application):
             app.launch((file,), None)
         except GLib.Error as e:
             print("Could not open received files location: %s" % e.message)
+
+    def grab_user_attention(self, server):
+        self.window.set_urgency_hint(True)
 
     ####  BROWSER ##############################################
 
@@ -648,7 +666,7 @@ class WarpApplication(Gtk.Application):
             return False
 
         print("Add peer: %s" % name)
-        item = ProxyItem(self.my_server_name, name, proxy)
+        item = ProxyItem(self.my_server_name, self.nick, name, proxy)
         item.connect("nick-changed", self.sort_proxies)
 
         self.peers[name] = item
@@ -725,7 +743,7 @@ class WarpApplication(Gtk.Application):
         menu.show_all()
 
     def attach_recent_submenu(self, menu, proxy):
-        sub = Gtk.RecentChooserMenu()
+        sub = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
         sub.connect("item-activated", self.status_icon_recent_item_selected, proxy)
         sub.add(Gtk.SeparatorMenuItem(visible=True))
 

@@ -112,7 +112,7 @@ class FileSender:
 
     def cancel_send_request(self):
         # handle return?
-        self.peer_proxy.abort_request(self.my_name, self.current_send_request.stamp)
+        self.peer_proxy.abort_request(self.my_name, str(self.current_send_request.stamp))
         self.current_send_request = None
 
     # Entry point from the ProxyItem class - the list of uri's dragged onto the widget are sent here
@@ -188,13 +188,13 @@ class FileSender:
         if self.peer_proxy.permission_needed():
             #ask_permission - block for a response
             self._update_progress(sender_awaiting_approval=True, count=request.transfer_count)
-            request.stamp = str(GLib.get_monotonic_time())
+            request.stamp = GLib.get_monotonic_time()
             while True:
                 response = self.peer_proxy.get_permission(self.my_name,
                                                           self.peer_nick,
                                                           str(request.transfer_size), # XML RPC can't handle longs
                                                           str(request.transfer_count),
-                                                          request.stamp)
+                                                          str(request.stamp))
 
                 if response == util.TRANSFER_REQUEST_PENDING:
                     time.sleep(1)
