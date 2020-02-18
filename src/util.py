@@ -19,18 +19,28 @@ TRANSFER_REQUEST_CANCELLED = "cancelled"
 _ = gettext.gettext
 
 class ProgressCallbackInfo():
-    def __init__(self, progress=0, speed="", time_left="", finished=False,
-                 sender_awaiting_approval=False, count=0,
-                 transfer_request_refused=False, transfer_starting=False, transfer_cancelled=False):
+    def __init__(self, progress=0, speed_str="", time_left_str="",
+                 finished=False, sender_awaiting_approval=False,
+                 transfer_refused=False, transfer_starting=False,
+                 transfer_exists=False, transfer_cancelled=False,
+                 count=0):
         self.progress = progress
-        self.speed = speed
-        self.time_left = time_left
+        self.speed = speed_str
+        self.time_left = time_left_str
         self.finished = finished
         self.sender_awaiting_approval = sender_awaiting_approval
         self.count = count
         self.transfer_starting = transfer_starting
         self.transfer_cancelled = transfer_cancelled
-        self.transfer_request_refused = transfer_request_refused
+        self.transfer_refused = transfer_refused
+        self.transfer_exists = transfer_exists
+
+    def is_informational(self):
+        return True in (self.sender_awaiting_approval,
+                        self.transfer_refused,
+                        self.transfer_starting,
+                        self.transfer_cancelled,
+                        self.transfer_exists)
 
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not
 # both in the same dialog.  This does.

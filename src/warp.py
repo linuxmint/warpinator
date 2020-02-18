@@ -397,11 +397,14 @@ class ProxyItem(GObject.Object):
     # You are in the process of sending, or attempting to send, files.
     def send_progress_callback(self, data=util.ProgressCallbackInfo()):
         cb_info = data
-
-        if cb_info.transfer_starting or cb_info.transfer_cancelled or cb_info.transfer_request_refused:
+        print("HEY", cb_info.transfer_exists)
+        if cb_info.transfer_starting or cb_info.transfer_cancelled or cb_info.transfer_refused or cb_info.transfer_exists:
             self.page_stack.set_visible_child_name("status")
-            if cb_info.transfer_request_refused:
+            if cb_info.transfer_refused:
                 self.show_refused_message()
+            elif cb_info.transfer_exists:
+                print("WHEHEHEHEHEH")
+                self.show_exists_message(cb_info.count)
             return
 
         if not self.send_progress_bar.get_visible() and not cb_info.finished and not cb_info.sender_awaiting_approval:
@@ -503,6 +506,23 @@ class ProxyItem(GObject.Object):
         dialog.destroy()
 
         self.active_receive_request = None
+
+    def show_exists_message(self, count):
+        self.widget.get_toplevel().present()
+
+        text = gettext.ngettext("File already exists, and overwriting is not currently permitted",
+                                "Files already exist, and overwriting is not currently permitted", count)
+
+        dialog = Gtk.MessageDialog(title=_("Transfer to %s Aborted") % self.proxy_nick,
+                                   # parent=self.widget.get_toplevel(),
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.WARNING,
+                                   use_markup=True,
+                                   text=text)
+        dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
+
+        res = dialog.run()
+        dialog.destroy()
 
     # The remote that initiated a transfer request has canceled it
     def receive_request_withdrawn(self, request):

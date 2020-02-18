@@ -179,15 +179,17 @@ class FileSender:
             exit()
 
         if self.proxy.prevent_overwriting() and self.proxy.files_exist(top_dir_basenames):
+            self._update_progress(util.ProgressCallbackInfo(transfer_exists=True, count=request.transfer_count))
+
             print("can't overwrite!!!")
             # handle?
             exit()
-
+        print("what?")
         permission = False
 
         if self.proxy.permission_needed():
             #ask_permission - block for a response
-            self._update_progress(sender_awaiting_approval=True, count=request.transfer_count)
+            self._update_progress(util.ProgressCallbackInfo(sender_awaiting_approval=True, count=request.transfer_count))
             request.stamp = GLib.get_monotonic_time()
             while True:
                 response = self.proxy.get_permission(self.app_name,
@@ -203,7 +205,7 @@ class FileSender:
                     print("cancelled my own request")
                     break
                 elif response == util.TRANSFER_REQUEST_REFUSED:
-                    self._update_progress(transfer_request_refused=True)
+                    self._update_progress(util.ProgressCallbackInfo(transfer_refused=True))
                     break
                 else:
                     permission = response == util.TRANSFER_REQUEST_GRANTED
@@ -220,12 +222,12 @@ class FileSender:
 
             self.total_transfer_size = new_total
 
-            self._update_progress(transfer_starting=True)
+            self._update_progress(util.ProgressCallbackInfo(transfer_starting=True))
 
             print("Starting send: %d files (%s)" % (request.transfer_count, GLib.format_size(request.transfer_size)))
             GLib.idle_add(self._queue_files, request, priority=GLib.PRIORITY_DEFAULT)
         else:
-            self._update_progress(transfer_cancelled=True)
+            self._update_progress(util.ProgressCallbackInfo(transfer_cancelled=True))
         exit()
 
     # Ready to start the transfer, all approved.  Mark down when we start, zero out the transmitted count, and
@@ -251,7 +253,7 @@ class FileSender:
 
             if self.queue.empty():
                 self.current_transfer_size = 0
-                self._update_progress(finished=True)
+                self._update_progress(util.ProgressCallbackInfo(finished=True))
 
     def _real_send(self, queued_file):
         serial = 0
@@ -305,7 +307,7 @@ class FileSender:
                     # knows also, so break and return so we can get another file from the queue.
                     if (bytes.get_size() > 0):
                         self.current_transfer_size += bytes.get_size()
-                        self._update_progress(finished=False)
+                        self._update_progress(util.ProgressCallbackInfo(finished=False))
                     else:
                         stream.close()
                         break
@@ -319,50 +321,26 @@ class FileSender:
         except Aborted as e:
             print("An error occurred during the transfer (our side): %s" % str(e))
             self.proxy.abort_transfer(self.app_name)
-            self._update_progress(finished=True)
+            self._update_progress(util.ProgressCallbackInfo(finished=True))
 
             self.clear_queue()
             self.send_abort_ml(e)
 
     # This handles all communication with regard to state changes and progress.  It sends to both the local ProxyItem,
     # as well as the remote server so receive progress can be updated for that user also.
-    def _update_progress(self, finished=False, sender_awaiting_approval=False,
-                         transfer_starting=False, transfer_cancelled=False,
-                         transfer_request_refused=False, count=0):
-        if finished:
-            self.proxy.update_progress(self.app_name, 0, "", "", finished)
-            GLib.idle_add(self.progress_callback,
-                          util.ProgressCallbackInfo(finished=True),
-                          priority=GLib.PRIORITY_DEFAULT)
-
+    def _update_progress(self, cb_info):
+        if cb_info.finished:
+            self.proxy.update_progress(self.app_name, 0, "", "", cb_info.finished)
+            GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
             print("finished: %s" % util.format_time_span((GLib.get_monotonic_time() - self.start_time) / 1000/1000))
             return
 
-        if sender_awaiting_approval:
-            GLib.idle_add(self.progress_callback,
-                          util.ProgressCallbackInfo(sender_awaiting_approval=True, count=count),
-                          priority=GLib.PRIORITY_DEFAULT)
+        if cb_info.is_informational():
+            print("whatwhat", cb_info.transfer_exists)
+            GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
             return
 
-        if transfer_request_refused:
-            GLib.idle_add(self.progress_callback,
-                          util.ProgressCallbackInfo(transfer_request_refused=True),
-                          priority=GLib.PRIORITY_DEFAULT)
-            return
-
-        if transfer_starting:
-            GLib.idle_add(self.progress_callback,
-                          util.ProgressCallbackInfo(transfer_starting=True),
-                          priority=GLib.PRIORITY_DEFAULT)
-            return
-
-        if transfer_cancelled:
-            GLib.idle_add(self.progress_callback,
-                          util.ProgressCallbackInfo(transfer_cancelled=True),
-                          priority=GLib.PRIORITY_DEFAULT)
-            return
-
-        progress = self.current_transfer_size / self.total_transfer_size
+        cb_info.progress = self.current_transfer_size / self.total_transfer_size
 
         cur_time = GLib.get_monotonic_time()
         total_elapsed = cur_time - self.start_time
@@ -372,16 +350,19 @@ class FileSender:
             bytes_per_micro = self.current_transfer_size / total_elapsed
             bytes_per_sec = int(bytes_per_micro * 1000 * 1000)
 
-            speed_str = _("%s/s") % GLib.format_size(bytes_per_sec)
-
             bytes_left = self.total_transfer_size - self.current_transfer_size
             time_left_sec = bytes_left / bytes_per_sec
-            time_left_str = util.format_time_span(time_left_sec)
 
-            self.proxy.update_progress(self.app_name, progress, speed_str, time_left_str, finished)
-            GLib.idle_add(self.progress_callback,
-                          util.ProgressCallbackInfo(progress=progress, speed=speed_str, time_left=time_left_str),
-                          priority=GLib.PRIORITY_DEFAULT)
+            cb_info.speed_str = _("%s/s") % GLib.format_size(bytes_per_sec)
+            cb_info.time_left_str = util.format_time_span(time_left_sec)
+
+            self.proxy.update_progress(self.app_name,
+                                       cb_info.progress,
+                                       cb_info.speed_str,
+                                       cb_info.time_left_str,
+                                       cb_info.finished)
+
+            GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
 
     @util._idle
     def send_abort_ml(self, error):
