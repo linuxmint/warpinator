@@ -192,8 +192,8 @@ class FileSender:
             while True:
                 response = self.peer_proxy.get_permission(self.my_name,
                                                           self.peer_nick,
-                                                          request.transfer_size,
-                                                          request.transfer_count,
+                                                          str(request.transfer_size), # XML RPC can't handle longs
+                                                          str(request.transfer_count),
                                                           request.stamp)
 
                 if response == util.TRANSFER_REQUEST_PENDING:

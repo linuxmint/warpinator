@@ -2,7 +2,7 @@ import threading
 import socket
 import gettext
 
-from gi.repository import GLib
+from gi.repository import GLib, Gtk
 
 TRANSFER_SEND_DATA = "data"
 TRANSFER_SEND_ABORT = "aborted"
@@ -29,6 +29,20 @@ class ProgressCallbackInfo():
         self.count = count
         self.transfer_starting = transfer_starting
         self.transfer_cancelled = transfer_cancelled
+
+def create_file_and_folder_picker(parent=None):
+    chooser = Gtk.FileChooserWidget(action=Gtk.FileChooserAction.OPEN,
+                                    select_multiple=True)
+
+    window = Gtk.Dialog(title=_("Select file(s) to send"),
+                        parent=None)
+    window.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL,
+                       _("Send"), Gtk.ResponseType.ACCEPT)
+    chooser.show_all()
+    window.get_content_area().add(chooser)
+
+    window.get_uris = chooser.get_uris
+    return window
 
 # Used as a decorator to run things in the background
 def _async(func):

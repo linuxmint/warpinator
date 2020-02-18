@@ -141,7 +141,11 @@ class WarpServer(GObject.Object):
     def _permission_needed(self):
         return prefs.require_permission_for_transfer()
 
-    def _get_permission(self, name, nick, size, count, time_str):
+    def _get_permission(self, name, nick, size_str, count_str, time_str):
+        # XML RPC can't transfer longs, so we stringify for transfer
+        count = int(count_str)
+        size = int(size_str)
+
         for req in self.permission_requests:
             if req.name == name:
                 if req.time_str == time_str:
@@ -239,6 +243,15 @@ class ProxyItem(GObject.Object):
         self.sender_awaiting_approval_cancel_button.connect("clicked", self.cancel_send_request)
         self.req_accept_button.connect("clicked", self.on_request_response, True)
         self.req_decline_button.connect("clicked", self.on_request_response, False)
+        self.send_file_menu_button = self.builder.get_object("send_file_menu_button")
+
+        self.recent_menu = Gtk.RecentChooserMenu()
+        self.recent_menu.connect("item-activated", self.recent_item_selected)
+        self.send_file_menu_button.set_popup(self.recent_menu)
+        self.recent_menu.add(Gtk.SeparatorMenuItem(visible=True))
+        picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
+        picker.connect("activate", self.open_file_picker)
+        self.recent_menu.add(picker)
 
         self.file_sender = transfers.FileSender(self.my_name, self.name, self.nick, self.proxy, self.send_progress_callback)
 
@@ -272,6 +285,23 @@ class ProxyItem(GObject.Object):
             GLib.timeout_add_seconds(1, self.update_remote_info)
 
         return False
+
+    def recent_item_selected(self, recent_chooser, data=None):
+        print("selected", self.recent_menu.get_current_uri())
+        uri = self.recent_menu.get_current_uri()
+
+        self.file_sender.send_files([uri])
+
+    def open_file_picker(self, button, data=None):
+        dialog = util.create_file_and_folder_picker()
+
+        res = dialog.run()
+
+        if res == Gtk.ResponseType.ACCEPT:
+            uri_list = dialog.get_uris()
+            self.file_sender.send_files(uri_list)
+
+        dialog.destroy()
 
     def update_sort_key(self):
         valid = GLib.utf8_make_valid(self.nick, -1)
@@ -635,11 +665,14 @@ class WarpApplication(Gtk.Application):
         except KeyError as e:
             print("Existing proxy item not found, why not?")
 
-    def sort_proxies(self, proxy=None, nick=None):
-        print("Re-sorting")
-        proxies = self.peers.values()
-        sorted_list = sorted(proxies, key=attrgetter('sort_key'))
+        self.sort_proxies()
 
+    def get_sorted_proxy_list(self):
+        proxies = self.peers.values()
+        return sorted(proxies, key=attrgetter('sort_key'))
+
+    def sort_proxies(self, proxy=None, nick=None):
+        sorted_list = self.get_sorted_proxy_list()
         widgets = self.box.get_children()
 
         for proxy in sorted_list:
@@ -648,6 +681,8 @@ class WarpApplication(Gtk.Application):
                     self.box.reorder_child(widget, -1)
                     break
 
+        self.rebuild_status_icon_menu()
+
     # STATUS ICON ##########################################################################
 
     def setup_status_icon(self):
@@ -655,7 +690,11 @@ class WarpApplication(Gtk.Application):
         self.status_icon.set_icon_name("warp-symbolic")
         self.status_icon.connect("activate", self.on_tray_icon_activate)
 
+    def rebuild_status_icon_menu(self):
         menu = Gtk.Menu()
+
+        self.add_proxy_menu_entries(menu)
+        menu.add(Gtk.SeparatorMenuItem())
 
         item = Gtk.MenuItem(label=_("Open Warp folder"))
         item.connect("activate", self.on_open_location_clicked)
@@ -666,6 +705,60 @@ class WarpApplication(Gtk.Application):
         menu.show_all()
 
         self.status_icon.set_secondary_menu(menu)
+
+    def add_proxy_menu_entries(self, menu):
+        proxy_list = self.get_sorted_proxy_list()
+        i = 0
+
+        for proxy in proxy_list:
+            item = Gtk.MenuItem(label=proxy.nick)
+            self.attach_recent_submenu(item, proxy)
+            menu.add(item)
+            i += 1
+
+        # If there is more than one proxy, add a 'send to all'
+        if i > 1:
+            item = Gtk.MenuItem(label=_("Everyone"))
+            self.attach_recent_submenu(item, None)
+            menu.add(item)
+
+        menu.show_all()
+
+    def attach_recent_submenu(self, menu, proxy):
+        sub = Gtk.RecentChooserMenu()
+        sub.connect("item-activated", self.status_icon_recent_item_selected, proxy)
+        sub.add(Gtk.SeparatorMenuItem(visible=True))
+
+        picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
+        picker.connect("activate", self.open_file_picker, proxy)
+        sub.add(picker)
+
+        menu.set_submenu(sub)
+
+    def status_icon_recent_item_selected(self, chooser, proxy=None):
+        uri = chooser.get_current_uri()
+
+        if proxy:
+            proxy.file_sender.send_files([uri])
+        else:
+            for p in self.peers.values():
+                p.file_sender.send_files([uri])
+
+    def open_file_picker(self, button, proxy=None):
+        dialog = util.create_file_and_folder_picker()
+
+        res = dialog.run()
+
+        if res == Gtk.ResponseType.ACCEPT:
+            uri_list = dialog.get_uris()
+
+            if proxy:
+                proxy.file_sender.send_files(uri_list)
+            else:
+                for p in self.peers.values():
+                    p.file_sender.send_files(uri_list)
+
+        dialog.destroy()
 
     def on_tray_icon_activate(self, icon, button, time=0):
         if self.window.is_active():
