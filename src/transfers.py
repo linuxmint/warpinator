@@ -12,7 +12,7 @@ import prefs
 
 _ = gettext.gettext
 
-FILE_INFOS = "standard::size,standard::name,standard::type,standard::symlink-target"
+FILE_INFOS = "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target"
 
 class Aborted(Exception):
     pass
@@ -44,7 +44,16 @@ class TransferRequest:
         file_type = info.get_file_type()
 
         is_dir = is_link = False
-        size = info.get_size()
+
+        # Normal files usually take more disk space than their actual size, so we want that
+        # for checking free disk space on the target computer.  However, sparse files can
+        # report a smaller allocated size on disk than their 'actual' size. For now we can
+        # only copy files in their full state, and at the other end they'll no longer be
+        # sparse, so we use the largest of the two sizes for our purposes.
+        alloc_size = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_STANDARD_ALLOCATED_SIZE)
+        file_size = info.get_size()
+        size = file_size if file_size > alloc_size else alloc_size
+
         relative_symlink_path = None
 
         if file_type == Gio.FileType.DIRECTORY:
@@ -180,23 +189,21 @@ class FileSender:
 
         if self.proxy.prevent_overwriting() and self.proxy.files_exist(top_dir_basenames):
             self._update_progress(util.ProgressCallbackInfo(transfer_exists=True, count=request.transfer_count))
-
-            print("can't overwrite!!!")
-            # handle?
             exit()
-        print("what?")
+
         permission = False
 
         if self.proxy.permission_needed():
             #ask_permission - block for a response
             self._update_progress(util.ProgressCallbackInfo(sender_awaiting_approval=True, count=request.transfer_count))
             request.stamp = GLib.get_monotonic_time()
+
             while True:
                 response = self.proxy.get_permission(self.app_name,
-                                                          self.proxy_nick,
-                                                          str(request.transfer_size), # XML RPC can't handle longs
-                                                          str(request.transfer_count),
-                                                          str(request.stamp))
+                                                     self.proxy_nick,
+                                                     str(request.transfer_size), # XML RPC can't handle longs
+                                                     str(request.transfer_count),
+                                                     str(request.stamp))
 
                 if response == util.TRANSFER_REQUEST_PENDING:
                     time.sleep(1)
@@ -206,6 +213,9 @@ class FileSender:
                     break
                 elif response == util.TRANSFER_REQUEST_REFUSED:
                     self._update_progress(util.ProgressCallbackInfo(transfer_refused=True))
+                    break
+                elif response == util.TRANSFER_REQUEST_DISKFULL:
+                    self._update_progress(util.ProgressCallbackInfo(transfer_diskfull=True, size=request.transfer_size))
                     break
                 else:
                     permission = response == util.TRANSFER_REQUEST_GRANTED
@@ -336,7 +346,6 @@ class FileSender:
             return
 
         if cb_info.is_informational():
-            print("whatwhat", cb_info.transfer_exists)
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
             return
 

@@ -62,18 +62,18 @@ class WarpServer(GObject.Object):
         'grab-attention': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, peers, service_name, app_nick, ip):
+    def __init__(self, peers, service_name, app_nick, ip, save_location):
         super(WarpServer, self).__init__()
         self.my_ip = ip
         self.service_name = service_name
         self.port = 8080
         self.peer_list = peers
-        self.save_location = GLib.get_home_dir()
-        self.app_nick = app_nick
+
+        self.file_receiver = transfers.FileReceiver(save_location)
+        self.set_prefs(app_nick, save_location)
 
         self.permission_requests = []
 
-        self.file_receiver = transfers.FileReceiver(self.save_location)
 
         self.serve_forever()
 
@@ -91,8 +91,7 @@ class WarpServer(GObject.Object):
         self.save_location = path
         self.file_receiver.save_path = path
 
-        if app_nick != "":
-            self.app_nick = app_nick
+        self.app_nick = app_nick
 
         print("Save path: %s" % self.save_location)
         print("Visible as '%s'" % self.app_nick)
@@ -160,6 +159,10 @@ class WarpServer(GObject.Object):
                     return req.permission
 
         request = PermissionRequest(name, sender_nick, size, count, time_str)
+
+        if not self.have_free_space(request):
+            return util.TRANSFER_REQUEST_DISKFULL
+
         self.permission_requests.append(request)
 
         try:
@@ -188,6 +191,7 @@ class WarpServer(GObject.Object):
 
                     try:
                         peer = self.peer_list[name]
+                        GLib.idle_add(peer.receive_request_withdrawn, req, priority=GLib.PRIORITY_DEFAULT)
                         peer.receive_request_withdrawn(req)
                     except KeyError:
                         print("Received transfer request for unknown proxy - what's up: %s" % name)
@@ -207,6 +211,24 @@ class WarpServer(GObject.Object):
             print("Received progress for unknown proxy - what's up: %s" % name)
 
         return False
+
+    def have_free_space(self, request):
+        save_file = Gio.File.new_for_path(self.save_location)
+
+        try:
+            info = save_file.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, None)
+        except GLib.Error as e:
+            print("Unable to check free space in save location (%s), but proceeding anyhow" % self.save_location)
+            return True
+
+        free = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE)
+
+        # I guess we could have exactly 0 bytes free, but I think you'd have larger problems.  I want to make sure
+        # here that we don't fail because we didn't get a valid number.
+        if free == 0:
+            return True
+
+        return request.size < free
 
     def close(self):
         self.file_receiver.stop()
@@ -289,7 +311,6 @@ class ProxyItem(GObject.Object):
         return False
 
     def recent_item_selected(self, recent_chooser, data=None):
-        print("selected", self.recent_menu.get_current_uri())
         uri = self.recent_menu.get_current_uri()
 
         self.file_sender.send_files([uri])
@@ -397,14 +418,14 @@ class ProxyItem(GObject.Object):
     # You are in the process of sending, or attempting to send, files.
     def send_progress_callback(self, data=util.ProgressCallbackInfo()):
         cb_info = data
-        print("HEY", cb_info.transfer_exists)
-        if cb_info.transfer_starting or cb_info.transfer_cancelled or cb_info.transfer_refused or cb_info.transfer_exists:
+        if cb_info.transfer_starting or cb_info.is_fail_state():
             self.page_stack.set_visible_child_name("status")
             if cb_info.transfer_refused:
                 self.show_refused_message()
             elif cb_info.transfer_exists:
-                print("WHEHEHEHEHEH")
                 self.show_exists_message(cb_info.count)
+            elif cb_info.transfer_diskfull:
+                self.show_diskfull_message(cb_info.size)
             return
 
         if not self.send_progress_bar.get_visible() and not cb_info.finished and not cb_info.sender_awaiting_approval:
@@ -481,8 +502,15 @@ class ProxyItem(GObject.Object):
         dialog.add_buttons(_("Refuse"), Gtk.ResponseType.CANCEL,
                            _("Accept"), Gtk.ResponseType.ACCEPT)
 
+        self.active_receive_request.permission_dialog = dialog
+
         res = dialog.run()
         dialog.destroy()
+
+        # request may have been cancelled.  Destroying the dialog elsewhere will still return a code,
+        # quit early if we're no longer tracking the request (see self.receive_request_withdrawn)
+        if not self.active_receive_request:
+            return
 
         if res == Gtk.ResponseType.ACCEPT:
             self.active_receive_request.permission = util.TRANSFER_REQUEST_GRANTED
@@ -517,6 +545,22 @@ class ProxyItem(GObject.Object):
                                    # parent=self.widget.get_toplevel(),
                                    destroy_with_parent=True,
                                    message_type=Gtk.MessageType.WARNING,
+                                   text=text)
+        dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
+
+        res = dialog.run()
+        dialog.destroy()
+
+    def show_diskfull_message(self, size):
+        self.widget.get_toplevel().present()
+
+        text = _("The target machine (<b>%s</b>) does not have enough disk space to complete the transfer (approximately %s required)" \
+                 % (self.proxy_nick, GLib.format_size(size)))
+
+        dialog = Gtk.MessageDialog(title=_("Insufficient Disk Space"),
+                                   # parent=self.widget.get_toplevel(),
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.WARNING,
                                    use_markup=True,
                                    text=text)
         dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
@@ -528,7 +572,10 @@ class ProxyItem(GObject.Object):
     def receive_request_withdrawn(self, request):
         if request != self.active_receive_request:
             print("proxy: unknown request cancelled by remote")
+
         self.active_receive_request = None
+        request.permission_dialog.destroy()
+
         self.page_stack.set_visible_child_name("status")
 
     # The remote peer has updated their info, and told our server about it, they
@@ -575,7 +622,7 @@ class WarpApplication(Gtk.Application):
         self.app_nick = prefs.get_nick()
         self.save_path = prefs.get_save_path()
 
-        self.server = WarpServer(self.peers, self.my_server_name, self.app_nick, self.my_ip)
+        self.server = WarpServer(self.peers, self.my_server_name, self.app_nick, self.my_ip, self.save_path)
         self.server.connect("grab-attention", self.grab_user_attention)
 
         self.setup_browser()
