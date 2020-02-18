@@ -84,11 +84,11 @@ class FileSender:
     CHUNK_MAX = 10 * 1024 * 1024 # Increase by 1mb each iteration to max 10mb (this resets for every file)
     PROGRESS_INTERVAL = 2 * 1000 * 1000
 
-    def __init__(self, my_name, peer_name, peer_nick, peer_proxy, progress_callback):
-        self.my_name = my_name
-        self.peer_proxy = peer_proxy
-        self.peer_name = peer_name
-        self.peer_nick = peer_nick
+    def __init__(self, app_name, proxy_name, proxy_nick, proxy, progress_callback):
+        self.app_name = app_name
+        self.proxy = proxy
+        self.proxy_name = proxy_name
+        self.proxy_nick = proxy_nick
 
         # This is ProxyItem:send_progress_callback, used to update the local widget's state.
         self.progress_callback = progress_callback
@@ -112,7 +112,7 @@ class FileSender:
 
     def cancel_send_request(self):
         # handle return?
-        self.peer_proxy.abort_request(self.my_name, str(self.current_send_request.stamp))
+        self.proxy.abort_request(self.app_name, str(self.current_send_request.stamp))
         self.current_send_request = None
 
     # Entry point from the ProxyItem class - the list of uri's dragged onto the widget are sent here
@@ -178,20 +178,20 @@ class FileSender:
             #what?
             exit()
 
-        if self.peer_proxy.prevent_overwriting() and self.peer_proxy.files_exist(top_dir_basenames):
+        if self.proxy.prevent_overwriting() and self.proxy.files_exist(top_dir_basenames):
             print("can't overwrite!!!")
             # handle?
             exit()
 
         permission = False
 
-        if self.peer_proxy.permission_needed():
+        if self.proxy.permission_needed():
             #ask_permission - block for a response
             self._update_progress(sender_awaiting_approval=True, count=request.transfer_count)
             request.stamp = GLib.get_monotonic_time()
             while True:
-                response = self.peer_proxy.get_permission(self.my_name,
-                                                          self.peer_nick,
+                response = self.proxy.get_permission(self.app_name,
+                                                          self.proxy_nick,
                                                           str(request.transfer_size), # XML RPC can't handle longs
                                                           str(request.transfer_count),
                                                           str(request.stamp))
@@ -201,6 +201,9 @@ class FileSender:
                     continue
                 elif response == util.TRANSFER_REQUEST_CANCELLED:
                     print("cancelled my own request")
+                    break
+                elif response == util.TRANSFER_REQUEST_REFUSED:
+                    self._update_progress(transfer_request_refused=True)
                     break
                 else:
                     permission = response == util.TRANSFER_REQUEST_GRANTED
@@ -259,7 +262,7 @@ class FileSender:
             # For folders and symlinks, we don't actually transfer any data, we just
             # send a block that has its filename, relative path, and what type of file it is.
             if queued_file.is_folder or queued_file.symlink_target_path:
-                if not self.peer_proxy.receive(self.my_name,
+                if not self.proxy.receive(self.app_name,
                                                queued_file.relative_uri,
                                                queued_file.is_folder,
                                                queued_file.symlink_target_path,
@@ -289,7 +292,7 @@ class FileSender:
 
                     serial += 1
 
-                    if not self.peer_proxy.receive(self.my_name,
+                    if not self.proxy.receive(self.app_name,
                                                    queued_file.relative_uri,
                                                    False,
                                                    None,
@@ -315,7 +318,7 @@ class FileSender:
             del self.file_to_size_map[queued_file.uri]
         except Aborted as e:
             print("An error occurred during the transfer (our side): %s" % str(e))
-            self.peer_proxy.abort_transfer(self.my_name)
+            self.proxy.abort_transfer(self.app_name)
             self._update_progress(finished=True)
 
             self.clear_queue()
@@ -323,9 +326,11 @@ class FileSender:
 
     # This handles all communication with regard to state changes and progress.  It sends to both the local ProxyItem,
     # as well as the remote server so receive progress can be updated for that user also.
-    def _update_progress(self, finished=False, sender_awaiting_approval=False, transfer_starting=False, transfer_cancelled=False, count=0):
+    def _update_progress(self, finished=False, sender_awaiting_approval=False,
+                         transfer_starting=False, transfer_cancelled=False,
+                         transfer_request_refused=False, count=0):
         if finished:
-            self.peer_proxy.update_progress(self.my_name, 0, "", "", finished)
+            self.proxy.update_progress(self.app_name, 0, "", "", finished)
             GLib.idle_add(self.progress_callback,
                           util.ProgressCallbackInfo(finished=True),
                           priority=GLib.PRIORITY_DEFAULT)
@@ -336,6 +341,12 @@ class FileSender:
         if sender_awaiting_approval:
             GLib.idle_add(self.progress_callback,
                           util.ProgressCallbackInfo(sender_awaiting_approval=True, count=count),
+                          priority=GLib.PRIORITY_DEFAULT)
+            return
+
+        if transfer_request_refused:
+            GLib.idle_add(self.progress_callback,
+                          util.ProgressCallbackInfo(transfer_request_refused=True),
                           priority=GLib.PRIORITY_DEFAULT)
             return
 
@@ -367,7 +378,7 @@ class FileSender:
             time_left_sec = bytes_left / bytes_per_sec
             time_left_str = util.format_time_span(time_left_sec)
 
-            self.peer_proxy.update_progress(self.my_name, progress, speed_str, time_left_str, finished)
+            self.proxy.update_progress(self.app_name, progress, speed_str, time_left_str, finished)
             GLib.idle_add(self.progress_callback,
                           util.ProgressCallbackInfo(progress=progress, speed=speed_str, time_left=time_left_str),
                           priority=GLib.PRIORITY_DEFAULT)

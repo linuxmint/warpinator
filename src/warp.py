@@ -118,8 +118,7 @@ class WarpServer(GObject.Object):
             server.serve_forever()
 
     def _get_nick(self):
-        if self.app_nick != None:
-            return self.app_nick
+        return self.app_nick
 
     def _update_remote_info(self, sender, sender_nick):
         try:
@@ -148,7 +147,7 @@ class WarpServer(GObject.Object):
     def _permission_needed(self):
         return prefs.require_permission_for_transfer()
 
-    def _get_permission(self, name, nick, size_str, count_str, time_str):
+    def _get_permission(self, name, sender_nick, size_str, count_str, time_str):
         # XML RPC can't transfer longs, so we stringify for transfer
         count = int(count_str)
         size = int(size_str)
@@ -160,12 +159,12 @@ class WarpServer(GObject.Object):
                         self.permission_requests.remove(req)
                     return req.permission
 
-        request = PermissionRequest(name, nick, size, count, time_str)
+        request = PermissionRequest(name, sender_nick, size, count, time_str)
         self.permission_requests.append(request)
 
         try:
             peer = self.peer_list[name]
-            peer.ask_my_permission(request)
+            GLib.idle_add(peer.ask_my_permission, request, priority=GLib.PRIORITY_DEFAULT)
         except KeyError:
             print("Received transfer request for unknown proxy - what's up: %s" % name)
             return False
@@ -218,14 +217,14 @@ class ProxyItem(GObject.Object):
         'nick-changed': (GObject.SignalFlags.RUN_LAST, None, (str,))
     }
 
-    def __init__(self, app_name, app_nick, name, proxy):
+    def __init__(self, app_name, app_nick, proxy_name, proxy):
         super(ProxyItem, self).__init__()
         self.app_name = app_name
         self.app_nick = app_nick
         self.proxy = proxy
-        self.name = name
-        self.nick = ""
-        self.sort_key = name
+        self.proxy_name = proxy_name
+        self.proxy_nick = ""
+        self.sort_key = proxy_name
         self.send_stat_delay_timer = 0
         self.receive_stat_delay_timer = 0
         self.dropping = False
@@ -251,8 +250,8 @@ class ProxyItem(GObject.Object):
         self.req_decline_button = self.builder.get_object("req_decline_button")
 
         self.sender_awaiting_approval_cancel_button.connect("clicked", self.cancel_send_request)
-        self.req_accept_button.connect("clicked", self.on_request_response, True)
-        self.req_decline_button.connect("clicked", self.on_request_response, False)
+        # self.req_accept_button.connect("clicked", self.on_request_response, True)
+        # self.req_decline_button.connect("clicked", self.on_request_response, False)
         self.send_file_menu_button = self.builder.get_object("send_file_menu_button")
 
         self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
@@ -263,7 +262,7 @@ class ProxyItem(GObject.Object):
         picker.connect("activate", self.open_file_picker)
         self.recent_menu.add(picker)
 
-        self.file_sender = transfers.FileSender(self.app_name, self.name, self.nick, self.proxy, self.send_progress_callback)
+        self.file_sender = transfers.FileSender(self.app_name, self.proxy_name, self.proxy_nick, self.proxy, self.send_progress_callback)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
         self.widget.drag_dest_set(Gtk.DestDefaults.ALL,
@@ -307,7 +306,7 @@ class ProxyItem(GObject.Object):
         dialog.destroy()
 
     def update_sort_key(self):
-        valid = GLib.utf8_make_valid(self.nick, -1)
+        valid = GLib.utf8_make_valid(self.proxy_nick, -1)
         self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
 
     def destroy(self):
@@ -399,8 +398,10 @@ class ProxyItem(GObject.Object):
     def send_progress_callback(self, data=util.ProgressCallbackInfo()):
         cb_info = data
 
-        if cb_info.transfer_starting or cb_info.transfer_cancelled:
+        if cb_info.transfer_starting or cb_info.transfer_cancelled or cb_info.transfer_request_refused:
             self.page_stack.set_visible_child_name("status")
+            if cb_info.transfer_request_refused:
+                self.show_refused_message()
             return
 
         if not self.send_progress_bar.get_visible() and not cb_info.finished and not cb_info.sender_awaiting_approval:
@@ -460,26 +461,48 @@ class ProxyItem(GObject.Object):
     # The remote peer wants to send files, and your pref is to be able to approve every transfer
     # This sets up the UI to let you know, switching to the query view with approve/disapprove buttons
     def ask_my_permission(self, request):
-        print("ask from ", self.nick)
         self.active_receive_request = request
-
-        self.page_stack.set_visible_child_name("transfer_request")
 
         markup = gettext.ngettext("<b>%s</b> wants to send you %d file (%s)",
                                   "<b>%s</b> wants to send you %d files (%s)", request.count) \
-                                  % (self.nick, request.count, GLib.format_size(request.size))
+                                  % (self.proxy_nick, request.count, GLib.format_size(request.size))
 
-        self.req_transfer_label.set_markup(markup)
+        self.widget.get_toplevel().present()
+        dialog = Gtk.MessageDialog(title=_("Incoming file"),
+                                   # parent=self.widget.get_toplevel(),
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.QUESTION,
+                                   use_markup=True,
+                                   modal=True,
+                                   text=markup)
+        dialog.add_buttons(_("Refuse"), Gtk.ResponseType.CANCEL,
+                           _("Accept"), Gtk.ResponseType.ACCEPT)
 
-    # This records your reponse on the server's PermissionRequest object then returns to the normal status view
-    def on_request_response(self, widget, approve):
-        if approve:
+        res = dialog.run()
+        dialog.destroy()
+
+        if res == Gtk.ResponseType.ACCEPT:
             self.active_receive_request.permission = util.TRANSFER_REQUEST_GRANTED
         else:
-            self.active_receive_request.permission = util.TRANSFER_REQUEST_DECLINED
+            self.active_receive_request.permission = util.TRANSFER_REQUEST_REFUSED
+
         self.active_receive_request = None
 
-        self.page_stack.set_visible_child_name("status")
+    def show_refused_message(self):
+        self.widget.get_toplevel().present()
+        dialog = Gtk.MessageDialog(title=_("Transfer Aborted"),
+                                   # parent=self.widget.get_toplevel(),
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.WARNING,
+                                   use_markup=True,
+                                   modal=True,
+                                   text=_("<b>%s</b> would not accept your request") % self.proxy_nick)
+        dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
+
+        res = dialog.run()
+        dialog.destroy()
+
+        self.active_receive_request = None
 
     # The remote that initiated a transfer request has canceled it
     def receive_request_withdrawn(self, request):
@@ -493,13 +516,13 @@ class ProxyItem(GObject.Object):
     def update_proxy_nick(self, proxy_nick):
         new_nick = proxy_nick
 
-        if self.nick != new_nick:
-            self.nick = new_nick
+        if self.proxy_nick != new_nick:
+            self.proxy_nick = new_nick
             self.update_sort_key()
             self.emit("nick-changed", new_nick)
 
-            self.nick_label.set_markup("<b>%s</b>" % self.nick)
-            self.file_sender.peer_nick = self.nick
+            self.nick_label.set_markup("<b>%s</b>" % self.proxy_nick)
+            self.file_sender.peer_nick = self.proxy_nick
 
     ######################## /Server Calls#####################################
 
@@ -510,7 +533,7 @@ class WarpApplication(Gtk.Application):
         self.window = None
         self.status_icon = None
         self.peers = {}
-        self.nick = None
+        self.app_nick = None
 
         self.server = None
         self.my_ip = util.getmyip()
@@ -529,10 +552,10 @@ class WarpApplication(Gtk.Application):
         print("Initializing Warp on %s" % self.my_ip)
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
-        self.nick = prefs.get_nick()
+        self.app_nick = prefs.get_nick()
         self.save_path = prefs.get_save_path()
 
-        self.server = WarpServer(self.peers, self.my_server_name, self.nick, self.my_ip)
+        self.server = WarpServer(self.peers, self.my_server_name, self.app_nick, self.my_ip)
         self.server.connect("grab-attention", self.grab_user_attention)
 
         self.setup_browser()
@@ -618,12 +641,12 @@ class WarpApplication(Gtk.Application):
     def _on_delayed_prefs_changed(self):
         self.prefs_changed_source_id = 0
 
-        self.nick = prefs.get_nick()
+        self.app_nick = prefs.get_nick()
         self.save_path = prefs.get_save_path()
 
-        self.server.set_prefs(self.nick, self.save_path)
+        self.server.set_prefs(self.app_nick, self.save_path)
         for item in self.peers.values():
-            item.update_app_nick(self.nick)
+            item.update_app_nick(self.app_nick)
         return False
 
     def on_open_location_clicked(self, widget, data=None):
@@ -666,7 +689,7 @@ class WarpApplication(Gtk.Application):
             return False
 
         print("Add peer: %s" % name)
-        item = ProxyItem(self.my_server_name, self.nick, name, proxy)
+        item = ProxyItem(self.my_server_name, self.app_nick, name, proxy)
         item.connect("nick-changed", self.sort_proxies)
 
         self.peers[name] = item
@@ -689,7 +712,7 @@ class WarpApplication(Gtk.Application):
         proxies = self.peers.values()
         return sorted(proxies, key=attrgetter('sort_key'))
 
-    def sort_proxies(self, proxy=None, nick=None):
+    def sort_proxies(self, proxy=None, proxy_nick=None):
         sorted_list = self.get_sorted_proxy_list()
         widgets = self.box.get_children()
 
@@ -729,7 +752,7 @@ class WarpApplication(Gtk.Application):
         i = 0
 
         for proxy in proxy_list:
-            item = Gtk.MenuItem(label=proxy.nick)
+            item = Gtk.MenuItem(label=proxy.proxy_nick)
             self.attach_recent_submenu(item, proxy)
             menu.add(item)
             i += 1
