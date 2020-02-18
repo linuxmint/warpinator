@@ -30,14 +30,17 @@ class ProgressCallbackInfo():
         self.transfer_starting = transfer_starting
         self.transfer_cancelled = transfer_cancelled
 
+# A normal GtkFileChooserDialog only lets you pick folders OR files, not
+# both in the same dialog.  This does.
 def create_file_and_folder_picker(parent=None):
-    chooser = Gtk.FileChooserWidget(action=Gtk.FileChooserAction.OPEN,
-                                    select_multiple=True)
-
     window = Gtk.Dialog(title=_("Select file(s) to send"),
                         parent=None)
     window.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL,
                        _("Send"), Gtk.ResponseType.ACCEPT)
+
+    chooser = Gtk.FileChooserWidget(action=Gtk.FileChooserAction.OPEN,
+                                    select_multiple=True)
+    chooser.connect("file-activated", lambda chooser: window.response(Gtk.ResponseType.ACCEPT))
 
     chooser.show_all()
     window.get_content_area().add(chooser)
