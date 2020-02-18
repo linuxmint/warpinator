@@ -463,7 +463,7 @@ class ProxyItem(GObject.Object):
 
         markup = gettext.ngettext("<b>%s</b> wants to send you %d file (%s)",
                                   "<b>%s</b> wants to send you %d files (%s)", request.count) \
-                                  % (request.nick, request.count, GLib.format_size(request.size))
+                                  % (self.nick, request.count, GLib.format_size(request.size))
 
         self.req_transfer_label.set_markup(markup)
 
