@@ -384,7 +384,7 @@ class ProxyItem(GObject.Object):
         widget.drag_get_data(context, atom, time)
 
     def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
-        if not self.online:
+        if not self.pulse.online:
             Gdk.drag_status(context, 0, time)
             return
 

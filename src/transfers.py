@@ -375,14 +375,13 @@ class FileSender:
             bytes_left = self.total_transfer_size - self.current_transfer_size
             time_left_sec = bytes_left / bytes_per_sec
 
-            cb_info.speed_str = _("%s/s") % GLib.format_size(bytes_per_sec)
-            cb_info.time_left_str = util.format_time_span(time_left_sec)
-
+            cb_info.speed = _("%s/s") % GLib.format_size(bytes_per_sec)
+            cb_info.time_left = util.format_time_span(time_left_sec)
             with self.proxy.lock:
                 self.proxy.update_progress(self.app_name,
                                            cb_info.progress,
-                                           cb_info.speed_str,
-                                           cb_info.time_left_str,
+                                           cb_info.speed,
+                                           cb_info.time_left,
                                            cb_info.finished)
 
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
