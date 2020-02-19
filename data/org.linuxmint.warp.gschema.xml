@@ -36,6 +36,10 @@
       <default>true</default>
       <summary>Abort transfers when the destination files already exist</summary>
     </key>
+    <key name="port" type="i">
+      <default>42000</default>
+      <summary>Abort transfers when the destination files already exist</summary>
+    </key>
   </schema>
 
   <schema id="com.linuxmint.warp.window-state" path="/com/linuxmint/warp/window-state/" gettext-domain="warp">

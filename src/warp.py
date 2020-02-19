@@ -15,6 +15,7 @@ from operator import attrgetter
 import socket
 import xmlrpc.server
 import xmlrpc.client
+import http
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser, ServiceStateChange
 
 import gi
@@ -26,6 +27,9 @@ import config
 import prefs
 import transfers
 import util
+import pulse
+
+socket.setdefaulttimeout(10)
 
 # Don't let warp run as root
 if os.getuid() == 0:
@@ -62,18 +66,17 @@ class WarpServer(GObject.Object):
         'grab-attention': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, peers, service_name, app_nick, ip, save_location):
+    def __init__(self, peers, service_name, app_nick, app_ip, save_location):
         super(WarpServer, self).__init__()
-        self.my_ip = ip
+        self.app_ip = app_ip
         self.service_name = service_name
-        self.port = 8080
+        self.port = prefs.get_port()
         self.peer_list = peers
 
         self.file_receiver = transfers.FileReceiver(save_location)
         self.set_prefs(app_nick, save_location)
 
         self.permission_requests = []
-
 
         self.serve_forever()
 
@@ -82,7 +85,7 @@ class WarpServer(GObject.Object):
 
         self.info = ServiceInfo("_http._tcp.local.",
                                 self.service_name,
-                                socket.inet_aton(self.my_ip), self.port, 0, 0,
+                                socket.inet_aton(self.app_ip), self.port, 0, 0,
                                 desc, "somehost.local.")
         self.zc = Zeroconf()
         self.zc.register_service(self.info)
@@ -114,6 +117,7 @@ class WarpServer(GObject.Object):
             server.register_function(self._abort_transfer, "abort_transfer")
             server.register_function(self._abort_request, "abort_request")
             server.register_function(self._update_progress, "update_progress")
+            server.register_function(self._ping, "ping")
             server.serve_forever()
 
     def _get_nick(self):
@@ -192,7 +196,6 @@ class WarpServer(GObject.Object):
                     try:
                         peer = self.peer_list[name]
                         GLib.idle_add(peer.receive_request_withdrawn, req, priority=GLib.PRIORITY_DEFAULT)
-                        peer.receive_request_withdrawn(req)
                     except KeyError:
                         print("Received transfer request for unknown proxy - what's up: %s" % name)
 
@@ -201,6 +204,9 @@ class WarpServer(GObject.Object):
     def _update_progress(self, name, progress, speed, time_left, finished):
         GLib.idle_add(self._update_progress_at_idle, name, progress, speed, time_left, finished, priority=GLib.PRIORITY_DEFAULT)
         return True
+
+    def _ping(self):
+        return "pong"
     ################################ / Server ################################
 
     def _update_progress_at_idle(self, name, progress, speed, time_left, finished):
@@ -227,7 +233,7 @@ class WarpServer(GObject.Object):
         # here that we don't fail because we didn't get a valid number.
         if free == 0:
             return True
-
+        print("Need: %s, have %s" % (GLib.format_size(request.size), GLib.format_size(free)))
         return request.size < free
 
     def close(self):
@@ -236,16 +242,19 @@ class WarpServer(GObject.Object):
 
 class ProxyItem(GObject.Object):
     __gsignals__ = {
-        'nick-changed': (GObject.SignalFlags.RUN_LAST, None, (str,))
+        'nick-changed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
+        'server-connectivity-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, app_name, app_nick, proxy_name, proxy):
+    def __init__(self, app_name, app_nick, proxy_name, proxy, proxy_ip, proxy_port):
         super(ProxyItem, self).__init__()
         self.app_name = app_name
         self.app_nick = app_nick
         self.proxy = proxy
         self.proxy_name = proxy_name
         self.proxy_nick = ""
+        self.proxy_ip = proxy_ip
+        self.proxy_port = proxy_port
         self.sort_key = proxy_name
         self.send_stat_delay_timer = 0
         self.receive_stat_delay_timer = 0
@@ -267,14 +276,13 @@ class ProxyItem(GObject.Object):
         self.receive_progress_bar = self.builder.get_object("receive_progress_bar")
         self.sender_awaiting_approval_label = self.builder.get_object("sender_awaiting_approval_label")
         self.sender_awaiting_approval_cancel_button = self.builder.get_object("sender_awaiting_approval_cancel_button")
+        self.send_file_menu_button = self.builder.get_object("send_file_menu_button")
         self.req_transfer_label = self.builder.get_object("req_transfer_label")
-        self.req_accept_button = self.builder.get_object("req_accept_button")
-        self.req_decline_button = self.builder.get_object("req_decline_button")
+        self.problem_info_label = self.builder.get_object("problem_info_label")
+        self.problem_more_info_label = self.builder.get_object("problem_more_info_label")
+        self.connecting_label = self.builder.get_object("connecting_label")
 
         self.sender_awaiting_approval_cancel_button.connect("clicked", self.cancel_send_request)
-        # self.req_accept_button.connect("clicked", self.on_request_response, True)
-        # self.req_decline_button.connect("clicked", self.on_request_response, False)
-        self.send_file_menu_button = self.builder.get_object("send_file_menu_button")
 
         self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
         self.recent_menu.connect("item-activated", self.recent_item_selected)
@@ -284,6 +292,7 @@ class ProxyItem(GObject.Object):
         picker.connect("activate", self.open_file_picker)
         self.recent_menu.add(picker)
 
+        self.proxy.lock = threading.Lock()
         self.file_sender = transfers.FileSender(self.app_name, self.proxy_name, self.proxy_nick, self.proxy, self.send_progress_callback)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
@@ -293,22 +302,39 @@ class ProxyItem(GObject.Object):
         self.widget.connect("drag-drop", self.on_drag_drop)
         self.widget.connect("drag-data-received", self.on_drag_data_received)
 
-        GLib.timeout_add_seconds(1, self.get_initial_proxy_nick)
+        self.show_connecting()
+
+        self.pulse = pulse.Pulse(self.proxy, self.proxy_ip, self.proxy_port)
+        self.pulse.connect("state-changed", self.pulse_state_changed)
+        self.pulse.start()
+
         self.hide_receive_stats()
         self.hide_send_stats()
         self.widget.show_all()
 
-    # Get updated info from the remote (either for the first time when we're setting things up,
-    # or later, if the remote changes their nickname)
-    def get_initial_proxy_nick(self, data=None):
-        try:
-            new_nick = self.proxy.get_nick()
-            self.update_proxy_nick(new_nick)
-        except ConnectionRefusedError:
-            print("Retrying proxy check")
-            return True
+    def pulse_state_changed(self, pulse, online, error, nick):
+        if online:
+            self.page_stack.set_visible_child_name("status")
 
-        return False
+            if nick:
+                self.update_proxy_nick(nick)
+            return
+
+        self.page_stack.set_visible_child_name("problems")
+        self.problem_info_label.set_markup(_("Problem communicating with <b>%s</b>.  Check for connectivity or firewall issues." \
+                                           % self.proxy_nick))
+        self.problem_more_info_label.set_text(_("Details: %s") % str(error) if error else _("Unknown"))
+
+    @util._idle
+    def show_connecting(self):
+        self.page_stack.set_visible_child_name("connecting")
+
+        try:
+            hostname = socket.gethostbyaddr(self.proxy_ip)
+        except:
+            hostname = self.proxy_ip
+
+        self.connecting_label.set_markup(_("Connecting to <b>%s</b>") % hostname)
 
     def recent_item_selected(self, recent_chooser, data=None):
         uri = self.recent_menu.get_current_uri()
@@ -331,20 +357,24 @@ class ProxyItem(GObject.Object):
         self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
 
     def destroy(self):
+        self.destroyed = True # kill heartbeat
+
         self.widget.destroy()
         self.file_sender.stop()
 
     ###################### Application calls #######################
 
-    # Our local nick has changed, (for now just our nick) - tell the remote server so our name on that end is updated
+    # Our app (local) nick has changed, (for now just our nick) - tell the remote server so our name on that end is updated
+    @util._async
     def update_app_nick(self, app_nick):
         self.app_nick = app_nick
-        self.proxy.update_remote_info(self.app_name, self.app_nick)
+        with self.proxy.lock:
+            self.proxy.update_remote_info(self.app_name, self.app_nick)
 
     # The application wants to know if we're currently in the middle of anything
     def transfer_active(self):
-        # FIXME: Make a more appropriate method of doing this.
-        return self.send_progress_bar.props.visible or self.receive_progress_bar.props.visible
+        return self.file_sender.get_active()
+
     ###################### / Application calls #######################
 
     #################### DND Handler ################
@@ -354,6 +384,10 @@ class ProxyItem(GObject.Object):
         widget.drag_get_data(context, atom, time)
 
     def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
+        if not self.online:
+            Gdk.drag_status(context, 0, time)
+            return
+
         if not self.dropping:
             if self.blocking_new_sends:
                 Gdk.drag_status(context, 0, time)
@@ -627,6 +661,7 @@ class WarpApplication(Gtk.Application):
 
         self.setup_browser()
         self.activate()
+        # self.heartbeat()
 
     def do_activate(self):
         if self.status_icon == None:
@@ -742,22 +777,24 @@ class WarpApplication(Gtk.Application):
         info = zeroconf.get_service_info(_type, name)
         print("\nService %s added, service info: %s\n" % (name, info))
         if info and name.count("warp"):
-            addrstr = "http://{}:{}".format(self.ip_extractor.search(name)[0], info.port)
+            ip = self.ip_extractor.search(name)[0]
+            addrstr = "http://{}:{}".format(ip, info.port)
             proxy = xmlrpc.client.ServerProxy(addrstr, allow_none=True)
             if name == self.my_server_name:
                 print("Not adding my own service (%s)" % name)
                 return
 
-            self.add_peer(name, proxy)
+            self.add_peer(name, proxy, ip, info.port)
 
     @util._idle
-    def add_peer(self, name, proxy):
+    def add_peer(self, name, proxy, ip, port):
         if name in self.peers.keys():
             return False
 
         print("Add peer: %s" % name)
-        item = ProxyItem(self.my_server_name, self.app_nick, name, proxy)
+        item = ProxyItem(self.my_server_name, self.app_nick, name, proxy, ip, port)
         item.connect("nick-changed", self.sort_proxies)
+        # item.connect("server-connectivity-changed", self.proxy_connectivity_changed)
 
         self.peers[name] = item
         self.box.add(item.widget)

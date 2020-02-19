@@ -119,14 +119,19 @@ class FileSender:
         self.file_to_size_map = {}
         self.current_send_request = None
 
-    def cancel_send_request(self):
-        # handle return?
-        self.proxy.abort_request(self.app_name, str(self.current_send_request.stamp))
-        self.current_send_request = None
+    def get_active(self):
+        return not (self.current_send_request == None and self.queue.empty())
 
     # Entry point from the ProxyItem class - the list of uri's dragged onto the widget are sent here
     def send_files(self, uri_list):
         self._process_files(uri_list)
+
+    @util._async
+    def cancel_send_request(self):
+        # handle return?
+        with self.proxy.lock:
+            self.proxy.abort_request(self.app_name, str(self.current_send_request.stamp))
+        self.current_send_request = None
 
     # This function creates a new TransferRequest, and begins crawling the files and adding them to the list.
     # It will then communicate with the server, checking for existing files, as well as permission to send.
@@ -187,23 +192,27 @@ class FileSender:
             #what?
             exit()
 
-        if self.proxy.prevent_overwriting() and self.proxy.files_exist(top_dir_basenames):
-            self._update_progress(util.ProgressCallbackInfo(transfer_exists=True, count=request.transfer_count))
-            exit()
+        with self.proxy.lock:
+            if self.proxy.prevent_overwriting() and self.proxy.files_exist(top_dir_basenames):
+                self._update_progress(util.ProgressCallbackInfo(transfer_exists=True, count=request.transfer_count))
+                exit()
 
         permission = False
 
-        if self.proxy.permission_needed():
-            #ask_permission - block for a response
+        with self.proxy.lock:
+            need = self.proxy.permission_needed()
+
+        if need:
             self._update_progress(util.ProgressCallbackInfo(sender_awaiting_approval=True, count=request.transfer_count))
             request.stamp = GLib.get_monotonic_time()
 
             while True:
-                response = self.proxy.get_permission(self.app_name,
-                                                     self.proxy_nick,
-                                                     str(request.transfer_size), # XML RPC can't handle longs
-                                                     str(request.transfer_count),
-                                                     str(request.stamp))
+                with self.proxy.lock:
+                    response = self.proxy.get_permission(self.app_name,
+                                                         self.proxy_nick,
+                                                         str(request.transfer_size), # XML RPC can't handle longs
+                                                         str(request.transfer_count),
+                                                         str(request.stamp))
 
                 if response == util.TRANSFER_REQUEST_PENDING:
                     time.sleep(1)
@@ -274,13 +283,14 @@ class FileSender:
             # For folders and symlinks, we don't actually transfer any data, we just
             # send a block that has its filename, relative path, and what type of file it is.
             if queued_file.is_folder or queued_file.symlink_target_path:
-                if not self.proxy.receive(self.app_name,
-                                               queued_file.relative_uri,
-                                               queued_file.is_folder,
-                                               queued_file.symlink_target_path,
-                                               0,
-                                               None):
-                    raise Aborted(_("Something went wrong with transfer of symlink or folder: %s") % file.get_uri())
+                with self.proxy.lock:
+                    if not self.proxy.receive(self.app_name,
+                                                   queued_file.relative_uri,
+                                                   queued_file.is_folder,
+                                                   queued_file.symlink_target_path,
+                                                   0,
+                                                   None):
+                        raise Aborted(_("Something went wrong with transfer of symlink or folder: %s") % file.get_uri())
             else:
                 # Any other file, we open a stream, and read/transfer in chunks.
                 gfile = Gio.File.new_for_uri(queued_file.uri)
@@ -304,13 +314,14 @@ class FileSender:
 
                     serial += 1
 
-                    if not self.proxy.receive(self.app_name,
-                                                   queued_file.relative_uri,
-                                                   False,
-                                                   None,
-                                                   serial,
-                                                   xmlrpc.client.Binary(bytes.get_data())):
-                        raise Aborted(_("Something went wrong with the transfer of %s") % queued_file.uri)
+                    with self.proxy.lock:
+                        if not self.proxy.receive(self.app_name,
+                                                       queued_file.relative_uri,
+                                                       False,
+                                                       None,
+                                                       serial,
+                                                       xmlrpc.client.Binary(bytes.get_data())):
+                            raise Aborted(_("Something went wrong with the transfer of %s") % queued_file.uri)
 
                     # As long as we read more than 0 bytes we keep repeating.
                     # If we've just read (and sent) 0 bytes, that means the file is done, and the server
@@ -330,7 +341,8 @@ class FileSender:
             del self.file_to_size_map[queued_file.uri]
         except Aborted as e:
             print("An error occurred during the transfer (our side): %s" % str(e))
-            self.proxy.abort_transfer(self.app_name)
+            with self.proxy.lock:
+                self.proxy.abort_transfer(self.app_name)
             self._update_progress(util.ProgressCallbackInfo(finished=True))
 
             self.clear_queue()
@@ -340,7 +352,8 @@ class FileSender:
     # as well as the remote server so receive progress can be updated for that user also.
     def _update_progress(self, cb_info):
         if cb_info.finished:
-            self.proxy.update_progress(self.app_name, 0, "", "", cb_info.finished)
+            with self.proxy.lock:
+                self.proxy.update_progress(self.app_name, 0, "", "", cb_info.finished)
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
             print("finished: %s" % util.format_time_span((GLib.get_monotonic_time() - self.start_time) / 1000/1000))
             return
@@ -365,11 +378,12 @@ class FileSender:
             cb_info.speed_str = _("%s/s") % GLib.format_size(bytes_per_sec)
             cb_info.time_left_str = util.format_time_span(time_left_sec)
 
-            self.proxy.update_progress(self.app_name,
-                                       cb_info.progress,
-                                       cb_info.speed_str,
-                                       cb_info.time_left_str,
-                                       cb_info.finished)
+            with self.proxy.lock:
+                self.proxy.update_progress(self.app_name,
+                                           cb_info.progress,
+                                           cb_info.speed_str,
+                                           cb_info.time_left_str,
+                                           cb_info.finished)
 
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
 

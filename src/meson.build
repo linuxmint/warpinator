@@ -17,6 +17,7 @@ config_py = configure_file(
 libexec_py = [
   config_py,
   'prefs.py',
+  'pulse.py',
   'transfers.py',
   'util.py',
   'warp.py',

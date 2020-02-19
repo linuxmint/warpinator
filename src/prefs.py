@@ -2,6 +2,7 @@ import locale
 import gettext
 
 from xapp.GSettingsWidgets import *
+from xapp.SettingsWidgets import SettingsWidget
 from gi.repository import Gtk, Gio
 
 import config
@@ -18,11 +19,15 @@ START_PINNED_KEY = "default-pinned"
 AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
+PORT_KEY = "port"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
 def get_nick():
     return prefs_settings.get_string(BROADCAST_NAME_KEY)
+
+def get_port():
+    return prefs_settings.get_int(PORT_KEY)
 
 def get_save_path():
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)
@@ -90,6 +95,22 @@ class Preferences(Gtk.Window):
 
         widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
+        section.add_row(widget)
+
+        section = page.add_section(_("Network"))
+
+        widget = GSettingsSpinButton(_("Port to use for traffic (program restart required)."),
+                                     PREFS_SCHEMA, PORT_KEY, mini=1024, maxi=49151, step=1, page=10, size_group=size_group)
+
+        section.add_row(widget)
+
+        widget = SettingsWidget()
+
+        label = Gtk.Label(use_markup=True, label=_("""\
+<b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers
+can make it simpler to add firewall exceptions if necessary."""))
+        widget.add(label)
+
         section.add_row(widget)
 
         self.show_all()
