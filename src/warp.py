@@ -142,10 +142,10 @@ class WarpServer(GObject.Object):
 
         return False
 
-    def _receive(self, sender, basename, folder=False, symlink_target=None, serial=0, binary_data=None):
+    def _receive(self, sender, basename, folder=False, symlink_target=None, serial=0, checksum=None, binary_data=None):
         # print("receive data for file %s from %s (serial %d) - folder:%d symlink:%s" % (basename, sender, serial, folder, symlink_target))
 
-        return self.file_receiver.receive(basename, folder, symlink_target, serial, binary_data)
+        return self.file_receiver.receive(basename, folder, symlink_target, serial, checksum, binary_data)
 
     def _permission_needed(self):
         return prefs.require_permission_for_transfer()
@@ -184,7 +184,7 @@ class WarpServer(GObject.Object):
         return prefs.prevent_overwriting()
 
     def _abort_transfer(self, name):
-        print("Server size: Abort transfer from", name)
+        print("Server side: Abort transfer from", name)
         pass
 
     def _abort_request(self, name, time_str):

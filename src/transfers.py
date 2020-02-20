@@ -90,8 +90,9 @@ class TransferRequest:
 # server, whom the ProxyItem represents.
 class FileSender:
     CHUNK_UNIT = 1024 * 1024 # Starting at 1 mb
-    CHUNK_MAX = 10 * 1024 * 1024 # Increase by 1mb each iteration to max 10mb (this resets for every file)
-    PROGRESS_INTERVAL = 2 * 1000 * 1000
+    CHUNK_MAX = 20 * 1024 * 1024 # Increase by 1mb each iteration to max 10mb (this resets for every file)
+    PROGRESS_INTERVAL = 4 * 1000 * 1000 # How often to report progress
+    MAX_RETRIES = 3 # How many re-sends if a chunk fails during transfer before aborting the whole thing
 
     def __init__(self, app_name, proxy_name, proxy_nick, proxy, progress_callback):
         self.app_name = app_name
@@ -314,14 +315,35 @@ class FileSender:
 
                     serial += 1
 
-                    with self.proxy.lock:
-                        if not self.proxy.receive(self.app_name,
-                                                       queued_file.relative_uri,
-                                                       False,
-                                                       None,
-                                                       serial,
-                                                       xmlrpc.client.Binary(bytes.get_data())):
-                            raise Aborted(_("Something went wrong with the transfer of %s") % queued_file.uri)
+                    if bytes.get_size() > 0:
+                        md5 = GLib.compute_checksum_for_bytes(GLib.ChecksumType.MD5, bytes)
+                    else:
+                        md5 = None
+
+                    retry_count = 0
+
+                    while True:
+                        with self.proxy.lock:
+                            ret = self.proxy.receive(self.app_name,
+                                                     queued_file.relative_uri,
+                                                     False,
+                                                     None,
+                                                     serial,
+                                                     md5,
+                                                     xmlrpc.client.Binary(bytes.get_data()))
+                        if ret == util.TRANSFER_RECEIVE_STATUS_RESEND:
+                            if retry_count < self.MAX_RETRIES:
+                                retry_count += 1
+                                print("Block of data for file %s - serial %d - failed md5, re-sending" % (queued_file.uri, serial))
+                                continue
+                            else:
+                                ret = util.TRANSFER_RECEIVE_STATUS_ERROR
+                                break
+                        else:
+                            break
+
+                    if ret == util.TRANSFER_RECEIVE_STATUS_ERROR:
+                        raise Aborted(_("Something went wrong with the transfer of %s") % queued_file.uri)
 
                     # As long as we read more than 0 bytes we keep repeating.
                     # If we've just read (and sent) 0 bytes, that means the file is done, and the server
@@ -445,9 +467,13 @@ class FileReceiver:
         self.thread = threading.Thread(target=self._receive_file_thread)
         self.thread.start()
 
-    def receive(self, basename, folder, symlink_target, serial, data=None):
+    def receive(self, basename, folder, symlink_target, serial, checksum, data=None):
         if self.error_state:
+            self.error_state = False
             return util.TRANSFER_RECEIVE_STATUS_ERROR
+
+        if checksum and GLib.compute_checksum_for_data(GLib.ChecksumType.MD5, data.data) != checksum:
+            return util.TRANSFER_RECEIVE_STATUS_RESEND
 
         chunk = Chunk(basename, folder, symlink_target, serial, data)
         self.request_queue.put(chunk)

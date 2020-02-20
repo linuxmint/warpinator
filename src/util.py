@@ -4,11 +4,9 @@ import gettext
 
 from gi.repository import GLib, Gtk
 
-TRANSFER_SEND_DATA = "data"
-TRANSFER_SEND_ABORT = "aborted"
-
 TRANSFER_RECEIVE_STATUS_OK = "ok"
 TRANSFER_RECEIVE_STATUS_ERROR = "error"
+TRANSFER_RECEIVE_STATUS_RESEND = "resend"
 
 TRANSFER_REQUEST_PENDING = "pending"
 TRANSFER_REQUEST_GRANTED = "granted"
