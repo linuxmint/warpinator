@@ -361,6 +361,7 @@ class ProxyItem(GObject.Object):
 
         self.widget.destroy()
         self.file_sender.stop()
+        self.pulse.destroy()
 
     ###################### Application calls #######################
 
@@ -729,6 +730,7 @@ class WarpApplication(Gtk.Application):
 
     def exit_app(self, menuitem=None, data=None):
         print("Shut down")
+        self.window.hide()
         self.server.close()
         for item in self.peers.values():
             item.destroy()

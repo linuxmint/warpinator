@@ -1,19 +1,19 @@
 import threading
 import socket
 import gettext
+import math
 
 from gi.repository import GLib, Gtk
 
-TRANSFER_RECEIVE_STATUS_OK = "ok"
-TRANSFER_RECEIVE_STATUS_ERROR = "error"
-TRANSFER_RECEIVE_STATUS_RESEND = "resend"
+TRANSFER_RECEIVE_STATUS_OK = 1
+TRANSFER_RECEIVE_STATUS_ERROR = 2
+TRANSFER_RECEIVE_STATUS_RESEND = 3
 
-TRANSFER_REQUEST_PENDING = "pending"
-TRANSFER_REQUEST_GRANTED = "granted"
-TRANSFER_REQUEST_REFUSED = "refused"
-TRANSFER_REQUEST_EXISTING = "existing"
-TRANSFER_REQUEST_CANCELLED = "cancelled"
-TRANSFER_REQUEST_DISKFULL = "diskfull"
+TRANSFER_REQUEST_PENDING = 5
+TRANSFER_REQUEST_GRANTED = 6
+TRANSFER_REQUEST_REFUSED = 7
+TRANSFER_REQUEST_CANCELLED = 8
+TRANSFER_REQUEST_DISKFULL = 9
 
 _ = gettext.gettext
 
@@ -124,3 +124,14 @@ def format_time_span(seconds):
         return res;
 
     return gettext.ngettext("approximately %d hour", "approximately %d hours", hours) % hours
+
+
+# adapted from nemo-file-operations.c: format_time()
+def precise_format_time_span(micro):
+    sdec, total_seconds = math.modf(micro / 1000 / 1000)
+    seconds = total_seconds % 60
+    mdec, total_minutes = math.modf(total_seconds / 60)
+    minutes = total_minutes % 60
+    hdec, total_hours = math.modf(total_minutes / 60)
+    hours = total_hours % 60
+    return ("%02d:%02d:%02d.%s" % (hours, minutes, seconds, str(sdec)[2:5]))

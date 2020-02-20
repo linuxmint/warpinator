@@ -377,7 +377,7 @@ class FileSender:
             with self.proxy.lock:
                 self.proxy.update_progress(self.app_name, 0, "", "", cb_info.finished)
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
-            print("finished: %s" % util.format_time_span((GLib.get_monotonic_time() - self.start_time) / 1000/1000))
+            print("finished: %s" % util.precise_format_time_span(GLib.get_monotonic_time() - self.start_time))
             return
 
         if cb_info.is_informational():
