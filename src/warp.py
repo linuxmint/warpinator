@@ -44,13 +44,6 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warp")
 
-dnd_string = """
-.ebox:drop(active) {
-    background-image: linear-gradient(to top, grey, transparent);
-    transition: 100ms;
-}
-"""
-
 class PermissionRequest():
     def __init__(self, name, nick, size, count, timestamp_str):
         self.name = name
@@ -201,18 +194,18 @@ class WarpServer(GObject.Object):
 
         return True
 
-    def _update_progress(self, name, progress, speed, time_left, finished):
-        GLib.idle_add(self._update_progress_at_idle, name, progress, speed, time_left, finished, priority=GLib.PRIORITY_DEFAULT)
+    def _update_progress(self, name, progress, speed, time_left, finished, error):
+        GLib.idle_add(self._update_progress_at_idle, name, progress, speed, time_left, finished, error, priority=GLib.PRIORITY_DEFAULT)
         return True
 
     def _ping(self):
         return "pong"
     ################################ / Server ################################
 
-    def _update_progress_at_idle(self, name, progress, speed, time_left, finished):
+    def _update_progress_at_idle(self, name, progress, speed, time_left, finished, error):
         try:
             peer = self.peer_list[name]
-            peer.receive_progress_callback(progress, speed, time_left, finished)
+            peer.receive_progress_callback(progress, speed, time_left, finished, error)
         except KeyError:
             print("Received progress for unknown proxy - what's up: %s" % name)
 
@@ -296,11 +289,12 @@ class ProxyItem(GObject.Object):
         self.file_sender = transfers.FileSender(self.app_name, self.proxy_name, self.proxy_nick, self.proxy, self.send_progress_callback)
 
         entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
-        self.widget.drag_dest_set(Gtk.DestDefaults.ALL,
-                                  (entry,),
-                                  Gdk.DragAction.COPY)
-        self.widget.connect("drag-drop", self.on_drag_drop)
-        self.widget.connect("drag-data-received", self.on_drag_data_received)
+        self.status_page.drag_dest_set(Gtk.DestDefaults.ALL,
+                                       (entry,),
+                                       Gdk.DragAction.COPY)
+        self.status_page.connect("drag-drop", self.on_drag_drop)
+        self.status_page.connect("drag-data-received", self.on_drag_data_received)
+        self.status_page.connect("drag-motion", self.on_drag_motion)
 
         self.show_connecting()
 
@@ -379,6 +373,13 @@ class ProxyItem(GObject.Object):
     ###################### / Application calls #######################
 
     #################### DND Handler ################
+
+    def on_drag_motion(self, widget, context, x, y, time):
+        if not self.pulse.online:
+            print("noooooooot online")
+            Gdk.drag_status(context, 0, time)
+            return
+
     def on_drag_drop(self, widget, context, x, y, time, data=None):
         atom =  widget.drag_dest_find_target(context, None)
         self.dropping = True
@@ -386,6 +387,7 @@ class ProxyItem(GObject.Object):
 
     def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
         if not self.pulse.online:
+            print("not online")
             Gdk.drag_status(context, 0, time)
             return
 
@@ -461,6 +463,8 @@ class ProxyItem(GObject.Object):
                 self.show_exists_message(cb_info.count)
             elif cb_info.transfer_diskfull:
                 self.show_diskfull_message(cb_info.size)
+            elif cb_info.error:
+                self.show_send_error_message(cb_info.error)
             return
 
         if not self.send_progress_bar.get_visible() and not cb_info.finished and not cb_info.sender_awaiting_approval:
@@ -501,7 +505,7 @@ class ProxyItem(GObject.Object):
 
     # The remote peer has begun sending you files.  This is his periodic progress report so you
     # can update the information on your local status widget for that peer
-    def receive_progress_callback(self, progress, speed, time_left, finished=False):
+    def receive_progress_callback(self, progress, speed, time_left, finished=False, error=None):
         # print("Receive progress callback - server", progress, speed, time_left)
         if not self.receive_progress_bar.get_visible():
             self.queue_receive_showing_stats()
@@ -516,6 +520,8 @@ class ProxyItem(GObject.Object):
 
         if finished:
             self.hide_receive_stats()
+            if error:
+                self.show_receive_error_message(error)
 
     # The remote peer wants to send files, and your pref is to be able to approve every transfer
     # This sets up the UI to let you know, switching to the query view with approve/disapprove buttons
@@ -596,6 +602,38 @@ class ProxyItem(GObject.Object):
                                    # parent=self.widget.get_toplevel(),
                                    destroy_with_parent=True,
                                    message_type=Gtk.MessageType.WARNING,
+                                   use_markup=True,
+                                   text=text)
+        dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
+
+        res = dialog.run()
+        dialog.destroy()
+
+    def show_send_error_message(self, error):
+        self.widget.get_toplevel().present()
+
+        text = _("An error occurred during the file transfer to <b>%s</b>: %s" % (self.proxy_nick, error))
+
+        dialog = Gtk.MessageDialog(title=_("Aborted File Transfer"),
+                                   # parent=self.widget.get_toplevel(),
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.ERROR,
+                                   use_markup=True,
+                                   text=text)
+        dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
+
+        res = dialog.run()
+        dialog.destroy()
+
+    def show_receive_error_message(self, error):
+        self.widget.get_toplevel().present()
+
+        text = _("An error occurred while receiving a file from <b>%s</b>: %s" % (self.proxy_nick, error))
+
+        dialog = Gtk.MessageDialog(title=_("Aborted File Transfer"),
+                                   # parent=self.widget.get_toplevel(),
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.ERROR,
                                    use_markup=True,
                                    text=text)
         dialog.add_buttons(_("Dismiss"), Gtk.ResponseType.CLOSE)
@@ -691,11 +729,6 @@ class WarpApplication(Gtk.Application):
         item.connect("activate", self.exit_app)
         menu.add(item)
         menu.show_all()
-
-        dnd_css = Gtk.CssProvider()
-
-        if dnd_css.load_from_data(dnd_string.encode()):
-            Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), dnd_css, 600)
 
         self.menu_button.set_popup(menu)
 

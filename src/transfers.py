@@ -17,6 +17,12 @@ FILE_INFOS = "standard::size,standard::allocated-size,standard::name,standard::t
 class Aborted(Exception):
     pass
 
+class Cancelled(Exception):
+    pass
+
+class NeverStartedSending(Exception):
+    pass
+
 # This represents a file to be transferred (this is used by the sender)
 class QueuedFile:
     def __init__(self, uri, rel_uri, size, folder, symlink_target_path):
@@ -149,8 +155,11 @@ class FileSender:
         def process_folder(folder_uri, top_dir):
             folder_file = Gio.File.new_for_uri(folder_uri)
 
-            enumerator = folder_file.enumerate_children(FILE_INFOS, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None)
-            info = enumerator.next_file(None)
+            try:
+                enumerator = folder_file.enumerate_children(FILE_INFOS, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None)
+                info = enumerator.next_file(None)
+            except GLib.Error as e:
+                raise NeverStartedSending(e.message)
 
             while info:
                 child = enumerator.get_child(info)
@@ -168,29 +177,40 @@ class FileSender:
                         size = info.get_size()
                         request.add_file(child_basename, child_uri, top_dir, info)
 
-                info = enumerator.next_file(None)
+                try:
+                    info = enumerator.next_file(None)
+                except GLib.Error as e:
+                    raise NeverStartedSending(e.message)
 
-        # Process the initial list.
-        for uri in uri_list:
-            file = Gio.File.new_for_uri(uri)
-            top_dir_basenames.append(file.get_basename())
+        try:
+            # Process the initial list.
+            for uri in uri_list:
+                file = Gio.File.new_for_uri(uri)
+                top_dir_basenames.append(file.get_basename())
 
-            info = file.query_info(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
-            basename = file.get_basename()
+                try:
+                    info = file.query_info(FILE_INFOS, Gio.FileQueryInfoFlags.NONE, None)
+                except GLib.Error as e:
+                    raise NeverStartedSending(e.message)
 
-            if info and info.get_file_type() == Gio.FileType.DIRECTORY:
-                top_dir = file.get_parent().get_uri()
-                if uri not in self.file_to_size_map.keys():
-                    request.add_file(basename, uri, None, info)
-                process_folder(uri, top_dir)
-                continue
-            else:
-                size = info.get_size()
-                if uri not in self.file_to_size_map.keys():
-                    request.add_file(basename, uri, None, info)
+                basename = file.get_basename()
 
-        if request.transfer_count == 0:
-            #what?
+                if info and info.get_file_type() == Gio.FileType.DIRECTORY:
+                    top_dir = file.get_parent().get_uri()
+                    if uri not in self.file_to_size_map.keys():
+                        request.add_file(basename, uri, None, info)
+                    process_folder(uri, top_dir)
+                    continue
+                else:
+                    size = info.get_size()
+                    if uri not in self.file_to_size_map.keys():
+                        request.add_file(basename, uri, None, info)
+
+            if request.transfer_count == 0:
+                #what?
+                exit()
+        except NeverStartedSending as e:
+            self._update_progress(util.ProgressCallbackInfo(transfer_cancelled=True, error=e))
             exit()
 
         with self.proxy.lock:
@@ -219,7 +239,6 @@ class FileSender:
                     time.sleep(1)
                     continue
                 elif response == util.TRANSFER_REQUEST_CANCELLED:
-                    print("cancelled my own request")
                     break
                 elif response == util.TRANSFER_REQUEST_REFUSED:
                     self._update_progress(util.ProgressCallbackInfo(transfer_refused=True))
@@ -291,7 +310,7 @@ class FileSender:
                                                    queued_file.symlink_target_path,
                                                    0,
                                                    None):
-                        raise Aborted(_("Something went wrong with transfer of symlink or folder: %s") % file.get_uri())
+                        raise Aborted(_("Could not copy symlink or folder: %s") % file.get_uri())
             else:
                 # Any other file, we open a stream, and read/transfer in chunks.
                 gfile = Gio.File.new_for_uri(queued_file.uri)
@@ -299,7 +318,7 @@ class FileSender:
 
                 if self.cancellable.is_cancelled():
                     stream.close()
-                    raise Aborted(_("Cancelled while opening file"));
+                    raise Cancelled("Cancelled while opening file")
 
                 # Start with a small chunk size.  We increase it by one CHUNK_UNIT each iteration until
                 # we've reached our max.
@@ -311,7 +330,7 @@ class FileSender:
                     except GLib.Error as e:
                         if self.cancellable.is_cancelled():
                             stream.close()
-                            raise Aborted("Cancelled while reading file contents");
+                            raise Cancelled("Cancelled while reading file contents")
 
                     serial += 1
 
@@ -343,7 +362,7 @@ class FileSender:
                             break
 
                     if ret == util.TRANSFER_RECEIVE_STATUS_ERROR:
-                        raise Aborted(_("Something went wrong with the transfer of %s") % queued_file.uri)
+                        raise Aborted(_("Retry count was exceeded attempting to copy %s") % queued_file.uri)
 
                     # As long as we read more than 0 bytes we keep repeating.
                     # If we've just read (and sent) 0 bytes, that means the file is done, and the server
@@ -362,10 +381,10 @@ class FileSender:
             # is in process, we don't want to include completed files in the speed/time remaining calculations.
             del self.file_to_size_map[queued_file.uri]
         except Aborted as e:
-            print("An error occurred during the transfer (our side): %s" % str(e))
+            print("An error occurred during the transfer (sender): %s" % str(e))
             with self.proxy.lock:
                 self.proxy.abort_transfer(self.app_name)
-            self._update_progress(util.ProgressCallbackInfo(finished=True))
+            self._update_progress(util.ProgressCallbackInfo(finished=True, error=e))
 
             self.clear_queue()
             self.send_abort_ml(e)
@@ -375,7 +394,12 @@ class FileSender:
     def _update_progress(self, cb_info):
         if cb_info.finished:
             with self.proxy.lock:
-                self.proxy.update_progress(self.app_name, 0, "", "", cb_info.finished)
+                # Don't send NeverStartedSending errors to the other end.
+                if cb_info.error and isinstance(cb_info.error, Aborted):
+                    e_str = str(cb_info.error)
+                else:
+                    e_str = None
+                self.proxy.update_progress(self.app_name, 0, "", "", cb_info.finished, e_str)
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
             print("finished: %s" % util.precise_format_time_span(GLib.get_monotonic_time() - self.start_time))
             return
@@ -404,7 +428,8 @@ class FileSender:
                                            cb_info.progress,
                                            cb_info.speed,
                                            cb_info.time_left,
-                                           cb_info.finished)
+                                           cb_info.finished,
+                                           None)
 
             GLib.idle_add(self.progress_callback, cb_info, priority=GLib.PRIORITY_DEFAULT)
 
@@ -442,8 +467,13 @@ class OpenFile():
     def __init__(self, path, cancellable):
         self.path = path
         self.file = Gio.File.new_for_path(self.path)
-        self.stream = self.file.create(Gio.FileCreateFlags.NONE,
-                                       cancellable)
+
+        if prefs.prevent_overwriting():
+            flags = Gio.FileCreateFlags.NONE
+        else:
+            flags = Gio.FileCreateFlags.REPLACE_DESTINATION
+
+        self.stream = self.file.replace(None, False, flags, cancellable)
         self.serial = 0
 
 # This handles receiving files, there is just one, attached to the local server.
@@ -498,7 +528,7 @@ class FileReceiver:
         # Info was for a folder
         if chunk.folder:
             try:
-                os.makedirs(path, exist_ok=False)
+                os.makedirs(path, exist_ok=(not prefs.prevent_overwriting()))
             except Exception as e:
                 print("Could not create folder %s: %s" % (path, str(e)))
                 self.error_state = True
