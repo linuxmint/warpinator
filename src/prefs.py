@@ -1,12 +1,11 @@
-import locale
+import os
 import gettext
 
-from xapp.GSettingsWidgets import *
-from xapp.SettingsWidgets import SettingsWidget
-from gi.repository import Gtk, Gio
+from xapp.GSettingsWidgets import GSettingsEntry, GSettingsSwitch, GSettingsFileChooser, GSettingsSpinButton
+from xapp.SettingsWidgets import SettingsWidget, SettingsPage
+from gi.repository import Gtk, Gio, GLib
 
 import config
-import util
 
 _ = gettext.gettext
 
@@ -20,6 +19,9 @@ AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 PORT_KEY = "port"
+SHOW_NOTIFICATIONS_KEY = "show-notifications"
+FAVORITES_KEY = "favorites"
+TRAY_ICON_KEY = "use-tray-icon"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -37,6 +39,9 @@ def get_save_path():
 
     return Gio.File.new_for_uri(uri).get_path()
 
+def use_tray_icon():
+    return prefs_settings.get_boolean(TRAY_ICON_KEY)
+
 def get_start_with_window():
     return prefs_settings.get_boolean(START_WITH_WINDOW_KEY)
 
@@ -49,27 +54,61 @@ def require_permission_for_transfer():
 def prevent_overwriting():
     return prefs_settings.get_boolean(NO_OVERWRITE_KEY)
 
-class Preferences(Gtk.Window):
-    def __init__(self, transfer_active):
-        super(Preferences, self).__init__(modal=True, title=_("Warp Preferences"))
+def get_show_notifications():
+    return prefs_settings.get_boolean(SHOW_NOTIFICATIONS_KEY)
+
+def get_is_favorite(hostname):
+    return hostname in prefs_settings.get_strv(FAVORITES_KEY)
+
+def toggle_favorite(hostname):
+    faves = prefs_settings.get_strv(FAVORITES_KEY)
+
+    if hostname in faves:
+        faves.remove(hostname)
+    else:
+        faves.append(hostname)
+
+    prefs_settings.set_strv(FAVORITES_KEY, faves)
+
+class Preferences():
+    def __init__(self, transient_for):
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
+
+        self.window = self.builder.get_object("prefs_window")
+        self.content_box = self.builder.get_object("content_box")
+        self.prefs_apply_button = self.builder.get_object("prefs_apply_button")
+        self.prefs_cancel_button = self.builder.get_object("prefs_cancel_button")
+
+        self.window.set_title(title=_("Warp Preferences"))
+        self.window.set_icon_name("preferences-system")
+
+        self.prefs_apply_button.connect("clicked", self.apply_clicked)
+        self.prefs_cancel_button.connect("clicked", self.cancel_clicked)
+
+        self.window.set_transient_for(transient_for)
 
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
         page = SettingsPage()
-        self.add(page)
-        section = page.add_section(_("General"))
+        self.content_box.pack_start(page, True, True, 0)
 
-        widget = GSettingsEntry(_("Nickname"),
-                                PREFS_SCHEMA, BROADCAST_NAME_KEY,
-                                size_group=size_group)
-        section.add_row(widget)
-        if transfer_active:
-            widget.set_sensitive(False)
-            widget.set_tooltip_text("Nickname changes are not allowed while there are active transfers")
+        section = page.add_section(_("Desktop"))
+
+        # widget = GSettingsEntry(_("Display name"),
+        #                         PREFS_SCHEMA, BROADCAST_NAME_KEY,
+        #                         size_group=size_group)
+        # section.add_row(widget)
+
+        self.settings_widget = GSettingsSwitch(_("Show a Warpinator icon in the notification area"),
+                                               PREFS_SCHEMA, TRAY_ICON_KEY)
+        section.add_row(self.settings_widget)
+
+        self.settings_widget.settings.delay()
 
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
-        section.add_row(widget)
+
+        section.add_reveal_row(widget, PREFS_SCHEMA, TRAY_ICON_KEY)
 
         widget = GSettingsSwitch(_("Pin the window by default"),
                                  PREFS_SCHEMA, START_PINNED_KEY)
@@ -85,21 +124,22 @@ class Preferences(Gtk.Window):
                                       PREFS_SCHEMA, FOLDER_NAME_KEY,
                                       size_group=size_group, dir_select=True)
         section.add_row(widget)
-        if transfer_active:
-            widget.set_sensitive(False)
-            widget.set_tooltip_text("Changes to the save location are not allowed while there are active transfers")
-
-        widget = GSettingsSwitch(_("Abort transfer if files exist"),
-                                 PREFS_SCHEMA, NO_OVERWRITE_KEY)
-        section.add_row(widget)
 
         widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
         section.add_row(widget)
 
+        widget = GSettingsSwitch(_("Prompt recipient before overwriting files"),
+                                 PREFS_SCHEMA, NO_OVERWRITE_KEY)
+        section.add_row(widget)
+
+        widget = GSettingsSwitch(_("Display a notification when someone sends (or tries to send) you files"),
+                                 PREFS_SCHEMA, SHOW_NOTIFICATIONS_KEY)
+        section.add_row(widget)
+
         section = page.add_section(_("Network"))
 
-        widget = GSettingsSpinButton(_("Port to use for traffic (program restart required)."),
+        widget = GSettingsSpinButton(_("Incoming port for transfers"),
                                      PREFS_SCHEMA, PORT_KEY, mini=1024, maxi=49151, step=1, page=10, size_group=size_group)
 
         section.add_row(widget)
@@ -113,4 +153,13 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         section.add_row(widget)
 
-        self.show_all()
+        self.window.show_all()
+
+    def apply_clicked(self, widget, data=None):
+        self.settings_widget.settings.apply()
+        self.window.destroy()
+
+    def cancel_clicked(self, widget, data=None):
+        self.settings_widget.settings.revert()
+        self.window.destroy()
+

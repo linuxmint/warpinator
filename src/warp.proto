@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+service Warp {
+    // Sender methods
+    rpc GetRemoteMachineInfo(VoidType) returns (stream RemoteMachineInfo) {}
+    rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
+    rpc RetryTransferOp(OpInfo) returns (VoidType) {}
+    rpc PauseTransferOp(OpInfo) returns (VoidType) {}
+
+    // Receiver methods
+    rpc AcceptTransferOpRequest(OpInfo) returns (VoidType) {}
+    rpc StartTransfer(OpInfo) returns (stream FileChunk) {}
+    rpc ReportProgress(ProgressReport) returns (VoidType) {}
+
+    // Both
+    rpc CancelTransferOpRequest(OpInfo) returns (VoidType) {}
+    rpc StopTransfer(OpInfo) returns (VoidType) {}
+
+    rpc Ping(VoidType) returns (VoidType) {}
+    // rpc CanYouSeeMe(VoidType) returns (Visible) {}
+}
+
+message RemoteMachineInfo {
+    string display_name = 1;
+    bytes avatar_chunk = 2;
+}
+
+message Visible {
+    bool yes_i_can = 1;
+}
+
+message VoidType {
+    int32 dummy = 1;
+}
+
+message OpInfo {
+    string connect_name = 1;
+    uint64 timestamp = 2;
+}
+
+message TransferOpRequest {
+    OpInfo info = 1;
+    string sender_name = 2;
+    string receiver_name = 3;
+    string receiver =4; // don't need for now
+    uint64 size = 5;
+    uint64 count = 6;
+    string name_if_single = 7;
+    string mime_if_single = 8;
+    repeated string top_dir_basenames = 9;
+}
+
+message FileChunk {
+    string relative_path = 1;
+    int32 file_type = 2;
+    string symlink_target = 3;
+    bytes chunk = 4;
+}
+
+message ProgressReport {
+    OpInfo info = 1;
+    float progress = 2;
+    uint64 bytes_per_sec = 3;
+    uint64 time_left_sec = 4;
+}

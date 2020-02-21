@@ -14,13 +14,22 @@ config_py = configure_file(
   configuration: pyconf
 )
 
+# I should be able to generated the protobuf files with custom_target() but I can't install_data()
+# with them.  I may be mistaken.
+meson.add_install_script(
+    join_paths(meson.source_root(), 'install-scripts', 'meson_generate_and_install_protobuf_files.py'),
+    meson.current_source_dir(),
+    'warp.proto')
+
 libexec_py = [
   config_py,
+  'accountsService.py',
+  'ops.py',
   'prefs.py',
-  'pulse.py',
+  'machines.py',
   'transfers.py',
   'util.py',
-  'warp.py',
+  'warp.py'
 ]
 
 install_data(libexec_py,
