@@ -2,20 +2,46 @@ import threading
 import socket
 import gettext
 import math
+import re
 
-from gi.repository import GLib, Gtk
+from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
-TRANSFER_RECEIVE_STATUS_OK = 1
-TRANSFER_RECEIVE_STATUS_ERROR = 2
-TRANSFER_RECEIVE_STATUS_RESEND = 3
-
-TRANSFER_REQUEST_PENDING = 5
-TRANSFER_REQUEST_GRANTED = 6
-TRANSFER_REQUEST_REFUSED = 7
-TRANSFER_REQUEST_CANCELLED = 8
-TRANSFER_REQUEST_DISKFULL = 9
+import prefs
 
 _ = gettext.gettext
+
+from accountsService import AccountsServiceClient
+accounts = AccountsServiceClient()
+
+from enum import IntEnum
+TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
+                                                  FROM_REMOTE_MACHINE')
+
+FileType = IntEnum('FileType', 'REGULAR \
+                                DIRECTORY \
+                                SYMBOLIC_LINK')
+
+OpStatus = IntEnum('OpStatus', 'INIT \
+                                CALCULATING \
+                                WAITING_PERMISSION \
+                                CANCELLED_PERMISSION_BY_SENDER \
+                                CANCELLED_PERMISSION_BY_RECEIVER \
+                                TRANSFERRING \
+                                PAUSED \
+                                STOPPED_BY_SENDER \
+                                STOPPED_BY_RECEIVER \
+                                FAILED \
+                                FINISHED')
+
+OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
+                                  UPDATE_PROGRESS \
+                                  CANCEL_PERMISSION_BY_SENDER \
+                                  CANCEL_PERMISSION_BY_RECEIVER \
+                                  PAUSE_TRANSFER \
+                                  RETRY_TRANSFER \
+                                  STOP_TRANSFER_BY_SENDER \
+                                  STOP_TRANSFER_BY_RECEIVER \
+                                  REMOVE_TRANSFER')
 
 class ProgressCallbackInfo():
     def __init__(self, progress=0, speed_str="", time_left_str="",
@@ -85,13 +111,32 @@ def _idle(func):
         GLib.idle_add(func, *args, **kwargs)
     return wrapper
 
-def getmyip():
+def gfiletype_to_int_enum(gfiletype):
+    if gfiletype == Gio.FileType.DIRECTORY:
+        return FileType.DIRECTORY
+    elif gfiletype == Gio.FileType.SYMBOLIC_LINK:
+        return FileType.SYMBOLIC_LINK
+    else:
+        return FileType.REGULAR
+
+def open_save_folder():
+    app = Gio.AppInfo.get_default_for_type("inode/directory", True)
+    try:
+        file = Gio.File.new_for_uri(prefs.get_save_path())
+        app.launch((file,), None)
+    except GLib.Error as e:
+        print("Could not open received files location: %s" % e.message)
+
+def get_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))
         ans = s.getsockname()[0]
         return ans
 
-def relpath_from_uris(child_uri, base_uri):
+def get_hostname():
+    return GLib.get_host_name()
+
+def relpath_from_uri(child_uri, base_uri):
     child_uri = GLib.uri_unescape_string(child_uri)
     base_uri = GLib.uri_unescape_string(base_uri)
 
@@ -137,3 +182,70 @@ def precise_format_time_span(micro):
     hdec, total_hours = math.modf(total_minutes / 60)
     hours = total_hours % 60
     return ("%02d:%02d:%02d.%s" % (hours, minutes, seconds, str(sdec)[2:5]))
+
+def get_global_scale_factor():
+    screen = Gdk.Screen.get_default()
+
+    v = GObject.Value(int)
+
+    if screen.get_setting("gdk-window-scaling-factor", v):
+        return v.get_value()
+
+    return 1
+
+class CairoSurfaceLoader(GObject.Object):
+    __gsignals__ = {
+        # 'surface-ready': (GObject.SignalFlags.RUN_LAST, None, (cairo.Surface,))
+        'error': (GObject.SignalFlags.RUN_LAST, None, ())
+    }
+
+    def __init__(self, icon_size=Gtk.IconSize.DND):
+        self.loader =GdkPixbuf.PixbufLoader()
+        self.loader.connect("size-prepared", self.on_loader_size_prepared)
+
+        s, w, h = Gtk.IconSize.lookup(icon_size)
+
+        self.surface_size = w
+        self.pixbuf_size = w * get_global_scale_factor()
+
+    def on_loader_size_prepared(self, loader, width, height, data=None):
+        new_width = self.pixbuf_size
+        new_height = self.pixbuf_size
+
+        if width != height:
+            if width > height:
+                aspect_ratio = height / width
+
+                new_width = self.target_size
+                new_height = new_width * aspect_ratio
+            else:
+                aspect_ratio = width / height
+
+                new_height = self.target_size
+                new_width = new_height * aspect_ratio
+
+        self.loader.set_size(new_width, new_height)
+
+    def add_bytes(self, _bytes):
+        try:
+            self.loader.write_bytes(GLib.Bytes(_bytes))
+        except GLib.Error:
+            try:
+                self.loader.close()
+            except:
+                pass
+
+            self.emit("error")
+
+    def get_surface(self):
+        try:
+            self.loader.close()
+            pixbuf = self.loader.get_pixbuf()
+
+            if pixbuf:
+                surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf,
+                                                               get_global_scale_factor(),
+                                                               None)
+                return surface
+        except:
+            self.emit("error")

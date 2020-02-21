@@ -20,6 +20,7 @@ AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 PORT_KEY = "port"
+FAVORITES_KEY = "favorites"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -28,6 +29,9 @@ def get_nick():
 
 def get_port():
     return prefs_settings.get_int(PORT_KEY)
+
+def get_server_port():
+    return prefs_settings.get_int(PORT_KEY) + 1
 
 def get_save_path():
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)
@@ -49,8 +53,21 @@ def require_permission_for_transfer():
 def prevent_overwriting():
     return prefs_settings.get_boolean(NO_OVERWRITE_KEY)
 
+def get_is_favorite(hostname):
+    return hostname in prefs_settings.get_strv(FAVORITES_KEY)
+
+def toggle_favorite(hostname):
+    faves = prefs_settings.get_strv(FAVORITES_KEY)
+
+    if hostname in faves:
+        faves.remove(hostname)
+    else:
+        faves.append(hostname)
+
+    prefs_settings.set_strv(FAVORITES_KEY, faves)
+
 class Preferences(Gtk.Window):
-    def __init__(self, transfer_active):
+    def __init__(self):
         super(Preferences, self).__init__(modal=True, title=_("Warp Preferences"))
 
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
@@ -59,13 +76,10 @@ class Preferences(Gtk.Window):
         self.add(page)
         section = page.add_section(_("General"))
 
-        widget = GSettingsEntry(_("Nickname"),
+        widget = GSettingsEntry(_("Display name"),
                                 PREFS_SCHEMA, BROADCAST_NAME_KEY,
                                 size_group=size_group)
         section.add_row(widget)
-        if transfer_active:
-            widget.set_sensitive(False)
-            widget.set_tooltip_text("Nickname changes are not allowed while there are active transfers")
 
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
@@ -84,13 +98,6 @@ class Preferences(Gtk.Window):
         widget = GSettingsFileChooser(_("Location for received files"),
                                       PREFS_SCHEMA, FOLDER_NAME_KEY,
                                       size_group=size_group, dir_select=True)
-        section.add_row(widget)
-        if transfer_active:
-            widget.set_sensitive(False)
-            widget.set_tooltip_text("Changes to the save location are not allowed while there are active transfers")
-
-        widget = GSettingsSwitch(_("Abort transfer if files exist"),
-                                 PREFS_SCHEMA, NO_OVERWRITE_KEY)
         section.add_row(widget)
 
         widget = GSettingsSwitch(_("Require approval before accepting files"),

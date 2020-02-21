@@ -32,6 +32,11 @@
       <summary>Start transfers automatically or require permission</summary>
       <description>If true, every transfer initiated must first be approved by the receiving user. If false, transfers start automatically.</description>
     </key>
+    <key name="favorites" type="as">
+      <default>[]</default>
+      <summary>List of favorite (starred) remote hostnames</summary>
+      <description>These will always be at the top of the user list.</description>
+    </key> 
     <key name="no-overwrite" type="b">
       <default>true</default>
       <summary>Abort transfers when the destination files already exist</summary>
