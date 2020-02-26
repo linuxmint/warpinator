@@ -1,12 +1,8 @@
-import locale
 import gettext
 
 from xapp.GSettingsWidgets import *
 from xapp.SettingsWidgets import SettingsWidget
-from gi.repository import Gtk, Gio
-
-import config
-import util
+from gi.repository import Gtk, Gio, GLib
 
 _ = gettext.gettext
 

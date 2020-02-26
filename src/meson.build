@@ -26,9 +26,7 @@ libexec_py = [
   'accountsService.py',
   'isolatedProxy.py',
   'prefs.py',
-  'pulse.py',
   'remote.py',
-  'surfaceImage.py',
   'transfers.py',
   'util.py',
   'warp.py'

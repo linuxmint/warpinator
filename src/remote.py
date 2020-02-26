@@ -1,11 +1,9 @@
-import rpyc
 import socket
 import time
 import os
 import threading
 import gettext
 from concurrent import futures
-from enum import Enum
 
 from gi.repository import GObject, GLib, Gio
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
@@ -20,7 +18,6 @@ import transfers
 from util import TransferDirection, OpStatus, OpCommand
 
 _ = gettext.gettext
-
 
 #typedef
 void = warp_pb2.VoidType()
@@ -176,7 +173,7 @@ class RemoteMachine(Machine):
 
         op.set_status(OpStatus.FINISHED)
 
-    def stop_transfer_op(self, op):
+    def stop_transfer_op(self, op, by_sender=False):
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
         else:
@@ -501,7 +498,7 @@ class SendOp(GObject.Object):
         self.size_string = "--" # I'd say 'Unknown' but that might be long enough to expand the label
         self.description = "--"
         self.mime_if_single = "application/octet-stream" # unknown
-        self.gicon = None
+        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
         self.progress = 0.0
         self.resolved_files = []
 
@@ -543,7 +540,6 @@ class SendOp(GObject.Object):
 
         self.progress = report.progress
         if self.progress == 1.0:
-            print("finisheeeeeed")
             self.status = OpStatus.FINISHED
             self.emit_status_changed()
             return
@@ -604,7 +600,7 @@ class ReceiveOp(GObject.Object):
         self.size_string = "--" # I'd say 'Unknown' but that might be long enough to expand the label
         self.description = "--"
         self.mime_if_single = "application/octet-stream" # unknown
-        self.gicon = None
+        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
         self.current_progress_report = None
         self.progress = 0.0

@@ -1,7 +1,5 @@
 import os
 import gettext
-import time
-
 
 from gi.repository import GLib, Gio, GObject
 

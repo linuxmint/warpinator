@@ -2,7 +2,6 @@ import threading
 import socket
 import gettext
 import math
-import re
 
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
