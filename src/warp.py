@@ -110,9 +110,11 @@ class TransferItem(GObject.Object):
             self.builder.get_object(name).props.visible = True
 
     def refresh_status_widgets(self):
-        if self.op.status in (OpStatus.TRANSFERRING, OpStatus.PAUSED):
+        if self.op.status == OpStatus.TRANSFERRING:
             self.op_progress_bar.set_fraction(self.op.progress)
             self.op_progress_bar.set_text(self.op.progress_text)
+        elif self.op.status == OpStatus.PAUSED:
+            self.op_progress_bar.set_text(_("Paused"))
         if self.op.status == OpStatus.WAITING_PERMISSION:
             if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
                 self.op_transfer_status_message.set_text(_("Waiting for approval"))
@@ -163,7 +165,6 @@ class TransferItem(GObject.Object):
                 self.set_visible_buttons(TRANSFER_RECEIVING_BUTTONS)
         elif self.op.status == OpStatus.PAUSED:
             self.op_status_stack.set_visible_child_name("progress-bar")
-
             if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
                 self.set_visible_buttons(TRANSFER_PAUSED_SENDING_BUTTONS)
             else:
@@ -229,6 +230,10 @@ class RemoteMachineButton(GObject.Object):
         self.remote_machine = remote_machine
         self.remote_machine_changed_id = self.remote_machine.connect("machine-info-changed",
                                                                      self._update_machine_info)
+        self.remote_machine_changed_id = self.remote_machine.connect("new-incoming-op",
+                                                                     self._handle_new_incoming_op)
+
+        self.new_ops = 0
 
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
         self.button = self.builder.get_object("overview_user_button")
@@ -237,6 +242,8 @@ class RemoteMachineButton(GObject.Object):
         self.hostname_label = self.builder.get_object("overview_user_hostname")
         self.ip_label = self.builder.get_object("overview_user_ip")
         self.favorite_image = self.builder.get_object("overview_user_favorite")
+        self.new_transfer_notify_label = self.builder.get_object("new_transfer_notify_label")
+        self.new_transfer_notify_box = self.builder.get_object("new_transfer_notify_box")
 
         self.button.connect("clicked", lambda button: self.emit("clicked"))
 
@@ -253,6 +260,7 @@ class RemoteMachineButton(GObject.Object):
         # Convenience for window to sort and remove buttons
         self.button.remote_machine = remote_machine
         self.button.connect_name = remote_machine.connect_name
+        self.button._delegate = self
 
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
@@ -268,6 +276,20 @@ class RemoteMachineButton(GObject.Object):
 
         self.emit("update-sort")
         self.button.show_all()
+
+    def _handle_new_incoming_op(self, remote_machine, op):
+        self.new_ops += 1
+        self.new_transfer_notify_box.show()
+
+        text = gettext.ngettext("%d new incoming transfer",
+                                "%d new incoming transfers", self.new_ops) % (self.new_ops,)
+        self.new_transfer_notify_label.set_text(text)
+        self.button.get_style_context().add_class("suggested-action")
+
+    def clear_new_op_notification(self):
+        self.new_ops = 0
+        self.new_transfer_notify_box.hide()
+        self.button.get_style_context().remove_class("suggested-action")
 
     def refresh_favorite_icon(self):
         if self.remote_machine.favorite:
@@ -481,11 +503,25 @@ class WarpWindow(GObject.Object):
         if not self.current_selected_remote_machine:
             return
 
-        for op in self.current_selected_remote_machine.transfer_ops:
+        # In our list box in the window's scrolled view we want most recent
+        # at the top.
+        ops = self.current_selected_remote_machine.transfer_ops.copy()
+        ops.reverse()
+
+        for op in ops:
             self.user_op_list.add(TransferItem(op).item)
 
     def back_to_overview(self, button=None, data=None):
         self.view_stack.set_visible_child_name("overview")
+
+        # clear new op notification on overview button for the one
+        # we just visited.
+        buttons = self.user_list_box.get_children()
+
+        for child in buttons:
+            if child.connect_name == self.current_selected_remote_machine.connect_name:
+                child._delegate.clear_new_op_notification()
+
         self.current_selected_remote_machine = None
         self.clear_user_view()
         self.sort_buttons()

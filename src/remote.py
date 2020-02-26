@@ -58,7 +58,8 @@ class Machine(GObject.Object):
 # client
 class RemoteMachine(Machine):
     __gsignals__ = {
-        'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ())
+        'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
+        'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,))
     }
 
     def __init__(self, *args, local_service_name=None):
@@ -73,7 +74,7 @@ class RemoteMachine(Machine):
 
     @util._idle
     def start(self):
-        print("Connecting to %s", self.connect_name)
+        print("Connecting to %s" % self.connect_name)
         self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port))
         future = grpc.channel_ready_future(self.channel)
         future.add_done_callback(self.channel_ready_cb)
@@ -210,6 +211,8 @@ class RemoteMachine(Machine):
         op.connect("status-changed", self.emit_ops_changed)
         op.connect("op-command", self.op_command_issued)
         op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
+        if isinstance(op, ReceiveOp):
+            self.emit("new-incoming-op", op)
         self.emit_ops_changed()
 
     @util._idle
@@ -495,8 +498,8 @@ class SendOp(GObject.Object):
 
         self.total_size = 0
         self.total_count = 0
-        self.size_string = "--" # I'd say 'Unknown' but that might be long enough to expand the label
-        self.description = "--"
+        self.size_string = "" # I'd say 'Unknown' but that might be long enough to expand the label
+        self.description = ""
         self.mime_if_single = "application/octet-stream" # unknown
         self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
         self.progress = 0.0
@@ -532,8 +535,9 @@ class SendOp(GObject.Object):
             self.description = self.resolved_files[0].basename
             self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
-        self.status = OpStatus.WAITING_PERMISSION
+        self.set_status(OpStatus.WAITING_PERMISSION)
         self.emit_initial_setup_complete()
+        self.emit_status_changed()
 
     def progress_report(self, report):
         self.current_progress_report = report

@@ -40,6 +40,24 @@
     <property name="can_focus">False</property>
     <property name="icon_name">folder-open-symbolic</property>
   </object>
+  <object class="GtkImage" id="image7">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">center</property>
+    <property name="icon_name">window-close-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image8">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">center</property>
+    <property name="icon_name">view-refresh-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image9">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">center</property>
+    <property name="icon_name">list-remove-symbolic</property>
+  </object>
   <object class="GtkBox" id="transfer_item">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -93,6 +111,7 @@
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">1gb</property>
         <property name="width_chars">10</property>
+        <property name="max_width_chars">10</property>
       </object>
       <packing>
         <property name="expand">False</property>
@@ -107,6 +126,7 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="op_status_stack">
+            <property name="width_request">175</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">2</property>
@@ -123,6 +143,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Awaiting approval</property>
+                    <property name="wrap">True</property>
+                    <property name="width_chars">30</property>
+                    <property name="max_width_chars">30</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -177,6 +200,18 @@
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Calculating</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
@@ -345,24 +380,6 @@
       </packing>
     </child>
   </object>
-  <object class="GtkImage" id="image7">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="halign">center</property>
-    <property name="icon_name">window-close-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image8">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="halign">center</property>
-    <property name="icon_name">view-refresh-symbolic</property>
-  </object>
-  <object class="GtkImage" id="image9">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="halign">center</property>
-    <property name="icon_name">list-remove-symbolic</property>
-  </object>
   <object class="GtkButton" id="overview_user_button">
     <property name="height_request">50</property>
     <property name="can_focus">True</property>
@@ -436,7 +453,7 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -450,7 +467,7 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="pack_type">end</property>
-            <property name="position">2</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -462,6 +479,47 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="new_transfer_notify_box">
+            <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">emblem-important-symbolic</property>
+                <property name="icon_size">3</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="new_transfer_notify_label">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">New transfer request</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">False</property>
             <property name="pack_type">end</property>
             <property name="position">3</property>
           </packing>
@@ -813,7 +871,6 @@
                       <object class="GtkScrolledWindow">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">never</property>
                         <property name="shadow_type">in</property>
                         <child>
                           <object class="GtkViewport">
