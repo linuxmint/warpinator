@@ -479,10 +479,16 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
     # receiver server responders
     def StartTransfer(self, request, context):
         op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
-        cancellable = threading.Event() # maybe we'll use this
+        cancellable = threading.Event()
         op.file_send_cancellable = cancellable
 
+        start_time = GLib.get_monotonic_time()
+
         def transfer_done():
+            print("Transfer of %s files (%s) finished in %s" % \
+                (op.total_count, GLib.format_size(op.total_size),\
+                 util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
+
             if op.file_send_cancellable.is_set():
                 print("File send cancelled")
             op.file_send_cancellable = None
