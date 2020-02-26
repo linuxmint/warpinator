@@ -39,7 +39,7 @@ setproctitle.setproctitle("warp")
 ALL_BUTTONS = ("transfer_accept", \
                "transfer_decline", \
                "transfer_cancel_request", \
-               "transfer_retry", \
+               "transfer_restart", \
                "transfer_pause", \
                "transfer_resume", \
                "transfer_stop", \
@@ -53,7 +53,9 @@ TRANSFER_SENDING_BUTTONS = ("transfer_pause", "transfer_stop")
 TRANSFER_RECEIVING_BUTTONS = ("transfer_stop",)
 TRANSFER_PAUSED_SENDING_BUTTONS = ("transfer_resume", "transfer_stop")
 TRANSFER_PAUSED_RECEIVING_BUTTONS = ()
-TRANSFER_FAILED_BUTTONS = ("transfer_retry", "transfer_remove")
+TRANSFER_FAILED_BUTTONS = ("transfer_restart", "transfer_remove")
+TRANSFER_STOPPED_BY_SENDER_BUTTONS = ("transfer_restart", "transfer_remove")
+TRANSFER_STOPPED_BY_RECEIVER_BUTTONS = ("transfer_remove",)
 TRANSFER_CANCELLED_BUTTONS = ("transfer_remove",)
 TRANSFER_COMPLETED_BUTTONS = ("transfer_remove", "transfer_open_folder")
 
@@ -81,7 +83,7 @@ class TransferItem(GObject.Object):
         self.accept_button =  self.builder.get_object("transfer_accept")
         self.decline_button =  self.builder.get_object("transfer_decline")
         self.cancel_button =  self.builder.get_object("transfer_cancel_request")
-        self.retry_button =  self.builder.get_object("transfer_retry")
+        self.restart_button =  self.builder.get_object("transfer_restart")
         self.pause_button =  self.builder.get_object("transfer_pause")
         self.stop_button =  self.builder.get_object("transfer_stop")
         self.remove_button =  self.builder.get_object("transfer_remove")
@@ -90,7 +92,7 @@ class TransferItem(GObject.Object):
         self.accept_button.connect("clicked", self.accept_button_clicked)
         self.decline_button.connect("clicked", self.decline_button_clicked)
         self.cancel_button.connect("clicked", self.cancel_button_clicked)
-        self.retry_button.connect("clicked", self.retry_button_clicked)
+        self.restart_button.connect("clicked", self.restart_button_clicked)
         self.pause_button.connect("clicked", self.pause_button_clicked)
         self.stop_button.connect("clicked", self.stop_button_clicked)
         self.remove_button.connect("clicked", self.remove_button_clicked)
@@ -98,6 +100,14 @@ class TransferItem(GObject.Object):
 
         self.refresh_status_widgets()
         self.refresh_buttons_and_icons()
+
+        self.check_for_autostart()
+
+    @util._idle
+    def check_for_autostart(self):
+        if self.op.status == OpStatus.WAITING_PERMISSION:
+            if isinstance(self.op, ReceiveOp) and (not prefs.require_permission_for_transfer()):
+                self.op.accept_transfer()
 
     def update_progress(self, op):
         self.op_progress_bar.set_fraction(self.op.progress)
@@ -127,10 +137,13 @@ class TransferItem(GObject.Object):
             self.op_transfer_status_message.set_text(_("Request cancelled by %s") % self.op.sender_name)
         elif (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_RECEIVER and isinstance(self.op, SendOp)):
             self.op_transfer_status_message.set_text(_("Request cancelled by %s") % self.op.receiver_name)
-        elif self.op.status == OpStatus.STOPPED_BY_SENDER:
-            self.op_transfer_status_message.set_text(_("Cancelled"))
-        elif self.op.status == OpStatus.STOPPED_BY_RECEIVER:
-            self.op_transfer_status_message.set_text(_("Cancelled by %s") % util.accounts.get_real_name())
+        elif (self.op.status == OpStatus.STOPPED_BY_SENDER and isinstance(self.op, SendOp)) or \
+            (self.op.status == OpStatus.STOPPED_BY_RECEIVER and isinstance(self.op, ReceiveOp)):
+            self.op_transfer_status_message.set_text(_("Transfer cancelled"))
+        elif (self.op.status == OpStatus.STOPPED_BY_SENDER and isinstance(self.op, ReceiveOp)):
+            self.op_transfer_status_message.set_text(_("Transfer cancelled by %s") % self.op.sender_name)
+        elif (self.op.status == OpStatus.STOPPED_BY_RECEIVER and isinstance(self.op, SendOp)):
+            self.op_transfer_status_message.set_text(_("Transfer cancelled by %s") % self.op.receiver_name)
         elif self.op.status == OpStatus.FAILED:
             self.op_transfer_status_message.set_text(_("Transfer failed"))
         elif self.op.status == OpStatus.FINISHED:
@@ -151,14 +164,12 @@ class TransferItem(GObject.Object):
             self.set_visible_buttons(INIT_BUTTONS)
         elif self.op.status == OpStatus.WAITING_PERMISSION:
             self.op_status_stack.set_visible_child_name("message")
-
             if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
                 self.set_visible_buttons(PERM_TO_SEND_BUTTONS)
             else:
                 self.set_visible_buttons(PERM_TO_ACCEPT_BUTTONS)
         elif self.op.status == OpStatus.TRANSFERRING:
             self.op_status_stack.set_visible_child_name("progress-bar")
-
             if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
                 self.set_visible_buttons(TRANSFER_SENDING_BUTTONS)
             else:
@@ -171,20 +182,19 @@ class TransferItem(GObject.Object):
                 self.set_visible_buttons(TRANSFER_PAUSED_RECEIVING_BUTTONS)
         elif self.op.status == OpStatus.FAILED:
             self.op_status_stack.set_visible_child_name("message")
-
             self.set_visible_buttons(TRANSFER_FAILED_BUTTONS)
         elif self.op.status == OpStatus.FINISHED:
             self.op_status_stack.set_visible_child_name("message")
-
             self.set_visible_buttons(TRANSFER_COMPLETED_BUTTONS)
         elif self.op.status in (OpStatus.CANCELLED_PERMISSION_BY_SENDER,
-                                OpStatus.CANCELLED_PERMISSION_BY_RECEIVER,
-                                OpStatus.STOPPED_BY_SENDER,
-                                OpStatus.STOPPED_BY_RECEIVER):
-            self.op_status_stack.set_visible_child_name("message")
-
+                                OpStatus.CANCELLED_PERMISSION_BY_RECEIVER):
             self.set_visible_buttons(TRANSFER_CANCELLED_BUTTONS)
-
+        elif self.op.status == OpStatus.STOPPED_BY_SENDER and isinstance(self.op, SendOp):
+            self.op_status_stack.set_visible_child_name("message")
+            self.set_visible_buttons(TRANSFER_STOPPED_BY_SENDER_BUTTONS)
+        elif self.op.status in (OpStatus.STOPPED_BY_SENDER, OpStatus.STOPPED_BY_RECEIVER):
+            self.op_status_stack.set_visible_child_name("message")
+            self.set_visible_buttons(TRANSFER_STOPPED_BY_RECEIVER_BUTTONS)
 
     def accept_button_clicked(self, button):
         self.op.accept_transfer()
@@ -195,7 +205,7 @@ class TransferItem(GObject.Object):
     def cancel_button_clicked(self, button):
         self.op.cancel_transfer_request()
 
-    def retry_button_clicked(self, button):
+    def restart_button_clicked(self, button):
         self.op.retry_transfer()
 
     def pause_button_clicked(self, button):

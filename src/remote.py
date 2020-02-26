@@ -151,13 +151,8 @@ class RemoteMachine(Machine):
     def update_op_progress(self, op):
         progress_op = self.stub.ReportProgress(op.current_progress_report)
 
-    # def retry_transfer_op(self, op):
-    #     retry_op = warp_pb2.RetryTransferOp(warp_pb2.OpInfo(timestamp=op.start_time,
-    #                                              connect_name=self.connect_name))
-
     # def pause_transfer_op(self, op):
         # stop_op = warp_pb2.PauseTransferOp(warp_pb2.OpInfo(timestamp=op.start_time))
-
         # self.emit("ops-changed")
 
     #### RECEIVER COMMANDS ####
@@ -166,12 +161,18 @@ class RemoteMachine(Machine):
         receiver = transfers.FileReceiver(op)
         op.set_status(OpStatus.TRANSFERRING)
 
-        file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                                connect_name=self.local_service_name))
+        op.file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
+                                                                   connect_name=self.local_service_name))
+        try:
+            for data in op.file_iterator:
+                receiver.receive_data(data)
+        except grpc.RpcError as e:
+            if op.file_iterator.code() == grpc.StatusCode.CANCELLED:
+                return
+            else:
+                print("An error occurred receiving data from %s: %s" % (op.sender, op.file_iterator.details()))
 
-        for data in file_iterator:
-            receiver.receive_data(data)
-
+        op.file_iterator = None
         op.set_status(OpStatus.FINISHED)
 
     def stop_transfer_op(self, op, by_sender=False):
@@ -179,9 +180,18 @@ class RemoteMachine(Machine):
             name = op.sender
         else:
             name = self.local_service_name
-        stop_op = self.stub.StopTransferOp(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                           connect_name=name))
-        op.set_status(OpStatus.STOPPED_BY_SENDER if by_sender else OpStatus.STOPPED_BY_RECEIVER)
+
+        if by_sender:
+            print("stop transfer initiated by sender")
+            op.file_send_cancellable.set()
+            op.set_status(OpStatus.STOPPED_BY_SENDER)
+        else:
+            print("stop transfer initiated by receiver")
+            op.file_iterator.cancel()
+            op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+
+        stop_op = self.stub.StopTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
+                                                         connect_name=name))
 
     @util._async
     def send_files(self, uri_list):
@@ -210,7 +220,8 @@ class RemoteMachine(Machine):
         self.transfer_ops.append(op)
         op.connect("status-changed", self.emit_ops_changed)
         op.connect("op-command", self.op_command_issued)
-        op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
+        if isinstance(op, SendOp):
+            op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
         if isinstance(op, ReceiveOp):
             self.emit("new-incoming-op", op)
         self.emit_ops_changed()
@@ -235,7 +246,8 @@ class RemoteMachine(Machine):
             self.pause_transfer_op(op)
         elif command == OpCommand.STOP_TRANSFER_BY_SENDER:
             self.stop_transfer_op(op, by_sender=True)
-
+        elif command == OpCommand.RETRY_TRANSFER:
+            self.send_transfer_op_request(op)
         elif command == OpCommand.REMOVE_TRANSFER:
             self.remove_op(op)
         # receive
@@ -359,7 +371,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
             print("Server running")
             self.server_runlock.wait()
             print("Server stopping")
-            self.server.stop(grace=5).wait()
+            self.server.stop(grace=2).wait()
             self.emit_shutdown_complete()
 
     def shutdown(self):
@@ -399,6 +411,12 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         return transfers.load_file_in_chunks(path)
 
     def ProcessTransferOpRequest(self, request, context):
+        remote_machine = self.remote_machines[request.sender]
+        for existing_op in remote_machine.transfer_ops:
+            if existing_op.start_time == request.timestamp:
+                existing_op.set_status(OpStatus.WAITING_PERMISSION)
+                return void
+
         op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.sender)
 
         op.sender_name = request.sender_name
@@ -412,7 +430,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         op.name_if_single = request.name_if_single
         op.top_dir_basenames = request.top_dir_basenames
 
-        op.connect("initial-setup-complete", self.add_receive_op_to_local_machine)
+        op.connect("initial-setup-complete", self.add_receive_op_to_remote_machine)
         op.prepare_receive_info()
 
         return void
@@ -442,17 +460,6 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         # pause how?
         return void
 
-    def StopTransferOp(self, request, context):
-        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
-
-        if op.direction == TransferDirection.TO_REMOTE_MACHINE:
-            op.set_status(OpStatus.STOPPED_BY_SENDER)
-        else:
-            # cancel..receiver is pulling so he stops
-            op.set_status(OpStatus.STOPPED_BY_RECEIVER)
-
-        return void
-
     def ReportProgress(self, request, context):
         op = self.remote_machines[request.info.connect_name].lookup_op(request.info.timestamp)
         op.update_progress(request)
@@ -462,16 +469,37 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
     # receiver server responders
     def StartTransfer(self, request, context):
         op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
+        cancellable = threading.Event() # maybe we'll use this
+        op.file_send_cancellable = cancellable
+
+        def transfer_done():
+            if op.file_send_cancellable.is_set():
+                print("File send cancelled")
+            op.file_send_cancellable = None
+
+        context.add_callback(transfer_done)
         op.set_status(OpStatus.TRANSFERRING)
-        sender = transfers.FileSender(op, self.service_name, request.timestamp)
+
+        sender = transfers.FileSender(op, self.service_name, request.timestamp, cancellable)
         return sender.read_chunks()
 
-    def StopReceivingTransferOpRequest(self, request, context):
-        op = self.remote_machines[request.connect_name]
+    def StopTransfer(self, request, context):### good
+        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
+
+        # If we receive this call, this means the op was stopped remotely.  So,
+        # our op with TO_REMOTE_MACHINE (we initiated it) was cancelled by the recipient.
+        if op.direction == TransferDirection.TO_REMOTE_MACHINE:
+            op.file_send_cancellable.set()
+            print("Sender received stop transfer by receiver")
+            op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+        else:
+            op.file_iterator.cancel()
+            print("Receiver received stop transfer by sender")
+            op.set_status(OpStatus.STOPPED_BY_SENDER)
 
         return void
 
-    def add_receive_op_to_local_machine(self, op):
+    def add_receive_op_to_remote_machine(self, op):
         self.remote_machines[op.sender].add_op(op)
 
 # This represents a send or receive 'job', there would be potentially many of these.
@@ -492,7 +520,6 @@ class SendOp(GObject.Object):
         self.receiver_name = receiver_name
         self.direction = direction
         self.status = OpStatus.INIT
-        self.transfer_request_sent = False
 
         self.start_time = GLib.get_monotonic_time() # for sorting in the op list
 
@@ -502,8 +529,9 @@ class SendOp(GObject.Object):
         self.description = ""
         self.mime_if_single = "application/octet-stream" # unknown
         self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
-        self.progress = 0.0
         self.resolved_files = []
+
+        self.file_send_cancellable = None
 
         self.current_progress_report = None
         self.progress = 0.0
@@ -595,7 +623,6 @@ class ReceiveOp(GObject.Object):
         self.receiver_name = util.accounts.get_real_name()
         self.direction = direction
         self.status = OpStatus.INIT
-        self.transfer_request_sent = False
 
         self.start_time = GLib.get_monotonic_time() # for sorting in the op list
 
@@ -605,6 +632,10 @@ class ReceiveOp(GObject.Object):
         self.description = "--"
         self.mime_if_single = "application/octet-stream" # unknown
         self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
+
+        # This is set when a transfer starts - it's a grpc.Future that we can cancel() if the user
+        # wants the transfer to stop.
+        self.file_iterator = None
 
         self.current_progress_report = None
         self.progress = 0.0

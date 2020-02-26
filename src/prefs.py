@@ -100,6 +100,10 @@ class Preferences(Gtk.Window):
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
         section.add_row(widget)
 
+        widget = GSettingsSwitch(_("Prompt recipient before overwriting files"),
+                                 PREFS_SCHEMA, NO_OVERWRITE_KEY)
+        section.add_row(widget)
+
         section = page.add_section(_("Network"))
 
         widget = GSettingsSpinButton(_("Port to use for traffic (program restart required)."),

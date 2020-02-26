@@ -43,17 +43,26 @@ class File:
 class FileSender(GObject.Object):
     UPDATE_FREQ = 1024 * 1024 * 4
     CHUNK_SIZE = 1024 * 1024
-    def __init__(self, op, connect_name, timestamp):
+    def __init__(self, op, connect_name, timestamp, cancellable):
         super(FileSender, self).__init__()
         self.op = op
         self.connect_name = connect_name
         self.timestamp = timestamp
+        self.cancellable = cancellable
+
+        op.progress = 0.0
+        op.current_progress_report = None
+        op.progress_text = None
+
         self.transfer_start_time = GLib.get_monotonic_time()
         self.last_update_time = self.transfer_start_time
         self.current_bytes_read = 0
 
     def read_chunks(self):
         for file in self.op.resolved_files:
+            if self.cancellable.is_set():
+                return # StopIteration as different behaviors between 3.5 and 3.7, this works as well.
+
             if file.file_type == FileType.DIRECTORY:
                 yield warp_pb2.FileChunk(relative_path=file.relative_path,
                                          file_type=file.file_type)
@@ -65,6 +74,9 @@ class FileSender(GObject.Object):
                 gfile = Gio.File.new_for_uri(file.uri)
                 stream = gfile.read(None)
                 while True:
+                    if self.cancellable.is_set():
+                        return
+
                     b = stream.read_bytes(self.CHUNK_SIZE, None)
                     size_read = b.get_size()
                     self.update_progress(size_read=size_read)
@@ -106,6 +118,11 @@ class FileReceiver(GObject.Object):
         super(FileReceiver, self).__init__()
         self.save_path = prefs.get_save_path()
         self.op = op
+
+        op.current_progress_report = None
+        op.progress = 0.0
+        op.progress_text = None
+
         self.current_path = None
         self.current_gfile = None
         self.current_stream = None
