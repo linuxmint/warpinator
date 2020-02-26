@@ -369,6 +369,16 @@ class WarpWindow(GObject.Object):
         self.user_hostname_label = self.builder.get_object("user_hostname")
         self.user_ip_label = self.builder.get_object("user_ip")
         self.user_op_list = self.builder.get_object("user_op_list")
+        self.user_send_button = self.builder.get_object("user_send_button")
+
+        # Send Files button
+        self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
+        self.recent_menu.connect("item-activated", self.recent_item_selected)
+        self.recent_menu.add(Gtk.SeparatorMenuItem(visible=True))
+        picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
+        picker.connect("activate", self.open_file_picker)
+        self.recent_menu.add(picker)
+        self.user_send_button.set_popup(self.recent_menu)
 
         self.view_stack.set_visible_child_name("startup")
 
@@ -407,6 +417,22 @@ class WarpWindow(GObject.Object):
                             lambda widget, event: self.emit("exit"))
 
         self.update_local_user_info()
+
+    def recent_item_selected(self, recent_chooser, data=None):
+        uri = self.recent_menu.get_current_uri()
+
+        self.current_selected_remote_machine.send_files([uri])
+
+    def open_file_picker(self, button, data=None):
+        dialog = util.create_file_and_folder_picker()
+
+        res = dialog.run()
+
+        if res == Gtk.ResponseType.ACCEPT:
+            uri_list = dialog.get_uris()
+            self.current_selected_remote_machine.send_files(uri_list)
+
+        dialog.destroy()
 
     def on_drag_drop(self, widget, context, x, y, time, data=None):
         atom =  widget.drag_dest_find_target(context, None)
