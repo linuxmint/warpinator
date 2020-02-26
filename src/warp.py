@@ -57,7 +57,8 @@ TRANSFER_FAILED_BUTTONS = ("transfer_restart", "transfer_remove")
 TRANSFER_STOPPED_BY_SENDER_BUTTONS = ("transfer_restart", "transfer_remove")
 TRANSFER_STOPPED_BY_RECEIVER_BUTTONS = ("transfer_remove",)
 TRANSFER_CANCELLED_BUTTONS = ("transfer_remove",)
-TRANSFER_COMPLETED_BUTTONS = ("transfer_remove", "transfer_open_folder")
+TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
+TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
 
 class TransferItem(GObject.Object):
     # __gsignals__ = {
@@ -100,14 +101,6 @@ class TransferItem(GObject.Object):
 
         self.refresh_status_widgets()
         self.refresh_buttons_and_icons()
-
-        self.check_for_autostart()
-
-    @util._idle
-    def check_for_autostart(self):
-        if self.op.status == OpStatus.WAITING_PERMISSION:
-            if isinstance(self.op, ReceiveOp) and (not prefs.require_permission_for_transfer()):
-                self.op.accept_transfer()
 
     def update_progress(self, op):
         self.op_progress_bar.set_fraction(self.op.progress)
@@ -185,7 +178,10 @@ class TransferItem(GObject.Object):
             self.set_visible_buttons(TRANSFER_FAILED_BUTTONS)
         elif self.op.status == OpStatus.FINISHED:
             self.op_status_stack.set_visible_child_name("message")
-            self.set_visible_buttons(TRANSFER_COMPLETED_BUTTONS)
+            if isinstance(self.op, SendOp):
+                self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
+            else:
+                self.set_visible_buttons(TRANSFER_COMPLETED_RECEIVER_BUTTONS)
         elif self.op.status in (OpStatus.CANCELLED_PERMISSION_BY_SENDER,
                                 OpStatus.CANCELLED_PERMISSION_BY_RECEIVER):
             self.set_visible_buttons(TRANSFER_CANCELLED_BUTTONS)

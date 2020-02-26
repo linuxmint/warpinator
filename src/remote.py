@@ -217,14 +217,22 @@ class RemoteMachine(Machine):
 
     @util._idle
     def add_op(self, op):
-        self.transfer_ops.append(op)
-        op.connect("status-changed", self.emit_ops_changed)
-        op.connect("op-command", self.op_command_issued)
-        if isinstance(op, SendOp):
-            op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
-        if isinstance(op, ReceiveOp):
-            self.emit("new-incoming-op", op)
+        if op not in self.transfer_ops:
+            self.transfer_ops.append(op)
+            op.connect("status-changed", self.emit_ops_changed)
+            op.connect("op-command", self.op_command_issued)
+            if isinstance(op, SendOp):
+                op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
+            if isinstance(op, ReceiveOp):
+                self.emit("new-incoming-op", op)
         self.emit_ops_changed()
+        self.check_for_autostart(op)
+
+    @util._idle
+    def check_for_autostart(self, op):
+        if op.status == OpStatus.WAITING_PERMISSION:
+            if isinstance(op, ReceiveOp) and (not prefs.require_permission_for_transfer()):
+                op.accept_transfer()
 
     @util._idle
     def remove_op(self, op):
@@ -247,6 +255,7 @@ class RemoteMachine(Machine):
         elif command == OpCommand.STOP_TRANSFER_BY_SENDER:
             self.stop_transfer_op(op, by_sender=True)
         elif command == OpCommand.RETRY_TRANSFER:
+            op.set_status(OpStatus.WAITING_PERMISSION)
             self.send_transfer_op_request(op)
         elif command == OpCommand.REMOVE_TRANSFER:
             self.remove_op(op)
@@ -415,6 +424,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         for existing_op in remote_machine.transfer_ops:
             if existing_op.start_time == request.timestamp:
                 existing_op.set_status(OpStatus.WAITING_PERMISSION)
+                self.add_receive_op_to_remote_machine(existing_op)
                 return void
 
         op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.sender)
