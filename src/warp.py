@@ -227,7 +227,8 @@ class RemoteMachineButton(GObject.Object):
     __gsignals__ = {
         'update-sort': (GObject.SignalFlags.RUN_LAST, None, ()),
         'clicked': (GObject.SignalFlags.RUN_LAST, None, ()),
-        'files-dropped': (GObject.SignalFlags.RUN_LAST, None, ())
+        'files-dropped': (GObject.SignalFlags.RUN_LAST, None, ()),
+        'need-attention': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
     def __init__(self, remote_machine):
@@ -291,6 +292,7 @@ class RemoteMachineButton(GObject.Object):
                                 "%d new incoming transfers", self.new_ops) % (self.new_ops,)
         self.new_transfer_notify_label.set_text(text)
         self.button.get_style_context().add_class("suggested-action")
+        self.emit("need-attention")
 
     def clear_new_op_notification(self):
         self.new_ops = 0
@@ -422,6 +424,9 @@ class WarpWindow(GObject.Object):
         self.window.connect("delete-event",
                             lambda widget, event: self.emit("exit"))
 
+        self.window.connect("focus-in-event",
+                            lambda window, event: window.set_urgency_hint(False))
+
         self.update_local_user_info()
 
     def recent_item_selected(self, recent_chooser, data=None):
@@ -484,6 +489,7 @@ class WarpWindow(GObject.Object):
         button.connect("update-sort", self.sort_buttons)
         button.connect("files-dropped", self.remote_machine_files_dropped)
         button.connect("clicked", self.remote_machine_button_clicked)
+        button.connect("need-attention", self._get_user_attention)
 
         self.user_list_box.add(button.button)
         self.sort_buttons()
@@ -506,6 +512,10 @@ class WarpWindow(GObject.Object):
 
     def remote_machine_files_dropped(self, button):
         self.switch_to_user_view(button.remote_machine)
+
+    def _get_user_attention(self, button):
+        if not self.window.is_active():
+            self.window.set_urgency_hint(True)
 
     def switch_to_user_view(self, remote_machine):
         self.view_stack.set_visible_child_name("user")
@@ -671,7 +681,6 @@ class WarpApplication(Gtk.Application):
 
     def _remote_ops_changed(self, local_machine, name):
         self.window.refresh_remote_machine_view()
-
 
     ####  BROWSER ##############################################
 
