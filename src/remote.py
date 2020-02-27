@@ -65,7 +65,8 @@ class Machine(GObject.Object):
 class RemoteMachine(Machine):
     __gsignals__ = {
         'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
-        'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,))
+        'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
+        'connected': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
     def __init__(self, *args, local_service_name=None):
@@ -104,6 +105,8 @@ class RemoteMachine(Machine):
     def get_remote_info(self):
         self.update_machine_name_info()
         self.get_machine_user_avatar()
+
+        self.emit("connected")
 
     def update_machine_name_info(self):
         def finished_cb(future):
@@ -303,7 +306,7 @@ class RemoteMachine(Machine):
 
     def shutdown(self):
         print("Shutdown - closing connection to remote machine '%s'" % self.connect_name)
-        # self.channel.close()
+        self.channel.close()
 
 # server
 class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
@@ -312,6 +315,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         "remote-machine-removed": (GObject.SignalFlags.RUN_LAST, None, (object,)),
         "remote-machine-ops-changed": (GObject.SignalFlags.RUN_LAST, None, (str,)),
 
+        "server-started": (GObject.SignalFlags.RUN_LAST, None, ()),
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
     def __init__(self, *args):
@@ -324,9 +328,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
 
         util.accounts.connect("account-loaded", self.user_account_loaded)
 
-        self.start_zeroconf()
         self.start_server()
-        self.start_remote_lookout()
 
     def user_account_loaded(self, client):
         self.display_name = util.accounts.get_real_name()
@@ -377,8 +379,12 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
                 machine.start()
 
             machine.connect("ops-changed", self.remote_ops_changed)
+            machine.connect("connected", self.remote_connected)
             self.remote_machines[name] = machine
-            self.emit("remote-machine-added", machine)
+
+    @util._idle
+    def remote_connected(self, remote_machine):
+        self.emit("remote-machine-added", remote_machine)
 
     @util._idle
     def remote_ops_changed(self, remote_machine):
@@ -400,6 +406,10 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         self.server.add_insecure_port('[::]:%d' % prefs.get_server_port())
         self.server.start()
 
+        self.emit("server-started")
+
+        self.start_discovery_services()
+
         with self.server_runlock:
             print("Server running")
             self.server_runlock.wait()
@@ -407,13 +417,22 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
             self.server.stop(grace=2).wait()
             self.emit_shutdown_complete()
 
+    @util._idle
+    def start_discovery_services(self):
+        self.start_zeroconf()
+        self.start_remote_lookout()
+
+    @util._async
     def shutdown(self):
         for machine in self.remote_machines.values():
-            machine.start()
+            machine.shutdown()
 
-        self.zc_srv.unregister_service(self.info)
-        self.zc_cli.close()
-        self.zc_srv.close()
+        try:
+            self.zc_srv.unregister_service(self.info)
+            self.zc_cli.close()
+            self.zc_srv.close()
+        except AttributeError as e:
+            pass # zeroconf never started if the server never started
 
         with self.server_runlock:
             self.server_runlock.notify()

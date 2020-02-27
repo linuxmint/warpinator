@@ -389,6 +389,7 @@ class WarpWindow(GObject.Object):
         self.user_send_button.set_popup(self.recent_menu)
 
         self.view_stack.set_visible_child_name("startup")
+        self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
 
         # Hamburger menu
         menu = Gtk.Menu()
@@ -428,6 +429,12 @@ class WarpWindow(GObject.Object):
                             lambda window, event: window.set_urgency_hint(False))
 
         self.update_local_user_info()
+
+    def server_not_started_timeout(self):
+        self.view_stack.set_visible_child_name("server-problem")
+
+        self.server_start_timeout = 0
+        return False
 
     def recent_item_selected(self, recent_chooser, data=None):
         uri = self.recent_menu.get_current_uri()
@@ -485,6 +492,14 @@ class WarpWindow(GObject.Object):
     def add_remote_button(self, remote_machine):
         self.view_stack.set_visible_child_name("overview")
 
+        if self.discovery_time_out_id > 0:
+            GLib.source_remove(self.discovery_time_out_id)
+            self.discovery_time_out_id = 0
+
+        if self.server_start_timeout_id > 0:
+            GLib.source_remove(self.server_start_timeout_id)
+            self.server_start_timeout_id = 0
+
         button = RemoteMachineButton(remote_machine)
         button.connect("update-sort", self.sort_buttons)
         button.connect("files-dropped", self.remote_machine_files_dropped)
@@ -501,11 +516,32 @@ class WarpWindow(GObject.Object):
             if child.connect_name == remote_machine.connect_name:
                 self.user_list_box.remove(child)
 
-        if len(self.user_list_box.get_children()) == 0:
-            self.view_stack.set_visible_child_name("no-remotes")
-
         self.back_to_overview()
+
+        if len(self.user_list_box.get_children()) == 0:
+            print("start timer")
+            self.start_discovery_timer()
+
         self.sort_buttons()
+
+    def display_shutdown(self):
+        self.view_stack.set_visible_child_name("shutdown")
+
+    def notify_server_started(self):
+        if self.server_start_timeout_id > 0:
+            GLib.source_remove(self.server_start_timeout_id)
+            self.server_start_timeout_id = 0
+
+        self.start_discovery_timer()
+
+    def start_discovery_timer(self):
+        self.discovery_time_out_id = GLib.timeout_add_seconds(6, self.discovery_timed_out)
+        self.view_stack.set_visible_child_name("discovery")
+
+    def discovery_timed_out(self):
+        self.view_stack.set_visible_child_name("no-remotes")
+        self.discovery_time_out_id = 0
+        return False
 
     def remote_machine_button_clicked(self, button):
         self.switch_to_user_view(button.remote_machine)
@@ -632,12 +668,14 @@ class WarpApplication(Gtk.Application):
             self.setup_window()
 
         self.server = remote.LocalMachine()
+        self.server.connect("server-started", self._server_started)
         self.server.connect("remote-machine-added", self._remote_added)
         self.server.connect("remote-machine-removed", self._remote_removed)
         self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
 
     def shutdown(self, window=None):
         print("Beginning shutdown")
+        self.window.display_shutdown()
         self.server.connect("shutdown-complete", self.ok_for_app_quit)
         self.server.shutdown()
 
@@ -681,6 +719,9 @@ class WarpApplication(Gtk.Application):
 
     def _remote_ops_changed(self, local_machine, name):
         self.window.refresh_remote_machine_view()
+
+    def _server_started(self, local_machine):
+        self.window.notify_server_started()
 
     ####  BROWSER ##############################################
 
