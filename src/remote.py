@@ -12,6 +12,12 @@ import grpc
 import warp_pb2
 import warp_pb2_grpc
 
+use_compression = False
+
+if use_compression:
+    from grpc._cython.cygrpc import CompressionAlgorithm
+    from grpc._cython.cygrpc import CompressionLevel
+
 import prefs
 import util
 import transfers
@@ -75,7 +81,17 @@ class RemoteMachine(Machine):
     @util._idle
     def start(self):
         print("Connecting to %s" % self.connect_name)
-        self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port))
+
+        if use_compression:
+            chan_ops = [
+                ('grpc.default_compression_algorithm', CompressionAlgorithm.gzip),
+                ('grpc.grpc.default_compression_level', CompressionLevel.high)
+            ]
+
+            self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port), chan_ops)
+        else:
+            self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port))
+
         future = grpc.channel_ready_future(self.channel)
         future.add_done_callback(self.channel_ready_cb)
 
@@ -370,7 +386,15 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
 
     @util._async
     def start_server(self):
-        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        if use_compression:
+            server_options = [
+                ("grpc.default_compression_algorithm", CompressionAlgorithm.gzip),
+                ("grpc.default_compression_level", CompressionLevel.high)
+            ]
+            self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=server_options)
+        else:
+            self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
         self.server.add_insecure_port('[::]:%d' % prefs.get_server_port())
