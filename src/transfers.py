@@ -73,20 +73,23 @@ class FileSender(GObject.Object):
             else:
                 gfile = Gio.File.new_for_uri(file.uri)
                 stream = gfile.read(None)
+
+                last_size_read = 1
+
                 while True:
+                    if last_size_read == 0:
+                        break
+
                     if self.cancellable.is_set():
                         return
 
                     b = stream.read_bytes(self.CHUNK_SIZE, None)
-                    size_read = b.get_size()
-                    self.update_progress(size_read=size_read)
+                    last_size_read = b.get_size()
+                    self.update_progress(size_read=last_size_read)
 
-                    if size_read > 0:
-                        yield warp_pb2.FileChunk(relative_path=file.relative_path,
-                                                 file_type=file.file_type,
-                                                 chunk=b.get_data())
-                    else:
-                        break
+                    yield warp_pb2.FileChunk(relative_path=file.relative_path,
+                                             file_type=file.file_type,
+                                             chunk=b.get_data())
 
                 stream.close()
                 continue
@@ -129,9 +132,8 @@ class FileReceiver(GObject.Object):
 
     def receive_data(self, s):
         path = os.path.join(self.save_path, s.relative_path)
-
         if path != self.current_path:
-            if self.current_path and self.current_gfile:
+            if self.current_stream:
                 self.current_stream.close()
                 self.current_stream = None
                 self.current_gfile = None
@@ -155,6 +157,9 @@ class FileReceiver(GObject.Object):
                     flags = Gio.FileCreateFlags.REPLACE_DESTINATION
 
                 self.current_stream = self.current_gfile.replace(None, False, flags, None)
+
+            if len(s.chunk) == 0:
+                return
 
             self.current_stream.write_bytes(GLib.Bytes(s.chunk), None)
 
