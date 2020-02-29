@@ -19,8 +19,6 @@ import util
 import machines
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus
-socket.setdefaulttimeout(10)
-
 
 # Don't let warp run as root
 if os.getuid() == 0:
@@ -412,6 +410,7 @@ class WarpWindow(GObject.Object):
 
         self.server_start_timeout_id = 0
         self.discovery_time_out_id = 0
+        self.restarting_server = False
 
         # Hamburger menu
         menu = Gtk.Menu()
@@ -451,17 +450,18 @@ class WarpWindow(GObject.Object):
             self.window.hide()
         else:
             if not self.window.get_visible():
-                # self.window.set_visible(True)
                 self.window.present()
-                # self.window.get_window().focus(time)
             else:
                 self.window.get_window().raise_()
                 self.window.get_window().focus(time)
 
-    def start_startup_timer(self):
+    def start_startup_timer(self, restarting=False):
         if self.server_start_timeout_id > 0:
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
+
+        print("start startup - restarting: ", restarting)
+        self.server_restarting = restarting
 
         self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
         self.view_stack.set_visible_child_name("startup")
@@ -563,6 +563,8 @@ class WarpWindow(GObject.Object):
         self.view_stack.set_visible_child_name("shutdown")
 
     def notify_server_started(self):
+        self.server_restarting = False
+
         if self.server_start_timeout_id > 0:
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
@@ -574,6 +576,12 @@ class WarpWindow(GObject.Object):
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
             self.discovery_time_out_id = 0
+
+        # If the server is restarting, this will get called when the last remote is removed
+        # during shutdown, but we want the 'startup' view to remain showing (called in
+        # display_shutdown()).
+        if self.server_restarting:
+            return
 
         self.discovery_time_out_id = GLib.timeout_add_seconds(6, self.discovery_timed_out)
         self.view_stack.set_visible_child_name("discovery")
@@ -631,7 +639,8 @@ class WarpWindow(GObject.Object):
             self.user_op_list.add(TransferItem(op).item)
 
     def back_to_overview(self, button=None, data=None):
-        self.view_stack.set_visible_child_name("overview")
+        if not self.server_restarting:
+            self.view_stack.set_visible_child_name("overview")
 
         # clear new op notification on overview button for the one
         # we just visited.
@@ -717,10 +726,10 @@ class WarpApplication(Gtk.Application):
         if self.window == None:
             self.setup_window()
 
-        self.restart_server()
+        self.start_server(restarting=False)
 
-    def restart_server(self):
-        self.window.start_startup_timer()
+    def start_server(self, restarting=False):
+        self.window.start_startup_timer(restarting)
 
         def ok_to_restart(server):
             self.server = machines.LocalMachine()
@@ -728,6 +737,7 @@ class WarpApplication(Gtk.Application):
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+
         if self.server:
             self.server.connect("shutdown-complete", ok_to_restart)
             self.server.shutdown()
@@ -736,6 +746,9 @@ class WarpApplication(Gtk.Application):
 
     def shutdown(self, window=None):
         print("Beginning shutdown")
+        self.server.disconnect_by_func(self._remote_removed)
+
+        self.window.display_shutdown()
         self.server.connect("shutdown-complete", self.ok_for_app_quit)
         self.server.shutdown()
 
@@ -750,7 +763,7 @@ class WarpApplication(Gtk.Application):
 
         self.add_window(self.window.window)
 
-        if prefs.get_start_with_window():
+        if prefs.get_start_with_window() or not prefs.use_tray_icon():
             self.window.window.present()
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
@@ -759,7 +772,7 @@ class WarpApplication(Gtk.Application):
         print("prefs changed")
         if prefs.get_port() != self.current_port:
             self.current_port = prefs.get_port()
-            self.restart_server()
+            self.start_server(restarting=True)
 
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)

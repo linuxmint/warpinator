@@ -330,8 +330,8 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.server_runlock = threading.Condition()
 
         self.browser = None
-        self.zc_srv = None
-        self.zc_cli = None
+        self.zeroconf = None
+        self.zeroconf = None
         self.info = None
 
         util.accounts.connect("account-loaded", self.user_account_loaded)
@@ -342,17 +342,16 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.display_name = util.accounts.get_real_name()
 
     def start_zeroconf(self):
-        self.zc_srv = Zeroconf()
+        self.zeroconf = Zeroconf()
         self.info = ServiceInfo("_http._tcp.local.",
                                 self.service_name,
                                 socket.inet_aton(util.get_ip()), prefs.get_port(), 0, 0,
                                 {}, "somehost.local.")
-        self.zc_srv.register_service(self.info)
+        self.zeroconf.register_service(self.info)
 
     def start_remote_lookout(self):
         print("Searching for others...")
-        self.zc_cli = Zeroconf()
-        self.browser = ServiceBrowser(self.zc_cli, "_http._tcp.local.", self)
+        self.browser = ServiceBrowser(self.zeroconf, "_http._tcp.local.", self)
 
     def remove_service(self, zeroconf, _type, name):
         if name == self.service_name or not name.count("warp"):
@@ -414,8 +413,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.server.add_insecure_port('[::]:%d' % prefs.get_port())
         self.server.start()
 
-        self.emit("server-started")
-
+        self.emit_server_started()
         self.start_discovery_services()
 
         with self.server_runlock:
@@ -427,6 +425,9 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
             self.server = None
 
     @util._idle
+    def emit_server_started(self):
+        self.emit("server-started")
+
     def start_discovery_services(self):
         self.start_zeroconf()
         self.start_remote_lookout()
@@ -435,16 +436,15 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
     def shutdown(self):
         remote_machines = list(self.remote_machines.values())
         for machine in remote_machines:
-            self.remove_service(self.zc_cli, None, machine.connect_name)
+            self.remove_service(self.zeroconf, None, machine.connect_name)
             machine.shutdown()
 
         remote_machines = None
 
         try:
             self.browser.cancel()
-            self.zc_srv.unregister_service(self.info)
-            self.zc_cli.close()
-            self.zc_srv.close()
+            self.zeroconf.unregister_service(self.info)
+            self.zeroconf.close()
         except AttributeError as e:
             print(e)
             pass # zeroconf never started if the server never started

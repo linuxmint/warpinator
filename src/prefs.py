@@ -87,8 +87,6 @@ class Preferences():
 
         self.window.set_transient_for(transient_for)
 
-        prefs_settings.delay()
-
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
         page = SettingsPage()
@@ -101,9 +99,11 @@ class Preferences():
         #                         size_group=size_group)
         # section.add_row(widget)
 
-        widget = GSettingsSwitch(_("Show a Warpinator icon in the notification area"),
-                                 PREFS_SCHEMA, TRAY_ICON_KEY)
-        section.add_row(widget)
+        self.settings_widget = GSettingsSwitch(_("Show a Warpinator icon in the notification area"),
+                                               PREFS_SCHEMA, TRAY_ICON_KEY)
+        section.add_row(self.settings_widget)
+
+        self.settings_widget.settings.delay()
 
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
@@ -156,10 +156,10 @@ can make it simpler to add firewall exceptions if necessary."""))
         self.window.show_all()
 
     def apply_clicked(self, widget, data=None):
-        prefs_settings.apply()
+        self.settings_widget.settings.apply()
         self.window.destroy()
 
     def cancel_clicked(self, widget, data=None):
-        prefs_settings.revert()
+        self.settings_widget.settings.revert()
         self.window.destroy()
 
