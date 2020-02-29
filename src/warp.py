@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import os
 import sys
-import time
 import setproctitle
 import locale
 import gettext
@@ -17,8 +16,8 @@ from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 import config
 import prefs
 import util
-import remote
-from remote import SendOp, ReceiveOp
+import machines
+from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus
 socket.setdefaulttimeout(10)
 
@@ -237,8 +236,8 @@ class RemoteMachineButton(GObject.Object):
         self.remote_machine = remote_machine
         self.remote_machine_changed_id = self.remote_machine.connect("machine-info-changed",
                                                                      self._update_machine_info)
-        self.remote_machine_changed_id = self.remote_machine.connect("new-incoming-op",
-                                                                     self._handle_new_incoming_op)
+        self.new_incoming_op_id = self.remote_machine.connect("new-incoming-op",
+                                                               self._handle_new_incoming_op)
 
         self.new_ops = 0
 
@@ -249,20 +248,11 @@ class RemoteMachineButton(GObject.Object):
         self.hostname_label = self.builder.get_object("overview_user_hostname")
         self.ip_label = self.builder.get_object("overview_user_ip")
         self.favorite_image = self.builder.get_object("overview_user_favorite")
+        self.overview_user_button_stack = self.builder.get_object("overview_user_button_stack")
         self.new_transfer_notify_label = self.builder.get_object("new_transfer_notify_label")
-        self.new_transfer_notify_box = self.builder.get_object("new_transfer_notify_box")
 
         self.button.connect("clicked", lambda button: self.emit("clicked"))
-
-        # DND
-        self.drop_pending = False
-        entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
-        self.button.drag_dest_set(Gtk.DestDefaults.ALL,
-                                  (entry,),
-                                  Gdk.DragAction.COPY)
-        self.button.connect("drag-drop", self.on_drag_drop)
-        self.button.connect("drag-data-received", self.on_drag_data_received)
-        # /DND
+        self.overview_user_button_stack.set_visible_child_name("clear")
 
         # Convenience for window to sort and remove buttons
         self.button.remote_machine = remote_machine
@@ -286,17 +276,21 @@ class RemoteMachineButton(GObject.Object):
 
     def _handle_new_incoming_op(self, remote_machine, op):
         self.new_ops += 1
-        self.new_transfer_notify_box.show()
+        self.overview_user_button_stack.set_visible_child_name("new-transfer")
 
         text = gettext.ngettext("%d new incoming transfer",
                                 "%d new incoming transfers", self.new_ops) % (self.new_ops,)
+
         self.new_transfer_notify_label.set_text(text)
         self.button.get_style_context().add_class("suggested-action")
+
+        self.notify_user(op)
+
         self.emit("need-attention")
 
-    def clear_new_op_notification(self):
+    def clear_new_op_highlighting(self):
         self.new_ops = 0
-        self.new_transfer_notify_box.hide()
+        self.overview_user_button_stack.set_visible_child_name("clear")
         self.button.get_style_context().remove_class("suggested-action")
 
     def refresh_favorite_icon(self):
@@ -307,45 +301,72 @@ class RemoteMachineButton(GObject.Object):
         else:
             self.favorite_image.clear()
 
-    # def on_drag_motion(self, widget, context, x, y, time):
-    #     pass
-    #     # if not self.pulse.online:
-    #     #     Gdk.drag_status(context, 0, time)
-    #     #     return
+    def notify_user(self, op):
+        if prefs.get_show_notifications():
+            notification = Gio.Notification.new(_("New incoming files"))
 
-    def on_drag_drop(self, widget, context, x, y, time, data=None):
-        atom =  widget.drag_dest_find_target(context, None)
-        self.drop_pending = True
-        widget.drag_get_data(context, atom, time)
+            if prefs.require_permission_for_transfer():
+                body =gettext.ngettext(
+                    _("%s would like to send you %d file (%s)."),
+                    _("%s would like to send you %d files%s"), op.total_count) \
+                        % (op.sender_name,
+                           op.total_count,
+                           op.top_dir_basenames[0] if op.total_count == 1 else "")
 
-    def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
-        # if not self.pulse.online:
-        #     Gdk.drag_status(context, 0, time)
-        #     return
+                notification.set_body(body)
+                notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
 
-        if not self.drop_pending:
-            Gdk.drag_status(context, Gdk.DragAction.COPY, time)
-            return
+                notification.add_button(_("Accept"), "app.notification-response::accept")
+                notification.add_button(_("Decline"), "app.notification-response::decline")
 
-        if data:
-            if context.get_selected_action() == Gdk.DragAction.COPY:
-                uris = data.get_uris()
-                self.emit("files-dropped")
-                self.remote_machine.send_files(uris)
+                notification.set_priority(Gio.NotificationPriority.URGENT)
 
-        Gtk.drag_finish(context, True, False, time)
-        self.drop_pending = False
+                app = Gio.Application.get_default()
+                app.lookup_action("notification-response").connect("activate", self._notification_response, op)
+
+                op.connect("status-changed",
+                           lambda op: app.withdraw_notification(op.sender) if op.status != OpStatus.WAITING_PERMISSION else None)
+            else:
+                body =gettext.ngettext(
+                    _("%s is sending you %d file (%s)."),
+                    _("%s is sending you %d files%s"), op.total_count) \
+                        % (op.sender_name,
+                           op.total_count,
+                           op.top_dir_basenames[0] if op.total_count == 1 else "")
+
+                notification.set_body(body)
+                notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
+
+        app = Gio.Application.get_default()
+        Gio.Application.get_default().send_notification(op.sender, notification)
+
+    def _notification_response(self, action, variant, op):
+        response = variant.unpack()
+
+        if response == "accept":
+            op.accept_transfer()
+        else:
+            op.decline_transfer_request()
+
+        app = Gio.Application.get_default()
+        app.lookup_action("notification-response").disconnect_by_func(self._notification_response)
 
     def do_dispose(self):
-        self.remote_machine.disconnect(self.remote_machine_changed_id)
-        self.remote_machine_changed_id = 0
+        if self.new_incoming_op_id > 0:
+            self.remote_machine.disconnect(self.new_incoming_op_id)
+            self.new_incoming_op_id = 0
+
+        if self.remote_machine_changed_id > 0:
+            self.remote_machine.disconnect(self.remote_machine_changed_id)
+            self.remote_machine_changed_id = 0
 
         print("(dispose) Disconnecting overview remote button from RemoteMachine")
         GObject.Object.do_dispose(self)
 
 class WarpWindow(GObject.Object):
     __gsignals__ = {
-        'exit': (GObject.SignalFlags.RUN_LAST, None, ())
+        'exit': (GObject.SignalFlags.RUN_LAST, None, ()),
+        'send-notification': (GObject.SignalFlags.RUN_LAST, None, (object,))
     }
 
     def __init__(self):
@@ -353,6 +374,7 @@ class WarpWindow(GObject.Object):
 
         self.current_selected_remote_machine = None
         self.drop_pending = False
+        self.window_close_handler_id = 0
 
         # overview
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
@@ -388,8 +410,8 @@ class WarpWindow(GObject.Object):
         self.recent_menu.add(picker)
         self.user_send_button.set_popup(self.recent_menu)
 
-        self.view_stack.set_visible_child_name("startup")
-        self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
+        self.server_start_timeout_id = 0
+        self.discovery_time_out_id = 0
 
         # Hamburger menu
         menu = Gtk.Menu()
@@ -419,21 +441,35 @@ class WarpWindow(GObject.Object):
         self.user_op_list.connect("drag-data-received", self.on_drag_data_received)
         # /DND
 
-        # self.window.connect("delete-event",
-        #                     lambda widget, event: widget.hide_on_delete())
-
-        self.window.connect("delete-event",
-                            lambda widget, event: self.emit("exit"))
-
         self.window.connect("focus-in-event",
                             lambda window, event: window.set_urgency_hint(False))
 
         self.update_local_user_info()
 
+    def toggle_visibility(self, time=0):
+        if self.window.is_active():
+            self.window.hide()
+        else:
+            if not self.window.get_visible():
+                # self.window.set_visible(True)
+                self.window.present()
+                # self.window.get_window().focus(time)
+            else:
+                self.window.get_window().raise_()
+                self.window.get_window().focus(time)
+
+    def start_startup_timer(self):
+        if self.server_start_timeout_id > 0:
+            GLib.source_remove(self.server_start_timeout_id)
+            self.server_start_timeout_id = 0
+
+        self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
+        self.view_stack.set_visible_child_name("startup")
+
     def server_not_started_timeout(self):
         self.view_stack.set_visible_child_name("server-problem")
 
-        self.server_start_timeout = 0
+        self.server_start_timeout_id = 0
         return False
 
     def recent_item_selected(self, recent_chooser, data=None):
@@ -452,14 +488,14 @@ class WarpWindow(GObject.Object):
 
         dialog.destroy()
 
-    def on_drag_drop(self, widget, context, x, y, time, data=None):
+    def on_drag_drop(self, widget, context, x, y, _time, data=None):
         atom =  widget.drag_dest_find_target(context, None)
         self.drop_pending = True
-        widget.drag_get_data(context, atom, time)
+        widget.drag_get_data(context, atom, _time)
 
-    def on_drag_data_received(self, widget, context, x, y, data, info, time, user_data=None):
+    def on_drag_data_received(self, widget, context, x, y, data, info, _time, user_data=None):
         if not self.drop_pending:
-            Gdk.drag_status(context, Gdk.DragAction.COPY, time)
+            Gdk.drag_status(context, Gdk.DragAction.COPY, _time)
             return
 
         if data:
@@ -467,15 +503,16 @@ class WarpWindow(GObject.Object):
                 uris = data.get_uris()
                 self.current_selected_remote_machine.send_files(uris)
 
-        Gtk.drag_finish(context, True, False, time)
+        Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
     def update_local_user_info(self):
         self.app_display_name_label.set_text(prefs.get_nick())
         self.app_hostname_label.set_text(util.get_hostname())
-        self.app_ip_label.set_text(util.get_ip())
+        self.app_ip_label.set_text("%s : %d" % (util.get_ip(), prefs.get_port()))
 
     def menu_quit(self, widget, data=None):
+        self.display_shutdown()
         self.emit("exit")
 
     def on_open_location_clicked(self, widget, data=None):
@@ -485,9 +522,7 @@ class WarpWindow(GObject.Object):
         self.window.set_urgency_hint(True)
 
     def open_preferences(self, menuitem, data=None):
-        w = prefs.Preferences()
-        w.set_transient_for(self.window)
-        w.present()
+        prefs.Preferences(self.window)
 
     def add_remote_button(self, remote_machine):
         self.view_stack.set_visible_child_name("overview")
@@ -519,7 +554,7 @@ class WarpWindow(GObject.Object):
         self.back_to_overview()
 
         if len(self.user_list_box.get_children()) == 0:
-            print("start timer")
+            print("start timer no more remotes")
             self.start_discovery_timer()
 
         self.sort_buttons()
@@ -535,10 +570,16 @@ class WarpWindow(GObject.Object):
         self.start_discovery_timer()
 
     def start_discovery_timer(self):
+        print("start discovey")
+        if self.discovery_time_out_id > 0:
+            GLib.source_remove(self.discovery_time_out_id)
+            self.discovery_time_out_id = 0
+
         self.discovery_time_out_id = GLib.timeout_add_seconds(6, self.discovery_timed_out)
         self.view_stack.set_visible_child_name("discovery")
 
     def discovery_timed_out(self):
+        print("discovery timeout")
         self.view_stack.set_visible_child_name("no-remotes")
         self.discovery_time_out_id = 0
         return False
@@ -618,29 +659,30 @@ class WarpWindow(GObject.Object):
         def cmp_buttons(a, b):
             am = a.remote_machine
             bm = b.remote_machine
-
-            if am.favorite and not bm.favorite:
-                return -1
-            elif bm.favorite and not am.favorite:
-                return +1
-            elif am.recent_time > bm.recent_time:
-                return -1
-            elif bm.recent_time > bm.recent_time:
-                return +1
-
-            return -1 if am.display_name < bm.display_name else +1
+            return util.sort_remote_machines(am, bm)
 
         children = self.user_list_box.get_children()
         return sorted(children, key=functools.cmp_to_key(cmp_buttons))
 
     def sort_buttons(self, button=None, data=None):
         sorted_list = self.get_sorted_button_list()
-        widgets = self.user_list_box.get_children()
 
         for button in sorted_list:
             self.user_list_box.reorder_child(button, -1)
 
-        # self.rebuild_status_icon_menu()
+    def update_behavior_from_preferences(self):
+        if self.window_close_handler_id > 0:
+            self.window.disconnect(self.window_close_handler_id)
+            self.window_close_handler_id = 0
+
+        if prefs.use_tray_icon():
+            self.window_close_handler_id = self.window.connect("delete-event",
+                                                               lambda widget, event: widget.hide_on_delete())
+        else:
+            self.window_close_handler_id = self.window.connect("delete-event",
+                                                               lambda widget, event: self.emit("exit"))
+
+        self.update_local_user_info()
 
     def destroy(self):
         self.window.destroy()
@@ -653,29 +695,47 @@ class WarpApplication(Gtk.Application):
         self.status_icon = None
         self.prefs_changed_source_id = 0
 
+        self.server = None
+        self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
+
     def do_startup(self):
         Gtk.Application.do_startup(self)
         print("Initializing Warp on %s\n" % util.get_ip())
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
 
+        vt = GLib.VariantType.new("s")
+
+        action = Gio.SimpleAction.new("notification-response", vt)
+        self.add_action(action)
+
         self.activate()
 
     def do_activate(self):
-        # if self.status_icon == None:
-            # self.setup_status_icon()
+        if self.status_icon == None:
+            self.update_status_icon_from_preferences()
         if self.window == None:
             self.setup_window()
 
-        self.server = remote.LocalMachine()
-        self.server.connect("server-started", self._server_started)
-        self.server.connect("remote-machine-added", self._remote_added)
-        self.server.connect("remote-machine-removed", self._remote_removed)
-        self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+        self.restart_server()
+
+    def restart_server(self):
+        self.window.start_startup_timer()
+
+        def ok_to_restart(server):
+            self.server = machines.LocalMachine()
+            self.server.connect("server-started", self._server_started)
+            self.server.connect("remote-machine-added", self._remote_added)
+            self.server.connect("remote-machine-removed", self._remote_removed)
+            self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+        if self.server:
+            self.server.connect("shutdown-complete", ok_to_restart)
+            self.server.shutdown()
+        else:
+            ok_to_restart(None);
 
     def shutdown(self, window=None):
         print("Beginning shutdown")
-        self.window.display_shutdown()
         self.server.connect("shutdown-complete", self.ok_for_app_quit)
         self.server.shutdown()
 
@@ -694,28 +754,22 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
-        return
-        if self.prefs_changed_source_id > 0:
-            GLib.source_remove(self.prefs_changed_source_id)
-
-        self.prefs_changed_source_id = GLib.timeout_add_seconds(1, self._on_delayed_prefs_changed)
-
-    def _on_delayed_prefs_changed(self):
-        self.prefs_changed_source_id = 0
-
-        # self.app_nick = prefs.get_nick()
-        # self.save_path = prefs.get_save_path()
-
-        # self.server.set_prefs(self.app_nick, self.save_path)
-        # for item in self.peers.values():
-            # item.update_app_nick(self.app_nick)
-        return False
+        self.window.update_behavior_from_preferences()
+        self.update_status_icon_from_preferences()
+        print("prefs changed")
+        if prefs.get_port() != self.current_port:
+            self.current_port = prefs.get_port()
+            self.restart_server()
 
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)
 
+        self.rebuild_status_icon_menu()
+
     def _remote_removed(self, local_machine, remote_machine):
         self.window.remove_remote_button(remote_machine)
+
+        self.rebuild_status_icon_menu()
 
     def _remote_ops_changed(self, local_machine, name):
         self.window.refresh_remote_machine_view()
@@ -723,103 +777,102 @@ class WarpApplication(Gtk.Application):
     def _server_started(self, local_machine):
         self.window.notify_server_started()
 
-    ####  BROWSER ##############################################
+    ####  STATUS ICON ##########################################################################
 
+    def update_status_icon_from_preferences(self):
+        if prefs.use_tray_icon():
+            if self.status_icon == None:
+                self.status_icon = XApp.StatusIcon()
+                self.status_icon.set_icon_name("warp-symbolic")
+                self.status_icon.connect("activate", self.on_tray_icon_activate)
+                self.hold()
+            else:
+                self.rebuild_status_icon_menu()
+        else:
+            if self.status_icon != None:
+                self.status_icon.set_visible(False)
+                self.status_icon = None
+                self.release()
 
-    # STATUS ICON ##########################################################################
+    def rebuild_status_icon_menu(self):
+        if self.status_icon == None:
+            return
 
-    # def setup_status_icon(self):
-    #     self.status_icon = XApp.StatusIcon()
-    #     self.status_icon.set_icon_name("warp-symbolic")
-    #     self.status_icon.connect("activate", self.on_tray_icon_activate)
+        menu = Gtk.Menu()
 
-    # def rebuild_status_icon_menu(self):
-    #     menu = Gtk.Menu()
+        self.add_favorite_entries(menu)
+        menu.add(Gtk.SeparatorMenuItem())
 
-    #     self.add_proxy_menu_entries(menu)
-    #     menu.add(Gtk.SeparatorMenuItem())
+        item = Gtk.MenuItem(label=_("Open Warp folder"))
+        item.connect("activate", util.open_save_folder)
+        menu.add(item)
+        item = Gtk.MenuItem(label=_("Quit"))
+        item.connect("activate", self.shutdown)
+        menu.add(item)
+        menu.show_all()
 
-    #     item = Gtk.MenuItem(label=_("Open Warp folder"))
-    #     item.connect("activate", self.on_open_location_clicked)
-    #     menu.add(item)
-    #     item = Gtk.MenuItem(label=_("Quit"))
-    #     item.connect("activate", self.exit_app)
-    #     menu.add(item)
-    #     menu.show_all()
+        self.status_icon.set_secondary_menu(menu)
 
-    #     self.status_icon.set_secondary_menu(menu)
+    def add_favorite_entries(self, menu):
+        remote_list = self.server.list_remote_machines()
 
-    # def add_proxy_menu_entries(self, menu):
-    #     proxy_list = self.get_sorted_proxy_list()
-    #     i = 0
+        if remote_list:
+            sorted_machines = sorted(remote_list, key=functools.cmp_to_key(util.sort_remote_machines))
 
-    #     for proxy in proxy_list:
-    #         item = Gtk.MenuItem(label=proxy.proxy_nick)
-    #         self.attach_recent_submenu(item, proxy)
-    #         menu.add(item)
-    #         i += 1
+            i = 0
 
-    #     # If there is more than one proxy, add a 'send to all'
-    #     if i > 1:
-    #         item = Gtk.MenuItem(label=_("Everyone"))
-    #         self.attach_recent_submenu(item, None)
-    #         menu.add(item)
+            for machine in sorted_machines:
+                if machine.favorite:
+                    item = Gtk.MenuItem(label=machine.display_name)
+                    self.attach_recent_submenu(item, machine)
+                    menu.add(item)
+                    i += 1
 
-    #     menu.show_all()
+        # If there is more than one proxy, add a 'send to all'
+        if i > 1:
+            item = Gtk.MenuItem(label=_("Everyone"))
+            self.attach_recent_submenu(item, None)
+            menu.add(item)
 
-    # def attach_recent_submenu(self, menu, proxy):
-    #     sub = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
-    #     sub.connect("item-activated", self.status_icon_recent_item_selected, proxy)
-    #     sub.add(Gtk.SeparatorMenuItem(visible=True))
+        menu.show_all()
 
-    #     picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
-    #     picker.connect("activate", self.open_file_picker, proxy)
-    #     sub.add(picker)
+    def attach_recent_submenu(self, menu, machine):
+        sub = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
+        sub.connect("item-activated", self.status_icon_recent_item_selected, machine)
+        sub.add(Gtk.SeparatorMenuItem(visible=True))
 
-    #     menu.set_submenu(sub)
+        picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
+        picker.connect("activate", self.open_file_picker, machine)
+        sub.add(picker)
 
-    # def status_icon_recent_item_selected(self, chooser, proxy=None):
-    #     uri = chooser.get_current_uri()
+        menu.set_submenu(sub)
 
-    #     if proxy:
-    #         proxy.file_sender.send_files([uri])
-    #     else:
-    #         for p in self.peers.values():
-    #             p.file_sender.send_files([uri])
+    def status_icon_recent_item_selected(self, chooser, remote_machine=None):
+        uri = chooser.get_current_uri()
 
-    # def open_file_picker(self, button, proxy=None):
-    #     dialog = util.create_file_and_folder_picker()
+        self.send_status_icon_selection_to_machine(uri, remote_machine)
 
-    #     res = dialog.run()
+    def open_file_picker(self, button, remote_machine=None):
+        dialog = util.create_file_and_folder_picker()
 
-    #     if res == Gtk.ResponseType.ACCEPT:
-    #         uri_list = dialog.get_uris()
+        res = dialog.run()
 
-    #         if proxy:
-    #             proxy.file_sender.send_files(uri_list)
-    #         else:
-    #             for p in self.peers.values():
-    #                 p.file_sender.send_files(uri_list)
+        if res == Gtk.ResponseType.ACCEPT:
+            uri_list = dialog.get_uris()
+            self.send_status_icon_selection_to_machine(uri_list, remote_machine)
 
-    #     dialog.destroy()
+        dialog.destroy()
 
-    # def on_tray_icon_activate(self, icon, button, time=0):
-    #     if self.window.is_active():
-    #         self.window.hide()
-    #     else:
-    #         if not self.window.get_visible():
-    #             self.window.present()
-    #             self.window.set_keep_above(self.above_toggle.props.active)
-    #         else:
-    #             # When there is more than one monitor, either gtk or
-    #             # window managers (I've seen this in cinnamon, mate, xfce)
-    #             # get confused if the mintupdate window is topmost on one
-    #             # monitor, but the current focus is actually a window in
-    #             # another monitor.  Focusing makes sure this window will
-    #             # become 'active' for purposes of the hiding code above.
+    def send_status_icon_selection_to_machine(self, uri, remote_machine=None):
+        if remote_machine:
+            remote_machine.send_files([uri])
+        else:
+            for remote_machine in self.server.list_remote_machines():
+                if remote_machine.favorite:
+                    remote_machine.send_files([uri])
 
-    #             self.window.get_window().raise_()
-    #             self.window.get_window().focus(time)
+    def on_tray_icon_activate(self, icon, button, time):
+        self.window.toggle_visibility(time)
 
 if __name__ == "__main__":
 

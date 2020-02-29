@@ -2,8 +2,7 @@ syntax = "proto3";
 
 service Warp {
     // Sender methods
-    rpc GetRemoteMachineNames(VoidType) returns (RemoteMachineNames) {}
-    rpc GetRemoteMachineAvatar(VoidType) returns (stream Bytes) {}
+    rpc GetRemoteMachineInfo(VoidType) returns (stream RemoteMachineInfo) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
     rpc RetryTransferOp(OpInfo) returns (VoidType) {}
     rpc PauseTransferOp(OpInfo) returns (VoidType) {}
@@ -18,30 +17,30 @@ service Warp {
     rpc StopTransfer(OpInfo) returns (VoidType) {}
 }
 
-message RemoteMachineNames {
+message RemoteMachineInfo {
     string display_name = 1;
-    string hostname = 2;
+    bytes avatar_chunk = 2;
 }
 
 message VoidType {
     int32 dummy = 1;
 }
 
-message Bytes {
-    bytes chunk = 1; // 1024 ?
+message OpInfo {
+    string connect_name = 1;
+    uint64 timestamp = 2;
 }
 
 message TransferOpRequest {
-    string sender = 1;
+    OpInfo info = 1;
     string sender_name = 2;
     string receiver_name = 3;
     string receiver =4; // don't need for now
-    uint64 timestamp = 5;  // This can be a unique ID for the op
-    uint64 size = 6;
-    uint64 count = 7;
-    string name_if_single = 8;
-    string mime_if_single = 9;
-    repeated string top_dir_basenames = 10;
+    uint64 size = 5;
+    uint64 count = 6;
+    string name_if_single = 7;
+    string mime_if_single = 8;
+    repeated string top_dir_basenames = 9;
 }
 
 message FileChunk {
@@ -56,9 +55,4 @@ message ProgressReport {
     float progress = 2;
     uint64 bytes_per_sec = 3;
     uint64 time_left_sec = 4;
-}
-
-message OpInfo {
-    string connect_name = 1;
-    uint64 timestamp = 2;
 }

@@ -5,7 +5,7 @@ import threading
 import gettext
 from concurrent import futures
 
-from gi.repository import GObject, GLib, Gio
+from gi.repository import GObject, GLib
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
 
 import grpc
@@ -21,6 +21,7 @@ if use_compression:
 import prefs
 import util
 import transfers
+from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, OpCommand
 
 _ = gettext.gettext
@@ -33,53 +34,38 @@ if os.environ.get('https_proxy'):
 if os.environ.get('http_proxy'):
     del os.environ['http_proxy']
 
-#base
-class Machine(GObject.Object):
-    __gsignals__ = {
-        'machine-info-changed': (GObject.SignalFlags.RUN_LAST, None, ())
-    }
-
-    def __init__(self, name, ip, port):
-        super(Machine, self).__init__()
-
-        self.ip_address = ip
-        self.port = port
-        self.connect_name = name
-
-        self.avatar_surface = None
-        self.display_name = name
-        self.hostname = None
-        self.starred = False
-        self.transfer_ops = []
-
-    def add_job(self, job):
-        self.jobs.insert(job)
-
-    def delete_job(self, job):
-        try:
-            self.jobs.remove(job)
-        except ValueError as e:
-            print("Can't delete unknown job")
+MAX_UNARY_UNARY_RETRIES = 2
 
 # client
-class RemoteMachine(Machine):
+class RemoteMachine(GObject.Object):
     __gsignals__ = {
+        'machine-info-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
         'connected': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, *args, local_service_name=None):
-        super(RemoteMachine, self).__init__(*args)
+    def __init__(self, name, hostname, ip, port, local_service_name):
+        GObject.Object.__init__(self)
+        self.ip_address = ip
+        self.port = port
+        self.connect_name = name
+        self.hostname = hostname
+        self.display_name = name
+        self.favorite = prefs.get_is_favorite(self.hostname)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
-        self.favorite = False
+
+        self.avatar_surface = None
+        self.transfer_ops = []
+
         self.changed_source_id = 0
+
         self.sort_key = self.connect_name
         self.local_service_name = local_service_name
 
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)
 
-    @util._idle
+    @util._async
     def start(self):
         print("Connecting to %s" % self.connect_name)
 
@@ -91,71 +77,85 @@ class RemoteMachine(Machine):
 
             self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port), chan_ops)
         else:
-            self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port))
+            print("make channel")
 
-        future = grpc.channel_ready_future(self.channel)
-        future.add_done_callback(self.channel_ready_cb)
+            self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port))
+            print("after insecure")
+            future = grpc.channel_ready_future(self.channel)
+
+        try:
+            print("future setup")
+            future.result(timeout=2)
+            future.add_done_callback(self.channel_ready_cb)
+        except grpc.FutureTimeoutError:
+            print("Time out now what?", future.exception)
+
 
     def channel_ready_cb(self, future):
-        time.sleep(1)
+        print("ready channel")
         self.stub = warp_pb2_grpc.WarpStub(self.channel)
-        self.get_remote_info()
+        print("after ready")
 
-    @util._idle
-    def get_remote_info(self):
-        self.update_machine_name_info()
-        self.get_machine_user_avatar()
-
+        self.update_remote_machine_info()
         self.emit("connected")
 
-    def update_machine_name_info(self):
-        def finished_cb(future):
-            res = future.result()
-
-            self.display_name = res.display_name
-            self.hostname = res.hostname
-            self.favorite = prefs.get_is_favorite(self.hostname)
-
-            valid = GLib.utf8_make_valid(self.display_name, -1)
-            self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
-
-            self.emit_machine_info_changed()
-
-        future_info = self.stub.GetRemoteMachineNames.future(void)
-        future_info.add_done_callback(finished_cb)
-
-    def get_machine_user_avatar(self):
+    @util._async
+    def update_remote_machine_info(self):
         loader = util.CairoSurfaceLoader()
 
-        iterator = self.stub.GetRemoteMachineAvatar(void)
-        for chunk in iterator:
-            loader.add_bytes(chunk.chunk)
+        name = None
 
-        self.get_finished_avatar_surface(loader)
+        iterator = self.stub.GetRemoteMachineInfo(void)
+        for info in iterator:
+            if name == None:
+                name = info.display_name
 
-    @util._idle
-    def get_finished_avatar_surface(self, loader):
+            loader.add_bytes(info.avatar_chunk)
+
         self.avatar_surface = loader.get_surface()
+
+        self.display_name = name
+        self.favorite = prefs.get_is_favorite(self.hostname)
+
+        valid = GLib.utf8_make_valid(self.display_name, -1)
+        self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
+
         self.emit_machine_info_changed()
 
+    @util._async
     def send_transfer_op_request(self, op):
+        retry_count = 0
         def finished_cb(future):
-            res = future.result()
-            pass
+            try:
+                future.result(timeout=1)
+                print("finished ok")
+            except Exception as e:
+                print("did not finish ok", e)
 
-        transfer_op = warp_pb2.TransferOpRequest(sender=op.sender,
+        transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(connect_name=op.sender,
+                                                                      timestamp=op.start_time),
                                                  sender_name=op.sender_name,
                                                  receiver=self.connect_name,
-                                                 timestamp=op.start_time,
                                                  size=op.total_size,
                                                  count=op.total_count,
                                                  name_if_single=op.description,
                                                  mime_if_single=op.mime_if_single,
                                                  top_dir_basenames=op.top_dir_basenames)
 
-        future_response = self.stub.ProcessTransferOpRequest.future(transfer_op)
-        future_response.add_done_callback(finished_cb)
+        while retry_count < MAX_UNARY_UNARY_RETRIES:
+            try:
+                print("trying to call")
+                future_response = self.stub.ProcessTransferOpRequest.future(transfer_op)
+                future_response.add_done_callback(finished_cb)
+                future_response.result(timeout=5)
+                break
+            except grpc.FutureTimeoutError:
+                if future_response.cancel():
+                    print("Timed out, trying again in 5 seconds")
+                    retry_count += 1
+                    time.sleep(5)
 
+    @util._async
     def cancel_transfer_op_request(self, op, by_sender=False):
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
@@ -194,6 +194,7 @@ class RemoteMachine(Machine):
         op.file_iterator = None
         op.set_status(OpStatus.FINISHED)
 
+    @util._async
     def stop_transfer_op(self, op, by_sender=False):
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
@@ -309,22 +310,29 @@ class RemoteMachine(Machine):
         self.channel.close()
 
 # server
-class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
+class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
     __gsignals__ = {
         "remote-machine-added": (GObject.SignalFlags.RUN_LAST, None, (object,)),
         "remote-machine-removed": (GObject.SignalFlags.RUN_LAST, None, (object,)),
         "remote-machine-ops-changed": (GObject.SignalFlags.RUN_LAST, None, (str,)),
-
         "server-started": (GObject.SignalFlags.RUN_LAST, None, ()),
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
-    def __init__(self, *args):
-        self.service_name = "warp.%s._http._tcp.local." % util.get_ip()
-        super(LocalMachine, self).__init__(self.service_name, util.get_ip(), prefs.get_server_port())
+    def __init__(self):
+        self.service_name = "warp.__%s__.__%s__._http._tcp.local." % (util.get_ip(), util.get_hostname())
+        super(LocalMachine, self).__init__()
+        GObject.Object.__init__(self)
+
+        self.ip_address = util.get_ip()
+        self.port = prefs.get_port()
 
         self.remote_machines = {}
-
         self.server_runlock = threading.Condition()
+
+        self.browser = None
+        self.zc_srv = None
+        self.zc_cli = None
+        self.info = None
 
         util.accounts.connect("account-loaded", self.user_account_loaded)
 
@@ -337,7 +345,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
         self.zc_srv = Zeroconf()
         self.info = ServiceInfo("_http._tcp.local.",
                                 self.service_name,
-                                socket.inet_aton(util.get_ip()), prefs.get_server_port(), 0, 0,
+                                socket.inet_aton(util.get_ip()), prefs.get_port(), 0, 0,
                                 {}, "somehost.local.")
         self.zc_srv.register_service(self.info)
 
@@ -367,15 +375,15 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
             if name == self.service_name:
                 return
 
-            # zeroconf service info might have multiple ip addresses, extract it from their 'name'
-            remote_ip = name.replace("warp.", "").replace("._http._tcp.local.", "")
-
+            # zeroconf service info might have multiple ip addresses, extract it from their 'name',
+            # as well as the hostname, since we want to display it whether we get a connection or not.
+            remote_ip, remote_hostname = name.replace("warp.__", "").replace("__._http._tcp.local.", "").split("__.__")
             print("Client %s added at %s" % (name, remote_ip))
 
             try:
                 machine = self.remote_machines[name]
             except KeyError:
-                machine = RemoteMachine(name, remote_ip, info.port, local_service_name=self.service_name)
+                machine = RemoteMachine(name, remote_hostname, remote_ip, info.port, self.service_name)
                 machine.start()
 
             machine.connect("ops-changed", self.remote_ops_changed)
@@ -403,7 +411,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
 
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
-        self.server.add_insecure_port('[::]:%d' % prefs.get_server_port())
+        self.server.add_insecure_port('[::]:%d' % prefs.get_port())
         self.server.start()
 
         self.emit("server-started")
@@ -416,6 +424,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
             print("Server stopping")
             self.server.stop(grace=2).wait()
             self.emit_shutdown_complete()
+            self.server = None
 
     @util._idle
     def start_discovery_services(self):
@@ -424,14 +433,20 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
 
     @util._async
     def shutdown(self):
-        for machine in self.remote_machines.values():
+        remote_machines = list(self.remote_machines.values())
+        for machine in remote_machines:
+            self.remove_service(self.zc_cli, None, machine.connect_name)
             machine.shutdown()
 
+        remote_machines = None
+
         try:
+            self.browser.cancel()
             self.zc_srv.unregister_service(self.info)
             self.zc_cli.close()
             self.zc_srv.close()
         except AttributeError as e:
+            print(e)
             pass # zeroconf never started if the server never started
 
         with self.server_runlock:
@@ -441,18 +456,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
     def emit_shutdown_complete(self):
         self.emit("shutdown-complete")
 
-    # Sender server responders
-    def GetRemoteMachineNames(self, request, context):
-        while True:
-            if not util.accounts.is_loaded:
-                time.sleep(1)
-            else:
-                break
-
-        return warp_pb2.RemoteMachineNames(display_name=util.accounts.get_real_name(),
-                                           hostname=util.get_hostname())
-
-    def GetRemoteMachineAvatar(self, request, context):
+    def GetRemoteMachineInfo(self, request, context):
         while True:
             if not util.accounts.is_loaded:
                 time.sleep(1)
@@ -460,23 +464,24 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
                 break
 
         path = util.accounts.get_face_path()
-        return transfers.load_file_in_chunks(path)
+        return transfers.load_file_in_chunks(path, util.accounts.get_real_name())
 
     def ProcessTransferOpRequest(self, request, context):
-        remote_machine = self.remote_machines[request.sender]
+        remote_machine = self.remote_machines[request.info.sender]
         for existing_op in remote_machine.transfer_ops:
             if existing_op.start_time == request.timestamp:
                 existing_op.set_status(OpStatus.WAITING_PERMISSION)
                 self.add_receive_op_to_remote_machine(existing_op)
                 return void
 
-        op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.sender)
+        op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.info.sender)
+
+        op.start_time = request.info.timestamp
 
         op.sender_name = request.sender_name
         op.receiver = request.receiver
         op.receiver_name = request.receiver_name
         op.status = OpStatus.WAITING_PERMISSION
-        op.start_time = request.timestamp
         op.total_size = request.size
         op.total_count = request.count
         op.mime_if_single = request.mime_if_single
@@ -561,194 +566,5 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, Machine):
     def add_receive_op_to_remote_machine(self, op):
         self.remote_machines[op.sender].add_op(op)
 
-# This represents a send or receive 'job', there would be potentially many of these.
-class SendOp(GObject.Object):
-    __gsignals__ = {
-        "status-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "initial-setup-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "op-command": (GObject.SignalFlags.RUN_LAST, None, (int,)),
-        "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ())
-    }
-
-    def __init__(self, direction, sender=None, receiver=None, receiver_name=None, uris=None):
-        super(SendOp, self).__init__()
-        self.uris = uris
-        self.sender = sender
-        self.receiver = receiver
-        self.sender_name = util.accounts.get_real_name()
-        self.receiver_name = receiver_name
-        self.direction = direction
-        self.status = OpStatus.INIT
-
-        self.start_time = GLib.get_monotonic_time() # for sorting in the op list
-
-        self.total_size = 0
-        self.total_count = 0
-        self.size_string = "" # I'd say 'Unknown' but that might be long enough to expand the label
-        self.description = ""
-        self.mime_if_single = "application/octet-stream" # unknown
-        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
-        self.resolved_files = []
-
-        self.file_send_cancellable = None
-
-        self.current_progress_report = None
-        self.progress = 0.0
-        self.progress_text = None
-
-        # These are the first-level base names (no path, just the filename) that we'll send to the server
-        # to check for pre-existence.  We know that if these files/folders don't exist, none of their children
-        # will.  This is a bit simple, but until we need more, it's fine.
-        self.top_dir_basenames = []
-
-    def set_status(self, status):
-        self.status = status
-        self.emit_status_changed()
-
-    def prepare_send_info(self):
-        self.status = OpStatus.CALCULATING
-        self.emit_status_changed()
-
-        transfers.gather_file_info(self)
-        self.size_string = GLib.format_size(self.total_size)
-        print("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
-
-        if self.total_count > 1:
-            # Translators: Don't need to translate singular, we show the filename if there's only one
-            self.description = gettext.ngettext("%d file",
-                                                "%d files", self.total_count) % (self.total_count,)
-            self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
-        else:
-            self.description = self.resolved_files[0].basename
-            self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
-
-        self.set_status(OpStatus.WAITING_PERMISSION)
-        self.emit_initial_setup_complete()
-        self.emit_status_changed()
-
-    def progress_report(self, report):
-        self.current_progress_report = report
-
-        self.progress = report.progress
-        if self.progress == 1.0:
-            self.status = OpStatus.FINISHED
-            self.emit_status_changed()
-            return
-        else:
-            self.progress_text = _("%s (%s/s)") % (util.format_time_span(report.time_left_sec), GLib.format_size(report.bytes_per_sec))
-
-        self.emit("progress-changed")
-        self.emit("op-command", OpCommand.UPDATE_PROGRESS)
-
-    @util._idle
-    def emit_initial_setup_complete(self):
-        self.emit("initial-setup-complete")
-
-    @util._idle
-    def emit_status_changed(self):
-        self.emit("status-changed")
-
-    # Widget handlers
-
-    def cancel_transfer_request(self):
-        self.emit("op-command", OpCommand.CANCEL_PERMISSION_BY_SENDER)
-
-    def retry_transfer(self):
-        self.emit("op-command", OpCommand.RETRY_TRANSFER)
-
-    def pause_transfer(self):
-        pass
-
-    def stop_transfer(self):
-        self.emit("op-command", OpCommand.STOP_TRANSFER_BY_SENDER)
-
-    def remove_transfer(self):
-        self.emit("op-command", OpCommand.REMOVE_TRANSFER)
-
-# This represents a send or receive 'job', there would be potentially many of these.
-class ReceiveOp(GObject.Object):
-    __gsignals__ = {
-        "status-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "initial-setup-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "op-command": (GObject.SignalFlags.RUN_LAST, None, (int,)),
-        "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ())
-    }
-
-    def __init__(self, direction, sender=None, uris=None):
-        super(ReceiveOp, self).__init__()
-        self.uris = uris
-        self.sender = sender
-        self.sender_name = self.sender
-        self.receiver_name = util.accounts.get_real_name()
-        self.direction = direction
-        self.status = OpStatus.INIT
-
-        self.start_time = GLib.get_monotonic_time() # for sorting in the op list
-
-        self.total_size = 0
-        self.total_count = 0
-        self.size_string = "--" # I'd say 'Unknown' but that might be long enough to expand the label
-        self.description = "--"
-        self.mime_if_single = "application/octet-stream" # unknown
-        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
-
-        # This is set when a transfer starts - it's a grpc.Future that we can cancel() if the user
-        # wants the transfer to stop.
-        self.file_iterator = None
-
-        self.current_progress_report = None
-        self.progress = 0.0
-        self.progress_text = None
-        # These are the first-level base names (no path, just the filename) that we'll send to the server
-        # to check for pre-existence.  We know that if these files/folders don't exist, none of their children
-        # will.  This is a bit simple, but until we need more, it's fine.
-        self.top_dir_basenames = []
-
-    def set_status(self, status):
-        self.status = status
-        self.emit_status_changed()
-
-    def prepare_receive_info(self):
-        self.size_string = GLib.format_size(self.total_size)
-        print("Transfer request received for %d files, with a size of %s" % (self.total_count, self.size_string))
-
-        if self.total_count > 1:
-            # Translators: Don't need to translate singular, we show the filename if there's only one
-            self.description = gettext.ngettext("%d file",
-                                                "%d files", self.total_count) % (self.total_count,)
-            self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
-        else:
-            self.description = self.name_if_single
-            self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
-
-        self.status = OpStatus.WAITING_PERMISSION
-        self.emit_initial_setup_complete()
-
-    def update_progress(self, report):
-        self.current_progress_report = report
-        self.progress = report.progress
-        self.progress_text = _("%s (%s/s)") % (util.format_time_span(report.time_left_sec), GLib.format_size(report.bytes_per_sec))
-
-        self.emit("progress-changed")
-
-    @util._idle
-    def emit_initial_setup_complete(self):
-        self.emit("initial-setup-complete")
-
-    @util._idle
-    def emit_status_changed(self):
-        self.emit("status-changed")
-
-    # Widget handlers
-    def accept_transfer(self):
-        self.emit("op-command", OpCommand.START_TRANSFER)
-
-    def decline_transfer_request(self):
-        self.emit("op-command", OpCommand.CANCEL_PERMISSION_BY_RECEIVER)
-
-    def stop_transfer(self):
-        self.emit("op-command", OpCommand.STOP_TRANSFER_BY_RECEIVER)
-
-    def remove_transfer(self):
-        self.emit("op-command", OpCommand.REMOVE_TRANSFER)
-
+    def list_remote_machines(self):
+        return self.remote_machines.values()

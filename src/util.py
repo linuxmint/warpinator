@@ -118,7 +118,7 @@ def gfiletype_to_int_enum(gfiletype):
     else:
         return FileType.REGULAR
 
-def open_save_folder():
+def open_save_folder(widget=None, data=None):
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
     try:
         file = Gio.File.new_for_uri(prefs.get_save_path())
@@ -143,6 +143,18 @@ def relpath_from_uri(child_uri, base_uri):
         return child_uri.replace(base_uri + "/", "")
     else:
         return None
+
+def sort_remote_machines(am, bm):
+    if am.favorite and not bm.favorite:
+        return -1
+    elif bm.favorite and not am.favorite:
+        return +1
+    elif am.recent_time > bm.recent_time:
+        return -1
+    elif bm.recent_time > bm.recent_time:
+        return +1
+
+    return -1 if am.display_name < bm.display_name else +1
 
 # adapted from nemo-file-operations.c: format_time()
 def format_time_span(seconds):

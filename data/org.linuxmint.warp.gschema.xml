@@ -15,6 +15,10 @@
       <summary>The remote display name for this computer.</summary>
       <description>If left empty, this computer's hostname will be used.</description>
     </key>
+    <key name="use-tray-icon" type="b">
+      <default>true</default>
+      <summary>Show a tray icon, and keep the program running even with the window closed</summary>
+    </key>
     <key name="start-with-window" type="b">
       <default>true</default>
       <summary>Show the main window at startup</summary>
@@ -43,7 +47,11 @@
     </key>
     <key name="port" type="i">
       <default>42000</default>
-      <summary>Abort transfers when the destination files already exist</summary>
+      <summary>Incoming port to use (this needs to be allowed by any firewall)</summary>
+    </key>
+    <key name="show-notifications" type="b">
+      <default>true</default>
+      <summary>Display notifications when a new transfer is incoming.</summary>
     </key>
   </schema>
 
