@@ -26,7 +26,6 @@ libexec_py = [
   'accountsService.py',
   'ops.py',
   'prefs.py',
-  'pulse.py',
   'machines.py',
   'transfers.py',
   'util.py',

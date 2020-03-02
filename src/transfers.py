@@ -16,7 +16,7 @@ FILE_INFOS_SINGLE_FILE = \
     "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target,standard::content-type"
 
 CHUNK_SIZE = 1024 * 1024
-UPDATE_FREQ = 4 * 1000 * 1000
+PROGRESS_UPDATE_FREQ = 4 * 1000 * 1000
 
 def load_file_in_chunks(path, display_name):
     gfile = Gio.File.new_for_path(path)

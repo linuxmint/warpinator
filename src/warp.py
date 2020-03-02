@@ -18,7 +18,7 @@ import prefs
 import util
 import machines
 from ops import SendOp, ReceiveOp
-from util import TransferDirection, OpStatus
+from util import TransferDirection, OpStatus, RemoteStatus
 
 # Don't let warp run as root
 if os.getuid() == 0:
@@ -236,6 +236,7 @@ class RemoteMachineButton(GObject.Object):
                                                                      self._update_machine_info)
         self.new_incoming_op_id = self.remote_machine.connect("new-incoming-op",
                                                                self._handle_new_incoming_op)
+        self.remote_machine.connect("remote-status-changed", self.remote_machine_status_changed)
 
         self.new_ops = 0
 
@@ -248,14 +249,48 @@ class RemoteMachineButton(GObject.Object):
         self.favorite_image = self.builder.get_object("overview_user_favorite")
         self.overview_user_button_stack = self.builder.get_object("overview_user_button_stack")
         self.new_transfer_notify_label = self.builder.get_object("new_transfer_notify_label")
+        self.overview_user_status_icon = self.builder.get_object("overview_user_status_icon")
+        self.overview_user_display_name_box = self.builder.get_object("overview_user_display_name_box")
+        self.overview_user_connecting_spinner = self.builder.get_object("overview_user_connecting_spinner")
+        self.overview_user_connecting_label = self.builder.get_object("overview_user_connecting_label")
+        self.overview_user_connection_issue_label = self.builder.get_object("overview_user_connection_issue_label")
 
         self.button.connect("clicked", lambda button: self.emit("clicked"))
-        self.overview_user_button_stack.set_visible_child_name("clear")
 
         # Convenience for window to sort and remove buttons
         self.button.remote_machine = remote_machine
         self.button.connect_name = remote_machine.connect_name
         self.button._delegate = self
+
+        self.button.show_all()
+        self.remote_machine_status_changed(self.remote_machine)
+
+    def remote_machine_status_changed(self, remote_machine):
+        if remote_machine.status == RemoteStatus.CONNECTING:
+            self.overview_user_connecting_spinner.show()
+            self.overview_user_status_icon.hide()
+            self.overview_user_button_stack.set_visible_child_name("connecting")
+            self.overview_user_display_name_box.hide()
+            self.overview_user_connecting_label.set_text(_("Connecting to %s") % remote_machine.hostname)
+        elif remote_machine.status == RemoteStatus.ONLINE:
+            self.overview_user_connecting_spinner.hide()
+            self.overview_user_status_icon.show()
+            self.overview_user_status_icon.set_from_icon_name("cs-xlet-running", Gtk.IconSize.LARGE_TOOLBAR)
+            self.overview_user_button_stack.set_visible_child_name("clear")
+            self.overview_user_display_name_box.show()
+        # elif remote_machine.status == RemoteStatus.OFFLINE:
+        #     self.overview_user_status_icon.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
+        #     self.overview_user_button_stack.set_visible_child_name("connection-issue")
+        #     self.overview_user_display_name_box.hide()
+        elif remote_machine.status == RemoteStatus.UNREACHABLE:
+            self.overview_user_status_icon.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
+            if remote_machine.display_name != None:
+                name = remote_machine.display_name
+            else:
+                name = remote_machine.hostname
+            self.overview_user_connection_issue_label.set_text(_("Cannot connect to %s") % name)
+            self.overview_user_button_stack.set_visible_child_name("connection-issue")
+            self.overview_user_display_name_box.hide()
 
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
@@ -412,6 +447,9 @@ class WarpWindow(GObject.Object):
         self.discovery_time_out_id = 0
         self.restarting_server = False
 
+        self.window.connect("delete-event",
+                            self.window_delete_event)
+
         # Hamburger menu
         menu = Gtk.Menu()
         item = Gtk.MenuItem(label=_("Open save folder"))
@@ -444,6 +482,14 @@ class WarpWindow(GObject.Object):
                             lambda window, event: window.set_urgency_hint(False))
 
         self.update_local_user_info()
+
+    def window_delete_event(self, widget, event, data=None):
+        if prefs.use_tray_icon():
+            self.window.hide()
+        else:
+            self.emit("exit")
+
+        return Gdk.EVENT_STOP
 
     def toggle_visibility(self, time=0):
         if self.window.is_active():
@@ -525,7 +571,8 @@ class WarpWindow(GObject.Object):
         prefs.Preferences(self.window)
 
     def add_remote_button(self, remote_machine):
-        self.view_stack.set_visible_child_name("overview")
+        if len(self.user_list_box.get_children()) == 0:
+            self.view_stack.set_visible_child_name("overview")
 
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
@@ -648,7 +695,7 @@ class WarpWindow(GObject.Object):
 
         for child in buttons:
             if child.connect_name == self.current_selected_remote_machine.connect_name:
-                child._delegate.clear_new_op_notification()
+                child._delegate.clear_new_op_highlighting()
 
         self.current_selected_remote_machine = None
         self.clear_user_view()
@@ -680,16 +727,7 @@ class WarpWindow(GObject.Object):
             self.user_list_box.reorder_child(button, -1)
 
     def update_behavior_from_preferences(self):
-        if self.window_close_handler_id > 0:
-            self.window.disconnect(self.window_close_handler_id)
-            self.window_close_handler_id = 0
-
-        if prefs.use_tray_icon():
-            self.window_close_handler_id = self.window.connect("delete-event",
-                                                               lambda widget, event: widget.hide_on_delete())
-        else:
-            self.window_close_handler_id = self.window.connect("delete-event",
-                                                               lambda widget, event: self.emit("exit"))
+        # more..
 
         self.update_local_user_info()
 
@@ -828,11 +866,10 @@ class WarpApplication(Gtk.Application):
 
     def add_favorite_entries(self, menu):
         remote_list = self.server.list_remote_machines()
+        i = 0
 
         if remote_list:
             sorted_machines = sorted(remote_list, key=functools.cmp_to_key(util.sort_remote_machines))
-
-            i = 0
 
             for machine in sorted_machines:
                 if machine.favorite:

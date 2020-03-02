@@ -15,11 +15,18 @@ service Warp {
     // Both
     rpc CancelTransferOpRequest(OpInfo) returns (VoidType) {}
     rpc StopTransfer(OpInfo) returns (VoidType) {}
+
+    rpc Ping(VoidType) returns (VoidType) {}
+    // rpc CanYouSeeMe(VoidType) returns (Visible) {}
 }
 
 message RemoteMachineInfo {
     string display_name = 1;
     bytes avatar_chunk = 2;
+}
+
+message Visible {
+    bool yes_i_can = 1;
 }
 
 message VoidType {

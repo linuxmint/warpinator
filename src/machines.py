@@ -21,8 +21,9 @@ if use_compression:
 import prefs
 import util
 import transfers
+import ping
 from ops import SendOp, ReceiveOp
-from util import TransferDirection, OpStatus, OpCommand
+from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
 
 _ = gettext.gettext
 
@@ -35,14 +36,14 @@ if os.environ.get('http_proxy'):
     del os.environ['http_proxy']
 
 MAX_UNARY_UNARY_RETRIES = 2
-
+MAX_CONNECT_RETRIES = 4
 # client
 class RemoteMachine(GObject.Object):
     __gsignals__ = {
         'machine-info-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
-        'connected': (GObject.SignalFlags.RUN_LAST, None, ())
+        'remote-status-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
     def __init__(self, name, hostname, ip, port, local_service_name):
@@ -51,14 +52,18 @@ class RemoteMachine(GObject.Object):
         self.port = port
         self.connect_name = name
         self.hostname = hostname
-        self.display_name = name
+        self.display_name = None
         self.favorite = prefs.get_is_favorite(self.hostname)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
-
+        self.status = RemoteStatus.CONNECTING
         self.avatar_surface = None
         self.transfer_ops = []
 
         self.changed_source_id = 0
+
+        self.channel = None
+        self.need_shutdown = False
+        self.connect_loop_cancelled = True
 
         self.sort_key = self.connect_name
         self.local_service_name = local_service_name
@@ -68,47 +73,62 @@ class RemoteMachine(GObject.Object):
     @util._async
     def start(self):
         print("Connecting to %s" % self.connect_name)
+        self.set_remote_status(RemoteStatus.CONNECTING)
 
-        if use_compression:
-            chan_ops = [
-                ('grpc.default_compression_algorithm', CompressionAlgorithm.gzip),
-                ('grpc.grpc.default_compression_level', CompressionLevel.high)
-            ]
+        def keep_channel():
+            with grpc.insecure_channel("%s:%d" % (self.ip_address, self.port),
+                                       options=[('grpc.enable_retries', 0),
+                                                ('grpc.keepalive_timeout_ms', 10000)
+                                               ]) as channel:
 
-            self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port), chan_ops)
-        else:
-            print("make channel")
+                future = grpc.channel_ready_future(channel)
 
-            self.channel = grpc.insecure_channel("%s:%d" % (self.ip_address, self.port))
-            print("after insecure")
-            future = grpc.channel_ready_future(self.channel)
+                connect_retries = 0
 
-        try:
-            print("future setup")
-            future.result(timeout=2)
-            future.add_done_callback(self.channel_ready_cb)
-        except grpc.FutureTimeoutError:
-            print("Time out now what?", future.exception)
+                while not self.need_shutdown:
+                    try:
+                        future.result(timeout=2)
+                        self.stub = warp_pb2_grpc.WarpStub(channel)
+                        break
+                    except grpc.FutureTimeoutError:
+                        if connect_retries < MAX_CONNECT_RETRIES:
+                            print("channel ready timeout, waiting 10s more")
+                            time.sleep(10)
+                            connect_retries += 1
+                            continue
+                        else:
+                            print("Trying to remake channel")
+                            return True
 
+                one_ping = False
+                while not self.need_shutdown:
+                    try:
+                        ping = self.stub.Ping(void, timeout=2)
+                        self.set_remote_status(RemoteStatus.ONLINE)
+                        if not one_ping:
+                            self.update_remote_machine_info()
+                            one_ping = True
+                    except grpc.RpcError as e:
+                        if e.code() in (grpc.StatusCode.DEADLINE_EXCEEDED, grpc.StatusCode.UNAVAILABLE):
+                            self.set_remote_status(RemoteStatus.UNREACHABLE)
 
-    def channel_ready_cb(self, future):
-        print("ready channel")
-        self.stub = warp_pb2_grpc.WarpStub(self.channel)
-        print("after ready")
+                    time.sleep(10)
+                return False
 
-        self.update_remote_machine_info()
-        self.emit("connected")
+        while keep_channel():
+            continue
 
-    @util._async
     def update_remote_machine_info(self):
-        loader = util.CairoSurfaceLoader()
-
+        loader = None
         name = None
 
         iterator = self.stub.GetRemoteMachineInfo(void)
         for info in iterator:
             if name == None:
                 name = info.display_name
+
+            if loader == None:
+                loader = util.CairoSurfaceLoader()
 
             loader.add_bytes(info.avatar_chunk)
 
@@ -121,6 +141,7 @@ class RemoteMachine(GObject.Object):
         self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
 
         self.emit_machine_info_changed()
+        self.set_remote_status(RemoteStatus.ONLINE)
 
     @util._async
     def send_transfer_op_request(self, op):
@@ -264,6 +285,14 @@ class RemoteMachine(GObject.Object):
         self.emit("ops-changed")
 
     @util._idle
+    def set_remote_status(self, status):
+        if status == self.status:
+            return
+
+        self.status = status
+        self.emit("remote-status-changed")
+
+    @util._idle
     def op_command_issued(self, op, command):
         # send
         if command == OpCommand.UPDATE_PROGRESS:
@@ -307,7 +336,9 @@ class RemoteMachine(GObject.Object):
 
     def shutdown(self):
         print("Shutdown - closing connection to remote machine '%s'" % self.connect_name)
-        self.channel.close()
+        self.need_shutdown = True
+        while not self.connect_loop_cancelled:
+            time.sleep(1)
 
 # server
 class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
@@ -353,6 +384,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         print("Searching for others...")
         self.browser = ServiceBrowser(self.zeroconf, "_http._tcp.local.", self)
 
+    @util._async
     def remove_service(self, zeroconf, _type, name):
         if name == self.service_name or not name.count("warp"):
             return
@@ -360,13 +392,14 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         print("Service %s removed" % (name,))
 
         try:
-            self.emit("remote-machine-removed", self.remote_machines[name])
+            self.emit_remote_machine_removed(self.remote_machines[name])
+            self.remote_machines[name].shutdown()
             del self.remote_machines[name]
             print("Removing remote machine '%s'" % name)
         except KeyError:
             print("Removed client we never knew: %s" % name)
 
-    @util._idle
+    @util._async
     def add_service(self, zeroconf, _type, name):
         info = zeroconf.get_service_info(_type, name)
 
@@ -386,12 +419,17 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
                 machine.start()
 
             machine.connect("ops-changed", self.remote_ops_changed)
-            machine.connect("connected", self.remote_connected)
+            # machine.connect("remote-status-changed", self.remote_status_changed)
             self.remote_machines[name] = machine
+            self.emit_remote_machine_added(machine)
 
     @util._idle
-    def remote_connected(self, remote_machine):
+    def emit_remote_machine_added(self, remote_machine):
         self.emit("remote-machine-added", remote_machine)
+
+    @util._idle
+    def emit_remote_machine_removed(self, remote_machine):
+        self.emit("remote-machine-removed", remote_machine)
 
     @util._idle
     def remote_ops_changed(self, remote_machine):
@@ -399,15 +437,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
 
     @util._async
     def start_server(self):
-        if use_compression:
-            server_options = [
-                ("grpc.default_compression_algorithm", CompressionAlgorithm.gzip),
-                ("grpc.default_compression_level", CompressionLevel.high)
-            ]
-            self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=server_options)
-        else:
-            self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=None)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
         self.server.add_insecure_port('[::]:%d' % prefs.get_port())
@@ -428,6 +458,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
     def emit_server_started(self):
         self.emit("server-started")
 
+    @util._idle
     def start_discovery_services(self):
         self.start_zeroconf()
         self.start_remote_lookout()
@@ -437,7 +468,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         remote_machines = list(self.remote_machines.values())
         for machine in remote_machines:
             self.remove_service(self.zeroconf, None, machine.connect_name)
-            machine.shutdown()
+            # machine.shutdown()
 
         remote_machines = None
 
@@ -455,6 +486,9 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
     @util._idle
     def emit_shutdown_complete(self):
         self.emit("shutdown-complete")
+
+    def Ping(self, request, context):
+        return void
 
     def GetRemoteMachineInfo(self, request, context):
         while True:

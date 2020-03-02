@@ -20,6 +20,11 @@ FileType = IntEnum('FileType', 'REGULAR \
                                 DIRECTORY \
                                 SYMBOLIC_LINK')
 
+RemoteStatus = IntEnum('RemoteStatus', 'ONLINE \
+                                        OFFLINE \
+                                        CONNECTING \
+                                        UNREACHABLE')
+
 OpStatus = IntEnum('OpStatus', 'INIT \
                                 CALCULATING \
                                 WAITING_PERMISSION \
