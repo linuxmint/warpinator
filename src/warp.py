@@ -254,6 +254,7 @@ class RemoteMachineButton(GObject.Object):
         self.overview_user_connecting_spinner = self.builder.get_object("overview_user_connecting_spinner")
         self.overview_user_connecting_label = self.builder.get_object("overview_user_connecting_label")
         self.overview_user_connection_issue_label = self.builder.get_object("overview_user_connection_issue_label")
+        self.overview_user_connection_issue_image = self.builder.get_object("overview_user_connection_issue_image")
 
         self.button.connect("clicked", lambda button: self.emit("clicked"))
 
@@ -266,7 +267,12 @@ class RemoteMachineButton(GObject.Object):
         self.remote_machine_status_changed(self.remote_machine)
 
     def remote_machine_status_changed(self, remote_machine):
-        if remote_machine.status == RemoteStatus.CONNECTING:
+        if remote_machine.display_name != None:
+            name = remote_machine.display_name
+        else:
+            name = remote_machine.hostname
+
+        if remote_machine.status == RemoteStatus.INIT_CONNECTING:
             self.overview_user_connecting_spinner.show()
             self.overview_user_status_icon.hide()
             self.overview_user_button_stack.set_visible_child_name("connecting")
@@ -278,19 +284,18 @@ class RemoteMachineButton(GObject.Object):
             self.overview_user_status_icon.set_from_icon_name("cs-xlet-running", Gtk.IconSize.LARGE_TOOLBAR)
             self.overview_user_button_stack.set_visible_child_name("clear")
             self.overview_user_display_name_box.show()
-        # elif remote_machine.status == RemoteStatus.OFFLINE:
-        #     self.overview_user_status_icon.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
-        #     self.overview_user_button_stack.set_visible_child_name("connection-issue")
-        #     self.overview_user_display_name_box.hide()
-        elif remote_machine.status == RemoteStatus.UNREACHABLE:
+        elif remote_machine.status == RemoteStatus.OFFLINE:
+            self.overview_user_connecting_spinner.hide()
             self.overview_user_status_icon.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
-            if remote_machine.display_name != None:
-                name = remote_machine.display_name
-            else:
-                name = remote_machine.hostname
-            self.overview_user_connection_issue_label.set_text(_("Cannot connect to %s") % name)
+            self.overview_user_connection_issue_label.set_text(_("%s is not currently online") % name)
             self.overview_user_button_stack.set_visible_child_name("connection-issue")
-            self.overview_user_display_name_box.hide()
+            self.overview_user_connection_issue_image.hide()
+        elif remote_machine.status == RemoteStatus.UNREACHABLE:
+            self.overview_user_connecting_spinner.hide()
+            self.overview_user_status_icon.set_from_icon_name("cs-xlet-update", Gtk.IconSize.LARGE_TOOLBAR)
+            self.overview_user_connection_issue_label.set_text(_("Problem communicating with %s") % name)
+            self.overview_user_button_stack.set_visible_child_name("connection-issue")
+            self.overview_user_connection_issue_image.show()
 
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
@@ -818,7 +823,8 @@ class WarpApplication(Gtk.Application):
         self.rebuild_status_icon_menu()
 
     def _remote_removed(self, local_machine, remote_machine):
-        self.window.remove_remote_button(remote_machine)
+        if remote_machine.status == RemoteStatus.INIT_CONNECTING:
+            self.window.remove_remote_button(remote_machine)
 
         self.rebuild_status_icon_menu()
 

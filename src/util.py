@@ -20,9 +20,15 @@ FileType = IntEnum('FileType', 'REGULAR \
                                 DIRECTORY \
                                 SYMBOLIC_LINK')
 
+
+# Online - all ok
+# Offline - no presence at all
+# Init connecting - we've just discovered you
+# Unreachable - we've either tried and failed after initial discovery, or something went wrong during the session
+
 RemoteStatus = IntEnum('RemoteStatus', 'ONLINE \
                                         OFFLINE \
-                                        CONNECTING \
+                                        INIT_CONNECTING \
                                         UNREACHABLE')
 
 OpStatus = IntEnum('OpStatus', 'INIT \

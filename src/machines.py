@@ -55,13 +55,12 @@ class RemoteMachine(GObject.Object):
         self.display_name = None
         self.favorite = prefs.get_is_favorite(self.hostname)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
-        self.status = RemoteStatus.CONNECTING
+        self.status = RemoteStatus.INIT_CONNECTING
         self.avatar_surface = None
         self.transfer_ops = []
 
         self.changed_source_id = 0
 
-        self.channel = None
         self.need_shutdown = False
         self.connect_loop_cancelled = True
 
@@ -72,10 +71,14 @@ class RemoteMachine(GObject.Object):
 
     @util._async
     def start(self):
+        self.need_shutdown = False
+        self.connect_loop_cancelled = False
+
         print("Connecting to %s" % self.connect_name)
-        self.set_remote_status(RemoteStatus.CONNECTING)
+        self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def keep_channel():
+            print("keep channel")
             with grpc.insecure_channel("%s:%d" % (self.ip_address, self.port),
                                        options=[('grpc.enable_retries', 0),
                                                 ('grpc.keepalive_timeout_ms', 10000)
@@ -97,6 +100,7 @@ class RemoteMachine(GObject.Object):
                             connect_retries += 1
                             continue
                         else:
+                            self.set_remote_status(RemoteStatus.UNREACHABLE)
                             print("Trying to remake channel")
                             return True
 
@@ -110,6 +114,7 @@ class RemoteMachine(GObject.Object):
                             one_ping = True
                     except grpc.RpcError as e:
                         if e.code() in (grpc.StatusCode.DEADLINE_EXCEEDED, grpc.StatusCode.UNAVAILABLE):
+                            one_ping = False
                             self.set_remote_status(RemoteStatus.UNREACHABLE)
 
                     time.sleep(10)
@@ -336,6 +341,7 @@ class RemoteMachine(GObject.Object):
 
     def shutdown(self):
         print("Shutdown - closing connection to remote machine '%s'" % self.connect_name)
+        self.set_remote_status(RemoteStatus.OFFLINE)
         self.need_shutdown = True
         while not self.connect_loop_cancelled:
             time.sleep(1)
@@ -394,7 +400,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         try:
             self.emit_remote_machine_removed(self.remote_machines[name])
             self.remote_machines[name].shutdown()
-            del self.remote_machines[name]
+            # del self.remote_machines[name]
             print("Removing remote machine '%s'" % name)
         except KeyError:
             print("Removed client we never knew: %s" % name)
@@ -416,12 +422,11 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
                 machine = self.remote_machines[name]
             except KeyError:
                 machine = RemoteMachine(name, remote_hostname, remote_ip, info.port, self.service_name)
-                machine.start()
+                self.remote_machines[name] = machine
+                machine.connect("ops-changed", self.remote_ops_changed)
+                self.emit_remote_machine_added(machine)
 
-            machine.connect("ops-changed", self.remote_ops_changed)
-            # machine.connect("remote-status-changed", self.remote_status_changed)
-            self.remote_machines[name] = machine
-            self.emit_remote_machine_added(machine)
+            machine.start()
 
     @util._idle
     def emit_remote_machine_added(self, remote_machine):
