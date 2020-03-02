@@ -286,12 +286,14 @@ class RemoteMachineButton(GObject.Object):
             self.overview_user_display_name_box.show()
         elif remote_machine.status == RemoteStatus.OFFLINE:
             self.overview_user_connecting_spinner.hide()
+            self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
             self.overview_user_connection_issue_label.set_text(_("%s is not currently online") % name)
             self.overview_user_button_stack.set_visible_child_name("connection-issue")
             self.overview_user_connection_issue_image.hide()
         elif remote_machine.status == RemoteStatus.UNREACHABLE:
             self.overview_user_connecting_spinner.hide()
+            self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name("cs-xlet-update", Gtk.IconSize.LARGE_TOOLBAR)
             self.overview_user_connection_issue_label.set_text(_("Problem communicating with %s") % name)
             self.overview_user_button_stack.set_visible_child_name("connection-issue")
@@ -475,12 +477,9 @@ class WarpWindow(GObject.Object):
 
         # DND
         self.drop_pending = False
-        entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
-        self.user_op_list.drag_dest_set(Gtk.DestDefaults.ALL,
-                                        (entry,),
-                                        Gdk.DragAction.COPY)
         self.user_op_list.connect("drag-drop", self.on_drag_drop)
         self.user_op_list.connect("drag-data-received", self.on_drag_data_received)
+        self.user_op_list.connect("drag-motion", self.on_drag_motion)
         # /DND
 
         self.window.connect("focus-in-event",
@@ -539,12 +538,21 @@ class WarpWindow(GObject.Object):
 
         dialog.destroy()
 
+    def on_drag_motion(self, widget, context, x, y, time):
+        if self.current_selected_remote_machine.status != RemoteStatus.ONLINE:
+            Gdk.drag_status(context, 0, time)
+            return
+
     def on_drag_drop(self, widget, context, x, y, _time, data=None):
         atom =  widget.drag_dest_find_target(context, None)
         self.drop_pending = True
         widget.drag_get_data(context, atom, _time)
 
     def on_drag_data_received(self, widget, context, x, y, data, info, _time, user_data=None):
+        if self.current_selected_remote_machine.status != RemoteStatus.ONLINE:
+            Gdk.drag_status(context, 0, time)
+            return
+
         if not self.drop_pending:
             Gdk.drag_status(context, Gdk.DragAction.COPY, _time)
             return
@@ -664,6 +672,9 @@ class WarpWindow(GObject.Object):
         if self.view_stack.get_visible_child_name() != "user":
             return
 
+        self.current_selected_remote_machine.connect("remote-status-changed",
+                                                     self.current_selected_remote_status_changed)
+        self.current_selected_remote_status_changed(self.current_selected_remote_machine)
         self.user_display_name_label.set_text(self.current_selected_remote_machine.display_name)
         self.user_hostname_label.set_text(self.current_selected_remote_machine.hostname)
         self.user_ip_label.set_text(self.current_selected_remote_machine.ip_address)
@@ -671,6 +682,15 @@ class WarpWindow(GObject.Object):
 
         self.add_op_items()
         self.sync_favorite()
+
+    def current_selected_remote_status_changed(self, remote_machine):
+        if remote_machine.status == RemoteStatus.ONLINE:
+            entry = Gtk.TargetEntry.new("text/uri-list",  0, 0)
+            self.user_op_list.drag_dest_set(Gtk.DestDefaults.ALL,
+                                            (entry,),
+                                            Gdk.DragAction.COPY)
+        else:
+            self.user_op_list.drag_dest_unset()
 
     def clear_user_view(self):
         for item in self.user_op_list:

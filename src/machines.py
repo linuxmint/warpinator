@@ -36,7 +36,7 @@ if os.environ.get('http_proxy'):
     del os.environ['http_proxy']
 
 MAX_UNARY_UNARY_RETRIES = 2
-MAX_CONNECT_RETRIES = 4
+MAX_CONNECT_RETRIES = 2
 # client
 class RemoteMachine(GObject.Object):
     __gsignals__ = {
