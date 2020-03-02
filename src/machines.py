@@ -467,14 +467,14 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         return transfers.load_file_in_chunks(path, util.accounts.get_real_name())
 
     def ProcessTransferOpRequest(self, request, context):
-        remote_machine = self.remote_machines[request.info.sender]
+        remote_machine = self.remote_machines[request.info.connect_name]
         for existing_op in remote_machine.transfer_ops:
-            if existing_op.start_time == request.timestamp:
+            if existing_op.start_time == request.info.timestamp:
                 existing_op.set_status(OpStatus.WAITING_PERMISSION)
                 self.add_receive_op_to_remote_machine(existing_op)
                 return void
 
-        op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.info.sender)
+        op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.info.connect_name)
 
         op.start_time = request.info.timestamp
 

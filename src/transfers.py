@@ -100,7 +100,7 @@ class FileSender(GObject.Object):
         self.current_bytes_read += size_read
 
         now = GLib.get_monotonic_time()
-        if ((now - self.last_update_time) > PROGRESS_UPDATE_FREQ) or finished:
+        if ((now - self.last_update_time) > UPDATE_FREQ) or finished:
             self.last_update_time = now
 
             progress = self.current_bytes_read / self.op.total_size
