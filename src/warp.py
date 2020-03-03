@@ -522,6 +522,8 @@ class WarpWindow(GObject.Object):
         self.window.connect("focus-in-event",
                             lambda window, event: window.set_urgency_hint(False))
 
+        # self.window.set_keep_above(prefs.get_start_pinned())
+
         self.update_local_user_info()
 
     def window_delete_event(self, widget, event, data=None):

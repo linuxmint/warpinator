@@ -14,7 +14,7 @@ PREFS_SCHEMA = "com.linuxmint.warp.preferences"
 BROADCAST_NAME_KEY = "broadcast-name"
 FOLDER_NAME_KEY = "receiving-folder"
 START_WITH_WINDOW_KEY = "start-with-window"
-START_PINNED_KEY = "default-pinned"
+# START_PINNED_KEY = "default-pinned"
 AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
@@ -45,8 +45,8 @@ def use_tray_icon():
 def get_start_with_window():
     return prefs_settings.get_boolean(START_WITH_WINDOW_KEY)
 
-def get_start_pinned():
-    return prefs_settings.get_boolean(START_PINNED_KEY)
+# def get_start_pinned():
+#     return prefs_settings.get_boolean(START_PINNED_KEY)
 
 def require_permission_for_transfer():
     return prefs_settings.get_boolean(ASK_PERMISSION_KEY)
@@ -110,9 +110,9 @@ class Preferences():
 
         section.add_row(widget)
 
-        widget = GSettingsSwitch(_("Pin the window by default"),
-                                 PREFS_SCHEMA, START_PINNED_KEY)
-        section.add_row(widget)
+        # widget = GSettingsSwitch(_("Pin the window by default"),
+        #                          PREFS_SCHEMA, START_PINNED_KEY)
+        # section.add_row(widget)
 
         widget = GSettingsSwitch(_("Start automatically"),
                                  PREFS_SCHEMA, AUTOSTART_KEY)
