@@ -985,10 +985,17 @@ class WarpApplication(Gtk.Application):
 
     def send_status_icon_selection_to_machine(self, uri, remote_machine=None):
         if remote_machine:
-            remote_machine.send_files([uri])
+            if isinstance(uri, list):
+                remote_machine.send_files(uri)
+            else:
+                remote_machine.send_files([uri])
         else:
             for remote_machine in self.server.list_remote_machines():
-                if remote_machine.favorite:
+                if remote_machine.favorite and remote_machine.status == RemoteStatus.ONLINE:
+                    if isinstance(uri, list):
+                        remote_machine.send_files(uri)
+                    else:
+                        remote_machine.send_files([uri])
                     remote_machine.send_files([uri])
 
     def on_tray_icon_activate(self, icon, button, time):

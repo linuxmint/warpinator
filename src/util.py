@@ -180,6 +180,10 @@ def files_exist(base_names):
 
     return False
 
+def check_ml(fid):
+    on_ml = threading.current_thread() == threading.main_thread()
+    print("%s on mainloop: " % fid, on_ml)
+
 def get_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))
