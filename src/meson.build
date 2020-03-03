@@ -35,11 +35,3 @@ libexec_py = [
 install_data(libexec_py,
   install_dir: install_libdir
 )
-
-data = [
-  'warp-window.ui',
-]
-
-install_data(data,
-  install_dir: install_datadir
-)

@@ -58,16 +58,14 @@ TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_FILE_NOT_FOUND_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
 
-class TransferItem(GObject.Object):
+class OpItem(GObject.Object):
     def __init__(self, op):
-        super(TransferItem, self).__init__()
-
+        super(OpItem, self).__init__()
         self.op = op
 
-        self.op.connect("progress-changed", self.update_progress)
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "op-item.ui"))
 
-        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
-        self.item = self.builder.get_object("transfer_item")
+        self.item = self.builder.get_object("op_item")
         self.direction_image = self.builder.get_object("transfer_direction_image")
         self.mime_image = self.builder.get_object("transfer_mime_image")
         self.transfer_description_label = self.builder.get_object("transfer_description_label")
@@ -93,6 +91,8 @@ class TransferItem(GObject.Object):
         self.stop_button.connect("clicked", self.stop_button_clicked)
         self.remove_button.connect("clicked", self.remove_button_clicked)
         self.folder_button.connect("clicked", self.folder_button_clicked)
+
+        self.op.connect("progress-changed", self.update_progress)
 
         self.refresh_status_widgets()
         self.refresh_buttons_and_icons()
@@ -234,7 +234,7 @@ class TransferItem(GObject.Object):
         print("(dispose) Disconnecting op row from TransferOp")
         GObject.Object.do_dispose(self)
 
-class RemoteMachineButton(GObject.Object):
+class OverviewButton(GObject.Object):
     __gsignals__ = {
         'update-sort': (GObject.SignalFlags.RUN_LAST, None, ()),
         'clicked': (GObject.SignalFlags.RUN_LAST, None, ()),
@@ -243,7 +243,7 @@ class RemoteMachineButton(GObject.Object):
     }
 
     def __init__(self, remote_machine):
-        super(RemoteMachineButton, self).__init__()
+        super(OverviewButton, self).__init__()
 
         self.remote_machine = remote_machine
         self.remote_machine_changed_id = self.remote_machine.connect("machine-info-changed",
@@ -253,11 +253,11 @@ class RemoteMachineButton(GObject.Object):
         self.new_incoming_op_id = self.remote_machine.connect("new-outgoing-op",
                                                                self._handle_new_outgoing_op)
         self.remote_machine.connect("remote-status-changed", self.remote_machine_status_changed)
-
         self.new_ops = 0
 
-        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
-        self.button = self.builder.get_object("overview_user_button")
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "overview-button.ui"))
+
+        self.button = self.builder.get_object("overview_button")
         self.avatar_image = self.builder.get_object("overview_user_avatar_image")
         self.display_name_label = self.builder.get_object("overview_user_display_name")
         self.hostname_label = self.builder.get_object("overview_user_hostname")
@@ -446,8 +446,9 @@ class WarpWindow(GObject.Object):
         self.window_close_handler_id = 0
 
         # overview
-        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
-        self.window =self.builder.get_object("window")
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "main-window.ui"))
+
+        self.window =self.builder.get_object("main_window")
         self.view_stack = self.builder.get_object("view_stack")
         self.menu_button = self.builder.get_object("menu_button")
         self.user_list_box = self.builder.get_object("user_list_box")
@@ -663,7 +664,7 @@ class WarpWindow(GObject.Object):
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
 
-        button = RemoteMachineButton(remote_machine)
+        button = OverviewButton(remote_machine)
         button.connect("update-sort", self.sort_buttons)
         button.connect("files-dropped", self.remote_machine_files_dropped)
         button.connect("clicked", self.remote_machine_button_clicked)
@@ -801,7 +802,7 @@ class WarpWindow(GObject.Object):
         ops.reverse()
 
         for op in ops:
-            self.user_op_list.add(TransferItem(op).item)
+            self.user_op_list.add(OpItem(op).item)
 
     def back_to_overview(self, button=None, data=None):
         if not self.server_restarting:

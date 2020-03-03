@@ -72,7 +72,7 @@ def toggle_favorite(hostname):
 
 class Preferences():
     def __init__(self, transient_for):
-        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "warp-window.ui"))
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "prefs-window.ui"))
 
         self.window = self.builder.get_object("prefs_window")
         self.content_box = self.builder.get_object("content_box")
