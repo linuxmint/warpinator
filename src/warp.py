@@ -505,7 +505,7 @@ class WarpWindow(GObject.Object):
         menu.show_all()
 
         self.menu_button.set_popup(menu)
-        # end Hamburger menu
+        # end Hamburger 
 
         # DND
         self.drop_pending = False
@@ -513,6 +513,9 @@ class WarpWindow(GObject.Object):
         self.user_op_list.connect("drag-data-received", self.on_drag_data_received)
         self.user_op_list.connect("drag-motion", self.on_drag_motion)
         # /DND
+
+        self.search_entry.connect("search-changed", self.search_entry_changed)
+        self.window.connect("key-press-event", self.window_key_press)
 
         self.window.connect("focus-in-event",
                             lambda window, event: window.set_urgency_hint(False))
@@ -527,6 +530,15 @@ class WarpWindow(GObject.Object):
 
         return Gdk.EVENT_STOP
 
+    def window_key_press(self, widget, event, data=None):
+        if not self.search_entry.has_focus() and self.view_stack.get_visible_child_name() == "overview":
+            self.search_entry.grab_focus()
+        elif event.keyval == Gdk.KEY_BackSpace and self.view_stack.get_visible_child_name() == "user":
+            self.back_to_overview()
+            return Gdk.EVENT_STOP
+
+        return Gdk.EVENT_PROPAGATE
+
     def toggle_visibility(self, time=0):
         if self.window.is_active():
             self.window.hide()
@@ -536,6 +548,21 @@ class WarpWindow(GObject.Object):
             else:
                 self.window.get_window().raise_()
                 self.window.get_window().focus(time)
+
+    def search_entry_changed(self, entry, data=None):
+        query = entry.get_text()
+        normalized_query = GLib.utf8_normalize(query, len(query), GLib.NormalizeMode.DEFAULT).lower()
+
+        for button in self.user_list_box.get_children():
+            joined = " ".join([button.remote_machine.display_name,
+                                  button.remote_machine.hostname,
+                                  button.remote_machine.ip_address])
+            normalized_contents = GLib.utf8_normalize(joined, len(joined), GLib.NormalizeMode.DEFAULT).lower()
+
+            if normalized_query in normalized_contents:
+                button.show()
+            else:
+                button.hide()
 
     def start_startup_timer(self, restarting=False):
         if self.server_start_timeout_id > 0:
