@@ -452,7 +452,7 @@ class WarpWindow(GObject.Object):
 
         self.server_start_timeout_id = 0
         self.discovery_time_out_id = 0
-        self.restarting_server = False
+        self.server_restarting = False
 
         self.window.connect("delete-event",
                             self.window_delete_event)
@@ -789,6 +789,7 @@ class WarpApplication(Gtk.Application):
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
+        self.server_restarting = False
 
         self.server = None
         self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
@@ -824,8 +825,11 @@ class WarpApplication(Gtk.Application):
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+            self.server_restarting = False
 
         if self.server:
+            self.server_restarting = True
+
             self.server.connect("shutdown-complete", ok_to_restart)
             self.server.shutdown()
         else:
@@ -871,7 +875,7 @@ class WarpApplication(Gtk.Application):
         self.rebuild_status_icon_menu()
 
     def _remote_removed(self, local_machine, remote_machine):
-        if remote_machine.status == RemoteStatus.INIT_CONNECTING:
+        if remote_machine.status == RemoteStatus.INIT_CONNECTING or self.server_restarting:
             self.window.remove_remote_button(remote_machine)
 
         self.rebuild_status_icon_menu()

@@ -420,7 +420,9 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
 
             try:
                 machine = self.remote_machines[name]
+                machine.port = info.port
             except KeyError:
+                print("new")
                 machine = RemoteMachine(name, remote_hostname, remote_ip, info.port, self.service_name)
                 self.remote_machines[name] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
