@@ -282,7 +282,7 @@ class RemoteMachineButton(GObject.Object):
         self.remote_machine_status_changed(self.remote_machine)
 
     def remote_machine_status_changed(self, remote_machine):
-        if remote_machine.display_name != None:
+        if remote_machine.display_name != "":
             name = remote_machine.display_name
         else:
             name = remote_machine.hostname
@@ -292,6 +292,7 @@ class RemoteMachineButton(GObject.Object):
             self.overview_user_status_icon.hide()
             self.overview_user_button_stack.set_visible_child_name("connecting")
             self.overview_user_display_name_box.hide()
+            self.ip_label.set_text(_("%s : %d") % (self.remote_machine.ip_address, self.remote_machine.port))
             self.overview_user_connecting_label.set_text(_("Connecting to %s") % remote_machine.hostname)
         elif remote_machine.status == RemoteStatus.ONLINE:
             self.overview_user_connecting_spinner.hide()

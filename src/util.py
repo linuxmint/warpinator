@@ -216,6 +216,8 @@ def sort_remote_machines(am, bm):
         return -1
     elif bm.display_name and not am.display_name:
         return +1
+    elif not am.display_name and not bm.display_name:
+        return -1
 
     return -1 if am.display_name < bm.display_name else +1
 

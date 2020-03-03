@@ -623,7 +623,6 @@
         <child>
           <object class="GtkImage" id="overview_user_favorite">
             <property name="width_request">40</property>
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="no_show_all">True</property>
             <property name="icon_name">document-open-recent-symbolic</property>

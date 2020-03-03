@@ -52,7 +52,7 @@ class RemoteMachine(GObject.Object):
         self.port = port
         self.connect_name = name
         self.hostname = hostname
-        self.display_name = None
+        self.display_name = ""
         self.favorite = prefs.get_is_favorite(self.hostname)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
         self.status = RemoteStatus.INIT_CONNECTING
