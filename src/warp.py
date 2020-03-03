@@ -55,6 +55,7 @@ TRANSFER_STOPPED_BY_SENDER_BUTTONS = ("transfer_restart", "transfer_remove")
 TRANSFER_STOPPED_BY_RECEIVER_BUTTONS = ("transfer_remove",)
 TRANSFER_CANCELLED_BUTTONS = ("transfer_remove",)
 TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
+TRANSFER_FILE_NOT_FOUND_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
 
 class TransferItem(GObject.Object):
@@ -141,6 +142,11 @@ class TransferItem(GObject.Object):
             self.op_transfer_status_message.set_text(_("Transfer cancelled by %s") % self.op.receiver_name)
         elif self.op.status == OpStatus.FAILED:
             self.op_transfer_status_message.set_text(_("Transfer failed"))
+        elif self.op.status == OpStatus.FILE_NOT_FOUND:
+            if self.op.first_missing_file != None:
+                self.op_transfer_status_message.set_text(_("Transfer failed (file '%s' not found)") % self.op.first_missing_file)
+            else:
+                self.op_transfer_status_message.set_text(_("Transfer failed (one or more files not found)"))
         elif self.op.status == OpStatus.FINISHED:
             self.op_transfer_status_message.set_text(_("Completed"))
 
@@ -178,6 +184,9 @@ class TransferItem(GObject.Object):
         elif self.op.status == OpStatus.FAILED:
             self.op_status_stack.set_visible_child_name("message")
             self.set_visible_buttons(TRANSFER_FAILED_BUTTONS)
+        elif self.op.status == OpStatus.FILE_NOT_FOUND:
+            self.op_status_stack.set_visible_child_name("message")
+            self.set_visible_buttons(TRANSFER_FILE_NOT_FOUND_BUTTONS)
         elif self.op.status == OpStatus.FINISHED:
             self.op_status_stack.set_visible_child_name("message")
             if isinstance(self.op, SendOp):
@@ -241,6 +250,8 @@ class RemoteMachineButton(GObject.Object):
                                                                      self._update_machine_info)
         self.new_incoming_op_id = self.remote_machine.connect("new-incoming-op",
                                                                self._handle_new_incoming_op)
+        self.new_incoming_op_id = self.remote_machine.connect("new-outgoing-op",
+                                                               self._handle_new_outgoing_op)
         self.remote_machine.connect("remote-status-changed", self.remote_machine_status_changed)
 
         self.new_ops = 0
@@ -330,6 +341,14 @@ class RemoteMachineButton(GObject.Object):
 
         self.emit("need-attention")
 
+    def _handle_new_outgoing_op(self, remote_machine, op):
+        self.new_ops += 1
+
+        if op.status in (OpStatus.FAILED, OpStatus.FILE_NOT_FOUND):
+            self.button.get_style_context().add_class("destructive-action")
+
+        self.emit("need-attention")
+
     def clear_new_op_highlighting(self):
         self.new_ops = 0
 
@@ -337,6 +356,7 @@ class RemoteMachineButton(GObject.Object):
             self.overview_user_button_stack.set_visible_child_name("clear")
 
         self.button.get_style_context().remove_class("suggested-action")
+        self.button.get_style_context().remove_class("destructive-action")
 
     def refresh_favorite_icon(self):
         if self.remote_machine.favorite:

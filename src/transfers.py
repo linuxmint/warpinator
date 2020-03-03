@@ -4,7 +4,7 @@ import gettext
 from gi.repository import GLib, Gio, GObject
 
 import util
-from util import FileType
+from util import FileType, OpStatus
 import prefs
 import warp_pb2
 
@@ -202,6 +202,8 @@ def gather_file_info(op):
         top_dir_basenames = []
         uri_list = op.uris
 
+        fail = False
+
         if len(uri_list) == 1:
             infos = FILE_INFOS_SINGLE_FILE
         else:
@@ -234,7 +236,13 @@ def gather_file_info(op):
             file = Gio.File.new_for_uri(uri)
             top_dir_basenames.append(file.get_basename())
 
-            info = file.query_info(infos, Gio.FileQueryInfoFlags.NONE, None)
+            try:
+                info = file.query_info(infos, Gio.FileQueryInfoFlags.NONE, None)
+            except GLib.Error as e:
+                if e.code == Gio.IOErrorEnum.NOT_FOUND:
+                    op.status = OpStatus.FILE_NOT_FOUND
+                    fail = True
+                    break
             basename = file.get_basename()
             if len(uri_list) == 1:
                 op.mime_if_single = info.get_content_type()
@@ -248,3 +256,5 @@ def gather_file_info(op):
                 add_file(op, basename, uri, None, info)
 
         op.top_dir_basenames = top_dir_basenames
+
+        return not fail

@@ -37,6 +37,7 @@ class SendOp(GObject.Object):
         self.mime_if_single = "application/octet-stream" # unknown
         self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
         self.resolved_files = []
+        self.first_missing_file = None
 
         self.file_send_cancellable = None
 
@@ -57,20 +58,26 @@ class SendOp(GObject.Object):
         self.status = OpStatus.CALCULATING
         self.emit_status_changed()
 
-        transfers.gather_file_info(self)
+        res = transfers.gather_file_info(self)
         self.size_string = GLib.format_size(self.total_size)
         print("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
 
-        if self.total_count > 1:
-            # Translators: Don't need to translate singular, we show the filename if there's only one
-            self.description = gettext.ngettext("%d file",
-                                                "%d files", self.total_count) % (self.total_count,)
-            self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
-        else:
-            self.description = self.resolved_files[0].basename
-            self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
+        if res:
+            if self.total_count > 1:
+                # Translators: Don't need to translate singular, we show the filename if there's only one
+                self.description = gettext.ngettext("%d file",
+                                                    "%d files", self.total_count) % (self.total_count,)
+                self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
+            else:
+                self.description = self.resolved_files[0].basename
+                self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
-        self.set_status(OpStatus.WAITING_PERMISSION)
+            self.set_status(OpStatus.WAITING_PERMISSION)
+        elif self.status == OpStatus.FILE_NOT_FOUND:
+            self.description = ""
+            self.first_missing_file = self.top_dir_basenames[-1]
+            self.gicon = Gio.ThemedIcon.new("dialog-error-symbolic")
+
         self.emit_initial_setup_complete()
         self.emit_status_changed()
 

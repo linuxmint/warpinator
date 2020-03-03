@@ -42,6 +42,7 @@ OpStatus = IntEnum('OpStatus', 'INIT \
                                 STOPPED_BY_SENDER \
                                 STOPPED_BY_RECEIVER \
                                 FAILED \
+                                FILE_NOT_FOUND \
                                 FINISHED')
 
 OpCommand = IntEnum('OpCommand', 'START_TRANSFER \

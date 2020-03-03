@@ -43,6 +43,7 @@ class RemoteMachine(GObject.Object):
         'machine-info-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
+        'new-outgoing-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
         'remote-status-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
@@ -258,8 +259,9 @@ class RemoteMachine(GObject.Object):
 
     @util._idle
     def notify_remote_machine_of_new_op(self, op):
-        if op.direction == TransferDirection.TO_REMOTE_MACHINE:
-            self.send_transfer_op_request(op)
+        if op.status == OpStatus.WAITING_PERMISSION:
+            if op.direction == TransferDirection.TO_REMOTE_MACHINE:
+                self.send_transfer_op_request(op)
 
     @util._idle
     def add_op(self, op):
@@ -269,6 +271,7 @@ class RemoteMachine(GObject.Object):
             op.connect("op-command", self.op_command_issued)
             if isinstance(op, SendOp):
                 op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
+                self.emit("new-outgoing-op", op)
             if isinstance(op, ReceiveOp):
                 self.emit("new-incoming-op", op)
         self.emit_ops_changed()
