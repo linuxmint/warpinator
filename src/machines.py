@@ -277,7 +277,7 @@ class RemoteMachine(GObject.Object):
     @util._idle
     def check_for_autostart(self, op):
         if op.status == OpStatus.WAITING_PERMISSION:
-            if isinstance(op, ReceiveOp) and (not prefs.require_permission_for_transfer()):
+            if isinstance(op, ReceiveOp) and op.have_space and (not prefs.require_permission_for_transfer()):
                 op.accept_transfer()
 
     @util._idle

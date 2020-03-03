@@ -73,6 +73,7 @@ class TransferItem(GObject.Object):
         self.transfer_size_label = self.builder.get_object("transfer_size_label")
         self.op_status_stack = self.builder.get_object("op_status_stack")
         self.op_transfer_status_message = self.builder.get_object("op_transfer_status_message")
+        self.op_transfer_no_space_label = self.builder.get_object("op_transfer_no_space_label")
         self.op_progress_bar = self.builder.get_object("op_transfer_progress_bar")
         self.accept_button =  self.builder.get_object("transfer_accept")
         self.decline_button =  self.builder.get_object("transfer_decline")
@@ -106,6 +107,8 @@ class TransferItem(GObject.Object):
             self.builder.get_object(name).props.visible = True
 
     def refresh_status_widgets(self):
+        self.op_transfer_no_space_label.hide()
+
         if self.op.status == OpStatus.TRANSFERRING:
             self.op_progress_bar.set_fraction(self.op.progress)
             self.op_progress_bar.set_text(self.op.progress_text)
@@ -116,6 +119,8 @@ class TransferItem(GObject.Object):
                 self.op_transfer_status_message.set_text(_("Waiting for approval"))
             else:
                 self.op_transfer_status_message.set_text(_("Waiting for your approval"))
+                if not self.op.have_space:
+                    self.op_transfer_no_space_label.show()
         elif (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_SENDER and isinstance(self.op, SendOp)) or \
             (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_RECEIVER and isinstance(self.op, ReceiveOp)):
             self.op_transfer_status_message.set_text(_("Request cancelled"))

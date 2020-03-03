@@ -152,6 +152,24 @@ def verify_save_folder(transient_for=None):
         res = dialog.run()
         dialog.destroy()
 
+def have_free_space(size):
+    save_file = Gio.File.new_for_path(prefs.get_save_path())
+
+    try:
+        info = save_file.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, None)
+    except GLib.Error as e:
+        print("Unable to check free space in save location (%s), but proceeding anyhow" % self.save_location)
+        return True
+
+    free = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE)
+
+    # I guess we could have exactly 0 bytes free, but I think you'd have larger problems.  I want to make sure
+    # here that we don't fail because we didn't get a valid number.
+    if free == 0:
+        return True
+    print("Need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
+    return size < free
+
 def get_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.connect(("8.8.8.8", 80))
