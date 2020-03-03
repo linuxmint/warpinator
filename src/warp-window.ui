@@ -407,10 +407,11 @@
         <property name="spacing">6</property>
         <child>
           <object class="GtkSpinner" id="overview_user_connecting_spinner">
-            <property name="height_request">20</property>
+            <property name="height_request">24</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="no_show_all">True</property>
+            <property name="margin_left">4</property>
             <property name="active">True</property>
           </object>
           <packing>
