@@ -710,6 +710,8 @@ class WarpWindow(GObject.Object):
         self.user_display_name_label.set_text(self.current_selected_remote_machine.display_name)
         self.user_hostname_label.set_text(self.current_selected_remote_machine.hostname)
         self.user_ip_label.set_text(self.current_selected_remote_machine.ip_address)
+        self.user_ip_label.set_text(_("%s : %d") % (self.current_selected_remote_machine.ip_address,
+                                                    self.current_selected_remote_machine.port))
         self.user_avatar_image.set_from_surface(self.current_selected_remote_machine.avatar_surface)
 
         self.add_op_items()
