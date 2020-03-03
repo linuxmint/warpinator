@@ -2,6 +2,7 @@ import threading
 import socket
 import gettext
 import math
+import os
 
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
@@ -169,6 +170,15 @@ def have_free_space(size):
         return True
     print("Need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
     return size < free
+
+def files_exist(base_names):
+    for name in base_names:
+        path = os.path.join(prefs.get_save_path(), name)
+        print("(server side) Checking if file or folder %s already exists." % (path,))
+        if GLib.file_test(path, GLib.FileTest.EXISTS):
+            return True
+
+    return False
 
 def get_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:

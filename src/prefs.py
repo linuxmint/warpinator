@@ -108,7 +108,7 @@ class Preferences():
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
 
-        section.add_reveal_row(widget, PREFS_SCHEMA, TRAY_ICON_KEY)
+        section.add_row(widget)
 
         widget = GSettingsSwitch(_("Pin the window by default"),
                                  PREFS_SCHEMA, START_PINNED_KEY)
@@ -129,7 +129,7 @@ class Preferences():
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
         section.add_row(widget)
 
-        widget = GSettingsSwitch(_("Prompt recipient before overwriting files"),
+        widget = GSettingsSwitch(_("Require approval when files would be overwritten"),
                                  PREFS_SCHEMA, NO_OVERWRITE_KEY)
         section.add_row(widget)
 

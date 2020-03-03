@@ -73,7 +73,7 @@ class TransferItem(GObject.Object):
         self.transfer_size_label = self.builder.get_object("transfer_size_label")
         self.op_status_stack = self.builder.get_object("op_status_stack")
         self.op_transfer_status_message = self.builder.get_object("op_transfer_status_message")
-        self.op_transfer_no_space_label = self.builder.get_object("op_transfer_no_space_label")
+        self.op_transfer_problem_label = self.builder.get_object("op_transfer_problem_label")
         self.op_progress_bar = self.builder.get_object("op_transfer_progress_bar")
         self.accept_button =  self.builder.get_object("transfer_accept")
         self.decline_button =  self.builder.get_object("transfer_decline")
@@ -107,7 +107,7 @@ class TransferItem(GObject.Object):
             self.builder.get_object(name).props.visible = True
 
     def refresh_status_widgets(self):
-        self.op_transfer_no_space_label.hide()
+        self.op_transfer_problem_label.hide()
 
         if self.op.status == OpStatus.TRANSFERRING:
             self.op_progress_bar.set_fraction(self.op.progress)
@@ -119,8 +119,12 @@ class TransferItem(GObject.Object):
                 self.op_transfer_status_message.set_text(_("Waiting for approval"))
             else:
                 self.op_transfer_status_message.set_text(_("Waiting for your approval"))
-                if not self.op.have_space:
-                    self.op_transfer_no_space_label.show()
+                if self.op.existing:
+                    self.op_transfer_problem_label.show()
+                    self.op_transfer_problem_label.set_text(_("Files may be overwritten"))
+                elif not self.op.have_space:
+                    self.op_transfer_problem_label.show()
+                    self.op_transfer_problem_label.set_text(_("Not enough disk space"))
         elif (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_SENDER and isinstance(self.op, SendOp)) or \
             (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_RECEIVER and isinstance(self.op, ReceiveOp)):
             self.op_transfer_status_message.set_text(_("Request cancelled"))
@@ -300,7 +304,7 @@ class RemoteMachineButton(GObject.Object):
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
         self.hostname_label.set_text(self.remote_machine.hostname)
-        self.ip_label.set_text(self.remote_machine.ip_address)
+        self.ip_label.set_text(_("%s : %d") % (self.remote_machine.ip_address, self.remote_machine.port))
 
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)

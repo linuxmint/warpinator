@@ -3,6 +3,7 @@ import gettext
 from gi.repository import GObject, GLib, Gio
 
 import transfers
+import prefs
 import util
 from util import OpStatus, OpCommand
 
@@ -135,6 +136,7 @@ class ReceiveOp(GObject.Object):
          # If there's insufficient disk space, always ask for permission
          # and show a warning.
         self.no_space = False
+        self.existing = False
 
 
         self.total_size = 0
@@ -165,6 +167,7 @@ class ReceiveOp(GObject.Object):
         print("Transfer request received for %d files, with a size of %s" % (self.total_count, self.size_string))
 
         self.have_space = util.have_free_space(self.total_size)
+        self.existing = util.files_exist(self.top_dir_basenames) and prefs.prevent_overwriting()
 
         if self.total_count > 1:
             # Translators: Don't need to translate singular, we show the filename if there's only one

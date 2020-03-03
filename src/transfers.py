@@ -143,7 +143,7 @@ class FileReceiver(GObject.Object):
             self.current_path = path
 
         if s.file_type == FileType.DIRECTORY:
-            os.makedirs(path, exist_ok=(not prefs.prevent_overwriting()))
+            os.makedirs(path, exist_ok=True)
         elif s.file_type == FileType.SYMBOLIC_LINK:
             absolute_symlink_target_path = os.path.join(save_path, s.symlink_target)
 
@@ -153,11 +153,7 @@ class FileReceiver(GObject.Object):
             if not self.current_gfile:
                 self.current_gfile = Gio.File.new_for_path(path)
 
-                if prefs.prevent_overwriting():
-                    flags = Gio.FileCreateFlags.NONE
-                else:
-                    flags = Gio.FileCreateFlags.REPLACE_DESTINATION
-
+                flags = Gio.FileCreateFlags.REPLACE_DESTINATION
                 self.current_stream = self.current_gfile.replace(None, False, flags, None)
 
             if len(s.chunk) == 0:
