@@ -279,6 +279,7 @@ class RemoteMachineButton(GObject.Object):
         self.button._delegate = self
 
         self.button.show_all()
+        self.refresh_favorite_icon()
         self.remote_machine_status_changed(self.remote_machine)
 
     def remote_machine_status_changed(self, remote_machine):
@@ -996,7 +997,11 @@ class WarpApplication(Gtk.Application):
 
             for machine in sorted_machines:
                 if machine.favorite:
-                    item = Gtk.MenuItem(label=machine.display_name)
+                    if machine.display_name != "":
+                        name = machine.display_name
+                    else:
+                        name = machine.hostname
+                    item = Gtk.MenuItem(label=name)
                     if machine.status != RemoteStatus.ONLINE:
                         item.set_sensitive(False)
                     self.attach_recent_submenu(item, machine)

@@ -78,7 +78,6 @@ class RemoteMachine(GObject.Object):
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def keep_channel():
-            print("keep channel")
             with grpc.insecure_channel("%s:%d" % (self.ip_address, self.port),
                                        options=[('grpc.enable_retries', 0),
                                                 ('grpc.keepalive_timeout_ms', 10000)
@@ -95,7 +94,7 @@ class RemoteMachine(GObject.Object):
                         break
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
-                            print("channel ready timeout, waiting 10s more")
+                            print("channel ready timeout, waiting 10s")
                             time.sleep(10)
                             connect_retries += 1
                             continue
@@ -425,7 +424,6 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
                 machine = self.remote_machines[name]
                 machine.port = info.port
             except KeyError:
-                print("new")
                 machine = RemoteMachine(name, remote_hostname, remote_ip, info.port, self.service_name)
                 self.remote_machines[name] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
