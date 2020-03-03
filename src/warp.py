@@ -690,28 +690,28 @@ class WarpWindow(GObject.Object):
                                             (entry,),
                                             Gdk.DragAction.COPY)
             self.user_send_button.set_sensitive(True)
-            self.user_online_label = _("Online")
+            self.user_online_label.set_text(_("Online"))
             self.user_online_image.set_from_icon_name("cs-xlet-running", Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
             self.user_online_image.show()
         elif remote_machine.status == RemoteStatus.OFFLINE:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
-            self.user_online_label = _("Offline")
+            self.user_online_label.set_text(_("Offline"))
             self.user_online_image.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
             self.user_online_image.show()
         elif remote_machine.status == RemoteStatus.UNREACHABLE:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
-            self.user_online_label = _("Unable to connect")
+            self.user_online_label.set_text(_("Unable to connect"))
             self.user_online_image.set_from_icon_name("cs-xlet-update", Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
             self.user_online_image.show()
         else:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
-            self.user_online_label = _("Connecting")
+            self.user_online_label.set_text(_("Connecting"))
             self.user_online_image.hide()
             self.user_online_spinner.show()
 
