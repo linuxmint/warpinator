@@ -450,6 +450,7 @@ class WarpWindow(GObject.Object):
         self.view_stack = self.builder.get_object("view_stack")
         self.menu_button = self.builder.get_object("menu_button")
         self.user_list_box = self.builder.get_object("user_list_box")
+        self.user_list_no_search_results_label = self.builder.get_object("user_list_no_search_results_label")
         self.search_entry = self.builder.get_object("search_entry")
         self.app_display_name_label = self.builder.get_object("app_display_name")
         self.app_ip_label = self.builder.get_object("app_ip")
@@ -553,6 +554,8 @@ class WarpWindow(GObject.Object):
         query = entry.get_text()
         normalized_query = GLib.utf8_normalize(query, len(query), GLib.NormalizeMode.DEFAULT).lower()
 
+        found_one = False
+
         for button in self.user_list_box.get_children():
             joined = " ".join([button.remote_machine.display_name,
                                   button.remote_machine.hostname,
@@ -560,9 +563,12 @@ class WarpWindow(GObject.Object):
             normalized_contents = GLib.utf8_normalize(joined, len(joined), GLib.NormalizeMode.DEFAULT).lower()
 
             if normalized_query in normalized_contents:
+                found_one = True
                 button.show()
             else:
                 button.hide()
+
+        self.user_list_no_search_results_label.set_visible(not found_one)
 
     def start_startup_timer(self, restarting=False):
         if self.server_start_timeout_id > 0:

@@ -907,6 +907,19 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkLabel" id="user_list_no_search_results_label">
+                    <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
+                    <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;No matching results&lt;/b&gt;&lt;/big&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkBox" id="user_list_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -919,7 +932,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>
