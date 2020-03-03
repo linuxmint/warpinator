@@ -1,6 +1,5 @@
-In mint 19/ubuntu 18.04, you need to use pip3 to get the grpc packages for the time being:
+#### Mint 19.x and Ubuntu Bionic (18.05) users
 
-```
-sudo apt-get install python3-pip
-pip3 install grpcio grpcio-tools
-```
+Add this PPA to satisfy dependencies (for the time being):
+
+<https://launchpad.net/~clementlefebvre/+archive/ubuntu/grpc?field.series_filter=bionic>
