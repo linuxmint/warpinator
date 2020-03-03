@@ -811,9 +811,10 @@ class WarpWindow(GObject.Object):
         # we just visited.
         buttons = self.user_list_box.get_children()
 
-        for child in buttons:
-            if child.connect_name == self.current_selected_remote_machine.connect_name:
-                child._delegate.clear_new_op_highlighting()
+        if self.current_selected_remote_machine != None:
+            for child in buttons:
+                if child.connect_name == self.current_selected_remote_machine.connect_name:
+                    child._delegate.clear_new_op_highlighting()
 
         self.current_selected_remote_machine = None
         self.clear_user_view()
