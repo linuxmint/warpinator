@@ -58,10 +58,6 @@ TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
 
 class TransferItem(GObject.Object):
-    # __gsignals__ = {
-    #     'update-sort': (GObject.SignalFlags.RUN_LAST, None, ())
-    # }
-
     def __init__(self, op):
         super(TransferItem, self).__init__()
 
@@ -254,7 +250,6 @@ class RemoteMachineButton(GObject.Object):
         self.overview_user_connecting_spinner = self.builder.get_object("overview_user_connecting_spinner")
         self.overview_user_connecting_label = self.builder.get_object("overview_user_connecting_label")
         self.overview_user_connection_issue_label = self.builder.get_object("overview_user_connection_issue_label")
-        self.overview_user_connection_issue_image = self.builder.get_object("overview_user_connection_issue_image")
 
         self.button.connect("clicked", lambda button: self.emit("clicked"))
 
@@ -290,14 +285,12 @@ class RemoteMachineButton(GObject.Object):
             self.overview_user_status_icon.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
             self.overview_user_connection_issue_label.set_text(_("%s is not currently online") % name)
             self.overview_user_button_stack.set_visible_child_name("connection-issue")
-            self.overview_user_connection_issue_image.hide()
         elif remote_machine.status == RemoteStatus.UNREACHABLE:
             self.overview_user_connecting_spinner.hide()
             self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name("cs-xlet-update", Gtk.IconSize.LARGE_TOOLBAR)
             self.overview_user_connection_issue_label.set_text(_("Problem communicating with %s") % name)
             self.overview_user_button_stack.set_visible_child_name("connection-issue")
-            self.overview_user_connection_issue_image.show()
 
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
@@ -330,7 +323,10 @@ class RemoteMachineButton(GObject.Object):
 
     def clear_new_op_highlighting(self):
         self.new_ops = 0
-        self.overview_user_button_stack.set_visible_child_name("clear")
+
+        if self.remote_machine.status == RemoteStatus.ONLINE:
+            self.overview_user_button_stack.set_visible_child_name("clear")
+
         self.button.get_style_context().remove_class("suggested-action")
 
     def refresh_favorite_icon(self):
@@ -440,6 +436,10 @@ class WarpWindow(GObject.Object):
         self.user_ip_label = self.builder.get_object("user_ip")
         self.user_op_list = self.builder.get_object("user_op_list")
         self.user_send_button = self.builder.get_object("user_send_button")
+        self.user_online_box = self.builder.get_object("user_online_box")
+        self.user_online_image = self.builder.get_object("user_online_image")
+        self.user_online_label = self.builder.get_object("user_online_label")
+        self.user_online_spinner = self.builder.get_object("user_online_spinner")
 
         # Send Files button
         self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
@@ -689,8 +689,31 @@ class WarpWindow(GObject.Object):
             self.user_op_list.drag_dest_set(Gtk.DestDefaults.ALL,
                                             (entry,),
                                             Gdk.DragAction.COPY)
+            self.user_send_button.set_sensitive(True)
+            self.user_online_label = _("Online")
+            self.user_online_image.set_from_icon_name("cs-xlet-running", Gtk.IconSize.LARGE_TOOLBAR)
+            self.user_online_spinner.hide()
+            self.user_online_image.show()
+        elif remote_machine.status == RemoteStatus.OFFLINE:
+            self.user_op_list.drag_dest_unset()
+            self.user_send_button.set_sensitive(False)
+            self.user_online_label = _("Offline")
+            self.user_online_image.set_from_icon_name("cs-xlet-error", Gtk.IconSize.LARGE_TOOLBAR)
+            self.user_online_spinner.hide()
+            self.user_online_image.show()
+        elif remote_machine.status == RemoteStatus.UNREACHABLE:
+            self.user_op_list.drag_dest_unset()
+            self.user_send_button.set_sensitive(False)
+            self.user_online_label = _("Unable to connect")
+            self.user_online_image.set_from_icon_name("cs-xlet-update", Gtk.IconSize.LARGE_TOOLBAR)
+            self.user_online_spinner.hide()
+            self.user_online_image.show()
         else:
             self.user_op_list.drag_dest_unset()
+            self.user_send_button.set_sensitive(False)
+            self.user_online_label = _("Connecting")
+            self.user_online_image.hide()
+            self.user_online_spinner.show()
 
     def clear_user_view(self):
         for item in self.user_op_list:
@@ -784,12 +807,13 @@ class WarpApplication(Gtk.Application):
         self.activate()
 
     def do_activate(self):
-        if self.status_icon == None:
-            self.update_status_icon_from_preferences()
         if self.window == None:
             self.setup_window()
 
         self.start_server(restarting=False)
+
+        if self.status_icon == None:
+            self.update_status_icon_from_preferences()
 
     def start_server(self, restarting=False):
         self.window.start_startup_timer(restarting)
@@ -809,7 +833,11 @@ class WarpApplication(Gtk.Application):
 
     def shutdown(self, window=None):
         print("Beginning shutdown")
+        self.window.disconnect_by_func(self.shutdown)
         self.server.disconnect_by_func(self._remote_removed)
+
+        if prefs.use_tray_icon():
+            self.release()
 
         self.window.display_shutdown()
         self.server.connect("shutdown-complete", self.ok_for_app_quit)
@@ -832,14 +860,14 @@ class WarpApplication(Gtk.Application):
     def on_prefs_changed(self, settings, pspec=None, data=None):
         self.window.update_behavior_from_preferences()
         self.update_status_icon_from_preferences()
-        print("prefs changed")
         if prefs.get_port() != self.current_port:
             self.current_port = prefs.get_port()
             self.start_server(restarting=True)
 
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)
-
+        remote_machine.connect("machine-info-changed", self.rebuild_status_icon_menu)
+        remote_machine.connect("remote-status-changed", self.rebuild_status_icon_menu)
         self.rebuild_status_icon_menu()
 
     def _remote_removed(self, local_machine, remote_machine):
@@ -863,22 +891,19 @@ class WarpApplication(Gtk.Application):
                 self.status_icon.set_icon_name("warp-symbolic")
                 self.status_icon.connect("activate", self.on_tray_icon_activate)
                 self.hold()
-            else:
-                self.rebuild_status_icon_menu()
+            self.rebuild_status_icon_menu()
         else:
             if self.status_icon != None:
                 self.status_icon.set_visible(False)
                 self.status_icon = None
                 self.release()
 
-    def rebuild_status_icon_menu(self):
+    def rebuild_status_icon_menu(self, remote_machine=None):
         if self.status_icon == None:
             return
 
         menu = Gtk.Menu()
-
         self.add_favorite_entries(menu)
-        menu.add(Gtk.SeparatorMenuItem())
 
         item = Gtk.MenuItem(label=_("Open Warp folder"))
         item.connect("activate", util.open_save_folder)
@@ -892,6 +917,7 @@ class WarpApplication(Gtk.Application):
 
     def add_favorite_entries(self, menu):
         remote_list = self.server.list_remote_machines()
+
         i = 0
 
         if remote_list:
@@ -900,6 +926,8 @@ class WarpApplication(Gtk.Application):
             for machine in sorted_machines:
                 if machine.favorite:
                     item = Gtk.MenuItem(label=machine.display_name)
+                    if machine.status != RemoteStatus.ONLINE:
+                        item.set_sensitive(False)
                     self.attach_recent_submenu(item, machine)
                     menu.add(item)
                     i += 1
@@ -909,6 +937,9 @@ class WarpApplication(Gtk.Application):
             item = Gtk.MenuItem(label=_("Everyone"))
             self.attach_recent_submenu(item, None)
             menu.add(item)
+
+        if i > 0:
+            menu.add(Gtk.SeparatorMenuItem())
 
         menu.show_all()
 
