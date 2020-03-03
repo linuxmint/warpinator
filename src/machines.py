@@ -21,7 +21,6 @@ if use_compression:
 import prefs
 import util
 import transfers
-import ping
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
 
