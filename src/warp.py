@@ -360,6 +360,8 @@ class RemoteMachineButton(GObject.Object):
         self.button.get_style_context().remove_class("destructive-action")
 
     def refresh_favorite_icon(self):
+        self.favorite_image.show()
+
         if self.remote_machine.favorite:
             self.favorite_image.set_from_icon_name("starred-symbolic", Gtk.IconSize.BUTTON)
         elif self.remote_machine.recent_time != 0:
