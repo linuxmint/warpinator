@@ -288,6 +288,8 @@ class OverviewButton(GObject.Object):
         else:
             name = remote_machine.hostname
 
+        self.clear_new_op_highlighting()
+
         if remote_machine.status == RemoteStatus.INIT_CONNECTING:
             self.overview_user_connecting_spinner.show()
             self.overview_user_status_icon.hide()
@@ -348,8 +350,7 @@ class OverviewButton(GObject.Object):
 
         if op.status in (OpStatus.FAILED, OpStatus.FILE_NOT_FOUND):
             self.button.get_style_context().add_class("destructive-action")
-
-        self.emit("need-attention")
+            self.emit("need-attention")
 
     def clear_new_op_highlighting(self):
         self.new_ops = 0
@@ -645,9 +646,6 @@ class WarpWindow(GObject.Object):
 
     def on_open_location_clicked(self, widget, data=None):
         util.open_save_folder()
-
-    def grab_user_attention(self, server):
-        self.window.set_urgency_hint(True)
 
     def open_preferences(self, menuitem, data=None):
         prefs.Preferences(self.window)
