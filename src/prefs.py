@@ -1,8 +1,8 @@
 import os
 import gettext
 
-from xapp.GSettingsWidgets import GSettingsEntry, GSettingsSwitch, GSettingsFileChooser, GSettingsSpinButton
-from xapp.SettingsWidgets import SettingsWidget, SettingsPage
+from xapp.GSettingsWidgets import GSettingsEntry, GSettingsSwitch, GSettingsFileChooser
+from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton
 from gi.repository import Gtk, Gio, GLib
 
 import config
@@ -76,14 +76,9 @@ class Preferences():
 
         self.window = self.builder.get_object("prefs_window")
         self.content_box = self.builder.get_object("content_box")
-        self.prefs_apply_button = self.builder.get_object("prefs_apply_button")
-        self.prefs_cancel_button = self.builder.get_object("prefs_cancel_button")
 
         self.window.set_title(title=_("Warp Preferences"))
         self.window.set_icon_name("preferences-system")
-
-        self.prefs_apply_button.connect("clicked", self.apply_clicked)
-        self.prefs_cancel_button.connect("clicked", self.cancel_clicked)
 
         self.window.set_transient_for(transient_for)
 
@@ -94,21 +89,14 @@ class Preferences():
 
         section = page.add_section(_("Desktop"))
 
-        # widget = GSettingsEntry(_("Display name"),
-        #                         PREFS_SCHEMA, BROADCAST_NAME_KEY,
-        #                         size_group=size_group)
-        # section.add_row(widget)
-
         self.settings_widget = GSettingsSwitch(_("Show a Warpinator icon in the notification area"),
                                                PREFS_SCHEMA, TRAY_ICON_KEY)
         section.add_row(self.settings_widget)
 
-        self.settings_widget.settings.delay()
-
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
 
-        section.add_row(widget)
+        section.add_reveal_row(widget, PREFS_SCHEMA, TRAY_ICON_KEY)
 
         # widget = GSettingsSwitch(_("Pin the window by default"),
         #                          PREFS_SCHEMA, START_PINNED_KEY)
@@ -139,8 +127,8 @@ class Preferences():
 
         section = page.add_section(_("Network"))
 
-        widget = GSettingsSpinButton(_("Incoming port for transfers"),
-                                     PREFS_SCHEMA, PORT_KEY, mini=1024, maxi=49151, step=1, page=10, size_group=size_group)
+        widget = PortSpinButton(_("Incoming port for transfers"),
+                                mini=1024, maxi=49151, step=1, page=10, size_group=size_group)
 
         section.add_row(widget)
 
@@ -155,11 +143,37 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         self.window.show_all()
 
+class PortSpinButton(SpinButton):
+    def __init__(self, *args, **kargs):
+        super(PortSpinButton, self).__init__(*args, **kargs)
+
+        self.old_port = get_port()
+        self.my_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+        self.set_spacing(6)
+
+        self.accept_button = Gtk.Button(label=_("Change port"))
+        self.accept_button.show()
+        self.accept_button.set_sensitive(False)
+        self.accept_button.get_style_context().add_class("suggested-action")
+        self.accept_button.connect("clicked", self.apply_clicked)
+
+        self.content_widget.set_value(get_port())
+
+        self.pack_end(self.accept_button, False, False, 0)
+        self.reorder_child(self.accept_button, 1)
+
+    def get_range(self):
+        return None
+
+    def set_value(self, value):
+        pass
+
+    def get_value(self):
+        pass
+
+    def apply_later(self, *args):
+        self.accept_button.set_sensitive(not (self.content_widget.get_value() == get_port()))
+
     def apply_clicked(self, widget, data=None):
-        self.settings_widget.settings.apply()
-        self.window.destroy()
-
-    def cancel_clicked(self, widget, data=None):
-        self.settings_widget.settings.revert()
-        self.window.destroy()
-
+        self.my_settings.set_int(PORT_KEY, int(self.content_widget.get_value()))
+        self.accept_button.set_sensitive(False)
