@@ -302,7 +302,17 @@ class RemoteMachine(GObject.Object):
             return
 
         self.status = status
+        self.cancel_ops_if_offline()
         self.emit("remote-status-changed")
+
+    def cancel_ops_if_offline(self):
+        if self.status in (RemoteStatus.OFFLINE, RemoteStatus.UNREACHABLE):
+            for op in self.transfer_ops:
+                if op.status in (OpStatus.FAILED, OpStatus.WAITING_PERMISSION):
+                    if isinstance(op, SendOp):
+                        op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER)
+                    else:
+                        op.set_status(OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
     @util._idle
     def op_command_issued(self, op, command):
