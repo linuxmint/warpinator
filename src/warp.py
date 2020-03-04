@@ -861,6 +861,9 @@ class WarpApplication(Gtk.Application):
         self.prefs_changed_source_id = 0
         self.server_restarting = False
 
+        self.inhibit_count = 0
+        self.inhibit_cookie = 0
+
         self.server = None
         self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
 
@@ -955,6 +958,25 @@ class WarpApplication(Gtk.Application):
 
     def _server_started(self, local_machine):
         self.window.notify_server_started()
+
+    def inhibit_for_transfer(self):
+        if self.inhibit_count == 0:
+            print("Inhibiting suspend/logout during transfer(s)")
+            self.inhibit_cookie = self.inhibit(self.window.window,
+                                               Gtk.ApplicationInhibitFlags.LOGOUT | Gtk.ApplicationInhibitFlags.SUSPEND,
+                                               "warp is in the middle of sending or receiving files")
+        self.inhibit_count += 1
+
+    def uninhibit_for_transfer(self):
+        if self.inhibit_count == 0:
+            print("Trying to uninhibit when we weren't already inhibited")
+        else:
+            self.inhibit_count -= 1
+
+        if self.inhibit_count == 0 and self.inhibit_cookie > 0:
+            print("Inhibiting suspend/logout during transfer(s)")
+            self.uninhibit(self.inhibit_cookie)
+            self.inhibit_cookie = 0
 
     ####  STATUS ICON ##########################################################################
 

@@ -5,7 +5,7 @@ import threading
 import gettext
 from concurrent import futures
 
-from gi.repository import GObject, GLib
+from gi.repository import GObject, GLib, Gio
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
 
 import grpc
@@ -209,6 +209,7 @@ class RemoteMachine(GObject.Object):
     def start_transfer_op(self, op):
         receiver = transfers.FileReceiver(op)
         op.set_status(OpStatus.TRANSFERRING)
+        Gio.Application.get_default().inhibit_for_transfer()
 
         op.file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
                                                                    connect_name=self.local_service_name))
@@ -216,12 +217,15 @@ class RemoteMachine(GObject.Object):
             for data in op.file_iterator:
                 receiver.receive_data(data)
         except grpc.RpcError as e:
+            Gio.Application.get_default().uninhibit_for_transfer()
+
             if op.file_iterator.code() == grpc.StatusCode.CANCELLED:
                 return
             else:
                 print("An error occurred receiving data from %s: %s" % (op.sender, op.file_iterator.details()))
 
         op.file_iterator = None
+        Gio.Application.get_default().uninhibit_for_transfer()
         op.set_status(OpStatus.FINISHED)
 
     @util._async
@@ -584,12 +588,16 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
     # receiver server responders
     def StartTransfer(self, request, context):
         op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
+        Gio.Application.get_default().inhibit_for_transfer()
+
         cancellable = threading.Event()
         op.file_send_cancellable = cancellable
 
         start_time = GLib.get_monotonic_time()
 
         def transfer_done():
+            Gio.Application.get_default().uninhibit_for_transfer()
+
             print("Transfer of %s files (%s) finished in %s" % \
                 (op.total_count, GLib.format_size(op.total_size),\
                  util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
