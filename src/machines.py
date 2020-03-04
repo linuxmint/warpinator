@@ -12,12 +12,6 @@ import grpc
 import warp_pb2
 import warp_pb2_grpc
 
-use_compression = False
-
-if use_compression:
-    from grpc._cython.cygrpc import CompressionAlgorithm
-    from grpc._cython.cygrpc import CompressionLevel
-
 import prefs
 import util
 import transfers

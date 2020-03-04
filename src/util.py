@@ -140,19 +140,7 @@ def open_save_folder(widget=None, data=None):
         print("Could not open received files location: %s" % e.message)
 
 def verify_save_folder(transient_for=None):
-    if not os.access(prefs.get_save_path(), os.R_OK | os.W_OK):
-        dialog = Gtk.MessageDialog(title=_("Invalid save folder"),
-                                   parent=transient_for,
-                                   destroy_with_parent=True,
-                                   message_type=Gtk.MessageType.ERROR,
-                                   use_markup=True,
-                                   modal=True,
-                                   text=_("""The current save location '%s' is not currently accessible. \
-                                             You will not be able to receive files until this is resolved""") % prefs.get_save_path())
-        dialog.add_buttons(_("Close"), Gtk.ResponseType.CLOSE)
-
-        res = dialog.run()
-        dialog.destroy()
+    return os.access(prefs.get_save_path(), os.R_OK | os.W_OK)
 
 def have_free_space(size):
     save_file = Gio.File.new_for_path(prefs.get_save_path())
@@ -160,7 +148,7 @@ def have_free_space(size):
     try:
         info = save_file.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, None)
     except GLib.Error as e:
-        print("Unable to check free space in save location (%s), but proceeding anyhow" % self.save_location)
+        print("Unable to check free space in save location (%s), but proceeding anyhow" % prefs.get_save_path())
         return True
 
     free = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE)

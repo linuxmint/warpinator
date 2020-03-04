@@ -33,6 +33,11 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warp")
 
+INHIBIT_STATES = (OpStatus.CALCULATING,
+                  OpStatus.WAITING_PERMISSION,
+                  OpStatus.TRANSFERRING,
+                  OpStatus.PAUSED)
+
 ALL_BUTTONS = ("transfer_accept", \
                "transfer_decline", \
                "transfer_cancel_request", \
@@ -459,6 +464,7 @@ class WarpWindow(GObject.Object):
         self.app_ip_label = self.builder.get_object("app_ip")
         self.app_hostname_label = self.builder.get_object("app_hostname")
         self.something_wrong_box = self.builder.get_object("no_clients")
+        self.bad_save_folder_label = self.builder.get_object("bad_save_folder_label")
 
         # user view
         self.user_back_button = self.builder.get_object("user_back")
@@ -523,8 +529,6 @@ class WarpWindow(GObject.Object):
 
         self.window.connect("focus-in-event",
                             lambda window, event: window.set_urgency_hint(False))
-
-        # self.window.set_keep_above(prefs.get_start_pinned())
 
         self.update_local_user_info()
 
@@ -649,6 +653,10 @@ class WarpWindow(GObject.Object):
 
     def open_preferences(self, menuitem, data=None):
         prefs.Preferences(self.window)
+
+    def report_bad_save_folder(self):
+        self.bad_save_folder_label.set_text(prefs.get_save_path())
+        self.view_stack.set_visible_child_name("bad-save-folder")
 
     def add_remote_button(self, remote_machine):
         if len(self.user_list_box.get_children()) == 0:
@@ -861,6 +869,8 @@ class WarpApplication(Gtk.Application):
         self.prefs_changed_source_id = 0
         self.server_restarting = False
 
+        self.bad_folder = False
+
         self.inhibit_count = 0
         self.inhibit_cookie = 0
 
@@ -883,6 +893,32 @@ class WarpApplication(Gtk.Application):
     def do_activate(self):
         if self.window == None:
             self.setup_window()
+
+        self.try_activation()
+
+    def try_activation(self):
+        try:
+            self.save_folder_monitor.cancel()
+            self.save_folder_monitor = None
+        except:
+            pass
+
+        if not util.verify_save_folder():
+            file = Gio.File.new_for_path(prefs.get_save_path())
+
+            def monitor_change_event(monitor, file, other_file, event_type, data=None):
+                print("State of save folder changed:", event_type)
+                self.try_activation()
+
+            try:
+                self.save_folder_monitor = file.monitor_directory(Gio.FileMonitorFlags.WATCH_MOUNTS, None)
+                self.save_folder_monitor.connect("changed", monitor_change_event)
+            except GLib.Error as e:
+                print("Could not create a monitor for the save folder: %s"% e.message)
+
+            self.window.report_bad_save_folder()
+            self.window.window.present()
+            return
 
         self.start_server(restarting=False)
 
@@ -911,14 +947,16 @@ class WarpApplication(Gtk.Application):
     def shutdown(self, window=None):
         print("Beginning shutdown")
         self.window.disconnect_by_func(self.shutdown)
-        self.server.disconnect_by_func(self._remote_removed)
 
         if prefs.use_tray_icon():
             self.release()
 
         self.window.display_shutdown()
-        self.server.connect("shutdown-complete", self.ok_for_app_quit)
-        self.server.shutdown()
+
+        if self.server:
+            self.server.disconnect_by_func(self._remote_removed)
+            self.server.connect("shutdown-complete", self.ok_for_app_quit)
+            self.server.shutdown()
 
     def ok_for_app_quit(self, local_machine):
         self.window.destroy()
@@ -936,7 +974,15 @@ class WarpApplication(Gtk.Application):
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
         self.window.update_behavior_from_preferences()
+
+        # This happens if we halted because the save folder was bad, if prefs change, maybe
+        # the user picked a new folder, so we try our activation again.
+        if self.server == None:
+            self.try_activation()
+            return
+
         self.update_status_icon_from_preferences()
+
         if prefs.get_port() != self.current_port:
             self.current_port = prefs.get_port()
             self.start_server(restarting=True)
