@@ -955,28 +955,36 @@ class WarpApplication(Gtk.Application):
 
     def _remote_ops_changed(self, local_machine, name):
         self.window.refresh_remote_machine_view()
+        self.update_inhibitor_state(local_machine)
 
     def _server_started(self, local_machine):
         self.window.notify_server_started()
 
-    def inhibit_for_transfer(self):
-        if self.inhibit_count == 0:
-            print("Inhibiting suspend/logout during transfer(s)")
-            self.inhibit_cookie = self.inhibit(self.window.window,
-                                               Gtk.ApplicationInhibitFlags.LOGOUT | Gtk.ApplicationInhibitFlags.SUSPEND,
-                                               "warp is in the middle of sending or receiving files")
-        self.inhibit_count += 1
+    def update_inhibitor_state(self, local_machine):
+        any_active_ops = False
 
-    def uninhibit_for_transfer(self):
-        if self.inhibit_count == 0:
-            print("Trying to uninhibit when we weren't already inhibited")
+        remotes = self.server.list_remote_machines()
+
+        for remote_machine in remotes:
+            for op in remote_machine.transfer_ops:
+                if op.status in INHIBIT_STATES:
+                    any_active_ops = True
+                    break
+
+            if any_active_ops:
+                break
+
+        if any_active_ops:
+            if self.inhibit_cookie == 0:
+                print("Inhibiting suspend/logout while transfers are active")
+                self.inhibit_cookie = self.inhibit(self.window.window,
+                                                   Gtk.ApplicationInhibitFlags.LOGOUT | Gtk.ApplicationInhibitFlags.SUSPEND,
+                                                   "Warp is sending or receiving files, or there is a pending transfer")
         else:
-            self.inhibit_count -= 1
-
-        if self.inhibit_count == 0 and self.inhibit_cookie > 0:
-            print("Inhibiting suspend/logout during transfer(s)")
-            self.uninhibit(self.inhibit_cookie)
-            self.inhibit_cookie = 0
+            if self.inhibit_cookie > 0:
+                print("No more active transfers, uninhibiting suspend/logout")
+                self.uninhibit(self.inhibit_cookie)
+                self.inhibit_cookie = 0
 
     ####  STATUS ICON ##########################################################################
 
