@@ -136,16 +136,21 @@ class RemoteMachine(GObject.Object):
 
             loader.add_bytes(info.avatar_chunk)
 
-        self.avatar_surface = loader.get_surface()
-
         self.display_name = name
         self.favorite = prefs.get_is_favorite(self.hostname)
 
         valid = GLib.utf8_make_valid(self.display_name, -1)
         self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
 
+        self.get_avatar_surface(loader)
         self.emit_machine_info_changed()
         self.set_remote_status(RemoteStatus.ONLINE)
+
+    @util._idle
+    def get_avatar_surface(self, loader):
+        # This needs to be on the main loop, or else we get an x error
+        self.avatar_surface = loader.get_surface()
+        self.emit_machine_info_changed()
 
     @util._async
     def send_transfer_op_request(self, op):
