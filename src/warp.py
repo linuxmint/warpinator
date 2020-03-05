@@ -957,6 +957,8 @@ class WarpApplication(Gtk.Application):
             self.server.disconnect_by_func(self._remote_removed)
             self.server.connect("shutdown-complete", self.ok_for_app_quit)
             self.server.shutdown()
+        else:
+            self.ok_for_app_quit(None)
 
     def ok_for_app_quit(self, local_machine):
         self.window.destroy()
