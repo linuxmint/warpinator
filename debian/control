@@ -8,6 +8,7 @@ Build-Depends:
  gnome-pkg-tools (>= 0.10),
  meson (>= 0.45.0),
  python3-grpc-tools (>= 1.14.0),
+ python3-protobuf (>= 3.6.1),
  gobject-introspection
 Standards-Version: 3.9.6
 
@@ -24,7 +25,6 @@ Depends:
  python3-xapp (>= 1.6.0),
  python3-zeroconf,
  python3-grpcio (>= 1.16.0),
- python3-protobuf (>= 3.6.1)
  ${misc:Depends},
  ${python3:Depends},
  ${shlibs:Depends},
