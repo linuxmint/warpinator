@@ -26,6 +26,5 @@ Depends:
  python3-zeroconf,
  python3-grpcio (>= 1.16.0),
  ${misc:Depends},
- ${python3:Depends},
- ${shlibs:Depends},
+ ${python3:Depends}
 Description: Allows simple local network file sharing.
