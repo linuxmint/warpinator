@@ -11,7 +11,6 @@ _ = gettext.gettext
 
 PREFS_SCHEMA = "com.linuxmint.warp.preferences"
 
-BROADCAST_NAME_KEY = "broadcast-name"
 FOLDER_NAME_KEY = "receiving-folder"
 START_WITH_WINDOW_KEY = "start-with-window"
 # START_PINNED_KEY = "default-pinned"
@@ -24,9 +23,6 @@ FAVORITES_KEY = "favorites"
 TRAY_ICON_KEY = "use-tray-icon"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
-
-def get_nick():
-    return prefs_settings.get_string(BROADCAST_NAME_KEY)
 
 def get_port():
     return prefs_settings.get_int(PORT_KEY)

@@ -462,7 +462,7 @@ class WarpWindow(GObject.Object):
         self.search_entry = self.builder.get_object("search_entry")
         self.app_display_name_label = self.builder.get_object("app_display_name")
         self.app_ip_label = self.builder.get_object("app_ip")
-        self.app_hostname_label = self.builder.get_object("app_hostname")
+        self.app_local_name_label = self.builder.get_object("app_local_name")
         self.something_wrong_box = self.builder.get_object("no_clients")
         self.bad_save_folder_label = self.builder.get_object("bad_save_folder_label")
 
@@ -640,8 +640,7 @@ class WarpWindow(GObject.Object):
         self.drop_pending = False
 
     def update_local_user_info(self):
-        self.app_display_name_label.set_text(prefs.get_nick())
-        self.app_hostname_label.set_text(util.get_hostname())
+        self.app_local_name_label.set_text(util.get_local_name())
         self.app_ip_label.set_text("%s : %d" % (util.get_ip(), prefs.get_port()))
 
     def menu_quit(self, widget, data=None):
