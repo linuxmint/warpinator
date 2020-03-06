@@ -3,6 +3,6 @@
 import subprocess
 
 try:
-    subprocess.call("/usr/libexec/warp/warp.py")
+    subprocess.call(["python3", "/usr/libexec/warp/warp.py"])
 except KeyboardInterrupt:
     exit(0)

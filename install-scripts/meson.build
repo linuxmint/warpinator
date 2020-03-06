@@ -19,3 +19,6 @@ meson.add_install_script('meson_install_schemas.py')
 
 # Update the Gtk icon cache
 meson.add_install_script('meson_update_icon_cache.py')
+
+# Make the binfile executable
+meson.add_install_script('meson_install_bin_script.sh')
