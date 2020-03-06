@@ -23,7 +23,6 @@ meson.add_install_script(
 
 libexec_py = [
   config_py,
-  'accountsService.py',
   'ops.py',
   'prefs.py',
   'machines.py',

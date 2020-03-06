@@ -382,12 +382,9 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.zeroconf = None
         self.info = None
 
-        util.accounts.connect("account-loaded", self.user_account_loaded)
+        self.display_name = GLib.get_real_name()
 
         self.start_server()
-
-    def user_account_loaded(self, client):
-        self.display_name = util.accounts.get_real_name()
 
     def start_zeroconf(self):
         self.zeroconf = Zeroconf()
@@ -508,14 +505,8 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         return void
 
     def GetRemoteMachineInfo(self, request, context):
-        while True:
-            if not util.accounts.is_loaded:
-                time.sleep(1)
-            else:
-                break
-
-        path = util.accounts.get_face_path()
-        return transfers.load_file_in_chunks(path, util.accounts.get_real_name())
+        path = os.path.join(GLib.get_home_dir(), ".face")
+        return transfers.load_file_in_chunks(path, GLib.get_real_name())
 
     def ProcessTransferOpRequest(self, request, context):
         remote_machine = self.remote_machines[request.info.connect_name]

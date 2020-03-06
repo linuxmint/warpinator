@@ -23,7 +23,7 @@ class SendOp(GObject.Object):
         self.uris = uris
         self.sender = sender
         self.receiver = receiver
-        self.sender_name = util.accounts.get_real_name()
+        self.sender_name = GLib.get_real_name()
         self.receiver_name = receiver_name
         self.direction = direction
         self.status = OpStatus.INIT
@@ -134,7 +134,7 @@ class ReceiveOp(GObject.Object):
         self.uris = uris
         self.sender = sender
         self.sender_name = self.sender
-        self.receiver_name = util.accounts.get_real_name()
+        self.receiver_name = GLib.get_real_name()
         self.direction = direction
         self.status = OpStatus.INIT
 

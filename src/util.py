@@ -10,9 +10,6 @@ import prefs
 
 _ = gettext.gettext
 
-from accountsService import AccountsServiceClient
-accounts = AccountsServiceClient()
-
 from enum import IntEnum
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
                                                   FROM_REMOTE_MACHINE')
