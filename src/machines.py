@@ -17,6 +17,7 @@ import util
 import transfers
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
+import rpc_fallbacks
 
 _ = gettext.gettext
 
@@ -104,6 +105,7 @@ class RemoteMachine(GObject.Object):
                         self.set_remote_status(RemoteStatus.ONLINE)
                         if not one_ping:
                             self.update_remote_machine_info()
+                            self.update_remote_machine_avatar()
                             one_ping = True
                     except grpc.RpcError as e:
                         if e.code() in (grpc.StatusCode.DEADLINE_EXCEEDED, grpc.StatusCode.UNAVAILABLE):
@@ -116,29 +118,35 @@ class RemoteMachine(GObject.Object):
         while keep_channel():
             continue
 
+    @util._async
     def update_remote_machine_info(self):
-        loader = None
-        name = None
+        def get_info_finished(future):
+            self.display_name = future.result().display_name
+            self.favorite = prefs.get_is_favorite(self.hostname)
 
-        iterator = self.stub.GetRemoteMachineInfo(void)
-        for info in iterator:
-            if name == None:
-                name = info.display_name
+            valid = GLib.utf8_make_valid(self.display_name, -1)
+            self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
 
-            if loader == None:
-                loader = util.CairoSurfaceLoader()
+            self.emit_machine_info_changed()
+            self.set_remote_status(RemoteStatus.ONLINE)
+        
+        future = self.stub.GetRemoteMachineInfo.future(void)
+        future.add_done_callback(get_info_finished)
 
-            loader.add_bytes(info.avatar_chunk)
+    @util._async
+    def update_remote_machine_avatar(self):
+        iterator = self.stub.GetRemoteMachineAvatar(void)
+        loader = util.CairoSurfaceLoader()
 
-        self.display_name = name
-        self.favorite = prefs.get_is_favorite(self.hostname)
-
-        valid = GLib.utf8_make_valid(self.display_name, -1)
-        self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
+        try:
+            for info in iterator:
+                loader.add_bytes(info.avatar_chunk)
+        except grpc.RpcError as e:
+            print("Could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
+            for info in rpc_fallbacks.default_avatar_iterator():
+                loader.add_bytes(info.avatar_chunk)
 
         self.get_avatar_surface(loader)
-        self.emit_machine_info_changed()
-        self.set_remote_status(RemoteStatus.ONLINE)
 
     @util._idle
     def get_avatar_surface(self, loader):
@@ -505,8 +513,14 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         return void
 
     def GetRemoteMachineInfo(self, request, context):
+        return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name())
+
+    def GetRemoteMachineAvatar(self, request, context):
         path = os.path.join(GLib.get_home_dir(), ".face")
-        return transfers.load_file_in_chunks(path, GLib.get_real_name())
+        if os.path.exists(path):
+            return transfers.load_file_in_chunks(path)
+        else:
+            context.abort(code=grpc.StatusCode.NOT_FOUND, details='.face file not found!')
 
     def ProcessTransferOpRequest(self, request, context):
         remote_machine = self.remote_machines[request.info.connect_name]

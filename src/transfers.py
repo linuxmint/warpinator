@@ -18,16 +18,20 @@ FILE_INFOS_SINGLE_FILE = \
 CHUNK_SIZE = 1024 * 1024
 PROGRESS_UPDATE_FREQ = 4 * 1000 * 1000
 
-def load_file_in_chunks(path, display_name):
+def load_file_in_chunks(path):
     gfile = Gio.File.new_for_path(path)
-    stream = gfile.read(None)
+
+    try:
+        stream = gfile.read(None)
+    except GLib.Error as e:
+        return
 
     while True:
         bytes = stream.read_bytes(CHUNK_SIZE, None)
         if bytes.get_size() == 0:
             break
 
-        response = warp_pb2.RemoteMachineInfo(avatar_chunk=bytes.get_data(), display_name=display_name)
+        response = warp_pb2.RemoteMachineAvatar(avatar_chunk=bytes.get_data())
         yield response
 
     stream.close()

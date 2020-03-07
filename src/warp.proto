@@ -2,7 +2,8 @@ syntax = "proto3";
 
 service Warp {
     // Sender methods
-    rpc GetRemoteMachineInfo(VoidType) returns (stream RemoteMachineInfo) {}
+    rpc GetRemoteMachineInfo(VoidType) returns (RemoteMachineInfo) {}
+    rpc GetRemoteMachineAvatar(VoidType) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
     rpc RetryTransferOp(OpInfo) returns (VoidType) {}
     rpc PauseTransferOp(OpInfo) returns (VoidType) {}
@@ -22,7 +23,10 @@ service Warp {
 
 message RemoteMachineInfo {
     string display_name = 1;
-    bytes avatar_chunk = 2;
+}
+
+message RemoteMachineAvatar {
+    bytes avatar_chunk = 1;
 }
 
 message Visible {
