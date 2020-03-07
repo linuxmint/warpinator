@@ -5,6 +5,7 @@ from gi.repository import GObject, GLib, Gio
 import transfers
 import prefs
 import util
+import notifications
 from util import OpStatus, OpCommand
 
 _ = gettext.gettext
@@ -167,6 +168,9 @@ class ReceiveOp(GObject.Object):
 
     def set_status(self, status):
         self.status = status
+
+        if status == OpStatus.FINISHED:
+            notifications.TransferCompleteNotification(self)
         self.emit_status_changed()
 
     def prepare_receive_info(self):
@@ -186,6 +190,8 @@ class ReceiveOp(GObject.Object):
             self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
         self.status = OpStatus.WAITING_PERMISSION
+
+        notifications.NewOpUserNotification(self)
         self.emit_initial_setup_complete()
 
     def update_progress(self, report):

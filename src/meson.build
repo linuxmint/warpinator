@@ -26,6 +26,7 @@ libexec_py = [
   'ops.py',
   'prefs.py',
   'machines.py',
+  'notifications.py',
   'rpc_fallbacks.py',
   'transfers.py',
   'util.py',

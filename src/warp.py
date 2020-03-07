@@ -346,8 +346,6 @@ class OverviewButton(GObject.Object):
         self.new_transfer_notify_label.set_text(text)
         self.button.get_style_context().add_class("suggested-action")
 
-        self.notify_user(op)
-
         self.emit("need-attention")
 
     def _handle_new_outgoing_op(self, remote_machine, op):
@@ -376,56 +374,6 @@ class OverviewButton(GObject.Object):
         else:
             self.favorite_image.clear()
 
-    def notify_user(self, op):
-        if prefs.get_show_notifications():
-            notification = Gio.Notification.new(_("New incoming files"))
-
-            if prefs.require_permission_for_transfer():
-                body =gettext.ngettext(
-                    _("%s would like to send you %d file (%s)."),
-                    _("%s would like to send you %d files%s"), op.total_count) \
-                        % (op.sender_name,
-                           op.total_count,
-                           op.top_dir_basenames[0] if op.total_count == 1 else "")
-
-                notification.set_body(body)
-                notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
-
-                notification.add_button(_("Accept"), "app.notification-response::accept")
-                notification.add_button(_("Decline"), "app.notification-response::decline")
-
-                notification.set_priority(Gio.NotificationPriority.URGENT)
-
-                app = Gio.Application.get_default()
-                app.lookup_action("notification-response").connect("activate", self._notification_response, op)
-
-                op.connect("status-changed",
-                           lambda op: app.withdraw_notification(op.sender) if op.status != OpStatus.WAITING_PERMISSION else None)
-            else:
-                body =gettext.ngettext(
-                    _("%s is sending you %d file (%s)."),
-                    _("%s is sending you %d files%s"), op.total_count) \
-                        % (op.sender_name,
-                           op.total_count,
-                           op.top_dir_basenames[0] if op.total_count == 1 else "")
-
-                notification.set_body(body)
-                notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
-
-        app = Gio.Application.get_default()
-        Gio.Application.get_default().send_notification(op.sender, notification)
-
-    def _notification_response(self, action, variant, op):
-        response = variant.unpack()
-
-        if response == "accept":
-            op.accept_transfer()
-        else:
-            op.decline_transfer_request()
-
-        app = Gio.Application.get_default()
-        app.lookup_action("notification-response").disconnect_by_func(self._notification_response)
-
     def do_dispose(self):
         if self.new_incoming_op_id > 0:
             self.remote_machine.disconnect(self.new_incoming_op_id)
@@ -441,7 +389,6 @@ class OverviewButton(GObject.Object):
 class WarpWindow(GObject.Object):
     __gsignals__ = {
         'exit': (GObject.SignalFlags.RUN_LAST, None, ()),
-        'send-notification': (GObject.SignalFlags.RUN_LAST, None, (object,))
     }
 
     def __init__(self):
