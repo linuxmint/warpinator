@@ -46,7 +46,7 @@ class NewOpUserNotification():
                     _("%s is sending you %d file (%s)."),
                     _("%s is sending you %d files%s"), self.op.total_count) \
                         % (self.op.sender_name,
-                           self.optotal_count,
+                           self.op.total_count,
                            self.optop_dir_basenames[0] if self.op.total_count == 1 else "")
 
                 notification.set_body(body)
