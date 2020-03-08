@@ -6,6 +6,7 @@ import transfers
 import prefs
 import util
 import notifications
+import interceptors
 from util import OpStatus, OpCommand
 
 _ = gettext.gettext
@@ -43,8 +44,6 @@ class SendOp(GObject.Object):
         self.file_send_cancellable = None
 
         self.current_progress_report = None
-        self.progress = 0.0
-        self.progress_text = None
 
         # These are the first-level base names (no path, just the filename) that we'll send to the server
         # to check for pre-existence.  We know that if these files/folders don't exist, none of their children
@@ -85,16 +84,24 @@ class SendOp(GObject.Object):
     def progress_report(self, report):
         self.current_progress_report = report
 
-        self.progress = report.progress
-        if self.progress == 1.0:
+        if report.progress == 1.0:
             self.status = OpStatus.FINISHED
             self.emit_status_changed()
             return
-        else:
-            self.progress_text = _("%s (%s/s)") % (util.format_time_span(report.time_left_sec), GLib.format_size(report.bytes_per_sec))
 
         self.emit("progress-changed")
-        self.emit("op-command", OpCommand.UPDATE_PROGRESS)
+
+    def get_progress_text(self):
+        try:
+            return self.current_progress_report.progress_text
+        except AttributeError:
+            return ""
+
+    def get_progress(self):
+        try:
+            return self.current_progress_report.progress
+        except AttributeError:
+            return 0
 
     @util._idle
     def emit_initial_setup_complete(self):
@@ -146,7 +153,6 @@ class ReceiveOp(GObject.Object):
         self.no_space = False
         self.existing = False
 
-
         self.total_size = 0
         self.total_count = 0
         self.size_string = "--" # I'd say 'Unknown' but that might be long enough to expand the label
@@ -157,10 +163,7 @@ class ReceiveOp(GObject.Object):
         # This is set when a transfer starts - it's a grpc.Future that we can cancel() if the user
         # wants the transfer to stop.
         self.file_iterator = None
-
         self.current_progress_report = None
-        self.progress = 0.0
-        self.progress_text = None
         # These are the first-level base names (no path, just the filename) that we'll send to the server
         # to check for pre-existence.  We know that if these files/folders don't exist, none of their children
         # will.  This is a bit simple, but until we need more, it's fine.
@@ -171,6 +174,7 @@ class ReceiveOp(GObject.Object):
 
         if status == OpStatus.FINISHED:
             notifications.TransferCompleteNotification(self)
+
         self.emit_status_changed()
 
     def prepare_receive_info(self):
@@ -194,12 +198,27 @@ class ReceiveOp(GObject.Object):
         notifications.NewOpUserNotification(self)
         self.emit_initial_setup_complete()
 
-    def update_progress(self, report):
+    def progress_report(self, report):
         self.current_progress_report = report
-        self.progress = report.progress
-        self.progress_text = _("%s (%s/s)") % (util.format_time_span(report.time_left_sec), GLib.format_size(report.bytes_per_sec))
+
+        if report.progress == 1.0:
+            self.status = OpStatus.FINISHED
+            self.emit_status_changed()
+            return
 
         self.emit("progress-changed")
+
+    def get_progress_text(self):
+        try:
+            return self.current_progress_report.progress_text
+        except AttributeError:
+            return ""
+
+    def get_progress(self):
+        try:
+            return self.current_progress_report.progress
+        except AttributeError:
+            return 0
 
     @util._idle
     def emit_initial_setup_complete(self):
@@ -221,4 +240,6 @@ class ReceiveOp(GObject.Object):
 
     def remove_transfer(self):
         self.emit("op-command", OpCommand.REMOVE_TRANSFER)
+
+
 

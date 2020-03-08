@@ -11,7 +11,6 @@ service Warp {
     // Receiver methods
     rpc AcceptTransferOpRequest(OpInfo) returns (VoidType) {}
     rpc StartTransfer(OpInfo) returns (stream FileChunk) {}
-    rpc ReportProgress(ProgressReport) returns (VoidType) {}
 
     // Both
     rpc CancelTransferOpRequest(OpInfo) returns (VoidType) {}
@@ -59,11 +58,4 @@ message FileChunk {
     int32 file_type = 2;
     string symlink_target = 3;
     bytes chunk = 4;
-}
-
-message ProgressReport {
-    OpInfo info = 1;
-    float progress = 2;
-    uint64 bytes_per_sec = 3;
-    uint64 time_left_sec = 4;
 }

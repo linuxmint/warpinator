@@ -18,6 +18,7 @@ import transfers
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
 import rpc_fallbacks
+import interceptors
 
 _ = gettext.gettext
 
@@ -78,14 +79,17 @@ class RemoteMachine(GObject.Object):
                                                 ('grpc.keepalive_timeout_ms', 10000)
                                                ]) as channel:
 
-                future = grpc.channel_ready_future(channel)
+                intercept_channel = grpc.intercept_channel(channel,
+                                                           interceptors.client_interceptor())
+
+                future = grpc.channel_ready_future(intercept_channel)
 
                 connect_retries = 0
 
                 while not self.need_shutdown:
                     try:
                         future.result(timeout=2)
-                        self.stub = warp_pb2_grpc.WarpStub(channel)
+                        self.stub = warp_pb2_grpc.WarpStub(intercept_channel)
                         break
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
@@ -138,13 +142,8 @@ class RemoteMachine(GObject.Object):
         iterator = self.stub.GetRemoteMachineAvatar(void)
         loader = util.CairoSurfaceLoader()
 
-        try:
-            for info in iterator:
-                loader.add_bytes(info.avatar_chunk)
-        except grpc.RpcError as e:
-            print("Could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
-            for info in rpc_fallbacks.default_avatar_iterator():
-                loader.add_bytes(info.avatar_chunk)
+        for info in iterator:
+            loader.add_bytes(info.avatar_chunk)
 
         self.get_avatar_surface(loader)
 
@@ -198,10 +197,6 @@ class RemoteMachine(GObject.Object):
 
         op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER if by_sender else OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
-    @util._async
-    def update_op_progress(self, op):
-        progress_op = self.stub.ReportProgress(op.current_progress_report)
-
     # def pause_transfer_op(self, op):
         # stop_op = warp_pb2.PauseTransferOp(warp_pb2.OpInfo(timestamp=op.start_time))
         # self.emit("ops-changed")
@@ -224,6 +219,7 @@ class RemoteMachine(GObject.Object):
                 print("An error occurred receiving data from %s: %s" % (op.sender, op.file_iterator.details()))
 
         op.file_iterator = None
+        receiver.receive_finished()
         op.set_status(OpStatus.FINISHED)
 
     @util._async
@@ -319,9 +315,7 @@ class RemoteMachine(GObject.Object):
     @util._idle
     def op_command_issued(self, op, command):
         # send
-        if command == OpCommand.UPDATE_PROGRESS:
-            self.update_op_progress(op)
-        elif command == OpCommand.CANCEL_PERMISSION_BY_SENDER:
+        if command == OpCommand.CANCEL_PERMISSION_BY_SENDER:
             self.cancel_transfer_op_request(op, by_sender=True)
         elif command == OpCommand.PAUSE_TRANSFER:
             self.pause_transfer_op(op)
@@ -572,12 +566,6 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
 
         # pause how?
-        return void
-
-    def ReportProgress(self, request, context):
-        op = self.remote_machines[request.info.connect_name].lookup_op(request.info.timestamp)
-        op.update_progress(request)
-
         return void
 
     # receiver server responders

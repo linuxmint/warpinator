@@ -15,9 +15,6 @@ FILE_INFOS = \
 FILE_INFOS_SINGLE_FILE = \
     "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target,standard::content-type"
 
-CHUNK_SIZE = 1024 * 1024
-PROGRESS_UPDATE_FREQ = 4 * 1000 * 1000
-
 def load_file_in_chunks(path):
     gfile = Gio.File.new_for_path(path)
 
@@ -27,7 +24,7 @@ def load_file_in_chunks(path):
         return
 
     while True:
-        bytes = stream.read_bytes(CHUNK_SIZE, None)
+        bytes = stream.read_bytes(util.CHUNK_SIZE, None)
         if bytes.get_size() == 0:
             break
 
@@ -54,13 +51,7 @@ class FileSender(GObject.Object):
         self.timestamp = timestamp
         self.cancellable = cancellable
 
-        op.progress = 0.0
-        op.current_progress_report = None
-        op.progress_text = None
-
-        self.transfer_start_time = GLib.get_monotonic_time()
-        self.last_update_time = self.transfer_start_time
-        self.current_bytes_read = 0
+        self.progress_tracker = OpProgressTracker(op)
 
     def read_chunks(self):
         for file in self.op.resolved_files:
@@ -87,9 +78,9 @@ class FileSender(GObject.Object):
                     if self.cancellable.is_set():
                         return
 
-                    b = stream.read_bytes(CHUNK_SIZE, None)
+                    b = stream.read_bytes(util.CHUNK_SIZE, None)
                     last_size_read = b.get_size()
-                    self.update_progress(size_read=last_size_read)
+                    self.progress_tracker.update_progress(last_size_read)
 
                     yield warp_pb2.FileChunk(relative_path=file.relative_path,
                                              file_type=file.file_type,
@@ -98,27 +89,8 @@ class FileSender(GObject.Object):
                 stream.close()
                 continue
 
-        self.update_progress(size_read=0, finished=True)
+        self.progress_tracker.finished()
 
-    def update_progress(self, size_read=0, finished=False):
-        self.current_bytes_read += size_read
-
-        now = GLib.get_monotonic_time()
-        if ((now - self.last_update_time) > PROGRESS_UPDATE_FREQ) or finished:
-            self.last_update_time = now
-
-            progress = self.current_bytes_read / self.op.total_size
-            elapsed = now - self.transfer_start_time
-            bytes_per_micro = self.current_bytes_read / elapsed
-            bytes_per_sec = int(bytes_per_micro * 1000 * 1000)
-            time_left_sec = (self.op.total_size - self.current_bytes_read) / bytes_per_sec
-            print("%s time left, %s/s" % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec)))
-            report = warp_pb2.ProgressReport(info=warp_pb2.OpInfo(connect_name=self.connect_name, timestamp=self.timestamp),
-                                             progress=1.0 if finished else progress,
-                                             bytes_per_sec=bytes_per_sec,
-                                             time_left_sec=int(time_left_sec))
-
-            GLib.idle_add(self.op.progress_report, report, priority=GLib.PRIORITY_DEFAULT)
 
 class FileReceiver(GObject.Object):
     def __init__(self, op):
@@ -126,9 +98,7 @@ class FileReceiver(GObject.Object):
         self.save_path = prefs.get_save_path()
         self.op = op
 
-        op.current_progress_report = None
-        op.progress = 0.0
-        op.progress_text = None
+        self.progress_tracker = OpProgressTracker(op)
 
         self.current_path = None
         self.current_gfile = None
@@ -160,10 +130,15 @@ class FileReceiver(GObject.Object):
                 flags = Gio.FileCreateFlags.REPLACE_DESTINATION
                 self.current_stream = self.current_gfile.replace(None, False, flags, None)
 
-            if len(s.chunk) == 0:
+            length = len(s.chunk)
+            if length == 0:
                 return
 
             self.current_stream.write_bytes(GLib.Bytes(s.chunk), None)
+            self.progress_tracker.update_progress(length)
+
+    def receive_finished(self):
+        self.progress_tracker.finished()
 
 
 def add_file(op, basename, uri, base_uri, info):
@@ -262,3 +237,46 @@ def gather_file_info(op):
         op.top_dir_basenames = top_dir_basenames
 
         return not fail
+
+class Progress():
+    def __init__(self, progress, time_left_sec, bytes_per_sec):
+        self.progress = progress
+        self.time_left_sec = time_left_sec
+        self.bytes_per_sec = bytes_per_sec
+        self.progress_text = _("%s (%s/s)") % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec))
+
+class OpProgressTracker():
+    def __init__(self, op):
+        self.op = op
+        self.total_size = op.total_size
+        self.total_transferred = 0
+        self.transfer_start_time = GLib.get_monotonic_time()
+        self.last_update_time = self.transfer_start_time
+
+    @util._idle
+    def update_progress(self, size_read):
+        self.total_transferred += size_read
+
+        now = GLib.get_monotonic_time()
+
+        if ((now - self.last_update_time) > util.PROGRESS_UPDATE_FREQ):
+            self.last_update_time = now
+
+            progress = self.total_transferred / self.total_size
+            elapsed = now - self.transfer_start_time
+
+            bytes_per_micro = self.total_transferred / elapsed
+            bytes_per_sec = int(bytes_per_micro * 1000 * 1000)
+
+            if bytes_per_sec == 0:
+                bytes_per_sec = 1 # no a/0
+
+            time_left_sec = (self.total_size - self.total_transferred) / bytes_per_sec
+
+            print("%s time left, %s/s" % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec)))
+
+            progress_report = Progress(progress, time_left_sec, bytes_per_sec)
+            self.op.progress_report(progress_report)
+
+    def finished(self):
+        self.op.progress_report(Progress(1.0, 0, 0))

@@ -103,8 +103,8 @@ class OpItem(GObject.Object):
         self.refresh_buttons_and_icons()
 
     def update_progress(self, op):
-        self.op_progress_bar.set_fraction(self.op.progress)
-        self.op_progress_bar.set_text(self.op.progress_text)
+        self.op_progress_bar.set_fraction(self.op.get_progress())
+        self.op_progress_bar.set_text(self.op.get_progress_text())
 
     def set_visible_buttons(self, vis_buttons):
         for name in ALL_BUTTONS:
@@ -116,8 +116,8 @@ class OpItem(GObject.Object):
         self.op_transfer_problem_label.hide()
 
         if self.op.status == OpStatus.TRANSFERRING:
-            self.op_progress_bar.set_fraction(self.op.progress)
-            self.op_progress_bar.set_text(self.op.progress_text)
+            self.op_progress_bar.set_fraction(self.op.get_progress())
+            self.op_progress_bar.set_text(self.op.get_progress_text())
         elif self.op.status == OpStatus.PAUSED:
             self.op_progress_bar.set_text(_("Paused"))
         if self.op.status == OpStatus.WAITING_PERMISSION:

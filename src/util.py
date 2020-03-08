@@ -10,6 +10,9 @@ import prefs
 
 _ = gettext.gettext
 
+CHUNK_SIZE = 1024 * 1024
+PROGRESS_UPDATE_FREQ = 2 * 1000 * 1000
+
 from enum import IntEnum
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
                                                   FROM_REMOTE_MACHINE')
@@ -51,41 +54,6 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   STOP_TRANSFER_BY_SENDER \
                                   STOP_TRANSFER_BY_RECEIVER \
                                   REMOVE_TRANSFER')
-
-class ProgressCallbackInfo():
-    def __init__(self, progress=0, speed_str="", time_left_str="",
-                 finished=False, sender_awaiting_approval=False,
-                 transfer_refused=False, transfer_starting=False,
-                 transfer_exists=False, transfer_cancelled=False,
-                 transfer_diskfull=False, error=None, size=0, count=0):
-        self.progress = progress
-        self.speed = speed_str
-        self.time_left = time_left_str
-        self.finished = finished
-        self.sender_awaiting_approval = sender_awaiting_approval
-        self.count = count
-        self.size = size
-        self.error = error
-        self.transfer_starting = transfer_starting
-        self.transfer_cancelled = transfer_cancelled
-        self.transfer_refused = transfer_refused
-        self.transfer_exists = transfer_exists
-        self.transfer_diskfull = transfer_diskfull
-
-    def is_informational(self):
-        return True in (self.sender_awaiting_approval,
-                        self.transfer_refused,
-                        self.transfer_starting,
-                        self.transfer_cancelled,
-                        self.transfer_exists,
-                        self.transfer_diskfull)
-
-    def is_fail_state(self):
-        return True in (self.transfer_refused,
-                        self.transfer_cancelled,
-                        self.transfer_exists,
-                        self.transfer_diskfull,
-                        self.error)
 
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not
 # both in the same dialog.  This does.
