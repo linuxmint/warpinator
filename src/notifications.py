@@ -47,7 +47,7 @@ class NewOpUserNotification():
                     _("%s is sending you %d files%s"), self.op.total_count) \
                         % (self.op.sender_name,
                            self.op.total_count,
-                           self.optop_dir_basenames[0] if self.op.total_count == 1 else "")
+                           self.op.top_dir_basenames[0] if self.op.total_count == 1 else "")
 
                 notification.set_body(body)
                 notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
