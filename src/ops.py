@@ -6,31 +6,64 @@ import transfers
 import prefs
 import util
 import notifications
-import interceptors
-from util import OpStatus, OpCommand
+from util import OpStatus, OpCommand, TransferDirection
 
 _ = gettext.gettext
 
-# This represents a send or receive 'job', there would be potentially many of these.
-class SendOp(GObject.Object):
+class CommonOp(GObject.Object):
     __gsignals__ = {
         "status-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
         "initial-setup-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
         "op-command": (GObject.SignalFlags.RUN_LAST, None, (int,)),
         "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ())
     }
-
-    def __init__(self, direction, sender=None, receiver=None, receiver_name=None, uris=None):
-        super(SendOp, self).__init__()
+    def __init__(self, direction, sender, uris=None):
+        super(CommonOp, self).__init__()
         self.uris = uris
         self.sender = sender
+        self.direction = direction
+        self.status = OpStatus.INIT
+        self.start_time = GLib.get_monotonic_time() # for sorting in the op list
+
+    def progress_report(self, report):
+        self.current_progress_report = report
+
+        if report.progress == 1.0:
+            self.status = OpStatus.FINISHED
+            self.emit_status_changed()
+            return
+
+        self.emit("progress-changed")
+
+    def get_progress_text(self):
+        try:
+            return self.current_progress_report.progress_text
+        except AttributeError:
+            return ""
+
+    def get_progress(self):
+        try:
+            return self.current_progress_report.progress
+        except AttributeError:
+            return 0
+
+    @util._idle
+    def emit_initial_setup_complete(self):
+        self.emit("initial-setup-complete")
+
+    @util._idle
+    def emit_status_changed(self):
+        self.emit("status-changed")
+
+    def set_status(self, status):
+        pass
+
+class SendOp(CommonOp):
+    def __init__(self, sender=None, receiver=None, receiver_name=None, uris=None):
+        super(SendOp, self).__init__(TransferDirection.TO_REMOTE_MACHINE, sender, uris)
         self.receiver = receiver
         self.sender_name = GLib.get_real_name()
         self.receiver_name = receiver_name
-        self.direction = direction
-        self.status = OpStatus.INIT
-
-        self.start_time = GLib.get_monotonic_time() # for sorting in the op list
 
         self.total_size = 0
         self.total_count = 0
@@ -81,36 +114,6 @@ class SendOp(GObject.Object):
         self.emit_initial_setup_complete()
         self.emit_status_changed()
 
-    def progress_report(self, report):
-        self.current_progress_report = report
-
-        if report.progress == 1.0:
-            self.status = OpStatus.FINISHED
-            self.emit_status_changed()
-            return
-
-        self.emit("progress-changed")
-
-    def get_progress_text(self):
-        try:
-            return self.current_progress_report.progress_text
-        except AttributeError:
-            return ""
-
-    def get_progress(self):
-        try:
-            return self.current_progress_report.progress
-        except AttributeError:
-            return 0
-
-    @util._idle
-    def emit_initial_setup_complete(self):
-        self.emit("initial-setup-complete")
-
-    @util._idle
-    def emit_status_changed(self):
-        self.emit("status-changed")
-
     # Widget handlers
 
     def cancel_transfer_request(self):
@@ -129,24 +132,11 @@ class SendOp(GObject.Object):
         self.emit("op-command", OpCommand.REMOVE_TRANSFER)
 
 # This represents a send or receive 'job', there would be potentially many of these.
-class ReceiveOp(GObject.Object):
-    __gsignals__ = {
-        "status-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "initial-setup-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "op-command": (GObject.SignalFlags.RUN_LAST, None, (int,)),
-        "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ())
-    }
-
-    def __init__(self, direction, sender=None, uris=None):
-        super(ReceiveOp, self).__init__()
-        self.uris = uris
-        self.sender = sender
+class ReceiveOp(CommonOp):
+    def __init__(self, sender):
+        super(ReceiveOp, self).__init__(TransferDirection.FROM_REMOTE_MACHINE, sender)
         self.sender_name = self.sender
         self.receiver_name = GLib.get_real_name()
-        self.direction = direction
-        self.status = OpStatus.INIT
-
-        self.start_time = GLib.get_monotonic_time() # for sorting in the op list
 
          # If there's insufficient disk space, always ask for permission
          # and show a warning.
@@ -198,36 +188,6 @@ class ReceiveOp(GObject.Object):
         notifications.NewOpUserNotification(self)
         self.emit_initial_setup_complete()
 
-    def progress_report(self, report):
-        self.current_progress_report = report
-
-        if report.progress == 1.0:
-            self.status = OpStatus.FINISHED
-            self.emit_status_changed()
-            return
-
-        self.emit("progress-changed")
-
-    def get_progress_text(self):
-        try:
-            return self.current_progress_report.progress_text
-        except AttributeError:
-            return ""
-
-    def get_progress(self):
-        try:
-            return self.current_progress_report.progress
-        except AttributeError:
-            return 0
-
-    @util._idle
-    def emit_initial_setup_complete(self):
-        self.emit("initial-setup-complete")
-
-    @util._idle
-    def emit_status_changed(self):
-        self.emit("status-changed")
-
     # Widget handlers
     def accept_transfer(self):
         self.emit("op-command", OpCommand.START_TRANSFER)
@@ -240,6 +200,3 @@ class ReceiveOp(GObject.Object):
 
     def remove_transfer(self):
         self.emit("op-command", OpCommand.REMOVE_TRANSFER)
-
-
-

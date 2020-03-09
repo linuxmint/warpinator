@@ -21,7 +21,6 @@ FileType = IntEnum('FileType', 'REGULAR \
                                 DIRECTORY \
                                 SYMBOLIC_LINK')
 
-
 # Online - all ok
 # Offline - no presence at all
 # Init connecting - we've just discovered you
@@ -112,7 +111,7 @@ def have_free_space(size):
 
     try:
         info = save_file.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, None)
-    except GLib.Error as e:
+    except GLib.Error:
         print("Unable to check free space in save location (%s), but proceeding anyhow" % prefs.get_save_path())
         return True
 

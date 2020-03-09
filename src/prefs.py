@@ -1,7 +1,7 @@
 import os
 import gettext
 
-from xapp.GSettingsWidgets import GSettingsEntry, GSettingsSwitch, GSettingsFileChooser
+from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton
 from gi.repository import Gtk, Gio, GLib
 

@@ -20,7 +20,7 @@ def load_file_in_chunks(path):
 
     try:
         stream = gfile.read(None)
-    except GLib.Error as e:
+    except GLib.Error:
         return
 
     while True:

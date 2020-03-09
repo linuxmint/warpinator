@@ -52,7 +52,6 @@ class NewOpUserNotification():
                 notification.set_body(body)
                 notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
 
-        app = Gio.Application.get_default()
         Gio.Application.get_default().send_notification(self.op.sender, notification)
 
     def _notification_response(self, action, variant, op):
@@ -88,8 +87,6 @@ class TransferCompleteNotification():
             notification.set_icon(Gio.ThemedIcon(name="emblem-ok-symbolic"))
 
             notification.set_priority(Gio.NotificationPriority.NORMAL)
-
-            app = Gio.Application.get_default()
 
             Gio.Application.get_default().send_notification(self.op.sender, notification)
 

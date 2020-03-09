@@ -5,7 +5,6 @@ service Warp {
     rpc GetRemoteMachineInfo(VoidType) returns (RemoteMachineInfo) {}
     rpc GetRemoteMachineAvatar(VoidType) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
-    rpc RetryTransferOp(OpInfo) returns (VoidType) {}
     rpc PauseTransferOp(OpInfo) returns (VoidType) {}
 
     // Receiver methods

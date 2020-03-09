@@ -6,8 +6,6 @@ import locale
 import gettext
 import functools
 
-import socket
-
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('XApp', '1.0')
@@ -51,7 +49,8 @@ ALL_BUTTONS = ("transfer_accept", \
 INIT_BUTTONS = ()
 PERM_TO_SEND_BUTTONS = ("transfer_cancel_request",)
 PERM_TO_ACCEPT_BUTTONS = ("transfer_accept", "transfer_decline")
-TRANSFER_SENDING_BUTTONS = ("transfer_pause", "transfer_stop")
+TRANSFER_SENDING_BUTTONS = ("transfer_stop",)
+# TRANSFER_SENDING_BUTTONS = ("transfer_pause", "transfer_stop") # not implemented yet
 TRANSFER_RECEIVING_BUTTONS = ("transfer_stop",)
 TRANSFER_PAUSED_SENDING_BUTTONS = ("transfer_resume", "transfer_stop")
 TRANSFER_PAUSED_RECEIVING_BUTTONS = ()
@@ -571,7 +570,7 @@ class WarpWindow(GObject.Object):
 
     def on_drag_data_received(self, widget, context, x, y, data, info, _time, user_data=None):
         if self.current_selected_remote_machine.status != RemoteStatus.ONLINE:
-            Gdk.drag_status(context, 0, time)
+            Gdk.drag_status(context, 0, _time)
             return
 
         if not self.drop_pending:

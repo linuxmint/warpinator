@@ -5,7 +5,7 @@ import threading
 import gettext
 from concurrent import futures
 
-from gi.repository import GObject, GLib, Gio
+from gi.repository import GObject, GLib
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
 
 import grpc
@@ -17,7 +17,6 @@ import util
 import transfers
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
-import rpc_fallbacks
 import interceptors
 
 _ = gettext.gettext
@@ -105,7 +104,7 @@ class RemoteMachine(GObject.Object):
                 one_ping = False
                 while not self.need_shutdown:
                     try:
-                        ping = self.stub.Ping(void, timeout=2)
+                        self.stub.Ping(void, timeout=2)
                         self.set_remote_status(RemoteStatus.ONLINE)
                         if not one_ping:
                             self.update_remote_machine_info()
@@ -192,9 +191,8 @@ class RemoteMachine(GObject.Object):
             name = op.sender
         else:
             name = self.local_service_name
-        cancel_op = self.stub.CancelTransferOpRequest(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                                      connect_name=name))
-
+        self.stub.CancelTransferOpRequest(warp_pb2.OpInfo(timestamp=op.start_time,
+                                                          connect_name=name))
         op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER if by_sender else OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
     # def pause_transfer_op(self, op):
@@ -212,7 +210,7 @@ class RemoteMachine(GObject.Object):
         try:
             for data in op.file_iterator:
                 receiver.receive_data(data)
-        except grpc.RpcError as e:
+        except grpc.RpcError:
             if op.file_iterator.code() == grpc.StatusCode.CANCELLED:
                 return
             else:
@@ -238,16 +236,15 @@ class RemoteMachine(GObject.Object):
             op.file_iterator.cancel()
             op.set_status(OpStatus.STOPPED_BY_RECEIVER)
 
-        stop_op = self.stub.StopTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                         connect_name=name))
+        self.stub.StopTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
+                                               connect_name=name))
 
     @util._async
     def send_files(self, uri_list):
         self.recent_time = GLib.get_monotonic_time()
         self.emit_machine_info_changed()
 
-        op = SendOp(TransferDirection.TO_REMOTE_MACHINE,
-                    self.local_service_name,
+        op = SendOp(self.local_service_name,
                     self.connect_name,
                     self.display_name,
                     uri_list)
@@ -524,7 +521,7 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
                 self.add_receive_op_to_remote_machine(existing_op)
                 return void
 
-        op = ReceiveOp(TransferDirection.FROM_REMOTE_MACHINE, request.info.connect_name)
+        op = ReceiveOp(request.info.connect_name)
 
         op.start_time = request.info.timestamp
 
@@ -556,17 +553,11 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         return void
 
-    def RetryTransferOp(self, request, context):
-        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
+    # def PauseTransferOp(self, request, context):
+    #     op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
 
-        # initiate transfer again
-        return void
-
-    def PauseTransferOp(self, request, context):
-        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
-
-        # pause how?
-        return void
+    #     # pause how?
+    #     return void
 
     # receiver server responders
     def StartTransfer(self, request, context):
