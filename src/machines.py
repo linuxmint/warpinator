@@ -46,6 +46,7 @@ class RemoteMachine(GObject.Object):
         self.port = port
         self.connect_name = name
         self.hostname = hostname
+        self.user_name = ""
         self.display_name = ""
         self.favorite = prefs.get_is_favorite(self.hostname)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
@@ -120,7 +121,9 @@ class RemoteMachine(GObject.Object):
     @util._async
     def update_remote_machine_info(self):
         def get_info_finished(future):
-            self.display_name = future.result().display_name
+            info = future.result()
+            self.display_name = info.display_name
+            self.user_name = info.user_name
             self.favorite = prefs.get_is_favorite(self.hostname)
 
             valid = GLib.utf8_make_valid(self.display_name, -1)
@@ -508,7 +511,8 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         return void
 
     def GetRemoteMachineInfo(self, request, context):
-        return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name())
+        return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name(),
+                                          user_name=GLib.get_user_name())
 
     def GetRemoteMachineAvatar(self, request, context):
         path = os.path.join(GLib.get_home_dir(), ".face")

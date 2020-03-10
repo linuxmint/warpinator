@@ -31,7 +31,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="no_show_all">True</property>
-            <property name="icon_name">cs-xlet-update</property>
+            <property name="icon_name">network-error-symbolic</property>
             <property name="icon_size">3</property>
           </object>
           <packing>

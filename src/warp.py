@@ -303,7 +303,7 @@ class OverviewButton(GObject.Object):
             self.overview_user_status_icon.hide()
             self.overview_user_button_stack.set_visible_child_name("connecting")
             self.overview_user_display_name_box.hide()
-            self.ip_label.set_text(_("%s : %d") % (self.remote_machine.ip_address, self.remote_machine.port))
+            self.ip_label.set_text(self.remote_machine.ip_address)
             self.overview_user_connecting_label.set_text(_("Connecting to %s") % remote_machine.hostname)
         elif remote_machine.status == RemoteStatus.ONLINE:
             self.overview_user_connecting_spinner.hide()
@@ -326,8 +326,8 @@ class OverviewButton(GObject.Object):
 
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
-        self.hostname_label.set_text(self.remote_machine.hostname)
-        self.ip_label.set_text(_("%s : %d") % (self.remote_machine.ip_address, self.remote_machine.port))
+        self.hostname_label.set_text("%s@%s" % (self.remote_machine.user_name, self.remote_machine.hostname))
+        self.ip_label.set_text(self.remote_machine.ip_address)
 
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)
@@ -591,7 +591,7 @@ class WarpWindow(GObject.Object):
 
     def update_local_user_info(self):
         self.app_local_name_label.set_text(util.get_local_name())
-        self.app_ip_label.set_text("%s : %d" % (util.get_ip(), prefs.get_port()))
+        self.app_ip_label.set_text(util.get_ip())
 
     def menu_quit(self, widget, data=None):
         self.display_shutdown()
@@ -700,7 +700,8 @@ class WarpWindow(GObject.Object):
                                                      self.current_selected_remote_status_changed)
         self.current_selected_remote_status_changed(self.current_selected_remote_machine)
         self.user_display_name_label.set_text(self.current_selected_remote_machine.display_name)
-        self.user_hostname_label.set_text(self.current_selected_remote_machine.hostname)
+        self.user_hostname_label.set_text("%s@%s" % (self.current_selected_remote_machine.user_name,
+                                                     self.current_selected_remote_machine.hostname))
         self.user_ip_label.set_text(self.current_selected_remote_machine.ip_address)
 
         if self.current_selected_remote_machine.avatar_surface != None:
