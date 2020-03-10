@@ -328,7 +328,7 @@ class OverviewButton(GObject.Object):
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)
         else:
-            self.avatar_image.clear()
+            self.avatar_image.set_from_icon_name("avatar-default-symbolic", Gtk.IconSize.DND)
 
         self.refresh_favorite_icon()
 
@@ -698,9 +698,11 @@ class WarpWindow(GObject.Object):
         self.user_display_name_label.set_text(self.current_selected_remote_machine.display_name)
         self.user_hostname_label.set_text(self.current_selected_remote_machine.hostname)
         self.user_ip_label.set_text(self.current_selected_remote_machine.ip_address)
-        self.user_ip_label.set_text(_("%s : %d") % (self.current_selected_remote_machine.ip_address,
-                                                    self.current_selected_remote_machine.port))
-        self.user_avatar_image.set_from_surface(self.current_selected_remote_machine.avatar_surface)
+
+        if self.current_selected_remote_machine.avatar_surface != None:
+            self.user_avatar_image.set_from_surface(self.current_selected_remote_machine.avatar_surface)
+        else:
+            self.user_avatar_image.set_from_icon_name("avatar-default-symbolic", Gtk.IconSize.DND)
 
         self.add_op_items()
         self.sync_favorite()

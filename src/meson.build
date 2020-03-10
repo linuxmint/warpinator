@@ -24,11 +24,9 @@ meson.add_install_script(
 libexec_py = [
   config_py,
   'ops.py',
-  'interceptors.py',
   'machines.py',
   'notifications.py',
   'prefs.py',
-  'rpc_fallbacks.py',
   'transfers.py',
   'util.py',
   'warp.py'

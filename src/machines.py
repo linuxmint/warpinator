@@ -17,7 +17,6 @@ import util
 import transfers
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
-import interceptors
 
 _ = gettext.gettext
 
@@ -78,17 +77,14 @@ class RemoteMachine(GObject.Object):
                                                 ('grpc.keepalive_timeout_ms', 10000)
                                                ]) as channel:
 
-                intercept_channel = grpc.intercept_channel(channel,
-                                                           interceptors.client_interceptor())
-
-                future = grpc.channel_ready_future(intercept_channel)
+                future = grpc.channel_ready_future(channel)
 
                 connect_retries = 0
 
                 while not self.need_shutdown:
                     try:
                         future.result(timeout=2)
-                        self.stub = warp_pb2_grpc.WarpStub(intercept_channel)
+                        self.stub = warp_pb2_grpc.WarpStub(channel)
                         break
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
@@ -139,17 +135,25 @@ class RemoteMachine(GObject.Object):
     @util._async
     def update_remote_machine_avatar(self):
         iterator = self.stub.GetRemoteMachineAvatar(void)
-        loader = util.CairoSurfaceLoader()
-
-        for info in iterator:
-            loader.add_bytes(info.avatar_chunk)
+        loader = None
+        try:
+            for info in iterator:
+                if loader == None:
+                    loader = util.CairoSurfaceLoader()
+                loader.add_bytes(info.avatar_chunk)
+        except grpc.RpcError as e:
+            print("Could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
 
         self.get_avatar_surface(loader)
 
     @util._idle
-    def get_avatar_surface(self, loader):
+    def get_avatar_surface(self, loader=None):
         # This needs to be on the main loop, or else we get an x error
-        self.avatar_surface = loader.get_surface()
+        if loader:
+            self.avatar_surface = loader.get_surface()
+        else:
+            self.avatar_surface = None
+
         self.emit_machine_info_changed()
 
     @util._async
