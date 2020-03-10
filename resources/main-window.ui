@@ -325,6 +325,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_text" translatable="yes">Make this remote machine a favorite in the main view</property>
                                 <property name="image">user_favorite_image</property>
                                 <property name="relief">none</property>
                               </object>

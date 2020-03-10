@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
-<interface>
+<interface domain="warp">
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
@@ -256,6 +256,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Accept this request</property>
             <property name="valign">center</property>
             <property name="image">image1</property>
           </object>
@@ -270,6 +271,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Refuse this request</property>
             <property name="valign">center</property>
             <property name="image">image3</property>
           </object>
@@ -284,6 +286,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Cancel this request</property>
             <property name="valign">center</property>
             <property name="image">image7</property>
           </object>
@@ -298,6 +301,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Restart this operation</property>
             <property name="valign">center</property>
             <property name="image">image8</property>
           </object>
@@ -312,6 +316,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Pause this operation</property>
             <property name="valign">center</property>
             <property name="image">image4</property>
           </object>
@@ -326,6 +331,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Resume this operation</property>
             <property name="valign">center</property>
             <property name="image">image10</property>
           </object>
@@ -340,6 +346,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Cancel this operation</property>
             <property name="valign">center</property>
             <property name="image">image5</property>
           </object>
@@ -354,6 +361,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Remove this operation from the list</property>
             <property name="valign">center</property>
             <property name="image">image9</property>
           </object>
@@ -368,6 +376,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Open the containing folder</property>
             <property name="valign">center</property>
             <property name="image">image6</property>
           </object>
