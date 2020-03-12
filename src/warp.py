@@ -518,8 +518,8 @@ class WarpWindow(GObject.Object):
 
         for button in self.user_list_box.get_children():
             joined = " ".join([button.remote_machine.display_name,
-                                  button.remote_machine.hostname,
-                                  button.remote_machine.ip_address])
+                               ("%s@%s" % (button.remote_machine.user_name, button.remote_machine.hostname)),
+                               button.remote_machine.ip_address])
             normalized_contents = GLib.utf8_normalize(joined, len(joined), GLib.NormalizeMode.DEFAULT).lower()
 
             if normalized_query in normalized_contents:
