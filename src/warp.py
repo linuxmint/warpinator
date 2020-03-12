@@ -267,17 +267,16 @@ class OverviewButton(GObject.Object):
 
         self.button = self.builder.get_object("overview_button")
         self.avatar_image = self.builder.get_object("overview_user_avatar_image")
+        self.avatar_box = self.builder.get_object("overview_user_avatar_box")
         self.display_name_label = self.builder.get_object("overview_user_display_name")
         self.hostname_label = self.builder.get_object("overview_user_hostname")
         self.ip_label = self.builder.get_object("overview_user_ip")
         self.favorite_image = self.builder.get_object("overview_user_favorite")
         self.overview_user_button_stack = self.builder.get_object("overview_user_button_stack")
-        self.new_transfer_notify_label = self.builder.get_object("new_transfer_notify_label")
+        self.overview_user_info_label = self.builder.get_object("overview_user_info_label")
         self.overview_user_status_icon = self.builder.get_object("overview_user_status_icon")
         self.overview_user_display_name_box = self.builder.get_object("overview_user_display_name_box")
         self.overview_user_connecting_spinner = self.builder.get_object("overview_user_connecting_spinner")
-        self.overview_user_connecting_label = self.builder.get_object("overview_user_connecting_label")
-        self.overview_user_connection_issue_label = self.builder.get_object("overview_user_connection_issue_label")
 
         self.button.connect("clicked", lambda button: self.emit("clicked"))
 
@@ -291,42 +290,44 @@ class OverviewButton(GObject.Object):
         self.remote_machine_status_changed(self.remote_machine)
 
     def remote_machine_status_changed(self, remote_machine):
-        if remote_machine.display_name != "":
-            name = remote_machine.display_name
-        else:
-            name = remote_machine.hostname
-
+        have_info = remote_machine.display_name != ""
+        name = remote_machine.display_name if have_info else remote_machine.hostname
         self.clear_new_op_highlighting()
 
         if remote_machine.status == RemoteStatus.INIT_CONNECTING:
             self.overview_user_connecting_spinner.show()
             self.overview_user_status_icon.hide()
-            self.overview_user_button_stack.set_visible_child_name("connecting")
-            self.overview_user_display_name_box.hide()
             self.ip_label.set_text(self.remote_machine.ip_address)
-            self.overview_user_connecting_label.set_text(_("Connecting to %s") % remote_machine.hostname)
+            if have_info:
+                self.overview_user_info_label.set_text(_("Connecting"))
+            else:
+                self.overview_user_info_label.set_text(_("Connecting to %s") % name)
         elif remote_machine.status == RemoteStatus.ONLINE:
             self.overview_user_connecting_spinner.hide()
             self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name(ICON_ONLINE, Gtk.IconSize.LARGE_TOOLBAR)
-            self.overview_user_button_stack.set_visible_child_name("clear")
-            self.overview_user_display_name_box.show()
+            self.overview_user_info_label.set_text("")
         elif remote_machine.status == RemoteStatus.OFFLINE:
             self.overview_user_connecting_spinner.hide()
             self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name(ICON_OFFLINE, Gtk.IconSize.LARGE_TOOLBAR)
-            self.overview_user_connection_issue_label.set_text(_("%s is not currently online") % name)
-            self.overview_user_button_stack.set_visible_child_name("connection-issue")
+            self.overview_user_info_label.set_text(_("%s is not online") % name)
         elif remote_machine.status == RemoteStatus.UNREACHABLE:
             self.overview_user_connecting_spinner.hide()
             self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
-            self.overview_user_connection_issue_label.set_text(_("Problem communicating with %s") % name)
-            self.overview_user_button_stack.set_visible_child_name("connection-issue")
+            self.overview_user_info_label.set_text(_("Cannot connect to %s") % name)
+
+        self.overview_user_display_name_box.set_visible(have_info)
 
     def _update_machine_info(self, remote_machine):
         self.display_name_label.set_text(self.remote_machine.display_name)
-        self.hostname_label.set_text("%s@%s" % (self.remote_machine.user_name, self.remote_machine.hostname))
+
+        if self.remote_machine.user_name != "":
+            self.hostname_label.set_text("%s@%s" % (self.remote_machine.user_name, self.remote_machine.hostname))
+        else:
+            self.hostname_label.set_text(self.remote_machine.hostname)
+
         self.ip_label.set_text(self.remote_machine.ip_address)
 
         if self.remote_machine.avatar_surface:
@@ -334,6 +335,7 @@ class OverviewButton(GObject.Object):
         else:
             self.avatar_image.set_from_icon_name("avatar-default-symbolic", Gtk.IconSize.DND)
 
+        self.remote_machine_status_changed(remote_machine)
         self.refresh_favorite_icon()
 
         self.emit("update-sort")
@@ -341,12 +343,11 @@ class OverviewButton(GObject.Object):
 
     def _handle_new_incoming_op(self, remote_machine, op):
         self.new_ops += 1
-        self.overview_user_button_stack.set_visible_child_name("new-transfer")
 
         text = gettext.ngettext("%d new incoming transfer",
                                 "%d new incoming transfers", self.new_ops) % (self.new_ops,)
 
-        self.new_transfer_notify_label.set_text(text)
+        self.overview_user_info_label.set_text(text)
         self.button.get_style_context().add_class("suggested-action")
 
         self.emit("need-attention")
@@ -362,7 +363,7 @@ class OverviewButton(GObject.Object):
         self.new_ops = 0
 
         if self.remote_machine.status == RemoteStatus.ONLINE:
-            self.overview_user_button_stack.set_visible_child_name("clear")
+            self.overview_user_info_label.set_text("")
 
         self.button.get_style_context().remove_class("suggested-action")
         self.button.get_style_context().remove_class("destructive-action")
@@ -699,8 +700,13 @@ class WarpWindow(GObject.Object):
                                                      self.current_selected_remote_status_changed)
         self.current_selected_remote_status_changed(self.current_selected_remote_machine)
         self.user_display_name_label.set_text(self.current_selected_remote_machine.display_name)
-        self.user_hostname_label.set_text("%s@%s" % (self.current_selected_remote_machine.user_name,
-                                                     self.current_selected_remote_machine.hostname))
+
+        if self.current_selected_remote_machine.user_name != "":
+            self.user_hostname_label.set_text("%s@%s" % (self.current_selected_remote_machine.user_name,
+                                                         self.current_selected_remote_machine.hostname))
+        else:
+            self.user_hostname_label.set_text(self.current_selected_remote_machine.hostname)
+
         self.user_ip_label.set_text(self.current_selected_remote_machine.ip_address)
 
         if self.current_selected_remote_machine.avatar_surface != None:

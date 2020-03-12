@@ -28,6 +28,7 @@
         </child>
         <child>
           <object class="GtkImage" id="overview_user_status_icon">
+            <property name="width_request">24</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="no_show_all">True</property>
@@ -66,6 +67,7 @@
         </child>
         <child>
           <object class="GtkBox" id="overview_user_display_name_box">
+            <property name="width_request">200</property>
             <property name="can_focus">False</property>
             <property name="no_show_all">True</property>
             <property name="orientation">vertical</property>
@@ -108,32 +110,54 @@
           </packing>
         </child>
         <child>
+          <object class="GtkImage" id="overview_user_favorite">
+            <property name="width_request">40</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="no_show_all">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="overview_user_ip">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">192.168.1.200</property>
+            <property name="justify">right</property>
+            <property name="xalign">1</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">5</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkStack" id="overview_user_button_stack">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkBox" id="overview_user_new_transfer_notify_box">
+              <object class="GtkBox" id="overview_user_info_label_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">center</property>
+                <property name="margin_right">10</property>
                 <property name="spacing">6</property>
                 <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">emblem-important-symbolic</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="new_transfer_notify_label">
+                  <object class="GtkLabel" id="overview_user_info_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">New transfer request</property>
+                    <property name="justify">center</property>
+                    <property name="wrap">True</property>
+                    <property name="wrap_mode">word-char</property>
+                    <property name="width_chars">30</property>
+                    <property name="max_width_chars">30</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -146,106 +170,10 @@
                 </child>
               </object>
               <packing>
-                <property name="name">new-transfer</property>
+                <property name="name">info</property>
                 <property name="title" translatable="yes">page0</property>
               </packing>
             </child>
-            <child>
-              <object class="GtkBox" id="overview_user_connection_issue_box">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkLabel" id="overview_user_connection_issue_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Cannot connect to hostname</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="name">connection-issue</property>
-                <property name="title" translatable="yes">page1</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="connecting">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkLabel" id="overview_user_connecting_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Connecting to hostname</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="name">connecting</property>
-                <property name="title" translatable="yes">page0</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="name">clear</property>
-                <property name="title" translatable="yes">page0</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="overview_user_favorite">
-            <property name="width_request">40</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="no_show_all">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="overview_user_ip">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">192.168.1.200</property>
           </object>
           <packing>
             <property name="expand">False</property>
