@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+import os
+import subprocess
+
+if os.path.basename(os.getcwd()) != "testing":
+    print("Run this in the 'testing' folder.")
+    exit(1)
+
+os.environ["PYTHONPATH"] = os.getcwd()
+os.environ["GSETTINGS_BACKEND"] = "memory"
+
+try:
+    subprocess.call(["python3", "/usr/libexec/warp/warp.py", "test"])
+except KeyboardInterrupt:
+    exit(0)

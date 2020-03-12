@@ -59,7 +59,7 @@ class RemoteMachine(GObject.Object):
         self.need_shutdown = False
         self.connect_loop_cancelled = True
 
-        self.sort_key = self.connect_name
+        self.sort_key = self.hostname
         self.local_service_name = local_service_name
 
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)

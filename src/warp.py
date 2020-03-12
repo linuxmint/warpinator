@@ -250,7 +250,7 @@ class OverviewButton(GObject.Object):
         'need-attention': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, remote_machine):
+    def __init__(self, remote_machine, simulated=False):
         super(OverviewButton, self).__init__()
 
         self.remote_machine = remote_machine
@@ -607,10 +607,7 @@ class WarpWindow(GObject.Object):
         self.bad_save_folder_label.set_text(prefs.get_save_path())
         self.view_stack.set_visible_child_name("bad-save-folder")
 
-    def add_remote_button(self, remote_machine):
-        if len(self.user_list_box.get_children()) == 0:
-            self.view_stack.set_visible_child_name("overview")
-
+    def add_remote_button(self, remote_machine, simulated=False):
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
             self.discovery_time_out_id = 0
@@ -619,13 +616,15 @@ class WarpWindow(GObject.Object):
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
 
-        button = OverviewButton(remote_machine)
+        button = OverviewButton(remote_machine, simulated)
         button.connect("update-sort", self.sort_buttons)
         button.connect("files-dropped", self.remote_machine_files_dropped)
         button.connect("clicked", self.remote_machine_button_clicked)
         button.connect("need-attention", self._get_user_attention)
 
         self.user_list_box.add(button.button)
+
+        self.view_stack.set_visible_child_name("overview")
         self.sort_buttons()
 
     def remove_remote_button(self, remote_machine):
@@ -876,6 +875,13 @@ class WarpApplication(Gtk.Application):
 
         if self.status_icon == None:
             self.update_status_icon_from_preferences()
+
+        self.add_simulated_widgets()
+
+    def add_simulated_widgets(self):
+        if len(sys.argv) == 2 and sys.argv[1] == "test":
+            import testing
+            testing.add_simulated_widgets(w)
 
     def start_server(self, restarting=False):
         self.window.start_startup_timer(restarting)
