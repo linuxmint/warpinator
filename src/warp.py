@@ -1034,7 +1034,7 @@ class WarpApplication(Gtk.Application):
     def add_favorite_entries(self, menu):
         remote_list = self.server.list_remote_machines()
 
-        i = 0
+        available_favorites = 0
 
         if remote_list:
             sorted_machines = sorted(remote_list, key=functools.cmp_to_key(util.sort_remote_machines))
@@ -1046,19 +1046,21 @@ class WarpApplication(Gtk.Application):
                     else:
                         name = machine.hostname
                     item = Gtk.MenuItem(label=name)
-                    if machine.status != RemoteStatus.ONLINE:
+                    if machine.status == RemoteStatus.ONLINE:
+                        available_favorites += 1
+                    else:
                         item.set_sensitive(False)
                     self.attach_recent_submenu(item, machine)
                     menu.add(item)
-                    i += 1
 
         # If there is more than one proxy, add a 'send to all'
-        if i > 1:
-            item = Gtk.MenuItem(label=_("Everyone"))
+        if available_favorites > 1:
+            menu.add(Gtk.SeparatorMenuItem())
+            item = Gtk.MenuItem(label=_("Send to all above"))
             self.attach_recent_submenu(item, None)
             menu.add(item)
 
-        if i > 0:
+        if available_favorites > 0:
             menu.add(Gtk.SeparatorMenuItem())
 
         menu.show_all()
