@@ -42,6 +42,7 @@ def add_simulated_widgets(app):
             machine.set_remote_status(RemoteStatus.UNREACHABLE)
         elif status == "connecting":
             machine.set_remote_status(RemoteStatus.INIT_CONNECTING)
+            machine.emit("machine-info-changed")
         elif status == "new_op":
             machine.display_name = display_name
             machine.user_name = user_name
