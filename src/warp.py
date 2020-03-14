@@ -233,7 +233,10 @@ class OpItem(GObject.Object):
         self.op.remove_transfer()
 
     def folder_button_clicked(self, button):
-        util.open_save_folder()
+        if len(self.op.top_dir_basenames) == 1:
+            util.open_save_folder(self.op.top_dir_basenames[0])
+        else:
+            util.open_save_folder()
 
     def do_dispose(self):
         # self.remote_machine.disconnect(self.remote_machine_changed_id)

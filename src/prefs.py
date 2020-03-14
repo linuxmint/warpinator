@@ -27,13 +27,16 @@ prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 def get_port():
     return prefs_settings.get_int(PORT_KEY)
 
-def get_save_path():
+def get_save_uri():
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)
 
     if uri == "":
-        return GLib.get_home_dir()
+        uri = Gio.File.new_for_path(GLib.get_home_dir()).get_uri()
 
-    return Gio.File.new_for_uri(uri).get_path()
+    return uri
+
+def get_save_path():
+    return Gio.File.new_for_uri(get_save_uri()).get_path()
 
 def use_tray_icon():
     return prefs_settings.get_boolean(TRAY_ICON_KEY)

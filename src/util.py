@@ -97,10 +97,15 @@ def gfiletype_to_int_enum(gfiletype):
     else:
         return FileType.REGULAR
 
-def open_save_folder(widget=None, data=None):
+def open_save_folder(filename=None):
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
     try:
-        file = Gio.File.new_for_uri(prefs.get_save_path())
+        if filename:
+            abs_path = os.path.join(prefs.get_save_path(), filename)
+            file = Gio.File.new_for_path(abs_path)
+        else:
+            file = Gio.File.new_for_uri(prefs.get_save_uri())
+
         app.launch((file,), None)
     except GLib.Error as e:
         print("Could not open received files location: %s" % e.message)

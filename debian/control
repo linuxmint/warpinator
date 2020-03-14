@@ -25,6 +25,7 @@ Depends:
  python3-xapp (>= 1.6.0),
  python3-zeroconf,
  python3-grpcio (>= 1.16.0),
+ python3-protobuf (>= 3.6.1),
  ${misc:Depends},
  ${python3:Depends}
 Description: Allows simple local network file sharing.
