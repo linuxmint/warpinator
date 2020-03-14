@@ -172,7 +172,7 @@ def sort_remote_machines(am, bm):
         return +1
     elif am.recent_time > bm.recent_time:
         return -1
-    elif bm.recent_time > bm.recent_time:
+    elif bm.recent_time > am.recent_time:
         return +1
     elif am.display_name and not bm.display_name:
         return -1

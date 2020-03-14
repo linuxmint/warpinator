@@ -408,6 +408,7 @@ class WarpWindow(GObject.Object):
         self.window =self.builder.get_object("main_window")
         self.view_stack = self.builder.get_object("view_stack")
         self.menu_button = self.builder.get_object("menu_button")
+        self.overview_scrolled_window = self.builder.get_object("overview_scrolled_window")
         self.user_list_box = self.builder.get_object("user_list_box")
         self.user_list_no_search_results_label = self.builder.get_object("user_list_no_search_results_label")
         self.search_entry = self.builder.get_object("search_entry")
@@ -683,6 +684,8 @@ class WarpWindow(GObject.Object):
         self.switch_to_user_view(button.remote_machine)
 
     def _get_user_attention(self, button):
+        self.sort_buttons()
+        self.overview_scrolled_window.get_vadjustment().set_value(0)
         if not self.window.is_active():
             self.window.set_urgency_hint(True)
 
@@ -771,6 +774,8 @@ class WarpWindow(GObject.Object):
         if not self.server_restarting:
             self.view_stack.set_visible_child_name("overview")
 
+        self.current_selected_remote_machine.stamp_recent_time()
+
         # clear new op notification on overview button for the one
         # we just visited.
         buttons = self.user_list_box.get_children()
@@ -800,8 +805,15 @@ class WarpWindow(GObject.Object):
             bm = b.remote_machine
             return util.sort_remote_machines(am, bm)
 
+        def cmp_favorite(a, b):
+            ad = a._delegate
+            bd = b._delegate
+            return -1 if ad.new_ops > bd.new_ops else +1
+
         children = self.user_list_box.get_children()
-        return sorted(children, key=functools.cmp_to_key(cmp_buttons))
+        sorted_list = sorted(children, key=functools.cmp_to_key(cmp_buttons))
+        ret = sorted(sorted_list, key=functools.cmp_to_key(cmp_favorite))
+        return ret
 
     def sort_buttons(self, button=None, data=None):
         sorted_list = self.get_sorted_button_list()

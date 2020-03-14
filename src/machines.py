@@ -248,9 +248,6 @@ class RemoteMachine(GObject.Object):
 
     @util._async
     def send_files(self, uri_list):
-        self.recent_time = GLib.get_monotonic_time()
-        self.emit_machine_info_changed()
-
         op = SendOp(self.local_service_name,
                     self.connect_name,
                     self.display_name,
@@ -259,7 +256,14 @@ class RemoteMachine(GObject.Object):
         op.prepare_send_info()
 
     def update_favorite_status(self, pspec, data=None):
+        old_favorite = self.favorite
         self.favorite = prefs.get_is_favorite(self.hostname)
+
+        if old_favorite != self.favorite:
+            self.emit_machine_info_changed()
+
+    def stamp_recent_time(self):
+        self.recent_time = GLib.get_monotonic_time()
         self.emit_machine_info_changed()
 
     @util._idle
