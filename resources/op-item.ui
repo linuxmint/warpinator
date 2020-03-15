@@ -71,8 +71,8 @@
     </child>
     <child>
       <object class="GtkImage" id="transfer_mime_image">
-        <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="no_show_all">True</property>
         <property name="icon_name">video-x-generic</property>
         <property name="icon_size">5</property>
       </object>

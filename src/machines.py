@@ -54,6 +54,8 @@ class RemoteMachine(GObject.Object):
         self.avatar_surface = None
         self.transfer_ops = []
 
+        self.stub = None
+
         self.changed_source_id = 0
 
         self.need_shutdown = False
@@ -161,6 +163,9 @@ class RemoteMachine(GObject.Object):
 
     @util._async
     def send_transfer_op_request(self, op):
+        if not self.stub: # short circuit for testing widgets
+            return
+
         retry_count = 0
         def finished_cb(future):
             try:
@@ -181,7 +186,6 @@ class RemoteMachine(GObject.Object):
 
         while retry_count < MAX_UNARY_UNARY_RETRIES:
             try:
-                print("trying to call")
                 future_response = self.stub.ProcessTransferOpRequest.future(transfer_op)
                 future_response.add_done_callback(finished_cb)
                 future_response.result(timeout=5)

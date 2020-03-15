@@ -203,7 +203,7 @@ def format_time_span(seconds):
         minutes = int(seconds / 60)
         return gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
 
-    hours = seconds / (60 * 60)
+    hours = math.floor(seconds / (60 * 60))
 
     if seconds < (60 * 60 * 4):
         minutes = int((seconds - hours * 60 * 60) / 60)

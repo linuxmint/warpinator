@@ -165,6 +165,7 @@ class OpItem(GObject.Object):
             self.direction_image.set_from_icon_name("go-down-symbolic", Gtk.IconSize.LARGE_TOOLBAR)
 
         self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.LARGE_TOOLBAR)
+        self.mime_image.set_visible(self.op.status != OpStatus.CALCULATING)
         self.transfer_size_label.set_text(self.op.size_string)
         self.transfer_description_label.set_text(self.op.description)
 

@@ -25,6 +25,14 @@ class CommonOp(GObject.Object):
         self.status = OpStatus.INIT
         self.start_time = GLib.get_monotonic_time() # for sorting in the op list
 
+        self.total_size = 0
+        self.total_count = 0
+        self.size_string = "" # I'd say 'Unknown' but that might be long enough to expand the label
+        self.description = ""
+        self.name_if_single = None
+        self.mime_if_single = "application/octet-stream" # unknown
+        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
+
     def progress_report(self, report):
         self.current_progress_report = report
 
@@ -65,12 +73,6 @@ class SendOp(CommonOp):
         self.sender_name = GLib.get_real_name()
         self.receiver_name = receiver_name
 
-        self.total_size = 0
-        self.total_count = 0
-        self.size_string = "" # I'd say 'Unknown' but that might be long enough to expand the label
-        self.description = ""
-        self.mime_if_single = "application/octet-stream" # unknown
-        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
         self.resolved_files = []
         self.first_missing_file = None
 
@@ -91,11 +93,14 @@ class SendOp(CommonOp):
         self.status = OpStatus.CALCULATING
         self.emit_status_changed()
 
-        res = transfers.gather_file_info(self)
-        self.size_string = GLib.format_size(self.total_size)
-        print("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
+        success = transfers.gather_file_info(self)
+        self.update_ui_info(success)
 
-        if res:
+    def update_ui_info(self, success):
+        if success:
+            self.size_string = GLib.format_size(self.total_size)
+            print("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
+
             if self.total_count > 1:
                 # Translators: Don't need to translate singular, we show the filename if there's only one
                 self.description = gettext.ngettext("%d file",
@@ -140,15 +145,8 @@ class ReceiveOp(CommonOp):
 
          # If there's insufficient disk space, always ask for permission
          # and show a warning.
-        self.no_space = False
+        self.have_space = False
         self.existing = False
-
-        self.total_size = 0
-        self.total_count = 0
-        self.size_string = "--" # I'd say 'Unknown' but that might be long enough to expand the label
-        self.description = "--"
-        self.mime_if_single = "application/octet-stream" # unknown
-        self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
         # This is set when a transfer starts - it's a grpc.Future that we can cancel() if the user
         # wants the transfer to stop.
@@ -173,7 +171,9 @@ class ReceiveOp(CommonOp):
 
         self.have_space = util.have_free_space(self.total_size)
         self.existing = util.files_exist(self.top_dir_basenames) and prefs.prevent_overwriting()
+        self.update_ui_info()
 
+    def update_ui_info(self):
         if self.total_count > 1:
             # Translators: Don't need to translate singular, we show the filename if there's only one
             self.description = gettext.ngettext("%d file",
@@ -200,3 +200,4 @@ class ReceiveOp(CommonOp):
 
     def remove_transfer(self):
         self.emit("op-command", OpCommand.REMOVE_TRANSFER)
+
