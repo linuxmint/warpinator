@@ -345,8 +345,6 @@ class RemoteMachine(GObject.Object):
             self.cancel_transfer_op_request(op, by_sender=False)
         elif command == OpCommand.STOP_TRANSFER_BY_RECEIVER:
             self.stop_transfer_op(op, by_sender=False)
-        elif command == OpCommand.REMOVE_TRANSFER:
-            self.remove_transfer_op(op)
 
     def emit_machine_info_changed(self):
         if self.changed_source_id > 0:

@@ -105,6 +105,8 @@ class OpItem(GObject.Object):
         self.refresh_status_widgets()
         self.refresh_buttons_and_icons()
 
+        self.item._delegate = self
+
     def update_progress(self, op):
         self.op_progress_bar.set_fraction(self.op.get_progress())
         self.op_progress_bar.set_text(self.op.get_progress_text())
@@ -443,6 +445,7 @@ class WarpWindow(GObject.Object):
         self.user_online_image = self.builder.get_object("user_online_image")
         self.user_online_label = self.builder.get_object("user_online_label")
         self.user_online_spinner = self.builder.get_object("user_online_spinner")
+        self.user_clear_ops_button = self.builder.get_object("user_clear_ops_button")
 
         # Send Files button
         self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
@@ -490,6 +493,8 @@ class WarpWindow(GObject.Object):
 
         self.window.connect("focus-in-event",
                             lambda window, event: window.set_urgency_hint(False))
+
+        self.user_clear_ops_button.connect("clicked", self.clear_ops_clicked)
 
         self.update_local_user_info()
 
@@ -556,6 +561,17 @@ class WarpWindow(GObject.Object):
 
         self.server_start_timeout_id = 0
         return False
+
+    def clear_ops_clicked(self, button):
+        for op in self.current_selected_remote_machine.transfer_ops:
+            if op.status in (OpStatus.CANCELLED_PERMISSION_BY_SENDER,
+                             OpStatus.CANCELLED_PERMISSION_BY_RECEIVER,
+                             OpStatus.STOPPED_BY_SENDER,
+                             OpStatus.STOPPED_BY_RECEIVER,
+                             OpStatus.FAILED,
+                             OpStatus.FILE_NOT_FOUND,
+                             OpStatus.FINISHED):
+                op.remove_transfer()
 
     def recent_item_selected(self, recent_chooser, data=None):
         uri = self.recent_menu.get_current_uri()
@@ -710,8 +726,14 @@ class WarpWindow(GObject.Object):
 
         remote = self.current_selected_remote_machine
 
+        try:
+            remote.disconnect_by_func(self.current_selected_remote_status_changed)
+        except TypeError:
+            pass
+
         remote.connect("remote-status-changed",
                        self.current_selected_remote_status_changed)
+
         self.current_selected_remote_status_changed(remote)
 
         self.user_display_name_label.set_text(remote.display_name)

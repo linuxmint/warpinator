@@ -59,6 +59,7 @@ def add_simulated_widgets(app):
         machine = machines.RemoteMachine(name, hostname, ip, port, local_machine.service_name)
 
         local_machine.remote_machines[name] = machine
+        machine.connect("ops-changed", local_machine.remote_ops_changed)
         app.window.add_remote_button(machine, simulated=True)
 
         if status == RemoteStatus.ONLINE:
