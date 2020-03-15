@@ -7,6 +7,11 @@ import util
 import transfers
 from util import RemoteStatus, OpStatus, FileType
 
+# we're using memory-backed gsettings (so we can mess with favorites without polluting our own user settings with garbage),
+# so we need to enable the gtk inspector for the process.
+gtk_settings = Gio.Settings(schema_id="org.gtk.Settings.Debug")
+gtk_settings.set_boolean("enable-inspector-keybinding", True)
+gtk_settings.set_boolean("inspector-warning", False)
 
 TEST_REMOTES = [
 # display_name,dscvry_name,user_name,  hostname,       ip address,   port,    status,  num_ops
