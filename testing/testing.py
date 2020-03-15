@@ -38,6 +38,7 @@ TEST_OPS = [
 ["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 100, 2000000, 5, "Luke Skywalker", "Han Solo", None, None],
 ["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 1001, 2000000, 5, "Luke Skywalker", "Han Solo", None, None],
 ["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 1005, 50000000, 5, "Luke Skywalker", "Hikaru Sulu", None, None],
+["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 100544, 10000, 1, "Luke Skywalker", "Hikaru Sulu", "saber-tips.pdf", None],
 ["receive", "test9", "test2", OpStatus.TRANSFERRING, 1040, 100000000, 20, "Jean Luc Picard", "Luke Skywalker", None, None],
 ["send", "test9", "test2", OpStatus.TRANSFERRING, 10403, 100000000, 20, "Luke Skywalker", "Dark Vader", None, None],
 ["receive", "test11", "test2", OpStatus.STOPPED_BY_RECEIVER, 1050, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "flying-tips.pdf", None],
@@ -100,12 +101,13 @@ def add_ops(machine):
         if op_type == "send":
             op = ops.SendOp(sender=sender, receiver=receiver, receiver_name=receiver_disp_name, uris=[])
             machine.add_op(op)
-            f = transfers.File("dummy", "fixme", "fixme", 50, FileType.REGULAR, None)
+            f = transfers.File(name_if_single, name_if_single, "fixme", 50, FileType.REGULAR, None)
 
-            op.top_dir_basenames = ["foo", "bar"]
+            op.top_dir_basenames = [name_if_single, "bar"]
             op.resolved_files = [f]
             op.total_size = size
             op.total_count = count
+            op.first_missing_file = name_if_single
             op.name_if_single = name_if_single
             op.mime_if_single, uncertainty = Gio.content_type_guess (op.name_if_single, None)
 

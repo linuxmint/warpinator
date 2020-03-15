@@ -151,10 +151,12 @@ class OpItem(GObject.Object):
         elif self.op.status == OpStatus.FAILED:
             self.op_transfer_status_message.set_text(_("Transfer failed"))
         elif self.op.status == OpStatus.FILE_NOT_FOUND:
+            self.op_transfer_problem_label.show()
+            self.op_transfer_status_message.set_text(_("Transfer failed"))
             if self.op.first_missing_file != None:
-                self.op_transfer_status_message.set_text(_("Transfer failed (file '%s' not found)") % self.op.first_missing_file)
+                self.op_transfer_problem_label.set_text(_("File '%s' not found") % self.op.first_missing_file)
             else:
-                self.op_transfer_status_message.set_text(_("Transfer failed (one or more files not found)"))
+                self.op_transfer_problem_label.set_text(_("Some files not found"))
         elif self.op.status == OpStatus.FINISHED:
             self.op_transfer_status_message.set_text(_("Completed"))
 
@@ -164,8 +166,11 @@ class OpItem(GObject.Object):
         else:
             self.direction_image.set_from_icon_name("go-down-symbolic", Gtk.IconSize.LARGE_TOOLBAR)
 
-        self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.LARGE_TOOLBAR)
-        self.mime_image.set_visible(self.op.status != OpStatus.CALCULATING)
+        if self.op.status == OpStatus.CALCULATING:
+            self.mime_image.clear()
+        else:
+            self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.LARGE_TOOLBAR)
+
         self.transfer_size_label.set_text(self.op.size_string)
         self.transfer_description_label.set_text(self.op.description)
 
