@@ -66,7 +66,7 @@ TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_FILE_NOT_FOUND_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
 
-class OpItem(GObject.Object):
+class OpItem(object):
     def __init__(self, op):
         super(OpItem, self).__init__()
         self.op = op
@@ -104,8 +104,6 @@ class OpItem(GObject.Object):
 
         self.refresh_status_widgets()
         self.refresh_buttons_and_icons()
-
-        self.item._delegate = self
 
     def update_progress(self, op):
         self.op_progress_bar.set_fraction(self.op.get_progress())
@@ -246,12 +244,15 @@ class OpItem(GObject.Object):
         else:
             util.open_save_folder()
 
-    def do_dispose(self):
-        # self.remote_machine.disconnect(self.remote_machine_changed_id)
-        # self.remote_machine_changed_id = 0
-
-        print("(dispose) Disconnecting op row from TransferOp")
-        GObject.Object.do_dispose(self)
+    def destroy(self):
+        self.builder = None
+        self.item.get_parent().destroy()
+        self.item = None
+        try:
+            self.op.disconnect_by_func(self.update_progress)
+        except:
+            pass
+        self.op = None
 
 class OverviewButton(GObject.Object):
     __gsignals__ = {
@@ -398,6 +399,11 @@ class OverviewButton(GObject.Object):
             self.remote_machine.disconnect(self.remote_machine_changed_id)
             self.remote_machine_changed_id = 0
 
+        # remove circular refs
+        self.button.remote_machine = None
+        self.button.connect_name = None
+        self.button._delegate = None
+
         print("(dispose) Disconnecting overview remote button from RemoteMachine")
         GObject.Object.do_dispose(self)
 
@@ -412,6 +418,7 @@ class WarpWindow(GObject.Object):
         self.current_selected_remote_machine = None
         self.drop_pending = False
         self.window_close_handler_id = 0
+        self.selected_op_items = {}
 
         # overview
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "main-window.ui"))
@@ -788,8 +795,10 @@ class WarpWindow(GObject.Object):
             self.user_online_spinner.show()
 
     def clear_user_view(self):
-        for item in self.user_op_list:
+        for item in self.selected_op_items.values():
             item.destroy()
+
+        self.selected_op_items = {}
 
     def add_op_items(self):
         self.clear_user_view()
@@ -803,7 +812,9 @@ class WarpWindow(GObject.Object):
         ops.reverse()
 
         for op in ops:
-            self.user_op_list.add(OpItem(op).item)
+            op_item = OpItem(op)
+            self.selected_op_items[op.start_time] = op_item
+            self.user_op_list.add(op_item.item)
 
     def back_to_overview(self, button=None, data=None):
         if not self.server_restarting:
