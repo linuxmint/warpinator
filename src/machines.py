@@ -23,13 +23,8 @@ _ = gettext.gettext
 #typedef
 void = warp_pb2.VoidType()
 
-if os.environ.get('https_proxy'):
-    del os.environ['https_proxy']
-if os.environ.get('http_proxy'):
-    del os.environ['http_proxy']
-
-MAX_UNARY_UNARY_RETRIES = 2
 MAX_CONNECT_RETRIES = 2
+
 # client
 class RemoteMachine(GObject.Object):
     __gsignals__ = {
@@ -166,14 +161,6 @@ class RemoteMachine(GObject.Object):
         if not self.stub: # short circuit for testing widgets
             return
 
-        retry_count = 0
-        def finished_cb(future):
-            try:
-                future.result(timeout=1)
-                print("finished ok")
-            except Exception as e:
-                print("did not finish ok", e)
-
         transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(connect_name=op.sender,
                                                                       timestamp=op.start_time),
                                                  sender_name=op.sender_name,
@@ -184,17 +171,7 @@ class RemoteMachine(GObject.Object):
                                                  mime_if_single=op.mime_if_single,
                                                  top_dir_basenames=op.top_dir_basenames)
 
-        while retry_count < MAX_UNARY_UNARY_RETRIES:
-            try:
-                future_response = self.stub.ProcessTransferOpRequest.future(transfer_op)
-                future_response.add_done_callback(finished_cb)
-                future_response.result(timeout=5)
-                break
-            except grpc.FutureTimeoutError:
-                if future_response.cancel():
-                    print("Timed out, trying again in 5 seconds")
-                    retry_count += 1
-                    time.sleep(5)
+        self.stub.ProcessTransferOpRequest(transfer_op)
 
     @util._async
     def cancel_transfer_op_request(self, op, by_sender=False):
@@ -494,7 +471,6 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         remote_machines = list(self.remote_machines.values())
         for machine in remote_machines:
             self.remove_service(self.zeroconf, None, machine.connect_name)
-            # machine.shutdown()
 
         remote_machines = None
 

@@ -157,7 +157,7 @@ def get_local_name():
     local_name = "%s@%s" % (GLib.get_user_name(), GLib.get_host_name())
     real_name = GLib.get_real_name()
     if real_name is not None and real_name != "" and real_name != "Unknown":
-        # according to glib's doc, it can actually return "Unkown"..
+        # according to glib's doc, it can actually return "Unknown"
         local_name = "%s - %s" % (real_name, local_name)
     return local_name
 
@@ -238,7 +238,6 @@ def get_global_scale_factor():
 
 class CairoSurfaceLoader(GObject.Object):
     __gsignals__ = {
-        # 'surface-ready': (GObject.SignalFlags.RUN_LAST, None, (cairo.Surface,))
         'error': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 

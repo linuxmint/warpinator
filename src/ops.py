@@ -27,7 +27,7 @@ class CommonOp(GObject.Object):
 
         self.total_size = 0
         self.total_count = 0
-        self.size_string = "" # I'd say 'Unknown' but that might be long enough to expand the label
+        self.size_string = ""
         self.description = ""
         self.name_if_single = None
         self.mime_if_single = "application/octet-stream" # unknown
@@ -144,7 +144,7 @@ class ReceiveOp(CommonOp):
         self.receiver_name = GLib.get_real_name()
 
          # If there's insufficient disk space, always ask for permission
-         # and show a warning.
+         # If we're overwriting, there's a preference to check whether we need to ask or not.
         self.have_space = False
         self.existing = False
 

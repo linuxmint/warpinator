@@ -1100,7 +1100,7 @@ class WarpApplication(Gtk.Application):
                     self.attach_recent_submenu(item, machine)
                     menu.add(item)
 
-        # If there is more than one proxy, add a 'send to all'
+        # If there is more than one online remote, add a 'send to all'
         if available_favorites > 1:
             menu.add(Gtk.SeparatorMenuItem())
             item = Gtk.MenuItem(label=_("Send to all above"))
