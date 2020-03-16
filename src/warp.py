@@ -940,8 +940,6 @@ class WarpApplication(Gtk.Application):
         if self.status_icon == None:
             self.update_status_icon_from_preferences()
 
-        self.add_simulated_widgets()
-
     def add_simulated_widgets(self):
         if len(sys.argv) == 2 and sys.argv[1] == "test":
             import testing
@@ -1029,6 +1027,7 @@ class WarpApplication(Gtk.Application):
 
     def _server_started(self, local_machine):
         self.window.notify_server_started()
+        self.add_simulated_widgets()
 
     def update_inhibitor_state(self, local_machine):
         any_active_ops = False
