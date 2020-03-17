@@ -911,7 +911,7 @@ class WarpApplication(Gtk.Application):
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
-        print("Initializing Warp on %s\n" % util.get_ip())
+        print("Initializing Warp\n")
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
 
@@ -929,6 +929,9 @@ class WarpApplication(Gtk.Application):
         self.try_activation()
 
     def try_activation(self):
+        self.window.start_startup_timer(restarting=False)
+        self.window.update_local_user_info()
+
         try:
             self.save_folder_monitor.cancel()
             self.save_folder_monitor = None
@@ -952,10 +955,26 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
             return
 
+        if util.get_ip() == "0.0.0.0":
+            print("No ip address - check your network connection.")
+            GLib.timeout_add_seconds(5, self.recheck_ip_address)
+            return
+
+        print("Starting server on %s\n" % util.get_ip())
         self.start_server(restarting=False)
 
         if self.status_icon == None:
             self.update_status_icon_from_preferences()
+
+    def recheck_ip_address(self):
+        if util.get_ip() == "0.0.0.0":
+            print("Still no network...")
+            return GLib.SOURCE_CONTINUE
+
+        print("Connected to a network")
+        GLib.idle_add(self.try_activation)
+
+        return GLib.SOURCE_REMOVE
 
     def add_simulated_widgets(self):
         if len(sys.argv) == 2 and sys.argv[1] == "test":

@@ -147,7 +147,11 @@ def check_ml(fid):
 
 def get_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-        s.connect(("8.8.8.8", 80))
+        try:
+            s.connect(("8.8.8.8", 80))
+        except OSError as e:
+            print("Unable to retrieve IP address: %s" % str(e))
+            return "0.0.0.0"
         ans = s.getsockname()[0]
         return ans
 
