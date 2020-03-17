@@ -2,6 +2,8 @@ import gettext
 
 from gi.repository import GObject, GLib, Gio
 
+import grpc
+
 import transfers
 import prefs
 import util
