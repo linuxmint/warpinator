@@ -120,6 +120,8 @@ class OpItem(object):
     def refresh_status_widgets(self):
         self.op_transfer_problem_label.hide()
 
+        self.item.set_tooltip_text(self.op.error_msg)
+
         if self.op.status == OpStatus.TRANSFERRING:
             self.op_progress_bar.set_fraction(self.op.get_progress())
             self.op_progress_bar.set_text(self.op.get_progress_text())

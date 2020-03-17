@@ -33,6 +33,8 @@ class CommonOp(GObject.Object):
         self.mime_if_single = "application/octet-stream" # unknown
         self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
+        self.error_msg = ""
+
         self.progress_tracker = None
 
     def progress_report(self, report):
@@ -56,6 +58,18 @@ class CommonOp(GObject.Object):
             return self.current_progress_report.progress
         except AttributeError:
             return 0
+
+    def set_error(self, e=None):
+        if e == None:
+            self.error_msg = ""
+            return
+
+        if isinstance(e, GLib.Error):
+            self.error_msg = e.message
+        elif isinstance(e, grpc.RpcError):
+            self.error_msg = e.details()
+        else:
+            self.error_msg = str(e)
 
     @util._idle
     def emit_initial_setup_complete(self):
@@ -95,11 +109,12 @@ class SendOp(CommonOp):
         self.status = OpStatus.CALCULATING
         self.emit_status_changed()
 
-        success = transfers.gather_file_info(self)
-        self.update_ui_info(success)
+        error = transfers.gather_file_info(self)
 
-    def update_ui_info(self, success):
-        if success:
+        self.update_ui_info(error)
+
+    def update_ui_info(self, error):
+        if error == None:
             self.size_string = GLib.format_size(self.total_size)
             print("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
 
@@ -113,10 +128,17 @@ class SendOp(CommonOp):
                 self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
             self.set_status(OpStatus.WAITING_PERMISSION)
-        elif self.status == OpStatus.FILE_NOT_FOUND:
-            self.description = ""
-            self.first_missing_file = self.top_dir_basenames[-1]
-            self.gicon = Gio.ThemedIcon.new("dialog-error-symbolic")
+        else:
+            if isinstance(error, GLib.Error) and error.code == Gio.IOErrorEnum.NOT_FOUND:
+                self.status = OpStatus.FILE_NOT_FOUND
+                self.description = ""
+                self.error_msg = ""
+                self.first_missing_file = self.top_dir_basenames[-1]
+                self.gicon = Gio.ThemedIcon.new("dialog-error-symbolic")
+            else:
+                self.status = OpStatus.FAILED_UNRECOVERABLE
+                self.description = ""
+                self.set_error(error)
 
         self.emit_initial_setup_complete()
         self.emit_status_changed()

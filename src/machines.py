@@ -197,17 +197,35 @@ class RemoteMachine(GObject.Object):
 
         op.file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
                                                                    connect_name=self.local_service_name))
+
+        def report_receive_error(error):
+            op.set_error(error)
+
+            try:
+                # If we leave an io stream open, it locks the location.  For instance,
+                # if this was a mounted location, we wouldn't be able to terminate until
+                # we closed warp.
+                receiver.current_stream.close()
+            except GLib.Error:
+                pass
+
+            print("An error occurred receiving data from %s: %s" % (op.sender, op.error_msg))
+            op.set_status(OpStatus.FAILED)
+            op.stop_transfer()
+
         try:
             for data in op.file_iterator:
                 receiver.receive_data(data)
         except grpc.RpcError:
             if op.file_iterator.code() == grpc.StatusCode.CANCELLED:
-                return
-            else:
-                print("An error occurred receiving data from %s: %s" % (op.sender, op.file_iterator.details()))
-                op.set_status(OpStatus.FAILED)
                 op.file_iterator = None
                 return
+            else:
+                report_receive_error(op.file_iterator)
+                return
+        except Exception as e:
+            report_receive_error(e)
+            return
 
         op.file_iterator = None
         receiver.receive_finished()
@@ -231,18 +249,25 @@ class RemoteMachine(GObject.Object):
             # but just failed.
             if not lost_connection:
                 print("stop transfer initiated by sender")
-                op.set_status(OpStatus.STOPPED_BY_SENDER)
+                if op.error_msg == "":
+                    op.set_status(OpStatus.STOPPED_BY_SENDER)
+                else:
+                    op.set_status(OpStatus.FAILED)
         else:
             op.file_iterator.cancel()
             if not lost_connection:
                 print("stop transfer initiated by receiver")
-                op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+                if op.error_msg == "":
+                    op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+                else:
+                    op.set_status(OpStatus.FAILED)
 
         if not lost_connection:
             # We don't need to send this if it's a connection loss, the other end will handle
             # its own cleanup.
-            self.stub.StopTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                   connect_name=name))
+            opinfo = warp_pb2.OpInfo(timestamp=op.start_time,
+                                     connect_name=name)
+            self.stub.StopTransfer(warp_pb2.StopInfo(info=opinfo, error=op.error_msg != ""))
 
     @util._async
     def send_files(self, uri_list):
@@ -313,9 +338,11 @@ class RemoteMachine(GObject.Object):
         if self.status in (RemoteStatus.OFFLINE, RemoteStatus.UNREACHABLE):
             for op in self.transfer_ops:
                 if op.status == OpStatus.TRANSFERRING:
+                    op.error_msg = _("Connection has been lost")
                     self.stop_transfer_op(op, isinstance(op, SendOp), lost_connection=True)
                     op.set_status(OpStatus.FAILED)
                 elif op.status in (OpStatus.WAITING_PERMISSION, OpStatus.CALCULATING, OpStatus.PAUSED):
+                    op.error_msg = _("Connection has been lost")
                     op.set_status(OpStatus.FAILED_UNRECOVERABLE)
 
     @util._idle
@@ -568,43 +595,61 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
 
     # receiver server responders
     def StartTransfer(self, request, context):
-        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
+        start_time = GLib.get_monotonic_time()
 
+        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
         cancellable = threading.Event()
         op.file_send_cancellable = cancellable
 
-        start_time = GLib.get_monotonic_time()
-
-        def transfer_done():
-            if op.file_send_cancellable.is_set():
-                print("File send cancelled")
-            else:
-                print("Transfer of %s files (%s) finished in %s" % \
-                    (op.total_count, GLib.format_size(op.total_size),\
-                     util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
-            op.file_send_cancellable = None
-
-        context.add_callback(transfer_done)
         op.set_status(OpStatus.TRANSFERRING)
 
         op.progress_tracker = transfers.OpProgressTracker(op)
         op.current_progress_report = None
         sender = transfers.FileSender(op, self.service_name, request.timestamp, cancellable)
+
+        def transfer_done():
+            if sender.error != None:
+                op.set_error(sender.error)
+                op.stop_transfer()
+                op.set_status(OpStatus.FAILED_UNRECOVERABLE)
+            elif op.file_send_cancellable.is_set():
+                print("File send cancelled")
+            else:
+                print("Transfer of %s files (%s) finished in %s" % \
+                    (op.total_count, GLib.format_size(op.total_size),\
+                     util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
+
+        context.add_callback(transfer_done)
         return sender.read_chunks()
 
-    def StopTransfer(self, request, context):### good
-        op = self.remote_machines[request.connect_name].lookup_op(request.timestamp)
+    def StopTransfer(self, request, context):
+        op = self.remote_machines[request.info.connect_name].lookup_op(request.info.timestamp)
 
         # If we receive this call, this means the op was stopped remotely.  So,
         # our op with TO_REMOTE_MACHINE (we initiated it) was cancelled by the recipient.
+
+        if request.error:
+            op.error_msg = _("An error occurred on the remote machine")
+
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             op.file_send_cancellable.set()
             print("Sender received stop transfer by receiver")
-            op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+            if op.error_msg == "":
+                op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+            else:
+                op.set_status(OpStatus.FAILED)
         else:
-            op.file_iterator.cancel()
+            try:
+                op.file_iterator.cancel()
+            except AttributeError:
+                # we may not have this yet if the transfer fails upon the initial response
+                # (meaning we haven't returned the generator)
+                pass
             print("Receiver received stop transfer by sender")
-            op.set_status(OpStatus.STOPPED_BY_SENDER)
+            if op.error_msg == "":
+                op.set_status(OpStatus.STOPPED_BY_SENDER)
+            else:
+                op.set_status(OpStatus.FAILED)
 
         return void
 

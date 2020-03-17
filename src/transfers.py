@@ -33,6 +33,13 @@ def load_file_in_chunks(path):
 
     stream.close()
 
+def make_symbolic_link(op, path, target):
+    tmppath = os.path.join(os.path.dirname(path), "%s-%d-%d.tmp" % (op.sender, op.start_time, GLib.get_monotonic_time()))
+    tmpfile = Gio.File.new_for_path(tmppath)
+
+    tmpfile.make_symbolic_link(target, None)
+    os.replace(tmpfile.get_path(), path)
+
 # This represents a file to be transferred (this is used by the sender)
 class File:
     def __init__(self, uri, basename, rel_path, size, file_type, symlink_target_path=None):
@@ -51,6 +58,8 @@ class FileSender(GObject.Object):
         self.timestamp = timestamp
         self.cancellable = cancellable
 
+        self.error = None
+
     def read_chunks(self):
         for file in self.op.resolved_files:
             if self.cancellable.is_set():
@@ -64,28 +73,42 @@ class FileSender(GObject.Object):
                                          file_type=file.file_type,
                                          symlink_target=file.symlink_target_path)
             else:
-                gfile = Gio.File.new_for_uri(file.uri)
-                stream = gfile.read(None)
+                stream = None
 
-                last_size_read = 1
+                try:
+                    gfile = Gio.File.new_for_uri(file.uri)
+                    stream = gfile.read(None)
 
-                while True:
-                    if last_size_read == 0:
-                        break
+                    last_size_read = 1
 
-                    if self.cancellable.is_set():
-                        return
+                    while True:
+                        if last_size_read == 0:
+                            break
 
-                    b = stream.read_bytes(util.CHUNK_SIZE, None)
-                    last_size_read = b.get_size()
-                    self.op.progress_tracker.update_progress(last_size_read)
+                        if self.cancellable.is_set():
+                            return
 
-                    yield warp_pb2.FileChunk(relative_path=file.relative_path,
-                                             file_type=file.file_type,
-                                             chunk=b.get_data())
+                        b = stream.read_bytes(util.CHUNK_SIZE, None)
+                        last_size_read = b.get_size()
+                        self.op.progress_tracker.update_progress(last_size_read)
 
-                stream.close()
-                continue
+                        yield warp_pb2.FileChunk(relative_path=file.relative_path,
+                                                 file_type=file.file_type,
+                                                 chunk=b.get_data())
+
+                    stream.close()
+                    continue
+                except Exception as e:
+                    try:
+                        # If we leave an io stream open, it locks the location.  For instance,
+                        # if this was a mounted location, we wouldn't be able to terminate until
+                        # we closed warp.
+                        stream.close()
+                    except GLib.Error:
+                        pass
+
+                    self.error = e
+                    return
 
         self.op.progress_tracker.finished()
 
@@ -116,9 +139,7 @@ class FileReceiver(GObject.Object):
             os.makedirs(path, exist_ok=True)
         elif s.file_type == FileType.SYMBOLIC_LINK:
             absolute_symlink_target_path = os.path.join(save_path, s.symlink_target)
-
-            file = Gio.File.new_for_path(path)
-            file.make_symbolic_link(absolute_symlink_target_path, None)
+            make_symbolic_link(self.op, path, absolute_symlink_target_path)
         else:
             if not self.current_gfile:
                 self.current_gfile = Gio.File.new_for_path(path)
@@ -177,7 +198,7 @@ def gather_file_info(op):
         top_dir_basenames = []
         uri_list = op.uris
 
-        fail = False
+        error = None
 
         if len(uri_list) == 1:
             infos = FILE_INFOS_SINGLE_FILE
@@ -214,10 +235,8 @@ def gather_file_info(op):
             try:
                 info = file.query_info(infos, Gio.FileQueryInfoFlags.NONE, None)
             except GLib.Error as e:
-                if e.code == Gio.IOErrorEnum.NOT_FOUND:
-                    op.status = OpStatus.FILE_NOT_FOUND
-                    fail = True
-                    break
+                error = e
+                break
             basename = file.get_basename()
             if len(uri_list) == 1:
                 op.mime_if_single = info.get_content_type()
@@ -232,7 +251,7 @@ def gather_file_info(op):
 
         op.top_dir_basenames = top_dir_basenames
 
-        return not fail
+        return error
 
 class Progress():
     def __init__(self, progress, time_left_sec, bytes_per_sec):
