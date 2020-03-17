@@ -24,6 +24,7 @@ _ = gettext.gettext
 void = warp_pb2.VoidType()
 
 MAX_CONNECT_RETRIES = 2
+PING_TIME = 5
 
 # client
 class RemoteMachine(GObject.Object):
@@ -70,10 +71,7 @@ class RemoteMachine(GObject.Object):
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def keep_channel():
-            with grpc.insecure_channel("%s:%d" % (self.ip_address, self.port),
-                                       options=[('grpc.enable_retries', 0),
-                                                ('grpc.keepalive_timeout_ms', 10000)
-                                               ]) as channel:
+            with grpc.insecure_channel("%s:%d" % (self.ip_address, self.port)) as channel:
 
                 future = grpc.channel_ready_future(channel)
 
@@ -87,7 +85,7 @@ class RemoteMachine(GObject.Object):
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
                             print("channel ready timeout, waiting 10s")
-                            time.sleep(10)
+                            time.sleep(PING_TIME)
                             connect_retries += 1
                             continue
                         else:
@@ -109,7 +107,7 @@ class RemoteMachine(GObject.Object):
                             one_ping = False
                             self.set_remote_status(RemoteStatus.UNREACHABLE)
 
-                    time.sleep(10)
+                    time.sleep(PING_TIME)
                 return False
 
         while keep_channel():
@@ -190,6 +188,10 @@ class RemoteMachine(GObject.Object):
     #### RECEIVER COMMANDS ####
     @util._async
     def start_transfer_op(self, op):
+        start_time = GLib.get_monotonic_time()
+
+        op.progress_tracker = transfers.OpProgressTracker(op)
+        op.current_progress_report = None
         receiver = transfers.FileReceiver(op)
         op.set_status(OpStatus.TRANSFERRING)
 
@@ -203,29 +205,44 @@ class RemoteMachine(GObject.Object):
                 return
             else:
                 print("An error occurred receiving data from %s: %s" % (op.sender, op.file_iterator.details()))
+                op.set_status(OpStatus.FAILED)
+                op.file_iterator = None
+                return
 
         op.file_iterator = None
         receiver.receive_finished()
+
+        print("Receipt of %s files (%s) finished in %s" % \
+              (op.total_count, GLib.format_size(op.total_size),\
+               util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
+
         op.set_status(OpStatus.FINISHED)
 
     @util._async
-    def stop_transfer_op(self, op, by_sender=False):
+    def stop_transfer_op(self, op, by_sender=False, lost_connection=False):
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
         else:
             name = self.local_service_name
 
         if by_sender:
-            print("stop transfer initiated by sender")
             op.file_send_cancellable.set()
-            op.set_status(OpStatus.STOPPED_BY_SENDER)
+            # If we stopped due to connection error, we don't want the message to be 'stopped by xx',
+            # but just failed.
+            if not lost_connection:
+                print("stop transfer initiated by sender")
+                op.set_status(OpStatus.STOPPED_BY_SENDER)
         else:
-            print("stop transfer initiated by receiver")
             op.file_iterator.cancel()
-            op.set_status(OpStatus.STOPPED_BY_RECEIVER)
+            if not lost_connection:
+                print("stop transfer initiated by receiver")
+                op.set_status(OpStatus.STOPPED_BY_RECEIVER)
 
-        self.stub.StopTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
-                                               connect_name=name))
+        if not lost_connection:
+            # We don't need to send this if it's a connection loss, the other end will handle
+            # its own cleanup.
+            self.stub.StopTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
+                                                   connect_name=name))
 
     @util._async
     def send_files(self, uri_list):
@@ -295,11 +312,11 @@ class RemoteMachine(GObject.Object):
     def cancel_ops_if_offline(self):
         if self.status in (RemoteStatus.OFFLINE, RemoteStatus.UNREACHABLE):
             for op in self.transfer_ops:
-                if op.status in (OpStatus.FAILED, OpStatus.WAITING_PERMISSION):
-                    if isinstance(op, SendOp):
-                        op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER)
-                    else:
-                        op.set_status(OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
+                if op.status == OpStatus.TRANSFERRING:
+                    self.stop_transfer_op(op, isinstance(op, SendOp), lost_connection=True)
+                    op.set_status(OpStatus.FAILED)
+                elif op.status in (OpStatus.WAITING_PERMISSION, OpStatus.CALCULATING, OpStatus.PAUSED):
+                    op.set_status(OpStatus.FAILED_UNRECOVERABLE)
 
     @util._idle
     def op_command_issued(self, op, command):
@@ -559,18 +576,19 @@ class LocalMachine(warp_pb2_grpc.WarpServicer, GObject.Object):
         start_time = GLib.get_monotonic_time()
 
         def transfer_done():
-
-            print("Transfer of %s files (%s) finished in %s" % \
-                (op.total_count, GLib.format_size(op.total_size),\
-                 util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
-
             if op.file_send_cancellable.is_set():
                 print("File send cancelled")
+            else:
+                print("Transfer of %s files (%s) finished in %s" % \
+                    (op.total_count, GLib.format_size(op.total_size),\
+                     util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
             op.file_send_cancellable = None
 
         context.add_callback(transfer_done)
         op.set_status(OpStatus.TRANSFERRING)
 
+        op.progress_tracker = transfers.OpProgressTracker(op)
+        op.current_progress_report = None
         sender = transfers.FileSender(op, self.service_name, request.timestamp, cancellable)
         return sender.read_chunks()
 

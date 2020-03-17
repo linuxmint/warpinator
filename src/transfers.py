@@ -51,8 +51,6 @@ class FileSender(GObject.Object):
         self.timestamp = timestamp
         self.cancellable = cancellable
 
-        self.progress_tracker = OpProgressTracker(op)
-
     def read_chunks(self):
         for file in self.op.resolved_files:
             if self.cancellable.is_set():
@@ -80,7 +78,7 @@ class FileSender(GObject.Object):
 
                     b = stream.read_bytes(util.CHUNK_SIZE, None)
                     last_size_read = b.get_size()
-                    self.progress_tracker.update_progress(last_size_read)
+                    self.op.progress_tracker.update_progress(last_size_read)
 
                     yield warp_pb2.FileChunk(relative_path=file.relative_path,
                                              file_type=file.file_type,
@@ -89,7 +87,7 @@ class FileSender(GObject.Object):
                 stream.close()
                 continue
 
-        self.progress_tracker.finished()
+        self.op.progress_tracker.finished()
 
 
 class FileReceiver(GObject.Object):
@@ -97,8 +95,6 @@ class FileReceiver(GObject.Object):
         super(FileReceiver, self).__init__()
         self.save_path = prefs.get_save_path()
         self.op = op
-
-        self.progress_tracker = OpProgressTracker(op)
 
         self.current_path = None
         self.current_gfile = None
@@ -135,10 +131,10 @@ class FileReceiver(GObject.Object):
                 return
 
             self.current_stream.write_bytes(GLib.Bytes(s.chunk), None)
-            self.progress_tracker.update_progress(length)
+            self.op.progress_tracker.update_progress(length)
 
     def receive_finished(self):
-        self.progress_tracker.finished()
+        self.op.progress_tracker.finished()
 
 
 def add_file(op, basename, uri, base_uri, info):

@@ -58,7 +58,9 @@ TRANSFER_SENDING_BUTTONS = ("transfer_stop",)
 TRANSFER_RECEIVING_BUTTONS = ("transfer_stop",)
 TRANSFER_PAUSED_SENDING_BUTTONS = ("transfer_resume", "transfer_stop")
 TRANSFER_PAUSED_RECEIVING_BUTTONS = ()
-TRANSFER_FAILED_BUTTONS = ("transfer_restart", "transfer_remove")
+TRANSFER_FAILED_SENDING_BUTTONS = ("transfer_restart", "transfer_remove")
+TRANSFER_FAILED_UNRECOVERABLE_BUTTONS = ("transfer_remove",)
+TRANSFER_FAILED_RECEIVING_BUTTONS = TRANSFER_FAILED_UNRECOVERABLE_BUTTONS
 TRANSFER_STOPPED_BY_SENDER_BUTTONS = ("transfer_restart", "transfer_remove")
 TRANSFER_STOPPED_BY_RECEIVER_BUTTONS = ("transfer_remove",)
 TRANSFER_CANCELLED_BUTTONS = ("transfer_remove",)
@@ -148,7 +150,7 @@ class OpItem(object):
             self.op_transfer_status_message.set_text(_("Transfer cancelled by %s") % self.op.sender_name)
         elif (self.op.status == OpStatus.STOPPED_BY_RECEIVER and isinstance(self.op, SendOp)):
             self.op_transfer_status_message.set_text(_("Transfer cancelled by %s") % self.op.receiver_name)
-        elif self.op.status == OpStatus.FAILED:
+        elif self.op.status in (OpStatus.FAILED, OpStatus.FAILED_UNRECOVERABLE):
             self.op_transfer_status_message.set_text(_("Transfer failed"))
         elif self.op.status == OpStatus.FILE_NOT_FOUND:
             self.op_transfer_problem_label.show()
@@ -196,8 +198,14 @@ class OpItem(object):
             else:
                 self.set_visible_buttons(TRANSFER_PAUSED_RECEIVING_BUTTONS)
         elif self.op.status == OpStatus.FAILED:
+            if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
+                self.set_visible_buttons(TRANSFER_FAILED_SENDING_BUTTONS)
+            else:
+                self.set_visible_buttons(TRANSFER_FAILED_RECEIVING_BUTTONS)
             self.op_status_stack.set_visible_child_name("message")
-            self.set_visible_buttons(TRANSFER_FAILED_BUTTONS)
+        elif self.op.status == OpStatus.FAILED_UNRECOVERABLE:
+            self.set_visible_buttons(TRANSFER_FAILED_UNRECOVERABLE_BUTTONS)
+            self.op_status_stack.set_visible_child_name("message")
         elif self.op.status == OpStatus.FILE_NOT_FOUND:
             self.op_status_stack.set_visible_child_name("message")
             self.set_visible_buttons(TRANSFER_FILE_NOT_FOUND_BUTTONS)
@@ -576,6 +584,7 @@ class WarpWindow(GObject.Object):
                              OpStatus.STOPPED_BY_SENDER,
                              OpStatus.STOPPED_BY_RECEIVER,
                              OpStatus.FAILED,
+                             OpStatus.FAILED_UNRECOVERABLE,
                              OpStatus.FILE_NOT_FOUND,
                              OpStatus.FINISHED):
                 op.remove_transfer()
@@ -794,6 +803,8 @@ class WarpWindow(GObject.Object):
             self.user_online_image.hide()
             self.user_online_spinner.show()
 
+        self.sync_buttons_enabled()
+
     def clear_user_view(self):
         for item in self.selected_op_items.values():
             item.destroy()
@@ -815,6 +826,12 @@ class WarpWindow(GObject.Object):
             op_item = OpItem(op)
             self.selected_op_items[op.start_time] = op_item
             self.user_op_list.add(op_item.item)
+
+        self.sync_buttons_enabled()
+
+    def sync_buttons_enabled(self):
+        for op_item in self.selected_op_items.values():
+            op_item.restart_button.set_sensitive(self.current_selected_remote_machine.status == RemoteStatus.ONLINE)
 
     def back_to_overview(self, button=None, data=None):
         if not self.server_restarting:

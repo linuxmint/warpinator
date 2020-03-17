@@ -33,6 +33,8 @@ class CommonOp(GObject.Object):
         self.mime_if_single = "application/octet-stream" # unknown
         self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
 
+        self.progress_tracker = None
+
     def progress_report(self, report):
         self.current_progress_report = report
 

@@ -41,6 +41,7 @@ OpStatus = IntEnum('OpStatus', 'INIT \
                                 STOPPED_BY_SENDER \
                                 STOPPED_BY_RECEIVER \
                                 FAILED \
+                                FAILED_UNRECOVERABLE \
                                 FILE_NOT_FOUND \
                                 FINISHED')
 
