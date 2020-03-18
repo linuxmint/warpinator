@@ -1116,8 +1116,8 @@ class WarpApplication(Gtk.Application):
         menu = Gtk.Menu()
         self.add_favorite_entries(menu)
 
-        item = Gtk.MenuItem(label=_("Open Warp folder"))
-        item.connect("activate", util.open_save_folder)
+        item = Gtk.MenuItem(label=_("Open save folder"))
+        item.connect("activate", lambda m: util.open_save_folder())
         menu.add(item)
         item = Gtk.MenuItem(label=_("Quit"))
         item.connect("activate", self.shutdown)
