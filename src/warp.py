@@ -1151,7 +1151,7 @@ class WarpApplication(Gtk.Application):
         # If there is more than one online remote, add a 'send to all'
         if available_favorites > 1:
             menu.add(Gtk.SeparatorMenuItem())
-            item = Gtk.MenuItem(label=_("Send to all above"))
+            item = Gtk.MenuItem(label=_("Send to favorites"))
             self.attach_recent_submenu(item, None)
             menu.add(item)
 
@@ -1200,7 +1200,6 @@ class WarpApplication(Gtk.Application):
                         remote_machine.send_files(uri)
                     else:
                         remote_machine.send_files([uri])
-                    remote_machine.send_files([uri])
 
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
