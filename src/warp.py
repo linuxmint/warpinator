@@ -567,7 +567,6 @@ class WarpWindow(GObject.Object):
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
 
-        print("start startup - restarting: ", restarting)
         self.server_restarting = restarting
 
         self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
@@ -661,6 +660,8 @@ class WarpWindow(GObject.Object):
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
 
+        remote_machine.connect("focus-remote", self.focus_remote_machine)
+
         button = OverviewButton(remote_machine, simulated)
         button.connect("update-sort", self.sort_buttons)
         button.connect("files-dropped", self.remote_machine_files_dropped)
@@ -686,6 +687,15 @@ class WarpWindow(GObject.Object):
             self.start_discovery_timer()
 
         self.sort_buttons()
+
+    def focus_remote_machine(self, remote_machine, data=None):
+        if self.current_selected_remote_machine != None:
+            self.cleanup_user_view()
+
+        self.switch_to_user_view(remote_machine)
+
+        if not self.window.is_active():
+            self.toggle_visibility()
 
     def display_shutdown(self):
         self.view_stack.set_visible_child_name("shutdown")
@@ -839,13 +849,16 @@ class WarpWindow(GObject.Object):
         if not self.server_restarting:
             self.view_stack.set_visible_child_name("overview")
 
-        self.current_selected_remote_machine.stamp_recent_time()
+        self.cleanup_user_view()
 
+    def cleanup_user_view(self):
         # clear new op notification on overview button for the one
         # we just visited.
         buttons = self.user_list_box.get_children()
 
         if self.current_selected_remote_machine != None:
+            self.current_selected_remote_machine.stamp_recent_time()
+
             for child in buttons:
                 if child.connect_name == self.current_selected_remote_machine.connect_name:
                     child._delegate.clear_new_op_highlighting()

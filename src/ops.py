@@ -17,7 +17,8 @@ class CommonOp(GObject.Object):
         "status-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
         "initial-setup-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
         "op-command": (GObject.SignalFlags.RUN_LAST, None, (int,)),
-        "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ())
+        "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
+        "focus": (GObject.SignalFlags.RUN_LAST, None, ())
     }
     def __init__(self, direction, sender, uris=None):
         super(CommonOp, self).__init__()
@@ -84,6 +85,9 @@ class CommonOp(GObject.Object):
     def set_status(self, status):
         pass
 
+    def focus(self):
+        self.emit("focus")
+
 class SendOp(CommonOp):
     def __init__(self, sender=None, receiver=None, receiver_name=None, uris=None):
         super(SendOp, self).__init__(TransferDirection.TO_REMOTE_MACHINE, sender, uris)
@@ -105,6 +109,12 @@ class SendOp(CommonOp):
 
     def set_status(self, status):
         self.status = status
+
+        if status == OpStatus.FINISHED:
+            notifications.TransferCompleteNotification(self, sender=True)
+        elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED):
+            notifications.TransferFailedNotification(self, sender=True)
+
         self.emit_status_changed()
 
     def prepare_send_info(self):
@@ -187,7 +197,9 @@ class ReceiveOp(CommonOp):
         self.status = status
 
         if status == OpStatus.FINISHED:
-            notifications.TransferCompleteNotification(self)
+            notifications.TransferCompleteNotification(self, sender=False)
+        elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED):
+            notifications.TransferFailedNotification(self, sender=False)
 
         self.emit_status_changed()
 

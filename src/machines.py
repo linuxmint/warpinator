@@ -33,6 +33,7 @@ class RemoteMachine(GObject.Object):
         'ops-changed': (GObject.SignalFlags.RUN_LAST, None, ()),
         'new-incoming-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
         'new-outgoing-op': (GObject.SignalFlags.RUN_LAST, None, (object,)),
+        'focus-remote': (GObject.SignalFlags.RUN_LAST, None, ()),
         'remote-status-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
@@ -301,6 +302,7 @@ class RemoteMachine(GObject.Object):
             self.transfer_ops.append(op)
             op.connect("status-changed", self.emit_ops_changed)
             op.connect("op-command", self.op_command_issued)
+            op.connect("focus", self.op_focus)
             if isinstance(op, SendOp):
                 op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
                 self.emit("new-outgoing-op", op)
@@ -366,6 +368,10 @@ class RemoteMachine(GObject.Object):
             self.cancel_transfer_op_request(op, by_sender=False)
         elif command == OpCommand.STOP_TRANSFER_BY_RECEIVER:
             self.stop_transfer_op(op, by_sender=False)
+
+    @util._idle
+    def op_focus(self, op):
+        self.emit("focus-remote")
 
     def emit_machine_info_changed(self):
         if self.changed_source_id > 0:
