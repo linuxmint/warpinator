@@ -603,7 +603,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="no_clients">
+                      <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">No other computers found...</property>
@@ -748,11 +748,10 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="something_went_wrong_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">Startup was unsuccessful, please check your logs.</property>
                         <property name="wrap">True</property>
                         <property name="max_width_chars">60</property>
                       </object>

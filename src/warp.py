@@ -31,6 +31,9 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warp")
 
+SERVER_START_TIMEOUT = 3
+DISCOVERY_TIMEOUT = 3
+
 ICON_ONLINE = ""
 ICON_OFFLINE = "network-offline-symbolic"
 ICON_UNREACHABLE = "network-error-symbolic"
@@ -443,7 +446,7 @@ class WarpWindow(GObject.Object):
         self.app_display_name_label = self.builder.get_object("app_display_name")
         self.app_ip_label = self.builder.get_object("app_ip")
         self.app_local_name_label = self.builder.get_object("app_local_name")
-        self.something_wrong_box = self.builder.get_object("no_clients")
+        self.something_wrong_label = self.builder.get_object("something_went_wrong_label")
         self.bad_save_folder_label = self.builder.get_object("bad_save_folder_label")
 
         # user view
@@ -569,11 +572,16 @@ class WarpWindow(GObject.Object):
 
         self.server_restarting = restarting
 
-        self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
+        self.server_start_timeout_id = GLib.timeout_add_seconds(SERVER_START_TIMEOUT, self.server_not_started_timeout)
         self.view_stack.set_visible_child_name("startup")
 
     def server_not_started_timeout(self):
         self.view_stack.set_visible_child_name("server-problem")
+
+        if util.get_ip() == "0.0.0.0":
+            self.something_wrong_label.set_text(_("You don't appear to be connected to a network."))
+        else:
+            self.something_wrong_label.set_text(_("Startup was unsuccessful, please check your logs."))
 
         self.server_start_timeout_id = 0
         return False
@@ -721,7 +729,7 @@ class WarpWindow(GObject.Object):
         if self.server_restarting:
             return
 
-        self.discovery_time_out_id = GLib.timeout_add_seconds(6, self.discovery_timed_out)
+        self.discovery_time_out_id = GLib.timeout_add_seconds(DISCOVERY_TIMEOUT, self.discovery_timed_out)
         self.view_stack.set_visible_child_name("discovery")
 
     def discovery_timed_out(self):
@@ -921,6 +929,10 @@ class WarpApplication(Gtk.Application):
         self.inhibit_count = 0
         self.inhibit_cookie = 0
 
+        self.netmon = util.NetworkMonitor()
+        self.netmon.connect("state-changed", self.network_state_changed)
+        self.netmon.start()
+
         self.server = None
         self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
 
@@ -944,10 +956,12 @@ class WarpApplication(Gtk.Application):
         if self.window == None:
             self.setup_window()
 
-        self.try_activation()
+        self.window.start_startup_timer(restarting=False)
+
+        if util.get_ip() != "0.0.0.0":
+            self.try_activation()
 
     def try_activation(self):
-        self.window.start_startup_timer(restarting=False)
         self.window.update_local_user_info()
 
         try:
@@ -973,23 +987,8 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
             return
 
-        if util.get_ip() == "0.0.0.0":
-            print("No ip address - check your network connection.")
-            GLib.timeout_add_seconds(5, self.recheck_ip_address)
-            return
-
         print("Starting server on %s\n" % util.get_ip())
         self.start_server(restarting=False)
-
-    def recheck_ip_address(self):
-        if util.get_ip() == "0.0.0.0":
-            print("Still no network...")
-            return GLib.SOURCE_CONTINUE
-
-        print("Connected to a network")
-        GLib.idle_add(self.try_activation)
-
-        return GLib.SOURCE_REMOVE
 
     def add_simulated_widgets(self):
         if len(sys.argv) == 2 and sys.argv[1] == "test":
@@ -1024,6 +1023,8 @@ class WarpApplication(Gtk.Application):
             self.release()
 
         self.window.display_shutdown()
+
+        self.netmon.stop()
 
         if self.server:
             self.server.disconnect_by_func(self._remote_removed)
@@ -1082,6 +1083,20 @@ class WarpApplication(Gtk.Application):
         self.window.notify_server_started()
         self.add_simulated_widgets()
 
+    def network_state_changed(self, netmon, online):
+        self.update_status_icon_online_state(online)
+
+        if online:
+            if self.server == None:
+                self.window.start_startup_timer()
+                self.try_activation()
+            else:
+                self.current_port = prefs.get_port()
+                self.start_server(restarting=True)
+                self.window.update_local_user_info()
+        else:
+            self.window.start_startup_timer()
+
     def update_inhibitor_state(self, local_machine):
         any_active_ops = False
 
@@ -1134,6 +1149,8 @@ class WarpApplication(Gtk.Application):
         else:
             self.status_icon.set_icon_name("warp-offline-symbolic")
             self.status_icon.set_tooltip_text("Offline")
+
+        self.rebuild_status_icon_menu()
 
     def rebuild_status_icon_menu(self, remote_machine=None):
         if self.status_icon == None:
