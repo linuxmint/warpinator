@@ -938,6 +938,9 @@ class WarpApplication(Gtk.Application):
         self.activate()
 
     def do_activate(self):
+        if self.status_icon == None:
+            self.update_status_icon_from_preferences()
+
         if self.window == None:
             self.setup_window()
 
@@ -978,9 +981,6 @@ class WarpApplication(Gtk.Application):
         print("Starting server on %s\n" % util.get_ip())
         self.start_server(restarting=False)
 
-        if self.status_icon == None:
-            self.update_status_icon_from_preferences()
-
     def recheck_ip_address(self):
         if util.get_ip() == "0.0.0.0":
             print("Still no network...")
@@ -1005,6 +1005,7 @@ class WarpApplication(Gtk.Application):
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+            self.update_status_icon_online_state(online=True)
             self.server_restarting = False
 
         if self.server:
@@ -1032,6 +1033,7 @@ class WarpApplication(Gtk.Application):
             self.ok_for_app_quit(None)
 
     def ok_for_app_quit(self, local_machine):
+        self.update_status_icon_online_state(online=False)
         self.window.destroy()
         print("Quitting..")
         self.quit()
@@ -1112,8 +1114,8 @@ class WarpApplication(Gtk.Application):
         if prefs.use_tray_icon():
             if self.status_icon == None:
                 self.status_icon = XApp.StatusIcon()
-                self.status_icon.set_icon_name("warp-symbolic")
                 self.status_icon.connect("activate", self.on_tray_icon_activate)
+                self.update_status_icon_online_state(self.server != None)
                 self.hold()
             self.rebuild_status_icon_menu()
         else:
@@ -1122,12 +1124,25 @@ class WarpApplication(Gtk.Application):
                 self.status_icon = None
                 self.release()
 
+    def update_status_icon_online_state(self, online=True):
+        if self.status_icon == None:
+            return
+
+        if online:
+            self.status_icon.set_icon_name("warp-symbolic")
+            self.status_icon.set_tooltip_text("Online")
+        else:
+            self.status_icon.set_icon_name("warp-offline-symbolic")
+            self.status_icon.set_tooltip_text("Offline")
+
     def rebuild_status_icon_menu(self, remote_machine=None):
         if self.status_icon == None:
             return
 
         menu = Gtk.Menu()
-        self.add_favorite_entries(menu)
+
+        if self.server != None:
+            self.add_favorite_entries(menu)
 
         item = Gtk.MenuItem(label=_("Open save folder"))
         item.connect("activate", lambda m: util.open_save_folder())
