@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -f warp.pot
+touch warp.pot
+xgettext --package-name=warp --language=Glade --join-existing --add-comments --output=warp.pot resources/*.ui
+xgettext --package-name=warp --language=Python -c --join-existing --keyword=_ --keyword=N_ --output=warp.pot src/*.py
+xgettext --package-name=warp --language=Desktop --join-existing --add-comments \
+          -k --keyword=Name --keyword=Comment --output=warp.pot data/warp.desktop.in

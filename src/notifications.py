@@ -8,7 +8,6 @@ import prefs
 
 _ = gettext.gettext
 
-
 class NewOpUserNotification():
     def __init__(self, op):
         self.op = op
@@ -24,11 +23,13 @@ class NewOpUserNotification():
                 # John Johnson would like to send you 1 file (foobar.txt)
                 # John Johnson would like to send you 5 files
                 body =gettext.ngettext(
-                    _("%s would like to send you %d file (%s)."),
-                    _("%s would like to send you %d files%s"),self.op.total_count) \
-                        % (self.op.sender_name,
-                           self.op.total_count,
-                           self.op.top_dir_basenames[0] if self.op.total_count == 1 else "")
+                    _("%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."),
+                    _("%(sender_name)s would like to send you %(file_count)d files"),self.op.total_count) \
+                        % ({
+                              "sender_name": self.op.sender_name,
+                              "file_count": self.op.total_count,
+                              "file_name": self.op.top_dir_basenames[0]
+                          })
 
                 notification.set_body(body)
                 notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
@@ -48,11 +49,13 @@ class NewOpUserNotification():
                 # John Johnson is sending you 1 file (foobar.txt)
                 # John Johnson is sending you 5 files
                 body =gettext.ngettext(
-                    _("%s is sending you %d file (%s)."),
-                    _("%s is sending you %d files%s"), self.op.total_count) \
-                        % (self.op.sender_name,
-                           self.op.total_count,
-                           self.op.top_dir_basenames[0] if self.op.total_count == 1 else "")
+                    _("%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."),
+                    _("%(sender_name)s is sending you %(file_count)d files"), self.op.total_count) \
+                        % ({
+                              "sender_name": self.op.sender_name,
+                              "file_count": self.op.total_count,
+                              "file_name": self.op.top_dir_basenames[0]
+                          })
 
                 notification.set_body(body)
                 notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))

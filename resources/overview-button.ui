@@ -76,7 +76,7 @@
               <object class="GtkLabel" id="overview_user_display_name">
                 <property name="can_focus">False</property>
                 <property name="no_show_all">True</property>
-                <property name="label" translatable="yes">Joe Blow</property>
+                <property name="label" translatable="no">Joe Blow</property>
                 <property name="xalign">0</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -93,7 +93,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="no_show_all">True</property>
-                <property name="label" translatable="yes">joe@hostname</property>
+                <property name="label" translatable="no">joe@hostname</property>
                 <property name="xalign">0</property>
               </object>
               <packing>
@@ -127,7 +127,7 @@
           <object class="GtkLabel" id="overview_user_ip">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">192.168.1.200</property>
+            <property name="label" translatable="no">192.168.1.200</property>
             <property name="justify">right</property>
             <property name="xalign">1</property>
           </object>
@@ -167,7 +167,6 @@
               </object>
               <packing>
                 <property name="name">info</property>
-                <property name="title" translatable="yes">page0</property>
               </packing>
             </child>
           </object>

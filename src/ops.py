@@ -42,6 +42,11 @@ class CommonOp(GObject.Object):
 
     def progress_report(self, report):
         self.current_progress_report = report
+        report.progress_text = _("%(time_left)s (%(bytes_per_sec)s/s)") \
+                                   % ({
+                                         "time_left": util.format_time_span(report.time_left_sec),
+                                         "bytes_per_sec": GLib.format_size(report.bytes_per_sec)
+                                     })
 
         if report.progress == 1.0:
             self.status = OpStatus.FINISHED
@@ -132,7 +137,7 @@ class SendOp(CommonOp):
 
             if self.total_count > 1:
                 # Translators: Don't need to translate singular, we show the filename if there's only one
-                self.description = gettext.ngettext("%d file",
+                self.description = gettext.ngettext("%d file-do-not-translate",
                                                     "%d files", self.total_count) % (self.total_count,)
                 self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
             else:

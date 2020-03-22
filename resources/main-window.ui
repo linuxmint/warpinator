@@ -22,7 +22,6 @@
   </object>
   <object class="XAppGtkWindow" id="main_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Warp</property>
     <property name="window_position">center</property>
     <property name="default_width">800</property>
     <property name="default_height">500</property>
@@ -78,7 +77,7 @@
               <object class="GtkLabel" id="app_local_name">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">joe@hostname</property>
+                <property name="label" translatable="no">joe@hostname</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -90,7 +89,7 @@
               <object class="GtkLabel" id="app_ip">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">192.168.10.2</property>
+                <property name="label" translatable="no">192.168.10.2</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -234,7 +233,6 @@
               </object>
               <packing>
                 <property name="name">overview</property>
-                <property name="title" translatable="yes">page0</property>
               </packing>
             </child>
             <child>
@@ -309,7 +307,7 @@
                                   <object class="GtkLabel" id="user_display_name">
                                     <property name="can_focus">False</property>
                                     <property name="no_show_all">True</property>
-                                    <property name="label" translatable="yes">Joe Blow</property>
+                                    <property name="label" translatable="no">Joe Blow</property>
                                     <property name="xalign">0</property>
                                     <attributes>
                                       <attribute name="weight" value="bold"/>
@@ -325,7 +323,7 @@
                                   <object class="GtkLabel" id="user_hostname">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">joe@hostname</property>
+                                    <property name="label" translatable="no">joe@hostname</property>
                                     <property name="xalign">0</property>
                                   </object>
                                   <packing>
@@ -361,7 +359,7 @@
                               <object class="GtkLabel" id="user_ip">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">192.168.1.200</property>
+                                <property name="label" translatable="no">192.168.1.200</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -570,7 +568,6 @@
               </object>
               <packing>
                 <property name="name">user</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -642,7 +639,6 @@
               </object>
               <packing>
                 <property name="name">no-remotes</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -700,7 +696,6 @@
               </object>
               <packing>
                 <property name="name">startup</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">3</property>
               </packing>
             </child>
@@ -771,7 +766,6 @@
               </object>
               <packing>
                 <property name="name">server-problem</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">4</property>
               </packing>
             </child>
@@ -823,7 +817,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">/home/mike/bucket</property>
+                        <property name="label" translatable="no">/home/mike/bucket</property>
                         <property name="ellipsize">middle</property>
                         <property name="single_line_mode">True</property>
                         <property name="max_width_chars">60</property>
@@ -862,7 +856,6 @@
               </object>
               <packing>
                 <property name="name">bad-save-folder</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">5</property>
               </packing>
             </child>
@@ -921,7 +914,6 @@
               </object>
               <packing>
                 <property name="name">discovery</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">6</property>
               </packing>
             </child>
@@ -980,7 +972,6 @@
               </object>
               <packing>
                 <property name="name">shutdown</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">7</property>
               </packing>
             </child>

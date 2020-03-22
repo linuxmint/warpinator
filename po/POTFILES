@@ -1,0 +1,14 @@
+resources/main-window.ui
+resources/op-item.ui
+resources/overview-button.ui
+resources/prefs-window.ui
+
+src/machines.py
+src/notifications.py
+src/ops.py
+src/prefs.py
+src/transfers.py
+src/util.py
+src/warp.py
+
+data/warp.desktop.in

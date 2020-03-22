@@ -97,10 +97,6 @@ class Preferences():
 
         section.add_reveal_row(widget, PREFS_SCHEMA, TRAY_ICON_KEY)
 
-        # widget = GSettingsSwitch(_("Pin the window by default"),
-        #                          PREFS_SCHEMA, START_PINNED_KEY)
-        # section.add_row(widget)
-
         widget = GSettingsSwitch(_("Start automatically"),
                                  PREFS_SCHEMA, AUTOSTART_KEY)
         section.add_row(widget)

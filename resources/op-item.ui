@@ -88,7 +88,7 @@
         <property name="width_request">125</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">10 Files</property>
+        <property name="label" translatable="no">10 Files</property>
         <property name="ellipsize">middle</property>
         <property name="width_chars">20</property>
         <property name="max_width_chars">20</property>
@@ -105,7 +105,7 @@
         <property name="width_request">100</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">1gb</property>
+        <property name="label" translatable="no">1gb</property>
         <property name="width_chars">10</property>
         <property name="max_width_chars">10</property>
       </object>
@@ -169,7 +169,6 @@
               </object>
               <packing>
                 <property name="name">message</property>
-                <property name="title" translatable="yes">page0</property>
               </packing>
             </child>
             <child>
@@ -193,7 +192,6 @@
               </object>
               <packing>
                 <property name="name">progress-bar</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -230,7 +228,6 @@
               </object>
               <packing>
                 <property name="name">calculating</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">2</property>
               </packing>
             </child>
