@@ -1,73 +1,23 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: cinnamon-screensaver
-Upstream-Contact: Linux Mint Project <root@linuxmint.com>
-Source: https://github.com/linuxmint/cinnamon-screensaver.git
+Upstream-Name: warp
+Upstream-Contact: Clement Lefebvre <root@linuxmint.com>
+Source: https://github.com/linuxmint/warp
 
 Files: *
-Copyright: 2016, Michael Webster <miketwebster@gmail.com>
-License: GPL-2+
-
-Files: COPYING.LIB
-Copyright: 1951, Franklin Street - Suite 500, Boston, MA, 02110-1335, USA
-           1991, Free Software Foundation, Inc
-License: LGPL-2+
-
-Files: debian/*
-Copyright: 2014-2017, Maximiliano Curia <maxy@debian.org>
-Copyright: 2013-2017, Linux Mint Project <root@linuxmint.com>
-License: LGPL-2+
-
-Files: libcscreensaver/setuid.c
-       libcscreensaver/setuid.h
-       libcscreensaver/subprocs.c
-       libcscreensaver/subprocs.h
-Copyright: 1991-2004, Jamie Zawinski <jwz@jwz.org>
-           2004, William Jon McCann <mccann@jhu.edu>
-License: MIT/X11
-
-Files: po/Makefile.in.in
-Copyright: 2004-2008, Rodney Dawes <dobey.pwns@gmail.com>
-           1995-1997, Ulrich Drepper <drepper@gnu.ai.mit.edu>
-License: Permissive
-
-License: GPL-2+
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License as
- published by the Free Software Foundation; either version 2 of the
- License, or (at your option) any later version.
+Copyright: 2020 Clement Lefebvre <root@linuxmint.com>
+License: GPL-3+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or (at
+ your option) any later version.
  .
  This program is distributed in the hope that it will be useful, but
  WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License for more details.
  .
- On Debian systems, the complete text of the GNU General Public License
- version 2 can be found in `/usr/share/common-licenses/GPL-2'.
-
-License: LGPL-2+
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU Library General Public License as published by the Free
- Software Foundation; either version 2 of the License, or (at your option) any
- later version.
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
  .
- This program is distributed in the hope that it will be useful, but WITHOUT
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- FOR A PARTICULAR PURPOSE.  See the GNU Library General Public License for
- more details.
- .
- On Debian systems, the complete text of the GNU Library General Public License
- version 2 can be found in `/usr/share/common-licenses/LGPL-2'.
-
-License: MIT/X11
- Permission to use, copy, modify, distribute, and sell this software and its
- documentation for any purpose is hereby granted without fee, provided that
- the above copyright notice appear in all copies and that both that
- copyright notice and this permission notice appear in supporting
- documentation.  No representations are made about the suitability of this
- software for any purpose.  It is provided "as is" without express or
- implied warranty.
-
-License: Permissive
- This file may be copied and used freely without restrictions.  It may
- be used in projects which are not available under a GNU Public License,
- but which still want to provide support for the GNU gettext functionality.
+ On Debian systems, the complete text of the GNU General
+ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".

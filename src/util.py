@@ -7,6 +7,7 @@ import os
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
 import prefs
+import config
 
 _ = gettext.gettext
 
@@ -328,3 +329,17 @@ class NetworkMonitor(GObject.Object):
         self.online = get_ip() != "0.0.0.0"
         if self.online != old_online:
             self.emit("state-changed", self.online)
+
+class AboutDialog():
+    def __init__(self, parent):
+        dialog = Gtk.AboutDialog(parent=parent,
+                                 title=_("About"),
+                                 program_name="Warp",
+                                 icon_name="warp",
+                                 logo_icon_name="warp",
+                                 comments=_("Send and Receive Files across the Network"),
+                                 version=config.VERSION,
+                                 license_type=Gtk.License.GPL_3_0)
+
+        dialog.run()
+        dialog.destroy()

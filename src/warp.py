@@ -493,6 +493,10 @@ class WarpWindow(GObject.Object):
         item.connect("activate", self.open_preferences)
         menu.add(item)
 
+        item = Gtk.MenuItem(label=_("About"))
+        item.connect("activate", self.show_about)
+        menu.add(item)
+
         item = Gtk.MenuItem(label=_("Quit"))
         item.connect("activate", self.menu_quit)
         menu.add(item)
@@ -517,6 +521,9 @@ class WarpWindow(GObject.Object):
         self.user_clear_ops_button.connect("clicked", self.clear_ops_clicked)
 
         self.update_local_user_info()
+
+    def show_about(self, widget):
+        util.AboutDialog(self.window)
 
     def window_delete_event(self, widget, event, data=None):
         if prefs.use_tray_icon():
