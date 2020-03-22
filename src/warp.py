@@ -539,6 +539,9 @@ class WarpWindow(GObject.Object):
         if self.window.is_active():
             self.window.hide()
         else:
+            self.show(time)
+
+    def show(self, time=0):
             if not self.window.get_visible():
                 self.window.present()
             else:
@@ -917,8 +920,7 @@ class WarpWindow(GObject.Object):
 
 class WarpApplication(Gtk.Application):
     def __init__(self):
-        super(WarpApplication, self).__init__(application_id="com.linuxmint.warp",
-                                              flags=Gio.ApplicationFlags.IS_SERVICE)
+        super(WarpApplication, self).__init__(application_id="com.linuxmint.warp")
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
@@ -947,9 +949,11 @@ class WarpApplication(Gtk.Application):
         action = Gio.SimpleAction.new("notification-response", vt)
         self.add_action(action)
 
-        self.activate()
-
     def do_activate(self):
+        if self.window != None:
+            self.window.show()
+            return
+
         if self.status_icon == None:
             self.update_status_icon_from_preferences()
 
