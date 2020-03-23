@@ -3,7 +3,7 @@ import os
 from gi.repository import GLib, Gio, GObject
 
 import util
-from util import FileType, OpStatus
+from util import FileType
 import prefs
 import warp_pb2
 

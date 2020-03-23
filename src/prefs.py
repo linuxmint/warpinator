@@ -2,10 +2,11 @@ import os
 import gettext
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
-from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton
-from gi.repository import Gtk, Gio, GLib
+from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
+from gi.repository import Gtk, Gio, GLib, GObject
 
 import config
+import auth
 
 _ = gettext.gettext
 
@@ -122,8 +123,21 @@ class Preferences():
 
         section = page.add_section(_("Network"))
 
+        entry_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.VERTICAL)
+        button_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.BOTH)
+
+        widget = GroupCodeEntry(_("Group Code"),
+                                tooltip=_("You cannot communicate with computers that do use the same code."),
+                                entry_size_group=entry_size_group,
+                                button_size_group=button_size_group)
+
+        section.add_row(widget)
+
         widget = PortSpinButton(_("Incoming port for transfers"),
-                                mini=1024, maxi=49151, step=1, page=10, size_group=size_group)
+                                mini=1024, maxi=49151, step=1, page=10,
+                                size_group=size_group,
+                                entry_size_group=entry_size_group,
+                                button_size_group=button_size_group)
 
         section.add_row(widget)
 
@@ -140,6 +154,9 @@ can make it simpler to add firewall exceptions if necessary."""))
 
 class PortSpinButton(SpinButton):
     def __init__(self, *args, **kargs):
+        button_size_group = kargs.pop("button_size_group")
+        entry_size_group = kargs.pop("entry_size_group")
+
         super(PortSpinButton, self).__init__(*args, **kargs)
 
         self.old_port = get_port()
@@ -151,8 +168,10 @@ class PortSpinButton(SpinButton):
         self.accept_button.set_sensitive(False)
         self.accept_button.get_style_context().add_class("suggested-action")
         self.accept_button.connect("clicked", self.apply_clicked)
+        button_size_group.add_widget(self.accept_button)
 
         self.content_widget.set_value(get_port())
+        entry_size_group.add_widget(self.content_widget)
 
         self.pack_end(self.accept_button, False, False, 0)
         self.reorder_child(self.accept_button, 1)
@@ -172,3 +191,38 @@ class PortSpinButton(SpinButton):
     def apply_clicked(self, widget, data=None):
         self.my_settings.set_int(PORT_KEY, int(self.content_widget.get_value()))
         self.accept_button.set_sensitive(False)
+
+class GroupCodeEntry(Entry):
+    def __init__(self, *args, **kargs):
+        button_size_group = kargs.pop("button_size_group")
+        entry_size_group = kargs.pop("entry_size_group")
+
+        super(GroupCodeEntry, self).__init__(*args, kargs["tooltip"])
+
+        self.code = auth.get_singleton().get_group_code().decode()
+        self.content_widget.set_text(self.code)
+        entry_size_group.add_widget(self.content_widget)
+        self.content_widget.connect("changed", self.text_changed)
+
+        self.set_child_packing(self.content_widget, False, False, 0, Gtk.PackType.END)
+        self.set_spacing(6)
+
+        self.accept_button = Gtk.Button(label=_("Set code"))
+        self.accept_button.show()
+        self.accept_button.set_sensitive(False)
+        self.accept_button.get_style_context().add_class("suggested-action")
+        self.accept_button.connect("clicked", self.apply_clicked)
+        button_size_group.add_widget(self.accept_button)
+
+        self.pack_end(self.accept_button, False, False, 0)
+        self.reorder_child(self.accept_button, 1)
+
+    def text_changed(self, widget, data=None):
+        self.accept_button.set_sensitive(self.content_widget.get_text() != self.code)
+
+    def apply_clicked(self, widget, data=None):
+        self.code = self.content_widget.get_text()
+        self.accept_button.set_sensitive(False)
+        auth.get_singleton().save_group_code(self.code)
+
+

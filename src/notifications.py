@@ -1,6 +1,6 @@
 import gettext
 
-from gi.repository import Gio, GLib
+from gi.repository import Gio
 
 import util
 from util import OpStatus

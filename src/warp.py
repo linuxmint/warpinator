@@ -14,7 +14,8 @@ from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 import config
 import prefs
 import util
-import machines
+import server
+import auth
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
@@ -28,6 +29,7 @@ locale.bindtextdomain(config.PACKAGE, config.localedir)
 gettext.bindtextdomain(config.PACKAGE, config.localedir)
 gettext.textdomain(config.PACKAGE)
 _ = gettext.gettext
+
 
 setproctitle.setproctitle("warp")
 
@@ -663,7 +665,7 @@ class WarpWindow(GObject.Object):
         util.open_save_folder()
 
     def open_preferences(self, menuitem, data=None):
-        prefs.Preferences(self.window)
+        pref_window = prefs.Preferences(self.window)
 
     def report_bad_save_folder(self):
         self.bad_save_folder_label.set_text(prefs.get_save_path())
@@ -728,7 +730,7 @@ class WarpWindow(GObject.Object):
         self.start_discovery_timer()
 
     def start_discovery_timer(self):
-        print("start discovey")
+        print("start discovery")
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
             self.discovery_time_out_id = 0
@@ -950,6 +952,7 @@ class WarpApplication(Gtk.Application):
         print("Initializing Warp\n")
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
+        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
 
         vt = GLib.VariantType.new("s")
 
@@ -1009,8 +1012,8 @@ class WarpApplication(Gtk.Application):
     def start_server(self, restarting=False):
         self.window.start_startup_timer(restarting)
 
-        def ok_to_restart(server):
-            self.server = machines.LocalMachine()
+        def ok_to_restart():
+            self.server = server.Server()
             self.server.connect("server-started", self._server_started)
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
@@ -1021,10 +1024,10 @@ class WarpApplication(Gtk.Application):
         if self.server:
             self.server_restarting = True
 
-            self.server.connect("shutdown-complete", ok_to_restart)
+            self.server.connect("shutdown-complete", lambda srv: ok_to_restart())
             self.server.shutdown()
         else:
-            ok_to_restart(None);
+            ok_to_restart();
 
     def shutdown(self, window=None):
         print("Beginning shutdown")
@@ -1073,6 +1076,9 @@ class WarpApplication(Gtk.Application):
         if prefs.get_port() != self.current_port:
             self.current_port = prefs.get_port()
             self.start_server(restarting=True)
+
+    def on_group_code_changed(self, auth_manager):
+        self.start_server(restarting=True)
 
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)
