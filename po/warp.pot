@@ -1,0 +1,447 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the warp package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: warp\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-01 01:43+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: resources/main-window.ui:33
+msgid "Warpinator"
+msgstr ""
+
+#: resources/main-window.ui:34 src/util.py:340
+msgid "Send and Receive Files across the Network"
+msgstr ""
+
+#: resources/main-window.ui:194
+msgid "<big><b>No matching results</b></big>"
+msgstr ""
+
+#: resources/main-window.ui:347
+msgid "Make this remote machine a favorite in the main view"
+msgstr ""
+
+#: resources/main-window.ui:421
+msgid "Clear inactive and completed operations"
+msgstr ""
+
+#: resources/main-window.ui:440
+msgid "Send files"
+msgstr ""
+
+#: resources/main-window.ui:466 src/prefs.py:104
+msgid "File Transfers"
+msgstr ""
+
+#: resources/main-window.ui:487 src/warp.py:811
+msgid "Online"
+msgstr ""
+
+#: resources/main-window.ui:606
+msgid "No other computers found..."
+msgstr ""
+
+#: resources/main-window.ui:622
+msgid ""
+"Is Warpinator running on other computers on this network? If so, check your "
+"network connectivity and your firewall rules."
+msgstr ""
+
+#: resources/main-window.ui:677
+msgid "Initializing, please wait..."
+msgstr ""
+
+#: resources/main-window.ui:734
+msgid "Something went wrong"
+msgstr ""
+
+#: resources/main-window.ui:805
+msgid "<big><b>Invalid save location</b></big>"
+msgstr ""
+
+#: resources/main-window.ui:839
+msgid ""
+"This folder is inaccessible or does not exist.  Please select a new location "
+"in Preferences or ensure that the current one is mounted."
+msgstr ""
+
+#: resources/main-window.ui:895
+msgid "Searching for other computers"
+msgstr ""
+
+#: resources/main-window.ui:953
+msgid "Shutting down..."
+msgstr ""
+
+#: resources/op-item.ui:141
+msgid "Awaiting approval"
+msgstr ""
+
+#: resources/op-item.ui:157
+msgid "Not enough disk space!"
+msgstr ""
+
+#: resources/op-item.ui:220
+msgid "Calculating"
+msgstr ""
+
+#: resources/op-item.ui:260
+msgid "Accept this request"
+msgstr ""
+
+#: resources/op-item.ui:275
+msgid "Refuse this request"
+msgstr ""
+
+#: resources/op-item.ui:290
+msgid "Cancel this request"
+msgstr ""
+
+#: resources/op-item.ui:305
+msgid "Restart this operation"
+msgstr ""
+
+#: resources/op-item.ui:320
+msgid "Pause this operation"
+msgstr ""
+
+#: resources/op-item.ui:335
+msgid "Resume this operation"
+msgstr ""
+
+#: resources/op-item.ui:350
+msgid "Cancel this operation"
+msgstr ""
+
+#: resources/op-item.ui:365
+msgid "Remove this operation from the list"
+msgstr ""
+
+#: resources/op-item.ui:380
+msgid "Open the containing folder"
+msgstr ""
+
+#: resources/prefs-window.ui:13 src/prefs.py:79
+msgid "Warp Preferences"
+msgstr ""
+
+#: src/machines.py:343 src/machines.py:347
+msgid "Connection has been lost"
+msgstr ""
+
+#: src/machines.py:638
+msgid "An error occurred on the remote machine"
+msgstr ""
+
+#: src/notifications.py:20
+msgid "New incoming files"
+msgstr ""
+
+#: src/notifications.py:26
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+
+#: src/notifications.py:27
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr ""
+
+#: src/notifications.py:37
+msgid "Accept"
+msgstr ""
+
+#: src/notifications.py:38
+msgid "Decline"
+msgstr ""
+
+#: src/notifications.py:52
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr ""
+
+#: src/notifications.py:53
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr ""
+
+#: src/notifications.py:88
+msgid "Transfer complete"
+msgstr ""
+
+#: src/notifications.py:90
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr ""
+
+#: src/notifications.py:92
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr ""
+
+#: src/notifications.py:121 src/warp.py:159 src/warp.py:162
+msgid "Transfer failed"
+msgstr ""
+
+#: src/notifications.py:124
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr ""
+
+#: src/notifications.py:126
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr ""
+
+#: src/ops.py:45
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr ""
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:140
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:222
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/prefs.py:89
+msgid "Desktop"
+msgstr ""
+
+#: src/prefs.py:91
+msgid "Show a Warpinator icon in the notification area"
+msgstr ""
+
+#: src/prefs.py:95
+msgid "Start with main window open"
+msgstr ""
+
+#: src/prefs.py:100
+msgid "Start automatically"
+msgstr ""
+
+#: src/prefs.py:106
+msgid "Location for received files"
+msgstr ""
+
+#: src/prefs.py:111
+msgid "Require approval before accepting files"
+msgstr ""
+
+#: src/prefs.py:115
+msgid "Require approval when files would be overwritten"
+msgstr ""
+
+#: src/prefs.py:119
+msgid "Display a notification when someone sends (or tries to send) you files"
+msgstr ""
+
+#: src/prefs.py:123
+msgid "Network"
+msgstr ""
+
+#: src/prefs.py:125
+msgid "Incoming port for transfers"
+msgstr ""
+
+#: src/prefs.py:132
+msgid ""
+"<b>Note on port numbers</b>: Any port number will work for the application, "
+"but using the same port for all computers\n"
+"can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+
+#: src/prefs.py:149
+msgid "Change port"
+msgstr ""
+
+#: src/util.py:62
+msgid "Select file(s) to send"
+msgstr ""
+
+#: src/util.py:66
+msgid "Cancel"
+msgstr ""
+
+#: src/util.py:67
+msgid "Send"
+msgstr ""
+
+#: src/util.py:203
+msgid "A few seconds remaining"
+msgstr ""
+
+#: src/util.py:206
+#, python-format
+msgid "%d seconds remaining"
+msgstr ""
+
+#: src/util.py:210 src/util.py:218
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/util.py:217
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/util.py:222
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/util.py:336 src/warp.py:496
+msgid "About"
+msgstr ""
+
+#: src/warp.py:132
+msgid "Paused"
+msgstr ""
+
+#: src/warp.py:135
+msgid "Waiting for approval"
+msgstr ""
+
+#: src/warp.py:137
+msgid "Waiting for your approval"
+msgstr ""
+
+#: src/warp.py:140
+msgid "Files may be overwritten"
+msgstr ""
+
+#: src/warp.py:143
+msgid "Not enough disk space"
+msgstr ""
+
+#: src/warp.py:146
+msgid "Request cancelled"
+msgstr ""
+
+#: src/warp.py:148 src/warp.py:150
+#, python-format
+msgid "Request cancelled by %s"
+msgstr ""
+
+#: src/warp.py:153
+msgid "Transfer cancelled"
+msgstr ""
+
+#: src/warp.py:155 src/warp.py:157
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr ""
+
+#: src/warp.py:164
+#, python-format
+msgid "File '%s' not found"
+msgstr ""
+
+#: src/warp.py:166
+msgid "Some files not found"
+msgstr ""
+
+#: src/warp.py:168
+msgid "Completed"
+msgstr ""
+
+#: src/warp.py:326 src/warp.py:832
+msgid "Connecting"
+msgstr ""
+
+#: src/warp.py:328
+#, python-format
+msgid "Connecting to %s"
+msgstr ""
+
+#: src/warp.py:338
+#, python-format
+msgid "%s is not online"
+msgstr ""
+
+#: src/warp.py:343
+#, python-format
+msgid "Cannot connect to %s"
+msgstr ""
+
+#: src/warp.py:372
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/warp.py:474 src/warp.py:1224
+msgid "Browse..."
+msgstr ""
+
+#: src/warp.py:488 src/warp.py:1175
+msgid "Open save folder"
+msgstr ""
+
+#: src/warp.py:492
+msgid "Preferences"
+msgstr ""
+
+#: src/warp.py:500 src/warp.py:1178
+msgid "Quit"
+msgstr ""
+
+#: src/warp.py:592
+msgid "You don't appear to be connected to a network."
+msgstr ""
+
+#: src/warp.py:594
+msgid "Startup was unsuccessful, please check your logs."
+msgstr ""
+
+#: src/warp.py:818
+msgid "Offline"
+msgstr ""
+
+#: src/warp.py:825
+msgid "Unable to connect"
+msgstr ""
+
+#: src/warp.py:1210
+msgid "Send to favorites"
+msgstr ""
+
+#: data/warp.desktop.in:4
+msgid "Warp"
+msgstr ""
+
+#: data/warp.desktop.in:5
+msgid "Transfer files from one computer to another on the local network"
+msgstr ""
