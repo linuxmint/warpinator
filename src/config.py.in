@@ -2,10 +2,10 @@
 
 prefix="@prefix@"
 datadir="@datadir@"
-localedir=datadir+"linuxmint/locale"
+localedir="@locale_dir@"
 pkgdatadir="@pkgdatadir@"
 libdir="@libdir@"
 libexecdir="@libexecdir@"
 PACKAGE="@PACKAGE@"
 VERSION="@VERSION@"
-GETTEXT_PACKAGE="@GETTEXT_PACKAGE@"
+GETTEXT_PACKAGE="@gettext_package@"

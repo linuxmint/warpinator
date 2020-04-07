@@ -6,7 +6,8 @@ pyconf.set('libexecdir', install_libdir)
 pyconf.set('libdir', get_option('libdir'))
 pyconf.set('PACKAGE', meson.project_name())
 pyconf.set('VERSION', meson.project_version())
-pyconf.set('GETTEXT_PACKAGE', meson.project_name())
+pyconf.set('gettext_package', gettext_package)
+pyconf.set('locale_dir', locale_dir)
 
 config_py = configure_file(
   output: 'config.py',
