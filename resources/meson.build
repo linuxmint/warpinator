@@ -1,4 +1,5 @@
 data = [
+  'gufw-example.png',
   'main-window.ui',
   'op-item.ui',
   'overview-button.ui',

@@ -241,6 +241,7 @@ class AuthManager(GObject.Object):
         self.code = bytes(code,  "utf-8")
 
         self._save_bytes(path, CODE_LABEL + self.code)
+        self.get_server_creds()
         self.emit("group-code-changed")
 
     def process_remote_cert_b64_dict(self, hostname, zc_dict):

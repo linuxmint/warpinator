@@ -143,14 +143,28 @@ class Preferences():
 
         widget = SettingsWidget()
 
+        button = Gtk.Button(_("Example gufw firewall rule"))
+        button.connect("clicked", self.show_sample_rule_image)
+
+        widget.pack_end(button, False, False, 0)
+
         label = Gtk.Label(use_markup=True, label=_("""\
 <b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers
 can make it simpler to add firewall exceptions if necessary."""))
-        widget.add(label)
+        widget.pack_start(label, True, True, 0)
 
         section.add_row(widget)
 
         self.window.show_all()
+
+    def show_sample_rule_image(self, widget):
+        popup = Gtk.Dialog()
+
+        image = Gtk.Image.new_from_file(os.path.join(config.pkgdatadir, "gufw-example.png"))
+        image.show()
+        popup.get_content_area().add(image)
+        popup.run()
+        popup.destroy()
 
 class PortSpinButton(SpinButton):
     def __init__(self, *args, **kargs):
