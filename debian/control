@@ -26,6 +26,8 @@ Depends:
  python3-zeroconf,
  python3-grpcio (>= 1.16.0),
  python3-protobuf (>= 3.6.1),
+ python3-cryptography,
+ python3-nacl,
  ${misc:Depends},
  ${python3:Depends}
 Description: Allows simple local network file sharing.
