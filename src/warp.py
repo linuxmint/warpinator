@@ -730,7 +730,7 @@ class WarpWindow(GObject.Object):
         self.start_discovery_timer()
 
     def start_discovery_timer(self):
-        print("start discovery")
+        # print("start discovery")
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
             self.discovery_time_out_id = 0
@@ -745,7 +745,7 @@ class WarpWindow(GObject.Object):
         self.view_stack.set_visible_child_name("discovery")
 
     def discovery_timed_out(self):
-        print("discovery timeout")
+        # print("discovery timeout")
         self.view_stack.set_visible_child_name("no-remotes")
         self.discovery_time_out_id = 0
         return False
@@ -1001,7 +1001,7 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
             return
 
-        print("Starting server on %s\n" % util.get_ip())
+        print("Starting server on %s" % util.get_ip())
         self.start_server(restarting=False)
 
     def add_simulated_widgets(self):

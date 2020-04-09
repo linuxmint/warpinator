@@ -64,7 +64,9 @@ class RemoteMachine(GObject.Object):
         self.need_shutdown = False
         self.connect_loop_cancelled = False
 
-        print("Connecting to %s" % self.connect_name)
+        self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
+
+        print("Connecting to %s (%s)" % (self.hostname, self.ip_address))
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def run_secure_loop(cert):
@@ -82,13 +84,13 @@ class RemoteMachine(GObject.Object):
                         break
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
-                            print("channel ready timeout, waiting 10s")
+                            # print("channel ready timeout, waiting 10s")
                             time.sleep(PING_TIME)
                             connect_retries += 1
                             continue
                         else:
                             self.set_remote_status(RemoteStatus.UNREACHABLE)
-                            print("Trying to remake channel")
+                            # print("Trying to remake channel")
                             future.cancel()
                             return True
 
@@ -334,6 +336,8 @@ class RemoteMachine(GObject.Object):
 
         self.status = status
         self.cancel_ops_if_offline()
+
+        print("** %s is now %s" % (self.hostname, self.status))
         self.emit("remote-status-changed")
 
     def cancel_ops_if_offline(self):

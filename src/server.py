@@ -70,7 +70,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.zeroconf.register_service(self.info)
 
     def start_remote_lookout(self):
-        print("Searching for others...")
         self.browser = ServiceBrowser(self.zeroconf, "_http._tcp.local.", self)
 
     @util._async
@@ -101,10 +100,10 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             remote_ip, remote_hostname = name.replace("warp.__", "").replace("__._http._tcp.local.", "").split("__.__")
 
             if not auth.get_singleton().process_remote_cert_b64_dict(remote_hostname, info.properties):
-                print("Unable to authenticate")
+                print("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))
                 return
 
-            print("Client %s added at %s" % (name, remote_ip))
+            # print("Client %s added at %s" % (name, remote_ip))
 
             try:
                 machine = self.remote_machines[name]
