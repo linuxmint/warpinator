@@ -89,6 +89,7 @@ class RemoteMachine(GObject.Object):
                         else:
                             self.set_remote_status(RemoteStatus.UNREACHABLE)
                             print("Trying to remake channel")
+                            future.cancel()
                             return True
 
                 one_ping = False
