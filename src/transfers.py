@@ -1,14 +1,11 @@
 import os
-import gettext
 
 from gi.repository import GLib, Gio, GObject
 
 import util
-from util import FileType, OpStatus
+from util import FileType
 import prefs
 import warp_pb2
-
-_ = gettext.gettext
 
 FILE_INFOS = \
     "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target"
@@ -258,7 +255,7 @@ class Progress():
         self.progress = progress
         self.time_left_sec = time_left_sec
         self.bytes_per_sec = bytes_per_sec
-        self.progress_text = _("%s (%s/s)") % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec))
+        self.progress_text = ""
 
 class OpProgressTracker():
     def __init__(self, op):

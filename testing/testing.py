@@ -1,7 +1,7 @@
 import random
 
 from gi.repository import GLib, Gio
-import machines
+import remote
 import ops
 import util
 import transfers
@@ -28,35 +28,34 @@ TEST_REMOTES = [
 
 TEST_OPS = [
 #type, "sender","status", timestamp, size, count,sender_disp_name, receiver_disp_name, name_if_single, special_condition
-["send", "test2", "test1", OpStatus.CALCULATING, 108, 2000000, 5, "Luke Skywalker", "Han Solo", None, None],
+["send", "test2", "test1", OpStatus.CALCULATING, 108, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
 ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102, 5000000, 1, "Darth Vader", "Luke Skywalker", "home-movies.mpg", None],
 ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102444, 5000000, 1, "Montgomery Scott", "Luke Skywalker", "engine-care.mpg", "nospace"],
 ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 1024494, 5000000, 1, "Jim Kirk", "Luke Skywalker", "pickup_lines.txt", "overwrite"],
-["send", "test2", "test11", OpStatus.WAITING_PERMISSION, 1002, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", None, None],
-["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 103, 2000000, 5, "Han Solo", "Luke Skywalker", None, None],
-["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 1030, 2000000, 5, "Han Solo", "Luke Skywalker", None, None],
-["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 100, 2000000, 5, "Luke Skywalker", "Han Solo", None, None],
-["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 1001, 2000000, 5, "Luke Skywalker", "Han Solo", None, None],
-["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 1005, 50000000, 5, "Luke Skywalker", "Hikaru Sulu", None, None],
+["send", "test2", "test11", OpStatus.WAITING_PERMISSION, 1002, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", "", None],
+["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 103, 2000000, 5, "Han Solo", "Luke Skywalker", "", None],
+["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 1030, 2000000, 5, "Han Solo", "Luke Skywalker", "", None],
+["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 100, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
+["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 1001, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
+["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 1005, 50000000, 5, "Luke Skywalker", "Hikaru Sulu", "", None],
 ["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 100544, 10000, 1, "Luke Skywalker", "Hikaru Sulu", "saber-tips.pdf", None],
-["receive", "test9", "test2", OpStatus.TRANSFERRING, 1040, 100000000, 20, "Jean Luc Picard", "Luke Skywalker", None, None],
-["send", "test9", "test2", OpStatus.TRANSFERRING, 10403, 100000000, 20, "Luke Skywalker", "Dark Vader", None, None],
+["receive", "test9", "test2", OpStatus.TRANSFERRING, 1040, 100000000, 20, "Jean Luc Picard", "Luke Skywalker", "", None],
+["send", "test9", "test2", OpStatus.TRANSFERRING, 10403, 100000000, 20, "Luke Skywalker", "Dark Vader", "", None],
 ["receive", "test11", "test2", OpStatus.STOPPED_BY_RECEIVER, 1050, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "flying-tips.pdf", None],
-["send", "test2", "test1", OpStatus.STOPPED_BY_SENDER, 1003, 50000000, 5, "Luke Skywalker", "Han Solo", None, None],
-["send", "test2", "test1", OpStatus.STOPPED_BY_RECEIVER, 10113, 50000000, 5, "Luke Skywalker", "Han Solo", None, None],
+["send", "test2", "test1", OpStatus.STOPPED_BY_SENDER, 1003, 50000000, 5, "Luke Skywalker", "Han Solo", "", None],
+["send", "test2", "test1", OpStatus.STOPPED_BY_RECEIVER, 10113, 50000000, 5, "Luke Skywalker", "Han Solo", "", None],
 ["receive", "test11", "test2", OpStatus.STOPPED_BY_SENDER, 105, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "baby-yoda.jpg", None],
-["receive", "test7", "test2", OpStatus.FAILED, 106, 1000, 2, "Hikaru Sulu", "Luke Skywalker", None, None],
-["send", "test2", "test11", OpStatus.FAILED, 1004, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", None, None],
-["receive", "test1", "test2", OpStatus.FINISHED, 107, 200000, 5, "Han Solo", "Luke Skywalker", None, None],
+["receive", "test7", "test2", OpStatus.FAILED, 106, 1000, 2, "Hikaru Sulu", "Luke Skywalker", "", None],
+["send", "test2", "test11", OpStatus.FAILED, 1004, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", "", None],
+["receive", "test1", "test2", OpStatus.FINISHED, 107, 200000, 5, "Han Solo", "Luke Skywalker", "", None],
 ["send", "test2", "test3", OpStatus.FINISHED, 1006, 50000000, 1, "Luke Skywalker", "Darth Vader", "kittens.mpg", None],
 ]
 
 def add_simulated_widgets(app):
     local_machine = app.server
-
     for entry in TEST_REMOTES:
         display_name, name, user_name, hostname, ip, port, status, num_ops = entry
-        machine = machines.RemoteMachine(name, hostname, ip, port, local_machine.service_name)
+        machine = remote.RemoteMachine(name, hostname, ip, port, local_machine.service_name)
 
         local_machine.remote_machines[name] = machine
         machine.connect("ops-changed", local_machine.remote_ops_changed)
@@ -123,7 +122,7 @@ def add_ops(machine):
             op.sender_name = sender_disp_name
             op.receiver_name = receiver_disp_name
             op.total_size = size
-            op.top_dir_basenames = ["foo", "bar"]
+            op.top_dir_basenames = [name_if_single, "bar"]
             op.total_count = count
             op.name_if_single = name_if_single
             op.mime_if_single, uncertainty = Gio.content_type_guess (op.name_if_single, None)

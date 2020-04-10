@@ -7,6 +7,7 @@ import os
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
 import prefs
+import config
 
 _ = gettext.gettext
 
@@ -150,7 +151,7 @@ def get_ip():
         try:
             s.connect(("8.8.8.8", 80))
         except OSError as e:
-            print("Unable to retrieve IP address: %s" % str(e))
+            # print("Unable to retrieve IP address: %s" % str(e))
             return "0.0.0.0"
         ans = s.getsockname()[0]
         return ans
@@ -296,3 +297,49 @@ class CairoSurfaceLoader(GObject.Object):
                 return surface
         except:
             self.emit("error")
+
+class NetworkMonitor(GObject.Object):
+    __gsignals__ = {
+        "state-changed": (GObject.SignalFlags.RUN_LAST, None, (bool,))
+    }
+
+    def __init__(self):
+        GObject.Object.__init__(self)
+        self.source_id = 0
+        self.online = False
+
+        self.check_online()
+
+    def start(self):
+        self.stop()
+        self.source_id = GLib.timeout_add_seconds(4, self._recheck_state)
+
+    def stop(self):
+        if self.source_id > 0:
+            GLib.source_remove(self.source_id)
+            self.source_id = 0
+
+    def _recheck_state(self):
+        self.check_online()
+
+        return GLib.SOURCE_CONTINUE
+
+    def check_online(self):
+        old_online = self.online
+        self.online = get_ip() != "0.0.0.0"
+        if self.online != old_online:
+            self.emit("state-changed", self.online)
+
+class AboutDialog():
+    def __init__(self, parent):
+        dialog = Gtk.AboutDialog(parent=parent,
+                                 title=_("About"),
+                                 program_name="Warp",
+                                 icon_name="warp",
+                                 logo_icon_name="warp",
+                                 comments=_("Send and Receive Files across the Network"),
+                                 version=config.VERSION,
+                                 license_type=Gtk.License.GPL_3_0)
+
+        dialog.run()
+        dialog.destroy()

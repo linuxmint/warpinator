@@ -2,10 +2,11 @@ import os
 import gettext
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
-from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton
-from gi.repository import Gtk, Gio, GLib
+from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
+from gi.repository import Gtk, Gio, GLib, GObject
 
 import config
+import auth
 
 _ = gettext.gettext
 
@@ -97,10 +98,6 @@ class Preferences():
 
         section.add_reveal_row(widget, PREFS_SCHEMA, TRAY_ICON_KEY)
 
-        # widget = GSettingsSwitch(_("Pin the window by default"),
-        #                          PREFS_SCHEMA, START_PINNED_KEY)
-        # section.add_row(widget)
-
         widget = GSettingsSwitch(_("Start automatically"),
                                  PREFS_SCHEMA, AUTOSTART_KEY)
         section.add_row(widget)
@@ -126,24 +123,54 @@ class Preferences():
 
         section = page.add_section(_("Network"))
 
+        entry_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.VERTICAL)
+        button_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.BOTH)
+
+        widget = GroupCodeEntry(_("Group Code"),
+                                tooltip=_("You cannot communicate with computers that do not use the same code."),
+                                entry_size_group=entry_size_group,
+                                button_size_group=button_size_group)
+
+        section.add_row(widget)
+
         widget = PortSpinButton(_("Incoming port for transfers"),
-                                mini=1024, maxi=49151, step=1, page=10, size_group=size_group)
+                                mini=1024, maxi=49151, step=1, page=10,
+                                size_group=size_group,
+                                entry_size_group=entry_size_group,
+                                button_size_group=button_size_group)
 
         section.add_row(widget)
 
         widget = SettingsWidget()
 
-        label = Gtk.Label(use_markup=True, label=_("""\
-<b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers
+        button = Gtk.Button(label=_("Example gufw firewall rule"), valign=Gtk.Align.CENTER)
+        button.connect("clicked", self.show_sample_rule_image)
+
+        widget.pack_end(button, False, False, 0)
+
+        label = Gtk.Label(use_markup=True, wrap=True, xalign=0.0, label=_("""\
+<b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers \
 can make it simpler to add firewall exceptions if necessary."""))
-        widget.add(label)
+        widget.pack_start(label, True, True, 0)
 
         section.add_row(widget)
 
         self.window.show_all()
 
+    def show_sample_rule_image(self, widget):
+        popup = Gtk.Dialog()
+
+        image = Gtk.Image.new_from_file(os.path.join(config.pkgdatadir, "gufw-example.png"))
+        image.show()
+        popup.get_content_area().add(image)
+        popup.run()
+        popup.destroy()
+
 class PortSpinButton(SpinButton):
     def __init__(self, *args, **kargs):
+        button_size_group = kargs.pop("button_size_group")
+        entry_size_group = kargs.pop("entry_size_group")
+
         super(PortSpinButton, self).__init__(*args, **kargs)
 
         self.old_port = get_port()
@@ -155,8 +182,10 @@ class PortSpinButton(SpinButton):
         self.accept_button.set_sensitive(False)
         self.accept_button.get_style_context().add_class("suggested-action")
         self.accept_button.connect("clicked", self.apply_clicked)
+        button_size_group.add_widget(self.accept_button)
 
         self.content_widget.set_value(get_port())
+        entry_size_group.add_widget(self.content_widget)
 
         self.pack_end(self.accept_button, False, False, 0)
         self.reorder_child(self.accept_button, 1)
@@ -176,3 +205,53 @@ class PortSpinButton(SpinButton):
     def apply_clicked(self, widget, data=None):
         self.my_settings.set_int(PORT_KEY, int(self.content_widget.get_value()))
         self.accept_button.set_sensitive(False)
+
+class GroupCodeEntry(Entry):
+    def __init__(self, *args, **kargs):
+        button_size_group = kargs.pop("button_size_group")
+        entry_size_group = kargs.pop("entry_size_group")
+
+        super(GroupCodeEntry, self).__init__(*args, **kargs)
+
+        self.code = auth.get_singleton().get_group_code().decode()
+        self.content_widget.set_text(self.code)
+
+        entry_size_group.add_widget(self.content_widget)
+        self.content_widget.connect("changed", self.text_changed)
+
+        self.set_child_packing(self.content_widget, False, False, 0, Gtk.PackType.END)
+        self.set_spacing(6)
+
+        self.accept_button = Gtk.Button(label=_("Set code"))
+        self.accept_button.show()
+        self.accept_button.set_sensitive(False)
+        self.accept_button.get_style_context().add_class("suggested-action")
+        self.accept_button.connect("clicked", self.apply_clicked)
+        button_size_group.add_widget(self.accept_button)
+
+        self.pack_end(self.accept_button, False, False, 0)
+        self.reorder_child(self.accept_button, 1)
+
+    def text_changed(self, widget, data=None):
+        text = self.content_widget.get_text()
+
+        if text == "":
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
+            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("A group code is required."))
+            self.accept_button.set_sensitive(False)
+            return
+
+        if len(text) < 8:
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-warning-symbolic")
+            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code should be longer if possible."))
+        else:
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
+
+        self.accept_button.set_sensitive(self.content_widget.get_text() != self.code)
+
+    def apply_clicked(self, widget, data=None):
+        self.code = self.content_widget.get_text()
+        self.accept_button.set_sensitive(False)
+        auth.get_singleton().save_group_code(self.code)
+
+

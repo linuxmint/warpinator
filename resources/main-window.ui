@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
-<interface>
+<interface domain="warp">
   <requires lib="gtk+" version="3.20"/>
   <requires lib="xapp" version="0.0"/>
   <object class="GtkImage" id="image1">
@@ -22,7 +22,6 @@
   </object>
   <object class="XAppGtkWindow" id="main_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Warp</property>
     <property name="window_position">center</property>
     <property name="default_width">800</property>
     <property name="default_height">500</property>
@@ -78,7 +77,7 @@
               <object class="GtkLabel" id="app_local_name">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">joe@hostname</property>
+                <property name="label" translatable="no">joe@hostname</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -90,7 +89,7 @@
               <object class="GtkLabel" id="app_ip">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">192.168.10.2</property>
+                <property name="label" translatable="no">192.168.10.2</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -234,7 +233,6 @@
               </object>
               <packing>
                 <property name="name">overview</property>
-                <property name="title" translatable="yes">page0</property>
               </packing>
             </child>
             <child>
@@ -309,7 +307,7 @@
                                   <object class="GtkLabel" id="user_display_name">
                                     <property name="can_focus">False</property>
                                     <property name="no_show_all">True</property>
-                                    <property name="label" translatable="yes">Joe Blow</property>
+                                    <property name="label" translatable="no">Joe Blow</property>
                                     <property name="xalign">0</property>
                                     <attributes>
                                       <attribute name="weight" value="bold"/>
@@ -325,7 +323,7 @@
                                   <object class="GtkLabel" id="user_hostname">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">joe@hostname</property>
+                                    <property name="label" translatable="no">joe@hostname</property>
                                     <property name="xalign">0</property>
                                   </object>
                                   <packing>
@@ -361,7 +359,7 @@
                               <object class="GtkLabel" id="user_ip">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">192.168.1.200</property>
+                                <property name="label" translatable="no">192.168.1.200</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -570,7 +568,6 @@
               </object>
               <packing>
                 <property name="name">user</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -603,13 +600,11 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="no_clients">
+                      <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">No other computers found...</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
+                        <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;No other computers found...&lt;/b&gt;&lt;/big&gt;</property>
+                        <property name="use_markup">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -618,18 +613,125 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkGrid">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">Is Warpinator running on other computers on this network? If so, check your network connectivity and your firewall rules.</property>
-                        <property name="wrap">True</property>
-                        <property name="max_width_chars">60</property>
+                        <property name="row_spacing">5</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label">•</property>
+                            <property name="width_chars">3</property>
+                            <property name="max_width_chars">3</property>
+                            <property name="yalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label">•</property>
+                            <property name="width_chars">3</property>
+                            <property name="max_width_chars">3</property>
+                            <property name="yalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label">•</property>
+                            <property name="width_chars">3</property>
+                            <property name="max_width_chars">3</property>
+                            <property name="yalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Make sure your network connection is active.</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">60</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Check your firewall rules.  The port number can be changed.  See preferences for more details.</property>
+                            <property name="use_markup">True</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">60</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Is Warpinator running on any other computers on this network?  If so, make sure they are all using the same group code in preferences.</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">60</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="margin_top">10</property>
+                            <property name="margin_bottom">5</property>
+                            <property name="label" translatable="yes">Possible solutions:</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </object>
@@ -642,7 +744,6 @@
               </object>
               <packing>
                 <property name="name">no-remotes</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -678,11 +779,9 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">Initializing, please wait...</property>
+                        <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Initializing, please wait...&lt;/b&gt;&lt;/big&gt;</property>
+                        <property name="use_markup">True</property>
                         <property name="max_width_chars">60</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -700,7 +799,6 @@
               </object>
               <packing>
                 <property name="name">startup</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">3</property>
               </packing>
             </child>
@@ -736,10 +834,8 @@
                       <object class="GtkLabel" id="no_clients2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Something went wrong</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
+                        <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Something went wrong&lt;/b&gt;&lt;/big&gt;</property>
+                        <property name="use_markup">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -748,13 +844,15 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="something_went_wrong_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">Startup was unsuccessful, please check your logs.</property>
                         <property name="wrap">True</property>
                         <property name="max_width_chars">60</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -772,7 +870,6 @@
               </object>
               <packing>
                 <property name="name">server-problem</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">4</property>
               </packing>
             </child>
@@ -824,7 +921,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">/home/mike/bucket</property>
+                        <property name="label"> </property>
                         <property name="ellipsize">middle</property>
                         <property name="single_line_mode">True</property>
                         <property name="max_width_chars">60</property>
@@ -863,7 +960,6 @@
               </object>
               <packing>
                 <property name="name">bad-save-folder</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">5</property>
               </packing>
             </child>
@@ -900,11 +996,9 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">Searching for other computers</property>
+                        <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Searching for other computers&lt;/b&gt;&lt;/big&gt;</property>
+                        <property name="use_markup">True</property>
                         <property name="max_width_chars">60</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -922,7 +1016,6 @@
               </object>
               <packing>
                 <property name="name">discovery</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">6</property>
               </packing>
             </child>
@@ -959,11 +1052,9 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">center</property>
-                        <property name="label" translatable="yes">Shutting down...</property>
+                        <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Shutting down...&lt;/b&gt;&lt;/big&gt;</property>
+                        <property name="use_markup">True</property>
                         <property name="max_width_chars">60</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -981,7 +1072,6 @@
               </object>
               <packing>
                 <property name="name">shutdown</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">7</property>
               </packing>
             </child>

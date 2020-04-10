@@ -14,7 +14,8 @@ from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 import config
 import prefs
 import util
-import machines
+import server
+import auth
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
@@ -29,7 +30,11 @@ gettext.bindtextdomain(config.PACKAGE, config.localedir)
 gettext.textdomain(config.PACKAGE)
 _ = gettext.gettext
 
+
 setproctitle.setproctitle("warp")
+
+SERVER_START_TIMEOUT = 3
+DISCOVERY_TIMEOUT = 3
 
 ICON_ONLINE = ""
 ICON_OFFLINE = "network-offline-symbolic"
@@ -443,7 +448,7 @@ class WarpWindow(GObject.Object):
         self.app_display_name_label = self.builder.get_object("app_display_name")
         self.app_ip_label = self.builder.get_object("app_ip")
         self.app_local_name_label = self.builder.get_object("app_local_name")
-        self.something_wrong_box = self.builder.get_object("no_clients")
+        self.something_wrong_label = self.builder.get_object("something_went_wrong_label")
         self.bad_save_folder_label = self.builder.get_object("bad_save_folder_label")
 
         # user view
@@ -490,6 +495,10 @@ class WarpWindow(GObject.Object):
         item.connect("activate", self.open_preferences)
         menu.add(item)
 
+        item = Gtk.MenuItem(label=_("About"))
+        item.connect("activate", self.show_about)
+        menu.add(item)
+
         item = Gtk.MenuItem(label=_("Quit"))
         item.connect("activate", self.menu_quit)
         menu.add(item)
@@ -515,6 +524,9 @@ class WarpWindow(GObject.Object):
 
         self.update_local_user_info()
 
+    def show_about(self, widget):
+        util.AboutDialog(self.window)
+
     def window_delete_event(self, widget, event, data=None):
         if prefs.use_tray_icon():
             self.window.hide()
@@ -536,6 +548,9 @@ class WarpWindow(GObject.Object):
         if self.window.is_active():
             self.window.hide()
         else:
+            self.show(time)
+
+    def show(self, time=0):
             if not self.window.get_visible():
                 self.window.present()
             else:
@@ -567,14 +582,18 @@ class WarpWindow(GObject.Object):
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
 
-        print("start startup - restarting: ", restarting)
         self.server_restarting = restarting
 
-        self.server_start_timeout_id = GLib.timeout_add_seconds(6, self.server_not_started_timeout)
+        self.server_start_timeout_id = GLib.timeout_add_seconds(SERVER_START_TIMEOUT, self.server_not_started_timeout)
         self.view_stack.set_visible_child_name("startup")
 
     def server_not_started_timeout(self):
         self.view_stack.set_visible_child_name("server-problem")
+
+        if util.get_ip() == "0.0.0.0":
+            self.something_wrong_label.set_text(_("You don't appear to be connected to a network."))
+        else:
+            self.something_wrong_label.set_text(_("Startup was unsuccessful, please check your logs."))
 
         self.server_start_timeout_id = 0
         return False
@@ -646,7 +665,7 @@ class WarpWindow(GObject.Object):
         util.open_save_folder()
 
     def open_preferences(self, menuitem, data=None):
-        prefs.Preferences(self.window)
+        pref_window = prefs.Preferences(self.window)
 
     def report_bad_save_folder(self):
         self.bad_save_folder_label.set_text(prefs.get_save_path())
@@ -660,6 +679,8 @@ class WarpWindow(GObject.Object):
         if self.server_start_timeout_id > 0:
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
+
+        remote_machine.connect("focus-remote", self.focus_remote_machine)
 
         button = OverviewButton(remote_machine, simulated)
         button.connect("update-sort", self.sort_buttons)
@@ -687,6 +708,15 @@ class WarpWindow(GObject.Object):
 
         self.sort_buttons()
 
+    def focus_remote_machine(self, remote_machine, data=None):
+        if self.current_selected_remote_machine != None:
+            self.cleanup_user_view()
+
+        self.switch_to_user_view(remote_machine)
+
+        if not self.window.is_active():
+            self.toggle_visibility()
+
     def display_shutdown(self):
         self.view_stack.set_visible_child_name("shutdown")
 
@@ -700,7 +730,7 @@ class WarpWindow(GObject.Object):
         self.start_discovery_timer()
 
     def start_discovery_timer(self):
-        print("start discovey")
+        # print("start discovery")
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
             self.discovery_time_out_id = 0
@@ -711,11 +741,11 @@ class WarpWindow(GObject.Object):
         if self.server_restarting:
             return
 
-        self.discovery_time_out_id = GLib.timeout_add_seconds(6, self.discovery_timed_out)
+        self.discovery_time_out_id = GLib.timeout_add_seconds(DISCOVERY_TIMEOUT, self.discovery_timed_out)
         self.view_stack.set_visible_child_name("discovery")
 
     def discovery_timed_out(self):
-        print("discovery timeout")
+        # print("discovery timeout")
         self.view_stack.set_visible_child_name("no-remotes")
         self.discovery_time_out_id = 0
         return False
@@ -839,13 +869,16 @@ class WarpWindow(GObject.Object):
         if not self.server_restarting:
             self.view_stack.set_visible_child_name("overview")
 
-        self.current_selected_remote_machine.stamp_recent_time()
+        self.cleanup_user_view()
 
+    def cleanup_user_view(self):
         # clear new op notification on overview button for the one
         # we just visited.
         buttons = self.user_list_box.get_children()
 
         if self.current_selected_remote_machine != None:
+            self.current_selected_remote_machine.stamp_recent_time()
+
             for child in buttons:
                 if child.connect_name == self.current_selected_remote_machine.connect_name:
                     child._delegate.clear_new_op_highlighting()
@@ -895,18 +928,23 @@ class WarpWindow(GObject.Object):
         self.window.destroy()
 
 class WarpApplication(Gtk.Application):
-    def __init__(self):
-        super(WarpApplication, self).__init__(application_id="com.linuxmint.warp",
-                                              flags=Gio.ApplicationFlags.IS_SERVICE)
+    def __init__(self, testing=False):
+        super(WarpApplication, self).__init__(application_id="com.linuxmint.warp")
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
         self.server_restarting = False
 
+        self.test_mode = testing
+
         self.bad_folder = False
 
         self.inhibit_count = 0
         self.inhibit_cookie = 0
+
+        self.netmon = util.NetworkMonitor()
+        self.netmon.connect("state-changed", self.network_state_changed)
+        self.netmon.start()
 
         self.server = None
         self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
@@ -916,22 +954,30 @@ class WarpApplication(Gtk.Application):
         print("Initializing Warp\n")
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
+        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
 
         vt = GLib.VariantType.new("s")
 
         action = Gio.SimpleAction.new("notification-response", vt)
         self.add_action(action)
 
-        self.activate()
-
     def do_activate(self):
+        if self.window != None:
+            self.window.show()
+            return
+
+        if self.status_icon == None:
+            self.update_status_icon_from_preferences()
+
         if self.window == None:
             self.setup_window()
 
-        self.try_activation()
+        self.window.start_startup_timer(restarting=False)
+
+        if util.get_ip() != "0.0.0.0":
+            self.try_activation()
 
     def try_activation(self):
-        self.window.start_startup_timer(restarting=False)
         self.window.update_local_user_info()
 
         try:
@@ -957,50 +1003,33 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
             return
 
-        if util.get_ip() == "0.0.0.0":
-            print("No ip address - check your network connection.")
-            GLib.timeout_add_seconds(5, self.recheck_ip_address)
-            return
-
-        print("Starting server on %s\n" % util.get_ip())
+        print("Starting server on %s" % util.get_ip())
         self.start_server(restarting=False)
 
-        if self.status_icon == None:
-            self.update_status_icon_from_preferences()
-
-    def recheck_ip_address(self):
-        if util.get_ip() == "0.0.0.0":
-            print("Still no network...")
-            return GLib.SOURCE_CONTINUE
-
-        print("Connected to a network")
-        GLib.idle_add(self.try_activation)
-
-        return GLib.SOURCE_REMOVE
-
     def add_simulated_widgets(self):
-        if len(sys.argv) == 2 and sys.argv[1] == "test":
+        if self.test_mode:
             import testing
             testing.add_simulated_widgets(w)
 
     def start_server(self, restarting=False):
         self.window.start_startup_timer(restarting)
 
-        def ok_to_restart(server):
-            self.server = machines.LocalMachine()
+        def ok_to_restart():
+            self.server = server.Server()
             self.server.connect("server-started", self._server_started)
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+            self.update_status_icon_online_state(online=True)
             self.server_restarting = False
 
         if self.server:
             self.server_restarting = True
 
-            self.server.connect("shutdown-complete", ok_to_restart)
+            self.server.connect("shutdown-complete", lambda srv: ok_to_restart())
             self.server.shutdown()
         else:
-            ok_to_restart(None);
+            ok_to_restart();
 
     def shutdown(self, window=None):
         print("Beginning shutdown")
@@ -1011,6 +1040,8 @@ class WarpApplication(Gtk.Application):
 
         self.window.display_shutdown()
 
+        self.netmon.stop()
+
         if self.server:
             self.server.disconnect_by_func(self._remote_removed)
             self.server.connect("shutdown-complete", self.ok_for_app_quit)
@@ -1019,6 +1050,7 @@ class WarpApplication(Gtk.Application):
             self.ok_for_app_quit(None)
 
     def ok_for_app_quit(self, local_machine):
+        self.update_status_icon_online_state(online=False)
         self.window.destroy()
         print("Quitting..")
         self.quit()
@@ -1047,6 +1079,9 @@ class WarpApplication(Gtk.Application):
             self.current_port = prefs.get_port()
             self.start_server(restarting=True)
 
+    def on_group_code_changed(self, auth_manager):
+        self.start_server(restarting=True)
+
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)
         remote_machine.connect("machine-info-changed", self.rebuild_status_icon_menu)
@@ -1066,6 +1101,20 @@ class WarpApplication(Gtk.Application):
     def _server_started(self, local_machine):
         self.window.notify_server_started()
         self.add_simulated_widgets()
+
+    def network_state_changed(self, netmon, online):
+        self.update_status_icon_online_state(online)
+
+        if online:
+            if self.server == None:
+                self.window.start_startup_timer()
+                self.try_activation()
+            else:
+                self.current_port = prefs.get_port()
+                self.start_server(restarting=True)
+                self.window.update_local_user_info()
+        else:
+            self.window.start_startup_timer()
 
     def update_inhibitor_state(self, local_machine):
         any_active_ops = False
@@ -1099,8 +1148,8 @@ class WarpApplication(Gtk.Application):
         if prefs.use_tray_icon():
             if self.status_icon == None:
                 self.status_icon = XApp.StatusIcon()
-                self.status_icon.set_icon_name("warp-symbolic")
                 self.status_icon.connect("activate", self.on_tray_icon_activate)
+                self.update_status_icon_online_state(self.server != None)
                 self.hold()
             self.rebuild_status_icon_menu()
         else:
@@ -1109,12 +1158,27 @@ class WarpApplication(Gtk.Application):
                 self.status_icon = None
                 self.release()
 
+    def update_status_icon_online_state(self, online=True):
+        if self.status_icon == None:
+            return
+
+        if online:
+            self.status_icon.set_icon_name("warp-symbolic")
+            self.status_icon.set_tooltip_text("Online")
+        else:
+            self.status_icon.set_icon_name("warp-offline-symbolic")
+            self.status_icon.set_tooltip_text("Offline")
+
+        self.rebuild_status_icon_menu()
+
     def rebuild_status_icon_menu(self, remote_machine=None):
         if self.status_icon == None:
             return
 
         menu = Gtk.Menu()
-        self.add_favorite_entries(menu)
+
+        if self.server != None:
+            self.add_favorite_entries(menu)
 
         item = Gtk.MenuItem(label=_("Open save folder"))
         item.connect("activate", lambda m: util.open_save_folder())
@@ -1204,13 +1268,19 @@ class WarpApplication(Gtk.Application):
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
 
-
 def main():
+    test_mode = False
+    args = sys.argv
 
-    w = WarpApplication()
+    # Handling test mode this way keeps from having to use GApplication.handle_command_line
+    if len(sys.argv) == 2 and sys.argv[1] == "test":
+        test_mode = True
+        args = [sys.argv[0]]
+
+    w = WarpApplication(test_mode)
 
     try:
-        w.run(sys.argv)
+        w.run(args)
     except KeyboardInterrupt:
         w.shutdown()
 

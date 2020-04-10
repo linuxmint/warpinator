@@ -16,7 +16,6 @@ service Warp {
     rpc StopTransfer(StopInfo) returns (VoidType) {}
 
     rpc Ping(VoidType) returns (VoidType) {}
-    // rpc CanYouSeeMe(VoidType) returns (Visible) {}
 }
 
 message RemoteMachineInfo {
