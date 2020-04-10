@@ -1,7 +1,7 @@
 import random
 
 from gi.repository import GLib, Gio
-import machines
+import remote
 import ops
 import util
 import transfers
@@ -53,10 +53,9 @@ TEST_OPS = [
 
 def add_simulated_widgets(app):
     local_machine = app.server
-
     for entry in TEST_REMOTES:
         display_name, name, user_name, hostname, ip, port, status, num_ops = entry
-        machine = machines.RemoteMachine(name, hostname, ip, port, local_machine.service_name)
+        machine = remote.RemoteMachine(name, hostname, ip, port, local_machine.service_name)
 
         local_machine.remote_machines[name] = machine
         machine.connect("ops-changed", local_machine.remote_ops_changed)

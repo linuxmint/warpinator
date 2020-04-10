@@ -928,12 +928,14 @@ class WarpWindow(GObject.Object):
         self.window.destroy()
 
 class WarpApplication(Gtk.Application):
-    def __init__(self):
+    def __init__(self, testing=False):
         super(WarpApplication, self).__init__(application_id="com.linuxmint.warp")
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
         self.server_restarting = False
+
+        self.test_mode = testing
 
         self.bad_folder = False
 
@@ -1005,7 +1007,7 @@ class WarpApplication(Gtk.Application):
         self.start_server(restarting=False)
 
     def add_simulated_widgets(self):
-        if len(sys.argv) == 2 and sys.argv[1] == "test":
+        if self.test_mode:
             import testing
             testing.add_simulated_widgets(w)
 
@@ -1267,11 +1269,18 @@ class WarpApplication(Gtk.Application):
         self.window.toggle_visibility(time)
 
 if __name__ == "__main__":
+    test_mode = False
+    args = sys.argv
 
-    w = WarpApplication()
+    # Handling test mode this way keeps from having to use GApplication.handle_command_line
+    if len(sys.argv) == 2 and sys.argv[1] == "test":
+        test_mode = True
+        args = [sys.argv[0]]
+
+    w = WarpApplication(test_mode)
 
     try:
-        w.run(sys.argv)
+        w.run(args)
     except KeyboardInterrupt:
         w.shutdown()
 
