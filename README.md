@@ -31,6 +31,8 @@ _____
 - python3-xapp (>= 1.6.0)
 - python3-zeroconf
 - python3-grpcio (>= 1.16.0)
+- python3-cryptography
+- python3-nacl
 ##### You can get grpcio and grpc-tools from pip3 also:
 ```
 pip3 install grpcio grpcio-tools
