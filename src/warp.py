@@ -1268,7 +1268,7 @@ class WarpApplication(Gtk.Application):
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
 
-if __name__ == "__main__":
+def main():
     test_mode = False
     args = sys.argv
 
@@ -1285,3 +1285,6 @@ if __name__ == "__main__":
         w.shutdown()
 
     exit(0)
+
+if __name__ == "__main__":
+    main()

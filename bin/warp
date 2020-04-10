@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 
-import subprocess
+import sys
+
+sys.path.insert(0, "/usr/libexec/warp/")
 
 try:
-    subprocess.call(["python3", "/usr/libexec/warp/warp.py"])
+    import warp
+    warp.main()
 except KeyboardInterrupt:
-    exit(0)
+    sys.exit(0)
