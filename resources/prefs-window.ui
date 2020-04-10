@@ -5,7 +5,9 @@
   <requires lib="xapp" version="0.0"/>
   <object class="XAppGtkWindow" id="prefs_window">
     <property name="can_focus">False</property>
+    <property name="valign">start</property>
     <property name="modal">True</property>
+    <property name="default_width">800</property>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
@@ -22,6 +24,7 @@
       <object class="GtkBox" id="content_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="valign">start</property>
         <property name="margin_bottom">26</property>
         <property name="orientation">vertical</property>
         <child>

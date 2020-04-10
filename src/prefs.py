@@ -127,7 +127,7 @@ class Preferences():
         button_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.BOTH)
 
         widget = GroupCodeEntry(_("Group Code"),
-                                tooltip=_("You cannot communicate with computers that do use the same code."),
+                                tooltip=_("You cannot communicate with computers that do not use the same code."),
                                 entry_size_group=entry_size_group,
                                 button_size_group=button_size_group)
 
@@ -143,13 +143,13 @@ class Preferences():
 
         widget = SettingsWidget()
 
-        button = Gtk.Button(_("Example gufw firewall rule"))
+        button = Gtk.Button(label=_("Example gufw firewall rule"), valign=Gtk.Align.CENTER)
         button.connect("clicked", self.show_sample_rule_image)
 
         widget.pack_end(button, False, False, 0)
 
-        label = Gtk.Label(use_markup=True, label=_("""\
-<b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers
+        label = Gtk.Label(use_markup=True, wrap=True, xalign=0.0, label=_("""\
+<b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers \
 can make it simpler to add firewall exceptions if necessary."""))
         widget.pack_start(label, True, True, 0)
 
@@ -211,7 +211,7 @@ class GroupCodeEntry(Entry):
         button_size_group = kargs.pop("button_size_group")
         entry_size_group = kargs.pop("entry_size_group")
 
-        super(GroupCodeEntry, self).__init__(*args, kargs["tooltip"])
+        super(GroupCodeEntry, self).__init__(*args, **kargs)
 
         self.code = auth.get_singleton().get_group_code().decode()
         self.content_widget.set_text(self.code)
