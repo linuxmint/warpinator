@@ -215,6 +215,7 @@ class GroupCodeEntry(Entry):
 
         self.code = auth.get_singleton().get_group_code().decode()
         self.content_widget.set_text(self.code)
+
         entry_size_group.add_widget(self.content_widget)
         self.content_widget.connect("changed", self.text_changed)
 
@@ -232,6 +233,20 @@ class GroupCodeEntry(Entry):
         self.reorder_child(self.accept_button, 1)
 
     def text_changed(self, widget, data=None):
+        text = self.content_widget.get_text()
+
+        if text == "":
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
+            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("A group code is required."))
+            self.accept_button.set_sensitive(False)
+            return
+
+        if len(text) < 8:
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-warning-symbolic")
+            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code should be longer if possible."))
+        else:
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
+
         self.accept_button.set_sensitive(self.content_widget.get_text() != self.code)
 
     def apply_clicked(self, widget, data=None):

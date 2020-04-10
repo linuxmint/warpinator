@@ -217,10 +217,13 @@ class AuthManager(GObject.Object):
 
         file_bytes = self._load_bytes(path)
 
-        if file_bytes == None:
+        def default_code():
             code = bytes(DEFAULT_GROUP_CODE, "utf-8")
             self.save_group_code(DEFAULT_GROUP_CODE)
             return code
+
+        if file_bytes == None:
+            return default_code()
 
         code = None
 
@@ -229,6 +232,13 @@ class AuthManager(GObject.Object):
             if line.startswith(CODE_LABEL):
                 code = line.strip().replace(CODE_LABEL, b"")
                 break
+
+        if code == None or code == b"":
+            print ("Code file contains no code, setting to default")
+            return default_code()
+
+        if len(code) < 8:
+            print("******** Group Code is short, consider something longer than 8 characters.")
 
         return code
 
