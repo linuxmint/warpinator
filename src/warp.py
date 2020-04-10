@@ -1269,6 +1269,8 @@ class WarpApplication(Gtk.Application):
         self.window.toggle_visibility(time)
 
 def main():
+    import signal
+
     test_mode = False
     args = sys.argv
 
@@ -1279,12 +1281,9 @@ def main():
 
     w = WarpApplication(test_mode)
 
-    try:
-        w.run(args)
-    except KeyboardInterrupt:
-        w.shutdown()
+    signal.signal(signal.SIGINT, lambda s, f: w.shutdown())
 
-    exit(0)
+    return w.run(args)
 
 if __name__ == "__main__":
     main()

@@ -6,6 +6,8 @@ sys.path.insert(0, "/usr/libexec/warp/")
 
 try:
     import warp
-    warp.main()
-except KeyboardInterrupt:
-    sys.exit(0)
+    sys.exit(warp.main())
+except Exception as e:
+    print(e)
+    sys.exit(1)
+

@@ -77,8 +77,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         if name == self.service_name or not name.count("warp"):
             return
 
-        print("Service %s removed" % (name,))
-
         try:
             self.emit_remote_machine_removed(self.remote_machines[name])
             self.remote_machines[name].shutdown()
@@ -168,7 +166,9 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
     def shutdown(self):
         remote_machines = list(self.remote_machines.values())
         for machine in remote_machines:
-            self.remove_service(self.zeroconf, None, machine.connect_name)
+            self.emit_remote_machine_removed(machine)
+            machine.shutdown()
+            del self.remote_machines[machine.connect_name]
 
         remote_machines = None
 

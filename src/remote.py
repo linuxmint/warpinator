@@ -52,7 +52,7 @@ class RemoteMachine(GObject.Object):
         self.changed_source_id = 0
 
         self.need_shutdown = False
-        self.connect_loop_cancelled = True
+        self.connected = False
 
         self.sort_key = self.hostname
         self.local_service_name = local_service_name
@@ -62,7 +62,6 @@ class RemoteMachine(GObject.Object):
     @util._async
     def start(self):
         self.need_shutdown = False
-        self.connect_loop_cancelled = False
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
@@ -81,6 +80,7 @@ class RemoteMachine(GObject.Object):
                     try:
                         future.result(timeout=2)
                         self.stub = warp_pb2_grpc.WarpStub(channel)
+                        self.connected = True
                         break
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
@@ -98,8 +98,8 @@ class RemoteMachine(GObject.Object):
                 while not self.need_shutdown:
                     try:
                         self.stub.Ping(void, timeout=2)
-                        self.set_remote_status(RemoteStatus.ONLINE)
                         if not one_ping:
+                            self.set_remote_status(RemoteStatus.ONLINE)
                             self.update_remote_machine_info()
                             self.update_remote_machine_avatar()
                             one_ping = True
@@ -115,6 +115,8 @@ class RemoteMachine(GObject.Object):
 
         while run_secure_loop(cert):
             continue
+
+        self.connected = False
 
     @util._async
     def update_remote_machine_info(self):
@@ -394,8 +396,8 @@ class RemoteMachine(GObject.Object):
                 return op
 
     def shutdown(self):
-        print("Shutdown - closing connection to remote machine '%s'" % self.connect_name)
+        print("Shutdown - closing connection to remote machine '%s'" % self.hostname)
         self.set_remote_status(RemoteStatus.OFFLINE)
         self.need_shutdown = True
-        while not self.connect_loop_cancelled:
+        while self.connected:
             time.sleep(1)
