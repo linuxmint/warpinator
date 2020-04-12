@@ -13,7 +13,7 @@ from nacl import secret
 import hashlib
 import base64
 
-from gi.repository import GLib, GObject
+from gi.repository import GLib, GObject, Gio
 
 import util
 
@@ -21,7 +21,10 @@ day = datetime.timedelta(1, 0, 0)
 EXPIRE_TIME = 30 * day
 
 DEFAULT_GROUP_CODE = "Warpinator"
-CODE_LABEL = b"groupcode="
+KEYFILE_GROUP_NAME = "warp"
+KEYFILE_CODE_KEY = "code"
+CODEFILE_NAME = ".group"
+
 CONFIG_FOLDER = os.path.join(GLib.get_user_config_dir(), "warp")
 CERT_FOLDER = os.path.join(CONFIG_FOLDER, "remotes")
 
@@ -46,7 +49,20 @@ class AuthManager(GObject.Object):
         GObject.Object.__init__(self)
         self.hostname = util.get_hostname()
         self.code = None
+
+        self.keyfile = GLib.KeyFile()
+
+        try:
+            self.keyfile.load_from_file(os.path.join(CONFIG_FOLDER, CODEFILE_NAME), GLib.KeyFileFlags.NONE)
+        except GLib.Error as e:
+            if e.code == GLib.FileError.NOENT:
+                print("No group code file, making one.")
+                pass
+            else:
+                print("Could not load existing settings: %s" % e.message)
+
         self.code = self.get_group_code()
+
 
     def _save_bytes(self, path, file_bytes):
         try:
@@ -215,42 +231,36 @@ class AuthManager(GObject.Object):
     def get_group_code(self):
         path = os.path.join(CONFIG_FOLDER, ".groupcode")
 
-        file_bytes = self._load_bytes(path)
+        code = DEFAULT_GROUP_CODE
 
-        def default_code():
-            code = bytes(DEFAULT_GROUP_CODE, "utf-8")
+        try:
+            code = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY)
+        except GLib.Error as e:
+            if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
+                print("Could not read group code from settings file: %s" % e.message)
             self.save_group_code(DEFAULT_GROUP_CODE)
-            return code
 
-        if file_bytes == None:
-            return default_code()
-
-        code = None
-
-        lines = file_bytes.split(b"\n")
-        for line in lines:
-            if line.startswith(CODE_LABEL):
-                code = line.strip().replace(CODE_LABEL, b"")
-                break
-
-        if code == None or code == b"":
-            print ("Code file contains no code, setting to default")
-            return default_code()
+        if code == "":
+            print ("Settings file contains no code, setting to default")
+            self.save_group_code(DEFAULT_GROUP_CODE)
 
         if len(code) < 8:
             print("******** Group Code is short, consider something longer than 8 characters.")
 
-        return code
+        return bytes(code, "utf-8")
 
-    def save_group_code(self, code, old_code=None):
+    def save_group_code(self, code):
         if bytes(code, "utf-8") == self.code:
             return
 
-        path = os.path.join(CONFIG_FOLDER, ".groupcode")
+        self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
+
+        path = os.path.join(CONFIG_FOLDER, CODEFILE_NAME)
 
         self.code = bytes(code,  "utf-8")
+        keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
 
-        self._save_bytes(path, CODE_LABEL + self.code)
+        self._save_bytes(path, keyfile_bytes)
         self.get_server_creds()
         self.emit("group-code-changed")
 
