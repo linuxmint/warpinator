@@ -1009,7 +1009,7 @@ class WarpApplication(Gtk.Application):
     def add_simulated_widgets(self):
         if self.test_mode:
             import testing
-            testing.add_simulated_widgets(w)
+            testing.add_simulated_widgets(self)
 
     def start_server(self, restarting=False):
         self.window.start_startup_timer(restarting)
