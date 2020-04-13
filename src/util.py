@@ -72,6 +72,7 @@ def create_file_and_folder_picker(parent=None):
 
     chooser.show_all()
     window.get_content_area().add(chooser)
+    window.get_content_area().set_border_width(0)
 
     window.get_uris = chooser.get_uris
     return window
