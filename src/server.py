@@ -80,7 +80,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         try:
             self.emit_remote_machine_removed(self.remote_machines[name])
             self.remote_machines[name].shutdown()
-            del self.remote_machines[name]
+
             print("Removing remote machine '%s'" % name)
         except KeyError:
             print("Removed client we never knew: %s" % name)
@@ -168,7 +168,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         for machine in remote_machines:
             self.emit_remote_machine_removed(machine)
             machine.shutdown()
-            del self.remote_machines[machine.connect_name]
 
         remote_machines = None
 
