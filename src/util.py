@@ -334,9 +334,9 @@ class AboutDialog():
     def __init__(self, parent):
         dialog = Gtk.AboutDialog(parent=parent,
                                  title=_("About"),
-                                 program_name="Warp",
-                                 icon_name="warp",
-                                 logo_icon_name="warp",
+                                 program_name="Warpinator",
+                                 icon_name="warpinator",
+                                 logo_icon_name="warpinator",
                                  comments=_("Send and Receive Files across the Network"),
                                  version=config.VERSION,
                                  license_type=Gtk.License.GPL_3_0)

@@ -1,4 +1,4 @@
-Source: warp
+Source: warpinator
 Section: x11
 Priority: optional
 Maintainer: Linux Mint <root@linuxmint.com>
@@ -12,7 +12,7 @@ Build-Depends:
  gobject-introspection
 Standards-Version: 3.9.6
 
-Package: warp
+Package: warpinator
 Architecture: all
 Pre-Depends: ${misc:Pre-Depends}
 Depends:

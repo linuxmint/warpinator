@@ -21,7 +21,7 @@ from util import TransferDirection, OpStatus, RemoteStatus
 
 # Don't let warp run as root
 if os.getuid() == 0:
-    print("Warp should not be run as root. Please run it in user mode.")
+    print("Warpinator should not be run as root. Please run it in user mode.")
     sys.exit(1)
 
 # i18n
@@ -31,7 +31,7 @@ gettext.textdomain(config.PACKAGE)
 _ = gettext.gettext
 
 
-setproctitle.setproctitle("warp")
+setproctitle.setproctitle("warpinator")
 
 SERVER_START_TIMEOUT = 3
 DISCOVERY_TIMEOUT = 3
@@ -929,7 +929,7 @@ class WarpWindow(GObject.Object):
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
-        super(WarpApplication, self).__init__(application_id="com.linuxmint.warp")
+        super(WarpApplication, self).__init__(application_id="org.x.warpinator")
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
@@ -951,7 +951,7 @@ class WarpApplication(Gtk.Application):
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
-        print("Initializing Warp\n")
+        print("Initializing Warpinator\n")
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
         auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
@@ -1135,7 +1135,7 @@ class WarpApplication(Gtk.Application):
                 print("Inhibiting suspend/logout while transfers are active")
                 self.inhibit_cookie = self.inhibit(self.window.window,
                                                    Gtk.ApplicationInhibitFlags.LOGOUT | Gtk.ApplicationInhibitFlags.SUSPEND,
-                                                   "Warp is sending or receiving files, or there is a pending transfer")
+                                                   "Warpinator is sending or receiving files, or there is a pending transfer")
         else:
             if self.inhibit_cookie > 0:
                 print("No more active transfers, uninhibiting suspend/logout")
@@ -1163,10 +1163,10 @@ class WarpApplication(Gtk.Application):
             return
 
         if online:
-            self.status_icon.set_icon_name("warp-symbolic")
+            self.status_icon.set_icon_name("warpinator-symbolic")
             self.status_icon.set_tooltip_text("Online")
         else:
-            self.status_icon.set_icon_name("warp-offline-symbolic")
+            self.status_icon.set_icon_name("warpinator-offline-symbolic")
             self.status_icon.set_tooltip_text("Offline")
 
         self.rebuild_status_icon_menu()

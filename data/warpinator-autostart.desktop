@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=Warp
+Name=Warpinator
 Comment=Transfer files from one computer to another on the local network
-Icon=warp
-Exec=warp
-AutostartCondition=GSettings com.linuxmint.warp.preferences autostart
+Icon=warpinator
+Exec=warpinator
+AutostartCondition=GSettings org.x.warpinator.preferences autostart
 Categories=GNOME;GTK;Utility;

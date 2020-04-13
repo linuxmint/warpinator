@@ -20,7 +20,7 @@ from grpc_tools import protoc
 import sys
 import os
 
-install_dir = os.path.join(os.environ['MESON_INSTALL_DESTDIR_PREFIX'], 'libexec', 'warp')
+install_dir = os.path.join(os.environ['MESON_INSTALL_DESTDIR_PREFIX'], 'libexec', 'warpinator')
 
 protoc.main((
     '',

@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: warp
+Upstream-Name: warpinator
 Upstream-Contact: Clement Lefebvre <root@linuxmint.com>
-Source: https://github.com/linuxmint/warp
+Source: https://github.com/linuxmint/warpinator
 
 Files: *
 Copyright: 2020 Clement Lefebvre <root@linuxmint.com>

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rm -f warp.pot
-touch warp.pot
-xgettext --package-name=warp --language=Glade --join-existing --add-comments --output=warp.pot resources/*.ui
-xgettext --package-name=warp --language=Python -c --join-existing --keyword=_ --keyword=N_ --output=warp.pot src/*.py
-xgettext --package-name=warp --language=Desktop --join-existing --add-comments \
-          -k --keyword=Name --keyword=Comment --output=warp.pot data/warp.desktop.in
+rm -f warpinator.pot
+touch warpinator.pot
+xgettext --package-name=warpinator --language=Glade --join-existing --add-comments --output=warpinator.pot resources/*.ui
+xgettext --package-name=warpinator --language=Python -c --join-existing --keyword=_ --keyword=N_ --output=warpinator.pot src/*.py
+xgettext --package-name=warpinator --language=Desktop --join-existing --add-comments \
+          -k --keyword=Name --keyword=Comment --output=warpinator.pot data/warpinator.desktop.in

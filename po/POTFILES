@@ -3,12 +3,13 @@ resources/op-item.ui
 resources/overview-button.ui
 resources/prefs-window.ui
 
-src/machines.py
+src/remote.py
 src/notifications.py
 src/ops.py
 src/prefs.py
+src/server.py
 src/transfers.py
 src/util.py
-src/warp.py
+src/warpinator.py
 
-data/warp.desktop.in
+data/warpinator.desktop.in

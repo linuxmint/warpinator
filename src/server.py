@@ -37,7 +37,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
     def __init__(self):
-        self.service_name = "warp.__%s__.__%s__._http._tcp.local." % (util.get_ip(), util.get_hostname())
+        self.service_name = "warpinator.__%s__.__%s__._http._tcp.local." % (util.get_ip(), util.get_hostname())
         super(Server, self).__init__()
         GObject.Object.__init__(self)
 
@@ -74,7 +74,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
     @util._async
     def remove_service(self, zeroconf, _type, name):
-        if name == self.service_name or not name.count("warp"):
+        if name == self.service_name or not name.count("warpinator"):
             return
 
         try:
@@ -89,13 +89,13 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
     def add_service(self, zeroconf, _type, name):
         info = zeroconf.get_service_info(_type, name)
 
-        if info and name.count("warp"):
+        if info and name.count("warpinator"):
             if name == self.service_name:
                 return
 
             # zeroconf service info might have multiple ip addresses, extract it from their 'name',
             # as well as the hostname, since we want to display it whether we get a connection or not.
-            remote_ip, remote_hostname = name.replace("warp.__", "").replace("__._http._tcp.local.", "").split("__.__")
+            remote_ip, remote_hostname = name.replace("warpinator.__", "").replace("__._http._tcp.local.", "").split("__.__")
 
             if not auth.get_singleton().process_remote_cert_b64_dict(remote_hostname, info.properties):
                 print("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))

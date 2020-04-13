@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
-<interface domain="warp">
+<interface domain="warpinator">
   <requires lib="gtk+" version="3.20"/>
   <requires lib="xapp" version="0.0"/>
   <object class="GtkImage" id="image1">
@@ -25,7 +25,7 @@
     <property name="window_position">center</property>
     <property name="default_width">800</property>
     <property name="default_height">500</property>
-    <property name="icon_name">warp</property>
+    <property name="icon_name">warpinator</property>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

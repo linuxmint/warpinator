@@ -10,7 +10,7 @@ import auth
 
 _ = gettext.gettext
 
-PREFS_SCHEMA = "com.linuxmint.warp.preferences"
+PREFS_SCHEMA = "org.x.warpinator.preferences"
 
 FOLDER_NAME_KEY = "receiving-folder"
 START_WITH_WINDOW_KEY = "start-with-window"
@@ -77,7 +77,7 @@ class Preferences():
         self.window = self.builder.get_object("prefs_window")
         self.content_box = self.builder.get_object("content_box")
 
-        self.window.set_title(title=_("Warp Preferences"))
+        self.window.set_title(title=_("Warpinator Preferences"))
         self.window.set_icon_name("preferences-system")
 
         self.window.set_transient_for(transient_for)
@@ -143,7 +143,7 @@ class Preferences():
 
         widget = SettingsWidget()
 
-        button = Gtk.Button(label=_("Example gufw firewall rule"), valign=Gtk.Align.CENTER)
+        button = Gtk.Button(label=_("Sample firewall rule"), valign=Gtk.Align.CENTER)
         button.connect("clicked", self.show_sample_rule_image)
 
         widget.pack_end(button, False, False, 0)

@@ -21,11 +21,11 @@ day = datetime.timedelta(1, 0, 0)
 EXPIRE_TIME = 30 * day
 
 DEFAULT_GROUP_CODE = "Warpinator"
-KEYFILE_GROUP_NAME = "warp"
+KEYFILE_GROUP_NAME = "warpinator"
 KEYFILE_CODE_KEY = "code"
 CODEFILE_NAME = ".group"
 
-CONFIG_FOLDER = os.path.join(GLib.get_user_config_dir(), "warp")
+CONFIG_FOLDER = os.path.join(GLib.get_user_config_dir(), "warpinator")
 CERT_FOLDER = os.path.join(CONFIG_FOLDER, "remotes")
 
 os.makedirs(CERT_FOLDER, 0o700, exist_ok=True)

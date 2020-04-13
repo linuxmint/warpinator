@@ -1,4 +1,4 @@
 usr/bin
-usr/libexec/warp
+usr/libexec/warpinator
 usr/share/*
 /etc/xdg/autostart

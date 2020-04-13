@@ -32,7 +32,7 @@ libexec_py = [
   'server.py',
   'transfers.py',
   'util.py',
-  'warp.py'
+  'warpinator.py'
 ]
 
 install_data(libexec_py,
