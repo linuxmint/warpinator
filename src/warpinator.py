@@ -171,14 +171,14 @@ class OpItem(object):
 
     def refresh_buttons_and_icons(self):
         if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
-            self.direction_image.set_from_icon_name("go-up-symbolic", Gtk.IconSize.LARGE_TOOLBAR)
+            self.direction_image.set_from_icon_name("go-up-symbolic", Gtk.IconSize.BUTTON)
         else:
-            self.direction_image.set_from_icon_name("go-down-symbolic", Gtk.IconSize.LARGE_TOOLBAR)
+            self.direction_image.set_from_icon_name("go-down-symbolic", Gtk.IconSize.BUTTON)
 
         if self.op.status == OpStatus.CALCULATING:
             self.mime_image.clear()
         else:
-            self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.LARGE_TOOLBAR)
+            self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.BUTTON)
 
         self.transfer_size_label.set_text(self.op.size_string)
         self.transfer_description_label.set_text(self.op.description)
