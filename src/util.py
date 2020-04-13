@@ -58,9 +58,9 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
 
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not
 # both in the same dialog.  This does.
-def create_file_and_folder_picker(parent=None):
+def create_file_and_folder_picker(dialog_parent=None):
     window = Gtk.Dialog(title=_("Select file(s) to send"),
-                        parent=None,
+                        parent=dialog_parent,
                         default_width=750,
                         default_height=500)
     window.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL,
