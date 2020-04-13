@@ -76,7 +76,7 @@
               <object class="GtkLabel" id="app_local_name">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="no">joe@hostname</property>
+                <property name="label">joe@hostname</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -88,7 +88,7 @@
               <object class="GtkLabel" id="app_ip">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="no">192.168.10.2</property>
+                <property name="label">192.168.10.2</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -306,7 +306,7 @@
                                   <object class="GtkLabel" id="user_display_name">
                                     <property name="can_focus">False</property>
                                     <property name="no_show_all">True</property>
-                                    <property name="label" translatable="no">Joe Blow</property>
+                                    <property name="label">Joe Blow</property>
                                     <property name="xalign">0</property>
                                     <attributes>
                                       <attribute name="weight" value="bold"/>
@@ -322,7 +322,7 @@
                                   <object class="GtkLabel" id="user_hostname">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="label" translatable="no">joe@hostname</property>
+                                    <property name="label">joe@hostname</property>
                                     <property name="xalign">0</property>
                                   </object>
                                   <packing>
@@ -358,7 +358,7 @@
                               <object class="GtkLabel" id="user_ip">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="no">192.168.1.200</property>
+                                <property name="label">192.168.1.200</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
