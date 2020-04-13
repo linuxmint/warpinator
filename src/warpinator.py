@@ -616,7 +616,7 @@ class WarpWindow(GObject.Object):
         self.current_selected_remote_machine.send_files([uri])
 
     def open_file_picker(self, button, data=None):
-        dialog = util.create_file_and_folder_picker()
+        dialog = util.create_file_and_folder_picker(self.window)
 
         res = dialog.run()
 
@@ -1241,7 +1241,7 @@ class WarpApplication(Gtk.Application):
         self.send_status_icon_selection_to_machine(uri, remote_machine)
 
     def open_file_picker(self, button, remote_machine=None):
-        dialog = util.create_file_and_folder_picker()
+        dialog = util.create_file_and_folder_picker(self.window)
 
         res = dialog.run()
 
