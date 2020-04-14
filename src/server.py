@@ -26,6 +26,7 @@ void = warp_pb2.VoidType()
 
 MAX_CONNECT_RETRIES = 2
 PING_TIME = 5
+SERVICE_TYPE = "_warpinator._tcp.local."
 
 # server
 class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
@@ -37,7 +38,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
     def __init__(self):
-        self.service_name = "warpinator.__%s__.__%s__._http._tcp.local." % (util.get_ip(), util.get_hostname())
+        self.service_name = "%s.%s" % (util.get_hostname(), SERVICE_TYPE)
         super(Server, self).__init__()
         GObject.Object.__init__(self)
 
@@ -60,21 +61,20 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.zeroconf = Zeroconf()
         box_as_props = auth.get_singleton().get_server_cert_b64_dict()
 
-        self.info = ServiceInfo("_http._tcp.local.",
+        self.info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
                                 socket.inet_aton(util.get_ip()),
-                                prefs.get_port(), 0, 0,
-                                box_as_props,
-                                "somehost.local.")
+                                prefs.get_port(),
+                                properties=box_as_props)
 
         self.zeroconf.register_service(self.info)
 
     def start_remote_lookout(self):
-        self.browser = ServiceBrowser(self.zeroconf, "_http._tcp.local.", self)
+        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
 
     @util._async
     def remove_service(self, zeroconf, _type, name):
-        if name == self.service_name or not name.count("warpinator"):
+        if name == self.service_name:
             return
 
         try:
@@ -89,13 +89,12 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
     def add_service(self, zeroconf, _type, name):
         info = zeroconf.get_service_info(_type, name)
 
-        if info and name.count("warpinator"):
+        if info:
             if name == self.service_name:
                 return
 
-            # zeroconf service info might have multiple ip addresses, extract it from their 'name',
-            # as well as the hostname, since we want to display it whether we get a connection or not.
-            remote_ip, remote_hostname = name.replace("warpinator.__", "").replace("__._http._tcp.local.", "").split("__.__")
+            remote_hostname = name.split(".")[0]
+            remote_ip = socket.inet_ntoa(info.address)
 
             if not auth.get_singleton().process_remote_cert_b64_dict(remote_hostname, info.properties):
                 print("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))
