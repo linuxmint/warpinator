@@ -158,7 +158,7 @@ can make it simpler to add firewall exceptions if necessary."""))
         self.window.show_all()
 
     def show_sample_rule_image(self, widget):
-        popup = Gtk.Dialog()
+        popup = Gtk.Dialog(transient_for=self.window, resizable=False)
 
         image = Gtk.Image.new_from_file(os.path.join(config.pkgdatadir, "gufw-example.png"))
         image.show()
