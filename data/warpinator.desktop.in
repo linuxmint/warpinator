@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Warpinator
-Comment=Transfer files from one computer to another on the local network
+Comment=Send and Receive Files across the Network
 Icon=warpinator
 Exec=warpinator
 Categories=GNOME;GTK;Utility;

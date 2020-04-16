@@ -89,7 +89,7 @@ class Preferences():
 
         section = page.add_section(_("Desktop"))
 
-        self.settings_widget = GSettingsSwitch(_("Show a Warpinator icon in the notification area"),
+        self.settings_widget = GSettingsSwitch(_("Show an icon in the notification area"),
                                                PREFS_SCHEMA, TRAY_ICON_KEY)
         section.add_row(self.settings_widget)
 
@@ -148,10 +148,17 @@ class Preferences():
 
         widget.pack_end(button, False, False, 0)
 
-        label = Gtk.Label(use_markup=True, wrap=True, xalign=0.0, label=_("""\
-<b>Note on port numbers</b>: Any port number will work for the application, but using the same port for all computers \
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        widget.pack_start(box, True, True, 0)
+
+        # Pulling in a label with attributes was simpler than trying to add attributes
+        # to a label here - the PangoAttribute python binding for font weight is missing.
+        box.pack_start(self.builder.get_object("port_help_heading"), False, False, 0)
+
+        label = Gtk.Label(wrap=True, xalign=0.0, label=_("""\
+Any port number will work for the application, but using the same port for all computers \
 can make it simpler to add firewall exceptions if necessary."""))
-        widget.pack_start(label, True, True, 0)
+        box.pack_start(label, False, False, 0)
 
         section.add_row(widget)
 

@@ -3,6 +3,15 @@
 <interface domain="warpinator">
   <requires lib="gtk+" version="3.20"/>
   <requires lib="xapp" version="0.0"/>
+  <object class="GtkLabel" id="port_help_heading">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="label" translatable="yes">Note on port numbers:</property>
+    <property name="xalign">0</property>
+    <attributes>
+      <attribute name="weight" value="bold"/>
+    </attributes>
+  </object>
   <object class="XAppGtkWindow" id="prefs_window">
     <property name="can_focus">False</property>
     <property name="valign">start</property>
