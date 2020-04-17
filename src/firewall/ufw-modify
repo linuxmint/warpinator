@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+
+import os
+import sys
+import subprocess
+import re
+
+if os.getuid() != 0:
+    print("Need to be root")
+    sys.exit(1)
+
+# Match n in '[n] 42001/tcp                  ALLOW IN    Anywhere                   # WARPINATOR'
+num_finder = re.compile(r'(?!\[\s+)\d+(?=\])')
+
+try:
+    port = sys.argv[1]
+except IndexError:
+    print("use: ufw-modify <port number to open>")
+    exit(1)
+
+# Remove any old rule for Warpinator
+numbered = subprocess.check_output(["ufw", "status", "numbered"]).decode("utf-8")
+
+found = []
+
+for line in numbered.split("\n"):
+    if "WARPINATOR" in line:
+        try:
+            num = num_finder.search(line)[0]
+            found.append(num)
+        except TypeError:
+            pass
+
+if len(found) > 0:
+    found.reverse()
+    print("Found %d existing rules" % len(found))
+
+    for number in found:
+        subprocess.run(["ufw", "--force", "delete", number])
+
+subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", port, "comment", "WARPINATOR"])
+
+exit(0)

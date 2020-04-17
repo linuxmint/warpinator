@@ -32,9 +32,11 @@ libexec_py = [
   'server.py',
   'transfers.py',
   'util.py',
-  'warpinator.py'
+  'warpinator.py',
 ]
 
 install_data(libexec_py,
   install_dir: install_libdir
 )
+
+subdir('firewall')
