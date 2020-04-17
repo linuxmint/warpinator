@@ -1,3 +1,33 @@
+warpinator (1.0.0) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * Fix test mode (again)
+  * server.py: Don't remove an offline remote from our list, it may come back, and it's still listed in the UI. (regression from recent commits)
+  * warpinator.py: Use button-sized icons.
+  * ui: Update glade files
+
+  [ JosephMcc ]
+  * util.py: Remove the ugly border width form the file picker dialog
+  * file-chooser: Set a parent for the dialog
+  * main-window.ui: Set a list box selection property to None
+
+  [ Michael Webster ]
+  * prefs: give the firewall popup a transient-parent to prevent a warning, and don't allow it to be resized.
+
+  [ slowscript ]
+  * Use a better name for the zeroconf service
+
+  [ Michael Webster ]
+  * Add new icons for the fallback theme.
+  * Remove markup from translatable strings.
+  * Add translator notes for strings with Warpinator in them.
+  * Add hidpi fallback icons, fix the folder names for the normal ones.
+
+  [ Clement Lefebvre ]
+  * l10n: Add POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 17 Apr 2020 16:29:17 +0100
+
 warpinator (0.0.1) unstable; urgency=medium
 
   * Initial development
