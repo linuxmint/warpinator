@@ -1,5 +1,6 @@
 import os
 import gettext
+import subprocess
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
@@ -143,10 +144,11 @@ class Preferences():
 
         widget = SettingsWidget()
 
-        button = Gtk.Button(label=_("Sample firewall rule"), valign=Gtk.Align.CENTER)
-        button.connect("clicked", self.show_sample_rule_image)
+        if GLib.find_program_in_path("ufw"):
+            button = Gtk.Button(label=_("Add a firewall rule"), valign=Gtk.Align.CENTER)
+            button.connect("clicked", self.open_port)
 
-        widget.pack_end(button, False, False, 0)
+            widget.pack_end(button, False, False, 0)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         widget.pack_start(box, True, True, 0)
@@ -164,14 +166,10 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         self.window.show_all()
 
-    def show_sample_rule_image(self, widget):
-        popup = Gtk.Dialog(transient_for=self.window, resizable=False)
-
-        image = Gtk.Image.new_from_file(os.path.join(config.pkgdatadir, "gufw-example.png"))
-        image.show()
-        popup.get_content_area().add(image)
-        popup.run()
-        popup.destroy()
+    def open_port(self, widget):
+        settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+        command = os.path.join(config.libexecdir, "firewall", "ufw-modify")
+        subprocess.Popen(["pkexec", command, str(settings.get_int(PORT_KEY))])
 
 class PortSpinButton(SpinButton):
     def __init__(self, *args, **kargs):
