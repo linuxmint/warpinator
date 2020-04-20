@@ -962,6 +962,8 @@ class WarpApplication(Gtk.Application):
         self.add_action(action)
 
     def do_activate(self):
+        Gtk.Application.do_activate(self)
+
         if self.window != None:
             self.window.show()
             return
@@ -971,14 +973,6 @@ class WarpApplication(Gtk.Application):
 
         if self.window == None:
             self.setup_window()
-
-        self.window.start_startup_timer(restarting=False)
-
-        if util.get_ip() != "0.0.0.0":
-            self.try_activation()
-
-    def try_activation(self):
-        self.window.update_local_user_info()
 
         try:
             self.save_folder_monitor.cancel()
@@ -1002,6 +996,16 @@ class WarpApplication(Gtk.Application):
             self.window.report_bad_save_folder()
             self.window.window.present()
             return
+
+        self.try_activation()
+
+    def try_activation(self):
+        self.window.start_startup_timer(restarting=False)
+
+        if util.get_ip() == "0.0.0.0":
+            return
+
+        self.window.update_local_user_info()
 
         print("Starting server on %s" % util.get_ip())
         self.start_server(restarting=False)
