@@ -3,6 +3,9 @@ Type=Application
 Name=Warpinator
 Comment=Transfer files from one computer to another on the local network
 Icon=warpinator
-Exec=warpinator
-AutostartCondition=GSettings org.x.warpinator.preferences autostart
+
+# the autostart argument tells /usr/bin/warpinator to check our autostart gsettings key and either keeps
+# going or exits immediately.
+Exec=warpinator autostart
+
 Categories=GNOME;GTK;Utility;

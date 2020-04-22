@@ -1,6 +1,14 @@
 #!/usr/bin/python3
 
 import sys
+from gi.repository import Gio
+
+if len(sys.argv) > 1 and sys.argv[1] == "autostart":
+    settings = Gio.Settings(schema_id="org.x.warpinator.preferences")
+    if not settings.get_boolean("autostart"):
+        sys.exit(0)
+
+    del sys.argv[1]
 
 sys.path.insert(0, "/usr/libexec/warpinator/")
 
