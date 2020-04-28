@@ -1,6 +1,8 @@
 import datetime
+import threading
 import stat
 import os
+import socket
 
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization as crypto_serialization
@@ -13,9 +15,13 @@ from nacl import secret
 import hashlib
 import base64
 
-from gi.repository import GLib, GObject, Gio
+from gi.repository import GLib, GObject
 
 import util
+import prefs
+
+REQUEST = b"REQUEST"
+
 
 day = datetime.timedelta(1, 0, 0)
 EXPIRE_TIME = 30 * day
@@ -50,6 +56,8 @@ class AuthManager(GObject.Object):
         self.hostname = util.get_hostname()
         self.code = None
 
+        self.cert_server = CertServer()
+
         self.keyfile = GLib.KeyFile()
 
         try:
@@ -62,7 +70,6 @@ class AuthManager(GObject.Object):
                 print("Could not load existing settings: %s" % e.message)
 
         self.code = self.get_group_code()
-
 
     def _save_bytes(self, path, file_bytes):
         try:
@@ -165,34 +172,7 @@ class AuthManager(GObject.Object):
 
         return None
 
-    def ip_and_hostname_matches_certificate(self, hostname, ip, data):
-        cert_ip = None
-        backend = crypto_default_backend()
-        instance = x509.load_pem_x509_certificate(data, backend)
-
-        issuer = self.lookup_single_by_oid(instance.issuer, x509.NameOID.COMMON_NAME)
-        subject = self.lookup_single_by_oid(instance.subject, x509.NameOID.COMMON_NAME)
-        if issuer != subject:
-            return False
-
-        for ext in instance.extensions:
-            if isinstance(ext.value, x509.SubjectAlternativeName):
-                for item in ext.value:
-                    if isinstance(item, x509.DNSName):
-                        cert_ip = item.value
-
-        return issuer == hostname and cert_ip == ip
-
     def get_server_creds(self):
-        key = self.load_private_key()
-        cert = self.load_cert(util.get_hostname())
-
-        if (key != None and cert != None) and self.ip_and_hostname_matches_certificate(self.hostname,
-                                                                                       util.get_ip(),
-                                                                                       cert):
-            print("Using existing server credentials")
-            return (key, cert)
-
         print("Creating server credentials")
         key, cert = self.make_key_cert_pair(self.hostname, util.get_ip())
 
@@ -229,8 +209,6 @@ class AuthManager(GObject.Object):
         return cert
 
     def get_group_code(self):
-        path = os.path.join(CONFIG_FOLDER, ".groupcode")
-
         code = DEFAULT_GROUP_CODE
 
         try:
@@ -264,16 +242,10 @@ class AuthManager(GObject.Object):
         self.get_server_creds()
         self.emit("group-code-changed")
 
-    def process_remote_cert_b64_dict(self, hostname, zc_dict):
-        box = b''
-        x = 0
-        while zc_dict[str(x).encode()] != False:
-            box += zc_dict[str(x).encode()] + b'\n'
-            x += 1
-
-        box = box.replace(b"*", b"=") # zeroconf uses = as a delimiter
-        decoded = base64.decodebytes(box)
-
+    def process_encoded_server_cert(self, hostname, server_data):
+        if server_data == None:
+            return False
+        decoded = base64.decodebytes(server_data)
         cert = self.unbox_server_cert(decoded)
 
         if cert:
@@ -282,23 +254,74 @@ class AuthManager(GObject.Object):
         else:
             return False
 
-    def get_server_cert_b64_dict(self):
+    def get_encoded_server_cert(self):
         box = self.get_boxed_server_cert()
 
         encoded = base64.encodebytes(box)
-        encoded =  encoded.replace(b"=", b"*") # zeroconf uses = as a delimiter
-        encoded_list = encoded.split(b'\n')
+        return encoded
 
-        zc_dict = {}
-        x = 0
+    def retrieve_remote_cert(self, hostname, ip, port):
+        data = request_server_cert(ip, port)
 
-        for line in encoded_list:
-            zc_dict[str(x).encode()] = line
-            x += 1
+        if data == None:
+            return False
 
-        return zc_dict
+        return self.process_encoded_server_cert(hostname, data)
 
-if __name__ == "__main__":
-    a = AuthManager()
+############################ Getting server certificate via udp after discovery ###########
 
-    a.get_server_creds()
+def request_server_cert(ip, port):
+    try_count = 0
+
+    # Try a few times in case their end is not set up yet to respond.
+    while try_count < 3:
+        try:
+            server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            server_sock.settimeout(1.0)
+            server_sock.sendto(REQUEST, (ip, port))
+
+            reply, addr = server_sock.recvfrom(2000)
+
+            if addr == (ip, port):
+                return reply
+        except socket.timeout:
+            try_count += 1
+            continue
+        except socket.error as e:
+            print("Something wrong with cert request:", e)
+            break
+
+    return None
+
+class CertServer():
+    def __init__(self):
+        self.exit = False
+
+        self.thread = threading.Thread(target=self.serve_cert_thread)
+        self.thread.start()
+
+    def serve_cert_thread(self):
+        try:
+            server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            server_sock.settimeout(1.0)
+            server_sock.bind((util.get_ip(), prefs.get_port()))
+        except socket.error as e:
+            print("Could not create udp socket for cert requests: %s", str(e))
+            return
+
+        while True:
+            try:
+                data, address = server_sock.recvfrom(2000)
+
+                if data == REQUEST:
+                    cert_data = get_singleton().get_encoded_server_cert()
+                    server_sock.sendto(cert_data, address)
+            except socket.timeout as e:
+                if self.exit:
+                    server_sock.close()
+                    break
+
+    def stop(self):
+        self.exit = True
+        self.thread.join()
+

@@ -48,6 +48,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.remote_machines = {}
         self.server_runlock = threading.Condition()
 
+        self.server = None
         self.browser = None
         self.zeroconf = None
         self.zeroconf = None
@@ -59,13 +60,12 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
     def start_zeroconf(self):
         self.zeroconf = Zeroconf()
-        box_as_props = auth.get_singleton().get_server_cert_b64_dict()
 
         self.info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
                                 socket.inet_aton(util.get_ip()),
                                 prefs.get_port(),
-                                properties=box_as_props)
+                                properties={})
 
         self.zeroconf.register_service(self.info)
 
@@ -96,7 +96,9 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             remote_hostname = name.split(".")[0]
             remote_ip = socket.inet_ntoa(info.address)
 
-            if not auth.get_singleton().process_remote_cert_b64_dict(remote_hostname, info.properties):
+            got_cert = auth.get_singleton().retrieve_remote_cert(remote_hostname, remote_ip, info.port)
+
+            if not got_cert:
                 print("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))
                 return
 
@@ -171,6 +173,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         remote_machines = None
 
         try:
+            auth.get_singleton().cert_server.stop()
             self.browser.cancel()
             self.zeroconf.unregister_service(self.info)
             self.zeroconf.close()
