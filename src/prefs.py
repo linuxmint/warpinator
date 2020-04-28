@@ -4,7 +4,7 @@ import subprocess
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
-from gi.repository import Gtk, Gio, GLib, GObject
+from gi.repository import Gtk, Gio, GLib
 
 import config
 import auth

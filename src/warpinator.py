@@ -665,7 +665,7 @@ class WarpWindow(GObject.Object):
         util.open_save_folder()
 
     def open_preferences(self, menuitem, data=None):
-        pref_window = prefs.Preferences(self.window)
+        prefs.Preferences(self.window)
 
     def report_bad_save_folder(self):
         self.bad_save_folder_label.set_text(prefs.get_save_path())
