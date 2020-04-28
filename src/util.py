@@ -101,13 +101,33 @@ def gfiletype_to_int_enum(gfiletype):
         return FileType.REGULAR
 
 def open_save_folder(filename=None):
+    bus = Gio.Application.get_default().get_dbus_connection()
+
+    if filename != None:
+        abs_path = os.path.join(prefs.get_save_path(), filename)
+        file = Gio.File.new_for_path(abs_path)
+
+        startup_id = str(os.getpid())
+
+        try:
+            bus.call_sync("org.freedesktop.FileManager1",
+                          "/org/freedesktop/FileManager1",
+                          "org.freedesktop.FileManager1",
+                          "ShowItems",
+                          GLib.Variant("(ass)",
+                                       ([file.get_uri()], startup_id)),
+                          None,
+                          Gio.DBusCallFlags.NONE,
+                          1000,
+                          None)
+            return
+        except GLib.Error as e:
+            pass
+
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
+
     try:
-        if filename:
-            abs_path = os.path.join(prefs.get_save_path(), filename)
-            file = Gio.File.new_for_path(abs_path)
-        else:
-            file = Gio.File.new_for_uri(prefs.get_save_uri())
+        file = Gio.File.new_for_uri(prefs.get_save_uri())
 
         app.launch((file,), None)
     except GLib.Error as e:
