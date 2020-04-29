@@ -985,6 +985,10 @@ class WarpApplication(Gtk.Application):
 
             def monitor_change_event(monitor, file, other_file, event_type, data=None):
                 print("State of save folder changed:", event_type)
+                if not util.verify_save_folder():
+                    return
+
+                self.save_folder_monitor.disconnect_by_func(monitor_change_event)
                 self.try_activation()
 
             try:
