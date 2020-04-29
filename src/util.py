@@ -265,12 +265,12 @@ class CairoSurfaceLoader(GObject.Object):
             if width > height:
                 aspect_ratio = height / width
 
-                new_width = self.target_size
+                new_width = self.pixbuf_size
                 new_height = new_width * aspect_ratio
             else:
                 aspect_ratio = width / height
 
-                new_height = self.target_size
+                new_height = self.pixbuf_size
                 new_width = new_height * aspect_ratio
 
         self.loader.set_size(new_width, new_height)
