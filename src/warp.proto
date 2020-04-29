@@ -36,7 +36,7 @@ message VoidType {
 }
 
 message OpInfo {
-    string connect_name = 1;
+    string remote_key = 1;
     uint64 timestamp = 2;
 }
 

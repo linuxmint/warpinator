@@ -180,8 +180,8 @@ def get_ip():
 def get_hostname():
     return GLib.get_host_name()
 
-def get_local_name():
-    local_name = "%s@%s" % (GLib.get_user_name(), GLib.get_host_name())
+def get_local_name(hostname=get_hostname()):
+    local_name = "%s@%s" % (GLib.get_user_name(), hostname)
     real_name = GLib.get_real_name()
     if real_name is not None and real_name != "" and real_name != "Unknown":
         # according to glib's doc, it can actually return "Unknown"

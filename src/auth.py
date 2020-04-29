@@ -102,12 +102,21 @@ class AuthManager(GObject.Object):
 
         return ret
 
-    def load_cert(self, hostname):
-        path = os.path.join(CERT_FOLDER, hostname + ".pem")
+    def load_cert(self, hostname, ip):
+        path = os.path.join(CERT_FOLDER, "%s.%s.pem" % (hostname, ip))
         return self._load_bytes(path)
 
-    def save_cert(self, hostname, cert_bytes):
-        path = os.path.join(CERT_FOLDER, hostname + ".pem")
+    def save_cert(self, hostname, ip, cert_bytes):
+        path = os.path.join(CERT_FOLDER, "%s.%s.pem" % (hostname, ip))
+
+        self._save_bytes(path, cert_bytes)
+
+    def load_server_cert(self):
+        path = os.path.join(CERT_FOLDER, "%s.pem" % (util.get_hostname(),))
+        return self._load_bytes(path)
+
+    def save_server_cert(self, cert_bytes):
+        path = os.path.join(CERT_FOLDER, "%s.pem" % (util.get_hostname(),))
 
         self._save_bytes(path, cert_bytes)
 
@@ -164,21 +173,13 @@ class AuthManager(GObject.Object):
 
         return ser_private_key, ser_public_key
 
-    def lookup_single_by_oid(self, name_attrs, oid):
-        res = name_attrs.get_attributes_for_oid(oid)
-
-        if res and res[0]:
-            return res[0].value
-
-        return None
-
     def get_server_creds(self):
         print("Creating server credentials")
         key, cert = self.make_key_cert_pair(self.hostname, util.get_ip())
 
         try:
             self.save_private_key(key)
-            self.save_cert(self.hostname, cert)
+            self.save_server_cert(cert)
         except OSError as e:
             print("Unable to save new server key and/or certificate: %s" % e)
 
@@ -191,7 +192,7 @@ class AuthManager(GObject.Object):
 
         encoder = secret.SecretBox(key)
 
-        encrypted = encoder.encrypt(self.load_cert(self.hostname))
+        encrypted = encoder.encrypt(self.load_server_cert())
         return encrypted
 
     def unbox_server_cert(self, box):
@@ -242,14 +243,14 @@ class AuthManager(GObject.Object):
         self.get_server_creds()
         self.emit("group-code-changed")
 
-    def process_encoded_server_cert(self, hostname, server_data):
+    def process_encoded_server_cert(self, hostname, ip, server_data):
         if server_data == None:
             return False
         decoded = base64.decodebytes(server_data)
         cert = self.unbox_server_cert(decoded)
 
         if cert:
-            self.save_cert(hostname, cert)
+            self.save_cert(hostname, ip, cert)
             return True
         else:
             return False
@@ -266,7 +267,7 @@ class AuthManager(GObject.Object):
         if data == None:
             return False
 
-        return self.process_encoded_server_cert(hostname, data)
+        return self.process_encoded_server_cert(hostname, ip, data)
 
 ############################ Getting server certificate via udp after discovery ###########
 
