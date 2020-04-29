@@ -232,6 +232,8 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             print(e)
             pass # zeroconf never started if the server never started
 
+        auth.get_singleton().clean_cert_folder()
+
         with self.server_runlock:
             self.server_runlock.notify()
 

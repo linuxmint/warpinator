@@ -71,6 +71,15 @@ class AuthManager(GObject.Object):
 
         self.code = self.get_group_code()
 
+    def clean_cert_folder(self):
+        for filename in os.listdir(CERT_FOLDER):
+            path = os.path.join(CERT_FOLDER, filename)
+
+            try:
+                os.unlink(path)
+            except Exception as e:
+                print("Cannot delete item in remote cert folder:" % e)
+
     def _save_bytes(self, path, file_bytes):
         try:
             os.remove(path)
@@ -240,7 +249,6 @@ class AuthManager(GObject.Object):
         keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
 
         self._save_bytes(path, keyfile_bytes)
-        self.get_server_creds()
         self.emit("group-code-changed")
 
     def process_encoded_server_cert(self, hostname, ip, server_data):
