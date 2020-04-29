@@ -1,5 +1,6 @@
 import time
 import gettext
+import threading
 
 from gi.repository import GObject, GLib
 
@@ -59,15 +60,18 @@ class RemoteMachine(GObject.Object):
         self.sort_key = self.hostname
         self.local_key = local_key
 
+        self.ping_timer = threading.Event()
+
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)
 
     @util._async
     def start(self):
+        self.ping_timer.clear()
         self.need_shutdown = False
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
-        print("Connecting to %s (%s)" % (self.hostname, self.ip_address))
+        print("** Connecting to %s (%s)" % (self.display_hostname, self.ip_address))
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def run_secure_loop(cert):
@@ -78,7 +82,7 @@ class RemoteMachine(GObject.Object):
 
                 connect_retries = 0
 
-                while not self.need_shutdown:
+                while not self.ping_timer.is_set():
                     try:
                         future.result(timeout=2)
                         self.stub = warp_pb2_grpc.WarpStub(channel)
@@ -87,7 +91,7 @@ class RemoteMachine(GObject.Object):
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
                             # print("channel ready timeout, waiting 10s")
-                            time.sleep(PING_TIME)
+                            self.ping_timer.wait(PING_TIME)
                             connect_retries += 1
                             continue
                         else:
@@ -97,7 +101,7 @@ class RemoteMachine(GObject.Object):
                             return True
 
                 one_ping = False
-                while not self.need_shutdown:
+                while not self.ping_timer.is_set():
                     try:
                         self.stub.Ping(void, timeout=2)
                         if not one_ping:
@@ -110,7 +114,7 @@ class RemoteMachine(GObject.Object):
                             one_ping = False
                             self.set_remote_status(RemoteStatus.UNREACHABLE)
 
-                    time.sleep(PING_TIME)
+                    self.ping_timer.wait(PING_TIME)
                 return False
 
         cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
@@ -397,8 +401,8 @@ class RemoteMachine(GObject.Object):
                 return op
 
     def shutdown(self):
-        print("Shutdown - closing connection to remote machine '%s'" % self.hostname)
+        print("** Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
         self.set_remote_status(RemoteStatus.OFFLINE)
-        self.need_shutdown = True
+        self.ping_timer.set()
         while self.connected:
-            time.sleep(1)
+            time.sleep(0.1)
