@@ -21,6 +21,8 @@ _ = gettext.gettext
 void = warp_pb2.VoidType()
 
 MAX_CONNECT_RETRIES = 2
+
+DUPLEX_WAIT_PING_TIME = 0.5
 PING_TIME = 5
 
 # client
@@ -60,6 +62,7 @@ class RemoteMachine(GObject.Object):
         self.sort_key = self.hostname
 
         self.ping_timer = threading.Event()
+        self.ping_time = DUPLEX_WAIT_PING_TIME
 
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)
 
@@ -90,7 +93,7 @@ class RemoteMachine(GObject.Object):
                     except grpc.FutureTimeoutError:
                         if connect_retries < MAX_CONNECT_RETRIES:
                             # print("channel ready timeout, waiting 10s")
-                            self.ping_timer.wait(PING_TIME)
+                            self.ping_timer.wait(self.ping_time)
                             connect_retries += 1
                             continue
                         else:
@@ -104,16 +107,22 @@ class RemoteMachine(GObject.Object):
                     try:
                         self.stub.Ping(void, timeout=2)
                         if not one_ping:
-                            self.set_remote_status(RemoteStatus.ONLINE)
-                            self.update_remote_machine_info()
-                            self.update_remote_machine_avatar()
-                            one_ping = True
+                            # Wait
+                            self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
+
+                            if self.check_duplex_connection():
+                                self.set_remote_status(RemoteStatus.ONLINE)
+                                self.update_remote_machine_info()
+                                self.update_remote_machine_avatar()
+
+                                self.ping_time = PING_TIME
+                                one_ping = True
                     except grpc.RpcError as e:
                         if e.code() in (grpc.StatusCode.DEADLINE_EXCEEDED, grpc.StatusCode.UNAVAILABLE):
                             one_ping = False
                             self.set_remote_status(RemoteStatus.UNREACHABLE)
 
-                    self.ping_timer.wait(PING_TIME)
+                    self.ping_timer.wait(self.ping_time)
                 return False
 
         cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
@@ -139,6 +148,11 @@ class RemoteMachine(GObject.Object):
         
         future = self.stub.GetRemoteMachineInfo.future(void)
         future.add_done_callback(get_info_finished)
+
+    def check_duplex_connection(self):
+        ret = self.stub.CheckDuplexConnection(warp_pb2.LookupName(id=self.local_ident))
+
+        return ret.response
 
     @util._async
     def update_remote_machine_avatar(self):

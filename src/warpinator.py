@@ -343,6 +343,11 @@ class OverviewButton(GObject.Object):
             self.overview_user_status_icon.show()
             self.overview_user_status_icon.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
             self.button.set_tooltip_text(_("Cannot connect to %s") % name)
+        elif remote_machine.status == RemoteStatus.AWAITING_DUPLEX:
+            self.overview_user_connecting_spinner.hide()
+            self.overview_user_status_icon.show()
+            self.overview_user_status_icon.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
+            self.button.set_tooltip_text(_("Waiting for %s to complete the connection.") % name)
 
         self.overview_user_display_name.set_visible(have_info)
         self.overview_user_hostname.set_visible(True)
@@ -825,6 +830,13 @@ class WarpWindow(GObject.Object):
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
             self.user_online_label.set_text(_("Unable to connect"))
+            self.user_online_image.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
+            self.user_online_spinner.hide()
+            self.user_online_image.show()
+        elif remote_machine.status == RemoteStatus.AWAITING_DUPLEX:
+            self.user_op_list.drag_dest_unset()
+            self.user_send_button.set_sensitive(False)
+            self.user_online_label.set_text(_("Waiting for two-way connection"))
             self.user_online_image.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
             self.user_online_image.show()

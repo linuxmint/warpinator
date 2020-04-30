@@ -2,6 +2,7 @@ syntax = "proto3";
 
 service Warp {
     // Sender methods
+    rpc CheckDuplexConnection(LookupName) returns (HaveDuplex) {}
     rpc GetRemoteMachineInfo(VoidType) returns (RemoteMachineInfo) {}
     rpc GetRemoteMachineAvatar(VoidType) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
@@ -27,8 +28,12 @@ message RemoteMachineAvatar {
     bytes avatar_chunk = 1;
 }
 
-message Visible {
-    bool yes_i_can = 1;
+message LookupName {
+    string id = 1;
+}
+
+message HaveDuplex {
+    bool response = 2;
 }
 
 message VoidType {

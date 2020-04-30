@@ -17,7 +17,7 @@ import prefs
 import util
 import transfers
 from ops import ReceiveOp
-from util import TransferDirection, OpStatus
+from util import TransferDirection, OpStatus, RemoteStatus
 
 _ = gettext.gettext
 
@@ -47,9 +47,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.ip_address = util.get_ip()
         self.port = prefs.get_port()
-
-        # this is the same format as keys for remote_machines dict (hostname.ip)
-        self.key_name = "%s.%s" % (util.get_hostname(), self.ip_address)
 
         self.remote_machines = {}
         self.server_runlock = threading.Condition()
@@ -236,6 +233,17 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
     def Ping(self, request, context):
         return void
 
+    def CheckDuplexConnection(self, request, context):
+        response = False
+
+        try:
+            remote = self.remote_machines[request.id]
+            response = (remote.status in (RemoteStatus.AWAITING_DUPLEX, RemoteStatus.ONLINE))
+        except KeyError:
+            pass
+
+        return warp_pb2.HaveDuplex(response=response)
+
     def GetRemoteMachineInfo(self, request, context):
         return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name(),
                                           user_name=GLib.get_user_name())
@@ -305,7 +313,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         op.progress_tracker = transfers.OpProgressTracker(op)
         op.current_progress_report = None
-        sender = transfers.FileSender(op, self.key_name, request.timestamp, cancellable)
+        sender = transfers.FileSender(op, request.timestamp, cancellable)
 
         def transfer_done():
             if sender.error != None:

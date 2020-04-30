@@ -30,7 +30,8 @@ FileType = IntEnum('FileType', 'REGULAR \
 RemoteStatus = IntEnum('RemoteStatus', 'ONLINE \
                                         OFFLINE \
                                         INIT_CONNECTING \
-                                        UNREACHABLE')
+                                        UNREACHABLE \
+                                        AWAITING_DUPLEX')
 
 OpStatus = IntEnum('OpStatus', 'INIT \
                                 CALCULATING \
