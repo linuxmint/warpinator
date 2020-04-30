@@ -51,11 +51,18 @@ TEST_OPS = [
 ["send", "test2", "test3", OpStatus.FINISHED, 1006, 50000000, 1, "Luke Skywalker", "Darth Vader", "kittens.mpg", None],
 ]
 
+class Dummy():
+    def set(self):
+        pass
+
+    def cancel(self):
+        pass
+
 def add_simulated_widgets(app):
     local_machine = app.server
     for entry in TEST_REMOTES:
         display_name, name, user_name, hostname, ip, port, status, num_ops = entry
-        machine = remote.RemoteMachine(name, hostname, ip, port, local_machine.service_name)
+        machine = remote.RemoteMachine(name, hostname, hostname, ip, port, local_machine.service_ident)
 
         local_machine.remote_machines[name] = machine
         machine.connect("ops-changed", local_machine.remote_ops_changed)
@@ -110,6 +117,7 @@ def add_ops(machine):
             op.first_missing_file = name_if_single
             op.name_if_single = name_if_single
             op.mime_if_single, uncertainty = Gio.content_type_guess (op.name_if_single, None)
+            op.file_send_cancellable = Dummy()
 
             if status != OpStatus.CALCULATING:
                 op.update_ui_info(True)
@@ -126,6 +134,7 @@ def add_ops(machine):
             op.total_count = count
             op.name_if_single = name_if_single
             op.mime_if_single, uncertainty = Gio.content_type_guess (op.name_if_single, None)
+            op.file_iterator = Dummy()
             machine.add_op(op)
 
             op.prepare_receive_info()
@@ -152,4 +161,3 @@ def emit_new_op(data):
     machine, op = data
     machine.emit("new-incoming-op", op)
     return False
-

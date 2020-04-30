@@ -1295,18 +1295,13 @@ class WarpApplication(Gtk.Application):
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
 
-def main():
+def main(test = False):
     import signal
 
     test_mode = False
     args = sys.argv
 
-    # Handling test mode this way keeps from having to use GApplication.handle_command_line
-    if len(sys.argv) == 2 and sys.argv[1] == "test":
-        test_mode = True
-        args = [sys.argv[0]]
-
-    w = WarpApplication(test_mode)
+    w = WarpApplication(test)
 
     signal.signal(signal.SIGINT, lambda s, f: w.shutdown())
 
