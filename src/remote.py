@@ -34,17 +34,17 @@ class RemoteMachine(GObject.Object):
         'remote-status-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, key, connect_name, hostname, ip, port, local_key):
+    def __init__(self, ident, hostname, display_hostname, ip, port, local_ident):
         GObject.Object.__init__(self)
         self.ip_address = ip
         self.port = port
-        self.remote_key = key
-        self.connect_name = connect_name
+        self.ident = ident
+        self.local_ident = local_ident
         self.hostname = hostname
-        self.display_hostname = connect_name.split(".")[0]
+        self.display_hostname = display_hostname
         self.user_name = ""
         self.display_name = ""
-        self.favorite = prefs.get_is_favorite(self.remote_key)
+        self.favorite = prefs.get_is_favorite(self.ident)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
         self.status = RemoteStatus.INIT_CONNECTING
         self.avatar_surface = None
@@ -58,7 +58,6 @@ class RemoteMachine(GObject.Object):
         self.connected = False
 
         self.sort_key = self.hostname
-        self.local_key = local_key
 
         self.ping_timer = threading.Event()
 
@@ -71,7 +70,7 @@ class RemoteMachine(GObject.Object):
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
-        print("** Connecting to %s (%s)" % (self.display_hostname, self.ip_address))
+        print("++ Connecting to %s (%s)" % (self.display_hostname, self.ip_address))
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def run_secure_loop(cert):
@@ -130,7 +129,7 @@ class RemoteMachine(GObject.Object):
             info = future.result()
             self.display_name = info.display_name
             self.user_name = info.user_name
-            self.favorite = prefs.get_is_favorite(self.remote_key)
+            self.favorite = prefs.get_is_favorite(self.ident)
 
             valid = GLib.utf8_make_valid(self.display_name, -1)
             self.sort_key = GLib.utf8_collate_key(valid.lower(), -1)
@@ -170,10 +169,10 @@ class RemoteMachine(GObject.Object):
         if not self.stub: # short circuit for testing widgets
             return
 
-        transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(remote_key=op.sender,
+        transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(ident=op.sender,
                                                                       timestamp=op.start_time),
                                                  sender_name=op.sender_name,
-                                                 receiver=self.remote_key,
+                                                 receiver=self.ident,
                                                  size=op.total_size,
                                                  count=op.total_count,
                                                  name_if_single=op.description,
@@ -186,9 +185,9 @@ class RemoteMachine(GObject.Object):
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
         else:
-            name = self.local_key
+            name = self.local_ident
         self.stub.CancelTransferOpRequest(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                          remote_key=name))
+                                                          ident=name))
         op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER if by_sender else OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
     # def pause_transfer_op(self, op):
@@ -206,7 +205,7 @@ class RemoteMachine(GObject.Object):
         op.set_status(OpStatus.TRANSFERRING)
 
         op.file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                                   remote_key=self.local_key))
+                                                                   ident=self.local_ident))
 
         def report_receive_error(error):
             op.set_error(error)
@@ -251,7 +250,7 @@ class RemoteMachine(GObject.Object):
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
         else:
-            name = self.local_key
+            name = self.local_ident
 
         if by_sender:
             op.file_send_cancellable.set()
@@ -276,13 +275,13 @@ class RemoteMachine(GObject.Object):
             # We don't need to send this if it's a connection loss, the other end will handle
             # its own cleanup.
             opinfo = warp_pb2.OpInfo(timestamp=op.start_time,
-                                     remote_key=name)
+                                     ident=name)
             self.stub.StopTransfer(warp_pb2.StopInfo(info=opinfo, error=op.error_msg != ""))
 
     @util._async
     def send_files(self, uri_list):
-        op = SendOp(self.local_key,
-                    self.remote_key,
+        op = SendOp(self.local_ident,
+                    self.ident,
                     self.display_name,
                     uri_list)
         self.add_op(op)
@@ -290,7 +289,7 @@ class RemoteMachine(GObject.Object):
 
     def update_favorite_status(self, pspec, data=None):
         old_favorite = self.favorite
-        self.favorite = prefs.get_is_favorite(self.remote_key)
+        self.favorite = prefs.get_is_favorite(self.ident)
 
         if old_favorite != self.favorite:
             self.emit_machine_info_changed()
@@ -401,7 +400,7 @@ class RemoteMachine(GObject.Object):
                 return op
 
     def shutdown(self):
-        print("** Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
+        print("-- Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
         self.set_remote_status(RemoteStatus.OFFLINE)
         self.ping_timer.set()
         while self.connected:

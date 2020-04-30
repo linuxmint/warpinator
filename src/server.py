@@ -43,6 +43,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         GObject.Object.__init__(self)
 
         self.service_name = None
+        self.service_ident = None
 
         self.ip_address = util.get_ip()
         self.port = prefs.get_port()
@@ -66,36 +67,16 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
     def start_zeroconf(self):
         self.zeroconf = Zeroconf()
 
-        self.find_unique_service_name()
-
-    @util._async
-    def find_unique_service_name(self):
-        # Make sure to use a unique service name.  We should be able to register_service()
-        # with 'allow_name_change=True' but that doesn't work for some reason.
-        name = "%s.%s" % (util.get_hostname(), SERVICE_TYPE)
-        instance_id = 1
-
-        while self.zeroconf.get_service_info(SERVICE_TYPE, name):
-            name = "%s[%d].%s" % (util.get_hostname(), instance_id, SERVICE_TYPE)
-            instance_id += 1
-
-        self.register_unique_service(name)
-
-    @util._idle
-    def register_unique_service(self, name):
-        self.service_name = name
+        self.service_ident = auth.get_singleton().get_ident()
+        self.service_name = "%s.%s" % (self.service_ident, SERVICE_TYPE)
 
         self.info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
                                 socket.inet_aton(util.get_ip()),
                                 prefs.get_port(),
-                                properties={})
+                                properties={ 'hostname': util.get_hostname() })
 
         self.zeroconf.register_service(self.info)
-
-        local_name = util.get_local_name(name.split(".")[0])
-
-        self.emit("local-info-changed", local_name)
 
         return False
 
@@ -107,17 +88,11 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         if name == self.service_name:
             return
 
-        matched_key = None
-
-        for key in self.remote_machines.keys():
-            if name == self.remote_machines[key].connect_name:
-                matched_key = key
+        ident = name.partition(".")[0]
 
         try:
-            self.emit_remote_machine_removed(self.remote_machines[matched_key])
-            self.remote_machines[matched_key].shutdown()
-
-            print("Removing remote machine '%s'" % name)
+            self.emit_remote_machine_removed(self.remote_machines[ident])
+            self.remote_machines[ident].shutdown()
         except KeyError:
             print("Removed client we never knew: %s" % name)
 
@@ -126,16 +101,17 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         info = zeroconf.get_service_info(_type, name)
 
         if info:
-            name_part = name.split(".")[0]
-            instance_id_idx = name_part.find("[")
+            ident = name.partition(".")[0]
 
-            if instance_id_idx != -1:
-                remote_hostname = name_part[0:instance_id_idx]
-            else:
-                remote_hostname = name_part
+            try:
+                remote_hostname = info.properties[b"hostname"].decode()
+            except KeyError:
+                print("No hostname in service info properties.  Is this an old version?")
+                return
 
             remote_ip = socket.inet_ntoa(info.address)
-            if util.get_hostname() == remote_hostname and remote_ip == self.ip_address:
+
+            if ident == self.service_ident:
                 return
 
             got_cert = auth.get_singleton().retrieve_remote_cert(remote_hostname, remote_ip, info.port)
@@ -144,28 +120,42 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
                 print("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))
                 return
 
-            # A remote may appear once as hostname.service, and disappear, then come back as
-            # hostname[1].service, and we want to be able to match them up.  Hostname and ip
-            # will always provide uniqueness, but the service name won't have the ip. We need
-            # to store the full service name to check against in remove_service.
-            key = "%s.%s" % (remote_hostname, remote_ip)
             # print("Client %s added at %s" % (name, remote_ip))
 
             try:
-                machine = self.remote_machines[key]
-                # Update our connect name (to match remove_service)
-                machine.remote_key = name
-                # Update our port if it changed (this does not imply uniqueness).
+                machine = self.remote_machines[ident]
+                # Update our connect info if it changed.
+                machine.hostname = remote_hostname
+                machine.ip_address = remote_ip
                 machine.port = info.port
             except KeyError:
-                machine = remote.RemoteMachine(key,
-                                               name,
+                display_hostname = remote_hostname
+                i = 1
+
+                while True:
+                    found = False
+
+                    for key in self.remote_machines.keys():
+                        remote_machine = self.remote_machines[key]
+
+                        if remote_machine.display_hostname == display_hostname:
+                            display_hostname = "%s[%d]" % (remote_hostname, i)
+                            found = True
+                            break
+
+                    i += 1
+
+                    if not found:
+                        break
+
+                machine = remote.RemoteMachine(ident,
                                                remote_hostname,
+                                               display_hostname,
                                                remote_ip,
                                                info.port,
-                                               self.key_name)
+                                               self.service_ident)
 
-                self.remote_machines[key] = machine
+                self.remote_machines[ident] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
                 self.emit_remote_machine_added(machine)
 
@@ -181,7 +171,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
     @util._idle
     def remote_ops_changed(self, remote_machine):
-        self.emit("remote-machine-ops-changed", remote_machine.remote_key)
+        self.emit("remote-machine-ops-changed", remote_machine.ident)
 
     @util._async
     def start_server(self):
@@ -193,6 +183,8 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.server.add_secure_port('[::]:%d' % prefs.get_port(), server_credentials)
         self.server.start()
+
+        auth.get_singleton().restart_cert_server()
 
         self.emit_server_started()
         self.start_discovery_services()
@@ -256,14 +248,14 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             context.abort(code=grpc.StatusCode.NOT_FOUND, details='.face file not found!')
 
     def ProcessTransferOpRequest(self, request, context):
-        remote_machine = self.remote_machines[request.info.remote_key]
+        remote_machine = self.remote_machines[request.info.ident]
         for existing_op in remote_machine.transfer_ops:
             if existing_op.start_time == request.info.timestamp:
                 existing_op.set_status(OpStatus.WAITING_PERMISSION)
                 self.add_receive_op_to_remote_machine(existing_op)
                 return void
 
-        op = ReceiveOp(request.info.remote_key)
+        op = ReceiveOp(request.info.ident)
 
         op.start_time = request.info.timestamp
 
@@ -283,7 +275,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         return void
 
     def CancelTransferOpRequest(self, request, context):### good
-        op = self.remote_machines[request.remote_key].lookup_op(request.timestamp)
+        op = self.remote_machines[request.ident].lookup_op(request.timestamp)
         print("received cancel request at server")
 
         # If we receive this call, this means the op was cancelled remotely.  So,
@@ -296,7 +288,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         return void
 
     # def PauseTransferOp(self, request, context):
-    #     op = self.remote_machines[request.remote_key].lookup_op(request.timestamp)
+    #     op = self.remote_machines[request.ident].lookup_op(request.timestamp)
 
     #     # pause how?
     #     return void
@@ -305,7 +297,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
     def StartTransfer(self, request, context):
         start_time = GLib.get_monotonic_time()
 
-        op = self.remote_machines[request.remote_key].lookup_op(request.timestamp)
+        op = self.remote_machines[request.ident].lookup_op(request.timestamp)
         cancellable = threading.Event()
         op.file_send_cancellable = cancellable
 
@@ -331,7 +323,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         return sender.read_chunks()
 
     def StopTransfer(self, request, context):
-        op = self.remote_machines[request.info.remote_key].lookup_op(request.info.timestamp)
+        op = self.remote_machines[request.info.ident].lookup_op(request.info.timestamp)
 
         # If we receive this call, this means the op was stopped remotely.  So,
         # our op with TO_REMOTE_MACHINE (we initiated it) was cancelled by the recipient.

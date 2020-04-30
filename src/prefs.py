@@ -58,16 +58,16 @@ def prevent_overwriting():
 def get_show_notifications():
     return prefs_settings.get_boolean(SHOW_NOTIFICATIONS_KEY)
 
-def get_is_favorite(remote_key):
-    return remote_key in prefs_settings.get_strv(FAVORITES_KEY)
+def get_is_favorite(ident):
+    return ident in prefs_settings.get_strv(FAVORITES_KEY)
 
-def toggle_favorite(remote_key):
+def toggle_favorite(ident):
     faves = prefs_settings.get_strv(FAVORITES_KEY)
 
-    if remote_key in faves:
-        faves.remove(remote_key)
+    if ident in faves:
+        faves.remove(ident)
     else:
-        faves.append(remote_key)
+        faves.append(ident)
 
     prefs_settings.set_strv(FAVORITES_KEY, faves)
 

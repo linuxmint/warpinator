@@ -308,7 +308,7 @@ class OverviewButton(GObject.Object):
 
         # Convenience for window to sort and remove buttons
         self.button.remote_machine = remote_machine
-        self.button.remote_key = remote_machine.remote_key
+        self.button.ident = remote_machine.ident
         self.button._delegate = self
 
         self.button.show_all()
@@ -416,7 +416,7 @@ class OverviewButton(GObject.Object):
 
         # remove circular refs
         self.button.remote_machine = None
-        self.button.remote_key = None
+        self.button.ident = None
         self.button._delegate = None
 
         print("(dispose) Disconnecting overview remote button from RemoteMachine")
@@ -653,8 +653,8 @@ class WarpWindow(GObject.Object):
         Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
-    def update_local_user_info(self, local_name=util.get_local_name()):
-        self.app_local_name_label.set_text(local_name)
+    def update_local_user_info(self):
+        self.app_local_name_label.set_text(util.get_local_name())
         self.app_ip_label.set_text(util.get_ip())
 
     def menu_quit(self, widget, data=None):
@@ -697,7 +697,7 @@ class WarpWindow(GObject.Object):
         buttons = self.user_list_box.get_children()
 
         for child in buttons:
-            if child.remote_key == remote_machine.remote_key:
+            if child.ident == remote_machine.ident:
                 self.user_list_box.remove(child)
 
         self.back_to_overview()
@@ -880,7 +880,7 @@ class WarpWindow(GObject.Object):
             self.current_selected_remote_machine.stamp_recent_time()
 
             for child in buttons:
-                if child.remote_key == self.current_selected_remote_machine.remote_key:
+                if child.ident == self.current_selected_remote_machine.ident:
                     child._delegate.clear_new_op_highlighting()
 
         self.current_selected_remote_machine = None
@@ -888,7 +888,7 @@ class WarpWindow(GObject.Object):
         self.sort_buttons()
 
     def user_favorite_clicked(self, widget, data=None):
-        prefs.toggle_favorite(self.current_selected_remote_machine.remote_key)
+        prefs.toggle_favorite(self.current_selected_remote_machine.ident)
         self.sync_favorite()
 
     def sync_favorite(self):
@@ -1028,7 +1028,6 @@ class WarpApplication(Gtk.Application):
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
-            self.server.connect("local-info-changed", self.local_info_changed)
             self.update_status_icon_online_state(online=True)
             self.server_restarting = False
 
@@ -1072,9 +1071,6 @@ class WarpApplication(Gtk.Application):
 
         if prefs.get_start_with_window() or not prefs.use_tray_icon():
             self.window.window.present()
-
-    def local_info_changed(self, server, local_name):
-        self.window.update_local_user_info(local_name)
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
         self.window.update_behavior_from_preferences()

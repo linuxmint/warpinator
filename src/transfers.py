@@ -48,10 +48,10 @@ class File:
         self.symlink_target_path = symlink_target_path
 
 class FileSender(GObject.Object):
-    def __init__(self, op, remote_key, timestamp, cancellable):
+    def __init__(self, op, ident, timestamp, cancellable):
         super(FileSender, self).__init__()
         self.op = op
-        self.remote_key = remote_key
+        self.ident = ident
         self.timestamp = timestamp
         self.cancellable = cancellable
 

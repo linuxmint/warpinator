@@ -3,6 +3,7 @@ import threading
 import stat
 import os
 import socket
+import uuid
 
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization as crypto_serialization
@@ -29,7 +30,8 @@ EXPIRE_TIME = 30 * day
 DEFAULT_GROUP_CODE = "Warpinator"
 KEYFILE_GROUP_NAME = "warpinator"
 KEYFILE_CODE_KEY = "code"
-CODEFILE_NAME = ".group"
+KEYFILE_UUID_KEY = "connect_id"
+CONFIG_FILE_NAME = ".group"
 
 CONFIG_FOLDER = os.path.join(GLib.get_user_config_dir(), "warpinator")
 CERT_FOLDER = os.path.join(CONFIG_FOLDER, "remotes")
@@ -55,13 +57,14 @@ class AuthManager(GObject.Object):
         GObject.Object.__init__(self)
         self.hostname = util.get_hostname()
         self.code = None
+        self.ident = None
 
-        self.cert_server = CertServer()
+        self.cert_server = None
 
         self.keyfile = GLib.KeyFile()
 
         try:
-            self.keyfile.load_from_file(os.path.join(CONFIG_FOLDER, CODEFILE_NAME), GLib.KeyFileFlags.NONE)
+            self.keyfile.load_from_file(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME), GLib.KeyFileFlags.NONE)
         except GLib.Error as e:
             if e.code == GLib.FileError.NOENT:
                 print("No group code file, making one.")
@@ -70,6 +73,12 @@ class AuthManager(GObject.Object):
                 print("Could not load existing settings: %s" % e.message)
 
         self.code = self.get_group_code()
+
+    def restart_cert_server(self):
+        if self.cert_server != None:
+            self.cert_server.stop()
+
+        self.cert_server = CertServer()
 
     def clean_cert_folder(self):
         for filename in os.listdir(CERT_FOLDER):
@@ -110,6 +119,27 @@ class AuthManager(GObject.Object):
             pass
 
         return ret
+
+    def get_ident(self):
+        if self.ident != None:
+            return self.ident
+
+        try:
+            self.ident = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY)
+        except GLib.Error as e:
+            if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
+                print("Could not read group code from settings file: %s" % e.message)
+
+            self.ident = str(uuid.uuid4())
+            self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY, self.ident)
+
+            path = os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME)
+
+            keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
+
+            self._save_bytes(path, keyfile_bytes)
+
+        return self.ident
 
     def load_cert(self, hostname, ip):
         path = os.path.join(CERT_FOLDER, "%s.%s.pem" % (hostname, ip))
@@ -243,7 +273,7 @@ class AuthManager(GObject.Object):
 
         self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
 
-        path = os.path.join(CONFIG_FOLDER, CODEFILE_NAME)
+        path = os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME)
 
         self.code = bytes(code,  "utf-8")
         keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
