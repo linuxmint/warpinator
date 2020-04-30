@@ -1,3 +1,17 @@
+warpinator (1.0.2) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * prefs: Have the firewall button add an exception instead of just a picture showing how.
+  * util: Fix wrong variable names in surface loader 'size-prepared' callback.
+  * server: Stop using zeroconf properties to deliver the server cert.
+  * util.py: Use org.freedesktop.FileManager1 interface to open the save folder and select the file if one is provided, otherwise just open the save folder.
+  * all: Ensure a unique service name, and handle collisions gracefully internally and in the ui.
+  * server: Clean remotes folder at shutdown.
+  * remote.py: Use a threading.Event instead of time.sleep() for the ping timers.
+  * warpinator.py: Don't leave the file monitor connected once the save folder is validated.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 30 Apr 2020 16:50:32 +0100
+
 warpinator (1.0.1) ulyana; urgency=medium
 
   [ Michael Webster ]
