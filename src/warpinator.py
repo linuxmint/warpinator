@@ -33,7 +33,8 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warpinator")
 
-SERVER_START_TIMEOUT = 3
+SERVER_RESTART_TIMEOUT = 12
+SERVER_START_TIMEOUT = 6
 DISCOVERY_TIMEOUT = 3
 
 ICON_ONLINE = ""
@@ -589,7 +590,9 @@ class WarpWindow(GObject.Object):
 
         self.server_restarting = restarting
 
-        self.server_start_timeout_id = GLib.timeout_add_seconds(SERVER_START_TIMEOUT, self.server_not_started_timeout)
+        timeout = SERVER_RESTART_TIMEOUT if restarting else SERVER_START_TIMEOUT
+
+        self.server_start_timeout_id = GLib.timeout_add_seconds(timeout, self.server_not_started_timeout)
         self.view_stack.set_visible_child_name("startup")
 
     def server_not_started_timeout(self):
