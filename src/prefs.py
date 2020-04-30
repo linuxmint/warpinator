@@ -8,6 +8,7 @@ from gi.repository import Gtk, Gio, GLib
 
 import config
 import auth
+import util
 
 _ = gettext.gettext
 
@@ -168,8 +169,15 @@ can make it simpler to add firewall exceptions if necessary."""))
 
     def open_port(self, widget):
         settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+
+        self.run_port_script(settings.get_int(PORT_KEY))
+
+    @util._async
+    def run_port_script(self, port):
         command = os.path.join(config.libexecdir, "firewall", "ufw-modify")
-        subprocess.Popen(["pkexec", command, str(settings.get_int(PORT_KEY))])
+        subprocess.run(["pkexec", command, str(port)])
+
+        GLib.timeout_add_seconds(1, lambda: Gio.Application.get_default().firewall_script_finished())
 
 class PortSpinButton(SpinButton):
     def __init__(self, *args, **kargs):

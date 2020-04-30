@@ -38,6 +38,6 @@ if len(found) > 0:
     for number in found:
         subprocess.run(["ufw", "--force", "delete", number])
 
-subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", port, "comment", "WARPINATOR"])
+subprocess.run(["ufw", "allow", "from", "any", "to", "any", "port", port, "comment", "WARPINATOR"])
 
 exit(0)

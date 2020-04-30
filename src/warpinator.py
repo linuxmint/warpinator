@@ -1099,6 +1099,13 @@ class WarpApplication(Gtk.Application):
             self.current_port = prefs.get_port()
             self.start_server(restarting=True)
 
+    def firewall_script_finished(self):
+        if self.server == None:
+            self.try_activation()
+            return
+
+        self.start_server(restarting=True)
+
     def on_group_code_changed(self, auth_manager):
         self.start_server(restarting=True)
 

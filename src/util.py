@@ -329,6 +329,7 @@ class NetworkMonitor(GObject.Object):
         GObject.Object.__init__(self)
         self.source_id = 0
         self.online = False
+        self.current_ip = None
 
         self.check_online()
 
@@ -348,8 +349,12 @@ class NetworkMonitor(GObject.Object):
 
     def check_online(self):
         old_online = self.online
-        self.online = get_ip() != "0.0.0.0"
-        if self.online != old_online:
+        old_ip = self.current_ip
+
+        self.current_ip = get_ip()
+        self.online = self.current_ip != "0.0.0.0"
+
+        if (self.online != old_online) or (self.current_ip != old_ip):
             self.emit("state-changed", self.online)
 
 class AboutDialog():
