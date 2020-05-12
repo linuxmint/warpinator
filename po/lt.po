@@ -1,0 +1,501 @@
+# Lithuanian translation for linuxmint
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-04-17 15:54+0100\n"
+"PO-Revision-Date: 2020-04-30 14:19+0000\n"
+"Last-Translator: Moo <hazap@hotmail.com>\n"
+"Language-Team: Lithuanian <lt@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+
+#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "Siųsti ir gauti failus per tinklą"
+
+#: resources/main-window.ui:193
+msgid "No matching results"
+msgstr "Nėra atitinkančių rezultatų"
+
+#: resources/main-window.ui:349
+msgid "Make this remote machine a favorite in the main view"
+msgstr "Padaryti šį nuotolinį kompiuterį mėgstamą pagrindiniame rodinyje"
+
+#: resources/main-window.ui:423
+msgid "Clear inactive and completed operations"
+msgstr "Išvalyti neaktyvias ir užbaigtas operacijas"
+
+#: resources/main-window.ui:442
+msgid "Send files"
+msgstr "Siųsti failus"
+
+#: resources/main-window.ui:468 src/prefs.py:105
+msgid "File Transfers"
+msgstr "Failų perdavimai"
+
+#: resources/main-window.ui:489 src/warpinator.py:813
+msgid "Online"
+msgstr "Pasiekiamas"
+
+#: resources/main-window.ui:609
+msgid "No other computers found..."
+msgstr "Nerasta jokių kitų kompiuterių..."
+
+#: resources/main-window.ui:673
+msgid "Make sure your network connection is active."
+msgstr "Įsitikinkite, kad jūsų tinklo ryšys yra aktyvus."
+
+#: resources/main-window.ui:688
+msgid ""
+"Check your firewall rules.  The port number can be changed.  See preferences "
+"for more details."
+msgstr ""
+"Patikrinkite savo užkardos taisykles. Prievado numerį galima keisti. "
+"Išsamesnei informacijai, žiūrėkite nuostatas."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:704
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"Ar Warpinator veikia kituose kompiuteriuose šiame tinkle? Jei taip, "
+"įsitikinkite, kad nuostatose jie visi naudoja tą patį grupės kodą."
+
+#: resources/main-window.ui:722
+msgid "Possible solutions:"
+msgstr "Galimi sprendimai:"
+
+#: resources/main-window.ui:788
+msgid "Initializing, please wait..."
+msgstr "Inicijuojama, palaukite..."
+
+#: resources/main-window.ui:846
+msgid "Something went wrong"
+msgstr "Kažkas nutiko"
+
+#: resources/main-window.ui:921
+msgid "Invalid save location"
+msgstr "Neteisinga įrašymo vieta"
+
+#: resources/main-window.ui:958
+msgid ""
+"This folder is inaccessible or does not exist.  Please select a new location "
+"in Preferences or ensure that the current one is mounted."
+msgstr ""
+"Šis aplankas yra nepasiekiamas arba jo nėra. Pasirinkite nuostatose naują "
+"vietą arba užtikrinkite, kad esama vieta yra prijungta."
+
+#: resources/main-window.ui:1014
+msgid "Searching for other computers"
+msgstr "Ieškoma kitų kompiuterių"
+
+#: resources/main-window.ui:1073
+msgid "Shutting down..."
+msgstr "Išjungiama..."
+
+#: resources/op-item.ui:140
+msgid "Awaiting approval"
+msgstr "Laukiama patvirtinimo"
+
+#: resources/op-item.ui:156
+msgid "Not enough disk space!"
+msgstr "Trūksta vietos diske!"
+
+#: resources/op-item.ui:219
+msgid "Calculating"
+msgstr "Apskaičiuojama"
+
+#: resources/op-item.ui:259
+msgid "Accept this request"
+msgstr "Priimti šią užklausą"
+
+#: resources/op-item.ui:274
+msgid "Refuse this request"
+msgstr "Atmesti šią užklausą"
+
+#: resources/op-item.ui:289
+msgid "Cancel this request"
+msgstr "Atsisakyti šios užklausos"
+
+#: resources/op-item.ui:304
+msgid "Restart this operation"
+msgstr "Paleisti šią operaciją iš naujo"
+
+#: resources/op-item.ui:319
+msgid "Pause this operation"
+msgstr "Pristabdyti šią operaciją"
+
+#: resources/op-item.ui:334
+msgid "Resume this operation"
+msgstr "Pratęsti šią operaciją"
+
+#: resources/op-item.ui:349
+msgid "Cancel this operation"
+msgstr "Atsisakyti šios operacijos"
+
+#: resources/op-item.ui:364
+msgid "Remove this operation from the list"
+msgstr "Šalinti šią operaciją iš sąrašo"
+
+#: resources/op-item.ui:379
+msgid "Open the containing folder"
+msgstr "Atverti vidinį aplanką"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "Pastaba dėl prievadų numerių:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Warpinator nuostatos"
+
+#: src/notifications.py:20
+msgid "New incoming files"
+msgstr "Nauji gaunamieji failai"
+
+#: src/notifications.py:26
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s norėtų atsiųsti jums %(file_count)d failą (%(file_name)s)."
+
+#: src/notifications.py:27
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s norėtų atsiųsti jums %(file_count)d failų(-us)"
+
+#: src/notifications.py:37
+msgid "Accept"
+msgstr "Priimti"
+
+#: src/notifications.py:38
+msgid "Decline"
+msgstr "Atmesti"
+
+#: src/notifications.py:52
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr "%(sender_name)s siunčia jums %(file_count)d failą (%(file_name)s)."
+
+#: src/notifications.py:53
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s siunčia jums %(file_count)d failų(-us)"
+
+#: src/notifications.py:88
+msgid "Transfer complete"
+msgstr "Perdavimas užbaigtas"
+
+#: src/notifications.py:90
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "Perdavimas į %s sėkmingai užbaigtas"
+
+#: src/notifications.py:92
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "Perdavimas iš %s sėkmingai užbaigtas"
+
+#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+msgid "Transfer failed"
+msgstr "Perdavimas nepavyko"
+
+#: src/notifications.py:124
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "Kažkas nutiko su perdavimu į %s"
+
+#: src/notifications.py:126
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "Kažkas nutiko su perdavimu iš %s"
+
+#: src/ops.py:45
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/sek.)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:140
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d file-do-not-translate"
+msgstr[1] "%d failai"
+msgstr[2] "%d failų"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:222
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d file"
+msgstr[1] "%d failai"
+msgstr[2] "%d failų"
+
+#: src/prefs.py:80
+msgid "Warpinator Preferences"
+msgstr "Warpinator nuostatos"
+
+#: src/prefs.py:90
+msgid "Desktop"
+msgstr "Darbalaukis"
+
+#: src/prefs.py:92
+msgid "Show an icon in the notification area"
+msgstr "Rodyti piktogramą pranešimų srityje"
+
+#: src/prefs.py:96
+msgid "Start with main window open"
+msgstr "Paleisti su atvertu pagrindiniu langu"
+
+#: src/prefs.py:101
+msgid "Start automatically"
+msgstr "Paleisti automatiškai"
+
+#: src/prefs.py:107
+msgid "Location for received files"
+msgstr "Vieta gautiems failams"
+
+#: src/prefs.py:112
+msgid "Require approval before accepting files"
+msgstr "Prieš priimant failus, reikalauti patvirtinimo"
+
+#: src/prefs.py:116
+msgid "Require approval when files would be overwritten"
+msgstr "Reikalauti patvirtinimo, kai failai turės būti perrašyti"
+
+#: src/prefs.py:120
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr "Rodyti pranešimą, kai kas nors siunčia (ar bando siųsti) jums failus"
+
+#: src/prefs.py:124
+msgid "Network"
+msgstr "Tinklas"
+
+#: src/prefs.py:129
+msgid "Group Code"
+msgstr "Grupės kodas"
+
+#: src/prefs.py:130
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr "Jūs negalite susisiekti su kompiuteriais, kurie naudoja kitą kodą."
+
+#: src/prefs.py:136
+msgid "Incoming port for transfers"
+msgstr "Perdavimų gaunamasis prievadas"
+
+#: src/prefs.py:146
+msgid "Sample firewall rule"
+msgstr "Pavyzdinė užkardos taisyklė"
+
+#: src/prefs.py:158
+msgid ""
+"Any port number will work for the application, but using the same port for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"Programai tiks bet kuris prievado numeris, tačiau naudojant tą patį prievadą "
+"visuose kompiuteriuose, bus paprasčiau, jei būtina, pridėti jį į užkardos "
+"išimtis."
+
+#: src/prefs.py:187
+msgid "Change port"
+msgstr "Keisti prievadą"
+
+#: src/prefs.py:232
+msgid "Set code"
+msgstr "Nustatyti kodą"
+
+#: src/prefs.py:247
+msgid "A group code is required."
+msgstr "Reikalingas grupės kodas."
+
+#: src/prefs.py:253
+msgid "The group code should be longer if possible."
+msgstr "Jei įmanoma, grupės kodas turėtų būti ilgesnis."
+
+#: src/remote.py:349 src/remote.py:353
+msgid "Connection has been lost"
+msgstr "Ryšys nutrūko"
+
+#: src/server.py:284
+msgid "An error occurred on the remote machine"
+msgstr "Nuotoliniame kompiuteryje įvyko klaida"
+
+#: src/util.py:62
+msgid "Select file(s) to send"
+msgstr "Pasirinkite norimus siųsti failus"
+
+#: src/util.py:66
+msgid "Cancel"
+msgstr "Atsisakyti"
+
+#: src/util.py:67
+msgid "Send"
+msgstr "Siųsti"
+
+#: src/util.py:204
+msgid "A few seconds remaining"
+msgstr "Liko kelios sekundės"
+
+#: src/util.py:207
+#, python-format
+msgid "%d seconds remaining"
+msgstr "Liko %d sek."
+
+#: src/util.py:211 src/util.py:219
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minutė"
+msgstr[1] "%d minutės"
+msgstr[2] "%d minučių"
+
+#: src/util.py:218
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d valanda"
+msgstr[1] "%d valandos"
+msgstr[2] "%d valandų"
+
+#: src/util.py:223
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "maždaug %d valanda"
+msgstr[1] "maždaug %d valandos"
+msgstr[2] "maždaug %d valandų"
+
+#: src/util.py:337 src/warpinator.py:498
+msgid "About"
+msgstr "Apie"
+
+#: src/warpinator.py:134
+msgid "Paused"
+msgstr "Pristabdyta"
+
+#: src/warpinator.py:137
+msgid "Waiting for approval"
+msgstr "Laukiama patvirtinimo"
+
+#: src/warpinator.py:139
+msgid "Waiting for your approval"
+msgstr "Laukiama jūsų patvirtinimo"
+
+#: src/warpinator.py:142
+msgid "Files may be overwritten"
+msgstr "Failai gali būti perrašyti"
+
+#: src/warpinator.py:145
+msgid "Not enough disk space"
+msgstr "Nepakanka vietos diske"
+
+#: src/warpinator.py:148
+msgid "Request cancelled"
+msgstr "Užklausos atsisakyta"
+
+#: src/warpinator.py:150 src/warpinator.py:152
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "%s atsisakė užklausos"
+
+#: src/warpinator.py:155
+msgid "Transfer cancelled"
+msgstr "Perdavimo atsisakyta"
+
+#: src/warpinator.py:157 src/warpinator.py:159
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "%s atsisakė perdavimo"
+
+#: src/warpinator.py:166
+#, python-format
+msgid "File '%s' not found"
+msgstr "Failas \"%s\" nerastas"
+
+#: src/warpinator.py:168
+msgid "Some files not found"
+msgstr "Kai kurie failai nerasti"
+
+#: src/warpinator.py:170
+msgid "Completed"
+msgstr "Užbaigta"
+
+#: src/warpinator.py:328 src/warpinator.py:834
+msgid "Connecting"
+msgstr "Jungiamasi"
+
+#: src/warpinator.py:330
+#, python-format
+msgid "Connecting to %s"
+msgstr "Jungiamasi prie %s"
+
+#: src/warpinator.py:340
+#, python-format
+msgid "%s is not online"
+msgstr "%s nėra pasiekiamas"
+
+#: src/warpinator.py:345
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "Nepavyksta prisijungti prie %s"
+
+#: src/warpinator.py:374
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d naujas gaunamasis perdavimas"
+msgstr[1] "%d nauji gaunamieji perdavimai"
+msgstr[2] "%d naujų gaunamųjų perdavimų"
+
+#: src/warpinator.py:476 src/warpinator.py:1232
+msgid "Browse..."
+msgstr "Naršyti..."
+
+#: src/warpinator.py:490 src/warpinator.py:1183
+msgid "Open save folder"
+msgstr "Atverti įrašymo vietą"
+
+#: src/warpinator.py:494
+msgid "Preferences"
+msgstr "Nuostatos"
+
+#: src/warpinator.py:502 src/warpinator.py:1186
+msgid "Quit"
+msgstr "Išeiti"
+
+#: src/warpinator.py:594
+msgid "You don't appear to be connected to a network."
+msgstr "Atrodo, kad nesate prisijungę prie tinklo."
+
+#: src/warpinator.py:596
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "Paleidimas buvo nesėkmingas, patikrinkite savo žurnalus."
+
+#: src/warpinator.py:820
+msgid "Offline"
+msgstr "Nepasiekiamas"
+
+#: src/warpinator.py:827
+msgid "Unable to connect"
+msgstr "Nepavyko prisijungti"
+
+#: src/warpinator.py:1218
+msgid "Send to favorites"
+msgstr "Siųsti į mėgstamus"

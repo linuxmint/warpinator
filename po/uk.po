@@ -1,0 +1,506 @@
+# Ukrainian translation for linuxmint
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-04-17 15:54+0100\n"
+"PO-Revision-Date: 2020-05-11 10:19+0000\n"
+"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+
+#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "Відправка й отримання файлів мережею"
+
+#: resources/main-window.ui:193
+msgid "No matching results"
+msgstr "Немає збігів"
+
+#: resources/main-window.ui:349
+msgid "Make this remote machine a favorite in the main view"
+msgstr "Зробити цю віддалену машину на головному екрані"
+
+#: resources/main-window.ui:423
+msgid "Clear inactive and completed operations"
+msgstr "Очистити неактивні й завершені операції"
+
+#: resources/main-window.ui:442
+msgid "Send files"
+msgstr "Надіслати файли"
+
+#: resources/main-window.ui:468 src/prefs.py:105
+msgid "File Transfers"
+msgstr "Передавання файлів"
+
+#: resources/main-window.ui:489 src/warpinator.py:813
+msgid "Online"
+msgstr "У мережі"
+
+#: resources/main-window.ui:609
+msgid "No other computers found..."
+msgstr "Не знайдено інших комп'ютерів..."
+
+#: resources/main-window.ui:673
+msgid "Make sure your network connection is active."
+msgstr "Переконайтеся, що ваше мережеве з'єднання активне"
+
+#: resources/main-window.ui:688
+msgid ""
+"Check your firewall rules.  The port number can be changed.  See preferences "
+"for more details."
+msgstr ""
+"Перевірте правила мережевого екрану. Номер порту може бути змінений. "
+"Докладно дивіться у налаштуваннях."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:704
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"Чи працює Warpinator на інших комп'ютерах у цій мережі? Якщо так, то "
+"переконайтеся, що усі вони використовують один й той самий код групи у "
+"налаштуваннях."
+
+#: resources/main-window.ui:722
+msgid "Possible solutions:"
+msgstr "Можливі рішення:"
+
+#: resources/main-window.ui:788
+msgid "Initializing, please wait..."
+msgstr "Ініціалізація, будь ласка зачекайте..."
+
+#: resources/main-window.ui:846
+msgid "Something went wrong"
+msgstr "Виникли проблеми"
+
+#: resources/main-window.ui:921
+msgid "Invalid save location"
+msgstr "Невірне місце збереження"
+
+#: resources/main-window.ui:958
+msgid ""
+"This folder is inaccessible or does not exist.  Please select a new location "
+"in Preferences or ensure that the current one is mounted."
+msgstr ""
+"Ця тека недоступна або її не існує. Будь ласка, оберіть нове розташування у "
+"Налаштуваннях або переконайтеся, що поточне місце змонтовано."
+
+#: resources/main-window.ui:1014
+msgid "Searching for other computers"
+msgstr "Пошук інших комп'ютерів"
+
+#: resources/main-window.ui:1073
+msgid "Shutting down..."
+msgstr "Завершення роботи..."
+
+#: resources/op-item.ui:140
+msgid "Awaiting approval"
+msgstr "В очікуванні затвердження"
+
+#: resources/op-item.ui:156
+msgid "Not enough disk space!"
+msgstr "Бракує місця на диску!"
+
+#: resources/op-item.ui:219
+msgid "Calculating"
+msgstr "Обчислення"
+
+#: resources/op-item.ui:259
+msgid "Accept this request"
+msgstr "Прийняти запит"
+
+#: resources/op-item.ui:274
+msgid "Refuse this request"
+msgstr "Відхилити запит"
+
+#: resources/op-item.ui:289
+msgid "Cancel this request"
+msgstr "Скасувати запит"
+
+#: resources/op-item.ui:304
+msgid "Restart this operation"
+msgstr "Перезапустити операцію"
+
+#: resources/op-item.ui:319
+msgid "Pause this operation"
+msgstr "Призупинити операцію"
+
+#: resources/op-item.ui:334
+msgid "Resume this operation"
+msgstr "Відновити операцію"
+
+#: resources/op-item.ui:349
+msgid "Cancel this operation"
+msgstr "Скасувати операцію"
+
+#: resources/op-item.ui:364
+msgid "Remove this operation from the list"
+msgstr "Вилучити операцію з переліку"
+
+#: resources/op-item.ui:379
+msgid "Open the containing folder"
+msgstr "Відкрийте теку з вмістом"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "Нотатка до переліку портів:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Налаштування Warpinator"
+
+#: src/notifications.py:20
+msgid "New incoming files"
+msgstr "Новий вхідний файл"
+
+#: src/notifications.py:26
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s бажає відправити Вам %(file_count)d файл (%(file_name)s)."
+
+#: src/notifications.py:27
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s бажає відправити Вам %(file_count)d файли"
+
+#: src/notifications.py:37
+msgid "Accept"
+msgstr "Прийняти"
+
+#: src/notifications.py:38
+msgid "Decline"
+msgstr "Відхилити"
+
+#: src/notifications.py:52
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr "%(sender_name)s відправляє Вам %(file_count)d файл (%(file_name)s)."
+
+#: src/notifications.py:53
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s відправляє Вам %(file_count)d файлів"
+
+#: src/notifications.py:88
+msgid "Transfer complete"
+msgstr "Передавання завершено"
+
+#: src/notifications.py:90
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "Відправка %s успішно завершена"
+
+#: src/notifications.py:92
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "Відправка файлу від %s успішно завершена"
+
+#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+msgid "Transfer failed"
+msgstr "Помилка передачі"
+
+#: src/notifications.py:124
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "Щось пішло не так з відправленням до %s"
+
+#: src/notifications.py:126
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "Щось пішло не так з відправленням від %s"
+
+#: src/ops.py:45
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:140
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d file-do-not-translate"
+msgstr[1] "%d файли"
+msgstr[2] "%d файлів"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:222
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d файл"
+msgstr[1] "%d файли"
+msgstr[2] "%d файлів"
+
+#: src/prefs.py:80
+msgid "Warpinator Preferences"
+msgstr "Налаштування Warpinator"
+
+#: src/prefs.py:90
+msgid "Desktop"
+msgstr "Стільниця"
+
+#: src/prefs.py:92
+msgid "Show an icon in the notification area"
+msgstr "Показувати піктограму у області сповіщення"
+
+#: src/prefs.py:96
+msgid "Start with main window open"
+msgstr "Запускати з відкритого головного вікна"
+
+#: src/prefs.py:101
+msgid "Start automatically"
+msgstr "Запускати автоматично"
+
+#: src/prefs.py:107
+msgid "Location for received files"
+msgstr "Місце для отриманих файлів"
+
+#: src/prefs.py:112
+msgid "Require approval before accepting files"
+msgstr "Запитувати схвалення перед прийманням файлів"
+
+#: src/prefs.py:116
+msgid "Require approval when files would be overwritten"
+msgstr "Запитувати схвалення на перезапис файлів"
+
+#: src/prefs.py:120
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr ""
+"Показувати сповіщення, коли хтось відправляє (або намагається відправити) "
+"файли"
+
+#: src/prefs.py:124
+msgid "Network"
+msgstr "Мережа"
+
+#: src/prefs.py:129
+msgid "Group Code"
+msgstr "Код Групи"
+
+#: src/prefs.py:130
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr ""
+"Ви не можете контактувати з комп'ютерами, які не використовують той самий "
+"код."
+
+#: src/prefs.py:136
+msgid "Incoming port for transfers"
+msgstr "Вхідний порт для відправки"
+
+#: src/prefs.py:146
+msgid "Sample firewall rule"
+msgstr "Приклад правила мережевого екрану"
+
+#: src/prefs.py:158
+msgid ""
+"Any port number will work for the application, but using the same port for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"Будь який номер порту буде працювати для застосунку, але використання одного "
+"й того ж порту для усіх комп'ютерів можна спростити шляхом додавання "
+"виключень мережевого екрану за необхідности."
+
+#: src/prefs.py:187
+msgid "Change port"
+msgstr "Змінити порт"
+
+#: src/prefs.py:232
+msgid "Set code"
+msgstr "Встановити код"
+
+#: src/prefs.py:247
+msgid "A group code is required."
+msgstr "Потрібен код групи"
+
+#: src/prefs.py:253
+msgid "The group code should be longer if possible."
+msgstr "Код групи має бути довшим, якщо це можливо."
+
+#: src/remote.py:349 src/remote.py:353
+msgid "Connection has been lost"
+msgstr "З'єднання втрачено"
+
+#: src/server.py:284
+msgid "An error occurred on the remote machine"
+msgstr "Помилка на віддаленому комп'ютері"
+
+#: src/util.py:62
+msgid "Select file(s) to send"
+msgstr "Оберіть файл(и) для відправки"
+
+#: src/util.py:66
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/util.py:67
+msgid "Send"
+msgstr "Відправити"
+
+#: src/util.py:204
+msgid "A few seconds remaining"
+msgstr "Залишилося декілька секунд"
+
+#: src/util.py:207
+#, python-format
+msgid "%d seconds remaining"
+msgstr "%d секунд залишилось"
+
+#: src/util.py:211 src/util.py:219
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d хвилина"
+msgstr[1] "%d хвилини"
+msgstr[2] "%d хвилин"
+
+#: src/util.py:218
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d година"
+msgstr[1] "%d години"
+msgstr[2] "%d годин"
+
+#: src/util.py:223
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "приблизно %d година"
+msgstr[1] "приблизно %d години"
+msgstr[2] "приблизно %d годин"
+
+#: src/util.py:337 src/warpinator.py:498
+msgid "About"
+msgstr "Про"
+
+#: src/warpinator.py:134
+msgid "Paused"
+msgstr "Павза"
+
+#: src/warpinator.py:137
+msgid "Waiting for approval"
+msgstr "Очікування підтвердження"
+
+#: src/warpinator.py:139
+msgid "Waiting for your approval"
+msgstr "Очікування вашого підтвердження"
+
+#: src/warpinator.py:142
+msgid "Files may be overwritten"
+msgstr "Файли можуть бути перезаписані"
+
+#: src/warpinator.py:145
+msgid "Not enough disk space"
+msgstr "Бракує дискового простору"
+
+#: src/warpinator.py:148
+msgid "Request cancelled"
+msgstr "Запит відхилено"
+
+#: src/warpinator.py:150 src/warpinator.py:152
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "Запит відхилено %s"
+
+#: src/warpinator.py:155
+msgid "Transfer cancelled"
+msgstr "Передавання скасовано"
+
+#: src/warpinator.py:157 src/warpinator.py:159
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "Передавання скасовано %s"
+
+#: src/warpinator.py:166
+#, python-format
+msgid "File '%s' not found"
+msgstr "Файл '%s' не знайдено"
+
+#: src/warpinator.py:168
+msgid "Some files not found"
+msgstr "Деякі файли не знайдено"
+
+#: src/warpinator.py:170
+msgid "Completed"
+msgstr "Завершено"
+
+#: src/warpinator.py:328 src/warpinator.py:834
+msgid "Connecting"
+msgstr "З'єднання"
+
+#: src/warpinator.py:330
+#, python-format
+msgid "Connecting to %s"
+msgstr "З’єднання з %s"
+
+#: src/warpinator.py:340
+#, python-format
+msgid "%s is not online"
+msgstr "%s не у мережі"
+
+#: src/warpinator.py:345
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "Не вдалося з'єднатися з %s"
+
+#: src/warpinator.py:374
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d нова вхідна передача"
+msgstr[1] "%d нові вхідні передачі"
+msgstr[2] "%d нових вхідних передач"
+
+#: src/warpinator.py:476 src/warpinator.py:1232
+msgid "Browse..."
+msgstr "Огляд..."
+
+#: src/warpinator.py:490 src/warpinator.py:1183
+msgid "Open save folder"
+msgstr "Відкрити теку збереження"
+
+#: src/warpinator.py:494
+msgid "Preferences"
+msgstr "Параметри"
+
+#: src/warpinator.py:502 src/warpinator.py:1186
+msgid "Quit"
+msgstr "Вийти"
+
+#: src/warpinator.py:594
+msgid "You don't appear to be connected to a network."
+msgstr "Здається, ви не під'єднані до мережі."
+
+#: src/warpinator.py:596
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "Помилка при запуску, перевірте ваші журнали."
+
+#: src/warpinator.py:820
+msgid "Offline"
+msgstr "Поза мережею"
+
+#: src/warpinator.py:827
+msgid "Unable to connect"
+msgstr "Не вдається з'єднатись"
+
+#: src/warpinator.py:1218
+msgid "Send to favorites"
+msgstr "Відправити у вибране"

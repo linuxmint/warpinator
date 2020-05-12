@@ -1,0 +1,499 @@
+# Brazilian Portuguese translation for linuxmint
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-04-17 15:54+0100\n"
+"PO-Revision-Date: 2020-05-01 16:36+0000\n"
+"Last-Translator: Sérgio Marques <Unknown>\n"
+"Language-Team: Portuguese <pt@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+"Language: pt\n"
+
+#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "Enviar e receber ficheiros através da rede"
+
+#: resources/main-window.ui:193
+msgid "No matching results"
+msgstr "Nenhum resultado correspondente"
+
+#: resources/main-window.ui:349
+msgid "Make this remote machine a favorite in the main view"
+msgstr "Faça deste computador remoto um favorito na vista principal"
+
+#: resources/main-window.ui:423
+msgid "Clear inactive and completed operations"
+msgstr "Limpar operações inativas e concluídas"
+
+#: resources/main-window.ui:442
+msgid "Send files"
+msgstr "Enviar ficheiros"
+
+#: resources/main-window.ui:468 src/prefs.py:105
+msgid "File Transfers"
+msgstr "Transferências de ficheiros"
+
+#: resources/main-window.ui:489 src/warpinator.py:813
+msgid "Online"
+msgstr "Ligado"
+
+#: resources/main-window.ui:609
+msgid "No other computers found..."
+msgstr "Nenhum outro computador encontrado..."
+
+#: resources/main-window.ui:673
+msgid "Make sure your network connection is active."
+msgstr "Certifique-se de que a ligação de rede está ativa."
+
+#: resources/main-window.ui:688
+msgid ""
+"Check your firewall rules.  The port number can be changed.  See preferences "
+"for more details."
+msgstr ""
+"Verifique as regras da sua firewall. O número da porta pode ser alterado. "
+"Consulte as preferências para obter mais detalhes."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:704
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"O Warpinator está a ser executado em qualquer outro computador desta rede? "
+"Em caso afirmativo, certifique-se de que estão todos a utilizar o mesmo "
+"código de grupo em preferências."
+
+#: resources/main-window.ui:722
+msgid "Possible solutions:"
+msgstr "Soluções possíveis:"
+
+#: resources/main-window.ui:788
+msgid "Initializing, please wait..."
+msgstr "A iniciar, aguarde..."
+
+#: resources/main-window.ui:846
+msgid "Something went wrong"
+msgstr "Algo correu mal"
+
+#: resources/main-window.ui:921
+msgid "Invalid save location"
+msgstr "Local de armazenamento inválido"
+
+#: resources/main-window.ui:958
+msgid ""
+"This folder is inaccessible or does not exist.  Please select a new location "
+"in Preferences or ensure that the current one is mounted."
+msgstr ""
+"Esta pasta está inacessível ou não existe. Escolha um novo local em "
+"Preferências ou certifique-se de que a atual está montada."
+
+#: resources/main-window.ui:1014
+msgid "Searching for other computers"
+msgstr "A procurar por outros computadores"
+
+#: resources/main-window.ui:1073
+msgid "Shutting down..."
+msgstr "A encerrar..."
+
+#: resources/op-item.ui:140
+msgid "Awaiting approval"
+msgstr "A aguardar aprovação"
+
+#: resources/op-item.ui:156
+msgid "Not enough disk space!"
+msgstr "O espaço em disco é insuficiente!"
+
+#: resources/op-item.ui:219
+msgid "Calculating"
+msgstr "A calcular"
+
+#: resources/op-item.ui:259
+msgid "Accept this request"
+msgstr "Aceitar este pedido"
+
+#: resources/op-item.ui:274
+msgid "Refuse this request"
+msgstr "Recusar este pedido"
+
+#: resources/op-item.ui:289
+msgid "Cancel this request"
+msgstr "Cancelar este pedido"
+
+#: resources/op-item.ui:304
+msgid "Restart this operation"
+msgstr "Reiniciar esta operação"
+
+#: resources/op-item.ui:319
+msgid "Pause this operation"
+msgstr "Interromper esta operação"
+
+#: resources/op-item.ui:334
+msgid "Resume this operation"
+msgstr "Retomar esta operação"
+
+#: resources/op-item.ui:349
+msgid "Cancel this operation"
+msgstr "Cancelar esta operação"
+
+#: resources/op-item.ui:364
+msgid "Remove this operation from the list"
+msgstr "Remover esta operação da lista"
+
+#: resources/op-item.ui:379
+msgid "Open the containing folder"
+msgstr "Abrir pasta"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "Nota sobre os números de porta:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Preferências do Warpinator"
+
+#: src/notifications.py:20
+msgid "New incoming files"
+msgstr "Novos ficheiros recebidos"
+
+#: src/notifications.py:26
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s gostaria de lhe enviar %(file_count)d ficheiro "
+"(%(file_name)s)."
+
+#: src/notifications.py:27
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s gostaria de lhe enviar %(file_count)d ficheiros"
+
+#: src/notifications.py:37
+msgid "Accept"
+msgstr "Aceitar"
+
+#: src/notifications.py:38
+msgid "Decline"
+msgstr "Rejeitar"
+
+#: src/notifications.py:52
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s está a enviar-lhe %(file_count)d ficheiro (%(file_name)s)."
+
+#: src/notifications.py:53
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s está a enviar-lhe %(file_count)d ficheiros"
+
+#: src/notifications.py:88
+msgid "Transfer complete"
+msgstr "Transferência concluída"
+
+#: src/notifications.py:90
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "A transferência para %s foi concluída com sucesso"
+
+#: src/notifications.py:92
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "A transferência de %s foi concluída com sucesso"
+
+#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+msgid "Transfer failed"
+msgstr "Falha na transferência"
+
+#: src/notifications.py:124
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "Algo correu mal na transferência para %s"
+
+#: src/notifications.py:126
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "Algo correu mal na transferência de %s"
+
+#: src/ops.py:45
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:140
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d file-do-not-translate"
+msgstr[1] "%d ficheiros"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:222
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d ficheiro"
+msgstr[1] "%d ficheiros"
+
+#: src/prefs.py:80
+msgid "Warpinator Preferences"
+msgstr "Preferências do Warpinator"
+
+#: src/prefs.py:90
+msgid "Desktop"
+msgstr "Ambiente de trabalho"
+
+#: src/prefs.py:92
+msgid "Show an icon in the notification area"
+msgstr "Mostrar ícone na área de notificação"
+
+#: src/prefs.py:96
+msgid "Start with main window open"
+msgstr "Iniciar com a janela principal aberta"
+
+#: src/prefs.py:101
+msgid "Start automatically"
+msgstr "Iniciar automaticamente"
+
+#: src/prefs.py:107
+msgid "Location for received files"
+msgstr "Localização para os ficheiros recebidos"
+
+#: src/prefs.py:112
+msgid "Require approval before accepting files"
+msgstr "Solicitar aprovação antes de aceitar ficheiros"
+
+#: src/prefs.py:116
+msgid "Require approval when files would be overwritten"
+msgstr "Solicitar aprovação ao sobrescrever os ficheiros"
+
+#: src/prefs.py:120
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr ""
+"Mostrar uma notificação quando alguém lhe envia (ou tenta enviar) ficheiros"
+
+#: src/prefs.py:124
+msgid "Network"
+msgstr "Rede"
+
+#: src/prefs.py:129
+msgid "Group Code"
+msgstr "Código de grupo"
+
+#: src/prefs.py:130
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr "Não pode comunicar com computadores que não utilizem o mesmo código."
+
+#: src/prefs.py:136
+msgid "Incoming port for transfers"
+msgstr "Porta de entrada para transferências"
+
+#: src/prefs.py:146
+msgid "Sample firewall rule"
+msgstr "Exemplo de regra para a firewall"
+
+#: src/prefs.py:158
+msgid ""
+"Any port number will work for the application, but using the same port for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"Qualquer número de porta irá funcionar para a aplicação, mas utilizar a "
+"mesma porta em todos os computadores pode simplificar a adição de exceções "
+"na firewall, se necessário."
+
+#: src/prefs.py:187
+msgid "Change port"
+msgstr "Altarar porta"
+
+#: src/prefs.py:232
+msgid "Set code"
+msgstr "Definir código"
+
+#: src/prefs.py:247
+msgid "A group code is required."
+msgstr "Requer um código de grupo."
+
+#: src/prefs.py:253
+msgid "The group code should be longer if possible."
+msgstr "O código de grupo deve ser o mais longo possível."
+
+#: src/remote.py:349 src/remote.py:353
+msgid "Connection has been lost"
+msgstr "Ligação perdida"
+
+#: src/server.py:284
+msgid "An error occurred on the remote machine"
+msgstr "Ocorreu um erro no computador remoto"
+
+#: src/util.py:62
+msgid "Select file(s) to send"
+msgstr "Escolha o(s) ficheiro(s) a enviar"
+
+#: src/util.py:66
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/util.py:67
+msgid "Send"
+msgstr "Enviar"
+
+#: src/util.py:204
+msgid "A few seconds remaining"
+msgstr "Faltam alguns segundos"
+
+#: src/util.py:207
+#, python-format
+msgid "%d seconds remaining"
+msgstr "Faltam %d segundos"
+
+#: src/util.py:211 src/util.py:219
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuto"
+msgstr[1] "%d minutos"
+
+#: src/util.py:218
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d hora"
+msgstr[1] "%d horas"
+
+#: src/util.py:223
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "aproximadamente %d hora"
+msgstr[1] "aproximadamente %d horas"
+
+#: src/util.py:337 src/warpinator.py:498
+msgid "About"
+msgstr "Acerca"
+
+#: src/warpinator.py:134
+msgid "Paused"
+msgstr "Em pausa"
+
+#: src/warpinator.py:137
+msgid "Waiting for approval"
+msgstr "Aguarda aprovação"
+
+#: src/warpinator.py:139
+msgid "Waiting for your approval"
+msgstr "Aguarda a sua aprovação"
+
+#: src/warpinator.py:142
+msgid "Files may be overwritten"
+msgstr "Os ficheiros podem ser sobrescritos"
+
+#: src/warpinator.py:145
+msgid "Not enough disk space"
+msgstr "O espaço em disco é insuficiente"
+
+#: src/warpinator.py:148
+msgid "Request cancelled"
+msgstr "Pedido cancelado"
+
+#: src/warpinator.py:150 src/warpinator.py:152
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "Pedido cancelado por %s"
+
+#: src/warpinator.py:155
+msgid "Transfer cancelled"
+msgstr "Transferência cancelada"
+
+#: src/warpinator.py:157 src/warpinator.py:159
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "Transferência cancelada por %s"
+
+#: src/warpinator.py:166
+#, python-format
+msgid "File '%s' not found"
+msgstr "Ficheiro '%s' não encontrado"
+
+#: src/warpinator.py:168
+msgid "Some files not found"
+msgstr "Alguns ficheiros não foram encontrados"
+
+#: src/warpinator.py:170
+msgid "Completed"
+msgstr "Terminado"
+
+#: src/warpinator.py:328 src/warpinator.py:834
+msgid "Connecting"
+msgstr "Estabelecendo ligação"
+
+#: src/warpinator.py:330
+#, python-format
+msgid "Connecting to %s"
+msgstr "A estabelecer ligação com %s"
+
+#: src/warpinator.py:340
+#, python-format
+msgid "%s is not online"
+msgstr "%s não está ligado"
+
+#: src/warpinator.py:345
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "Não é possível ligar-se a %s"
+
+#: src/warpinator.py:374
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d nova transferência a chegar"
+msgstr[1] "%d novas transferências a chegar"
+
+#: src/warpinator.py:476 src/warpinator.py:1232
+msgid "Browse..."
+msgstr "Explorar..."
+
+#: src/warpinator.py:490 src/warpinator.py:1183
+msgid "Open save folder"
+msgstr "Abrir pasta de armazenamento"
+
+#: src/warpinator.py:494
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/warpinator.py:502 src/warpinator.py:1186
+msgid "Quit"
+msgstr "Sair"
+
+#: src/warpinator.py:594
+msgid "You don't appear to be connected to a network."
+msgstr "Não parece estar ligado a uma rede."
+
+#: src/warpinator.py:596
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "Falha no arranque, verifique os registos."
+
+#: src/warpinator.py:820
+msgid "Offline"
+msgstr "Desligado"
+
+#: src/warpinator.py:827
+msgid "Unable to connect"
+msgstr "Não foi possível ligar"
+
+#: src/warpinator.py:1218
+msgid "Send to favorites"
+msgstr "Enviar para os favoritos"

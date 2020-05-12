@@ -1,0 +1,499 @@
+# Czech translation for linuxmint
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-04-17 15:54+0100\n"
+"PO-Revision-Date: 2020-04-22 13:24+0000\n"
+"Last-Translator: Pavel Borecki <Unknown>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+
+#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "Posílání a přijímání souborů po síti"
+
+#: resources/main-window.ui:193
+msgid "No matching results"
+msgstr "Žádné odpovídající výsledky"
+
+#: resources/main-window.ui:349
+msgid "Make this remote machine a favorite in the main view"
+msgstr "V hlavním pohledu přidat tento vzdálený stroj do oblíbených"
+
+#: resources/main-window.ui:423
+msgid "Clear inactive and completed operations"
+msgstr "Vyčistit od neaktivních a dokončených operací"
+
+#: resources/main-window.ui:442
+msgid "Send files"
+msgstr "Poslat soubory"
+
+#: resources/main-window.ui:468 src/prefs.py:105
+msgid "File Transfers"
+msgstr "Přenos souborů"
+
+#: resources/main-window.ui:489 src/warpinator.py:813
+msgid "Online"
+msgstr "Online"
+
+#: resources/main-window.ui:609
+msgid "No other computers found..."
+msgstr "Nenalezeny žádné další počítače…"
+
+#: resources/main-window.ui:673
+msgid "Make sure your network connection is active."
+msgstr "Ověřte, že je vaše připojení k síti aktivní."
+
+#: resources/main-window.ui:688
+msgid ""
+"Check your firewall rules.  The port number can be changed.  See preferences "
+"for more details."
+msgstr ""
+"Zkontrolujte pravidla brány firewall. Číslo portu je možné změnit. "
+"Podrobnosti viz předvolby."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:704
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"Je Warpinator spuštěný na nějakých dalších počítačích na této síti? Pokud "
+"ano, ověřte, že všechny v předvolbách používají stejný kód skupiny."
+
+#: resources/main-window.ui:722
+msgid "Possible solutions:"
+msgstr "Možná řešení:"
+
+#: resources/main-window.ui:788
+msgid "Initializing, please wait..."
+msgstr "Inicializuje se – čekejte prosím…"
+
+#: resources/main-window.ui:846
+msgid "Something went wrong"
+msgstr "Něco se pokazilo"
+
+#: resources/main-window.ui:921
+msgid "Invalid save location"
+msgstr "Neplatné umístění pro uložení"
+
+#: resources/main-window.ui:958
+msgid ""
+"This folder is inaccessible or does not exist.  Please select a new location "
+"in Preferences or ensure that the current one is mounted."
+msgstr ""
+"Tato složka není přístupná nebo neexistuje. Vyberte v Předvolbách nové "
+"umístění nebo zajistěte, aby to stávající bylo přípojeno."
+
+#: resources/main-window.ui:1014
+msgid "Searching for other computers"
+msgstr "Hledání ostatních počítačů"
+
+#: resources/main-window.ui:1073
+msgid "Shutting down..."
+msgstr "Ukončuje se…"
+
+#: resources/op-item.ui:140
+msgid "Awaiting approval"
+msgstr "Čeká na schválení"
+
+#: resources/op-item.ui:156
+msgid "Not enough disk space!"
+msgstr "Nedostatek místa na disku!"
+
+#: resources/op-item.ui:219
+msgid "Calculating"
+msgstr "Počítá se"
+
+#: resources/op-item.ui:259
+msgid "Accept this request"
+msgstr "Přijmout tento požadavek"
+
+#: resources/op-item.ui:274
+msgid "Refuse this request"
+msgstr "Odmítnout tento požadavek"
+
+#: resources/op-item.ui:289
+msgid "Cancel this request"
+msgstr "Zrušit tento požadavek"
+
+#: resources/op-item.ui:304
+msgid "Restart this operation"
+msgstr "Restartovat tuto operaci"
+
+#: resources/op-item.ui:319
+msgid "Pause this operation"
+msgstr "Pozastavit tuto operaci"
+
+#: resources/op-item.ui:334
+msgid "Resume this operation"
+msgstr "Pokračovat v této operaci"
+
+#: resources/op-item.ui:349
+msgid "Cancel this operation"
+msgstr "Zrušit tuto operaci"
+
+#: resources/op-item.ui:364
+msgid "Remove this operation from the list"
+msgstr "Odebrat tuto operaci ze seznamu"
+
+#: resources/op-item.ui:379
+msgid "Open the containing folder"
+msgstr "Otevřít složku, ve které se nachází"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "Poznámka ohledně čísel portů:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Předvolby pro Warpinator"
+
+#: src/notifications.py:20
+msgid "New incoming files"
+msgstr "Nové příchozí soubory"
+
+#: src/notifications.py:26
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr "%(sender_name)s vám chce poslat %(file_count)d file (%(file_name)s)."
+
+#: src/notifications.py:27
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s vám chce poslat %(file_count)d souborů"
+
+#: src/notifications.py:37
+msgid "Accept"
+msgstr "Přijmout"
+
+#: src/notifications.py:38
+msgid "Decline"
+msgstr "Odmítnout"
+
+#: src/notifications.py:52
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr "%(sender_name)s vám posílá %(file_count)d souborP (%(file_name)s)."
+
+#: src/notifications.py:53
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s vám posílá %(file_count)d souborů"
+
+#: src/notifications.py:88
+msgid "Transfer complete"
+msgstr "Přenos dokončen"
+
+#: src/notifications.py:90
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "Přenos k %s úspěšně dokončen"
+
+#: src/notifications.py:92
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "Přenos z %s úspěšně dokončen"
+
+#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+msgid "Transfer failed"
+msgstr "Přenos se nezdařil"
+
+#: src/notifications.py:124
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "Něco se pokazilo při přenosu k %s"
+
+#: src/notifications.py:126
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "Něco se pokazilo při přenosu od %s"
+
+#: src/ops.py:45
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:140
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d file-do-not-translate"
+msgstr[1] "%d soubory"
+msgstr[2] "%d souborů"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:222
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d file"
+msgstr[1] "%d soubory"
+msgstr[2] "%d souborů"
+
+#: src/prefs.py:80
+msgid "Warpinator Preferences"
+msgstr "Předvolby pro Warpinator"
+
+#: src/prefs.py:90
+msgid "Desktop"
+msgstr "Plocha"
+
+#: src/prefs.py:92
+msgid "Show an icon in the notification area"
+msgstr "Zobrazovat ikonu v oznamovací oblasti"
+
+#: src/prefs.py:96
+msgid "Start with main window open"
+msgstr "Spouštět s hlavním oknem otevřeným"
+
+#: src/prefs.py:101
+msgid "Start automatically"
+msgstr "Spouštět automaticky"
+
+#: src/prefs.py:107
+msgid "Location for received files"
+msgstr "Umístění pro přijaté soubory"
+
+#: src/prefs.py:112
+msgid "Require approval before accepting files"
+msgstr "Před přijmutím souborů vyžadovat schválení"
+
+#: src/prefs.py:116
+msgid "Require approval when files would be overwritten"
+msgstr "Pokud by soubory měly být přepsány, vyžadovat schválení"
+
+#: src/prefs.py:120
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr ""
+"Zobrazit upozornění, když vám někdo pošle (nebo se pokusí poslat) soubory"
+
+#: src/prefs.py:124
+msgid "Network"
+msgstr "Síť"
+
+#: src/prefs.py:129
+msgid "Group Code"
+msgstr "Kód skupiny"
+
+#: src/prefs.py:130
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr "Nemůžete komunikovat s počítači, které nepoužívají stejný kód."
+
+#: src/prefs.py:136
+msgid "Incoming port for transfers"
+msgstr "Příchozí port pro přenosy"
+
+#: src/prefs.py:146
+msgid "Sample firewall rule"
+msgstr "Pravidlo brány firewall pro ukázku"
+
+#: src/prefs.py:158
+msgid ""
+"Any port number will work for the application, but using the same port for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"Aplikace může použít libovolné číslo portu, ale použití stejného portu na "
+"všech počítačích může usnadnit přidání případné výjimky na bráně firewall."
+
+#: src/prefs.py:187
+msgid "Change port"
+msgstr "Změnit port"
+
+#: src/prefs.py:232
+msgid "Set code"
+msgstr "Nastavit kód"
+
+#: src/prefs.py:247
+msgid "A group code is required."
+msgstr "Je zapotřebí kódu skupiny."
+
+#: src/prefs.py:253
+msgid "The group code should be longer if possible."
+msgstr "Kód skupiny by měl být pokud možno delší."
+
+#: src/remote.py:349 src/remote.py:353
+msgid "Connection has been lost"
+msgstr "Spojení bylo ztraceno"
+
+#: src/server.py:284
+msgid "An error occurred on the remote machine"
+msgstr "Došlo k problému na vzdáleném stroji"
+
+#: src/util.py:62
+msgid "Select file(s) to send"
+msgstr "Vyberte soubor(y), které odeslat"
+
+#: src/util.py:66
+msgid "Cancel"
+msgstr "Storno"
+
+#: src/util.py:67
+msgid "Send"
+msgstr "Odslat"
+
+#: src/util.py:204
+msgid "A few seconds remaining"
+msgstr "Zbývá několik sekund"
+
+#: src/util.py:207
+#, python-format
+msgid "%d seconds remaining"
+msgstr "Zbývá %d sekund"
+
+#: src/util.py:211 src/util.py:219
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuta"
+msgstr[1] "%d minuty"
+msgstr[2] "%d minut"
+
+#: src/util.py:218
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d hodina"
+msgstr[1] "%d hodiny"
+msgstr[2] "%d hodin"
+
+#: src/util.py:223
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "přibližně %d hodina"
+msgstr[1] "přibližně %d hodiny"
+msgstr[2] "přibližně %d hodin"
+
+#: src/util.py:337 src/warpinator.py:498
+msgid "About"
+msgstr "O aplikaci"
+
+#: src/warpinator.py:134
+msgid "Paused"
+msgstr "Pozastaveno"
+
+#: src/warpinator.py:137
+msgid "Waiting for approval"
+msgstr "Čeká na schválení"
+
+#: src/warpinator.py:139
+msgid "Waiting for your approval"
+msgstr "Čeká na vaše schválení"
+
+#: src/warpinator.py:142
+msgid "Files may be overwritten"
+msgstr "Soubory mohou být přepsány"
+
+#: src/warpinator.py:145
+msgid "Not enough disk space"
+msgstr "Nedostatek místa na disku"
+
+#: src/warpinator.py:148
+msgid "Request cancelled"
+msgstr "Požadavek zrušen"
+
+#: src/warpinator.py:150 src/warpinator.py:152
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "%s zrušil(a) přenos"
+
+#: src/warpinator.py:155
+msgid "Transfer cancelled"
+msgstr "Přenos zrušen"
+
+#: src/warpinator.py:157 src/warpinator.py:159
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "%s zrušil(a) přenos"
+
+#: src/warpinator.py:166
+#, python-format
+msgid "File '%s' not found"
+msgstr "Soubor „%s“ nenalezen"
+
+#: src/warpinator.py:168
+msgid "Some files not found"
+msgstr "Některé soubory nenalezeny"
+
+#: src/warpinator.py:170
+msgid "Completed"
+msgstr "Dokončeno"
+
+#: src/warpinator.py:328 src/warpinator.py:834
+msgid "Connecting"
+msgstr "Připojuje se"
+
+#: src/warpinator.py:330
+#, python-format
+msgid "Connecting to %s"
+msgstr "Připojuje se k %s"
+
+#: src/warpinator.py:340
+#, python-format
+msgid "%s is not online"
+msgstr "%s není dostupný"
+
+#: src/warpinator.py:345
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "Nezdařilo se připojit k %s"
+
+#: src/warpinator.py:374
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d nový příchozí přenos"
+msgstr[1] "%d nové příchozí přenosy"
+msgstr[2] "%d nových příchozích přenosů"
+
+#: src/warpinator.py:476 src/warpinator.py:1232
+msgid "Browse..."
+msgstr "Procházet…"
+
+#: src/warpinator.py:490 src/warpinator.py:1183
+msgid "Open save folder"
+msgstr "Otevřít složku, ve které je uloženo"
+
+#: src/warpinator.py:494
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: src/warpinator.py:502 src/warpinator.py:1186
+msgid "Quit"
+msgstr "Ukončit"
+
+#: src/warpinator.py:594
+msgid "You don't appear to be connected to a network."
+msgstr "Zdá se, že nejste připojení k síti."
+
+#: src/warpinator.py:596
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "Spuštění nebylo úspěšné – podívejte se do záznamu událostí (log)."
+
+#: src/warpinator.py:820
+msgid "Offline"
+msgstr "Odpojeno"
+
+#: src/warpinator.py:827
+msgid "Unable to connect"
+msgstr "Nedaří se připojit"
+
+#: src/warpinator.py:1218
+msgid "Send to favorites"
+msgstr "Poslat do oblíbených"

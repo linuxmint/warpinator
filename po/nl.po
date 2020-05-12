@@ -1,0 +1,497 @@
+# Dutch translation for linuxmint
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-04-17 15:54+0100\n"
+"PO-Revision-Date: 2020-04-18 19:21+0000\n"
+"Last-Translator: Pjotr12345 <Unknown>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
+"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+
+#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "Bestanden verzenden en ontvangen via het netwerk"
+
+#: resources/main-window.ui:193
+msgid "No matching results"
+msgstr "Geen overeenkomende resultaten"
+
+#: resources/main-window.ui:349
+msgid "Make this remote machine a favorite in the main view"
+msgstr "Maak deze machine-op-afstand een favoriet in het hoofdvenster"
+
+#: resources/main-window.ui:423
+msgid "Clear inactive and completed operations"
+msgstr "Wis inactieve en voltooide bewerkingen"
+
+#: resources/main-window.ui:442
+msgid "Send files"
+msgstr "Bestanden verzenden"
+
+#: resources/main-window.ui:468 src/prefs.py:105
+msgid "File Transfers"
+msgstr "Bestandsoverdrachten"
+
+#: resources/main-window.ui:489 src/warpinator.py:813
+msgid "Online"
+msgstr "Verbonden"
+
+#: resources/main-window.ui:609
+msgid "No other computers found..."
+msgstr "Geen andere computers gevonden...."
+
+#: resources/main-window.ui:673
+msgid "Make sure your network connection is active."
+msgstr "Zorg ervoor dat uw netwerkverbinding actief is."
+
+#: resources/main-window.ui:688
+msgid ""
+"Check your firewall rules.  The port number can be changed.  See preferences "
+"for more details."
+msgstr ""
+"Kijk uw firewallregels na. Het poortnummer kan veranderd zijn. Zie de "
+"Voorkeuren voor meer bijzonderheden."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:704
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"Draait Warpinator ook op andere computers in dit netwerk? Zo ja, zorg er dan "
+"voor dat ze alle dezelfde groepscode gebruiken in de Voorkeuren."
+
+#: resources/main-window.ui:722
+msgid "Possible solutions:"
+msgstr "Mogelijke oplossingen:"
+
+#: resources/main-window.ui:788
+msgid "Initializing, please wait..."
+msgstr "Bezig met opstarten, een ogenblik a.u.b...."
+
+#: resources/main-window.ui:846
+msgid "Something went wrong"
+msgstr "Er is iets misgegaan"
+
+#: resources/main-window.ui:921
+msgid "Invalid save location"
+msgstr "Ongeldige opslaglocatie"
+
+#: resources/main-window.ui:958
+msgid ""
+"This folder is inaccessible or does not exist.  Please select a new location "
+"in Preferences or ensure that the current one is mounted."
+msgstr ""
+"Deze map is ontoegankelijk of bestaat niet. Kies a.u.b. een nieuwe locatie "
+"in de Voorkeuren of zorg ervoor dat de huidige locatie is aangekoppeld."
+
+#: resources/main-window.ui:1014
+msgid "Searching for other computers"
+msgstr "Zoeken naar andere computers..."
+
+#: resources/main-window.ui:1073
+msgid "Shutting down..."
+msgstr "Afsluiten..."
+
+#: resources/op-item.ui:140
+msgid "Awaiting approval"
+msgstr "Wachten op goedkeuring..."
+
+#: resources/op-item.ui:156
+msgid "Not enough disk space!"
+msgstr "Te weinig schijfruimte."
+
+#: resources/op-item.ui:219
+msgid "Calculating"
+msgstr "Berekenen..."
+
+#: resources/op-item.ui:259
+msgid "Accept this request"
+msgstr "Aanvaard dit verzoek"
+
+#: resources/op-item.ui:274
+msgid "Refuse this request"
+msgstr "Weiger dit verzoek"
+
+#: resources/op-item.ui:289
+msgid "Cancel this request"
+msgstr "Breek dit verzoek af"
+
+#: resources/op-item.ui:304
+msgid "Restart this operation"
+msgstr "Herstart deze bewerking"
+
+#: resources/op-item.ui:319
+msgid "Pause this operation"
+msgstr "Pauzeer deze bewerking"
+
+#: resources/op-item.ui:334
+msgid "Resume this operation"
+msgstr "Hervat deze bewerking"
+
+#: resources/op-item.ui:349
+msgid "Cancel this operation"
+msgstr "Breek deze bewerking af"
+
+#: resources/op-item.ui:364
+msgid "Remove this operation from the list"
+msgstr "Verwijder deze bewerking uit de lijst"
+
+#: resources/op-item.ui:379
+msgid "Open the containing folder"
+msgstr "Open de bevattende map"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "Opmerking inzake poortnummers:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Voorkeuren van Warpinator"
+
+#: src/notifications.py:20
+msgid "New incoming files"
+msgstr "Nieuwe binnenkomende bestanden"
+
+#: src/notifications.py:26
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s zou u graag %(file_count)d bestand (%(file_name)s) willen "
+"zenden."
+
+#: src/notifications.py:27
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s zou u graag %(file_count)d bestanden willen zenden."
+
+#: src/notifications.py:37
+msgid "Accept"
+msgstr "Aanvaarden"
+
+#: src/notifications.py:38
+msgid "Decline"
+msgstr "Weigeren"
+
+#: src/notifications.py:52
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s is u %(file_count)d bestand (%(file_name)s) aan het sturen."
+
+#: src/notifications.py:53
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s is u %(file_count)d bestanden aan het sturen."
+
+#: src/notifications.py:88
+msgid "Transfer complete"
+msgstr "Overdracht voltooid"
+
+#: src/notifications.py:90
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "De overdracht naar %s is met succes voltooid"
+
+#: src/notifications.py:92
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "De overdracht vanaf %s is met succes voltooid"
+
+#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+msgid "Transfer failed"
+msgstr "Overdracht mislukt"
+
+#: src/notifications.py:124
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "Er is iets mis gegaan met de overdracht naar %s"
+
+#: src/notifications.py:126
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "Er is iets mis gegaan met de overdracht vanaf %s"
+
+#: src/ops.py:45
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:140
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d file-do-not-translate"
+msgstr[1] "%d bestanden"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:222
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d file"
+msgstr[1] "%d bestanden"
+
+#: src/prefs.py:80
+msgid "Warpinator Preferences"
+msgstr "Voorkeuren van Warpinator"
+
+#: src/prefs.py:90
+msgid "Desktop"
+msgstr "Bureaublad"
+
+#: src/prefs.py:92
+msgid "Show an icon in the notification area"
+msgstr "Toon een pictogram in het meldingsvak"
+
+#: src/prefs.py:96
+msgid "Start with main window open"
+msgstr "Start met geopend hoofdvenster"
+
+#: src/prefs.py:101
+msgid "Start automatically"
+msgstr "Automatisch starten"
+
+#: src/prefs.py:107
+msgid "Location for received files"
+msgstr "Locatie voor ontvangen bestanden"
+
+#: src/prefs.py:112
+msgid "Require approval before accepting files"
+msgstr "Verg toestemming alvorens bestanden te aanvaarden"
+
+#: src/prefs.py:116
+msgid "Require approval when files would be overwritten"
+msgstr "Verg toestemming wanneer er bestanden overschreven zouden worden"
+
+#: src/prefs.py:120
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr "Toon een melding wanneer iemand u bestanden (probeert te) sturen"
+
+#: src/prefs.py:124
+msgid "Network"
+msgstr "Netwerk"
+
+#: src/prefs.py:129
+msgid "Group Code"
+msgstr "Groepscode"
+
+#: src/prefs.py:130
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr ""
+"U kunt alleen communiceren met computers die dezelfde code gebruiken."
+
+#: src/prefs.py:136
+msgid "Incoming port for transfers"
+msgstr "Binnenkomende poort voor overdrachten"
+
+#: src/prefs.py:146
+msgid "Sample firewall rule"
+msgstr "Voorbeeld van firewallregel"
+
+#: src/prefs.py:158
+msgid ""
+"Any port number will work for the application, but using the same port for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"Elk poortnummer is goed voor de toepassing, maar het gebruiken van dezelfde "
+"poort voor alle computers kan het makkelijker maken om, indien nodig, "
+"firewalluitzonderingen te maken."
+
+#: src/prefs.py:187
+msgid "Change port"
+msgstr "Poort wijzigen"
+
+#: src/prefs.py:232
+msgid "Set code"
+msgstr "Code instellen"
+
+#: src/prefs.py:247
+msgid "A group code is required."
+msgstr "Een groepscode is vereist."
+
+#: src/prefs.py:253
+msgid "The group code should be longer if possible."
+msgstr "De groepscode zou, indien mogelijk, langer moeten zijn."
+
+#: src/remote.py:349 src/remote.py:353
+msgid "Connection has been lost"
+msgstr "Verbinding is verbroken"
+
+#: src/server.py:284
+msgid "An error occurred on the remote machine"
+msgstr "Er is een fout opgetreden op de machine-op-afstand"
+
+#: src/util.py:62
+msgid "Select file(s) to send"
+msgstr "Kies bestand(en) om te verzenden"
+
+#: src/util.py:66
+msgid "Cancel"
+msgstr "Afbreken"
+
+#: src/util.py:67
+msgid "Send"
+msgstr "Verzenden"
+
+#: src/util.py:204
+msgid "A few seconds remaining"
+msgstr "Nog enkele seconden te gaan"
+
+#: src/util.py:207
+#, python-format
+msgid "%d seconds remaining"
+msgstr "Nog %d seconden te gaan"
+
+#: src/util.py:211 src/util.py:219
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuut"
+msgstr[1] "%d minuten"
+
+#: src/util.py:218
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d uur"
+msgstr[1] "%d uren"
+
+#: src/util.py:223
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "ongeveer %d uur"
+msgstr[1] "ongeveer %d uren"
+
+#: src/util.py:337 src/warpinator.py:498
+msgid "About"
+msgstr "Over"
+
+#: src/warpinator.py:134
+msgid "Paused"
+msgstr "Gepauzeerd"
+
+#: src/warpinator.py:137
+msgid "Waiting for approval"
+msgstr "Wachten op goedkeuring...."
+
+#: src/warpinator.py:139
+msgid "Waiting for your approval"
+msgstr "Wachtend op uw goedkeuring..."
+
+#: src/warpinator.py:142
+msgid "Files may be overwritten"
+msgstr "Er zouden bestanden kunnen worden overschreven"
+
+#: src/warpinator.py:145
+msgid "Not enough disk space"
+msgstr "Niet genoeg schijfruimte"
+
+#: src/warpinator.py:148
+msgid "Request cancelled"
+msgstr "Verzoek afgebroken"
+
+#: src/warpinator.py:150 src/warpinator.py:152
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "Verzoek afgebroken door %s"
+
+#: src/warpinator.py:155
+msgid "Transfer cancelled"
+msgstr "Overdracht afgebroken"
+
+#: src/warpinator.py:157 src/warpinator.py:159
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "Overdracht afgebroken door %s"
+
+#: src/warpinator.py:166
+#, python-format
+msgid "File '%s' not found"
+msgstr "Bestand '%s' niet gevonden"
+
+#: src/warpinator.py:168
+msgid "Some files not found"
+msgstr "Sommige bestanden niet gevonden"
+
+#: src/warpinator.py:170
+msgid "Completed"
+msgstr "Voltooid"
+
+#: src/warpinator.py:328 src/warpinator.py:834
+msgid "Connecting"
+msgstr "Verbinden...."
+
+#: src/warpinator.py:330
+#, python-format
+msgid "Connecting to %s"
+msgstr "Aan het verbinden met %s ...."
+
+#: src/warpinator.py:340
+#, python-format
+msgid "%s is not online"
+msgstr "%s heeft geen internetverbinding"
+
+#: src/warpinator.py:345
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "Kan niet verbinden met %s"
+
+#: src/warpinator.py:374
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d nieuwe binnenkomende overdracht"
+msgstr[1] "%d nieuwe binnenkomende overdrachten"
+
+#: src/warpinator.py:476 src/warpinator.py:1232
+msgid "Browse..."
+msgstr "Verkennen..."
+
+#: src/warpinator.py:490 src/warpinator.py:1183
+msgid "Open save folder"
+msgstr "Opslagmap openen"
+
+#: src/warpinator.py:494
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: src/warpinator.py:502 src/warpinator.py:1186
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: src/warpinator.py:594
+msgid "You don't appear to be connected to a network."
+msgstr "U lijkt niet verbonden te zijn met een netwerk."
+
+#: src/warpinator.py:596
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "Opstarten is niet gelukt, kijk a.u.b. uw logboeken na."
+
+#: src/warpinator.py:820
+msgid "Offline"
+msgstr "Niet verbonden"
+
+#: src/warpinator.py:827
+msgid "Unable to connect"
+msgstr "Kan geen verbinding maken"
+
+#: src/warpinator.py:1218
+msgid "Send to favorites"
+msgstr "Verzenden naar favorieten"
