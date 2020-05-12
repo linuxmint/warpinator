@@ -7,6 +7,7 @@ Build-Depends:
  dh-python,
  gnome-pkg-tools (>= 0.10),
  meson (>= 0.45.0),
+ policykit-1,
  python3-grpc-tools (>= 1.14.0),
  python3-protobuf (>= 3.6.1),
  gobject-introspection
