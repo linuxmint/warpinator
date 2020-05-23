@@ -2,6 +2,7 @@ import threading
 import socket
 import gettext
 import math
+import logging
 import os
 
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
@@ -10,9 +11,6 @@ import prefs
 import config
 
 _ = gettext.gettext
-
-CHUNK_SIZE = 1024 * 1024
-PROGRESS_UPDATE_FREQ = 2 * 1000 * 1000
 
 from enum import IntEnum
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
@@ -152,7 +150,9 @@ def have_free_space(size):
     # here that we don't fail because we didn't get a valid number.
     if free == 0:
         return True
-    print("Need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
+
+    logging.debug("Need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
+
     return size < free
 
 def files_exist(base_names):
@@ -327,25 +327,26 @@ class NetworkMonitor(GObject.Object):
 
     def __init__(self):
         GObject.Object.__init__(self)
-        self.source_id = 0
         self.online = False
         self.current_ip = None
 
-        self.check_online()
+        self.sleep_timer = threading.Event()
 
+        ip = get_ip()
+
+        self.current_ip = ip
+        self.online = ip != "0.0.0.0"
+
+    @_async
     def start(self):
-        self.stop()
-        self.source_id = GLib.timeout_add_seconds(4, self._recheck_state)
+        logging.debug("Starting network monitor")
+        while not self.sleep_timer.is_set():
+            self.check_online()
+            self.sleep_timer.wait(4)
 
     def stop(self):
-        if self.source_id > 0:
-            GLib.source_remove(self.source_id)
-            self.source_id = 0
-
-    def _recheck_state(self):
-        self.check_online()
-
-        return GLib.SOURCE_CONTINUE
+        logging.debug("Stopping network monitor")
+        self.sleep_timer.set()
 
     def check_online(self):
         old_online = self.online
@@ -355,7 +356,11 @@ class NetworkMonitor(GObject.Object):
         self.online = self.current_ip != "0.0.0.0"
 
         if (self.online != old_online) or (self.current_ip != old_ip):
-            self.emit("state-changed", self.online)
+            self.emit_state_changed()
+
+    @_idle
+    def emit_state_changed(self):
+        self.emit("state-changed", self.online)
 
 class AboutDialog():
     def __init__(self, parent):

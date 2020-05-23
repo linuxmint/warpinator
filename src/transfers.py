@@ -1,4 +1,5 @@
 import os
+import logging
 
 from gi.repository import GLib, Gio, GObject
 
@@ -12,6 +13,9 @@ FILE_INFOS = \
 FILE_INFOS_SINGLE_FILE = \
     "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target,standard::content-type"
 
+CHUNK_SIZE = 1024 * 1024
+PROGRESS_UPDATE_FREQ = 2 * 1000 * 1000
+
 def load_file_in_chunks(path):
     gfile = Gio.File.new_for_path(path)
 
@@ -21,7 +25,7 @@ def load_file_in_chunks(path):
         return
 
     while True:
-        bytes = stream.read_bytes(util.CHUNK_SIZE, None)
+        bytes = stream.read_bytes(CHUNK_SIZE, None)
         if bytes.get_size() == 0:
             break
 
@@ -84,7 +88,7 @@ class FileSender(GObject.Object):
                         if self.cancellable.is_set():
                             return
 
-                        b = stream.read_bytes(util.CHUNK_SIZE, None)
+                        b = stream.read_bytes(CHUNK_SIZE, None)
                         last_size_read = b.get_size()
                         self.op.progress_tracker.update_progress(last_size_read)
 
@@ -100,7 +104,7 @@ class FileSender(GObject.Object):
                         # if this was a mounted location, we wouldn't be able to terminate until
                         # we closed warp.
                         stream.close()
-                    except GLib.Error:
+                    except:
                         pass
 
                     self.error = e
@@ -270,7 +274,7 @@ class OpProgressTracker():
 
         now = GLib.get_monotonic_time()
 
-        if ((now - self.last_update_time) > util.PROGRESS_UPDATE_FREQ):
+        if ((now - self.last_update_time) > PROGRESS_UPDATE_FREQ):
             self.last_update_time = now
 
             progress = self.total_transferred / self.total_size
@@ -284,7 +288,7 @@ class OpProgressTracker():
 
             time_left_sec = (self.total_size - self.total_transferred) / bytes_per_sec
 
-            print("%s time left, %s/s" % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec)))
+            logging.debug("%s time left, %s/s" % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec)))
 
             progress_report = Progress(progress, time_left_sec, bytes_per_sec)
             self.op.progress_report(progress_report)

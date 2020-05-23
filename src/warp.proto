@@ -3,8 +3,8 @@ syntax = "proto3";
 service Warp {
     // Sender methods
     rpc CheckDuplexConnection(LookupName) returns (HaveDuplex) {}
-    rpc GetRemoteMachineInfo(VoidType) returns (RemoteMachineInfo) {}
-    rpc GetRemoteMachineAvatar(VoidType) returns (stream RemoteMachineAvatar) {}
+    rpc GetRemoteMachineInfo(LookupName) returns (RemoteMachineInfo) {}
+    rpc GetRemoteMachineAvatar(LookupName) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
     rpc PauseTransferOp(OpInfo) returns (VoidType) {}
 
@@ -16,7 +16,7 @@ service Warp {
     rpc CancelTransferOpRequest(OpInfo) returns (VoidType) {}
     rpc StopTransfer(StopInfo) returns (VoidType) {}
 
-    rpc Ping(VoidType) returns (VoidType) {}
+    rpc Ping(LookupName) returns (VoidType) {}
 }
 
 message RemoteMachineInfo {
@@ -30,6 +30,7 @@ message RemoteMachineAvatar {
 
 message LookupName {
     string id = 1;
+    string readable_name = 2;
 }
 
 message HaveDuplex {
@@ -43,6 +44,7 @@ message VoidType {
 message OpInfo {
     string ident = 1;
     uint64 timestamp = 2;
+    string readable_name = 3;
 }
 
 message StopInfo {

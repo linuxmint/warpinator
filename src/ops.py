@@ -1,4 +1,5 @@
 import gettext
+import logging
 
 from gi.repository import GObject, GLib, Gio
 
@@ -133,7 +134,7 @@ class SendOp(CommonOp):
     def update_ui_info(self, error):
         if error == None:
             self.size_string = GLib.format_size(self.total_size)
-            print("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
+            logging.debug("Calculated %d files, with a size of %s" % (self.total_count, self.size_string))
 
             if self.total_count > 1:
                 # Translators: Don't need to translate singular, we show the filename if there's only one
@@ -210,7 +211,7 @@ class ReceiveOp(CommonOp):
 
     def prepare_receive_info(self):
         self.size_string = GLib.format_size(self.total_size)
-        print("Transfer request received for %d files, with a size of %s" % (self.total_count, self.size_string))
+        logging.debug("Details: %d files, with a size of %s" % (self.total_count, self.size_string))
 
         self.have_space = util.have_free_space(self.total_size)
         self.existing = util.files_exist(self.top_dir_basenames) and prefs.prevent_overwriting()

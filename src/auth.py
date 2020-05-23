@@ -4,6 +4,7 @@ import stat
 import os
 import socket
 import uuid
+import logging
 
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization as crypto_serialization
@@ -61,16 +62,18 @@ class AuthManager(GObject.Object):
 
         self.cert_server = None
 
+        self.clean_cert_folder()
+
         self.keyfile = GLib.KeyFile()
 
         try:
             self.keyfile.load_from_file(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME), GLib.KeyFileFlags.NONE)
         except GLib.Error as e:
             if e.code == GLib.FileError.NOENT:
-                print("No group code file, making one.")
+                logging.debug("No group code file, making one.")
                 pass
             else:
-                print("Could not load existing settings: %s" % e.message)
+                logging.debug("Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
 
         self.code = self.get_group_code()
 
@@ -87,7 +90,7 @@ class AuthManager(GObject.Object):
             try:
                 os.unlink(path)
             except Exception as e:
-                print("Cannot delete item in remote cert folder:" % e)
+                logging.critical("Cannot delete item in remote cert folder (%s): %s" % (CERT_FOLDER, e))
 
     def _save_bytes(self, path, file_bytes):
         try:
@@ -128,7 +131,7 @@ class AuthManager(GObject.Object):
             self.ident = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY)
         except GLib.Error as e:
             if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
-                print("Could not read group code from settings file: %s" % e.message)
+                logging.critical("Could not read group code from settings file: %s" % e.message)
 
             self.ident = str(uuid.uuid4())
             self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY, self.ident)
@@ -213,14 +216,14 @@ class AuthManager(GObject.Object):
         return ser_private_key, ser_public_key
 
     def get_server_creds(self):
-        print("Creating server credentials")
+        logging.debug("Creating server credentials")
         key, cert = self.make_key_cert_pair(self.hostname, util.get_ip())
 
         try:
             self.save_private_key(key)
             self.save_server_cert(cert)
         except OSError as e:
-            print("Unable to save new server key and/or certificate: %s" % e)
+            logging.critical("Unable to save new server key and/or certificate: %s" % e)
 
         return (key, cert)
 
@@ -255,15 +258,15 @@ class AuthManager(GObject.Object):
             code = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY)
         except GLib.Error as e:
             if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
-                print("Could not read group code from settings file: %s" % e.message)
+                logging.warn("Could not read group code from settings file (%s): %s" % (CONFIG_FOLDER, e.message))
             self.save_group_code(DEFAULT_GROUP_CODE)
 
         if code == "":
-            print ("Settings file contains no code, setting to default")
+            logging.warn("Settings file contains no code, setting to default (%s)" % CONFIG_FOLDER)
             self.save_group_code(DEFAULT_GROUP_CODE)
 
         if len(code) < 8:
-            print("******** Group Code is short, consider something longer than 8 characters.")
+            logging.warn("Group Code is short, consider something longer than 8 characters.")
 
         return bytes(code, "utf-8")
 
@@ -310,6 +313,7 @@ class AuthManager(GObject.Object):
 ############################ Getting server certificate via udp after discovery ###########
 
 def request_server_cert(ip, port):
+    logging.debug("Requesting cert from remote (%s:%d)" % (ip, port))
     try_count = 0
 
     # Try a few times in case their end is not set up yet to respond.
@@ -327,13 +331,14 @@ def request_server_cert(ip, port):
             try_count += 1
             continue
         except socket.error as e:
-            print("Something wrong with cert request:", e)
+            logging.critical("Something wrong with cert request (%s:%s): " % (ip, port, e))
             break
 
     return None
 
 class CertServer():
     def __init__(self):
+        logging.debug("Starting local cert server")
         self.exit = False
 
         self.thread = threading.Thread(target=self.serve_cert_thread)
@@ -345,7 +350,7 @@ class CertServer():
             server_sock.settimeout(1.0)
             server_sock.bind((util.get_ip(), prefs.get_port()))
         except socket.error as e:
-            print("Could not create udp socket for cert requests: %s", str(e))
+            logging.critical("Could not create udp socket for cert requests: %s" % str(e))
             return
 
         while True:

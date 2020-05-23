@@ -16,7 +16,6 @@ PREFS_SCHEMA = "org.x.warpinator.preferences"
 
 FOLDER_NAME_KEY = "receiving-folder"
 START_WITH_WINDOW_KEY = "start-with-window"
-# START_PINNED_KEY = "default-pinned"
 AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
@@ -27,14 +26,15 @@ TRAY_ICON_KEY = "use-tray-icon"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
+if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
+    default = Gio.File.new_for_path(GLib.get_home_dir())
+    prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
+
 def get_port():
     return prefs_settings.get_int(PORT_KEY)
 
 def get_save_uri():
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)
-
-    if uri == "":
-        uri = Gio.File.new_for_path(GLib.get_home_dir()).get_uri()
 
     return uri
 
@@ -46,9 +46,6 @@ def use_tray_icon():
 
 def get_start_with_window():
     return prefs_settings.get_boolean(START_WITH_WINDOW_KEY)
-
-# def get_start_pinned():
-#     return prefs_settings.get_boolean(START_PINNED_KEY)
 
 def require_permission_for_transfer():
     return prefs_settings.get_boolean(ASK_PERMISSION_KEY)
