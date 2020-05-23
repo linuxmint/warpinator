@@ -6,6 +6,7 @@ import locale
 import gettext
 import functools
 import logging
+import time
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -1070,6 +1071,9 @@ class WarpApplication(Gtk.Application):
         if self.server:
             self.server.disconnect_by_func(self._remote_removed)
             self.server.connect("shutdown-complete", self.ok_for_app_quit)
+
+            self.kill_as_a_last_resort()
+
             self.server.shutdown()
         else:
             self.ok_for_app_quit(None)
@@ -1079,6 +1083,14 @@ class WarpApplication(Gtk.Application):
         self.window.destroy()
         logging.info("Quitting..")
         self.quit()
+
+    @util._async
+    def kill_as_a_last_resort(self):
+        # There are plenty of opportunities for our threads to hang due to network
+        # hangs and grpc errors.  Give 10 seconds and then just end it regardless.
+        time.sleep(10)
+
+        os.system("kill -9 %s &" % os.getpid())
 
     def setup_window(self):
         self.window = WarpWindow()
