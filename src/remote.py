@@ -50,22 +50,24 @@ class RemoteMachine(GObject.Object):
         self.display_name = ""
         self.favorite = prefs.get_is_favorite(self.ident)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
-        self.status = RemoteStatus.INIT_CONNECTING
+
         self.avatar_surface = None
         self.transfer_ops = []
 
         self.stub = None
-
-        self.changed_source_id = 0
-
-        self.need_shutdown = False
         self.connected = False
 
         self.busy = False # Skip keepalive ping when we're busy.
 
         self.sort_key = self.hostname
 
+        self.status = RemoteStatus.INIT_CONNECTING
+
+        self.machine_info_changed_source_id = 0
         self.machine_info_changed_lock = threading.Lock()
+
+        self.status_idle_source_id = 0
+        self.status_lock = threading.Lock()
 
         self.ping_timer = threading.Event()
         self.ping_time = NOT_CONNECTED_WAIT_PING_TIME
@@ -75,7 +77,6 @@ class RemoteMachine(GObject.Object):
     @util._async
     def start(self):
         self.ping_timer.clear()
-        self.need_shutdown = False
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
@@ -158,6 +159,60 @@ class RemoteMachine(GObject.Object):
 
         self.connected = False
 
+    def shutdown(self):
+        logging.info("-- Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
+        self.set_remote_status(RemoteStatus.OFFLINE)
+        self.ping_timer.set()
+        while self.connected:
+            time.sleep(0.1)
+
+    def update_favorite_status(self, pspec, data=None):
+        old_favorite = self.favorite
+        self.favorite = prefs.get_is_favorite(self.ident)
+
+        if old_favorite != self.favorite:
+            self.emit_machine_info_changed()
+
+    def stamp_recent_time(self):
+        self.recent_time = GLib.get_monotonic_time()
+        self.emit_machine_info_changed()
+
+    def set_remote_status(self, status):
+        with self.status_lock:
+            if self.status_idle_source_id > 0:
+                GLib.source_remove(self.status_idle_source_id)
+
+            self.status_idle_source_id = GLib.idle_add(self.set_status_cb, status)
+
+    def set_status_cb(self, status):
+        with self.status_lock:
+            self.status_idle_source_id = 0
+
+            if status == self.status:
+                return GLib.SOURCE_REMOVE
+
+            self.status = status
+            self.cancel_ops_if_offline()
+
+            logging.info("** %s is now %s" % (self.hostname, self.status))
+            self.emit("remote-status-changed")
+
+        return GLib.SOURCE_REMOVE
+
+    def emit_machine_info_changed(self):
+        with self.machine_info_changed_lock:
+            if self.machine_info_changed_source_id > 0:
+                GLib.source_remove(self.machine_info_changed_source_id)
+
+            self.machine_info_changed_source_id = GLib.idle_add(self.emit_machine_info_changed_cb)
+
+    def emit_machine_info_changed_cb(self):
+        with self.machine_info_changed_lock:
+            self.machine_info_changed_source_id = 0
+            self.emit("machine-info-changed")
+
+        return GLib.SOURCE_REMOVE
+
     @util._async
     def update_remote_machine_info(self):
         def get_info_finished(future):
@@ -186,6 +241,7 @@ class RemoteMachine(GObject.Object):
 
     @util._async
     def update_remote_machine_avatar(self):
+        logging.debug("Calling GetRemoteMachineAvatar on '%s'" % self.display_hostname)
         iterator = self.stub.GetRemoteMachineAvatar(warp_pb2.LookupName(id=self.local_ident,
                                                                         readable_name=util.get_hostname()))
         loader = None
@@ -209,10 +265,13 @@ class RemoteMachine(GObject.Object):
 
         self.emit_machine_info_changed()
 
+    # grpc calls
     @util._async
     def send_transfer_op_request(self, op):
         if not self.stub: # short circuit for testing widgets
             return
+
+        logging.debug("Calling TransferOpRequest on '%s'" % (self.display_hostname))
 
         transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(ident=op.sender,
                                                                       timestamp=op.start_time,
@@ -228,6 +287,8 @@ class RemoteMachine(GObject.Object):
 
     @util._async
     def cancel_transfer_op_request(self, op, by_sender=False):
+        logging.debug("Calling CancelTransferOpRequest on '%s'" % (self.display_hostname))
+
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
         else:
@@ -237,13 +298,10 @@ class RemoteMachine(GObject.Object):
                                                           readable_name=util.get_hostname()))
         op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER if by_sender else OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
-    # def pause_transfer_op(self, op):
-        # stop_op = warp_pb2.PauseTransferOp(warp_pb2.OpInfo(timestamp=op.start_time))
-        # self.emit("ops-changed")
-
-    #### RECEIVER COMMANDS ####
     @util._async
     def start_transfer_op(self, op):
+        logging.debug("Calling StartTransfer on '%s'" % (self.display_hostname))
+
         start_time = GLib.get_monotonic_time()
 
         op.progress_tracker = transfers.OpProgressTracker(op)
@@ -295,6 +353,8 @@ class RemoteMachine(GObject.Object):
 
     @util._async
     def stop_transfer_op(self, op, by_sender=False, lost_connection=False):
+        logging.debug("Calling StopTransfer on '%s'" % (self.display_hostname))
+
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
         else:
@@ -327,6 +387,7 @@ class RemoteMachine(GObject.Object):
                                      readable_name=util.get_hostname())
             self.stub.StopTransfer(warp_pb2.StopInfo(info=opinfo, error=op.error_msg != ""))
 
+    # Op handling
     @util._async
     def send_files(self, uri_list):
         op = SendOp(self.local_ident,
@@ -335,23 +396,6 @@ class RemoteMachine(GObject.Object):
                     uri_list)
         self.add_op(op)
         op.prepare_send_info()
-
-    def update_favorite_status(self, pspec, data=None):
-        old_favorite = self.favorite
-        self.favorite = prefs.get_is_favorite(self.ident)
-
-        if old_favorite != self.favorite:
-            self.emit_machine_info_changed()
-
-    def stamp_recent_time(self):
-        self.recent_time = GLib.get_monotonic_time()
-        self.emit_machine_info_changed()
-
-    @util._idle
-    def notify_remote_machine_of_new_op(self, op):
-        if op.status == OpStatus.WAITING_PERMISSION:
-            if op.direction == TransferDirection.TO_REMOTE_MACHINE:
-                self.send_transfer_op_request(op)
 
     @util._idle
     def add_op(self, op):
@@ -375,13 +419,18 @@ class RemoteMachine(GObject.Object):
         self.check_for_autostart(op)
 
     @util._idle
+    def notify_remote_machine_of_new_op(self, op):
+        if op.status == OpStatus.WAITING_PERMISSION:
+            if op.direction == TransferDirection.TO_REMOTE_MACHINE:
+                self.send_transfer_op_request(op)
+
+    @util._idle
     def check_for_autostart(self, op):
         if op.status == OpStatus.WAITING_PERMISSION:
             if isinstance(op, ReceiveOp) and \
               op.have_space  and not op.existing and (not prefs.require_permission_for_transfer()):
                 op.accept_transfer()
 
-    @util._idle
     def remove_op(self, op):
         self.transfer_ops.remove(op)
         self.emit_ops_changed()
@@ -389,17 +438,6 @@ class RemoteMachine(GObject.Object):
     @util._idle
     def emit_ops_changed(self, op=None):
         self.emit("ops-changed")
-
-    @util._idle
-    def set_remote_status(self, status):
-        if status == self.status:
-            return
-
-        self.status = status
-        self.cancel_ops_if_offline()
-
-        logging.info("** %s is now %s" % (self.hostname, self.status))
-        self.emit("remote-status-changed")
 
     def cancel_ops_if_offline(self):
         if self.status in (RemoteStatus.OFFLINE, RemoteStatus.UNREACHABLE):
@@ -438,27 +476,7 @@ class RemoteMachine(GObject.Object):
     def op_focus(self, op):
         self.emit("focus-remote")
 
-    def emit_machine_info_changed(self):
-        with self.machine_info_changed_lock:
-            if self.changed_source_id > 0:
-                GLib.source_remove(self.changed_source_id)
-
-            self.changed_source_id = GLib.idle_add(self.emit_machine_info_changed_cb)
-
-    def emit_machine_info_changed_cb(self):
-        with self.machine_info_changed_lock:
-            self.emit("machine-info-changed")
-            self.changed_source_id = 0
-            return False
-
     def lookup_op(self, timestamp):
         for op in self.transfer_ops:
             if op.start_time == timestamp:
                 return op
-
-    def shutdown(self):
-        logging.info("-- Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
-        self.set_remote_status(RemoteStatus.OFFLINE)
-        self.ping_timer.set()
-        while self.connected:
-            time.sleep(0.1)

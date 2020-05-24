@@ -51,7 +51,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.remote_machines = {}
 
-        self.server_loop_timer = threading.Event()
+        self.server_thread_keepalive = threading.Event()
 
         self.server = None
         self.browser = None
@@ -93,11 +93,9 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
                                              'type': 'real' })
 
         self.zeroconf.register_service(self.info)
+        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
 
         return False
-
-    def start_remote_lookout(self):
-        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
 
     @util._async
     def remove_service(self, zeroconf, _type, name):
@@ -107,7 +105,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         ident = name.partition(".")[0]
 
         try:
-            self.emit_remote_machine_removed(self.remote_machines[ident])
+            self.idle_emit("remote-machine-removed", self.remote_machines[ident])
             self.remote_machines[ident].shutdown()
         except KeyError:
             logging.debug("Removed client we never knew: %s" % name)
@@ -183,24 +181,14 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
                 self.remote_machines[ident] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
-                self.emit_remote_machine_added(machine)
+                self.idle_emit("remote-machine-added", machine)
 
             machine.start()
 
-    @util._idle
-    def emit_remote_machine_added(self, remote_machine):
-        self.emit("remote-machine-added", remote_machine)
-
-    @util._idle
-    def emit_remote_machine_removed(self, remote_machine):
-        self.emit("remote-machine-removed", remote_machine)
-
-    @util._idle
-    def remote_ops_changed(self, remote_machine):
-        self.emit("remote-machine-ops-changed", remote_machine.ident)
-
     @util._async
     def start_server(self):
+        logging.debug("Starting server")
+
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=None)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
@@ -212,53 +200,49 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         auth.get_singleton().restart_cert_server()
 
-        self.emit_server_started()
-        self.start_discovery_services()
+        self.idle_emit("server-started")
+        self.start_zeroconf()
 
-        self.server_loop_timer.clear()
-        logging.debug("Starting server")
+        self.server_thread_keepalive.clear()
 
-        while not self.server_loop_timer.is_set():
-            self.server_loop_timer.wait(1)
+        # **** RUNNING ****
+        while not self.server_thread_keepalive.is_set():
+            self.server_thread_keepalive.wait(.5)
+        # **** STOPPING ****
 
         logging.debug("Stopping server")
-        self.server.stop(grace=2).wait()
-        self.emit_shutdown_complete()
-        self.server = None
 
-    @util._idle
-    def emit_server_started(self):
-        self.emit("server-started")
-
-    @util._idle
-    def start_discovery_services(self):
-        self.start_zeroconf()
-        self.start_remote_lookout()
-
-    @util._async
-    def shutdown(self):
         remote_machines = list(self.remote_machines.values())
         for machine in remote_machines:
-            self.emit_remote_machine_removed(machine)
+            self.idle_emit("remote-machine-removed", machine)
             machine.shutdown()
 
         remote_machines = None
 
-        try:
-            auth.get_singleton().cert_server.stop()
-            self.zeroconf.close()
-        except AttributeError:
-            pass # zeroconf never started if the server never started
-        except Exception as e:
-            logging.debug(e, stack_info=True)
-
+        auth.get_singleton().cert_server.stop()
         auth.get_singleton().clean_cert_folder()
+        self.zeroconf.close()
 
-        self.server_loop_timer.set()
+        self.server.stop(grace=2).wait()
+        self.idle_emit("shutdown-complete")
+        self.server = None
+
+    def shutdown(self):
+        self.server_thread_keepalive.set()
+
+    def add_receive_op_to_remote_machine(self, op):
+        self.remote_machines[op.sender].add_op(op)
 
     @util._idle
-    def emit_shutdown_complete(self):
-        self.emit("shutdown-complete")
+    def remote_ops_changed(self, remote_machine):
+        self.emit("remote-machine-ops-changed", remote_machine.ident)
+
+    def list_remote_machines(self):
+        return self.remote_machines.values()
+
+    @util._idle
+    def idle_emit(self, signal, *callback_data):
+        self.emit(signal, *callback_data)
 
     def Ping(self, request, context):
         logging.debug("Ping from '%s'" % request.readable_name)
@@ -432,9 +416,3 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
                 op.set_status(OpStatus.FAILED)
 
         return void
-
-    def add_receive_op_to_remote_machine(self, op):
-        self.remote_machines[op.sender].add_op(op)
-
-    def list_remote_machines(self):
-        return self.remote_machines.values()
