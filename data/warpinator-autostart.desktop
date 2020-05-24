@@ -6,6 +6,6 @@ Icon=warpinator
 
 # the autostart argument tells /usr/bin/warpinator to check our autostart gsettings key and either keeps
 # going or exits immediately.
-Exec=warpinator autostart
+Exec=warpinator --autostart
 
 Categories=GNOME;GTK;Utility;

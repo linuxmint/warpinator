@@ -1312,18 +1312,20 @@ class WarpApplication(Gtk.Application):
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
 
-def main(test = False):
+def main(test=False, debug=False):
     import signal
 
     logging.basicConfig(format="%(asctime)-15s::warpinator::%(levelname)s: %(message)s -- %(filename)s (line %(lineno)d)")
-    logging.root.setLevel(logging.DEBUG)
-    args = sys.argv
+
+    if debug:
+        logging.root.setLevel(logging.DEBUG)
+    else:
+        logging.root.setLevel(logging.INFO)
 
     w = WarpApplication(test)
-
     signal.signal(signal.SIGINT, lambda s, f: w.shutdown())
 
-    return w.run(args)
+    return w.run(sys.argv)
 
 if __name__ == "__main__":
     main()

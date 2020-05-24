@@ -1,20 +1,29 @@
 #!/usr/bin/python3
 
 import sys
+import argparse
+
 from gi.repository import Gio
 
-if len(sys.argv) > 1 and sys.argv[1] == "autostart":
+parser = argparse.ArgumentParser(description="Send and Receive Files across the Network")
+parser.add_argument("-d", "--debug", help="Print debugging information.",
+                    action="store_true")
+parser.add_argument("-a", "--autostart", help="Exit if (dconf) org.x.warpinator.preferences 'autostart' is false.",
+                    action="store_true")
+args = parser.parse_args()
+
+if args.autostart:
     settings = Gio.Settings(schema_id="org.x.warpinator.preferences")
     if not settings.get_boolean("autostart"):
         sys.exit(0)
 
-    del sys.argv[1]
+del sys.argv[1:]
 
 sys.path.insert(0, "/usr/libexec/warpinator/")
 
 try:
     import warpinator
-    sys.exit(warpinator.main())
+    sys.exit(warpinator.main(debug=args.debug))
 except Exception as e:
     print(e)
     sys.exit(1)

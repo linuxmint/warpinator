@@ -266,7 +266,8 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         try:
             remote = self.remote_machines[request.id]
         except KeyError as e:
-            logging.warning("Received ping from unknown remote '%s': %s" % (request.readable_name, e))
+            logging.debug("Received ping from unknown remote (or not fully online yet) '%s': %s"
+                              % (request.readable_name, e))
             return void
 
         # If we receive a ping, assume no transfer is happening, set clear busy flag from our respective
