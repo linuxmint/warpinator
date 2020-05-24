@@ -270,7 +270,6 @@ class RemoteMachine(GObject.Object):
 
         try:
             for data in op.file_iterator:
-                self.busy = True
                 receiver.receive_data(data)
         except grpc.RpcError:
             if op.file_iterator.code() == grpc.StatusCode.CANCELLED:
@@ -364,6 +363,12 @@ class RemoteMachine(GObject.Object):
                 self.emit("new-outgoing-op", op)
             if isinstance(op, ReceiveOp):
                 self.emit("new-incoming-op", op)
+
+        def set_busy():
+            self.busy = True
+
+        op.connect("active", lambda op: set_busy())
+
         self.emit_ops_changed()
         self.check_for_autostart(op)
 

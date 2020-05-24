@@ -268,11 +268,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         except KeyError as e:
             logging.debug("Received ping from unknown remote (or not fully online yet) '%s': %s"
                               % (request.readable_name, e))
-            return void
-
-        # If we receive a ping, assume no transfer is happening, set clear busy flag from our respective
-        # remote so we can start sending pings.
-        remote.busy = False
 
         return void
 
@@ -371,8 +366,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             logging.warning("Received start transfer from unknown remote '%s': %s" % (request.readable_name, e))
             return
 
-        remote.busy = True
-
         try:
             op = self.remote_machines[request.ident].lookup_op(request.timestamp)
         except KeyError as e:
@@ -389,7 +382,6 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         sender = transfers.FileSender(op, request.timestamp, cancellable)
 
         def transfer_done():
-            remote.busy = False
             if sender.error != None:
                 op.set_error(sender.error)
                 op.stop_transfer()

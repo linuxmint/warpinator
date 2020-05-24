@@ -19,6 +19,7 @@ class CommonOp(GObject.Object):
         "initial-setup-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
         "op-command": (GObject.SignalFlags.RUN_LAST, None, (int,)),
         "progress-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
+        "active": (GObject.SignalFlags.RUN_LAST, None, ()),
         "focus": (GObject.SignalFlags.RUN_LAST, None, ())
     }
     def __init__(self, direction, sender, uris=None):
@@ -54,6 +55,7 @@ class CommonOp(GObject.Object):
             self.emit_status_changed()
             return
 
+        self.emit("active")
         self.emit("progress-changed")
 
     def get_progress_text(self):
