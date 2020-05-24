@@ -65,6 +65,8 @@ class RemoteMachine(GObject.Object):
 
         self.sort_key = self.hostname
 
+        self.machine_info_changed_lock = threading.Lock()
+
         self.ping_timer = threading.Event()
         self.ping_time = NOT_CONNECTED_WAIT_PING_TIME
 
@@ -437,15 +439,17 @@ class RemoteMachine(GObject.Object):
         self.emit("focus-remote")
 
     def emit_machine_info_changed(self):
-        if self.changed_source_id > 0:
-            GLib.source_remove(self.changed_source_id)
+        with self.machine_info_changed_lock:
+            if self.changed_source_id > 0:
+                GLib.source_remove(self.changed_source_id)
 
-        self.changed_source_id = GLib.idle_add(self.emit_machine_info_changed_cb)
+            self.changed_source_id = GLib.idle_add(self.emit_machine_info_changed_cb)
 
     def emit_machine_info_changed_cb(self):
-        self.emit("machine-info-changed")
-        self.changed_source_id = 0
-        return False
+        with self.machine_info_changed_lock:
+            self.emit("machine-info-changed")
+            self.changed_source_id = 0
+            return False
 
     def lookup_op(self, timestamp):
         for op in self.transfer_ops:
