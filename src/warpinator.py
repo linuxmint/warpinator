@@ -947,7 +947,7 @@ class WarpWindow(GObject.Object):
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
-        super(WarpApplication, self).__init__(application_id="org.x.warpinator")
+        super(WarpApplication, self).__init__(application_id="org.x.warpinator", register_session=True)
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
@@ -1040,7 +1040,12 @@ class WarpApplication(Gtk.Application):
     def start_server(self, restarting=False):
         self.window.start_startup_timer(restarting)
 
-        def ok_to_restart():
+        def ok_to_restart(srv=None):
+            try:
+                self.server.disconnect_by_func(ok_to_restart)
+            except AttributeError:
+                pass
+
             self.server = server.Server()
             self.server.connect("server-started", self._server_started)
             self.server.connect("remote-machine-added", self._remote_added)
@@ -1052,40 +1057,41 @@ class WarpApplication(Gtk.Application):
         if self.server:
             self.server_restarting = True
 
-            self.server.connect("shutdown-complete", lambda srv: ok_to_restart())
+            self.server.connect("shutdown-complete", ok_to_restart)
             self.server.shutdown()
         else:
             ok_to_restart();
 
-    def shutdown(self, window=None):
+    def do_shutdown(self):
         logging.info("Beginning shutdown")
-        self.window.disconnect_by_func(self.shutdown)
 
-        if prefs.use_tray_icon():
-            self.release()
-
+        self.update_status_icon_online_state(online=False)
         self.window.display_shutdown()
 
         self.netmon.stop()
 
         if self.server:
-            self.server.disconnect_by_func(self._remote_removed)
-            self.server.connect("shutdown-complete", self.ok_for_app_quit)
-
-            self.kill_as_a_last_resort()
-
+            self.setup_kill_as_a_last_resort()
             self.server.shutdown()
-        else:
-            self.ok_for_app_quit(None)
+            # do_shutdown is called after the main loop is ended, we need to continue
+            # the loop while waiting for the server to finish shutting down.  This is the
+            # only way we can come close to a clean exit when being killed or shutdown via
+            # the session manager.
+            while self.server.is_alive():
+                GLib.MainContext.default().iteration(may_block=False)
 
-    def ok_for_app_quit(self, local_machine):
-        self.update_status_icon_online_state(online=False)
+            self.server.join()
+
         self.window.destroy()
-        logging.info("Quitting..")
-        self.quit()
+
+        logging.info("Shutdown complete")
+        Gio.Application.do_shutdown(self)
+
+    def exit_warp(self):
+        GLib.idle_add(self.quit)
 
     @util._async
-    def kill_as_a_last_resort(self):
+    def setup_kill_as_a_last_resort(self):
         # There are plenty of opportunities for our threads to hang due to network
         # hangs and grpc errors.  Give 10 seconds and then just end it regardless.
         time.sleep(10)
@@ -1094,7 +1100,7 @@ class WarpApplication(Gtk.Application):
 
     def setup_window(self):
         self.window = WarpWindow()
-        self.window.connect("exit", self.shutdown)
+        self.window.connect("exit", lambda w: self.exit_warp())
 
         self.add_window(self.window.window)
 
@@ -1228,7 +1234,7 @@ class WarpApplication(Gtk.Application):
         item.connect("activate", lambda m: util.open_save_folder())
         menu.add(item)
         item = Gtk.MenuItem(label=_("Quit"))
-        item.connect("activate", self.shutdown)
+        item.connect("activate", lambda i: self.exit_warp())
         menu.add(item)
         menu.show_all()
 
@@ -1323,7 +1329,8 @@ def main(test=False, debug=False):
         logging.root.setLevel(logging.INFO)
 
     w = WarpApplication(test)
-    signal.signal(signal.SIGINT, lambda s, f: w.shutdown())
+    signal.signal(signal.SIGINT, lambda s, f: w.exit_warp())
+    signal.signal(signal.SIGTERM, lambda s, f: w.exit_warp())
 
     return w.run(sys.argv)
 

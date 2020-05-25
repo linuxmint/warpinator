@@ -61,6 +61,8 @@ class AuthManager(GObject.Object):
         self.ident = None
 
         self.cert_server = None
+        self.requests_lock = threading.Lock()
+        self.requests = {}
 
         self.clean_cert_folder()
 
@@ -82,6 +84,15 @@ class AuthManager(GObject.Object):
             self.cert_server.stop()
 
         self.cert_server = CertServer()
+
+    def shutdown(self):
+        if self.cert_server != None:
+            self.cert_server.stop()
+
+        self.clean_cert_folder()
+
+        for key in self.requests.keys():
+            self.requests[key].cancel()
 
     def clean_cert_folder(self):
         for filename in os.listdir(CERT_FOLDER):
@@ -302,39 +313,75 @@ class AuthManager(GObject.Object):
         encoded = base64.encodebytes(box)
         return encoded
 
-    def retrieve_remote_cert(self, hostname, ip, port):
-        data = request_server_cert(ip, port)
+    def retrieve_remote_cert(self, ident, hostname, ip, port):
+        logging.debug("Starting a new RequestLoop for '%s' (%s:%d)" % (hostname, ip, port))
+        with self.requests_lock:
+            req = RequestLoop(ip, port)
+
+            self.requests[ident] = req
+
+        data = req.request()
+
+        with self.requests_lock:
+            del self.requests[ident]
+
+        logging.debug("RequestLoop complete for '%s' (%s:%d): got cert? %s" % (hostname, ip, port, "Yes" if data else "No"))
 
         if data == None:
             return False
 
         return self.process_encoded_server_cert(hostname, ip, data)
 
+    def cancel_request_loop(self, ident):
+        req = None
+
+        with self.requests_lock:
+            try:
+                req = self.requests[ident]
+                del self.requests[ident]
+            except KeyError:
+                pass
+
+        if req:
+            req.cancel()
+
 ############################ Getting server certificate via udp after discovery ###########
 
-def request_server_cert(ip, port):
-    logging.debug("Requesting cert from remote (%s:%d)" % (ip, port))
-    try_count = 0
+class RequestLoop():
+    def __init__(self, ip, port):
+        self.ip = ip
+        self.port = port
 
-    # Try a few times in case their end is not set up yet to respond.
-    while try_count < 3:
-        try:
-            server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            server_sock.settimeout(1.0)
-            server_sock.sendto(REQUEST, (ip, port))
+        self.timer = threading.Event()
 
-            reply, addr = server_sock.recvfrom(2000)
+    def request(self):
+        while not self.timer.is_set():
+            logging.debug("Requesting cert from remote (%s:%d)" % (self.ip, self.port))
+            try_count = 0
 
-            if addr == (ip, port):
-                return reply
-        except socket.timeout:
-            try_count += 1
-            continue
-        except socket.error as e:
-            logging.critical("Something wrong with cert request (%s:%s): " % (ip, port, e))
-            break
+            while try_count < 3:
+                try:
+                    server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    server_sock.settimeout(1.0)
+                    server_sock.sendto(REQUEST, (self.ip, self.port))
 
-    return None
+                    reply, addr = server_sock.recvfrom(2000)
+
+                    if addr == (self.ip, self.port):
+                        return reply
+                except socket.timeout:
+                    try_count += 1
+                    continue
+                except socket.error as e:
+                    logging.critical("Something wrong with cert request (%s:%s): " % (self.ip, self.port, e))
+                    break
+            self.timer.wait(5)
+
+        logging.critical("RequestLoop canceled (event set) for (%s:%s)" % (self.ip, self.port))
+        return None
+
+    def cancel(self):
+        self.timer.set()
 
 class CertServer():
     def __init__(self):

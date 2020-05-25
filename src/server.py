@@ -3,6 +3,7 @@ import os
 import threading
 import gettext
 import logging
+import time
 from concurrent import futures
 
 from gi.repository import GObject, GLib
@@ -22,15 +23,12 @@ from util import TransferDirection, OpStatus, RemoteStatus
 
 _ = gettext.gettext
 
-#typedef
 void = warp_pb2.VoidType()
 
-MAX_CONNECT_RETRIES = 2
-PING_TIME = 5
 SERVICE_TYPE = "_warpinator._tcp.local."
 
 # server
-class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
+class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     __gsignals__ = {
         "remote-machine-added": (GObject.SignalFlags.RUN_LAST, None, (object,)),
         "remote-machine-removed": (GObject.SignalFlags.RUN_LAST, None, (object,)),
@@ -40,6 +38,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
     def __init__(self):
+        threading.Thread.__init__(self, name="server-thread")
         super(Server, self).__init__()
         GObject.Object.__init__(self)
 
@@ -60,8 +59,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
         self.info = None
 
         self.display_name = GLib.get_real_name()
-
-        self.start_server()
+        self.start()
 
     def start_zeroconf(self):
         self.zeroconf = Zeroconf()
@@ -83,7 +81,9 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
                                              'type': 'flush' })
 
         self.zeroconf.register_service(init_info)
+        time.sleep(1)
         self.zeroconf.unregister_service(init_info)
+        time.sleep(1)
 
         self.info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
@@ -103,6 +103,7 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             return
 
         ident = name.partition(".")[0]
+        auth.get_singleton().cancel_request_loop(ident)
 
         try:
             self.idle_emit("remote-machine-removed", self.remote_machines[ident])
@@ -138,7 +139,10 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
             if ident == self.service_ident:
                 return
 
-            got_cert = auth.get_singleton().retrieve_remote_cert(remote_hostname, remote_ip, info.port)
+            # This will block if the remote's warp udp port is closed, until either the port is unblocked
+            # or we tell the auth object to shutdown, in which case the request timer will cancel and return
+            # here immediately (with None)
+            got_cert = auth.get_singleton().retrieve_remote_cert(ident, remote_hostname, remote_ip, info.port)
 
             if not got_cert:
                 logging.critical("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))
@@ -185,11 +189,10 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
             machine.start()
 
-    @util._async
-    def start_server(self):
+    def run(self):
         logging.debug("Starting server")
 
-        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), options=None)
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=4), options=None)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
         pair = auth.get_singleton().get_server_creds()
@@ -219,13 +222,19 @@ class Server(warp_pb2_grpc.WarpServicer, GObject.Object):
 
         remote_machines = None
 
-        auth.get_singleton().cert_server.stop()
-        auth.get_singleton().clean_cert_folder()
+        logging.debug("Stopping authentication server")
+        auth.get_singleton().shutdown()
+
+        logging.debug("Stopping discovery and advertisement")
         self.zeroconf.close()
 
+        logging.debug("Terminating server")
         self.server.stop(grace=2).wait()
+
         self.idle_emit("shutdown-complete")
         self.server = None
+
+        logging.debug("Server stopped")
 
     def shutdown(self):
         self.server_thread_keepalive.set()
