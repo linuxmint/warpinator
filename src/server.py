@@ -83,9 +83,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                 other_ttl=30)
 
         self.zeroconf.register_service(init_info)
-        time.sleep(1)
+        time.sleep(3)
         self.zeroconf.unregister_service(init_info)
-        time.sleep(1)
+        time.sleep(3)
 
         self.info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
@@ -207,14 +207,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         auth.get_singleton().restart_cert_server()
 
-        self.idle_emit("server-started")
         self.start_zeroconf()
-
         self.server_thread_keepalive.clear()
+
+        self.idle_emit("server-started")
 
         # **** RUNNING ****
         while not self.server_thread_keepalive.is_set():
-            self.server_thread_keepalive.wait(.5)
+            self.server_thread_keepalive.wait(10)
         # **** STOPPING ****
 
         logging.debug("Stopping server")

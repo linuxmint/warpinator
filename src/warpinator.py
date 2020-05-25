@@ -36,7 +36,7 @@ _ = gettext.gettext
 setproctitle.setproctitle("warpinator")
 
 SERVER_RESTART_TIMEOUT = 12
-SERVER_START_TIMEOUT = 6
+SERVER_START_TIMEOUT = 8
 DISCOVERY_TIMEOUT = 3
 
 ICON_ONLINE = ""
@@ -1321,7 +1321,9 @@ class WarpApplication(Gtk.Application):
 def main(test=False, debug=False):
     import signal
 
-    logging.basicConfig(format="%(asctime)-15s::warpinator::%(levelname)s: %(message)s -- %(filename)s (line %(lineno)d)")
+    log_handler = logging.StreamHandler(sys.stdout)
+    log_handler.setFormatter(util.WarpLogFormatter())
+    logging.root.addHandler(log_handler)
 
     if debug:
         logging.root.setLevel(logging.DEBUG)

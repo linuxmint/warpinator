@@ -80,7 +80,7 @@ class RemoteMachine(GObject.Object):
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
-        logging.info("== Attempting to connect to %s (%s)" % (self.display_hostname, self.ip_address))
+        logging.debug("== Attempting to connect to %s (%s)" % (self.display_hostname, self.ip_address))
 
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
         self.ping_time = NOT_CONNECTED_WAIT_PING_TIME
@@ -129,7 +129,7 @@ class RemoteMachine(GObject.Object):
                                 self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
 
                                 if self.check_duplex_connection():
-                                    logging.info("++ Connected to %s (%s)" % (self.display_hostname, self.ip_address))
+                                    logging.debug("++ Connected to %s (%s)" % (self.display_hostname, self.ip_address))
 
                                     self.set_remote_status(RemoteStatus.ONLINE)
                                     self.update_remote_machine_info()
@@ -160,7 +160,7 @@ class RemoteMachine(GObject.Object):
         self.connected = False
 
     def shutdown(self):
-        logging.info("-- Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
+        logging.debug("-- Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
         self.set_remote_status(RemoteStatus.OFFLINE)
         self.ping_timer.set()
         while self.connected:
@@ -194,7 +194,7 @@ class RemoteMachine(GObject.Object):
             self.status = status
             self.cancel_ops_if_offline()
 
-            logging.info("** %s is now %s" % (self.hostname, self.status))
+            logging.debug("** %s is now %s" % (self.hostname, self.status))
             self.emit("remote-status-changed")
 
         return GLib.SOURCE_REMOVE
@@ -251,7 +251,7 @@ class RemoteMachine(GObject.Object):
                     loader = util.CairoSurfaceLoader()
                 loader.add_bytes(info.avatar_chunk)
         except grpc.RpcError as e:
-            logging.warn("Could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
+            logging.debug("Could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
 
         self.get_avatar_surface(loader)
 

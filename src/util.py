@@ -375,3 +375,21 @@ class AboutDialog():
 
         dialog.run()
         dialog.destroy()
+
+class WarpLogFormatter(logging.Formatter):
+    dbg_crit_format = "%(asctime)-15s::warpinator::%(levelname)s: %(message)s -- %(filename)s (line %(lineno)d)"
+    info_format = "%(asctime)-15s::warpinator: %(message)s"
+
+    def __init__(self):
+        super().__init__()
+
+    def format(self, record):
+        if record.levelno in (logging.DEBUG, logging.ERROR):
+            self._style._fmt = WarpLogFormatter.dbg_crit_format
+
+        elif record.levelno == logging.INFO:
+            self._style._fmt = WarpLogFormatter.info_format
+
+        result = logging.Formatter.format(self, record)
+
+        return result
