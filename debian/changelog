@@ -1,3 +1,19 @@
+warpinator (1.0.4) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * debian/control: Add policykit-1 dependency for build.
+  * Handle shutdowns better, add better logging tweak some keepalive bits.
+  * Kill the process if it's taking an excessive amount of time to perform an orderly shutdown.
+  * Startup: Add argument parser, option to enable debug output.
+  * remote: Make ping suppression during a transfer happen on both ends of the connection.
+  * Use a lock on the info updated trigger, there can be some collision on slower machines at startup.
+  * Clean up server, remote code.
+  * shutdown: Improve cleanup handling, shutdown gracefully when a quit is received (kill command or session manager).
+  * Increase discovery flush time, and extend the initialization view for a longer time to account for it.
+  * logging: Don't be so verbose with normal operation, and show info with a simpler format.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 27 May 2020 12:43:45 +0100
+
 warpinator (1.0.3) ulyana; urgency=medium
 
   [ Michael Webster ]
