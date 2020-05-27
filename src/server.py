@@ -78,9 +78,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                 socket.inet_aton(util.get_ip()),
                                 prefs.get_port(),
                                 properties={ 'hostname': util.get_hostname(),
-                                             'type': 'flush' },
-                                host_ttl=30,
-                                other_ttl=30)
+                                             'type': 'flush' })
 
         self.zeroconf.register_service(init_info)
         time.sleep(3)
@@ -92,9 +90,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                 socket.inet_aton(util.get_ip()),
                                 prefs.get_port(),
                                 properties={ 'hostname': util.get_hostname(),
-                                             'type': 'real' },
-                                host_ttl=30,
-                                other_ttl=30)
+                                             'type': 'real' })
 
         self.zeroconf.register_service(self.info)
         self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
