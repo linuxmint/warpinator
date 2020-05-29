@@ -24,6 +24,7 @@ void = warp_pb2.VoidType()
 
 CHANNEL_RETRY_WAIT_TIME = 30
 
+DUPLEX_MAX_FAILURES = 10
 DUPLEX_WAIT_PING_TIME = 1
 CONNECTED_PING_TIME = 20
 
@@ -88,6 +89,9 @@ class RemoteMachine(GObject.Object):
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def run_secure_loop():
+            logging.debug("Starting a new connection loop for %s (%s:%d)"
+                              % (self.display_hostname, self.ip_address, self.port))
+
             cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
             creds = grpc.ssl_channel_credentials(cert)
 
@@ -103,29 +107,34 @@ class RemoteMachine(GObject.Object):
                     future.cancel()
 
                     if not self.ping_timer.is_set():
-                        logging.debug("Unable to establish channel to remote server, trying again in %ds" % CHANNEL_RETRY_WAIT_TIME)
+                        logging.debug("Unable to establish secure connection with %s (%s:%d). Trying again in %ds"
+                                          % (self.display_hostname, self.ip_address, self.port, CHANNEL_RETRY_WAIT_TIME))
                         self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
                         return True # run_secure_loop()
 
                     return False # run_secure_loop()
 
-                ping_retry_count = 0
-                one_ping = False # run_secure_loop()
+                duplex_fail_counter = 0
+                one_ping = False # A successful duplex response lets us finish setting things up.
 
                 while not self.ping_timer.is_set():
+
                     if self.busy:
-                        logging.debug("Skipping keepalive ping to %s (busy)" % self.display_hostname)
+                        logging.debug("Skipping keepalive ping to %s (%s:%d) (busy)"
+                                          % (self.display_hostname, self.ip_address, self.port))
                         self.busy = False
                     else:
                         try:
-                            logging.debug("Sending keepalive ping to %s" % self.display_hostname)
+                            logging.debug("Sending keepalive ping to %s (%s:%d)"
+                                          % (self.display_hostname, self.ip_address, self.port))
                             self.stub.Ping(warp_pb2.LookupName(id=self.local_ident,
                                                                readable_name=util.get_hostname()),
                                            timeout=5)
                             if not one_ping:
                                 self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
                                 if self.check_duplex_connection():
-                                    logging.debug("++ Connected to %s (%s)" % (self.display_hostname, self.ip_address))
+                                    logging.debug("++ Connected to %s (%s:%d)"
+                                                      % (self.display_hostname, self.ip_address, self.port))
 
                                     self.set_remote_status(RemoteStatus.ONLINE)
 
@@ -133,8 +142,16 @@ class RemoteMachine(GObject.Object):
                                     self.rpc_call(self.update_remote_machine_info)
                                     self.rpc_call(self.update_remote_machine_avatar)
                                     one_ping = True
+                                else:
+                                    duplex_fail_counter += 1
+                                    if duplex_fail_counter > DUPLEX_MAX_FAILURES:
+                                        logging.debug("CheckDuplexConnection to %s (%s:%d) failed too many times"
+                                                          % (self.display_hostname, self.ip_address, self.port))
+                                        self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
+                                        return True
                         except grpc.RpcError as e:
-                            logging.debug("Ping failed, shutting down (%s)" % self.display_hostname)
+                            logging.debug("Ping failed, shutting down %s (%s:%d)"
+                                              % (self.display_hostname, self.ip_address, self.port))
                             break
 
                     self.ping_timer.wait(CONNECTED_PING_TIME if self.status == RemoteStatus.ONLINE else DUPLEX_WAIT_PING_TIME)
