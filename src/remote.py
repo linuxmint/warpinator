@@ -2,7 +2,6 @@ import time
 import gettext
 import threading
 import logging
-from concurrent.futures import ThreadPoolExecutor
 
 from gi.repository import GObject, GLib
 
@@ -72,14 +71,18 @@ class RemoteMachine(GObject.Object):
 
         self.ping_timer = threading.Event()
 
-        self.tpool = None
-
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)
 
         self.has_zc_presence = False # This is currently unused.
 
-    @util._async
-    def start(self):
+    def start_remote_thread(self):
+        remote_thread = threading.Thread(target=self.run, name="remote-thread-%s-%s:%d-%s"
+                                             % (self.hostname, self.ip_address, self.port, self.ident))
+        # logging.debug("remote-thread-%s-%s:%d-%s"
+                          # % (self.hostname, self.ip_address, self.port, self.ident))
+        remote_thread.start()
+
+    def run(self):
         self.ping_timer.clear()
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
@@ -138,7 +141,6 @@ class RemoteMachine(GObject.Object):
 
                                     self.set_remote_status(RemoteStatus.ONLINE)
 
-                                    self.tpool = ThreadPoolExecutor(max_workers=4)
                                     self.rpc_call(self.update_remote_machine_info)
                                     self.rpc_call(self.update_remote_machine_avatar)
                                     one_ping = True
@@ -173,11 +175,6 @@ class RemoteMachine(GObject.Object):
                                  % (self.display_hostname, self.ip_address, self.port, e))
 
         self.set_remote_status(RemoteStatus.OFFLINE)
-
-        if self.tpool:
-            self.tpool.shutdown(wait=True)
-            self.tpool = None
-
         self.connected = False
 
     def shutdown(self):
@@ -233,12 +230,12 @@ class RemoteMachine(GObject.Object):
         return GLib.SOURCE_REMOVE
 
     def rpc_call(self, func, *args, **kargs):
-        if self.tpool == None:
-            logging.critical("!! RPC: call attempted but no thread pool! %s (%s:%d)"
-                                 % (self.display_hostname, self.ip_address, self.port))
-            return
-
-        self.tpool.submit(func, *args, **kargs)
+        try:
+            util.global_rpc_threadpool.submit(func, *args, **kargs)
+        except Exception as e:
+            # exception concurrent.futures.thread.BrokenThreadPool is not available in bionic/python3 < 3.7
+            logging.critical("!! RPC threadpool failure while submitting call to %s (%s:%d): %s"
+                                 % (self.display_hostname, self.ip_address, self.port, e))
 
     # Not added to thread pool
     def check_duplex_connection(self):
@@ -426,7 +423,7 @@ class RemoteMachine(GObject.Object):
             self.add_op(op)
             op.prepare_send_info()
 
-        self.tpool.submit(_send_files, uri_list)
+        self.rpc_call(_send_files, uri_list)
 
     @util._idle
     def add_op(self, op):

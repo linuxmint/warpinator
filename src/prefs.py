@@ -23,6 +23,8 @@ PORT_KEY = "port"
 SHOW_NOTIFICATIONS_KEY = "show-notifications"
 FAVORITES_KEY = "favorites"
 TRAY_ICON_KEY = "use-tray-icon"
+SERVER_THREAD_POOL_SIZE_KEY = "server-thread-pool-size"
+RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -68,6 +70,19 @@ def toggle_favorite(ident):
         faves.append(ident)
 
     prefs_settings.set_strv(FAVORITES_KEY, faves)
+
+def get_remote_pool_max_threads():
+    setting_value = prefs_settings.get_int(RPC_THREAD_POOL_SIZE_KEY)
+
+    if setting_value == 0:
+        setting_value = max(8, os.cpu_count() + 4)
+
+    return setting_value
+
+def get_server_pool_max_threads():
+    setting_value = prefs_settings.get_int(SERVER_THREAD_POOL_SIZE_KEY)
+
+    return max(setting_value, 2)
 
 class Preferences():
     def __init__(self, transient_for):

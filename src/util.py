@@ -4,6 +4,7 @@ import gettext
 import math
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
@@ -11,6 +12,20 @@ import prefs
 import config
 
 _ = gettext.gettext
+
+# Not sure what the ideal count is, too few and there will be waits if a lot of
+# transfers are happening.  The server runs on its own thread, and has its own thread
+# pool to service incoming rpcs. Each remote uses one thread for its connection loop,
+# and all remotes share this thread pool for outgoing calls. It could be we may need
+# to limit the number of simultaneous ops in the gui.
+#
+# Both server and remote thread pool sizes can be adjusted in dconf.
+global_rpc_threadpool = None
+
+# Initializing in thie function avoids a circular import due to prefs.get_thread_count()
+def initialize_rpc_threadpool():
+    global global_rpc_threadpool
+    global_rpc_threadpool = ThreadPoolExecutor(max_workers=prefs.get_remote_pool_max_threads())
 
 from enum import IntEnum
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \

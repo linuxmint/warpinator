@@ -98,7 +98,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         return False
 
-    @util._async
+    # Zeroconf worker thread
     def remove_service(self, zeroconf, _type, name):
         if name == self.service_name:
             return
@@ -117,7 +117,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         remote.has_zc_presence = False
 
-    @util._async
+    # Zeroconf worker thread
     def add_service(self, zeroconf, _type, name):
         info = zeroconf.get_service_info(_type, name)
 
@@ -225,12 +225,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 self.idle_emit("remote-machine-added", machine)
 
             machine.has_zc_presence = True
-            machine.start()
+            machine.start_remote_thread()
 
     def run(self):
         logging.debug("Starting server")
 
-        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=4), options=None)
+        util.initialize_rpc_threadpool()
+
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=prefs.get_server_pool_max_threads()), options=None)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
         pair = auth.get_singleton().get_server_creds()
@@ -275,6 +277,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.idle_emit("shutdown-complete")
         self.server = None
 
+        util.global_rpc_threadpool.shutdown(wait=True)
         logging.debug("Server stopped")
 
     def shutdown(self):

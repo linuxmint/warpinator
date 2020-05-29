@@ -48,8 +48,16 @@
       <default>true</default>
       <summary>Display notifications when a new transfer is incoming.</summary>
     </key>
+    <key name="rpc-thread-pool-size" type="i">
+      <default>0</default>
+      <summary>Number of threads to share between all remotes and the server to handle inter-machine communication</summary>
+      <description>If this is set to 0, a sane value will be used based equal to larger of (number_of_cpu_cores + 4) and 8.  It is recommended to set this to at least 8.</description>
+    </key>
+    <key name="server-thread-pool-size" type="i">
+      <default>4</default>
+      <summary>Number of threads to allow the server, for handling incoming rpcs.</summary>
+    </key>
   </schema>
-
   <schema id="org.x.warpinator.window-state" path="/org/x/warpinator/window-state/" gettext-domain="warpinator">
     <key name="x" type="i">
       <default>-1</default>
