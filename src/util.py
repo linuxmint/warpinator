@@ -16,9 +16,11 @@ from enum import IntEnum
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
                                                   FROM_REMOTE_MACHINE')
 
-FileType = IntEnum('FileType', 'REGULAR \
-                                DIRECTORY \
-                                SYMBOLIC_LINK')
+# Using Gio enums fails for some unknown reason when collecting file info sometimes.
+# Avoid introspection.
+FileType = IntEnum('FileType', (('REGULAR', Gio.FileType.REGULAR),
+                                ('DIRECTORY', Gio.FileType.DIRECTORY),
+                                ('SYMBOLIC_LINK', Gio.FileType.SYMBOLIC_LINK)))
 
 # Online - all ok
 # Offline - no presence at all
@@ -92,9 +94,9 @@ def _idle(func):
     return wrapper
 
 def gfiletype_to_int_enum(gfiletype):
-    if gfiletype == Gio.FileType.DIRECTORY:
+    if gfiletype == FileType.DIRECTORY:
         return FileType.DIRECTORY
-    elif gfiletype == Gio.FileType.SYMBOLIC_LINK:
+    elif gfiletype == FileType.SYMBOLIC_LINK:
         return FileType.SYMBOLIC_LINK
     else:
         return FileType.REGULAR

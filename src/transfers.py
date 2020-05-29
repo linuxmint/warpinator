@@ -172,7 +172,7 @@ def add_file(op, basename, uri, base_uri, info):
 
     file_type = info.get_file_type()
 
-    if file_type == Gio.FileType.SYMBOLIC_LINK:
+    if file_type == FileType.SYMBOLIC_LINK:
         symlink_target = info.get_symlink_target()
         if symlink_target:
             if symlink_target[0] == "/":
@@ -219,7 +219,7 @@ def gather_file_info(op):
 
                 file_type = info.get_file_type()
 
-                if file_type == Gio.FileType.DIRECTORY:
+                if file_type == FileType.DIRECTORY:
                     add_file(op, child_basename, child_uri, top_dir, info)
                     process_folder(child_uri, top_dir)
                 else:
@@ -241,7 +241,7 @@ def gather_file_info(op):
             if len(uri_list) == 1:
                 op.mime_if_single = info.get_content_type()
 
-            if info and info.get_file_type() == Gio.FileType.DIRECTORY:
+            if info and info.get_file_type() == FileType.DIRECTORY:
                 top_dir = file.get_parent().get_uri()
                 add_file(op, basename, uri, None, info)
                 process_folder(uri, top_dir)
