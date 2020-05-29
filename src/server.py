@@ -27,7 +27,8 @@ void = warp_pb2.VoidType()
 
 SERVICE_TYPE = "_warpinator._tcp.local."
 
-# server
+# server (this is on a separate thread from the ui, grpc isn't compatible with
+# gmainloop)
 class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     __gsignals__ = {
         "remote-machine-added": (GObject.SignalFlags.RUN_LAST, None, (object,)),
@@ -106,18 +107,21 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         auth.get_singleton().cancel_request_loop(ident)
 
         try:
-            self.idle_emit("remote-machine-removed", self.remote_machines[ident])
-            self.remote_machines[ident].shutdown()
+            remote = self.remote_machines[ident]
         except KeyError:
-            logging.debug("Removed client we never knew: %s" % name)
+            logging.debug("<< Discovery: unknown service ident (%s) reported as gone by zc." % ident)
+            return
+
+        logging.debug("<< Discovery: service %s (%s:%d) has disappeared."
+                          % (remote.display_hostname, remote.ip_address, remote.port))
+
+        remote.has_zc_presence = False
 
     @util._async
     def add_service(self, zeroconf, _type, name):
         info = zeroconf.get_service_info(_type, name)
 
         if info:
-            # logging.debug("New service info: %s", info)
-
             ident = name.partition(".")[0]
 
             try:
@@ -126,36 +130,66 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 logging.critical("No hostname in service info properties.  Is this an old version?")
                 return
 
+            remote_ip = socket.inet_ntoa(info.address)
+
             try:
                 # Check if this is a flush registration to reset the remote servier's presence.
                 if info.properties[b"type"].decode() == "flush":
-                    logging.debug("Received flush service info (ignoring): %s (%s)" % (remote_hostname, ident))
+                    logging.debug(">> Discovery: received flush service info (ignoring): %s (%s:%d)"
+                                      % (remote_hostname, remote_ip, info.port))
                     return
             except KeyError:
                 logging.warning("No type in service info properties, assuming this is a real connect attempt")
 
-            remote_ip = socket.inet_ntoa(info.address)
-
             if ident == self.service_ident:
                 return
 
-            # This will block if the remote's warp udp port is closed, until either the port is unblocked
-            # or we tell the auth object to shutdown, in which case the request timer will cancel and return
-            # here immediately (with None)
-            got_cert = auth.get_singleton().retrieve_remote_cert(ident, remote_hostname, remote_ip, info.port)
+            def check_cert():
+                # This will block if the remote's warp udp port is closed, until either the port is unblocked
+                # or we tell the auth object to shutdown, in which case the request timer will cancel and return
+                # here immediately (with None)
+                got_cert = auth.get_singleton().retrieve_remote_cert(ident, remote_hostname, remote_ip, info.port)
 
-            if not got_cert:
-                logging.critical("Unable to authenticate with %s (%s)" % (remote_hostname, remote_ip))
-                return
+                if not got_cert:
+                    logging.critical("<< Discovery: unable to authenticate with %s (%s:%d)"
+                                         % (remote_hostname, remote_ip, info.port))
+                    return False
+                return True
 
             try:
-                logging.debug("Found existing remote: %s" % ident)
                 machine = self.remote_machines[ident]
+                machine.has_zc_presence = True
+                logging.debug(">> Discovery: existing remote: %s (%s:%d)"
+                                  % (machine.display_hostname, remote_ip, info.port))
+
+                # If the remote truly is the same one (our service info just dropped out
+                # momentarily), this will end up just retrieving the current cert again.
+                # If this was a real disconnect we didn't notice, we'll have the new cert
+                # which we'll need when our supposedly existing connection tries to continue
+                # pinging. It will fail out and restart the connection loop, and will need
+                # this updated one.
+                if not check_cert():
+                    return
+
+                if machine.status == RemoteStatus.ONLINE:
+                    return
+
+                logging.debug("Closing previous connection for %s (%s%d)"
+                                  % (machine.display_hostname, remote_ip, info.port))
+                machine.shutdown() # This does nothing if run more than once.  It's here to make sure
+                                   # the previous start thread is complete before starting a new one.
+                                   # This is needed in the corner case where the remote has gone offline,
+                                   # and returns before our Ping loop times out and closes the thread
+                                   # itself.
+
                 # Update our connect info if it changed.
                 machine.hostname = remote_hostname
                 machine.ip_address = remote_ip
                 machine.port = info.port
             except KeyError:
+                if not check_cert():
+                    return
+
                 display_hostname = remote_hostname
                 i = 1
 
@@ -175,7 +209,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     if not found:
                         break
 
-                logging.debug("New remote: %s, hostname: %s, ip: %s:%d" % (ident, display_hostname, remote_ip, info.port))
+                logging.debug(">> Discovery: new remote: %s (%s:%d)"
+                                  % (display_hostname, remote_ip, info.port))
+
                 machine = remote.RemoteMachine(ident,
                                                remote_hostname,
                                                display_hostname,
@@ -185,8 +221,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
                 self.remote_machines[ident] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
+                machine.connect("remote-status-changed", self.remote_status_changed)
                 self.idle_emit("remote-machine-added", machine)
 
+            machine.has_zc_presence = True
             machine.start()
 
     def run(self):
@@ -216,9 +254,12 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         logging.debug("Stopping server")
 
         remote_machines = list(self.remote_machines.values())
-        for machine in remote_machines:
-            self.idle_emit("remote-machine-removed", machine)
-            machine.shutdown()
+        for remote in remote_machines:
+            self.idle_emit("remote-machine-removed", remote)
+            logging.debug("-- Closing connection to remote machine %s (%s:%d)"
+                              % (remote.display_hostname, remote.ip_address, remote.port))
+
+            remote.shutdown()
 
         remote_machines = None
 
@@ -238,6 +279,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
     def shutdown(self):
         self.server_thread_keepalive.set()
+
+    def remote_status_changed(self, remote):
+        if remote.status == RemoteStatus.OFFLINE:
+            self.emit("remote-machine-removed", remote)
 
     def add_receive_op_to_remote_machine(self, op):
         self.remote_machines[op.sender].add_op(op)

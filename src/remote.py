@@ -2,6 +2,7 @@ import time
 import gettext
 import threading
 import logging
+from concurrent.futures import ThreadPoolExecutor
 
 from gi.repository import GObject, GLib
 
@@ -21,11 +22,10 @@ _ = gettext.gettext
 #typedef
 void = warp_pb2.VoidType()
 
-MAX_CONNECT_RETRIES = 2
-MAX_PING_RETRIES = 10
+CHANNEL_RETRY_WAIT_TIME = 30
 
-NOT_CONNECTED_WAIT_PING_TIME = 1
-CONNECTED_PING_TIME = 10
+DUPLEX_WAIT_PING_TIME = 1
+CONNECTED_PING_TIME = 20
 
 # client
 class RemoteMachine(GObject.Object):
@@ -70,9 +70,12 @@ class RemoteMachine(GObject.Object):
         self.status_lock = threading.Lock()
 
         self.ping_timer = threading.Event()
-        self.ping_time = NOT_CONNECTED_WAIT_PING_TIME
+
+        self.tpool = None
 
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)
+
+        self.has_zc_presence = False # This is currently unused.
 
     @util._async
     def start(self):
@@ -83,36 +86,31 @@ class RemoteMachine(GObject.Object):
         logging.debug("== Attempting to connect to %s (%s)" % (self.display_hostname, self.ip_address))
 
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
-        self.ping_time = NOT_CONNECTED_WAIT_PING_TIME
 
-        def run_secure_loop(cert):
+        def run_secure_loop():
+            cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
             creds = grpc.ssl_channel_credentials(cert)
 
             with grpc.secure_channel("%s:%d" % (self.ip_address, self.port), creds) as channel:
                 future = grpc.channel_ready_future(channel)
 
-                connect_retries = 0
+                try:
+                    future.result(timeout=4)
+                    self.stub = warp_pb2_grpc.WarpStub(channel)
+                    self.connected = True
+                except grpc.FutureTimeoutError:
+                    self.set_remote_status(RemoteStatus.UNREACHABLE)
+                    future.cancel()
 
-                while not self.ping_timer.is_set():
-                    try:
-                        future.result(timeout=2)
-                        self.stub = warp_pb2_grpc.WarpStub(channel)
-                        self.connected = True
-                        break
-                    except grpc.FutureTimeoutError:
-                        if connect_retries < MAX_CONNECT_RETRIES:
-                            logging.debug("Unable to connect, channel ready timeout, waiting 10s")
-                            self.ping_timer.wait(self.ping_time)
-                            connect_retries += 1
-                            continue
-                        else:
-                            self.set_remote_status(RemoteStatus.UNREACHABLE)
-                            logging.debug("Trying to remake channel")
-                            future.cancel()
-                            return True
+                    if not self.ping_timer.is_set():
+                        logging.debug("Unable to establish channel to remote server, trying again in %ds" % CHANNEL_RETRY_WAIT_TIME)
+                        self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
+                        return True # run_secure_loop()
+
+                    return False # run_secure_loop()
 
                 ping_retry_count = 0
-                one_ping = False
+                one_ping = False # run_secure_loop()
 
                 while not self.ping_timer.is_set():
                     if self.busy:
@@ -125,43 +123,47 @@ class RemoteMachine(GObject.Object):
                                                                readable_name=util.get_hostname()),
                                            timeout=5)
                             if not one_ping:
-                                # Wait
                                 self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
-
                                 if self.check_duplex_connection():
                                     logging.debug("++ Connected to %s (%s)" % (self.display_hostname, self.ip_address))
 
                                     self.set_remote_status(RemoteStatus.ONLINE)
-                                    self.update_remote_machine_info()
-                                    self.update_remote_machine_avatar()
 
-                                    self.ping_time = CONNECTED_PING_TIME
+                                    self.tpool = ThreadPoolExecutor(max_workers=4)
+                                    self.rpc_call(self.update_remote_machine_info)
+                                    self.rpc_call(self.update_remote_machine_avatar)
                                     one_ping = True
                         except grpc.RpcError as e:
-                            logging.debug("Ping timeout (%s)" % self.display_hostname)
-                            if e.code() in (grpc.StatusCode.DEADLINE_EXCEEDED, grpc.StatusCode.UNAVAILABLE):
-                                one_ping = False
-                                self.ping_time = NOT_CONNECTED_WAIT_PING_TIME
-                                if ping_retry_count < MAX_PING_RETRIES:
-                                    self.set_remote_status(RemoteStatus.UNREACHABLE)
-                                    ping_retry_count += 1
-                                else:
-                                    logging.debug("Ping retry exceeded, going to reset the connection (%s)" % self.display_hostname)
-                                    return True
+                            logging.debug("Ping failed, shutting down (%s)" % self.display_hostname)
+                            break
 
-                    self.ping_timer.wait(self.ping_time)
-                return False
+                    self.ping_timer.wait(CONNECTED_PING_TIME if self.status == RemoteStatus.ONLINE else DUPLEX_WAIT_PING_TIME)
 
-        cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
+                # This is reached by the RpcError break above.  If the remote is still discoverable, start
+                # the secure loop over.  This could have happened as a result of a quick disco/reconnect,
+                # And we don't notice until it has already come back. In this case, try a new connection.
+                if self.has_zc_presence and not self.ping_timer.is_set():
+                    return True # run_secure_loop()
 
-        while run_secure_loop(cert):
-            continue
+                # The ping timer has been triggered, this is an orderly shutdown.
+                return False # run_secure_loop()
+
+        try:
+            while run_secure_loop():
+                continue
+        except Exception as e:
+            logging.critical("!! Major problem starting connection loop for %s (%s:%d): %s"
+                                 % (self.display_hostname, self.ip_address, self.port, e))
+
+        self.set_remote_status(RemoteStatus.OFFLINE)
+
+        if self.tpool:
+            self.tpool.shutdown(wait=True)
+            self.tpool = None
 
         self.connected = False
 
     def shutdown(self):
-        logging.debug("-- Closing connection to remote machine %s (%s)" % (self.display_hostname, self.ip_address))
-        self.set_remote_status(RemoteStatus.OFFLINE)
         self.ping_timer.set()
         while self.connected:
             time.sleep(0.1)
@@ -213,8 +215,26 @@ class RemoteMachine(GObject.Object):
 
         return GLib.SOURCE_REMOVE
 
-    @util._async
+    def rpc_call(self, func, *args, **kargs):
+        if self.tpool == None:
+            logging.critical("!! RPC: call attempted but no thread pool! %s (%s:%d)"
+                                 % (self.display_hostname, self.ip_address, self.port))
+            return
+
+        self.tpool.submit(func, *args, **kargs)
+
+    # Not added to thread pool
+    def check_duplex_connection(self):
+        logging.debug("Checking duplex with '%s'" % self.display_hostname)
+
+        ret = self.stub.CheckDuplexConnection(warp_pb2.LookupName(id=self.local_ident,
+                                                                  readable_name=util.get_hostname()))
+
+        return ret.response
+
+    # Run in thread pool
     def update_remote_machine_info(self):
+        logging.debug("Calling GetRemoteMachineInfo on '%s'" % self.display_hostname)
         def get_info_finished(future):
             info = future.result()
             self.display_name = info.display_name
@@ -231,15 +251,7 @@ class RemoteMachine(GObject.Object):
                                                                            readable_name=util.get_hostname()))
         future.add_done_callback(get_info_finished)
 
-    def check_duplex_connection(self):
-        logging.debug("Checking duplex with '%s'" % self.display_hostname)
-
-        ret = self.stub.CheckDuplexConnection(warp_pb2.LookupName(id=self.local_ident,
-                                                                  readable_name=util.get_hostname()))
-
-        return ret.response
-
-    @util._async
+    # Run in thread pool
     def update_remote_machine_avatar(self):
         logging.debug("Calling GetRemoteMachineAvatar on '%s'" % self.display_hostname)
         iterator = self.stub.GetRemoteMachineAvatar(warp_pb2.LookupName(id=self.local_ident,
@@ -265,8 +277,7 @@ class RemoteMachine(GObject.Object):
 
         self.emit_machine_info_changed()
 
-    # grpc calls
-    @util._async
+    # Run in thread pool
     def send_transfer_op_request(self, op):
         if not self.stub: # short circuit for testing widgets
             return
@@ -285,7 +296,7 @@ class RemoteMachine(GObject.Object):
                                                  top_dir_basenames=op.top_dir_basenames)
         self.stub.ProcessTransferOpRequest(transfer_op)
 
-    @util._async
+    # Run in thread pool
     def cancel_transfer_op_request(self, op, by_sender=False):
         logging.debug("Calling CancelTransferOpRequest on '%s'" % (self.display_hostname))
 
@@ -298,7 +309,7 @@ class RemoteMachine(GObject.Object):
                                                           readable_name=util.get_hostname()))
         op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER if by_sender else OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
-    @util._async
+    # Run in thread pool
     def start_transfer_op(self, op):
         logging.debug("Calling StartTransfer on '%s'" % (self.display_hostname))
 
@@ -351,7 +362,7 @@ class RemoteMachine(GObject.Object):
 
         op.set_status(OpStatus.FINISHED)
 
-    @util._async
+    # Run in thread pool
     def stop_transfer_op(self, op, by_sender=False, lost_connection=False):
         logging.debug("Calling StopTransfer on '%s'" % (self.display_hostname))
 
@@ -371,7 +382,8 @@ class RemoteMachine(GObject.Object):
                 else:
                     op.set_status(OpStatus.FAILED)
         else:
-            op.file_iterator.cancel()
+            if op.file_iterator:
+                op.file_iterator.cancel()
             if not lost_connection:
                 logging.debug("stop transfer initiated by receiver")
                 if op.error_msg == "":
@@ -387,15 +399,17 @@ class RemoteMachine(GObject.Object):
                                      readable_name=util.get_hostname())
             self.stub.StopTransfer(warp_pb2.StopInfo(info=opinfo, error=op.error_msg != ""))
 
-    # Op handling
-    @util._async
+    # Op handling (run in thread pool)
     def send_files(self, uri_list):
-        op = SendOp(self.local_ident,
-                    self.ident,
-                    self.display_name,
-                    uri_list)
-        self.add_op(op)
-        op.prepare_send_info()
+        def _send_files(uri_list):
+            op = SendOp(self.local_ident,
+                        self.ident,
+                        self.display_name,
+                        uri_list)
+            self.add_op(op)
+            op.prepare_send_info()
+
+        self.tpool.submit(_send_files, uri_list)
 
     @util._idle
     def add_op(self, op):
@@ -422,7 +436,7 @@ class RemoteMachine(GObject.Object):
     def notify_remote_machine_of_new_op(self, op):
         if op.status == OpStatus.WAITING_PERMISSION:
             if op.direction == TransferDirection.TO_REMOTE_MACHINE:
-                self.send_transfer_op_request(op)
+                self.rpc_call(self.send_transfer_op_request, op)
 
     @util._idle
     def check_for_autostart(self, op):
@@ -444,7 +458,7 @@ class RemoteMachine(GObject.Object):
             for op in self.transfer_ops:
                 if op.status == OpStatus.TRANSFERRING:
                     op.error_msg = _("Connection has been lost")
-                    self.stop_transfer_op(op, isinstance(op, SendOp), lost_connection=True)
+                    self.rpc_call(self.stop_transfer_op, op, isinstance(op, SendOp), lost_connection=True)
                     op.set_status(OpStatus.FAILED)
                 elif op.status in (OpStatus.WAITING_PERMISSION, OpStatus.CALCULATING, OpStatus.PAUSED):
                     op.error_msg = _("Connection has been lost")
@@ -454,23 +468,23 @@ class RemoteMachine(GObject.Object):
     def op_command_issued(self, op, command):
         # send
         if command == OpCommand.CANCEL_PERMISSION_BY_SENDER:
-            self.cancel_transfer_op_request(op, by_sender=True)
-        elif command == OpCommand.PAUSE_TRANSFER:
-            self.pause_transfer_op(op)
+            self.rpc_call(self.cancel_transfer_op_request, op, by_sender=True)
+        # elif command == OpCommand.PAUSE_TRANSFER:
+            # self.rpc_call(self.pause_transfer_op, op)
         elif command == OpCommand.STOP_TRANSFER_BY_SENDER:
-            self.stop_transfer_op(op, by_sender=True)
+            self.rpc_call(self.stop_transfer_op, op, by_sender=True)
         elif command == OpCommand.RETRY_TRANSFER:
             op.set_status(OpStatus.WAITING_PERMISSION)
-            self.send_transfer_op_request(op)
+            self.rpc_call(self.send_transfer_op_request, op)
         elif command == OpCommand.REMOVE_TRANSFER:
             self.remove_op(op)
         # receive
         elif command == OpCommand.START_TRANSFER:
-            self.start_transfer_op(op)
+            self.rpc_call(self.start_transfer_op, op)
         elif command == OpCommand.CANCEL_PERMISSION_BY_RECEIVER:
-            self.cancel_transfer_op_request(op, by_sender=False)
+            self.rpc_call(self.cancel_transfer_op_request, op, by_sender=False)
         elif command == OpCommand.STOP_TRANSFER_BY_RECEIVER:
-            self.stop_transfer_op(op, by_sender=False)
+            self.rpc_call(self.stop_transfer_op, op, by_sender=False)
 
     @util._idle
     def op_focus(self, op):

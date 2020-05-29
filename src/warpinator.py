@@ -960,10 +960,6 @@ class WarpApplication(Gtk.Application):
         self.inhibit_count = 0
         self.inhibit_cookie = 0
 
-        self.netmon = util.NetworkMonitor()
-        self.netmon.connect("state-changed", self.network_state_changed)
-        self.netmon.start()
-
         self.server = None
         self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
 
@@ -1023,6 +1019,10 @@ class WarpApplication(Gtk.Application):
 
     def try_activation(self):
         self.window.start_startup_timer(restarting=False)
+
+        self.netmon = util.NetworkMonitor()
+        self.netmon.connect("state-changed", self.network_state_changed)
+        self.netmon.start()
 
         if util.get_ip() == "0.0.0.0":
             return

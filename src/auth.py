@@ -338,7 +338,6 @@ class AuthManager(GObject.Object):
         with self.requests_lock:
             try:
                 req = self.requests[ident]
-                del self.requests[ident]
             except KeyError:
                 pass
 
@@ -375,9 +374,12 @@ class RequestLoop():
                 except socket.error as e:
                     logging.critical("Something wrong with cert request (%s:%s): " % (self.ip, self.port, e))
                     break
-            self.timer.wait(5)
 
-        logging.critical("RequestLoop canceled (event set) for (%s:%s)" % (self.ip, self.port))
+            logging.debug("Cert request failed from remote (%s:%d), waiting 30s to try again. (Is their udp port blocked?"
+                              % (self.ip, self.port))
+            self.timer.wait(30)
+
+        logging.debug("RequestLoop canceled (event set) for (%s:%s)" % (self.ip, self.port))
         return None
 
     def cancel(self):
