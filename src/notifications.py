@@ -32,7 +32,7 @@ class NewOpUserNotification():
                           })
 
                 notification.set_body(body)
-                notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
+                notification.set_icon(Gio.ThemedIcon(name="warpinator-symbolic"))
 
                 notification.add_button(_("Accept"), "app.notification-response::accept")
                 notification.add_button(_("Decline"), "app.notification-response::decline")
@@ -58,7 +58,7 @@ class NewOpUserNotification():
                           })
 
                 notification.set_body(body)
-                notification.set_icon(Gio.ThemedIcon(name="mail-send-symbolic"))
+                notification.set_icon(Gio.ThemedIcon(name="warpinator-symbolic"))
 
         Gio.Application.get_default().send_notification(self.op.sender, notification)
 
@@ -127,6 +127,40 @@ class TransferFailedNotification():
 
             notification.set_body(body)
             notification.set_icon(Gio.ThemedIcon(name="dialog-error-symbolic"))
+            notification.set_default_action("app.notification-response::focus")
+
+            notification.set_priority(Gio.NotificationPriority.NORMAL)
+
+            app = Gio.Application.get_default()
+            app.lookup_action("notification-response").connect("activate", self._notification_response, self.op)
+
+            app.get_default().send_notification(self.op.sender, notification)
+
+    def _notification_response(self, action, variant, op):
+        op.focus()
+
+        app = Gio.Application.get_default()
+        app.lookup_action("notification-response").disconnect_by_func(self._notification_response)
+
+class TransferStoppedNotification():
+    def __init__(self, op, sender=True):
+        self.op = op
+        self.sender = sender
+
+        self.send_notification()
+
+    @util._idle
+    def send_notification(self):
+        if prefs.get_show_notifications():
+            notification = Gio.Notification.new(_("Transfer cancelled"))
+
+            if self.sender:
+                body = (_("Your transfer to %s was cancelled") % self.op.receiver_name)
+            else:
+                body = (_("Your incoming transfer from %s was cancelled") % self.op.sender_name)
+
+            notification.set_body(body)
+            notification.set_icon(Gio.ThemedIcon(name="dialog-info-symbolic"))
             notification.set_default_action("app.notification-response::focus")
 
             notification.set_priority(Gio.NotificationPriority.NORMAL)

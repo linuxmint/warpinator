@@ -122,6 +122,9 @@ class SendOp(CommonOp):
             notifications.TransferCompleteNotification(self, sender=True)
         elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED):
             notifications.TransferFailedNotification(self, sender=True)
+         # We only care if the other remote cancelled.  If we did it, we don't need a notification.
+        elif status == OpStatus.STOPPED_BY_RECEIVER:
+            notifications.TransferStoppedNotification(self, sender=True)
 
         self.emit_status_changed()
 
@@ -208,6 +211,9 @@ class ReceiveOp(CommonOp):
             notifications.TransferCompleteNotification(self, sender=False)
         elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED):
             notifications.TransferFailedNotification(self, sender=False)
+         # We only care if the other remote cancelled.  If we did it, we don't need a notification.
+        elif status == OpStatus.STOPPED_BY_SENDER:
+            notifications.TransferStoppedNotification(self, sender=False)
 
         self.emit_status_changed()
 
