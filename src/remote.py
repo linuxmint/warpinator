@@ -55,7 +55,7 @@ class RemoteMachine(GObject.Object):
         self.transfer_ops = []
 
         self.stub = None
-        self.connected = False
+        self.remote_thread = None
 
         self.busy = False # Skip keepalive ping when we're busy.
 
@@ -76,11 +76,11 @@ class RemoteMachine(GObject.Object):
         self.has_zc_presence = False # This is currently unused.
 
     def start_remote_thread(self):
-        remote_thread = threading.Thread(target=self.run, name="remote-thread-%s-%s:%d-%s"
-                                             % (self.hostname, self.ip_address, self.port, self.ident))
+        self.remote_thread = threading.Thread(target=self.run, name="remote-thread-%s-%s:%d-%s"
+                                              % (self.hostname, self.ip_address, self.port, self.ident))
         # logging.debug("remote-thread-%s-%s:%d-%s"
                           # % (self.hostname, self.ip_address, self.port, self.ident))
-        remote_thread.start()
+        self.remote_thread.start()
 
     def run(self):
         self.ping_timer.clear()
@@ -104,7 +104,6 @@ class RemoteMachine(GObject.Object):
                 try:
                     future.result(timeout=4)
                     self.stub = warp_pb2_grpc.WarpStub(channel)
-                    self.connected = True
                 except grpc.FutureTimeoutError:
                     self.set_remote_status(RemoteStatus.UNREACHABLE)
                     future.cancel()
@@ -178,12 +177,19 @@ class RemoteMachine(GObject.Object):
                                  % (self.display_hostname, self.ip_address, self.port, e))
 
         self.set_remote_status(RemoteStatus.OFFLINE)
-        self.connected = False
+        self.run_thread_alive = False
 
     def shutdown(self):
         self.ping_timer.set()
-        while self.connected:
-            time.sleep(0.1)
+
+        # This is called by server just before running start_remote_thread, so the first time
+        # self.remote_thread will be None.
+        try:
+            self.remote_thread.join(10)
+        except AttributeError:
+            pass
+
+        self.remote_thread = None
 
     def update_favorite_status(self, pspec, data=None):
         old_favorite = self.favorite
@@ -348,7 +354,8 @@ class RemoteMachine(GObject.Object):
                 # If we leave an io stream open, it locks the location.  For instance,
                 # if this was a mounted location, we wouldn't be able to terminate until
                 # we closed warp.
-                receiver.current_stream.close()
+                if receiver.current_stream != None:
+                    receiver.current_stream.close()
             except GLib.Error:
                 pass
 

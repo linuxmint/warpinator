@@ -172,15 +172,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     return
 
                 if machine.status == RemoteStatus.ONLINE:
-                    return
-
-                logging.debug("Closing previous connection for %s (%s%d)"
+                    logging.debug(">>> Discovery: rejoining existing connect with %s (%s:%d)"
                                   % (machine.display_hostname, remote_ip, info.port))
-                machine.shutdown() # This does nothing if run more than once.  It's here to make sure
-                                   # the previous start thread is complete before starting a new one.
-                                   # This is needed in the corner case where the remote has gone offline,
-                                   # and returns before our Ping loop times out and closes the thread
-                                   # itself.
+                    return
 
                 # Update our connect info if it changed.
                 machine.hostname = remote_hostname
@@ -225,6 +219,15 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 self.idle_emit("remote-machine-added", machine)
 
             machine.has_zc_presence = True
+
+            logging.debug(">>> Discovery: closing previous connection for %s (%s%d)"
+                              % (machine.display_hostname, remote_ip, info.port))
+            machine.shutdown() # This does nothing if run more than once.  It's here to make sure
+                               # the previous start thread is complete before starting a new one.
+                               # This is needed in the corner case where the remote has gone offline,
+                               # and returns before our Ping loop times out and closes the thread
+                               # itself.
+
             machine.start_remote_thread()
 
     def run(self):
