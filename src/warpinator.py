@@ -1045,7 +1045,7 @@ class WarpApplication(Gtk.Application):
         def ok_to_restart(srv=None):
             try:
                 self.server.disconnect_by_func(ok_to_restart)
-            except AttributeError:
+            except:
                 pass
 
             self.server = server.Server()
