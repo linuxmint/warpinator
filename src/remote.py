@@ -87,12 +87,12 @@ class RemoteMachine(GObject.Object):
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
-        logging.debug("== Attempting to connect to %s (%s)" % (self.display_hostname, self.ip_address))
+        logging.debug("Remote: Attempting to connect to %s (%s)" % (self.display_hostname, self.ip_address))
 
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
         def run_secure_loop():
-            logging.debug("Starting a new connection loop for %s (%s:%d)"
+            logging.debug("Remote: Starting a new connection loop for %s (%s:%d)"
                               % (self.display_hostname, self.ip_address, self.port))
 
             cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
@@ -110,7 +110,7 @@ class RemoteMachine(GObject.Object):
                     future.cancel()
 
                     if not self.ping_timer.is_set():
-                        logging.debug("Unable to establish secure connection with %s (%s:%d). Trying again in %ds"
+                        logging.debug("Remote: Unable to establish secure connection with %s (%s:%d). Trying again in %ds"
                                           % (self.display_hostname, self.ip_address, self.port, CHANNEL_RETRY_WAIT_TIME))
                         self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
                         return True # run_secure_loop()
@@ -123,20 +123,23 @@ class RemoteMachine(GObject.Object):
                 while not self.ping_timer.is_set():
 
                     if self.busy:
-                        logging.debug("Skipping keepalive ping to %s (%s:%d) (busy)"
+                        logging.debug("Remote Ping: Skipping keepalive ping to %s (%s:%d) (busy)"
                                           % (self.display_hostname, self.ip_address, self.port))
                         self.busy = False
                     else:
                         try:
-                            logging.debug("Sending keepalive ping to %s (%s:%d)"
+                            # t = GLib.get_monotonic_time()
+                            logging.debug("Remote Ping: to   %s (%s:%d)"
                                           % (self.display_hostname, self.ip_address, self.port))
                             self.stub.Ping(warp_pb2.LookupName(id=self.local_ident,
                                                                readable_name=util.get_hostname()),
                                            timeout=5)
+                            # logging.debug("Latency: %s (%s)"
+                                          # % (util.precise_format_time_span(GLib.get_monotonic_time() - t), self.display_hostname))
                             if not one_ping:
                                 self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
                                 if self.check_duplex_connection():
-                                    logging.debug("++ Connected to %s (%s:%d)"
+                                    logging.debug("Remote: Connected to %s (%s:%d)"
                                                       % (self.display_hostname, self.ip_address, self.port))
 
                                     self.set_remote_status(RemoteStatus.ONLINE)
@@ -147,12 +150,12 @@ class RemoteMachine(GObject.Object):
                                 else:
                                     duplex_fail_counter += 1
                                     if duplex_fail_counter > DUPLEX_MAX_FAILURES:
-                                        logging.debug("CheckDuplexConnection to %s (%s:%d) failed too many times"
+                                        logging.debug("Remote: CheckDuplexConnection to %s (%s:%d) failed too many times"
                                                           % (self.display_hostname, self.ip_address, self.port))
                                         self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
                                         return True
                         except grpc.RpcError as e:
-                            logging.debug("Ping failed, shutting down %s (%s:%d)"
+                            logging.debug("Remote: Ping failed, shutting down %s (%s:%d)"
                                               % (self.display_hostname, self.ip_address, self.port))
                             break
 
@@ -210,7 +213,7 @@ class RemoteMachine(GObject.Object):
             self.status = status
             self.cancel_ops_if_offline()
 
-            logging.debug("** %s is now %s" % (self.hostname, self.status))
+            logging.debug("Remote: %s is now %s ****" % (self.hostname, self.status))
             self.emit("remote-status-changed")
 
         return GLib.SOURCE_REMOVE
@@ -239,7 +242,7 @@ class RemoteMachine(GObject.Object):
 
     # Not added to thread pool
     def check_duplex_connection(self):
-        logging.debug("Checking duplex with '%s'" % self.display_hostname)
+        logging.debug("Remote: checking duplex with '%s'" % self.display_hostname)
 
         ret = self.stub.CheckDuplexConnection(warp_pb2.LookupName(id=self.local_ident,
                                                                   readable_name=util.get_hostname()))
@@ -248,7 +251,7 @@ class RemoteMachine(GObject.Object):
 
     # Run in thread pool
     def update_remote_machine_info(self):
-        logging.debug("Calling GetRemoteMachineInfo on '%s'" % self.display_hostname)
+        logging.debug("Remote RPC: calling GetRemoteMachineInfo on '%s'" % self.display_hostname)
         def get_info_finished(future):
             info = future.result()
             self.display_name = info.display_name
@@ -267,7 +270,7 @@ class RemoteMachine(GObject.Object):
 
     # Run in thread pool
     def update_remote_machine_avatar(self):
-        logging.debug("Calling GetRemoteMachineAvatar on '%s'" % self.display_hostname)
+        logging.debug("Remote RPC: calling GetRemoteMachineAvatar on '%s'" % self.display_hostname)
         iterator = self.stub.GetRemoteMachineAvatar(warp_pb2.LookupName(id=self.local_ident,
                                                                         readable_name=util.get_hostname()))
         loader = None
@@ -277,7 +280,7 @@ class RemoteMachine(GObject.Object):
                     loader = util.CairoSurfaceLoader()
                 loader.add_bytes(info.avatar_chunk)
         except grpc.RpcError as e:
-            logging.debug("Could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
+            logging.debug("Remote RPC: could not fetch remote avatar, using a generic one. (%s, %s)" % (e.code(), e.details()))
 
         self.get_avatar_surface(loader)
 
@@ -296,7 +299,7 @@ class RemoteMachine(GObject.Object):
         if not self.stub: # short circuit for testing widgets
             return
 
-        logging.debug("Calling TransferOpRequest on '%s'" % (self.display_hostname))
+        logging.debug("Remote RPC: calling TransferOpRequest on '%s'" % (self.display_hostname))
 
         transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(ident=op.sender,
                                                                       timestamp=op.start_time,
@@ -312,7 +315,7 @@ class RemoteMachine(GObject.Object):
 
     # Run in thread pool
     def cancel_transfer_op_request(self, op, by_sender=False):
-        logging.debug("Calling CancelTransferOpRequest on '%s'" % (self.display_hostname))
+        logging.debug("Remote RPC: calling CancelTransferOpRequest on '%s'" % (self.display_hostname))
 
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
@@ -325,7 +328,7 @@ class RemoteMachine(GObject.Object):
 
     # Run in thread pool
     def start_transfer_op(self, op):
-        logging.debug("Calling StartTransfer on '%s'" % (self.display_hostname))
+        logging.debug("Remote RPC: calling StartTransfer on '%s'" % (self.display_hostname))
 
         start_time = GLib.get_monotonic_time()
 
@@ -370,7 +373,7 @@ class RemoteMachine(GObject.Object):
         op.file_iterator = None
         receiver.receive_finished()
 
-        logging.debug("Receipt of %s files (%s) finished in %s" % \
+        logging.debug("Remote: receipt of %s files (%s) finished in %s" % \
               (op.total_count, GLib.format_size(op.total_size),\
                util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
 
@@ -378,7 +381,7 @@ class RemoteMachine(GObject.Object):
 
     # Run in thread pool
     def stop_transfer_op(self, op, by_sender=False, lost_connection=False):
-        logging.debug("Calling StopTransfer on '%s'" % (self.display_hostname))
+        logging.debug("Remote RPC: Calling StopTransfer on '%s'" % (self.display_hostname))
 
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             name = op.sender
@@ -390,7 +393,7 @@ class RemoteMachine(GObject.Object):
             # If we stopped due to connection error, we don't want the message to be 'stopped by xx',
             # but just failed.
             if not lost_connection:
-                logging.debug("stop transfer initiated by sender")
+                logging.debug("Remote: stop transfer initiated by sender")
                 if op.error_msg == "":
                     op.set_status(OpStatus.STOPPED_BY_SENDER)
                 else:
@@ -399,7 +402,7 @@ class RemoteMachine(GObject.Object):
             if op.file_iterator:
                 op.file_iterator.cancel()
             if not lost_connection:
-                logging.debug("stop transfer initiated by receiver")
+                logging.debug("Remote: stop transfer initiated by receiver")
                 if op.error_msg == "":
                     op.set_status(OpStatus.STOPPED_BY_RECEIVER)
                 else:

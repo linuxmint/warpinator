@@ -72,10 +72,10 @@ class AuthManager(GObject.Object):
             self.keyfile.load_from_file(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME), GLib.KeyFileFlags.NONE)
         except GLib.Error as e:
             if e.code == GLib.FileError.NOENT:
-                logging.debug("No group code file, making one.")
+                logging.debug("Auth: No group code file, making one.")
                 pass
             else:
-                logging.debug("Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
+                logging.debug("Auth: Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
 
         self.code = self.get_group_code()
 
@@ -227,7 +227,7 @@ class AuthManager(GObject.Object):
         return ser_private_key, ser_public_key
 
     def get_server_creds(self):
-        logging.debug("Creating server credentials")
+        logging.debug("Auth: Creating server credentials")
         key, cert = self.make_key_cert_pair(self.hostname, util.get_ip())
 
         try:
@@ -314,7 +314,7 @@ class AuthManager(GObject.Object):
         return encoded
 
     def retrieve_remote_cert(self, ident, hostname, ip, port):
-        logging.debug("Starting a new RequestLoop for '%s' (%s:%d)" % (hostname, ip, port))
+        logging.debug("Auth: Starting a new RequestLoop for '%s' (%s:%d)" % (hostname, ip, port))
         with self.requests_lock:
             req = RequestLoop(ip, port)
 
@@ -325,7 +325,7 @@ class AuthManager(GObject.Object):
         with self.requests_lock:
             del self.requests[ident]
 
-        logging.debug("RequestLoop complete for '%s' (%s:%d): got cert? %s" % (hostname, ip, port, "Yes" if data else "No"))
+        logging.debug("Auth: RequestLoop complete for '%s' (%s:%d): got cert? %s" % (hostname, ip, port, "Yes" if data else "No"))
 
         if data == None:
             return False
@@ -355,7 +355,7 @@ class RequestLoop():
 
     def request(self):
         while not self.timer.is_set():
-            logging.debug("Requesting cert from remote (%s:%d)" % (self.ip, self.port))
+            logging.debug("Auth: Requesting cert from remote (%s:%d)" % (self.ip, self.port))
             try_count = 0
 
             while try_count < 3:
@@ -375,11 +375,11 @@ class RequestLoop():
                     logging.critical("Something wrong with cert request (%s:%s): " % (self.ip, self.port, e))
                     break
 
-            logging.debug("Cert request failed from remote (%s:%d), waiting 30s to try again. (Is their udp port blocked?"
+            logging.debug("Auth: Cert request failed from remote (%s:%d), waiting 30s to try again. (Is their udp port blocked?"
                               % (self.ip, self.port))
             self.timer.wait(30)
 
-        logging.debug("RequestLoop canceled (event set) for (%s:%s)" % (self.ip, self.port))
+        logging.debug("Auth: RequestLoop canceled (event set) for (%s:%s)" % (self.ip, self.port))
         return None
 
     def cancel(self):
@@ -387,7 +387,7 @@ class RequestLoop():
 
 class CertServer():
     def __init__(self):
-        logging.debug("Starting local cert server")
+        logging.debug("Auth: Starting local cert server")
         self.exit = False
 
         self.thread = threading.Thread(target=self.serve_cert_thread)

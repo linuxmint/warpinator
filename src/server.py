@@ -109,10 +109,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         try:
             remote = self.remote_machines[ident]
         except KeyError:
-            logging.debug("<< Discovery: unknown service ident (%s) reported as gone by zc." % ident)
+            logging.debug(">>> Discovery: unknown service ident (%s) reported as gone by zc." % ident)
             return
 
-        logging.debug("<< Discovery: service %s (%s:%d) has disappeared."
+        logging.debug(">>> Discovery: service %s (%s:%d) has disappeared."
                           % (remote.display_hostname, remote.ip_address, remote.port))
 
         remote.has_zc_presence = False
@@ -127,7 +127,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             try:
                 remote_hostname = info.properties[b"hostname"].decode()
             except KeyError:
-                logging.critical("No hostname in service info properties.  Is this an old version?")
+                logging.critical(">>> Discovery: no hostname in service info properties.  Is this an old version?")
                 return
 
             remote_ip = socket.inet_ntoa(info.address)
@@ -135,7 +135,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             try:
                 # Check if this is a flush registration to reset the remote servier's presence.
                 if info.properties[b"type"].decode() == "flush":
-                    logging.debug(">> Discovery: received flush service info (ignoring): %s (%s:%d)"
+                    logging.debug(">>> Discovery: received flush service info (ignoring): %s (%s:%d)"
                                       % (remote_hostname, remote_ip, info.port))
                     return
             except KeyError:
@@ -151,7 +151,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 got_cert = auth.get_singleton().retrieve_remote_cert(ident, remote_hostname, remote_ip, info.port)
 
                 if not got_cert:
-                    logging.critical("<< Discovery: unable to authenticate with %s (%s:%d)"
+                    logging.critical(">>> Discovery: unable to authenticate with %s (%s:%d)"
                                          % (remote_hostname, remote_ip, info.port))
                     return False
                 return True
@@ -159,7 +159,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             try:
                 machine = self.remote_machines[ident]
                 machine.has_zc_presence = True
-                logging.debug(">> Discovery: existing remote: %s (%s:%d)"
+                logging.debug(">>> Discovery: existing remote: %s (%s:%d)"
                                   % (machine.display_hostname, remote_ip, info.port))
 
                 # If the remote truly is the same one (our service info just dropped out
@@ -209,7 +209,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     if not found:
                         break
 
-                logging.debug(">> Discovery: new remote: %s (%s:%d)"
+                logging.debug(">>> Discovery: new remote: %s (%s:%d)"
                                   % (display_hostname, remote_ip, info.port))
 
                 machine = remote.RemoteMachine(ident,
@@ -228,7 +228,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             machine.start_remote_thread()
 
     def run(self):
-        logging.debug("Starting server")
+        logging.debug("Server: starting server")
 
         util.initialize_rpc_threadpool()
 
@@ -253,32 +253,32 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             self.server_thread_keepalive.wait(10)
         # **** STOPPING ****
 
-        logging.debug("Stopping server")
+        logging.debug("Server: stopping server")
 
         remote_machines = list(self.remote_machines.values())
         for remote in remote_machines:
             self.idle_emit("remote-machine-removed", remote)
-            logging.debug("-- Closing connection to remote machine %s (%s:%d)"
+            logging.debug("Server: Closing connection to remote machine %s (%s:%d)"
                               % (remote.display_hostname, remote.ip_address, remote.port))
 
             remote.shutdown()
 
         remote_machines = None
 
-        logging.debug("Stopping authentication server")
+        logging.debug("Server: stopping authentication server")
         auth.get_singleton().shutdown()
 
-        logging.debug("Stopping discovery and advertisement")
+        logging.debug("Server: stopping discovery and advertisement")
         self.zeroconf.close()
 
-        logging.debug("Terminating server")
+        logging.debug("Server: terminating server")
         self.server.stop(grace=2).wait()
 
         self.idle_emit("shutdown-complete")
         self.server = None
 
         util.global_rpc_threadpool.shutdown(wait=True)
-        logging.debug("Server stopped")
+        logging.debug("Server: server stopped")
 
     def shutdown(self):
         self.server_thread_keepalive.set()
@@ -302,18 +302,17 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.emit(signal, *callback_data)
 
     def Ping(self, request, context):
-        logging.debug("Ping from '%s'" % request.readable_name)
+        logging.debug("Server Ping: from %s" % request.readable_name)
 
         try:
             remote = self.remote_machines[request.id]
         except KeyError as e:
-            logging.debug("Received ping from unknown remote (or not fully online yet) '%s': %s"
-                              % (request.readable_name, e))
+            logging.debug("Server Ping: ping is from unknown remote (or not fully online yet)")
 
         return void
 
     def CheckDuplexConnection(self, request, context):
-        logging.debug("CheckDuplexConnection from '%s'" % request.readable_name)
+        logging.debug("Server RPC: CheckDuplexConnection from '%s'" % request.readable_name)
         response = False
 
         try:
@@ -325,13 +324,13 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         return warp_pb2.HaveDuplex(response=response)
 
     def GetRemoteMachineInfo(self, request, context):
-        logging.debug("GetRemoteMachineInfo from '%s'" % request.readable_name)
+        logging.debug("Server RPC: GetRemoteMachineInfo from '%s'" % request.readable_name)
 
         return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name(),
                                           user_name=GLib.get_user_name())
 
     def GetRemoteMachineAvatar(self, request, context):
-        logging.debug("GetRemoteMachineAvatar from '%s'" % request.readable_name)
+        logging.debug("Server RPC: GetRemoteMachineAvatar from '%s'" % request.readable_name)
 
         path = os.path.join(GLib.get_home_dir(), ".face")
         if os.path.exists(path):
@@ -340,7 +339,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             context.abort(code=grpc.StatusCode.NOT_FOUND, details='.face file not found!')
 
     def ProcessTransferOpRequest(self, request, context):
-        logging.debug("ProcessTransferOpRequest from '%s'" % request.info.readable_name)
+        logging.debug("Server RPC: ProcessTransferOpRequest from '%s'" % request.info.readable_name)
 
         remote_machine = self.remote_machines[request.info.ident]
 
@@ -376,15 +375,13 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         return void
 
     def CancelTransferOpRequest(self, request, context):### good
-        logging.debug("CancelTransferOpRequest from '%s'" % request.readable_name)
+        logging.debug("Server RPC: CancelTransferOpRequest from '%s'" % request.readable_name)
 
         try:
             op = self.remote_machines[request.ident].lookup_op(request.timestamp)
         except KeyError as e:
             logging.warning("Received cancel transfer op request for unknown op: %s" % e)
             return
-
-        logging.debug("received cancel request at server")
 
         # If we receive this call, this means the op was cancelled remotely.  So,
         # our op with TO_REMOTE_MACHINE (we initiated it) was cancelled by the recipient.
@@ -397,20 +394,20 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
     # receiver server responders
     def StartTransfer(self, request, context):
-        logging.debug("StartTransfer from '%s'" % request.readable_name)
+        logging.debug("Server RPC: StartTransfer from '%s'" % request.readable_name)
 
         start_time = GLib.get_monotonic_time()
 
         try:
             remote = self.remote_machines[request.ident]
         except KeyError as e:
-            logging.warning("Received start transfer from unknown remote '%s': %s" % (request.readable_name, e))
+            logging.warning("Server: start transfer is from unknown remote: %s" % e)
             return
 
         try:
             op = self.remote_machines[request.ident].lookup_op(request.timestamp)
         except KeyError as e:
-            logging.warning("Received start transfer for unknown op: %s" % e)
+            logging.warning("Server: start transfer for unknowns op: %s" % e)
             return
 
         cancellable = threading.Event()
@@ -428,9 +425,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 op.stop_transfer()
                 op.set_status(OpStatus.FAILED_UNRECOVERABLE)
             elif op.file_send_cancellable.is_set():
-                logging.debug("File send cancelled")
+                logging.debug("Server: file send cancelled")
             else:
-                logging.debug("Transfer of %s files (%s) finished in %s" % \
+                logging.debug("Server: transfer of %s files (%s) finished in %s" % \
                     (op.total_count, GLib.format_size(op.total_size),\
                      util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
 
@@ -438,12 +435,12 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         return sender.read_chunks()
 
     def StopTransfer(self, request, context):
-        logging.debug("StopTransfer from '%s'" % request.info.readable_name)
+        logging.debug("Server RPC: StopTransfer from '%s'" % request.info.readable_name)
 
         try:
             op = self.remote_machines[request.info.ident].lookup_op(request.info.timestamp)
         except KeyError as e:
-            logging.warning("Received stop transfer for unknown op: %s" % e)
+            logging.warning("Server: stop transfer was for unknown op: %s" % e)
             return
 
         # If we receive this call, this means the op was stopped remotely.  So,
@@ -454,7 +451,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
             op.file_send_cancellable.set()
-            logging.debug("Sender received stop transfer by receiver: %s" % op.error_msg)
+            logging.debug("Server: sender received stop transfer by receiver: %s" % op.error_msg)
             if op.error_msg == "":
                 op.set_status(OpStatus.STOPPED_BY_RECEIVER)
             else:
@@ -466,7 +463,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 # we may not have this yet if the transfer fails upon the initial response
                 # (meaning we haven't returned the generator)
                 pass
-            logging.debug("Receiver received stop transfer by sender: %s" % op.error_msg)
+            logging.debug("Server: receiver received stop transfer by sender: %s" % op.error_msg)
             if op.error_msg == "":
                 op.set_status(OpStatus.STOPPED_BY_SENDER)
             else:

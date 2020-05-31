@@ -427,7 +427,7 @@ class OverviewButton(GObject.Object):
         self.button.ident = None
         self.button._delegate = None
 
-        logging.debug("(%s) Disconnecting overview remote button from RemoteMachine" % self.remote_machine.display_hostname)
+        logging.debug("UI: (%s) Disconnecting overview remote button from RemoteMachine" % self.remote_machine.display_hostname)
         GObject.Object.do_dispose(self)
 
 class WarpWindow(GObject.Object):
@@ -739,7 +739,7 @@ class WarpWindow(GObject.Object):
         self.start_discovery_timer()
 
     def start_discovery_timer(self):
-        logging.debug("Start discovery timer (no remotes)")
+        logging.debug("UI: start discovery timer (no remotes)")
 
         if self.discovery_time_out_id > 0:
             GLib.source_remove(self.discovery_time_out_id)
@@ -755,7 +755,7 @@ class WarpWindow(GObject.Object):
         self.view_stack.set_visible_child_name("discovery")
 
     def discovery_timed_out(self):
-        logging.debug("Discovery timed out (no remotes)")
+        logging.debug("UI: Discovery timed out (no remotes)")
 
         self.view_stack.set_visible_child_name("no-remotes")
         self.discovery_time_out_id = 0
@@ -982,6 +982,8 @@ class WarpApplication(Gtk.Application):
             self.window.show()
             return
 
+        logging.debug("UI: Creating window and status icon")
+
         if self.status_icon == None:
             self.update_status_icon_from_preferences()
 
@@ -998,7 +1000,7 @@ class WarpApplication(Gtk.Application):
             file = Gio.File.new_for_path(prefs.get_save_path())
 
             def monitor_change_event(monitor, file, other_file, event_type, data=None):
-                logging.debug("State of save folder changed: %s (%s)", str(event_type), file.get_path())
+                logging.debug("UI: State of save folder changed: %s (%s)", str(event_type), file.get_path())
                 if not util.verify_save_folder():
                     return
 
@@ -1063,7 +1065,7 @@ class WarpApplication(Gtk.Application):
             ok_to_restart();
 
     def do_shutdown(self):
-        logging.info("Beginning shutdown")
+        logging.debug("Beginning shutdown")
 
         self.update_status_icon_online_state(online=False)
         self.window.display_shutdown()
@@ -1084,7 +1086,7 @@ class WarpApplication(Gtk.Application):
 
         self.window.destroy()
 
-        logging.info("Shutdown complete")
+        logging.debug("Shutdown complete")
         Gio.Application.do_shutdown(self)
 
     def exit_warp(self):
@@ -1094,8 +1096,8 @@ class WarpApplication(Gtk.Application):
     def setup_kill_as_a_last_resort(self):
         # There are plenty of opportunities for our threads to hang due to network
         # hangs and grpc errors.  Give 10 seconds and then just end it regardless.
+        logging.debug("Setting up kill")
         time.sleep(10)
-
         os.system("kill -9 %s &" % os.getpid())
 
     def setup_window(self):
@@ -1182,13 +1184,13 @@ class WarpApplication(Gtk.Application):
 
         if any_active_ops:
             if self.inhibit_cookie == 0:
-                logging.debug("Inhibiting suspend/logout while transfers are active")
+                logging.debug("UI: Inhibiting suspend/logout while transfers are active")
                 self.inhibit_cookie = self.inhibit(self.window.window,
                                                    Gtk.ApplicationInhibitFlags.LOGOUT | Gtk.ApplicationInhibitFlags.SUSPEND,
                                                    "Warpinator is sending or receiving files, or there is a pending transfer")
         else:
             if self.inhibit_cookie > 0:
-                logging.debug("No more active transfers, uninhibiting suspend/logout")
+                logging.debug("UI: No more active transfers, uninhibiting suspend/logout")
                 self.uninhibit(self.inhibit_cookie)
                 self.inhibit_cookie = 0
 

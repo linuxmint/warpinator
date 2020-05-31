@@ -288,7 +288,7 @@ class OpProgressTracker():
 
             time_left_sec = (self.total_size - self.total_transferred) / bytes_per_sec
 
-            logging.debug("%s time left, %s/s" % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec)))
+            logging.debug("Progress: %s time left, %s/s" % (util.format_time_span(time_left_sec), GLib.format_size(bytes_per_sec)))
 
             progress_report = Progress(progress, time_left_sec, bytes_per_sec)
             self.op.progress_report(progress_report)

@@ -147,7 +147,7 @@ def open_save_folder(filename=None):
 
         app.launch((file,), None)
     except GLib.Error as e:
-        print("Could not open received files location: %s" % e.message)
+        logging.critical("Could not open received files location: %s" % e.message)
 
 def verify_save_folder(transient_for=None):
     return os.access(prefs.get_save_path(), os.R_OK | os.W_OK)
@@ -158,7 +158,7 @@ def have_free_space(size):
     try:
         info = save_file.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, None)
     except GLib.Error:
-        print("Unable to check free space in save location (%s), but proceeding anyhow" % prefs.get_save_path())
+        logging.warning("Unable to check free space in save location (%s), but proceeding anyhow" % prefs.get_save_path())
         return True
 
     free = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE)
@@ -168,14 +168,14 @@ def have_free_space(size):
     if free == 0:
         return True
 
-    logging.debug("Need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
+    logging.debug("need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
 
     return size < free
 
 def files_exist(base_names):
     for name in base_names:
         path = os.path.join(prefs.get_save_path(), name)
-        print("(server side) Checking if file or folder %s already exists." % (path,))
+        logging.debug("(server side) Checking if file or folder %s already exists." % (path,))
         if GLib.file_test(path, GLib.FileTest.EXISTS):
             return True
 
@@ -377,6 +377,7 @@ class NetworkMonitor(GObject.Object):
 
     @_idle
     def emit_state_changed(self):
+        logging.debug("Network state changed: online = %s" % str(self.online))
         self.emit("state-changed", self.online)
 
 class AboutDialog():
