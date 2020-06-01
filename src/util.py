@@ -222,6 +222,10 @@ def same_subnet(other_ip):
         # We're more likely to have failed here than to have found something on a different subnet.
         return True
 
+    if my_net.netmask.exploded == "255.255.255.255":
+        logging.warning("Discovery: netmask is 255.255.255.255 - are you on a vpn?")
+        return False
+
     for addr in list(my_net.hosts()):
         if other_ip == addr.exploded:
             return True
