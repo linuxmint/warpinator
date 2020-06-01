@@ -157,7 +157,7 @@ class TransferStoppedNotification():
             if self.sender:
                 body = (_("Your transfer to %s was cancelled") % self.op.receiver_name)
             else:
-                body = (_("Your incoming transfer from %s was cancelled") % self.op.sender_name)
+                body = (_("An incoming transfer from %s was cancelled") % self.op.sender_name)
 
             notification.set_body(body)
             notification.set_icon(Gio.ThemedIcon(name="dialog-info-symbolic"))
