@@ -132,6 +132,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
             remote_ip = socket.inet_ntoa(info.address)
 
+            if not util.same_subnet(remote_ip):
+                logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ip))
+                return
+
             try:
                 # Check if this is a flush registration to reset the remote servier's presence.
                 if info.properties[b"type"].decode() == "flush":

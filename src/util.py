@@ -1,5 +1,7 @@
 import threading
 import socket
+import netifaces
+import ipaddress
 import gettext
 import math
 import logging
@@ -194,6 +196,37 @@ def get_ip():
             return "0.0.0.0"
         ans = s.getsockname()[0]
         return ans
+
+def get_my_network():
+    for name in netifaces.interfaces():
+        net = netifaces.ifaddresses(name)
+
+        try:
+            addresses = net[netifaces.AF_INET]
+        except KeyError:
+            continue
+        for address in addresses:
+            try:
+                if address["addr"] == get_ip():
+                    iface = ipaddress.IPv4Interface("%s/%s" % (address["addr"], address["netmask"]))
+                    return iface.network
+            except:
+                pass
+
+    return None
+
+def same_subnet(other_ip):
+    my_net = get_my_network()
+
+    if my_net == None:
+        # We're more likely to have failed here than to have found something on a different subnet.
+        return True
+
+    for addr in list(my_net.hosts()):
+        if other_ip == addr.exploded:
+            return True
+
+    return False
 
 def get_hostname():
     return GLib.get_host_name()
