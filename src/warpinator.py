@@ -960,6 +960,7 @@ class WarpApplication(Gtk.Application):
         self.inhibit_count = 0
         self.inhibit_cookie = 0
 
+        self.netmon = None
         self.server = None
         self.current_port = prefs.get_port() # This is only so we can check if the port changed when setting preferences
 
@@ -1070,7 +1071,8 @@ class WarpApplication(Gtk.Application):
         self.update_status_icon_online_state(online=False)
         self.window.display_shutdown()
 
-        self.netmon.stop()
+        if self.netmon:
+            self.netmon.stop()
 
         if self.server:
             self.setup_kill_as_a_last_resort()

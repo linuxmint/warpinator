@@ -29,7 +29,13 @@ RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
 if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
-    default = Gio.File.new_for_path(GLib.get_home_dir())
+    default = Gio.File.new_for_path(os.path.join(GLib.get_home_dir(), "Warpinator"))
+
+    try:
+        os.makedirs(default.get_path(), exist_ok=True)
+    except:
+        default = Gio.File.new_for_path(GLib.get_home_dir())
+
     prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
 
 def get_port():
