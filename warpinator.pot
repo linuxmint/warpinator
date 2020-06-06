@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-12 11:31+0100\n"
+"POT-Creation-Date: 2020-06-06 14:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: resources/main-window.ui:33 src/util.py:367 data/warpinator.desktop.in:5
+#: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
 msgid "Send and Receive Files across the Network"
 msgstr ""
 
@@ -38,11 +38,11 @@ msgstr ""
 msgid "Send files"
 msgstr ""
 
-#: resources/main-window.ui:468 src/prefs.py:107
+#: resources/main-window.ui:468 src/prefs.py:125
 msgid "File Transfers"
 msgstr ""
 
-#: resources/main-window.ui:489 src/warpinator.py:821
+#: resources/main-window.ui:489 src/warpinator.py:824
 msgid "Online"
 msgstr ""
 
@@ -202,7 +202,7 @@ msgstr ""
 msgid "The transfer from %s has finished successfully"
 msgstr ""
 
-#: src/notifications.py:121 src/warpinator.py:162 src/warpinator.py:165
+#: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
 msgstr ""
 
@@ -216,13 +216,27 @@ msgstr ""
 msgid "Something went wrong with the transfer from %s"
 msgstr ""
 
-#: src/ops.py:45
+#: src/notifications.py:155 src/warpinator.py:158
+msgid "Transfer cancelled"
+msgstr ""
+
+#: src/notifications.py:158
+#, python-format
+msgid "Your transfer to %s was cancelled"
+msgstr ""
+
+#: src/notifications.py:160
+#, python-format
+msgid "An incoming transfer from %s was cancelled"
+msgstr ""
+
+#: src/ops.py:47
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr ""
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:140
+#: src/ops.py:146
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
@@ -230,263 +244,259 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:222
+#: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/prefs.py:82
+#: src/prefs.py:100
 msgid "Warpinator Preferences"
 msgstr ""
 
-#: src/prefs.py:92
+#: src/prefs.py:110
 msgid "Desktop"
 msgstr ""
 
-#: src/prefs.py:94
+#: src/prefs.py:112
 msgid "Show an icon in the notification area"
 msgstr ""
 
-#: src/prefs.py:98
+#: src/prefs.py:116
 msgid "Start with main window open"
 msgstr ""
 
-#: src/prefs.py:103
+#: src/prefs.py:121
 msgid "Start automatically"
 msgstr ""
 
-#: src/prefs.py:109
+#: src/prefs.py:127
 msgid "Location for received files"
 msgstr ""
 
-#: src/prefs.py:114
+#: src/prefs.py:132
 msgid "Require approval before accepting files"
 msgstr ""
 
-#: src/prefs.py:118
+#: src/prefs.py:136
 msgid "Require approval when files would be overwritten"
 msgstr ""
 
-#: src/prefs.py:122
+#: src/prefs.py:140
 msgid "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 
-#: src/prefs.py:126
+#: src/prefs.py:144
 msgid "Network"
 msgstr ""
 
-#: src/prefs.py:131
+#: src/prefs.py:149
 msgid "Group Code"
 msgstr ""
 
-#: src/prefs.py:132
+#: src/prefs.py:150
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 
-#: src/prefs.py:138
+#: src/prefs.py:156
 msgid "Incoming port for transfers"
 msgstr ""
 
-#: src/prefs.py:149
+#: src/prefs.py:167
 msgid "Update firewall rules"
 msgstr ""
 
-#: src/prefs.py:161
+#: src/prefs.py:179
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
 
-#: src/prefs.py:193
+#: src/prefs.py:211
 msgid "Change port"
 msgstr ""
 
-#: src/prefs.py:238
+#: src/prefs.py:256
 msgid "Set code"
 msgstr ""
 
-#: src/prefs.py:253
+#: src/prefs.py:271
 msgid "A group code is required."
 msgstr ""
 
-#: src/prefs.py:259
+#: src/prefs.py:277
 msgid "The group code should be longer if possible."
 msgstr ""
 
-#: src/remote.py:367 src/remote.py:371
+#: src/remote.py:484 src/remote.py:488
 msgid "Connection has been lost"
 msgstr ""
 
-#: src/server.py:340
+#: src/server.py:458
 msgid "An error occurred on the remote machine"
 msgstr ""
 
-#: src/util.py:63
+#: src/util.py:80
 msgid "Select file(s) to send"
 msgstr ""
 
-#: src/util.py:67
+#: src/util.py:84
 msgid "Cancel"
 msgstr ""
 
-#: src/util.py:68
+#: src/util.py:85
 msgid "Send"
 msgstr ""
 
-#: src/util.py:225
+#: src/util.py:271
 msgid "A few seconds remaining"
 msgstr ""
 
-#: src/util.py:228
+#: src/util.py:274
 #, python-format
 msgid "%d seconds remaining"
 msgstr ""
 
-#: src/util.py:232 src/util.py:240
+#: src/util.py:278 src/util.py:286
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:239
+#: src/util.py:285
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:244
+#: src/util.py:290
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:363 src/warpinator.py:504
+#: src/util.py:415 src/warpinator.py:506
 msgid "About"
 msgstr ""
 
-#: src/warpinator.py:135
+#: src/warpinator.py:137
 msgid "Paused"
 msgstr ""
 
-#: src/warpinator.py:138
+#: src/warpinator.py:140
 msgid "Waiting for approval"
 msgstr ""
 
-#: src/warpinator.py:140
+#: src/warpinator.py:142
 msgid "Waiting for your approval"
 msgstr ""
 
-#: src/warpinator.py:143
+#: src/warpinator.py:145
 msgid "Files may be overwritten"
 msgstr ""
 
-#: src/warpinator.py:146
+#: src/warpinator.py:148
 msgid "Not enough disk space"
 msgstr ""
 
-#: src/warpinator.py:149
+#: src/warpinator.py:151
 msgid "Request cancelled"
 msgstr ""
 
-#: src/warpinator.py:151 src/warpinator.py:153
+#: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
 msgstr ""
 
-#: src/warpinator.py:156
-msgid "Transfer cancelled"
-msgstr ""
-
-#: src/warpinator.py:158 src/warpinator.py:160
+#: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr ""
 
-#: src/warpinator.py:167
+#: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
 msgstr ""
 
-#: src/warpinator.py:169
+#: src/warpinator.py:171
 msgid "Some files not found"
 msgstr ""
 
-#: src/warpinator.py:171
+#: src/warpinator.py:173
 msgid "Completed"
 msgstr ""
 
-#: src/warpinator.py:329 src/warpinator.py:849
+#: src/warpinator.py:331 src/warpinator.py:852
 msgid "Connecting"
 msgstr ""
 
-#: src/warpinator.py:331
+#: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
 msgstr ""
 
-#: src/warpinator.py:341
+#: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
 msgstr ""
 
-#: src/warpinator.py:346
+#: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
 msgstr ""
 
-#: src/warpinator.py:351
+#: src/warpinator.py:353
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr ""
 
-#: src/warpinator.py:380
+#: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/warpinator.py:482 src/warpinator.py:1262
+#: src/warpinator.py:484 src/warpinator.py:1286
 msgid "Browse..."
 msgstr ""
 
-#: src/warpinator.py:496 src/warpinator.py:1213
+#: src/warpinator.py:498 src/warpinator.py:1237
 msgid "Open save folder"
 msgstr ""
 
-#: src/warpinator.py:500
+#: src/warpinator.py:502
 msgid "Preferences"
 msgstr ""
 
-#: src/warpinator.py:508 src/warpinator.py:1216
+#: src/warpinator.py:510 src/warpinator.py:1240
 msgid "Quit"
 msgstr ""
 
-#: src/warpinator.py:602
+#: src/warpinator.py:604
 msgid "You don't appear to be connected to a network."
 msgstr ""
 
-#: src/warpinator.py:604
+#: src/warpinator.py:606
 msgid "Startup was unsuccessful, please check your logs."
 msgstr ""
 
-#: src/warpinator.py:828
+#: src/warpinator.py:831
 msgid "Offline"
 msgstr ""
 
-#: src/warpinator.py:835
+#: src/warpinator.py:838
 msgid "Unable to connect"
 msgstr ""
 
-#: src/warpinator.py:842
+#: src/warpinator.py:845
 msgid "Waiting for two-way connection"
 msgstr ""
 
-#: src/warpinator.py:1248
+#: src/warpinator.py:1272
 msgid "Send to favorites"
 msgstr ""
