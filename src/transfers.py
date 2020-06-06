@@ -188,7 +188,7 @@ def add_file(op, basename, uri, base_uri, info):
     else:
         relative_path = basename
 
-    file = File(uri, basename, relative_path, size, util.gfiletype_to_int_enum(file_type), relative_symlink_path)
+    file = File(uri, basename, relative_path, size, file_type, relative_symlink_path)
 
     op.resolved_files.append(file)
     op.total_size += size

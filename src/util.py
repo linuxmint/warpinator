@@ -110,14 +110,6 @@ def _idle(func):
         GLib.idle_add(func, *args, **kwargs)
     return wrapper
 
-def gfiletype_to_int_enum(gfiletype):
-    if gfiletype == FileType.DIRECTORY:
-        return FileType.DIRECTORY
-    elif gfiletype == FileType.SYMBOLIC_LINK:
-        return FileType.SYMBOLIC_LINK
-    else:
-        return FileType.REGULAR
-
 def open_save_folder(filename=None):
     bus = Gio.Application.get_default().get_dbus_connection()
 
