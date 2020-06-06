@@ -1,3 +1,27 @@
+warpinator (1.0.5) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * server: Remove zeroconf ttl adjustments, they're not supported in python zeroconf 19.1 (used in mint 19).
+  * util.py: Use native enums for file types.
+  * Connection reliability improvements and some other refactoring.
+  * remote: Limit duplex phase to 10 attempts, before waiting 30s to try a new connection.
+  * Use a global thread pool for all remotes.  Allow adjustment of server and remote thread pools for debugging purposes.
+  * notifications: Add a cancelled notification, in the case of the remote computer cancelling a transfer (in either direction).
+  * Improve logging
+  * remote: Track the connection loop by its thread's life, rather than our own accounting, it's more reliable.
+  * warpinator.py: catch any exception for disconnecting our shutdown callback - it may either be empty or glib can throw that there's nothing to disconnect (why? This should silently fail).
+  * server: Ignore services that appear to be on a different subnet.
+  * discovery: Check for tunneling netmask.
+  * notifications.py: Improve some wording.
+  * debian/control: add missing dependency.
+  * transfers: Remove some useless code.
+  * prefs.py: Default to a 'Warpinator' folder in the home folder, rather than the home folder itself.
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sat, 06 Jun 2020 14:22:31 +0100
+
 warpinator (1.0.4) ulyana; urgency=medium
 
   [ Michael Webster ]

@@ -1,4 +1,4 @@
-project('warpinator', 'c', version: '1.0.4', meson_version: '>=0.45.0')
+project('warpinator', 'c', version: '1.0.5', meson_version: '>=0.45.0')
 
 i18n = import('i18n')
 gettext_package = meson.project_name()
