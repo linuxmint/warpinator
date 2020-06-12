@@ -877,6 +877,7 @@ class WarpWindow(GObject.Object):
             self.selected_op_items[op.start_time] = op_item
             self.user_op_list.add(op_item.item)
 
+        self.user_clear_ops_button.set_sensitive(len(ops) > 0)
         self.sync_buttons_enabled()
 
     def sync_buttons_enabled(self):
