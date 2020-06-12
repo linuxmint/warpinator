@@ -115,24 +115,26 @@ def open_save_folder(filename=None):
 
     if filename != None:
         abs_path = os.path.join(prefs.get_save_path(), filename)
-        file = Gio.File.new_for_path(abs_path)
 
-        startup_id = str(os.getpid())
+        if os.path.isfile(abs_path):
+            file = Gio.File.new_for_path(abs_path)
 
-        try:
-            bus.call_sync("org.freedesktop.FileManager1",
-                          "/org/freedesktop/FileManager1",
-                          "org.freedesktop.FileManager1",
-                          "ShowItems",
-                          GLib.Variant("(ass)",
-                                       ([file.get_uri()], startup_id)),
-                          None,
-                          Gio.DBusCallFlags.NONE,
-                          1000,
-                          None)
-            return
-        except GLib.Error as e:
-            pass
+            startup_id = str(os.getpid())
+
+            try:
+                bus.call_sync("org.freedesktop.FileManager1",
+                              "/org/freedesktop/FileManager1",
+                              "org.freedesktop.FileManager1",
+                              "ShowItems",
+                              GLib.Variant("(ass)",
+                                           ([file.get_uri()], startup_id)),
+                              None,
+                              Gio.DBusCallFlags.NONE,
+                              1000,
+                              None)
+                return
+            except GLib.Error as e:
+                pass
 
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
 
