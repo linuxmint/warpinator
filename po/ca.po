@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-04-17 15:54+0100\n"
-"PO-Revision-Date: 2020-05-11 10:20+0000\n"
-"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
+"POT-Creation-Date: 2020-06-06 14:20+0100\n"
+"PO-Revision-Date: 2020-06-07 09:30+0000\n"
+"Last-Translator: Isidro Pisa <isidro@utils.info>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
-"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+"X-Launchpad-Export-Date: 2020-06-24 10:13+0000\n"
+"X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
 
-#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+#: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
 msgid "Send and Receive Files across the Network"
 msgstr "Envia i rep arxius a través de la xarxa"
 
@@ -38,11 +38,11 @@ msgstr "Esborra operacions inactives i completades"
 msgid "Send files"
 msgstr "Envia arxius"
 
-#: resources/main-window.ui:468 src/prefs.py:105
+#: resources/main-window.ui:468 src/prefs.py:125
 msgid "File Transfers"
 msgstr "Transferències de fitxers"
 
-#: resources/main-window.ui:489 src/warpinator.py:813
+#: resources/main-window.ui:489 src/warpinator.py:824
 msgid "Online"
 msgstr "En línia"
 
@@ -210,7 +210,7 @@ msgstr "La transferència a %s ha finalitzat correctament"
 msgid "The transfer from %s has finished successfully"
 msgstr "La transferència des de %s ha finalitzat correctament"
 
-#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+#: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
 msgstr "Transfèrencia fallida"
 
@@ -224,13 +224,27 @@ msgstr "Hi ha hagut un error en la transferència a %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "Hi ha hagut un error en la transferència des de %s"
 
-#: src/ops.py:45
+#: src/notifications.py:155 src/warpinator.py:158
+msgid "Transfer cancelled"
+msgstr "Transferència cancel·lada"
+
+#: src/notifications.py:158
+#, python-format
+msgid "Your transfer to %s was cancelled"
+msgstr "La transferència per a %s s'ha cancel·lat"
+
+#: src/notifications.py:160
+#, python-format
+msgid "An incoming transfer from %s was cancelled"
+msgstr "S'ha cancel·lat una transferència provinent de %s"
+
+#: src/ops.py:47
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:140
+#: src/ops.py:146
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
@@ -238,73 +252,73 @@ msgstr[0] "%d file-do-not-translate"
 msgstr[1] "%d arxius"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:222
+#: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d arxiu"
 msgstr[1] "%d arxius"
 
-#: src/prefs.py:80
+#: src/prefs.py:100
 msgid "Warpinator Preferences"
 msgstr "Preferències de Warpinator"
 
-#: src/prefs.py:90
+#: src/prefs.py:110
 msgid "Desktop"
 msgstr "Escriptori"
 
-#: src/prefs.py:92
+#: src/prefs.py:112
 msgid "Show an icon in the notification area"
 msgstr "Mostra una icona a l'àrea de notificació"
 
-#: src/prefs.py:96
+#: src/prefs.py:116
 msgid "Start with main window open"
 msgstr "Inicia amb la finestra principal oberta"
 
-#: src/prefs.py:101
+#: src/prefs.py:121
 msgid "Start automatically"
 msgstr "Inicia automàticament"
 
-#: src/prefs.py:107
+#: src/prefs.py:127
 msgid "Location for received files"
 msgstr "Ubicació dels arxius rebuts"
 
-#: src/prefs.py:112
+#: src/prefs.py:132
 msgid "Require approval before accepting files"
 msgstr "Requereix aprovació per acceptar arxius"
 
-#: src/prefs.py:116
+#: src/prefs.py:136
 msgid "Require approval when files would be overwritten"
 msgstr "Requereix aprovació per sobreescriure arxius"
 
-#: src/prefs.py:120
+#: src/prefs.py:140
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Mostrar una notificació quan algú us envia (o intenta enviar-vos) arxius"
 
-#: src/prefs.py:124
+#: src/prefs.py:144
 msgid "Network"
 msgstr "Xarxa"
 
-#: src/prefs.py:129
+#: src/prefs.py:149
 msgid "Group Code"
 msgstr "Codi de grup"
 
-#: src/prefs.py:130
+#: src/prefs.py:150
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "No podeu comunicar-vos amb equips que no facin servir el mateix codi."
 
-#: src/prefs.py:136
+#: src/prefs.py:156
 msgid "Incoming port for transfers"
 msgstr "Port entrant per a transferències"
 
-#: src/prefs.py:146
-msgid "Sample firewall rule"
-msgstr "Regla de tallafocs de mostra"
+#: src/prefs.py:167
+msgid "Update firewall rules"
+msgstr "Actualitza les regles del tallafocs"
 
-#: src/prefs.py:158
+#: src/prefs.py:179
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -313,185 +327,190 @@ msgstr ""
 "mateix port en tots els equips pot facilitar la creació d'excepcions de "
 "tallafocs si cal."
 
-#: src/prefs.py:187
+#: src/prefs.py:211
 msgid "Change port"
 msgstr "Canvia el port"
 
-#: src/prefs.py:232
+#: src/prefs.py:256
 msgid "Set code"
 msgstr "Defineix el codi"
 
-#: src/prefs.py:247
+#: src/prefs.py:271
 msgid "A group code is required."
 msgstr "Cal un codi de grup"
 
-#: src/prefs.py:253
+#: src/prefs.py:277
 msgid "The group code should be longer if possible."
 msgstr "El codi de grup hauria de ser més llarg si és possible."
 
-#: src/remote.py:349 src/remote.py:353
+#: src/remote.py:484 src/remote.py:488
 msgid "Connection has been lost"
 msgstr "S'ha perdut la connexió"
 
-#: src/server.py:284
+#: src/server.py:458
 msgid "An error occurred on the remote machine"
 msgstr "S'ha produït un error a la màquina remota"
 
-#: src/util.py:62
+#: src/util.py:80
 msgid "Select file(s) to send"
 msgstr "Seleccioneu arxiu(s) per enviar"
 
-#: src/util.py:66
+#: src/util.py:84
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/util.py:67
+#: src/util.py:85
 msgid "Send"
 msgstr "Envia"
 
-#: src/util.py:204
+#: src/util.py:271
 msgid "A few seconds remaining"
 msgstr "Queden pocs segons"
 
-#: src/util.py:207
+#: src/util.py:274
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d segonds restants"
 
-#: src/util.py:211 src/util.py:219
+#: src/util.py:278 src/util.py:286
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minut"
 msgstr[1] "%d minuts"
 
-#: src/util.py:218
+#: src/util.py:285
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
 msgstr[1] "%d hores"
 
-#: src/util.py:223
+#: src/util.py:290
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "aproximadament %d hora"
 msgstr[1] "aproximadament %d hores"
 
-#: src/util.py:337 src/warpinator.py:498
+#: src/util.py:415 src/warpinator.py:506
 msgid "About"
 msgstr "Quant a"
 
-#: src/warpinator.py:134
+#: src/warpinator.py:137
 msgid "Paused"
 msgstr "Pausat"
 
-#: src/warpinator.py:137
+#: src/warpinator.py:140
 msgid "Waiting for approval"
 msgstr "Esperant aprovació"
 
-#: src/warpinator.py:139
+#: src/warpinator.py:142
 msgid "Waiting for your approval"
 msgstr "Esperant la vostra aprovació"
 
-#: src/warpinator.py:142
+#: src/warpinator.py:145
 msgid "Files may be overwritten"
 msgstr "Els arxius poden ser sobreescrits"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Not enough disk space"
 msgstr "No hi ha prou espai en el disc dur"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Request cancelled"
 msgstr "Sol·licitud cancel·lada"
 
-#: src/warpinator.py:150 src/warpinator.py:152
+#: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "Sol·licitud cancel·lada por %s"
 
-#: src/warpinator.py:155
-msgid "Transfer cancelled"
-msgstr "Transferència cancel·lada"
-
-#: src/warpinator.py:157 src/warpinator.py:159
+#: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Transferència cancel·lada por %s"
 
-#: src/warpinator.py:166
+#: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
 msgstr "Archivo '%s' no trobat"
 
-#: src/warpinator.py:168
+#: src/warpinator.py:171
 msgid "Some files not found"
 msgstr "Alguns arxius no es troben"
 
-#: src/warpinator.py:170
+#: src/warpinator.py:173
 msgid "Completed"
 msgstr "Completat"
 
-#: src/warpinator.py:328 src/warpinator.py:834
+#: src/warpinator.py:331 src/warpinator.py:852
 msgid "Connecting"
 msgstr "Connectant"
 
-#: src/warpinator.py:330
+#: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
 msgstr "Connectant a %s"
 
-#: src/warpinator.py:340
+#: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
 msgstr "%s no és en línia"
 
-#: src/warpinator.py:345
+#: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "No es pot connectar a %s"
 
-#: src/warpinator.py:374
+#: src/warpinator.py:353
+#, python-format
+msgid "Waiting for %s to complete the connection."
+msgstr "Esperant que %s completi la connexió."
+
+#: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d transferència entrant nova"
 msgstr[1] "%d transferències entrants noves"
 
-#: src/warpinator.py:476 src/warpinator.py:1232
+#: src/warpinator.py:484 src/warpinator.py:1286
 msgid "Browse..."
 msgstr "Explora..."
 
-#: src/warpinator.py:490 src/warpinator.py:1183
+#: src/warpinator.py:498 src/warpinator.py:1237
 msgid "Open save folder"
 msgstr "Obre la carpeta de desament"
 
-#: src/warpinator.py:494
+#: src/warpinator.py:502
 msgid "Preferences"
 msgstr "Preferències"
 
-#: src/warpinator.py:502 src/warpinator.py:1186
+#: src/warpinator.py:510 src/warpinator.py:1240
 msgid "Quit"
 msgstr "Surt"
 
-#: src/warpinator.py:594
+#: src/warpinator.py:604
 msgid "You don't appear to be connected to a network."
 msgstr "Sembla que no esteu connectat a una xarxa."
 
-#: src/warpinator.py:596
+#: src/warpinator.py:606
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "L'inici ha fallat, comproveu els registres."
 
-#: src/warpinator.py:820
+#: src/warpinator.py:831
 msgid "Offline"
 msgstr "Fora de línia"
 
-#: src/warpinator.py:827
+#: src/warpinator.py:838
 msgid "Unable to connect"
 msgstr "No s'ha pogut connectar"
 
-#: src/warpinator.py:1218
+#: src/warpinator.py:845
+msgid "Waiting for two-way connection"
+msgstr "Esperant la connexió bidireccional"
+
+#: src/warpinator.py:1272
 msgid "Send to favorites"
 msgstr "Envia a favorits"

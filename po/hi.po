@@ -1,4 +1,4 @@
-# Spanish translation for linuxmint
+# Hindi translation for linuxmint
 # Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
 # This file is distributed under the same license as the linuxmint package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-06-06 14:20+0100\n"
-"PO-Revision-Date: 2020-06-07 09:28+0000\n"
-"Last-Translator: Isidro Pisa <isidro@utils.info>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2020-06-22 05:18+0000\n"
+"Last-Translator: Panwar <Unknown>\n"
+"Language-Team: Hindi <hi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,48 +20,46 @@ msgstr ""
 
 #: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
 msgid "Send and Receive Files across the Network"
-msgstr "Enviar y recibir archivos a través de la red"
+msgstr "नेटवर्क द्वारा फाइलों का आदान-प्रदान करें"
 
 #: resources/main-window.ui:193
 msgid "No matching results"
-msgstr "No hay coincidencias"
+msgstr "कोई परिणाम मेल नहीं खाता"
 
 #: resources/main-window.ui:349
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
-"Hacer que esta máquina remota sea una de las favoritas en la vista principal"
+msgstr "मुख्य दृश्य में इस दूरस्थ मशीन को पसंदीदा में जोड़ें"
 
 #: resources/main-window.ui:423
 msgid "Clear inactive and completed operations"
-msgstr "Borrar operaciones inactivas y completadas"
+msgstr "निष्क्रिय व पूर्ण हो चुके कार्य हटाएँ"
 
 #: resources/main-window.ui:442
 msgid "Send files"
-msgstr "Enviar archivos"
+msgstr "फ़ाइलें भेजें"
 
 #: resources/main-window.ui:468 src/prefs.py:125
 msgid "File Transfers"
-msgstr "Transferencias de archivos"
+msgstr "फ़ाइल हस्तांतरण"
 
 #: resources/main-window.ui:489 src/warpinator.py:824
 msgid "Online"
-msgstr "En línea"
+msgstr "ऑनलाइन"
 
 #: resources/main-window.ui:609
 msgid "No other computers found..."
-msgstr "No se han encontrado otros equipos..."
+msgstr "अन्य कंप्यूटर नहीं मिले..."
 
 #: resources/main-window.ui:673
 msgid "Make sure your network connection is active."
-msgstr "Compruebe que su conexión de red esté activa."
+msgstr "सुनिश्चित करें कि आपका नेटवर्क कनेक्शन चालू है।"
 
 #: resources/main-window.ui:688
 msgid ""
 "Check your firewall rules.  The port number can be changed.  See preferences "
 "for more details."
 msgstr ""
-"Revise las reglas del cortafuegos. Se puede cambiar el número del puerto. "
-"Consulte las preferencias para obtener más detalles."
+"फ़ायरवॉल नियम जांचें। पोर्ट नंबर बदलें। अधिक जानकरी हेतु सेटिंग्स देखें।"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:704
@@ -69,176 +67,174 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"¿Se está ejecutando Warpinator en otros equipos de la red? Si es así, "
-"asegúrese de que todos estén usando el mismo código de grupo en las "
-"preferencias."
+"क्या इस नेटवर्क के अन्य कम्प्यूटरों पर Warpinator चल रहा है? अगर हाँ, तो "
+"सेटिंग्स में सुनिश्चित करें कि उनका समूह कोड एक ही है।"
 
 #: resources/main-window.ui:722
 msgid "Possible solutions:"
-msgstr "Soluciones posibles:"
+msgstr "संभव उपाय :"
 
 #: resources/main-window.ui:788
 msgid "Initializing, please wait..."
-msgstr "Inicializando, espere..."
+msgstr "चालू हो रहा है, प्रतीक्षा करें..."
 
 #: resources/main-window.ui:846
 msgid "Something went wrong"
-msgstr "Se ha producido un fallo"
+msgstr "कुछ गलत हो गया"
 
 #: resources/main-window.ui:921
 msgid "Invalid save location"
-msgstr "La ubicación para guardar no es válida"
+msgstr "अमान्य संचित स्थान"
 
 #: resources/main-window.ui:958
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
-"La carpeta no es accesible o no existe. Seleccione una nueva ubicación en "
-"las preferencias o asegúrese de que la actual esté montada."
+"यह फ़ोल्डर पहुँच से बाहर है या फिर मौजूद ही नहीं है। कृपया सेटिंग्स द्वारा "
+"नया स्थान चुनें या सुनिश्चित करें कि वर्तमान स्थान माउंट है।"
 
 #: resources/main-window.ui:1014
 msgid "Searching for other computers"
-msgstr "Buscando otros equipos"
+msgstr "अन्य कम्प्यूटरों को खोजा जा रहा है"
 
 #: resources/main-window.ui:1073
 msgid "Shutting down..."
-msgstr "Apagando..."
+msgstr "बंद किया जा रहा है..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Esperando la aprobación"
+msgstr "स्वीकृति की प्रतीक्षा में"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "¡No hay suficiente espacio de disco!"
+msgstr "अपर्याप्त डिस्क स्पेस!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "Calculando"
+msgstr "गणना की जा रही है"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Aceptar esta solicitud"
+msgstr "यह अनुरोध स्वीकारें"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Rechazar esta solicitud"
+msgstr "यह अनुरोध अस्वीकारें"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Cancelar esta solicitud"
+msgstr "यह अनुरोध रद्द करें"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Reiniciar esta operación"
+msgstr "यह कार्य पुनः आरंभ करें"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Pausar esta operación"
+msgstr "यह कार्य रोकें"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Reanudar esta operación"
+msgstr "यह कार्य पुनः आरंभ करें"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Cancelar esta operación"
+msgstr "यह कार्य रद्द करें"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Eliminar esta operación de la lista"
+msgstr "इस कार्य को सूची से हटाएँ"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Abrir la carpeta contenedora"
+msgstr "फ़ाइल युक्त फ़ोल्डर खोलें"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Sobre los números del puerto:"
+msgstr "पोर्ट संख्या हेतु नोट :"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Preferencias de Warpinator"
+msgstr "Warpinator सेटिंग्स"
 
 #: src/notifications.py:20
 msgid "New incoming files"
-msgstr "Archivos entrantes nuevos"
+msgstr "नई आवक फ़ाइलें"
 
 #: src/notifications.py:26
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s quiere enviarle %(file_count)d archivo (%(file_name)s)."
+"%(sender_name)s आपको %(file_count)d फ़ाइल (%(file_name)s) भेजना चाहता है।"
 
 #: src/notifications.py:27
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s quiere enviarle %(file_count)d archivos"
+msgstr "%(sender_name)s आपको %(file_count)d फ़ाइलें भेजना चाहता है"
 
 #: src/notifications.py:37
 msgid "Accept"
-msgstr "Aceptar"
+msgstr "स्वीकारें"
 
 #: src/notifications.py:38
 msgid "Decline"
-msgstr "Rechazar"
+msgstr "अस्वीकारें"
 
 #: src/notifications.py:52
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
-"%(sender_name)s le está enviando %(file_count)d archivo (%(file_name)s)."
+msgstr "%(sender_name)s आपको %(file_count)d फ़ाइल (%(file_name)s) भेज रहा है।"
 
 #: src/notifications.py:53
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s le está enviando %(file_count)d archivos"
+msgstr "%(sender_name)s आपको %(file_count)d फ़ाइलें भेज रहा है"
 
 #: src/notifications.py:88
 msgid "Transfer complete"
-msgstr "Transferencia completa"
+msgstr "हस्तांतरण पूर्ण हुआ"
 
 #: src/notifications.py:90
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "La transferencia a %s ha finalizado correctamente"
+msgstr "%s को हस्तांतरण सफलतापूर्वक पूर्ण हुआ"
 
 #: src/notifications.py:92
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "La transferencia desde %s ha finalizado correctamente"
+msgstr "%s से हस्तांतरण सफल रहा"
 
 #: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
-msgstr "Transferencia fallida"
+msgstr "हस्तांतरण विफल रहा"
 
 #: src/notifications.py:124
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Se ha producido un fallo en la transferencia a %s"
+msgstr "%s को हस्तांतरण विफल रहा"
 
 #: src/notifications.py:126
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Se ha producido un fallo en la transferencia desde %s"
+msgstr "%s से हस्तांतरण विफल रहा"
 
 #: src/notifications.py:155 src/warpinator.py:158
 msgid "Transfer cancelled"
-msgstr "Transferencia cancelada"
+msgstr "हस्तांतरण रद्द किया गया"
 
 #: src/notifications.py:158
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "La transferencia para %s se ha cancelado"
+msgstr "%s को हस्तांतरण रद्द किया गया"
 
 #: src/notifications.py:160
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Se ha cancelado una transferencia proveniente de %s"
+msgstr "%s से आवक हस्तांतरण रद्द किया गया"
 
 #: src/ops.py:47
 #, python-format
@@ -251,268 +247,265 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] "%d file-do-not-translate"
-msgstr[1] "%d archivos"
+msgstr[1] "%d फ़ाइलें"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%d archivo"
-msgstr[1] "%d archivos"
+msgstr[0] "%d फ़ाइल"
+msgstr[1] "%d फ़ाइलें"
 
 #: src/prefs.py:100
 msgid "Warpinator Preferences"
-msgstr "Preferencias de Warpinator"
+msgstr "Warpinator सेटिंग्स"
 
 #: src/prefs.py:110
 msgid "Desktop"
-msgstr "Escritorio"
+msgstr "डेस्कटॉप"
 
 #: src/prefs.py:112
 msgid "Show an icon in the notification area"
-msgstr "Mostrar un icono en el área de notificación"
+msgstr "अधिसूचना क्षेत्र में आइकन दिखाएँ"
 
 #: src/prefs.py:116
 msgid "Start with main window open"
-msgstr "Iniciar con la ventana principal abierta"
+msgstr "आरंभ पर मुख्य विंडो खोलें"
 
 #: src/prefs.py:121
 msgid "Start automatically"
-msgstr "Iniciar automáticamente"
+msgstr "स्वतः आरंभ करें"
 
 #: src/prefs.py:127
 msgid "Location for received files"
-msgstr "Ubicación de los archivos recibidos"
+msgstr "प्राप्त फ़ाइलों हेतु फ़ोल्डर"
 
 #: src/prefs.py:132
 msgid "Require approval before accepting files"
-msgstr "Requerir la aprobación para aceptar archivos"
+msgstr "फ़ाइल स्वीकृति से पूर्व अनुमोदन आवश्यक"
 
 #: src/prefs.py:136
 msgid "Require approval when files would be overwritten"
-msgstr "Requerir la aprobación para sobreescribir archivos"
+msgstr "फ़ाइलें अधिलेखित करने से पूर्व अनुमोदन आवश्यक"
 
 #: src/prefs.py:140
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
-msgstr ""
-"Mostrar una notificación cuando alguien le envía (o intenta enviarle) "
-"archivos"
+msgstr "फ़ाइल निवेदन पर अधिसूचना दिखाएँ"
 
 #: src/prefs.py:144
 msgid "Network"
-msgstr "Red"
+msgstr "नेटवर्क"
 
 #: src/prefs.py:149
 msgid "Group Code"
-msgstr "Código de grupo"
+msgstr "समूह कोड"
 
 #: src/prefs.py:150
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr "No puede comunicarse con equipos que no usen el mismo código."
+msgstr "असमान कोड वाले कंप्यूटर आपस में संवाद नहीं कर सकते हैं।"
 
 #: src/prefs.py:156
 msgid "Incoming port for transfers"
-msgstr "Puerto de entrada para transferencias"
+msgstr "हस्तांतरण हेतु आवक पोर्ट"
 
 #: src/prefs.py:167
 msgid "Update firewall rules"
-msgstr "Actualizar las reglas del cortafuegos"
+msgstr "फ़ायरवॉल नियम अपडेट करें"
 
 #: src/prefs.py:179
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Cualquier número de puerto sirve para la aplicación, pero usar el mismo "
-"puerto en todos los equipos puede facilitar el añadir excepciones al "
-"cortafuegos si es necesario."
+"अनुप्रयोग हेतु कोई भी पोर्ट संख्या उपयोग की जा सकती है, पर सभी कंप्यूटर हेतु "
+"समान कोड होने से फ़ायरवॉल अपवाद जोड़ना सरल हो जाता है।"
 
 #: src/prefs.py:211
 msgid "Change port"
-msgstr "Cambiar el puerto"
+msgstr "पोर्ट बदलें"
 
 #: src/prefs.py:256
 msgid "Set code"
-msgstr "Configurar el código"
+msgstr "कोड सेट करें"
 
 #: src/prefs.py:271
 msgid "A group code is required."
-msgstr "Se requiere un código de grupo."
+msgstr "ग्रुप कोड आवश्यक है।"
 
 #: src/prefs.py:277
 msgid "The group code should be longer if possible."
-msgstr "El código de grupo debería ser más largo si es posible."
+msgstr "संभव हो तो, समूह कोड और बड़ा बनाएँ।"
 
 #: src/remote.py:484 src/remote.py:488
 msgid "Connection has been lost"
-msgstr "Se ha perdido la conexión"
+msgstr "कनेक्शन वियोजित हो गया"
 
 #: src/server.py:458
 msgid "An error occurred on the remote machine"
-msgstr "Se ha producido un error en la máquina remota"
+msgstr "दूरस्थ मशीन पर त्रुटि हुई"
 
 #: src/util.py:80
 msgid "Select file(s) to send"
-msgstr "Seleccione archivos para enviar"
+msgstr "भेजने हेतु फ़ाइल चुनें"
 
 #: src/util.py:84
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "रद्द करें"
 
 #: src/util.py:85
 msgid "Send"
-msgstr "Enviar"
+msgstr "भेजें"
 
 #: src/util.py:271
 msgid "A few seconds remaining"
-msgstr "Quedan pocos segundos"
+msgstr "कुछ सेकंड शेष"
 
 #: src/util.py:274
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d segundos restantes"
+msgstr "%d सेकंड शेष"
 
 #: src/util.py:278 src/util.py:286
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minuto"
-msgstr[1] "%d minutos"
+msgstr[0] "%d मिनट"
+msgstr[1] "%d मिनट"
 
 #: src/util.py:285
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d hora"
-msgstr[1] "%d horas"
+msgstr[0] "%d घंटा"
+msgstr[1] "%d घंटे"
 
 #: src/util.py:290
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "aproximadamente %d hora"
-msgstr[1] "aproximadamente %d horas"
+msgstr[0] "अनुमानतः %d घंटा"
+msgstr[1] "अनुमानतः %d घंटे"
 
 #: src/util.py:415 src/warpinator.py:506
 msgid "About"
-msgstr "Acerca de"
+msgstr "के बारे में"
 
 #: src/warpinator.py:137
 msgid "Paused"
-msgstr "En pausa"
+msgstr "रोका गया"
 
 #: src/warpinator.py:140
 msgid "Waiting for approval"
-msgstr "Esperando la aprobación"
+msgstr "अनुमोदन हेतु प्रतीक्षा में"
 
 #: src/warpinator.py:142
 msgid "Waiting for your approval"
-msgstr "Esperando su aprobación"
+msgstr "आपके अनुमोदन हेतु प्रतीक्षा में"
 
 #: src/warpinator.py:145
 msgid "Files may be overwritten"
-msgstr "Se pueden sobrescribir los archivos"
+msgstr "संभवतः फ़ाइलें ओवरराइट हो गई"
 
 #: src/warpinator.py:148
 msgid "Not enough disk space"
-msgstr "No hay suficiente espacio de disco"
+msgstr "अपर्याप्त डिस्क स्पेस"
 
 #: src/warpinator.py:151
 msgid "Request cancelled"
-msgstr "Solicitud cancelada"
+msgstr "निवेदन रद्द"
 
 #: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "Solicitud cancelada por %s"
+msgstr "%s द्वारा निवेदन रद्द"
 
 #: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Transferencia cancelada por %s"
+msgstr "%s द्वारा हस्तांतरण रद्द"
 
 #: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
-msgstr "No se ha encontrado el archivo «%s»."
+msgstr "फ़ाइल '%s' नहीं मिली"
 
 #: src/warpinator.py:171
 msgid "Some files not found"
-msgstr "No se han encontrado algunos archivos"
+msgstr "कुछ फ़ाइलें नहीं मिली"
 
 #: src/warpinator.py:173
 msgid "Completed"
-msgstr "Completado"
+msgstr "पूर्ण"
 
 #: src/warpinator.py:331 src/warpinator.py:852
 msgid "Connecting"
-msgstr "Conectando"
+msgstr "कनेक्‍ट हो रहा है"
 
 #: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
-msgstr "Conectando a %s"
+msgstr "%s से कनेक्ट हो रहा है"
 
 #: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
-msgstr "%s no está en línea"
+msgstr "%s ऑनलाइन नहीं है"
 
 #: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "No se puede conectar con %s"
+msgstr "%s से कनेक्ट नहीं हुआ"
 
 #: src/warpinator.py:353
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Esperando que %s complete la conexión."
+msgstr "%s द्वारा कनेक्शन पूर्ण करने की प्रतीक्षा में।"
 
 #: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d transferencia entrante nueva"
-msgstr[1] "%d transferencias entrantes nuevas"
+msgstr[0] "%d नया आवक हस्तांतरण"
+msgstr[1] "%d नए आवक हस्तांतरण"
 
 #: src/warpinator.py:484 src/warpinator.py:1286
 msgid "Browse..."
-msgstr "Examinar..."
+msgstr "ब्राउज़ करें..."
 
 #: src/warpinator.py:498 src/warpinator.py:1237
 msgid "Open save folder"
-msgstr "Abrir la carpeta para guardar"
+msgstr "संचित फ़ोल्डर खोलें"
 
 #: src/warpinator.py:502
 msgid "Preferences"
-msgstr "Preferencias"
+msgstr "विन्यास सेटिंग्स"
 
 #: src/warpinator.py:510 src/warpinator.py:1240
 msgid "Quit"
-msgstr "Salir"
+msgstr "बंद करें"
 
 #: src/warpinator.py:604
 msgid "You don't appear to be connected to a network."
-msgstr "No parece estar conectado a una red."
+msgstr "प्रतीत होता है कि आप नेटवर्क से कनेक्ट नहीं है।"
 
 #: src/warpinator.py:606
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "El inicio ha fallado, compruebe los registros."
+msgstr "आरंभ विफल रहा, कृपया लॉग फ़ाइल जाँचें।"
 
 #: src/warpinator.py:831
 msgid "Offline"
-msgstr "Fuera de línea"
+msgstr "ऑफलाइन"
 
 #: src/warpinator.py:838
 msgid "Unable to connect"
-msgstr "No se puede conectar"
+msgstr "कनेक्ट करने में असमर्थ"
 
 #: src/warpinator.py:845
 msgid "Waiting for two-way connection"
-msgstr "Esperando la conexión bidireccional"
+msgstr "द्विमार्गी कनेक्शन की प्रतीक्षा में"
 
 #: src/warpinator.py:1272
 msgid "Send to favorites"
-msgstr "Enviar a favoritos"
+msgstr "पसंदीदा में भेजें"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-04-17 15:54+0100\n"
-"PO-Revision-Date: 2020-05-02 22:46+0000\n"
+"POT-Creation-Date: 2020-06-06 14:20+0100\n"
+"PO-Revision-Date: 2020-06-07 19:00+0000\n"
 "Last-Translator: Saša Marjanović <Unknown>\n"
 "Language-Team: Serbian Latin <sr@latin@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2020-05-11 11:04+0000\n"
-"X-Generator: Launchpad (build fbdff7602bd10fb883bf7e2ddcc7fd5a16f60398)\n"
+"X-Launchpad-Export-Date: 2020-06-24 10:13+0000\n"
+"X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
 
-#: resources/main-window.ui:33 src/util.py:341 data/warpinator.desktop.in:5
+#: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
 msgid "Send and Receive Files across the Network"
 msgstr "Šaljite i primajte datoteke preko mreže"
 
@@ -29,37 +29,39 @@ msgstr "Nema rezultata koji se poklapaju"
 
 #: resources/main-window.ui:349
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "Proglasi ovu udaljenu mašinu za omiljenu u glavnom prikazu"
 
 #: resources/main-window.ui:423
 msgid "Clear inactive and completed operations"
-msgstr ""
+msgstr "Izbriši neaktivne i završene operacije"
 
 #: resources/main-window.ui:442
 msgid "Send files"
-msgstr ""
+msgstr "Pošalji datoteke"
 
-#: resources/main-window.ui:468 src/prefs.py:105
+#: resources/main-window.ui:468 src/prefs.py:125
 msgid "File Transfers"
-msgstr ""
+msgstr "Prenos datoteka"
 
-#: resources/main-window.ui:489 src/warpinator.py:813
+#: resources/main-window.ui:489 src/warpinator.py:824
 msgid "Online"
-msgstr ""
+msgstr "Na mreži"
 
 #: resources/main-window.ui:609
 msgid "No other computers found..."
-msgstr ""
+msgstr "Nijedan drugi računar nije pronađen..."
 
 #: resources/main-window.ui:673
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "Uverite se da je Vaša mrežna veza aktivna."
 
 #: resources/main-window.ui:688
 msgid ""
 "Check your firewall rules.  The port number can be changed.  See preferences "
 "for more details."
 msgstr ""
+"Proverite pravila Vašeg zaštitnog zida (``firewall``). Broj porta može biti "
+"promenjen. Vidite preferencije za više detalja."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:704
@@ -67,419 +69,457 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"Da li je Warpinator pokrenut na još nekom računaru na ovoj mreži? Ukoliko "
+"jeste, uverite se da svi koriste isti grupni kod u preferencama."
 
 #: resources/main-window.ui:722
 msgid "Possible solutions:"
-msgstr ""
+msgstr "Moguća rešenja:"
 
 #: resources/main-window.ui:788
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "Inicijalizovanje, sačekajte..."
 
 #: resources/main-window.ui:846
 msgid "Something went wrong"
-msgstr ""
+msgstr "Nešto nije kako treba"
 
 #: resources/main-window.ui:921
 msgid "Invalid save location"
-msgstr ""
+msgstr "Neispravno mesto za snimanje"
 
 #: resources/main-window.ui:958
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
+"Ovom direktorijumu se ne može pristupiti ili on ne postoji. Izaberite novo "
+"mesto u Preferencijama ili se uverite da je trenutno označeno mesto "
+"montirano."
 
 #: resources/main-window.ui:1014
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Pretraga za drugim računarima"
 
 #: resources/main-window.ui:1073
 msgid "Shutting down..."
-msgstr ""
+msgstr "Isključivanje..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "Čekam odobrenje"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "Nema dovoljno prostora na disku!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr ""
+msgstr "Izračunavam"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr ""
+msgstr "Prihvati ovaj zahtev"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr ""
+msgstr "Odbij ovaj zahtev"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr ""
+msgstr "Otkaži ovaj zahtev"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr ""
+msgstr "Ponovo pokreni ovu operaciju"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Pauziraj ovu operaciju"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr ""
+msgstr "Nastavi ovu operaciju"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr ""
+msgstr "Otkaži ovu operaciju"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Ukloni ovu operaciju sa spiska"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Otvori direktorijum u kome se nalazi"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "Upozorenje o brojevima portova:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Preferencije za Warpinator"
 
 #: src/notifications.py:20
 msgid "New incoming files"
-msgstr ""
+msgstr "Nove datoteke pristižu"
 
 #: src/notifications.py:26
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"%(sender_name)s želi da Vam pošalje %(file_count)d datoteku/e "
+"(%(file_name)s)."
 
 #: src/notifications.py:27
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s želi da Vam pošalje %(file_count)d datoteku/e"
 
 #: src/notifications.py:37
 msgid "Accept"
-msgstr ""
+msgstr "Prihvati"
 
 #: src/notifications.py:38
 msgid "Decline"
-msgstr ""
+msgstr "Odbij"
 
 #: src/notifications.py:52
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
+msgstr "%(sender_name)s Vam šalje %(file_count)d datoteku/e (%(file_name)s)."
 
 #: src/notifications.py:53
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s Vam šalje %(file_count)d datoteku/e"
 
 #: src/notifications.py:88
 msgid "Transfer complete"
-msgstr ""
+msgstr "Prenos završen"
 
 #: src/notifications.py:90
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "Prenos na %s je uspešno završen"
 
 #: src/notifications.py:92
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "Prenos sa %s je uspešno završen"
 
-#: src/notifications.py:121 src/warpinator.py:161 src/warpinator.py:164
+#: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
-msgstr ""
+msgstr "Prenos nije uspeo"
 
 #: src/notifications.py:124
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "Nešto je pošlo naopako prilikom prenosa na %s"
 
 #: src/notifications.py:126
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "Nešto je pošlo naopako prilikom prenosa sa %s"
 
-#: src/ops.py:45
+#: src/notifications.py:155 src/warpinator.py:158
+msgid "Transfer cancelled"
+msgstr "Prenos je otkazan"
+
+#: src/notifications.py:158
+#, python-format
+msgid "Your transfer to %s was cancelled"
+msgstr "Vaš prenos na %s je bio otkazan"
+
+#: src/notifications.py:160
+#, python-format
+msgid "An incoming transfer from %s was cancelled"
+msgstr "Dolazni prenos sa %s je bio otkazan"
+
+#: src/ops.py:47
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:140
+#: src/ops.py:146
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d datoteke"
+msgstr[1] "%d datoteka"
+msgstr[2] "%d datoteka"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:222
+#: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d datoteka"
+msgstr[1] "%d datoteke"
+msgstr[2] "%d datoteka"
 
-#: src/prefs.py:80
+#: src/prefs.py:100
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Preferencije za Warpinator"
 
-#: src/prefs.py:90
+#: src/prefs.py:110
 msgid "Desktop"
-msgstr ""
-
-#: src/prefs.py:92
-msgid "Show an icon in the notification area"
-msgstr ""
-
-#: src/prefs.py:96
-msgid "Start with main window open"
-msgstr ""
-
-#: src/prefs.py:101
-msgid "Start automatically"
-msgstr ""
-
-#: src/prefs.py:107
-msgid "Location for received files"
-msgstr ""
+msgstr "Radna površina"
 
 #: src/prefs.py:112
-msgid "Require approval before accepting files"
-msgstr ""
+msgid "Show an icon in the notification area"
+msgstr "Prikaži ikonu na površini za obaveštenja"
 
 #: src/prefs.py:116
-msgid "Require approval when files would be overwritten"
-msgstr ""
+msgid "Start with main window open"
+msgstr "Pokreni sa otvorenim glavnim prozorom"
 
-#: src/prefs.py:120
+#: src/prefs.py:121
+msgid "Start automatically"
+msgstr "Pokreni automatski"
+
+#: src/prefs.py:127
+msgid "Location for received files"
+msgstr "Mesto za primljene datoteke"
+
+#: src/prefs.py:132
+msgid "Require approval before accepting files"
+msgstr "Zahtevaj odobrenje pre prihvatanja datoteka"
+
+#: src/prefs.py:136
+msgid "Require approval when files would be overwritten"
+msgstr "Zahtevaj odobrenje kada bi datoteke bile upisane preko postojećih"
+
+#: src/prefs.py:140
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+"Prikaži obaveštenje kada neko šalje (ili pokušava da pošalje) datoteke"
 
-#: src/prefs.py:124
+#: src/prefs.py:144
 msgid "Network"
-msgstr ""
+msgstr "Mreža"
 
-#: src/prefs.py:129
+#: src/prefs.py:149
 msgid "Group Code"
-msgstr ""
+msgstr "Grupni kod"
 
-#: src/prefs.py:130
+#: src/prefs.py:150
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
+msgstr "Ne možete da komunicirate sa računarima koji ne koriste isti kod."
 
-#: src/prefs.py:136
+#: src/prefs.py:156
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "Dolazni port za prenose"
 
-#: src/prefs.py:146
-msgid "Sample firewall rule"
-msgstr ""
+#: src/prefs.py:167
+msgid "Update firewall rules"
+msgstr "Ažuriraj pravila za zaštitni zid (firewall)"
 
-#: src/prefs.py:158
+#: src/prefs.py:179
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Bilo koji broj porta će funkcionisati za aplikacije, ali korišćenje istog "
+"porta za sve računare pojednostavljuje dodavanje izuzetaka od pravila za "
+"zaštitni zid, ukoliko je to neophodno."
 
-#: src/prefs.py:187
+#: src/prefs.py:211
 msgid "Change port"
-msgstr ""
+msgstr "Promeni port"
 
-#: src/prefs.py:232
+#: src/prefs.py:256
 msgid "Set code"
-msgstr ""
+msgstr "Odredi kod"
 
-#: src/prefs.py:247
+#: src/prefs.py:271
 msgid "A group code is required."
-msgstr ""
+msgstr "Grupni kod je neophodan."
 
-#: src/prefs.py:253
+#: src/prefs.py:277
 msgid "The group code should be longer if possible."
-msgstr ""
+msgstr "Grupni kod bi trebao biti duži, ukoliko je to moguće."
 
-#: src/remote.py:349 src/remote.py:353
+#: src/remote.py:484 src/remote.py:488
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Veza je izgubljena"
 
-#: src/server.py:284
+#: src/server.py:458
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "Došlo je do greške na udaljenoj mašini"
 
-#: src/util.py:62
+#: src/util.py:80
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "Izaberi datoteku(e) za slanje"
 
-#: src/util.py:66
+#: src/util.py:84
 msgid "Cancel"
-msgstr ""
+msgstr "Otkaži"
 
-#: src/util.py:67
+#: src/util.py:85
 msgid "Send"
-msgstr ""
+msgstr "Pošalji"
 
-#: src/util.py:204
+#: src/util.py:271
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "Preostalo je još nekoliko sekundi"
 
-#: src/util.py:207
+#: src/util.py:274
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d sekundi preostaje"
 
-#: src/util.py:211 src/util.py:219
+#: src/util.py:278 src/util.py:286
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minut"
+msgstr[1] "%d minuta"
+msgstr[2] "%d minuta"
 
-#: src/util.py:218
+#: src/util.py:285
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d sat"
+msgstr[1] "%d sata"
+msgstr[2] "%d sati"
 
-#: src/util.py:223
+#: src/util.py:290
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "oko %d sat"
+msgstr[1] "oko %d sata"
+msgstr[2] "oko %d sati"
 
-#: src/util.py:337 src/warpinator.py:498
+#: src/util.py:415 src/warpinator.py:506
 msgid "About"
-msgstr ""
-
-#: src/warpinator.py:134
-msgid "Paused"
-msgstr ""
+msgstr "O programu"
 
 #: src/warpinator.py:137
-msgid "Waiting for approval"
-msgstr ""
+msgid "Paused"
+msgstr "Pauzirano"
 
-#: src/warpinator.py:139
-msgid "Waiting for your approval"
-msgstr ""
+#: src/warpinator.py:140
+msgid "Waiting for approval"
+msgstr "Čekam na odobrenje"
 
 #: src/warpinator.py:142
-msgid "Files may be overwritten"
-msgstr ""
+msgid "Waiting for your approval"
+msgstr "Čekam na Vaše odobrenje"
 
 #: src/warpinator.py:145
-msgid "Not enough disk space"
-msgstr ""
+msgid "Files may be overwritten"
+msgstr "Datoteke mogu biti prepisane novijim"
 
 #: src/warpinator.py:148
-msgid "Request cancelled"
-msgstr ""
+msgid "Not enough disk space"
+msgstr "Nema dovoljno prostora na disku"
 
-#: src/warpinator.py:150 src/warpinator.py:152
+#: src/warpinator.py:151
+msgid "Request cancelled"
+msgstr "Zahtev je otkazan"
+
+#: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "Zahtev je otkazao %s"
 
-#: src/warpinator.py:155
-msgid "Transfer cancelled"
-msgstr ""
-
-#: src/warpinator.py:157 src/warpinator.py:159
+#: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "Prenos je otkazao %s"
 
-#: src/warpinator.py:166
+#: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
-msgstr ""
+msgstr "Datoteka '%s' nije pronađena"
 
-#: src/warpinator.py:168
+#: src/warpinator.py:171
 msgid "Some files not found"
-msgstr ""
+msgstr "Neke datoteke nisu pronađene"
 
-#: src/warpinator.py:170
+#: src/warpinator.py:173
 msgid "Completed"
-msgstr ""
+msgstr "Završeno"
 
-#: src/warpinator.py:328 src/warpinator.py:834
+#: src/warpinator.py:331 src/warpinator.py:852
 msgid "Connecting"
-msgstr ""
+msgstr "Povezujem se"
 
-#: src/warpinator.py:330
+#: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Povezujem se sa „%s“"
 
-#: src/warpinator.py:340
+#: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s nije na mreži"
 
-#: src/warpinator.py:345
+#: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "Ne mogu da se povežem na %s"
 
-#: src/warpinator.py:374
+#: src/warpinator.py:353
+#, python-format
+msgid "Waiting for %s to complete the connection."
+msgstr "Čekam da %s završi povezivanje."
+
+#: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d novi dolazeći prenos"
+msgstr[1] "%d nova dolazeća prenosa"
+msgstr[2] "%d novih dolazećih prenosa"
 
-#: src/warpinator.py:476 src/warpinator.py:1232
+#: src/warpinator.py:484 src/warpinator.py:1286
 msgid "Browse..."
-msgstr ""
+msgstr "Pretraži..."
 
-#: src/warpinator.py:490 src/warpinator.py:1183
+#: src/warpinator.py:498 src/warpinator.py:1237
 msgid "Open save folder"
-msgstr ""
+msgstr "Otvori direktorijum za čuvanje"
 
-#: src/warpinator.py:494
+#: src/warpinator.py:502
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencije"
 
-#: src/warpinator.py:502 src/warpinator.py:1186
+#: src/warpinator.py:510 src/warpinator.py:1240
 msgid "Quit"
-msgstr ""
+msgstr "Izađi"
 
-#: src/warpinator.py:594
+#: src/warpinator.py:604
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "Izgleda da niste povezani na mrežu."
 
-#: src/warpinator.py:596
+#: src/warpinator.py:606
 msgid "Startup was unsuccessful, please check your logs."
 msgstr ""
+"Pokretanje nije bilo uspešno, proverite Vašu datoteku za beleženje promena "
+"(log)."
 
-#: src/warpinator.py:820
+#: src/warpinator.py:831
 msgid "Offline"
-msgstr ""
+msgstr "Nepovezan"
 
-#: src/warpinator.py:827
+#: src/warpinator.py:838
 msgid "Unable to connect"
-msgstr ""
+msgstr "Ne mogu da se povežem"
 
-#: src/warpinator.py:1218
+#: src/warpinator.py:845
+msgid "Waiting for two-way connection"
+msgstr "Čekam na dvosmernu vezu"
+
+#: src/warpinator.py:1272
 msgid "Send to favorites"
-msgstr ""
+msgstr "Pošalji u omiljeno"

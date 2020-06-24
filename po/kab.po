@@ -1,62 +1,67 @@
+# Kabyle translation for linuxmint
+# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: warpinator\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-06-06 14:20+0100\n"
-"PO-Revision-Date: 2020-06-13 04:25+0000\n"
-"Last-Translator: KAMI <kami911@gmail.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2020-06-13 22:54+0000\n"
+"Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
+"Language-Team: Kabyle <kab@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2020-06-24 10:13+0000\n"
 "X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
-"Language: hu_HU\n"
+"Language: kab\n"
 
 #: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
 msgid "Send and Receive Files across the Network"
-msgstr "Fájlok küldése és fogadása a hálózaton"
+msgstr "Azen rnu ṭṭef-d ifuylas uzeṭṭa"
 
 #: resources/main-window.ui:193
 msgid "No matching results"
-msgstr "Nincs eredmény"
+msgstr "Ulac igmaḍ yemṣadan"
 
 #: resources/main-window.ui:349
 msgid "Make this remote machine a favorite in the main view"
-msgstr "A távoli számítógép kedvencnek jelölése a fő nézetben"
+msgstr "Smenyaf tamacint-a tanmeggagt deg teskant tagejdant"
 
 #: resources/main-window.ui:423
 msgid "Clear inactive and completed operations"
-msgstr "Tétlen és befejezett műveletek törlése"
+msgstr "Sfeḍ timehlin ur nermid ara akked tid immeden"
 
 #: resources/main-window.ui:442
 msgid "Send files"
-msgstr "Fájlok küldése"
+msgstr "Azen ifuyla"
 
 #: resources/main-window.ui:468 src/prefs.py:125
 msgid "File Transfers"
-msgstr "Fájlátvitel"
+msgstr "Asiweḍ n yifuyla"
 
 #: resources/main-window.ui:489 src/warpinator.py:824
 msgid "Online"
-msgstr "Elérhető"
+msgstr "Srid"
 
 #: resources/main-window.ui:609
 msgid "No other computers found..."
-msgstr "Nem találhatóak további számítógépek…"
+msgstr "Ulac iselkimen-nniḍen yettwafen..."
 
 #: resources/main-window.ui:673
 msgid "Make sure your network connection is active."
-msgstr "Bizonyosodjon meg róla, hogy van elérhető hálózati kapcsolat."
+msgstr "Ttḥeqqeq belli azeḍḍa-inek yeqqen yerna yermed."
 
 #: resources/main-window.ui:688
 msgid ""
 "Check your firewall rules.  The port number can be changed.  See preferences "
 "for more details."
 msgstr ""
-"Ellenőrizze a tűzfalszabályokat. A port száma megváltoztatható. Nézze meg a "
-"beállításokat a részletekért."
+"Selken iligan n uɣrab-inek n tmes. Uḍḍun n uzeḍḍa yezmer ad yettwabeddel. "
+"Ẓer ismenyifen i wugar n telqayt."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:704
@@ -64,174 +69,175 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Másik hálózati gépen fut a Warpinator? Ha igen, győződjön meg róla, hogy "
-"azonos-e a csoport kódja a beállításokban."
+"Warpinato itteddu ɣef kra n uselkim-nniḍen deg uzeḍḍa-agi ? Ma yetteddu, "
+"ttḥeqqeq belli akk iselkimen sseqdacen yiwen n ugraw n tengalt deg "
+"yismenyifen."
 
 #: resources/main-window.ui:722
 msgid "Possible solutions:"
-msgstr "Lehetséges megoldások:"
+msgstr "Atent-aya kra n tifrat:"
 
 #: resources/main-window.ui:788
 msgid "Initializing, please wait..."
-msgstr "Előkészítés, kis türelmet."
+msgstr "Awennez, ttxil-k arǧu..."
 
 #: resources/main-window.ui:846
 msgid "Something went wrong"
-msgstr "Hoppá, valami elromlott"
+msgstr "Yella wayen ur neddi ara"
 
 #: resources/main-window.ui:921
 msgid "Invalid save location"
-msgstr "Érvénytelen mentési mappa"
+msgstr "Ideg n usekles d armeɣtu"
 
 #: resources/main-window.ui:958
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
-"Ez a mappa nem hozzáférhető vagy nem létezik. Kérem válasszon egy új helyet "
-"a beállításokban vagy győződjön meg hogy a jelenlegi csatolva van."
+"Akaram-agi ur yettwaddaf ara neɣ ulac-it. Ttxil-k fren ideg amaynut di "
+"Ismenyifen neɣ ttḥeqqeq belli ideg amiran yettwaserkeb."
 
 #: resources/main-window.ui:1014
 msgid "Searching for other computers"
-msgstr "További számítógépek keresése"
+msgstr "Anadi ɣef yiselkimen-nniḍen"
 
 #: resources/main-window.ui:1073
 msgid "Shutting down..."
-msgstr "Leállítás…"
+msgstr "Asensi..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Jóváhagyásra várva"
+msgstr "Yettraǧu aqbal"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Nincs elegendő lemezterület"
+msgstr "Ulac ddeqs n tallunt deg uḍebsi !"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "Számítás"
+msgstr "Asiḍen"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Kérés elfogadása"
+msgstr "Qbel asuter-agi"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Kérés visszautasítása"
+msgstr "Agi asuter-agi"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Kérés megszakítása"
+msgstr "Sefsex asuter-agi"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Művelet újraindítása"
+msgstr "Ales asekker n temhelt-agi"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Művelet szüneteltetése"
+msgstr "Ḥbes tamhelt-agi"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Művelet folytatása"
+msgstr "Kemmel tamhelt-agi"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Művelet megszakítása"
+msgstr "Sefsex tamhelt-agi"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Művelet eltávolítása a listából"
+msgstr "KKes tamhelt-agi si tebdart"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Tartalmazó mappa megnyitása"
+msgstr "Ldi akaram anagbar"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Megjegyzés a portok számával kapcsolatban:"
+msgstr "Tamawt ɣef wuḍḍunen n tewura:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Beállítások"
+msgstr "Ismenyifen n Warpinator"
 
 #: src/notifications.py:20
 msgid "New incoming files"
-msgstr "Új beérkező fájlok"
+msgstr "Ifuyla imaynuten inekcamen"
 
 #: src/notifications.py:26
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s szeretne Önnek %(file_count)d fájlt küldeni (%(file_name)s)."
+"%(sender_name)s yebɣa ad k-yazen %(file_count)d n ufaylu (%(file_name)s)."
 
 #: src/notifications.py:27
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s szeretne Önnek %(file_count)d fájlt küldeni"
+msgstr "%(sender_name)s yebɣa ad k-yazen %(file_count)d n yifuyla"
 
 #: src/notifications.py:37
 msgid "Accept"
-msgstr "Elfogadás"
+msgstr "Qbel"
 
 #: src/notifications.py:38
 msgid "Decline"
-msgstr "Elutasítás"
+msgstr "Agi"
 
 #: src/notifications.py:52
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s %(file_count)d fájlt küld Önnek (%(file_name)s)."
+msgstr "%(sender_name)s yettazen-ak %(file_count)d n ufaylu (%(file_name)s)."
 
 #: src/notifications.py:53
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s %(file_count)d fájlt küld Önnek"
+msgstr "%(sender_name)s yettazen-ak %(file_count)d n yifuyla"
 
 #: src/notifications.py:88
 msgid "Transfer complete"
-msgstr "Az átvitel sikeresen befejeződött"
+msgstr "Asiweḍ yemmed"
 
 #: src/notifications.py:90
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "A fájlok küldése „%s” részére sikeresen befejeződött"
+msgstr "Asiweḍ ɣer %s yedda akken iwata"
 
 #: src/notifications.py:92
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "A fájlok átvitele „%s” részéről sikeresen befejeződött"
+msgstr "Asiweḍ si %s yedda akken iwata"
 
 #: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
-msgstr "Sikertelen átvitel"
+msgstr "Asiweḍ ur yeddi ara"
 
 #: src/notifications.py:124
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Hiba történt a fájlok „%s” részére történő küldése során"
+msgstr "Yella wayen ur neddi ara deg usiweḍ ɣer %s"
 
 #: src/notifications.py:126
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Hiba történt a fájlok „%s” részéről történő átvitele során"
+msgstr "Yella wayen ur neddi ara deg usiweḍ si %s"
 
 #: src/notifications.py:155 src/warpinator.py:158
 msgid "Transfer cancelled"
-msgstr "Átvitel megszakítva"
+msgstr "Asiweḍ yettwasefsex"
 
 #: src/notifications.py:158
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "A(z) „%s” részére történő küldés megszakítva"
+msgstr "Asiweḍ-inek ɣer %s yettwasefsex"
 
 #: src/notifications.py:160
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "A(z) „%s” részéről történő átvitel megszakítva"
+msgstr "Asiweḍ i d-yekkan si %s yettwasefsex"
 
 #: src/ops.py:47
 #, python-format
@@ -243,270 +249,270 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] "%d fájl"
-msgstr[1] "%d fájl"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%d fájl"
-msgstr[1] "%d fájl"
+msgstr[0] "%d n ufaylu"
+msgstr[1] "%d n yifuyla"
 
 #: src/prefs.py:100
 msgid "Warpinator Preferences"
-msgstr "Beállítások"
+msgstr "Ismenyifen n Warpinator"
 
 #: src/prefs.py:110
 msgid "Desktop"
-msgstr "Asztal"
+msgstr "Tanarit"
 
 #: src/prefs.py:112
 msgid "Show an icon in the notification area"
-msgstr "Ikon megjelenítése az értesítési területen"
+msgstr "Sken tignit di tmennaḍt n telɣut"
 
 #: src/prefs.py:116
 msgid "Start with main window open"
-msgstr "Indulás a főablak megnyitásával"
+msgstr "Bdu s usfaylu agejdan yeldi"
 
 #: src/prefs.py:121
 msgid "Start automatically"
-msgstr "Automatikus indítás"
+msgstr "Bdu s wudem awurman"
 
 #: src/prefs.py:127
 msgid "Location for received files"
-msgstr "Fogadott fájlok mentési mappája"
+msgstr "Ideg i yifuyla i d-yettwaṭṭfen"
 
 #: src/prefs.py:132
 msgid "Require approval before accepting files"
-msgstr "Fogadott fájlok jóváhagyása szükséges"
+msgstr "Suter aqbal send ad tqebleḍ ifuyla"
 
 #: src/prefs.py:136
 msgid "Require approval when files would be overwritten"
-msgstr "Fájlok felülírásához jóváhagyása szükséges"
+msgstr "Suter aqbal ticki yewwi-d ad ttusfesxen yifuyla"
 
 #: src/prefs.py:140
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Értesítés megjelenítése, ha valaki fájlokat küld (vagy küldeni próbál)"
+"Beqqeḍ talɣut ticki yebɣa wabɛaḍ ad k-d-yazen (neɣ yettaɛraḍ ad k-d-yazen) "
+"ifuyla"
 
 #: src/prefs.py:144
 msgid "Network"
-msgstr "Hálózat"
+msgstr "Aẓeḍḍa"
 
 #: src/prefs.py:149
 msgid "Group Code"
-msgstr "Csoportkód"
+msgstr "Tangalt n ugraw"
 
 #: src/prefs.py:150
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
-"Nem kommunikálhat olyan számítógépekkel, amelyek nem ugyanazt a kódot "
-"használják."
+"Ur tezmireḍ ara ad tmeslayeḍ akked yiselkimen ur nsseqdac ara tangalt am "
+"tagi."
 
 #: src/prefs.py:156
 msgid "Incoming port for transfers"
-msgstr "Beérkező átvitel forgalmának portja"
+msgstr "Tawwurt n wekcam i wesiweḍ"
 
 #: src/prefs.py:167
 msgid "Update firewall rules"
-msgstr "Tűzfal szabályok frissítése"
+msgstr "Leqqem ilugan n uɣrab n tmes"
 
 #: src/prefs.py:179
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Bármelyik porton működni fog az alkalmazás, de ugyanazt a portot használva "
-"az összes számítógéphez megkönnyítheti a tűzfalszabályok hozzáadását."
+"Uḍḍun menwal n tewwurt ad yeddu akked usnas, maca asqedec n yiwet n tewwurt "
+"i yiselkimen merra ad yesishel timerna tsuraf ma yelaq."
 
 #: src/prefs.py:211
 msgid "Change port"
-msgstr "Port megváltoztatása"
+msgstr "Snifel tawwurt"
 
 #: src/prefs.py:256
 msgid "Set code"
-msgstr "Kód beállítása"
+msgstr "Seɣwer tangalt"
 
 #: src/prefs.py:271
 msgid "A group code is required."
-msgstr "A csoportkód megadása szükséges"
+msgstr "Tettwasra tengalt n wegraw."
 
 #: src/prefs.py:277
 msgid "The group code should be longer if possible."
-msgstr "A csoportkódnak hosszabbnak kellene lennie, ha ez lehetséges."
+msgstr "Tangalt n wegraw ilaq ad tiɣzif ma yella wamek."
 
 #: src/remote.py:484 src/remote.py:488
 msgid "Connection has been lost"
-msgstr "A kapcsolat elveszett"
+msgstr "Tuqqna truḥ"
 
 #: src/server.py:458
 msgid "An error occurred on the remote machine"
-msgstr "Hiba lépett fel a távoli számítógépen"
+msgstr "Teḍra-d tuccḍa di tmacint tanmeggagt"
 
 #: src/util.py:80
 msgid "Select file(s) to send"
-msgstr "Válassza ki a küldendő fájl(oka)t"
+msgstr "Fren afaylu (ifuyla) ara tazneḍ"
 
 #: src/util.py:84
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Sefsex"
 
 #: src/util.py:85
 msgid "Send"
-msgstr "Küldés"
+msgstr "Azen"
 
 #: src/util.py:271
 msgid "A few seconds remaining"
-msgstr "Néhány másodperc múlva befejeződik"
+msgstr "Kra n tasinin i d-yeggran"
 
 #: src/util.py:274
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d másodperc van hátra"
+msgstr "%d n tasinin i d-yeggran"
 
 #: src/util.py:278 src/util.py:286
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d perc"
-msgstr[1] "%d perc"
+msgstr[0] "%d n tesdidt"
+msgstr[1] "%d n tesdidin"
 
 #: src/util.py:285
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d óra"
-msgstr[1] "%d óra"
+msgstr[0] "%d n usrag"
+msgstr[1] "%d n yisragen"
 
 #: src/util.py:290
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "nagyjából %d óra"
-msgstr[1] "nagyjából %d óra"
+msgstr[0] "azal n %d n wesrag"
+msgstr[1] "azal n %d n yisragen"
 
 #: src/util.py:415 src/warpinator.py:506
 msgid "About"
-msgstr "Névjegy"
+msgstr "Ɣef"
 
 #: src/warpinator.py:137
 msgid "Paused"
-msgstr "Szüneteltetve"
+msgstr "Yettṛaǧu"
 
 #: src/warpinator.py:140
 msgid "Waiting for approval"
-msgstr "Jóváhagyásra várva"
+msgstr "Yettraǧu aqbal"
 
 #: src/warpinator.py:142
 msgid "Waiting for your approval"
-msgstr "Az Ön jóváhagyására vár"
+msgstr "Yettraǧu ad tqebleḍ"
 
 #: src/warpinator.py:145
 msgid "Files may be overwritten"
-msgstr "A már létező fájlok felül lesznek írva"
+msgstr "Ifuyla zemren ad ttwasfesxen"
 
 #: src/warpinator.py:148
 msgid "Not enough disk space"
-msgstr "Nincs elegendő lemezterület"
+msgstr "Ulac ddeqs n tallunt deg uḍebsi"
 
 #: src/warpinator.py:151
 msgid "Request cancelled"
-msgstr "Kérés visszautasítva"
+msgstr "Asuter yettwasefsex"
 
 #: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "A kérést „%s”  visszautasította"
+msgstr "Asuter isefsex-it %s"
 
 #: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Az átvitelt „%s” megszakította"
+msgstr "Asuter isefsex-it %s"
 
 #: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
-msgstr "„%s” fájl nem található"
+msgstr "Afayly '%s' ur yettwaf ara"
 
 #: src/warpinator.py:171
 msgid "Some files not found"
-msgstr "Nem találhatók fájlok"
+msgstr "Kra n yifuyla ur ttwafen ara"
 
 #: src/warpinator.py:173
 msgid "Completed"
-msgstr "Befejezve"
+msgstr "Yemmed"
 
 #: src/warpinator.py:331 src/warpinator.py:852
 msgid "Connecting"
-msgstr "Kapcsolódás"
+msgstr "Itteqqen"
 
 #: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
-msgstr "Kapcsolódás a következőhöz: %s"
+msgstr "Ala yetteqqen ɣer %s"
 
 #: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
-msgstr "A(z) „%s” most nem elérhető"
+msgstr "%s ur yeqqin ara"
 
 #: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Nem lehet kapcsolódni a következőhöz: %s"
+msgstr "Ulamek tuqqna ɣer %s"
 
 #: src/warpinator.py:353
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Várakozás „%s” partnerre a kapcsolat létrehozásához."
+msgstr "Yettraǧu %s i tuqqna tummidt."
 
 #: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d beérkező kapcsolat"
-msgstr[1] "%d beérkező kapcsolat"
+msgstr[0] "%d n usiweḍ anekcm"
+msgstr[1] "%d n yisiweḍen inekcamen"
 
 #: src/warpinator.py:484 src/warpinator.py:1286
 msgid "Browse..."
-msgstr "Tallózás…"
+msgstr "Snirem..."
 
 #: src/warpinator.py:498 src/warpinator.py:1237
 msgid "Open save folder"
-msgstr "Mentési mappa megnyitása"
+msgstr "Ldi akaram n usekles"
 
 #: src/warpinator.py:502
 msgid "Preferences"
-msgstr "Beállítások"
+msgstr "Ismenyifen"
 
 #: src/warpinator.py:510 src/warpinator.py:1240
 msgid "Quit"
-msgstr "Kilépés"
+msgstr "Ffeɣ"
 
 #: src/warpinator.py:604
 msgid "You don't appear to be connected to a network."
-msgstr "Nincs hálózati kapcsolat."
+msgstr "Ur tettbaneḍ ara teqqneḍ ɣer uzeḍḍa."
 
 #: src/warpinator.py:606
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
-"Az alkalmazás indítása meghiúsult. A hibát megtudhatja a naplófájlból."
+msgstr "Asekker yedda akken iwata, ttxil-k selken aɣemis-inek."
 
 #: src/warpinator.py:831
 msgid "Offline"
-msgstr "Nem érhető el"
+msgstr "War tuqqna"
 
 #: src/warpinator.py:838
 msgid "Unable to connect"
-msgstr "Nem lehet kapcsolódni"
+msgstr "Ulamek tuqqna"
 
 #: src/warpinator.py:845
 msgid "Waiting for two-way connection"
-msgstr "Várakozás a kétirányú kapcsolat lét"
+msgstr "Yettraǧu tuqqna mm sin n yiberdan"
 
 #: src/warpinator.py:1272
 msgid "Send to favorites"
-msgstr "Hozzáadás a kedvencekhez"
+msgstr "Azen ɣer yinurifen"
