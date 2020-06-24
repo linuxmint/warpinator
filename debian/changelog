@@ -1,3 +1,14 @@
+warpinator (1.0.6) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * util.py: Only use org.freedesktop.FileManager1 to reveal and select normal files.
+  * warpinator.py: Disable the clear-ops button in the user view if there aren't any ops.
+
+  [ Clement Lefebvre ]
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 24 Jun 2020 13:24:44 +0100
+
 warpinator (1.0.5) ulyana; urgency=medium
 
   [ Michael Webster ]
