@@ -466,7 +466,9 @@ class RemoteMachine(GObject.Object):
     def check_for_autostart(self, op):
         if op.status == OpStatus.WAITING_PERMISSION:
             if isinstance(op, ReceiveOp) and \
-              op.have_space  and not op.existing and (not prefs.require_permission_for_transfer()):
+              op.have_space and \
+              (not (op.existing and prefs.prevent_overwriting())) and \
+              (not prefs.require_permission_for_transfer()):
                 op.accept_transfer()
 
     def remove_op(self, op):

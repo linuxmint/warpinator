@@ -19,6 +19,7 @@ START_WITH_WINDOW_KEY = "start-with-window"
 AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
+KEEP_PERMISSIONS_KEY = "keep-permissions"
 PORT_KEY = "port"
 SHOW_NOTIFICATIONS_KEY = "show-notifications"
 FAVORITES_KEY = "favorites"
@@ -60,6 +61,9 @@ def require_permission_for_transfer():
 
 def prevent_overwriting():
     return prefs_settings.get_boolean(NO_OVERWRITE_KEY)
+
+def preserve_permissions():
+    return prefs_settings.get_boolean(KEEP_PERMISSIONS_KEY)
 
 def get_show_notifications():
     return prefs_settings.get_boolean(SHOW_NOTIFICATIONS_KEY)
@@ -128,6 +132,10 @@ class Preferences():
                                       PREFS_SCHEMA, FOLDER_NAME_KEY,
                                       size_group=size_group, dir_select=True)
         section.add_row(widget)
+
+        # widget = GSettingsSwitch(_("Preserve original file permissions"),
+        #                          PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
+        # section.add_row(widget)
 
         widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)

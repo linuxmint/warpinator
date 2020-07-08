@@ -56,7 +56,7 @@ message TransferOpRequest {
     OpInfo info = 1;
     string sender_name = 2;
     string receiver_name = 3;
-    string receiver =4; // don't need for now
+    string receiver = 4; // don't need for now
     uint64 size = 5;
     uint64 count = 6;
     string name_if_single = 7;
@@ -69,4 +69,5 @@ message FileChunk {
     int32 file_type = 2;
     string symlink_target = 3;
     bytes chunk = 4;
+    uint32 file_mode = 5;
 }

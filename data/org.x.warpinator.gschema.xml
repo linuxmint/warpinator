@@ -40,6 +40,10 @@
       <default>true</default>
       <summary>Abort transfers when the destination files already exist</summary>
     </key>
+    <key name="keep-permissions" type="b">
+      <default>true</default>
+      <summary>Preserve the original user permissions of files being received.</summary>
+    </key>
     <key name="port" type="i">
       <default>42000</default>
       <summary>Incoming port to use (this needs to be allowed by any firewall)</summary>

@@ -140,7 +140,7 @@ class OpItem(object):
                 self.op_transfer_status_message.set_text(_("Waiting for approval"))
             else:
                 self.op_transfer_status_message.set_text(_("Waiting for your approval"))
-                if self.op.existing:
+                if self.op.existing and prefs.prevent_overwriting():
                     self.op_transfer_problem_label.show()
                     self.op_transfer_problem_label.set_text(_("Files may be overwritten"))
                 elif not self.op.have_space:
