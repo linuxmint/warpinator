@@ -1,5 +1,7 @@
 import os
 import logging
+import stat
+import shutil
 
 from gi.repository import GLib, Gio, GObject
 
@@ -8,10 +10,26 @@ from util import FileType
 import prefs
 import warp_pb2
 
-FILE_INFOS = \
-    "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target"
-FILE_INFOS_SINGLE_FILE = \
-    "standard::size,standard::allocated-size,standard::name,standard::type,standard::symlink-target,standard::content-type"
+FILE_INFOS = ",".join([
+    "standard::size",
+    "standard::allocated-size",
+    "standard::name",
+    "standard::type",
+    "standard::symlink-target",
+    "unix::mode"
+])
+
+FILE_INFOS_SINGLE_FILE = ",".join([
+    "standard::size",
+    "standard::allocated-size",
+    "standard::name",
+    "standard::type",
+    "standard::symlink-target",
+    "standard::content-type",
+    "unix::mode"
+])
+
+MODE_MASK = (stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
 CHUNK_SIZE = 1024 * 1024
 PROGRESS_UPDATE_FREQ = 2 * 1000 * 1000
@@ -43,13 +61,14 @@ def make_symbolic_link(op, path, target):
 
 # This represents a file to be transferred (this is used by the sender)
 class File:
-    def __init__(self, uri, basename, rel_path, size, file_type, symlink_target_path=None):
+    def __init__(self, uri, basename, rel_path, size, file_type, symlink_target_path=None, file_mode=0):
         self.uri = uri
         self.basename = basename
         self.relative_path = rel_path
         self.size = size
         self.file_type = file_type
         self.symlink_target_path = symlink_target_path
+        self.file_mode = file_mode
 
 class FileSender(GObject.Object):
     def __init__(self, op, timestamp, cancellable):
@@ -67,11 +86,13 @@ class FileSender(GObject.Object):
 
             if file.file_type == FileType.DIRECTORY:
                 yield warp_pb2.FileChunk(relative_path=file.relative_path,
-                                         file_type=file.file_type)
+                                         file_type=file.file_type,
+                                         file_mode=file.file_mode)
             elif file.file_type == FileType.SYMBOLIC_LINK:
                 yield warp_pb2.FileChunk(relative_path=file.relative_path,
                                          file_type=file.file_type,
-                                         symlink_target=file.symlink_target_path)
+                                         symlink_target=file.symlink_target_path,
+                                         file_mode=file.file_mode)
             else:
                 stream = None
 
@@ -94,7 +115,8 @@ class FileSender(GObject.Object):
 
                         yield warp_pb2.FileChunk(relative_path=file.relative_path,
                                                  file_type=file.file_type,
-                                                 chunk=b.get_data())
+                                                 chunk=b.get_data(),
+                                                 file_mode=file.file_mode)
 
                     stream.close()
                     continue
@@ -118,25 +140,42 @@ class FileReceiver(GObject.Object):
         super(FileReceiver, self).__init__()
         self.save_path = prefs.get_save_path()
         self.op = op
+        self.preserve_perms = prefs.preserve_permissions() and util.save_folder_is_native_fs()
 
         self.current_path = None
         self.current_gfile = None
         self.current_stream = None
+        self.current_mode = 0
+
+        if op.existing:
+            for name in op.top_dir_basenames:
+                try:
+                    path = os.path.join(self.save_path, name)
+                    if os.path.isdir(path): # file not found is ok
+                        shutil.rmtree(path)
+                    else:
+                        os.remove(path)
+                except FileNotFoundError:
+                    pass
+                except Exception as e:
+                    logging.warning("Problem removing existing files.  Transfer may not succeed: %s" % e)
+
+        # We write files top-down.  If we're preserving permissions and we receive
+        # a folder in some hierarchy that is not writable, we won't be able to create
+        # anything inside it.
+        self.folder_permission_change_list = []
 
     def receive_data(self, s):
         save_path = prefs.get_save_path()
 
         path = os.path.join(save_path, s.relative_path)
         if path != self.current_path:
-            if self.current_stream:
-                self.current_stream.close()
-                self.current_stream = None
-                self.current_gfile = None
-
+            self.close_current_file()
             self.current_path = path
+            self.current_mode = s.file_mode
 
         if s.file_type == FileType.DIRECTORY:
-            os.makedirs(path, exist_ok=True)
+            os.makedirs(path, mode=s.file_mode if (s.file_mode > 0) else 0o777, exist_ok=True)
         elif s.file_type == FileType.SYMBOLIC_LINK:
             absolute_symlink_target_path = os.path.join(save_path, s.symlink_target)
             make_symbolic_link(self.op, path, absolute_symlink_target_path)
@@ -154,7 +193,25 @@ class FileReceiver(GObject.Object):
             self.current_stream.write_bytes(GLib.Bytes(s.chunk), None)
             self.op.progress_tracker.update_progress(length)
 
+    def close_current_file(self):
+        if self.current_stream:
+            self.current_stream.close()
+            self.current_stream = None
+            self.current_gfile = None
+            if self.preserve_perms and self.current_mode > 0:
+                os.chmod(self.current_path, mode=self.current_mode)
+
+    def apply_folder_permissions(self):
+        if self.preserve_perms:
+            while self.folder_permission_change_list:
+                # We added folders from parent->children, this will apply permissions
+                # from child to parent.
+                os.chmod(*self.folder_permission_change_list.pop())
+
     def receive_finished(self):
+        # We left the last (or only) file open
+        self.close_current_file()
+        self.apply_folder_permissions()
         self.op.progress_tracker.finished()
 
 
@@ -183,12 +240,15 @@ def add_file(op, basename, uri, base_uri, info):
             else:
                 relative_symlink_path = symlink_target
 
+    st_mode = info.get_attribute_uint32("unix::mode")
+    file_mode = (st_mode & MODE_MASK) if (st_mode > 0) else 0
+
     if base_uri:
         relative_path = util.relpath_from_uri(uri, base_uri)
     else:
         relative_path = basename
 
-    file = File(uri, basename, relative_path, size, file_type, relative_symlink_path)
+    file = File(uri, basename, relative_path, size, file_type, relative_symlink_path, file_mode)
 
     op.resolved_files.append(file)
     op.total_size += size

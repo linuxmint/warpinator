@@ -148,6 +148,9 @@ def open_save_folder(filename=None):
 def verify_save_folder(transient_for=None):
     return os.access(prefs.get_save_path(), os.R_OK | os.W_OK)
 
+def save_folder_is_native_fs():
+    return True
+
 def have_free_space(size):
     save_file = Gio.File.new_for_path(prefs.get_save_path())
 

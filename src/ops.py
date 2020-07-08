@@ -222,7 +222,7 @@ class ReceiveOp(CommonOp):
         logging.debug("Op: details: %d files, with a size of %s" % (self.total_count, self.size_string))
 
         self.have_space = util.have_free_space(self.total_size)
-        self.existing = util.files_exist(self.top_dir_basenames) and prefs.prevent_overwriting()
+        self.existing = util.files_exist(self.top_dir_basenames)
         self.update_ui_info()
 
     def update_ui_info(self):
