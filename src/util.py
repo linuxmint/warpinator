@@ -445,3 +445,20 @@ class WarpLogFormatter(logging.Formatter):
         result = logging.Formatter.format(self, record)
 
         return result
+
+
+recent_manager = Gtk.RecentManager()
+
+def add_to_recents_if_single_selection(uri_list):
+    if len(uri_list) == 1:
+        try:
+            recent_manager.add_item(uri_list[0])
+        except Exception as e:
+            logging.warning("Could not add '%s' single item to recent files: %s" % e)
+
+def get_recent_chooser_menu():
+    chooser = Gtk.RecentChooserMenu(show_tips=True,
+                                    sort_type=Gtk.RecentSortType.MRU,
+                                    show_not_found=False)
+
+    return chooser

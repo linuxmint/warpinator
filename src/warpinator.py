@@ -478,7 +478,7 @@ class WarpWindow(GObject.Object):
         self.user_clear_ops_button = self.builder.get_object("user_clear_ops_button")
 
         # Send Files button
-        self.recent_menu = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
+        self.recent_menu = util.get_recent_chooser_menu()
         self.recent_menu.connect("item-activated", self.recent_item_selected)
         self.recent_menu.add(Gtk.SeparatorMenuItem(visible=True))
         picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
@@ -1280,7 +1280,7 @@ class WarpApplication(Gtk.Application):
         menu.show_all()
 
     def attach_recent_submenu(self, menu, machine):
-        sub = Gtk.RecentChooserMenu(show_tips=True, sort_type=Gtk.RecentSortType.MRU, show_not_found=False)
+        sub = util.get_recent_chooser_menu()
         sub.connect("item-activated", self.status_icon_recent_item_selected, machine)
         sub.add(Gtk.SeparatorMenuItem(visible=True))
 

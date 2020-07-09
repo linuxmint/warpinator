@@ -433,6 +433,7 @@ class RemoteMachine(GObject.Object):
             self.add_op(op)
             op.prepare_send_info()
 
+        util.add_to_recents_if_single_selection(uri_list)
         self.rpc_call(_send_files, uri_list)
 
     @util._idle
