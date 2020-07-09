@@ -61,13 +61,13 @@ def make_symbolic_link(op, path, target):
 
 # This represents a file to be transferred (this is used by the sender)
 class File:
-    def __init__(self, uri, basename, rel_path, size, file_type, symlink_target_path=None, file_mode=0):
+    def __init__(self, uri, basename, rel_path, size, file_type, symlink_target=None, file_mode=0):
         self.uri = uri
         self.basename = basename
         self.relative_path = rel_path
         self.size = size
         self.file_type = file_type
-        self.symlink_target_path = symlink_target_path
+        self.symlink_target = symlink_target
         self.file_mode = file_mode
 
 class FileSender(GObject.Object):
@@ -91,7 +91,7 @@ class FileSender(GObject.Object):
             elif file.file_type == FileType.SYMBOLIC_LINK:
                 yield warp_pb2.FileChunk(relative_path=file.relative_path,
                                          file_type=file.file_type,
-                                         symlink_target=file.symlink_target_path,
+                                         symlink_target=file.symlink_target,
                                          file_mode=file.file_mode)
             else:
                 stream = None
@@ -177,8 +177,7 @@ class FileReceiver(GObject.Object):
         if s.file_type == FileType.DIRECTORY:
             os.makedirs(path, mode=s.file_mode if (s.file_mode > 0) else 0o777, exist_ok=True)
         elif s.file_type == FileType.SYMBOLIC_LINK:
-            absolute_symlink_target_path = os.path.join(save_path, s.symlink_target)
-            make_symbolic_link(self.op, path, absolute_symlink_target_path)
+            make_symbolic_link(self.op, path, s.symlink_target)
         else:
             if not self.current_gfile:
                 self.current_gfile = Gio.File.new_for_path(path)
@@ -216,7 +215,7 @@ class FileReceiver(GObject.Object):
 
 
 def add_file(op, basename, uri, base_uri, info):
-    relative_symlink_path = None
+    symlink_target = None
 
     # Normal files usually take more disk space than their actual size, so we want that
     # for checking free disk space on the target computer.  However, sparse files can
@@ -231,14 +230,6 @@ def add_file(op, basename, uri, base_uri, info):
 
     if file_type == FileType.SYMBOLIC_LINK:
         symlink_target = info.get_symlink_target()
-        if symlink_target:
-            if symlink_target[0] == "/":
-                symlink_file = Gio.File.new_for_path(symlink_target)
-                relative_symlink_path = util.relpath_from_uri(symlink_file.get_uri(), base_uri)
-                if not relative_symlink_path:
-                    relative_symlink_path = symlink_target
-            else:
-                relative_symlink_path = symlink_target
 
     st_mode = info.get_attribute_uint32("unix::mode")
     file_mode = (st_mode & MODE_MASK) if (st_mode > 0) else 0
@@ -248,7 +239,7 @@ def add_file(op, basename, uri, base_uri, info):
     else:
         relative_path = basename
 
-    file = File(uri, basename, relative_path, size, file_type, relative_symlink_path, file_mode)
+    file = File(uri, basename, relative_path, size, file_type, symlink_target, file_mode)
 
     op.resolved_files.append(file)
     op.total_size += size
@@ -269,7 +260,9 @@ def gather_file_info(op):
         def process_folder(folder_uri, top_dir):
             folder_file = Gio.File.new_for_uri(folder_uri)
 
-            enumerator = folder_file.enumerate_children(infos, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None)
+            enumerator = folder_file.enumerate_children(infos,
+                                                        Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+                                                        None)
             info = enumerator.next_file(None)
 
             while info:
