@@ -281,28 +281,26 @@ def gather_file_info(op):
                 info = enumerator.next_file(None)
 
         # Process the initial list.
-        for uri in uri_list:
-            file = Gio.File.new_for_uri(uri)
-            top_dir_basenames.append(file.get_basename())
+        try:
+            for uri in uri_list:
+                file = Gio.File.new_for_uri(uri)
+                top_dir_basenames.append(file.get_basename())
 
-            try:
                 info = file.query_info(infos, Gio.FileQueryInfoFlags.NONE, None)
-            except GLib.Error as e:
-                error = e
-                break
-            basename = file.get_basename()
-            if len(uri_list) == 1:
-                op.mime_if_single = info.get_content_type()
+                basename = file.get_basename()
+                if len(uri_list) == 1:
+                    op.mime_if_single = info.get_content_type()
 
-            if info and info.get_file_type() == FileType.DIRECTORY:
-                top_dir = file.get_parent().get_uri()
-                add_file(op, basename, uri, None, info)
-                process_folder(uri, top_dir)
-                continue
-            else:
-                add_file(op, basename, uri, None, info)
-
-        op.top_dir_basenames = top_dir_basenames
+                if info and info.get_file_type() == FileType.DIRECTORY:
+                    top_dir = file.get_parent().get_uri()
+                    add_file(op, basename, uri, None, info)
+                    process_folder(uri, top_dir)
+                    continue
+                else:
+                    add_file(op, basename, uri, None, info)
+            op.top_dir_basenames = top_dir_basenames
+        except Exception as e:
+            error = e
 
         return error
 
