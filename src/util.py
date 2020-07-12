@@ -74,6 +74,7 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   STOP_TRANSFER_BY_RECEIVER \
                                   REMOVE_TRANSFER')
 
+last_location = Gio.File.new_for_path(GLib.get_home_dir())
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not
 # both in the same dialog.  This does.
 def create_file_and_folder_picker(dialog_parent=None):
@@ -86,7 +87,18 @@ def create_file_and_folder_picker(dialog_parent=None):
 
     chooser = Gtk.FileChooserWidget(action=Gtk.FileChooserAction.OPEN,
                                     select_multiple=True)
+
+    chooser.set_current_folder_file(last_location)
     chooser.connect("file-activated", lambda chooser: window.response(Gtk.ResponseType.ACCEPT))
+
+    def update_last_location(dialog, response_id, data=None):
+        if response_id != Gtk.ResponseType.ACCEPT:
+            return
+
+        global last_location
+        last_location = chooser.get_current_folder_file()
+
+    window.connect("response", update_last_location)
 
     chooser.show_all()
     window.get_content_area().add(chooser)
