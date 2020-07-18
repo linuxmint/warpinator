@@ -1,8 +1,9 @@
 import os
 import gettext
 import subprocess
+import json
 
-from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
+from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
 from gi.repository import Gtk, Gio, GLib
 
@@ -20,6 +21,8 @@ AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 KEEP_PERMISSIONS_KEY = "keep-permissions"
+NET_IFACE="network-iface"
+USE_FALLBACK_IFACE="fallback-to-available-iface"
 PORT_KEY = "port"
 SHOW_NOTIFICATIONS_KEY = "show-notifications"
 FAVORITES_KEY = "favorites"
@@ -28,6 +31,10 @@ SERVER_THREAD_POOL_SIZE_KEY = "server-thread-pool-size"
 RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+
+#### One-time initializers
+if prefs_settings.get_string(NET_IFACE) == "":
+    prefs_settings.set_string(NET_IFACE, util.get_default_net_interface())
 
 if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     default = Gio.File.new_for_path(os.path.join(GLib.get_home_dir(), "Warpinator"))
@@ -38,6 +45,13 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
         default = Gio.File.new_for_path(GLib.get_home_dir())
 
     prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
+####
+
+def get_net_iface():
+    return prefs_settings.get_string(NET_IFACE)
+
+def allow_fallback_iface():
+    return prefs_settings.get_boolean(USE_FALLBACK_IFACE)
 
 def get_port():
     return prefs_settings.get_int(PORT_KEY)
@@ -159,6 +173,39 @@ class Preferences():
                                 entry_size_group=entry_size_group,
                                 button_size_group=button_size_group)
 
+        section.add_row(widget)
+
+        iface_names = util.get_net_interface_list()
+
+        try:
+            lshw = json.loads(subprocess.getoutput("lshw -sanitize -class network -json 2>/dev/null"))
+        except Exception as e:
+            print(e)
+            lshw = None
+
+        options = []
+
+        for name in iface_names:
+            if lshw:
+                for entry in lshw:
+                    if entry["logicalname"] == name:
+                        try:
+                            options.append((name, "%s - %s" % (name, entry["product"])))
+                        except:
+                            options.append((name, "%s - %s" % (name, entry["description"])))
+            else:
+                options.append((name, name))
+
+        widget = GSettingsComboBox(_("Network interface to use"),
+                                   "org.x.warpinator.preferences",
+                                   "network-iface",
+                                   options,
+                                   valtype=str)
+
+        section.add_row(widget)
+
+        widget = GSettingsSwitch(_("Use the default network interface if the preferred one is not found"),
+                                 PREFS_SCHEMA, USE_FALLBACK_IFACE)
         section.add_row(widget)
 
         widget = PortSpinButton(_("Incoming port for transfers"),

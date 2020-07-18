@@ -228,7 +228,7 @@ class AuthManager(GObject.Object):
 
     def get_server_creds(self):
         logging.debug("Auth: Creating server credentials")
-        key, cert = self.make_key_cert_pair(self.hostname, util.get_ip())
+        key, cert = self.make_key_cert_pair(self.hostname, util.get_preferred_ip())
 
         try:
             self.save_private_key(key)
@@ -397,7 +397,7 @@ class CertServer():
         try:
             server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             server_sock.settimeout(1.0)
-            server_sock.bind((util.get_ip(), prefs.get_port()))
+            server_sock.bind((util.get_preferred_ip(), prefs.get_port()))
         except socket.error as e:
             logging.critical("Could not create udp socket for cert requests: %s" % str(e))
             return

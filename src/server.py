@@ -47,7 +47,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.service_name = None
         self.service_ident = None
 
-        self.ip_address = util.get_ip()
+        self.ip_address = util.get_preferred_ip()
         self.port = prefs.get_port()
 
         self.remote_machines = {}
@@ -75,9 +75,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         # momentarily, and the unregister properly, so remotes get notified.
         # Then we'll do it again without the flush property for the real
         # connection.
+
         init_info = wrappers.new_service_info(SERVICE_TYPE,
                                               self.service_name,
-                                              socket.inet_aton(util.get_ip()),
+                                              socket.inet_aton(self.ip_address),
                                               prefs.get_port(),
                                               properties={ 'hostname': util.get_hostname(),
                                                            'type': 'flush' })
@@ -89,7 +90,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.info = wrappers.new_service_info(SERVICE_TYPE,
                                               self.service_name,
-                                              socket.inet_aton(util.get_ip()),
+                                              socket.inet_aton(self.ip_address),
                                               prefs.get_port(),
                                               properties={ 'hostname': util.get_hostname(),
                                                            'type': 'real' })
@@ -247,7 +248,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         pair = auth.get_singleton().get_server_creds()
         server_credentials = grpc.ssl_server_credentials((pair,))
 
-        self.server.add_secure_port('[::]:%d' % prefs.get_port(), server_credentials)
+        self.server.add_secure_port('%s:%d' % (self.ip_address, prefs.get_port()),
+                                    server_credentials)
         self.server.start()
 
         auth.get_singleton().restart_cert_server()

@@ -8,7 +8,9 @@ import logging
 import os
 from concurrent.futures import ThreadPoolExecutor
 
-from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
+import gi
+gi.require_version('NM', '1.0')
+from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio, NM
 
 import prefs
 import config
@@ -196,7 +198,7 @@ def check_ml(fid):
     on_ml = threading.current_thread() == threading.main_thread()
     print("%s on mainloop: " % fid, on_ml)
 
-def get_ip():
+def get_default_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         try:
             s.connect(("8.8.8.8", 80))
@@ -205,6 +207,23 @@ def get_ip():
             return "0.0.0.0"
         ans = s.getsockname()[0]
         return ans
+
+def get_preferred_ip():
+    iface_name = prefs.get_net_iface()
+
+    try:
+        pref_network = netifaces.ifaddresses(prefs.get_net_iface())
+        ip = pref_network[netifaces.AF_INET][0]["addr"]
+        return ip
+    except (KeyError, ValueError) as e:
+        logging.critical("Preferred network '%s' not found." % iface_name)
+
+        if prefs.allow_fallback_iface():
+            logging.critical("Using default network")
+
+            return get_default_ip()
+
+    return "0.0.0.0"
 
 def get_my_network():
     for name in netifaces.interfaces():
@@ -216,13 +235,39 @@ def get_my_network():
             continue
         for address in addresses:
             try:
-                if address["addr"] == get_ip():
+                if address["addr"] == get_preferred_ip():
                     iface = ipaddress.IPv4Interface("%s/%s" % (address["addr"], address["netmask"]))
                     return iface.network
             except:
                 pass
 
     return None
+
+def get_net_interface_list():
+    filtered = []
+
+    for name in netifaces.interfaces():
+        iface = netifaces.ifaddresses(name)
+        addresses = iface[netifaces.AF_LINK]
+        if addresses[0]["addr"] == "00:00:00:00:00:00":
+            continue
+        filtered.append(name)
+
+    return filtered
+
+def get_default_net_interface():
+    ip = get_default_ip()
+    iface_names = get_net_interface_list()
+
+    for name in iface_names:
+        iface = netifaces.ifaddresses(name)
+        addresses = iface[netifaces.AF_INET]
+        for address in addresses:
+            if address["addr"] == ip:
+                return name
+
+    return None
+
 
 def same_subnet(other_ip):
     my_net = get_my_network()
@@ -390,32 +435,47 @@ class NetworkMonitor(GObject.Object):
 
     def __init__(self):
         GObject.Object.__init__(self)
-        self.online = False
-        self.current_ip = None
+        logging.debug("Starting network monitor")
+        self.nm_client = None
+        self.sleep_timer = None
 
-        self.sleep_timer = threading.Event()
-
-        ip = get_ip()
-
+        ip = get_preferred_ip()
         self.current_ip = ip
         self.online = ip != "0.0.0.0"
 
+        NM.Client.new_async(None, self.nm_client_acquired);
+
+    def nm_client_acquired(self, source, res, data=None):
+        try:
+            self.nm_client = NM.Client.new_finish(res)
+            self.nm_client.connect("notify::connectivity", self.nm_connectivity_changed)
+        except GLib.Error as e:
+            logging.critical("NetworkMonitor: Could not create NM Client, using polling instead: %s" % e.message)
+            self.sleep_timer = threading.Event()
+            self.start_polling()
+
+    def nm_connectivity_changed(self, client, pspec, data=None):
+        self.check_online()
+
     @_async
-    def start(self):
-        logging.debug("Starting network monitor")
+    def start_polling(self):
         while not self.sleep_timer.is_set():
             self.check_online()
             self.sleep_timer.wait(4)
 
     def stop(self):
         logging.debug("Stopping network monitor")
-        self.sleep_timer.set()
+        if self.nm_client != None:
+            self.nm_client.disconnect_by_func(self.nm_connectivity_changed)
+            self.nm_client = None
+        else:
+            self.sleep_timer.set()
 
     def check_online(self):
         old_online = self.online
         old_ip = self.current_ip
 
-        self.current_ip = get_ip()
+        self.current_ip = get_preferred_ip()
         self.online = self.current_ip != "0.0.0.0"
 
         if (self.online != old_online) or (self.current_ip != old_ip):
