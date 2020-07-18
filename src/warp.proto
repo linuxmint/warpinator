@@ -9,7 +9,8 @@ syntax = "proto3";
 
 service Warp {
     // Sender methods
-    rpc CheckDuplexConnection(LookupName) returns (HaveDuplex) {}
+    rpc CheckDuplexConnection(LookupName) returns (HaveDuplex) {} // Old polling-style duplex check
+    rpc WaitForDuplexConnection(LookupName) returns (HaveDuplex) {} // New non-polling duplex check
     rpc GetRemoteMachineInfo(LookupName) returns (RemoteMachineInfo) {}
     rpc GetRemoteMachineAvatar(LookupName) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}

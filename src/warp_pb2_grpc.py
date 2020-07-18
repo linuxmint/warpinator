@@ -25,6 +25,11 @@ class WarpStub(object):
         request_serializer=warp__pb2.LookupName.SerializeToString,
         response_deserializer=warp__pb2.HaveDuplex.FromString,
         )
+    self.WaitForDuplexConnection = channel.unary_unary(
+        '/Warp/WaitForDuplexConnection',
+        request_serializer=warp__pb2.LookupName.SerializeToString,
+        response_deserializer=warp__pb2.HaveDuplex.FromString,
+        )
     self.GetRemoteMachineInfo = channel.unary_unary(
         '/Warp/GetRemoteMachineInfo',
         request_serializer=warp__pb2.LookupName.SerializeToString,
@@ -85,6 +90,13 @@ class WarpServicer(object):
   def CheckDuplexConnection(self, request, context):
     """Sender methods
     """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def WaitForDuplexConnection(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -157,6 +169,11 @@ def add_WarpServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'CheckDuplexConnection': grpc.unary_unary_rpc_method_handler(
           servicer.CheckDuplexConnection,
+          request_deserializer=warp__pb2.LookupName.FromString,
+          response_serializer=warp__pb2.HaveDuplex.SerializeToString,
+      ),
+      'WaitForDuplexConnection': grpc.unary_unary_rpc_method_handler(
+          servicer.WaitForDuplexConnection,
           request_deserializer=warp__pb2.LookupName.FromString,
           response_serializer=warp__pb2.HaveDuplex.SerializeToString,
       ),

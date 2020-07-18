@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='warp.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"A\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"o\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r2\xf3\x03\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12/\n\x17\x41\x63\x63\x65ptTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"A\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"o\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r2\xaa\x04\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x35\n\x17WaitForDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12/\n\x17\x41\x63\x63\x65ptTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x62\x06proto3')
 )
 
 
@@ -507,7 +507,7 @@ _WARP = _descriptor.ServiceDescriptor(
   index=0,
   options=None,
   serialized_start=671,
-  serialized_end=1170,
+  serialized_end=1225,
   methods=[
   _descriptor.MethodDescriptor(
     name='CheckDuplexConnection',
@@ -519,9 +519,18 @@ _WARP = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='WaitForDuplexConnection',
+    full_name='Warp.WaitForDuplexConnection',
+    index=1,
+    containing_service=None,
+    input_type=_LOOKUPNAME,
+    output_type=_HAVEDUPLEX,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='GetRemoteMachineInfo',
     full_name='Warp.GetRemoteMachineInfo',
-    index=1,
+    index=2,
     containing_service=None,
     input_type=_LOOKUPNAME,
     output_type=_REMOTEMACHINEINFO,
@@ -530,7 +539,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetRemoteMachineAvatar',
     full_name='Warp.GetRemoteMachineAvatar',
-    index=2,
+    index=3,
     containing_service=None,
     input_type=_LOOKUPNAME,
     output_type=_REMOTEMACHINEAVATAR,
@@ -539,7 +548,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ProcessTransferOpRequest',
     full_name='Warp.ProcessTransferOpRequest',
-    index=3,
+    index=4,
     containing_service=None,
     input_type=_TRANSFEROPREQUEST,
     output_type=_VOIDTYPE,
@@ -548,7 +557,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='PauseTransferOp',
     full_name='Warp.PauseTransferOp',
-    index=4,
+    index=5,
     containing_service=None,
     input_type=_OPINFO,
     output_type=_VOIDTYPE,
@@ -557,7 +566,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='AcceptTransferOpRequest',
     full_name='Warp.AcceptTransferOpRequest',
-    index=5,
+    index=6,
     containing_service=None,
     input_type=_OPINFO,
     output_type=_VOIDTYPE,
@@ -566,7 +575,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='StartTransfer',
     full_name='Warp.StartTransfer',
-    index=6,
+    index=7,
     containing_service=None,
     input_type=_OPINFO,
     output_type=_FILECHUNK,
@@ -575,7 +584,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='CancelTransferOpRequest',
     full_name='Warp.CancelTransferOpRequest',
-    index=7,
+    index=8,
     containing_service=None,
     input_type=_OPINFO,
     output_type=_VOIDTYPE,
@@ -584,7 +593,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='StopTransfer',
     full_name='Warp.StopTransfer',
-    index=8,
+    index=9,
     containing_service=None,
     input_type=_STOPINFO,
     output_type=_VOIDTYPE,
@@ -593,7 +602,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='Ping',
     full_name='Warp.Ping',
-    index=9,
+    index=10,
     containing_service=None,
     input_type=_LOOKUPNAME,
     output_type=_VOIDTYPE,

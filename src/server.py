@@ -13,6 +13,7 @@ import grpc
 import warp_pb2
 import warp_pb2_grpc
 
+import config
 import auth
 import remote
 import prefs
@@ -39,7 +40,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         "server-started": (GObject.SignalFlags.RUN_LAST, None, ()),
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
-    def __init__(self):
+    def __init__(self, iface, ip, port):
         threading.Thread.__init__(self, name="server-thread")
         super(Server, self).__init__()
         GObject.Object.__init__(self)
@@ -47,12 +48,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.service_name = None
         self.service_ident = None
 
-        self.ip_address = util.get_ip()
-        self.port = prefs.get_port()
+        self.ip_address = ip
+        self.port = port
+        self.iface = iface
 
         self.remote_machines = {}
 
         self.server_thread_keepalive = threading.Event()
+        self.duplex_check_abort = threading.Event()
 
         self.server = None
         self.browser = None
@@ -75,12 +78,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         # momentarily, and the unregister properly, so remotes get notified.
         # Then we'll do it again without the flush property for the real
         # connection.
+
         init_info = wrappers.new_service_info(SERVICE_TYPE,
                                               self.service_name,
-                                              socket.inet_aton(util.get_ip()),
-                                              prefs.get_port(),
+                                              socket.inet_aton(self.ip_address),
+                                              self.port,
                                               properties={ 'hostname': util.get_hostname(),
-                                                           'type': 'flush' })
+                                                           'type': 'flush',
+                                                           'warp_version': config.VERSION })
 
         self.zeroconf.register_service(init_info)
         time.sleep(3)
@@ -89,10 +94,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.info = wrappers.new_service_info(SERVICE_TYPE,
                                               self.service_name,
-                                              socket.inet_aton(util.get_ip()),
-                                              prefs.get_port(),
+                                              socket.inet_aton(self.ip_address),
+                                              self.port,
                                               properties={ 'hostname': util.get_hostname(),
-                                                           'type': 'real' })
+                                                           'type': 'real',
+                                                           'warp_version': config.VERSION })
 
         self.zeroconf.register_service(self.info)
         self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
@@ -133,7 +139,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
             remote_ip = socket.inet_ntoa(info.addresses[0] if wrappers.zc_new_api else info.address)
 
-            if not util.same_subnet(remote_ip):
+            if not util.same_subnet(self.ip_address, remote_ip):
                 if remote_ip != self.ip_address:
                     logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ip))
                 return
@@ -160,7 +166,21 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     logging.critical(">>> Discovery: unable to authenticate with %s (%s:%d)"
                                          % (remote_hostname, remote_ip, info.port))
                     return False
+
+                # This check isn't instant.  Make sure this server is still valid before continuing.
+                if self.server_thread_keepalive.is_set():
+                    logging.warning(">>> Discovery: server shutting down, ignoring remote cert result %s (%s:%d)"
+                                         % (remote_hostname, remote_ip, info.port))
+                    return False
+
                 return True
+
+            version = "1.0.9"
+
+            try:
+                version = info.properties[b"warp_version"].decode()
+            except KeyError:
+                pass
 
             try:
                 machine = self.remote_machines[ident]
@@ -186,6 +206,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 machine.hostname = remote_hostname
                 machine.ip_address = remote_ip
                 machine.port = info.port
+                machine.version = version
             except KeyError:
                 if not check_cert():
                     return
@@ -217,7 +238,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                                display_hostname,
                                                remote_ip,
                                                info.port,
-                                               self.service_ident)
+                                               self.service_ident,
+                                               version)
 
                 self.remote_machines[ident] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
@@ -237,32 +259,39 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             machine.start_remote_thread()
 
     def run(self):
-        logging.debug("Server: starting server")
+        logging.debug("Server: starting server on %s (%s)" % (self.ip_address, self.iface))
 
         util.initialize_rpc_threadpool()
 
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=prefs.get_server_pool_max_threads()), options=None)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
-        pair = auth.get_singleton().get_server_creds()
+        pair = auth.get_singleton().get_server_creds(self.ip_address)
         server_credentials = grpc.ssl_server_credentials((pair,))
 
-        self.server.add_secure_port('[::]:%d' % prefs.get_port(), server_credentials)
+        self.server.add_secure_port('%s:%d' % (self.ip_address, self.port),
+                                    server_credentials)
         self.server.start()
 
-        auth.get_singleton().restart_cert_server()
-
         self.start_zeroconf()
-        self.server_thread_keepalive.clear()
 
+        self.server_thread_keepalive.clear()
         self.idle_emit("server-started")
+
+        logging.info("Server: ACTIVE")
 
         # **** RUNNING ****
         while not self.server_thread_keepalive.is_set():
             self.server_thread_keepalive.wait(10)
         # **** STOPPING ****
 
-        logging.debug("Server: stopping server")
+        logging.debug("Server: stopping server on %s (%s)" % (self.ip_address, self.iface))
+
+        logging.debug("Server: stopping authentication server")
+        auth.get_singleton().shutdown()
+
+        logging.debug("Server: stopping discovery and advertisement")
+        self.zeroconf.close()
 
         remote_machines = list(self.remote_machines.values())
         for remote in remote_machines:
@@ -274,12 +303,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         remote_machines = None
 
-        logging.debug("Server: stopping authentication server")
-        auth.get_singleton().shutdown()
-
-        logging.debug("Server: stopping discovery and advertisement")
-        self.zeroconf.close()
-
         logging.debug("Server: terminating server")
         self.server.stop(grace=2).wait()
 
@@ -290,6 +313,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         logging.debug("Server: server stopped")
 
     def shutdown(self):
+        self.duplex_check_abort.set()
         self.server_thread_keepalive.set()
 
     def remote_status_changed(self, remote):
@@ -331,6 +355,22 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             pass
 
         return warp_pb2.HaveDuplex(response=response)
+
+    def WaitForDuplexConnection(self, request, contect):
+        logging.debug("Server RPC: WaitForDuplexConnection from '%s'" % request.readable_name)
+
+        try:
+            remote = self.remote_machines[request.id]
+        except KeyError:
+            return warp_pb2.HaveDuplex(response=False)
+
+        while not self.duplex_check_abort.is_set():
+            if remote.status in (RemoteStatus.AWAITING_DUPLEX, RemoteStatus.ONLINE):
+                return warp_pb2.HaveDuplex(repsonse=True)
+            else:
+                time.sleep(1)
+
+        return warp_pb2.HaveDuplex(response=False)
 
     def GetRemoteMachineInfo(self, request, context):
         logging.debug("Server RPC: GetRemoteMachineInfo from '%s'" % request.readable_name)

@@ -44,6 +44,14 @@
       <default>true</default>
       <summary>Preserve the original user permissions of files being received.</summary>
     </key>
+    <key name="network-iface" type="s">
+      <default>''</default>
+      <summary>Name of network interface the service should use.</summary>
+    </key>
+    <key name="fallback-to-available-iface" type="b">
+      <default>true</default>
+      <summary>If the preferred network is unavailable, try to use the default active network, if one exists.</summary>
+    </key>
     <key name="port" type="i">
       <default>42000</default>
       <summary>Incoming port to use (this needs to be allowed by any firewall)</summary>

@@ -8,7 +8,9 @@ import logging
 import os
 from concurrent.futures import ThreadPoolExecutor
 
-from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
+import gi
+gi.require_version('NM', '1.0')
+from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio, NM
 
 import prefs
 import config
@@ -196,7 +198,7 @@ def check_ml(fid):
     on_ml = threading.current_thread() == threading.main_thread()
     print("%s on mainloop: " % fid, on_ml)
 
-def get_ip():
+def get_default_ip():
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         try:
             s.connect(("8.8.8.8", 80))
@@ -206,7 +208,27 @@ def get_ip():
         ans = s.getsockname()[0]
         return ans
 
-def get_my_network():
+def get_ip_for_iface(iface_name):
+    pref_network = netifaces.ifaddresses(iface_name)
+    ip = pref_network[netifaces.AF_INET][0]["addr"]
+    return ip
+
+def get_preferred_ip():
+    iface_name = prefs.get_net_iface()
+
+    try:
+        return get_ip_for_iface(iface_name)
+    except (KeyError, ValueError) as e:
+        logging.critical("Preferred network '%s' not found." % iface_name)
+
+        if prefs.allow_fallback_iface():
+            logging.critical("Using default network")
+
+            return get_default_ip()
+
+    return "0.0.0.0"
+
+def get_my_network(ip):
     for name in netifaces.interfaces():
         net = netifaces.ifaddresses(name)
 
@@ -216,7 +238,7 @@ def get_my_network():
             continue
         for address in addresses:
             try:
-                if address["addr"] == get_ip():
+                if address["addr"] == ip:
                     iface = ipaddress.IPv4Interface("%s/%s" % (address["addr"], address["netmask"]))
                     return iface.network
             except:
@@ -224,8 +246,43 @@ def get_my_network():
 
     return None
 
-def same_subnet(other_ip):
-    my_net = get_my_network()
+def get_net_interface_list():
+    filtered = []
+
+    for name in netifaces.interfaces():
+        iface = netifaces.ifaddresses(name)
+
+        try:
+            addresses = iface[netifaces.AF_LINK]
+            if addresses[0]["addr"] == "00:00:00:00:00:00":
+                continue
+        except KeyError:
+            continue
+
+        filtered.append(name)
+
+    return filtered
+
+def get_default_net_interface():
+    ip = get_default_ip()
+    iface_names = get_net_interface_list()
+
+    for name in iface_names:
+        iface = netifaces.ifaddresses(name)
+
+        try:
+            addresses = iface[netifaces.AF_INET]
+        except KeyError as e:
+            continue
+
+        for address in addresses:
+            if address["addr"] == ip:
+                return name
+
+    return None
+
+def same_subnet(my_ip, other_ip):
+    my_net = get_my_network(my_ip)
 
     if my_net == None:
         # We're more likely to have failed here than to have found something on a different subnet.
@@ -382,49 +439,6 @@ class CairoSurfaceLoader(GObject.Object):
                 return surface
         except:
             self.emit("error")
-
-class NetworkMonitor(GObject.Object):
-    __gsignals__ = {
-        "state-changed": (GObject.SignalFlags.RUN_LAST, None, (bool,))
-    }
-
-    def __init__(self):
-        GObject.Object.__init__(self)
-        self.online = False
-        self.current_ip = None
-
-        self.sleep_timer = threading.Event()
-
-        ip = get_ip()
-
-        self.current_ip = ip
-        self.online = ip != "0.0.0.0"
-
-    @_async
-    def start(self):
-        logging.debug("Starting network monitor")
-        while not self.sleep_timer.is_set():
-            self.check_online()
-            self.sleep_timer.wait(4)
-
-    def stop(self):
-        logging.debug("Stopping network monitor")
-        self.sleep_timer.set()
-
-    def check_online(self):
-        old_online = self.online
-        old_ip = self.current_ip
-
-        self.current_ip = get_ip()
-        self.online = self.current_ip != "0.0.0.0"
-
-        if (self.online != old_online) or (self.current_ip != old_ip):
-            self.emit_state_changed()
-
-    @_idle
-    def emit_state_changed(self):
-        logging.debug("Network state changed: online = %s" % str(self.online))
-        self.emit("state-changed", self.online)
 
 class AboutDialog():
     def __init__(self, parent):

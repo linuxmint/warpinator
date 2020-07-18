@@ -38,7 +38,7 @@ class RemoteMachine(GObject.Object):
         'remote-status-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self, ident, hostname, display_hostname, ip, port, local_ident):
+    def __init__(self, ident, hostname, display_hostname, ip, port, local_ident, version):
         GObject.Object.__init__(self)
         self.ip_address = ip
         self.port = port
@@ -50,6 +50,8 @@ class RemoteMachine(GObject.Object):
         self.display_name = ""
         self.favorite = prefs.get_is_favorite(self.ident)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
+
+        self.remote_version = version
 
         self.avatar_surface = None
         self.transfer_ops = []
@@ -69,7 +71,7 @@ class RemoteMachine(GObject.Object):
         self.status_idle_source_id = 0
         self.status_lock = threading.Lock()
 
-        self.ping_timer = threading.Event()
+        self.remote_keepalive = threading.Event()
 
         prefs.prefs_settings.connect("changed::favorites", self.update_favorite_status)
 
@@ -83,7 +85,13 @@ class RemoteMachine(GObject.Object):
         self.remote_thread.start()
 
     def run(self):
-        self.ping_timer.clear()
+        if self.remote_version == "1.0.9":
+            self.run_legacy_connect()
+        else:
+            self.run_connect()
+
+    def run_legacy_connect(self):
+        self.remote_keepalive.clear()
 
         self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
 
@@ -108,10 +116,10 @@ class RemoteMachine(GObject.Object):
                     self.set_remote_status(RemoteStatus.UNREACHABLE)
                     future.cancel()
 
-                    if not self.ping_timer.is_set():
+                    if not self.remote_keepalive.is_set():
                         logging.debug("Remote: Unable to establish secure connection with %s (%s:%d). Trying again in %ds"
                                           % (self.display_hostname, self.ip_address, self.port, CHANNEL_RETRY_WAIT_TIME))
-                        self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
+                        self.remote_keepalive.wait(CHANNEL_RETRY_WAIT_TIME)
                         return True # run_secure_loop()
 
                     return False # run_secure_loop()
@@ -119,7 +127,7 @@ class RemoteMachine(GObject.Object):
                 duplex_fail_counter = 0
                 one_ping = False # A successful duplex response lets us finish setting things up.
 
-                while not self.ping_timer.is_set():
+                while not self.remote_keepalive.is_set():
 
                     if self.busy:
                         logging.debug("Remote Ping: Skipping keepalive ping to %s (%s:%d) (busy)"
@@ -151,22 +159,22 @@ class RemoteMachine(GObject.Object):
                                     if duplex_fail_counter > DUPLEX_MAX_FAILURES:
                                         logging.debug("Remote: CheckDuplexConnection to %s (%s:%d) failed too many times"
                                                           % (self.display_hostname, self.ip_address, self.port))
-                                        self.ping_timer.wait(CHANNEL_RETRY_WAIT_TIME)
+                                        self.remote_keepalive.wait(CHANNEL_RETRY_WAIT_TIME)
                                         return True
                         except grpc.RpcError as e:
                             logging.debug("Remote: Ping failed, shutting down %s (%s:%d)"
                                               % (self.display_hostname, self.ip_address, self.port))
                             break
 
-                    self.ping_timer.wait(CONNECTED_PING_TIME if self.status == RemoteStatus.ONLINE else DUPLEX_WAIT_PING_TIME)
+                    self.remote_keepalive.wait(CONNECTED_PING_TIME if self.status == RemoteStatus.ONLINE else DUPLEX_WAIT_PING_TIME)
 
                 # This is reached by the RpcError break above.  If the remote is still discoverable, start
                 # the secure loop over.  This could have happened as a result of a quick disco/reconnect,
                 # And we don't notice until it has already come back. In this case, try a new connection.
-                if self.has_zc_presence and not self.ping_timer.is_set():
+                if self.has_zc_presence and not self.remote_keepalive.is_set():
                     return True # run_secure_loop()
 
-                # The ping timer has been triggered, this is an orderly shutdown.
+                # The remote keepalive has been triggered, this is an orderly shutdown.
                 return False # run_secure_loop()
 
         try:
@@ -177,10 +185,101 @@ class RemoteMachine(GObject.Object):
                                  % (self.display_hostname, self.ip_address, self.port, e))
 
         self.set_remote_status(RemoteStatus.OFFLINE)
-        self.run_thread_alive = False
+
+    def run_connect(self):
+        self.remote_keepalive.clear()
+
+        self.emit_machine_info_changed() # Let's make sure the button doesn't have junk in it if we fail to connect.
+
+        logging.debug("Remote: Attempting to connect to %s (%s)" % (self.display_hostname, self.ip_address))
+
+        self.set_remote_status(RemoteStatus.INIT_CONNECTING)
+
+        cert = auth.get_singleton().load_cert(self.hostname, self.ip_address)
+        creds = grpc.ssl_channel_credentials(cert)
+
+        with grpc.secure_channel("%s:%d" % (self.ip_address, self.port), creds) as channel:
+            future = grpc.channel_ready_future(channel)
+
+            try:
+                # blocks remote thread
+                future.result(timeout=4)
+                self.stub = warp_pb2_grpc.WarpStub(channel)
+                channel.subscribe(self.channel_state_changed)
+
+                self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
+
+                duplex_future = self.check_duplex_connection()
+
+                while not duplex_future.done() or not self.remote_keepalive.is_set():
+                    self.remote_keepalive.wait(CHANNEL_RETRY_WAIT_TIME)
+
+                if self.remote_keepalive.is_set():
+                    return # ????
+
+                logging.debug("Remote: Connected to %s (%s:%d)"
+                                  % (self.display_hostname, self.ip_address, self.port))
+
+                self.set_remote_status(RemoteStatus.ONLINE)
+                self.rpc_call(self.update_remote_machine_info)
+                self.rpc_call(self.update_remote_machine_avatar)
+
+                while not self.remote_keepalive.is_set():
+                    self.remote_keepalive.wait(CONNECTED_PING_TIME)
+
+            except grpc.FutureTimeoutError:
+                self.set_remote_status(RemoteStatus.UNREACHABLE)
+                future.cancel()
+
+                # This is reached by the RpcError break above.  If the remote is still discoverable, start
+                # the secure loop over.  This could have happened as a result of a quick disco/reconnect,
+                # And we don't notice until it has already come back. In this case, try a new connection.
+                if self.has_zc_presence and not self.remote_keepalive.is_set():
+                    return True # run_secure_loop()
+
+        self.set_remote_status(RemoteStatus.OFFLINE)
+
+    def channel_state_changed(state):
+        print("State changed %s: %s" % (self.display_hostname, state));
+        if self.status == RemoteStatus.ONLINE:
+            print("Terminating")
+            self.remote_keepalive.set()
 
     def shutdown(self):
-        self.ping_timer.set()
+        self.remote_keepalive.set()
+
+        # This is called by server just before running start_remote_thread, so the first time
+        # self.remote_thread will be None.
+        try:
+            self.remote_thread.join(10)
+        except AttributeError:
+            pass
+
+        self.remote_thread = None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def channel_state_changed(state):
+        print("State changed %s: %s" % (self.display_hostname, state));
+        if self.status == RemoteStatus.ONLINE:
+            print("Terminating")
+            self.remote_keepalive.set()
+
+    def shutdown(self):
+        self.remote_keepalive.set()
 
         # This is called by server just before running start_remote_thread, so the first time
         # self.remote_thread will be None.
@@ -254,6 +353,14 @@ class RemoteMachine(GObject.Object):
                                                                   readable_name=util.get_hostname()))
 
         return ret.response
+
+    def wait_for_duplex_connection(self):
+        logging.debug("Remote: Waiting for duplex with '%s'" % self.display_hostname)
+
+        future = self.stub.WaitForDuplexConnection.future(warp_pb2.LookupName(id=self.local_ident,
+                                                                              readable_name=util.get_hostname()))
+
+        return future
 
     # Run in thread pool
     def update_remote_machine_info(self):

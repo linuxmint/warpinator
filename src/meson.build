@@ -19,6 +19,7 @@ config_py = configure_file(
 libexec_py = [
   config_py,
   'auth.py',
+  'networkmonitor.py',
   'notifications.py',
   'ops.py',
   'prefs.py',
