@@ -1,16 +1,43 @@
-#### Ubuntu 20.04, Debian Buster (and LMDE4):
+## How to build and install
+________
+#### Mint 20, LMDE 4:
+```
+sudo apt-get install warpinator
+```
 
-Use dpkg-buildpackage, the python3-grpc-tools and python3-grpcio versions in those repos are fine
+#### Ubuntu 20.04, related:
+```
+# Install build dependencies listed below, note minimum versions:
+sudo apt-get install python3-grpc-tools python3-grpcio
 
-#### Mint 19.x and Ubuntu Bionic (18.04) users
+# Clone this repo:
+git clone https://github.com/linuxmint/warpinator.git
 
-Add this PPA to satisfy dependencies (for the time being):
+# Enter the folder, specify version:
+cd warpinator
 
+# Check out appropriate branch (1.0.6 is current official, master is development)
+git checkout 1.0.6
+
+# Try to build. If this fails, it's probably due to missing dependencies.
+# Take note of these packages, install them using apt-get:
+dpkg-buildpackage --no-sign
+
+# Once that succeeds, install:
+cd ..
+sudo dpkg -i *warp*.deb
+
+# If this fails, make note of missing runtime dependencies (check list below),
+# install them, repeat previous command (apt-get install -f may also work).
+```
+##### Note for Mint 19.x and Ubuntu Bionic (18.04) users:
+
+Add this PPA to satisfy dependencies, then you can follow steps above:
 <https://launchpad.net/~clementlefebvre/+archive/ubuntu/grpc?field.series_filter=bionic>
 
-#### Otherwise,
+#### Otherwise (and this is valid anywhere if you want to avoid packaging):
 ```
-meson builddir --prefix=/usr  (I think it needs to be /usr for gobject introspection to work).
+meson builddir --prefix=/usr  (This is typical).
 ninja -C builddir
 sudo ninja -C builddir install
 ```
@@ -37,4 +64,3 @@ _____
 ```
 pip3 install grpcio grpcio-tools
 ```
-
