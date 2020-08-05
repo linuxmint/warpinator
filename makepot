@@ -6,3 +6,5 @@ xgettext --package-name=warpinator --language=Glade --join-existing --add-commen
 xgettext --package-name=warpinator --language=Python -c --join-existing --keyword=_ --keyword=N_ --output=warpinator.pot src/*.py
 xgettext --package-name=warpinator --language=Desktop --join-existing --add-comments \
           -k --keyword=Comment --output=warpinator.pot data/warpinator.desktop.in
+xgettext --package-name=warpinator --its=/usr/share/gettext/its/polkit.its --join-existing --add-comments \
+         --output=warpinator.pot data/org.x.warpinator.policy.in.in
