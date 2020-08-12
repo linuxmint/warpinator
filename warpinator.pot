@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-06 14:20+0100\n"
+"POT-Creation-Date: 2020-08-13 20:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
+#: resources/main-window.ui:33 src/util.py:421
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:6
 msgid "Send and Receive Files across the Network"
 msgstr ""
 
@@ -333,7 +335,7 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr ""
 
-#: src/server.py:458
+#: src/server.py:460
 msgid "An error occurred on the remote machine"
 msgstr ""
 
@@ -349,37 +351,37 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: src/util.py:271
+#: src/util.py:273
 msgid "A few seconds remaining"
 msgstr ""
 
-#: src/util.py:274
+#: src/util.py:276
 #, python-format
 msgid "%d seconds remaining"
 msgstr ""
 
-#: src/util.py:278 src/util.py:286
+#: src/util.py:280 src/util.py:288
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:285
+#: src/util.py:287
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:290
+#: src/util.py:292
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:415 src/warpinator.py:506
+#: src/util.py:417 src/warpinator.py:506
 msgid "About"
 msgstr ""
 
@@ -461,11 +463,11 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/warpinator.py:484 src/warpinator.py:1286
+#: src/warpinator.py:484 src/warpinator.py:1287
 msgid "Browse..."
 msgstr ""
 
-#: src/warpinator.py:498 src/warpinator.py:1237
+#: src/warpinator.py:498 src/warpinator.py:1238
 msgid "Open save folder"
 msgstr ""
 
@@ -473,7 +475,7 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: src/warpinator.py:510 src/warpinator.py:1240
+#: src/warpinator.py:510 src/warpinator.py:1241
 msgid "Quit"
 msgstr ""
 
@@ -497,6 +499,29 @@ msgstr ""
 msgid "Waiting for two-way connection"
 msgstr ""
 
-#: src/warpinator.py:1272
+#: src/warpinator.py:1273
 msgid "Send to favorites"
+msgstr ""
+
+#: data/org.x.warpinator.policy.in.in:12
+msgid "Open a firewall port for Warpinator"
+msgstr ""
+
+#: data/org.x.warpinator.policy.in.in:13
+msgid "To modify firewall settings, you need to authenticate."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:5
+msgid "Warpinator"
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:8
+msgid ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and share files quickly and securely."
+msgstr ""
+
+#. DO NOT TRANSLATE Linux Mint
+#: data/org.x.Warpinator.appdata.xml.in.in:26
+msgid "Linux Mint"
 msgstr ""

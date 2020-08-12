@@ -8,6 +8,8 @@ install_datadir = join_paths(get_option('prefix'), get_option('datadir'), 'warpi
 install_libdir = join_paths(get_option('prefix'), get_option('libexecdir'), 'warpinator')
 install_bindir = join_paths(get_option('prefix'), get_option('bindir'))
 
+include_firewall_mod = get_option('include-firewall-mod')
+
 subdir('data')
 subdir('src')
 subdir('bin')

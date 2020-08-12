@@ -2,9 +2,13 @@
 
 rm -f warpinator.pot
 touch warpinator.pot
-xgettext --package-name=warpinator --language=Glade --join-existing --add-comments --output=warpinator.pot resources/*.ui
-xgettext --package-name=warpinator --language=Python -c --join-existing --keyword=_ --keyword=N_ --output=warpinator.pot src/*.py
-xgettext --package-name=warpinator --language=Desktop --join-existing --add-comments \
-          -k --keyword=Comment --output=warpinator.pot data/warpinator.desktop.in
+xgettext --package-name=warpinator --language=Glade --join-existing --add-comments \
+         --output=warpinator.pot resources/*.ui
+xgettext --package-name=warpinator --language=Python -c --join-existing --add-comments --keyword=_ --keyword=N_ \
+         --output=warpinator.pot --files-from=src/gettext_files
+xgettext --package-name=warpinator --language=Desktop --join-existing \
+          -k --keyword=Comment --output=warpinator.pot data/org.x.Warpinator.desktop.in.in
 xgettext --package-name=warpinator --its=/usr/share/gettext/its/polkit.its --join-existing --add-comments \
          --output=warpinator.pot data/org.x.warpinator.policy.in.in
+xgettext --package-name=warpinator --its=/usr/share/gettext/its/metainfo.its --join-existing --add-comments \
+         --output=warpinator.pot data/org.x.Warpinator.appdata.xml.in.in

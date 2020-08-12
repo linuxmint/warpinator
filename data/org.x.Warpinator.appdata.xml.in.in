@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>@appid@</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Warpinator</name>
+  <summary>Send and Receive Files across the Network</summary>
+  <description>
+    <p>
+      Warpinator allows you to easily connect multiple computers on a local area network and share files quickly and securely.
+    </p>
+  </description>
+  <categories>
+    <category>Network</category>
+    <category>Utility</category>
+  </categories>
+  <url type="bugtracker">https://github.com/linuxmint/warpinator/issues</url>
+  <url type="donation">https://www.linuxmint.com/donors.php</url>
+  <url type="homepage">https://github.com/linuxmint/warpinator</url>
+  <url type="translate">https://translations.launchpad.net/linuxmint/latest/+pots/warpinator</url>
+  <launchable type="desktop-id">@appid@.desktop</launchable>
+  <releases>
+    <release version="1.0.6" data="2020-08-13" />
+  </releases>
+  <project_license>GPL-3.0+</project_license>
+  <!-- DO NOT TRANSLATE Linux Mint -->
+  <developer_name>Linux Mint</developer_name>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://github.com/linuxmint/warpinator/tree/master/data/appdata/screenshot-1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/linuxmint/warpinator/tree/master/data/appdata/screenshot-2.png</image>
+    </screenshot>
+  </screenshots>
+  <update_contact>root@linuxmint.com</update_contact>
+  <translation type="gettext">warpinator</translation>
+</component>
+

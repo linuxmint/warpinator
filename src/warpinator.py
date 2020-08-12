@@ -948,7 +948,7 @@ class WarpWindow(GObject.Object):
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
-        super(WarpApplication, self).__init__(application_id="org.x.warpinator", register_session=True)
+        super(WarpApplication, self).__init__(application_id="org.x.Warpinator", register_session=True)
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
@@ -1218,10 +1218,10 @@ class WarpApplication(Gtk.Application):
             return
 
         if online:
-            self.status_icon.set_icon_name("warpinator-symbolic")
+            self.status_icon.set_icon_name("org.x.Warpinator-symbolic")
             self.status_icon.set_tooltip_text("Online")
         else:
-            self.status_icon.set_icon_name("warpinator-offline-symbolic")
+            self.status_icon.set_icon_name("org.x.Warpinator-offline-symbolic")
             self.status_icon.set_tooltip_text("Offline")
 
         self.rebuild_status_icon_menu()

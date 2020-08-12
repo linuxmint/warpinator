@@ -8,19 +8,13 @@ pyconf.set('PACKAGE', meson.project_name())
 pyconf.set('VERSION', meson.project_version())
 pyconf.set('gettext_package', gettext_package)
 pyconf.set('locale_dir', locale_dir)
+pyconf.set('include_firewall_mod', include_firewall_mod)
 
 config_py = configure_file(
   output: 'config.py',
   input: 'config.py.in',
   configuration: pyconf
 )
-
-# I should be able to generated the protobuf files with custom_target() but I can't install_data()
-# with them.  I may be mistaken.
-meson.add_install_script(
-    join_paths(meson.source_root(), 'install-scripts', 'meson_generate_and_install_protobuf_files.py'),
-    meson.current_source_dir(),
-    'warp.proto')
 
 libexec_py = [
   config_py,
@@ -33,10 +27,15 @@ libexec_py = [
   'transfers.py',
   'util.py',
   'warpinator.py',
+  'warp_pb2.py',
+  'warp_pb2_grpc.py',
+  'wrappers.py'
 ]
 
 install_data(libexec_py,
   install_dir: install_libdir
 )
 
-subdir('firewall')
+if include_firewall_mod
+    subdir('firewall')
+endif

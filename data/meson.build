@@ -1,43 +1,61 @@
 subdir('icons')
 
+desktop_id = get_option('desktop-id')
+
+desktop_conf = configuration_data()
+desktop_conf.set('desktop_id', desktop_id)
+
 i18n.merge_file(
-    input: 'warpinator.desktop.in',
-    output: 'warpinator.desktop',
+    input: configure_file(
+    input: 'org.x.Warpinator.desktop.in.in',
+    output: 'org.x.Warpinator.desktop.in',
+    configuration: desktop_conf
+    ),
+    output: '@0@.desktop'.format(desktop_id),
     type: 'desktop',
     po_dir: join_paths(meson.source_root(), 'po'),
     install: true,
-    install_dir: join_paths(get_option('datadir'), 'applications')
+    install_dir: join_paths(get_option('datadir'), 'applications'),
 )
 
 install_data('warpinator-autostart.desktop',
     install_dir: join_paths(get_option('sysconfdir'), 'xdg', 'autostart')
 )
 
-install_data('org.x.warpinator.gschema.xml',
+install_data('org.x.Warpinator.gschema.xml',
     install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
 )
 
-merged_file = i18n.merge_file(
-    input: 'org.x.warpinator.policy.in.in',
-    output: 'org.x.warpinator.policy',
+if include_firewall_mod
+    policyConf = configuration_data()
+    policyConf.set('libexecdir', install_libdir)
+
+    merged_file = i18n.merge_file(
+        input: configure_file(
+            input : 'org.x.warpinator.policy.in.in',
+            output: 'org.x.warpinator.policy.in',
+            configuration: policyConf,
+        ),
+        output: 'org.x.warpinator.policy',
+        type: 'xml',
+        po_dir: join_paths(meson.source_root(), 'po'),
+        install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions'),
+        install: true,
+    )
+endif
+
+appdata_conf = configuration_data()
+appdata_conf.set('appid', desktop_id)
+
+appdata = i18n.merge_file(
+    input: configure_file(
+        input: files('org.x.Warpinator.appdata.xml.in.in'),
+        output: 'org.x.Warpinator.appdata.xml.in',
+        configuration: appdata_conf
+    ),
+    output: '@0@.appdata.xml'.format(desktop_id),
     type: 'xml',
     po_dir: join_paths(meson.source_root(), 'po'),
-    install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions'),
+    install_dir: join_paths(get_option('datadir'), 'metainfo'),
     install: true,
 )
-
-##### How can we i18n and configure a file?  (.in.in -> .in -> final file)
-##### I'm unable to let the build set the libexec location, as the input files
-##### are checked at runtime.  Or I'm missing something.
-# policyConf = configuration_data()
-# policyConf.set('libexecdir', install_libdir)
-
-# rootPolicyFile = configure_file(
-#   input : org.x.warpinator.policy.in,
-#   output: 'org.x.warpinator.policy',
-#   configuration: policyConf,
-# )
-
-# install_data(rootPolicyFile,
-#   install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions')
-# )

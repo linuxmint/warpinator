@@ -1,0 +1,10 @@
+option('desktop-id',
+    type : 'string',
+    value : 'warpinator',
+    description: 'Name of the desktop file and desktop file icon.'
+)
+option('include-firewall-mod',
+    type: 'boolean',
+    value: true,
+    description: 'Include the script/functionality that allows Warpinator to open firewall ports using ufw.'
+)

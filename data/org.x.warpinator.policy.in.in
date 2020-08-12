@@ -7,8 +7,8 @@
   <vendor>Linux Mint</vendor>
   <vendor_url>https://linuxmint.com/</vendor_url>
 
-  <action id="com.linuxmint.warpinator">
-    <icon_name>mintsources</icon_name>
+  <action id="org.x.warpinator">
+    <icon_name>org.x.Warpinator</icon_name>
         <description>Open a firewall port for Warpinator</description>
         <message>To modify firewall settings, you need to authenticate.</message>
 

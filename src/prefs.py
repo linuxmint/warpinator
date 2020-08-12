@@ -163,7 +163,7 @@ class Preferences():
 
         widget = SettingsWidget()
 
-        if GLib.find_program_in_path("ufw"):
+        if config.include_firewall_mod and GLib.find_program_in_path("ufw"):
             button = Gtk.Button(label=_("Update firewall rules"), valign=Gtk.Align.CENTER)
             button.connect("clicked", self.open_port)
 

@@ -18,6 +18,7 @@ import remote
 import prefs
 import util
 import transfers
+import wrappers
 from ops import ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
@@ -74,24 +75,24 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         # momentarily, and the unregister properly, so remotes get notified.
         # Then we'll do it again without the flush property for the real
         # connection.
-        init_info = ServiceInfo(SERVICE_TYPE,
-                                self.service_name,
-                                socket.inet_aton(util.get_ip()),
-                                prefs.get_port(),
-                                properties={ 'hostname': util.get_hostname(),
-                                             'type': 'flush' })
+        init_info = wrappers.new_service_info(SERVICE_TYPE,
+                                              self.service_name,
+                                              socket.inet_aton(util.get_ip()),
+                                              prefs.get_port(),
+                                              properties={ 'hostname': util.get_hostname(),
+                                                           'type': 'flush' })
 
         self.zeroconf.register_service(init_info)
         time.sleep(3)
         self.zeroconf.unregister_service(init_info)
         time.sleep(3)
 
-        self.info = ServiceInfo(SERVICE_TYPE,
-                                self.service_name,
-                                socket.inet_aton(util.get_ip()),
-                                prefs.get_port(),
-                                properties={ 'hostname': util.get_hostname(),
-                                             'type': 'real' })
+        self.info = wrappers.new_service_info(SERVICE_TYPE,
+                                              self.service_name,
+                                              socket.inet_aton(util.get_ip()),
+                                              prefs.get_port(),
+                                              properties={ 'hostname': util.get_hostname(),
+                                                           'type': 'real' })
 
         self.zeroconf.register_service(self.info)
         self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
@@ -130,7 +131,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 logging.critical(">>> Discovery: no hostname in service info properties.  Is this an old version?")
                 return
 
-            remote_ip = socket.inet_ntoa(info.address)
+            remote_ip = socket.inet_ntoa(info.addresses[0] if wrappers.zc_new_api else info.address)
 
             if not util.same_subnet(remote_ip):
                 if remote_ip != self.ip_address:
@@ -225,7 +226,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
             machine.has_zc_presence = True
 
-            logging.debug(">>> Discovery: closing previous connection for %s (%s%d)"
+            logging.debug(">>> Discovery: closing previous connection for %s (%s:%d)"
                               % (machine.display_hostname, remote_ip, info.port))
             machine.shutdown() # This does nothing if run more than once.  It's here to make sure
                                # the previous start thread is complete before starting a new one.

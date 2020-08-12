@@ -1,5 +1,12 @@
 syntax = "proto3";
 
+// ************ Important! ***************
+//
+// If you change anything here, you *must* run 'generate-protobuf' to update the
+// generated stub files.
+//
+// Never change the existing members and member values of messages, only add new ones.
+
 service Warp {
     // Sender methods
     rpc CheckDuplexConnection(LookupName) returns (HaveDuplex) {}

@@ -132,6 +132,7 @@ def open_save_folder(filename=None):
                               Gio.DBusCallFlags.NONE,
                               1000,
                               None)
+                logging.debug("Opening save folder using dbus")
                 return
             except GLib.Error as e:
                 pass
@@ -139,9 +140,8 @@ def open_save_folder(filename=None):
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
 
     try:
-        file = Gio.File.new_for_uri(prefs.get_save_uri())
-
-        app.launch((file,), None)
+        logging.debug("Opening save folder using Gio (mimetype)")
+        Gio.AppInfo.launch_default_for_uri(prefs.get_save_uri(), None)
     except GLib.Error as e:
         logging.critical("Could not open received files location: %s" % e.message)
 

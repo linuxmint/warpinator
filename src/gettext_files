@@ -1,0 +1,10 @@
+src/auth.py
+src/notifications.py
+src/ops.py
+src/prefs.py
+src/remote.py
+src/server.py
+src/transfers.py
+src/util.py
+src/warpinator.py
+src/wrappers.py

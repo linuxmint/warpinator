@@ -2,6 +2,6 @@
 Type=Application
 Name=Warpinator
 Comment=Send and Receive Files across the Network
-Icon=warpinator
+Icon=@desktop_id@
 Exec=warpinator
 Categories=GNOME;GTK;Utility;
