@@ -20,20 +20,21 @@
   <url type="translate">https://translations.launchpad.net/linuxmint/latest/+pots/warpinator</url>
   <launchable type="desktop-id">@appid@.desktop</launchable>
   <releases>
-    <release version="1.0.6" data="2020-08-13" />
+    <release version="1.0.8" date="2020-08-14" />
   </releases>
   <project_license>GPL-3.0+</project_license>
   <!-- DO NOT TRANSLATE Linux Mint -->
   <developer_name>Linux Mint</developer_name>
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/linuxmint/warpinator/tree/master/data/appdata/screenshot-1.png</image>
+      <image>https://raw.githubusercontent.com/linuxmint/warpinator/@app_version@/data/appdata/screenshot-1.png</image>
     </screenshot>
     <screenshot>
-      <image>https://github.com/linuxmint/warpinator/tree/master/data/appdata/screenshot-2.png</image>
+      <image>https://raw.githubusercontent.com/linuxmint/warpinator/@app_version@/data/appdata/screenshot-2.png</image>
     </screenshot>
   </screenshots>
   <update_contact>root@linuxmint.com</update_contact>
   <translation type="gettext">warpinator</translation>
+  <content_rating type="oars-1.0" />
 </component>
 

@@ -46,6 +46,7 @@ endif
 
 appdata_conf = configuration_data()
 appdata_conf.set('appid', desktop_id)
+appdata_conf.set('app_version', meson.project_version())
 
 appdata = i18n.merge_file(
     input: configure_file(
