@@ -1,3 +1,20 @@
+warpinator (1.0.7) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * Update README.md.
+  * makepot: Add scan for polkit file.
+  * Accommodate flatpak builds.
+  * about dialog: Show if this is a flatpak running.
+  * Preserve file permissions on target machine.
+  * transfers.py: Simplify symbolic link handling.  They should be transferred without any sort of modification to their target to accomodate the recipient's save folder.
+  * file chooser: Update the recent list with sent files, but only when the selection was a single item.
+  * transfers.py: Handle more errors during local fileinfo gathering.
+  * util.py: Remember the last location for the send dialog.
+  * Update protobuf files.
+  * appdata xml: Add a note to not translate 'Warpinator'.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 14 Aug 2020 16:13:28 +0100
+
 warpinator (1.0.6) ulyana; urgency=medium
 
   [ Michael Webster ]
