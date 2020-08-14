@@ -413,9 +413,15 @@ class NetworkMonitor(GObject.Object):
 
 class AboutDialog():
     def __init__(self, parent):
+        # Maybe this can be configured during the build? But this works.
+        if config.prefix == "/app":
+            name = "Warpinator (Flatpak)"
+        else:
+            name = "Warpinator"
+
         dialog = Gtk.AboutDialog(parent=parent,
                                  title=_("About"),
-                                 program_name="Warpinator",
+                                 program_name=name,
                                  icon_name="warpinator",
                                  logo_icon_name="warpinator",
                                  comments=_("Send and Receive Files across the Network"),
