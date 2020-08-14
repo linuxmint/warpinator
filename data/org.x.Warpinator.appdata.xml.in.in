@@ -2,6 +2,7 @@
 <component type="desktop-application">
   <id>@appid@</id>
   <metadata_license>CC0-1.0</metadata_license>
+  <!-- DO NOT TRANSLATE Warpinator -->
   <name>Warpinator</name>
   <summary>Send and Receive Files across the Network</summary>
   <description>
