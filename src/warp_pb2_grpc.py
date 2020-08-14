@@ -5,8 +5,14 @@ import warp_pb2 as warp__pb2
 
 
 class WarpStub(object):
-  # missing associated documentation comment in .proto file
-  pass
+  """************ Important! ***************
+
+  If you change anything here, you *must* run 'generate-protobuf' to update the
+  generated stub files.
+
+  Never change the existing members and member values of messages, only add new ones.
+
+  """
 
   def __init__(self, channel):
     """Constructor.
@@ -67,8 +73,14 @@ class WarpStub(object):
 
 
 class WarpServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
+  """************ Important! ***************
+
+  If you change anything here, you *must* run 'generate-protobuf' to update the
+  generated stub files.
+
+  Never change the existing members and member values of messages, only add new ones.
+
+  """
 
   def CheckDuplexConnection(self, request, context):
     """Sender methods
