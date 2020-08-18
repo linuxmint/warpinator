@@ -39,7 +39,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         "server-started": (GObject.SignalFlags.RUN_LAST, None, ()),
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
-    def __init__(self):
+    def __init__(self, iface, ip, port):
         threading.Thread.__init__(self, name="server-thread")
         super(Server, self).__init__()
         GObject.Object.__init__(self)
@@ -47,8 +47,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.service_name = None
         self.service_ident = None
 
-        self.ip_address = util.get_preferred_ip()
-        self.port = prefs.get_port()
+        self.ip_address = ip
+        self.port = port
+        self.iface = iface
 
         self.remote_machines = {}
 
@@ -79,7 +80,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         init_info = wrappers.new_service_info(SERVICE_TYPE,
                                               self.service_name,
                                               socket.inet_aton(self.ip_address),
-                                              prefs.get_port(),
+                                              self.port,
                                               properties={ 'hostname': util.get_hostname(),
                                                            'type': 'flush' })
 
@@ -91,12 +92,12 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.info = wrappers.new_service_info(SERVICE_TYPE,
                                               self.service_name,
                                               socket.inet_aton(self.ip_address),
-                                              prefs.get_port(),
+                                              self.port,
                                               properties={ 'hostname': util.get_hostname(),
                                                            'type': 'real' })
 
         self.zeroconf.register_service(self.info)
-        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
+        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=self.ip_address)
 
         return False
 
@@ -134,7 +135,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
             remote_ip = socket.inet_ntoa(info.addresses[0] if wrappers.zc_new_api else info.address)
 
-            if not util.same_subnet(remote_ip):
+            if not util.same_subnet(self.ip_address, remote_ip):
                 if remote_ip != self.ip_address:
                     logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ip))
                 return
@@ -238,33 +239,33 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             machine.start_remote_thread()
 
     def run(self):
-        logging.debug("Server: starting server")
+        logging.debug("Server: starting server on %s (%s)" % (self.ip_address, self.iface))
 
         util.initialize_rpc_threadpool()
 
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=prefs.get_server_pool_max_threads()), options=None)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
-        pair = auth.get_singleton().get_server_creds()
+        pair = auth.get_singleton().get_server_creds(self.ip_address)
         server_credentials = grpc.ssl_server_credentials((pair,))
 
-        self.server.add_secure_port('%s:%d' % (self.ip_address, prefs.get_port()),
+        self.server.add_secure_port('%s:%d' % (self.ip_address, self.port),
                                     server_credentials)
         self.server.start()
 
-        auth.get_singleton().restart_cert_server()
-
         self.start_zeroconf()
-        self.server_thread_keepalive.clear()
 
+        self.server_thread_keepalive.clear()
         self.idle_emit("server-started")
+
+        logging.info("Server: ACTIVE")
 
         # **** RUNNING ****
         while not self.server_thread_keepalive.is_set():
             self.server_thread_keepalive.wait(10)
         # **** STOPPING ****
 
-        logging.debug("Server: stopping server")
+        logging.debug("Server: stopping server on %s (%s)" % (self.ip_address, self.iface))
 
         remote_machines = list(self.remote_machines.values())
         for remote in remote_machines:

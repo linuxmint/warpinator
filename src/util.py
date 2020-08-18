@@ -208,13 +208,16 @@ def get_default_ip():
         ans = s.getsockname()[0]
         return ans
 
+def get_ip_for_iface(iface_name):
+    pref_network = netifaces.ifaddresses(iface_name)
+    ip = pref_network[netifaces.AF_INET][0]["addr"]
+    return ip
+
 def get_preferred_ip():
     iface_name = prefs.get_net_iface()
 
     try:
-        pref_network = netifaces.ifaddresses(prefs.get_net_iface())
-        ip = pref_network[netifaces.AF_INET][0]["addr"]
-        return ip
+        return get_ip_for_iface(iface_name)
     except (KeyError, ValueError) as e:
         logging.critical("Preferred network '%s' not found." % iface_name)
 
@@ -225,7 +228,7 @@ def get_preferred_ip():
 
     return "0.0.0.0"
 
-def get_my_network():
+def get_my_network(ip):
     for name in netifaces.interfaces():
         net = netifaces.ifaddresses(name)
 
@@ -235,7 +238,7 @@ def get_my_network():
             continue
         for address in addresses:
             try:
-                if address["addr"] == get_preferred_ip():
+                if address["addr"] == ip:
                     iface = ipaddress.IPv4Interface("%s/%s" % (address["addr"], address["netmask"]))
                     return iface.network
             except:
@@ -268,9 +271,8 @@ def get_default_net_interface():
 
     return None
 
-
-def same_subnet(other_ip):
-    my_net = get_my_network()
+def same_subnet(my_ip, other_ip):
+    my_net = get_my_network(my_ip)
 
     if my_net == None:
         # We're more likely to have failed here than to have found something on a different subnet.
@@ -433,13 +435,14 @@ class NetworkMonitor(GObject.Object):
         "state-changed": (GObject.SignalFlags.RUN_LAST, None, (bool,))
     }
 
-    def __init__(self):
+    def __init__(self, iface, ip):
         GObject.Object.__init__(self)
         logging.debug("Starting network monitor")
         self.nm_client = None
+        self.nm_device = None
         self.sleep_timer = None
 
-        ip = get_preferred_ip()
+        self.iface = iface
         self.current_ip = ip
         self.online = ip != "0.0.0.0"
 
@@ -448,34 +451,50 @@ class NetworkMonitor(GObject.Object):
     def nm_client_acquired(self, source, res, data=None):
         try:
             self.nm_client = NM.Client.new_finish(res)
-            self.nm_client.connect("notify::connectivity", self.nm_connectivity_changed)
+            self.nm_device = self.nm_client.get_device_by_iface(self.iface)
+            self.nm_device.connect("state-changed", self.nm_device_state_changed)
+            self.online = self.nm_get_device_online(self.nm_device)
         except GLib.Error as e:
             logging.critical("NetworkMonitor: Could not create NM Client, using polling instead: %s" % e.message)
             self.sleep_timer = threading.Event()
             self.start_polling()
 
-    def nm_connectivity_changed(self, client, pspec, data=None):
-        self.check_online()
+    def nm_get_device_online(self, device):
+        conn = device.get_active_connection()
+
+        if conn != None:
+            return conn.get_state() == NM.ActiveConnectionState.ACTIVATED
+        elif device.get_state() == NM.DeviceState.UNMANAGED:
+            return get_ip_for_iface(self.iface) != "0.0.0.0"
+
+        return False
+
+    def nm_device_state_changed(self, device, new, old, reason, data=None):
+        online = self.nm_get_device_online(self.nm_device)
+
+        if online != self.online:
+            self.online = online
+            self.emit_state_changed()
 
     @_async
     def start_polling(self):
         while not self.sleep_timer.is_set():
-            self.check_online()
+            self.check_online_fallback()
             self.sleep_timer.wait(4)
 
     def stop(self):
         logging.debug("Stopping network monitor")
-        if self.nm_client != None:
-            self.nm_client.disconnect_by_func(self.nm_connectivity_changed)
-            self.nm_client = None
+        if self.nm_device != None:
+            self.nm_device.disconnect_by_func(self.nm_device_state_changed)
+            self.nm_device = None
         else:
             self.sleep_timer.set()
 
-    def check_online(self):
+    def check_online_fallback(self):
         old_online = self.online
         old_ip = self.current_ip
 
-        self.current_ip = get_preferred_ip()
+        self.current_ip = get_ip_for_iface(self.iface)
         self.online = self.current_ip != "0.0.0.0"
 
         if (self.online != old_online) or (self.current_ip != old_ip):

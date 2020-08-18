@@ -2,6 +2,7 @@ import os
 import gettext
 import subprocess
 import json
+import logging
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
@@ -186,6 +187,7 @@ class Preferences():
         options = []
 
         for name in iface_names:
+            found = False
             if lshw:
                 for entry in lshw:
                     if entry["logicalname"] == name:
@@ -193,7 +195,10 @@ class Preferences():
                             options.append((name, "%s - %s" % (name, entry["product"])))
                         except:
                             options.append((name, "%s - %s" % (name, entry["description"])))
-            else:
+                        found = True
+                        break
+
+            if not found:
                 options.append((name, name))
 
         widget = GSettingsComboBox(_("Network interface to use"),

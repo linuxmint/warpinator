@@ -32,10 +32,9 @@ gettext.bindtextdomain(config.PACKAGE, config.localedir)
 gettext.textdomain(config.PACKAGE)
 _ = gettext.gettext
 
-
 setproctitle.setproctitle("warpinator")
 
-SERVER_RESTART_TIMEOUT = 12
+SERVER_RESTART_TIMEOUT = 15
 SERVER_START_TIMEOUT = 8
 DISCOVERY_TIMEOUT = 3
 
@@ -663,9 +662,9 @@ class WarpWindow(GObject.Object):
         Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
-    def update_local_user_info(self):
+    def update_local_user_info(self, ip="0.0.0.0"):
         self.app_local_name_label.set_text(util.get_local_name())
-        self.app_ip_label.set_text(util.get_preferred_ip())
+        self.app_ip_label.set_text(ip)
 
     def menu_quit(self, widget, data=None):
         self.display_shutdown()
@@ -943,11 +942,6 @@ class WarpWindow(GObject.Object):
         for button in sorted_list:
             self.user_list_box.reorder_child(button, -1)
 
-    def update_behavior_from_preferences(self):
-        # more..
-
-        self.update_local_user_info()
-
     def destroy(self):
         self.window.destroy()
 
@@ -958,6 +952,7 @@ class WarpApplication(Gtk.Application):
         self.status_icon = None
         self.prefs_changed_source_id = 0
         self.server_starting = False
+        self.recheck_server_after_start = False
 
         self.test_mode = testing
 
@@ -972,13 +967,13 @@ class WarpApplication(Gtk.Application):
         # This is only so we can check if the port changed when setting preferences
         self.current_port = prefs.get_port()
         self.current_ip = util.get_preferred_ip()
+        self.current_iface = prefs.get_net_iface()
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
         logging.info("Initializing Warpinator")
 
         prefs.prefs_settings.connect("changed", self.on_prefs_changed)
-        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
 
         vt = GLib.VariantType.new("s")
 
@@ -1015,7 +1010,7 @@ class WarpApplication(Gtk.Application):
                     return
 
                 self.save_folder_monitor.disconnect_by_func(monitor_change_event)
-                self.try_activation()
+                self.new_server()
 
             try:
                 self.save_folder_monitor = file.monitor_directory(Gio.FileMonitorFlags.WATCH_MOUNTS, None)
@@ -1027,31 +1022,33 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
             return
 
-        self.try_activation()
+        self.new_server()
 
-    def try_activation(self):
+    def new_server(self):
         if self.server_starting:
+            logging.debug("Trying to start server while server already starting, will check later")
             return
 
+        self.server_starting = True
         self.window.start_startup_timer(restarting=False)
 
-        if self.netmon == None:
-            self.netmon = util.NetworkMonitor()
-            self.netmon.connect("state-changed", self.network_state_changed)
-
-        self.window.update_local_user_info()
         self.current_port = prefs.get_port()
         self.current_ip = util.get_preferred_ip()
+        self.current_iface = prefs.get_net_iface()
 
-        logging.info("Trying to start server on %s" % self.current_ip)
-        self.start_server()
+        if auth.singleton != None:
+            auth.get_singleton().disconnect_by_func(self.on_group_code_changed)
 
-    def add_simulated_widgets(self):
-        if self.test_mode:
-            import testing
-            testing.add_simulated_widgets(self)
+        if self.netmon:
+            self.netmon.disconnect_by_func(self.network_state_changed)
+            self.netmon.stop()
 
-    def start_server(self):
+        self.netmon = util.NetworkMonitor(self.current_iface, self.current_ip)
+        self.netmon.connect("state-changed", self.network_state_changed)
+
+        self.update_status_icon_from_preferences()
+        self.window.update_local_user_info(self.current_ip)
+
         self.window.clear_remotes()
 
         def try_to_start(srv=None):
@@ -1062,12 +1059,15 @@ class WarpApplication(Gtk.Application):
 
             self.server = None
 
-            if util.get_preferred_ip() == "0.0.0.0":
+            if self.current_ip == "0.0.0.0":
                 logging.info("No network access")
                 return
 
-            self.server_starting = True
-            self.server = server.Server()
+            auth.new_singleton(self.current_ip, self.current_port).connect(
+                "group-code-changed", self.on_group_code_changed
+            )
+
+            self.server = server.Server(self.current_iface, self.current_ip, self.current_port)
             self.server.connect("server-started", self._server_started)
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)
@@ -1079,6 +1079,23 @@ class WarpApplication(Gtk.Application):
             self.server.shutdown()
         else:
             try_to_start();
+
+    def _server_started(self, local_machine):
+        self.server_starting = False
+
+        if self.state_changed_during_server_startup():
+            print("CHANGED")
+            self.new_server()
+            return
+
+        self.update_status_icon_online_state(online=True)
+        self.window.notify_server_started()
+        self.add_simulated_widgets()
+
+    def state_changed_during_server_startup(self):
+        return self.current_port != prefs.get_port() or \
+               self.current_ip != util.get_preferred_ip() or \
+               not self.netmon.online
 
     def do_shutdown(self):
         logging.debug("Beginning shutdown")
@@ -1106,6 +1123,10 @@ class WarpApplication(Gtk.Application):
         logging.debug("Shutdown complete")
         Gio.Application.do_shutdown(self)
 
+    def network_state_changed(self, netmon, online):
+        self.update_status_icon_online_state(online)
+        self.new_server()
+
     def exit_warp(self):
         GLib.idle_add(self.quit)
 
@@ -1127,22 +1148,19 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
 
     def on_prefs_changed(self, settings, pspec=None, data=None):
-        self.window.update_behavior_from_preferences()
-        self.update_status_icon_from_preferences()
-
         if prefs.get_port() != self.current_port or \
            util.get_preferred_ip() != self.current_ip:
-            self.try_activation()
+            self.new_server()
 
     def firewall_script_finished(self):
         if self.server == None:
-            self.try_activation()
+            self.new_server()
             return
 
-        self.try_activation()
+        self.new_server()
 
     def on_group_code_changed(self, auth_manager):
-        self.try_activation()
+        self.new_server()
 
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)
@@ -1160,39 +1178,10 @@ class WarpApplication(Gtk.Application):
         self.window.refresh_remote_machine_view()
         self.update_inhibitor_state(local_machine)
 
-    def _server_started(self, local_machine):
-        self.update_status_icon_online_state(online=True)
-        self.server_starting = False
-
-        self.window.notify_server_started()
-        self.add_simulated_widgets()
-
-    def network_state_changed(self, netmon, online):
-        self.update_status_icon_online_state(online)
-
-        if online:
-            self.try_activation()
-        else:
-            # Lost the network - show that we're doing something, and shut the
-            # server down if it's running.
-            self.window.start_startup_timer()
-
-            if self.server != None:
-                def no_network_shutdown_complete(netmon):
-                    self.server.disconnect_by_func(no_network_shutdown_complete)
-                    self.server = None
-
-                    # Now reconnect to the network monitor.
-                    self.netmon.connect("state-changed", self.network_state_changed)
-                    # Now run state-changed again in case we came back online while
-                    # the server was shutting down.
-                    self.network_state_changed(self.netmon, self.netmon.online)
-
-                self.server.connect("shutdown-complete", no_network_shutdown_complete)
-
-                # Temporarily disconnect so we don't get ahead of ourselves.
-                self.netmon.disconnect_by_func(self.network_state_changed)
-                self.server.shutdown()
+    def add_simulated_widgets(self):
+        if self.test_mode:
+            import testing
+            testing.add_simulated_widgets(self)
 
     def update_inhibitor_state(self, local_machine):
         any_active_ops = False

@@ -41,12 +41,17 @@ os.makedirs(CERT_FOLDER, 0o700, exist_ok=True)
 
 singleton = None
 
-def get_singleton():
+def new_singleton(ip, port):
     global singleton
 
-    if singleton == None:
-        singleton = AuthManager()
+    if singleton != None:
+        singleton.shutdown()
 
+    singleton = AuthManager(ip, port)
+    return singleton
+
+def get_singleton():
+    assert singleton != None
     return singleton
 
 class AuthManager(GObject.Object):
@@ -54,11 +59,13 @@ class AuthManager(GObject.Object):
         'group-code-changed': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
-    def __init__(self):
+    def __init__(self, ip, port):
         GObject.Object.__init__(self)
         self.hostname = util.get_hostname()
         self.code = None
         self.ident = None
+        self.ip = ip
+        self.port = port
 
         self.cert_server = None
         self.requests_lock = threading.Lock()
@@ -78,12 +85,13 @@ class AuthManager(GObject.Object):
                 logging.debug("Auth: Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
 
         self.code = self.get_group_code()
+        self.start_cert_server()
 
-    def restart_cert_server(self):
+    def start_cert_server(self):
         if self.cert_server != None:
             self.cert_server.stop()
 
-        self.cert_server = CertServer()
+        self.cert_server = CertServer(self.ip, self.port)
 
     def shutdown(self):
         if self.cert_server != None:
@@ -165,11 +173,11 @@ class AuthManager(GObject.Object):
         self._save_bytes(path, cert_bytes)
 
     def load_server_cert(self):
-        path = os.path.join(CERT_FOLDER, "%s.pem" % (util.get_hostname(),))
+        path = os.path.join(CERT_FOLDER, "%s.pem" % (self.hostname,))
         return self._load_bytes(path)
 
     def save_server_cert(self, cert_bytes):
-        path = os.path.join(CERT_FOLDER, "%s.pem" % (util.get_hostname(),))
+        path = os.path.join(CERT_FOLDER, "%s.pem" % (self.hostname,))
 
         self._save_bytes(path, cert_bytes)
 
@@ -183,7 +191,7 @@ class AuthManager(GObject.Object):
 
         self._save_bytes(path, key_bytes)
 
-    def make_key_cert_pair(self, hostname, ip):
+    def make_key_cert_pair(self):
         private_key = rsa.generate_private_key(
             backend=crypto_default_backend(),
             public_exponent=65537,
@@ -194,10 +202,10 @@ class AuthManager(GObject.Object):
 
         builder = x509.CertificateBuilder()
         builder = builder.subject_name(x509.Name([
-            x509.NameAttribute(NameOID.COMMON_NAME, hostname),
+            x509.NameAttribute(NameOID.COMMON_NAME, self.hostname),
         ]))
         builder = builder.issuer_name(x509.Name([
-            x509.NameAttribute(NameOID.COMMON_NAME, hostname),
+            x509.NameAttribute(NameOID.COMMON_NAME, self.hostname),
         ]))
         builder = builder.not_valid_before(datetime.datetime.today() - day)
         builder = builder.not_valid_after(datetime.datetime.today() + EXPIRE_TIME)
@@ -205,7 +213,7 @@ class AuthManager(GObject.Object):
         builder = builder.public_key(public_key)
         builder = builder.add_extension(
             x509.SubjectAlternativeName(
-                [x509.DNSName(ip)]
+                [x509.DNSName(self.ip)]
             ),
             critical=True
         )
@@ -226,9 +234,9 @@ class AuthManager(GObject.Object):
 
         return ser_private_key, ser_public_key
 
-    def get_server_creds(self):
+    def get_server_creds(self, ip):
         logging.debug("Auth: Creating server credentials")
-        key, cert = self.make_key_cert_pair(self.hostname, util.get_preferred_ip())
+        key, cert = self.make_key_cert_pair()
 
         try:
             self.save_private_key(key)
@@ -386,9 +394,11 @@ class RequestLoop():
         self.timer.set()
 
 class CertServer():
-    def __init__(self):
-        logging.debug("Auth: Starting local cert server")
+    def __init__(self, ip, port):
         self.exit = False
+        self.ip = ip
+        self.port = port
+        logging.debug("Auth: Starting local cert server (%s)" % self.ip)
 
         self.thread = threading.Thread(target=self.serve_cert_thread)
         self.thread.start()
@@ -397,7 +407,7 @@ class CertServer():
         try:
             server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             server_sock.settimeout(1.0)
-            server_sock.bind((util.get_preferred_ip(), prefs.get_port()))
+            server_sock.bind((self.ip, self.port))
         except socket.error as e:
             logging.critical("Could not create udp socket for cert requests: %s" % str(e))
             return
@@ -415,6 +425,7 @@ class CertServer():
                     break
 
     def stop(self):
+        logging.debug("Auth: Stopping local cert server (%s)" % self.ip)
         self.exit = True
         self.thread.join()
 
