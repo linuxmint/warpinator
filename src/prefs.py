@@ -35,7 +35,9 @@ prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
 #### One-time initializers
 if prefs_settings.get_string(NET_IFACE) == "":
-    prefs_settings.set_string(NET_IFACE, util.get_default_net_interface())
+    default = util.get_default_net_interface()
+    if default != None:
+        prefs_settings.set_string(NET_IFACE, default)
 
 if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     default = Gio.File.new_for_path(os.path.join(GLib.get_home_dir(), "Warpinator"))

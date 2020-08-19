@@ -97,7 +97,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                                            'type': 'real' })
 
         self.zeroconf.register_service(self.info)
-        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=self.ip_address)
+        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
 
         return False
 

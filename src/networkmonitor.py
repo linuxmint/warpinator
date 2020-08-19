@@ -7,6 +7,16 @@ from gi.repository import GLib, GObject, NM
 
 import util
 
+network_monitor = None
+
+def get_network_monitor():
+    global network_monitor
+
+    if network_monitor == None:
+        network_monitor = NetworkMonitor()
+
+    return network_monitor
+
 class NetworkMonitor(GObject.Object):
     __gsignals__ = {
         "ready": (GObject.SignalFlags.RUN_LAST, None, ()),
@@ -48,6 +58,10 @@ class NetworkMonitor(GObject.Object):
 
     def nm_check_interface_online(self):
         device = self.nm_client.get_device_by_iface(self.iface)
+
+        if device == None:
+            return False
+
         conn = device.get_active_connection()
 
         if conn != None:

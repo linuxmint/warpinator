@@ -251,9 +251,14 @@ def get_net_interface_list():
 
     for name in netifaces.interfaces():
         iface = netifaces.ifaddresses(name)
-        addresses = iface[netifaces.AF_LINK]
-        if addresses[0]["addr"] == "00:00:00:00:00:00":
+
+        try:
+            addresses = iface[netifaces.AF_LINK]
+            if addresses[0]["addr"] == "00:00:00:00:00:00":
+                continue
+        except KeyError:
             continue
+
         filtered.append(name)
 
     return filtered
@@ -264,7 +269,12 @@ def get_default_net_interface():
 
     for name in iface_names:
         iface = netifaces.ifaddresses(name)
-        addresses = iface[netifaces.AF_INET]
+
+        try:
+            addresses = iface[netifaces.AF_INET]
+        except KeyError as e:
+            continue
+
         for address in addresses:
             if address["addr"] == ip:
                 return name

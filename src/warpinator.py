@@ -443,6 +443,9 @@ class WarpWindow(GObject.Object):
         self.window_close_handler_id = 0
         self.selected_op_items = {}
 
+        # Only used in the window for deciding on error message
+        self.netmon = networkmonitor.get_network_monitor()
+
         # overview
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "main-window.ui"))
 
@@ -601,7 +604,7 @@ class WarpWindow(GObject.Object):
         self.view_stack.set_visible_child_name("server-problem")
 
         # Should check the WarpApplication's value, but it should be a signal
-        if util.get_preferred_ip() == "0.0.0.0":
+        if util.get_preferred_ip() == "0.0.0.0" or not self.netmon.online:
             self.something_wrong_label.set_text(_("You don't appear to be connected to a network."))
         else:
             self.something_wrong_label.set_text(_("Startup was unsuccessful, please check your logs."))
@@ -1034,7 +1037,7 @@ class WarpApplication(Gtk.Application):
             self.window.window.present()
             return
 
-        self.netmon = networkmonitor.NetworkMonitor()
+        self.netmon = networkmonitor.get_network_monitor()
         self.netmon.connect("ready", self.netmon_ready)
 
     def netmon_ready(self, netmon):
@@ -1053,6 +1056,8 @@ class WarpApplication(Gtk.Application):
         self.current_port = prefs.get_port()
         self.current_ip = util.get_preferred_ip()
         self.current_iface = prefs.get_net_iface()
+
+        logging.debug("New server requested for '%s' (%s)", self.current_iface, self.current_ip)
 
         self.netmon.update_current_network(self.current_iface, self.current_ip)
 
@@ -1079,13 +1084,11 @@ class WarpApplication(Gtk.Application):
 
             self.server = None
 
-            if self.current_ip == "0.0.0.0":
+            if self.current_ip == "0.0.0.0" or not self.netmon.online:
                 logging.info("No network access")
                 self.server_starting = False
                 self.window.show_no_network()
                 return
-
-
 
             self.server = server.Server(self.current_iface, self.current_ip, self.current_port)
             self.server.connect("server-started", self._server_started)
