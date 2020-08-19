@@ -94,13 +94,15 @@ class AuthManager(GObject.Object):
         self.cert_server = CertServer(self.ip, self.port)
 
     def shutdown(self):
+        with self.requests_lock:
+            for key in self.requests.keys():
+                self.requests[key].cancel()
+            self.requests = {}
+
         if self.cert_server != None:
             self.cert_server.stop()
 
         self.clean_cert_folder()
-
-        for key in self.requests.keys():
-            self.requests[key].cancel()
 
     def clean_cert_folder(self):
         for filename in os.listdir(CERT_FOLDER):
@@ -109,7 +111,7 @@ class AuthManager(GObject.Object):
             try:
                 os.unlink(path)
             except Exception as e:
-                logging.critical("Cannot delete item in remote cert folder (%s): %s" % (CERT_FOLDER, e))
+                pass
 
     def _save_bytes(self, path, file_bytes):
         try:
@@ -331,7 +333,10 @@ class AuthManager(GObject.Object):
         data = req.request()
 
         with self.requests_lock:
-            del self.requests[ident]
+            try:
+                del self.requests[ident]
+            except KeyError:
+                pass
 
         logging.debug("Auth: RequestLoop complete for '%s' (%s:%d): got cert? %s" % (hostname, ip, port, "Yes" if data else "No"))
 
@@ -373,6 +378,9 @@ class RequestLoop():
                     server_sock.sendto(REQUEST, (self.ip, self.port))
 
                     reply, addr = server_sock.recvfrom(2000)
+
+                    if self.timer.is_set():
+                        return None
 
                     if addr == (self.ip, self.port):
                         return reply

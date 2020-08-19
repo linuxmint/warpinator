@@ -162,6 +162,13 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     logging.critical(">>> Discovery: unable to authenticate with %s (%s:%d)"
                                          % (remote_hostname, remote_ip, info.port))
                     return False
+
+                # This check isn't instant.  Make sure this server is still valid before continuing.
+                if self.server_thread_keepalive.is_set():
+                    logging.warning(">>> Discovery: server shutting down, ignoring remote cert result %s (%s:%d)"
+                                         % (remote_hostname, remote_ip, info.port))
+                    return False
+
                 return True
 
             try:
@@ -267,6 +274,12 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         logging.debug("Server: stopping server on %s (%s)" % (self.ip_address, self.iface))
 
+        logging.debug("Server: stopping authentication server")
+        auth.get_singleton().shutdown()
+
+        logging.debug("Server: stopping discovery and advertisement")
+        self.zeroconf.close()
+
         remote_machines = list(self.remote_machines.values())
         for remote in remote_machines:
             self.idle_emit("remote-machine-removed", remote)
@@ -276,12 +289,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             remote.shutdown()
 
         remote_machines = None
-
-        logging.debug("Server: stopping authentication server")
-        auth.get_singleton().shutdown()
-
-        logging.debug("Server: stopping discovery and advertisement")
-        self.zeroconf.close()
 
         logging.debug("Server: terminating server")
         self.server.stop(grace=2).wait()
