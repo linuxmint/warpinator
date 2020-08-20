@@ -46,6 +46,7 @@ _____
 - meson (>= 0.45.0)
 - python3-grpc-tools (>= 1.14.0)
 - python3-protobuf (>= 3.6.1)
+- python3-packaging
 - gobject-introspection
 
 ##### runtime deps
@@ -60,7 +61,6 @@ _____
 - python3-grpcio (>= 1.16.0)
 - python3-cryptography
 - python3-nacl
-- python3-packaging
 
 ##### You can get grpcio and grpc-tools from pip3 also:
 ```
