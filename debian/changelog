@@ -1,3 +1,12 @@
+warpinator (1.0.8) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * Fix appdata file.
+  * Add new dependency to debian/control.
+  * desktop file: Use new icon name.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 21 Aug 2020 10:31:06 +0100
+
 warpinator (1.0.7) ulyana; urgency=medium
 
   [ Michael Webster ]
@@ -13,7 +22,7 @@ warpinator (1.0.7) ulyana; urgency=medium
   * Update protobuf files.
   * appdata xml: Add a note to not translate 'Warpinator'.
 
- -- Clement Lefebvre <root@linuxmint.com>  Fri, 14 Aug 2020 16:13:28 +0100
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 21 Aug 2020 10:30:53 +0100
 
 warpinator (1.0.6) ulyana; urgency=medium
 
