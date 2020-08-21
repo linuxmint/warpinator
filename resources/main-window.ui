@@ -24,7 +24,7 @@
     <property name="window_position">center</property>
     <property name="default_width">800</property>
     <property name="default_height">500</property>
-    <property name="icon_name">warpinator</property>
+    <property name="icon_name">org.x.Warpinator</property>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

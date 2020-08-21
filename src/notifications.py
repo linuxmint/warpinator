@@ -32,7 +32,7 @@ class NewOpUserNotification():
                           })
 
                 notification.set_body(body)
-                notification.set_icon(Gio.ThemedIcon(name="warpinator-symbolic"))
+                notification.set_icon(Gio.ThemedIcon(name="org.x.Warpinator-symbolic"))
 
                 notification.add_button(_("Accept"), "app.notification-response::accept")
                 notification.add_button(_("Decline"), "app.notification-response::decline")
@@ -58,7 +58,7 @@ class NewOpUserNotification():
                           })
 
                 notification.set_body(body)
-                notification.set_icon(Gio.ThemedIcon(name="warpinator-symbolic"))
+                notification.set_icon(Gio.ThemedIcon(name="org.x.Warpinator-symbolic"))
 
         Gio.Application.get_default().send_notification(self.op.sender, notification)
 
