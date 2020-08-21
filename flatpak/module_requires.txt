@@ -1,0 +1,21 @@
+# flatpak-pip-generator -r module_requires.txt --runtime org.gnome.Platform/x86_64/3.36
+# (rename after edits)
+#
+# NOTE: This does not generate a perfect file.
+# 
+# cryptography and pynacl modules need local wheel (.whl) files for wheel and setuptools
+# in their source list.
+#
+# protobuf needs wheel built as a sub-module (with its local .whl file)
+#
+# Otherwise these won't build successfully. I'm still learning why.
+#
+# 
+grpcio>=1.16.1
+protobuf>=3.6.1
+setproctitle
+zeroconf>=0.24.4
+cryptography
+pynacl
+netifaces
+packaging
