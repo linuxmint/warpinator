@@ -1121,6 +1121,8 @@ class WarpApplication(Gtk.Application):
     def do_shutdown(self):
         logging.debug("Beginning shutdown")
 
+        self.setup_kill_as_a_last_resort()
+
         self.update_status_icon_online_state(online=False)
         self.window.display_shutdown()
 
@@ -1128,7 +1130,6 @@ class WarpApplication(Gtk.Application):
             self.netmon.stop()
 
         if self.server:
-            self.setup_kill_as_a_last_resort()
             self.server.shutdown()
             # do_shutdown is called after the main loop is ended, we need to continue
             # the loop while waiting for the server to finish shutting down.  This is the

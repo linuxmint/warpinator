@@ -28,6 +28,7 @@ _ = gettext.gettext
 void = warp_pb2.VoidType()
 
 SERVICE_TYPE = "_warpinator._tcp.local."
+WAIT_FOR_DUPLEX_TIMEOUT = 1
 
 # server (this is on a separate thread from the ui, grpc isn't compatible with
 # gmainloop)
@@ -263,7 +264,22 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         util.initialize_rpc_threadpool()
 
-        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=prefs.get_server_pool_max_threads()), options=None)
+        options=(
+            # ('grpc.keepalive_time_ms', 30 * 1000),
+            # ('grpc.keepalive_timeout_ms', 5 * 1000),
+            ('grpc.keepalive_permit_without_calls', True),
+
+        #     # allow keepalive pings when there's no gRPC calls
+            ('grpc.http2.max_pings_without_data', 0),
+        #     # allow unlimited amount of keepalive pings without data
+            # ('grpc.http2.min_time_between_pings_ms', 30 * 1000),
+        #     # allow grpc pings from client every 10 seconds
+            ('grpc.http2.min_ping_interval_without_data_ms',  20 * 1000),
+        #     # allow grpc pings from client without data every 5 seconds
+        )
+
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=prefs.get_server_pool_max_threads()),
+                                  options=options)
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
         pair = auth.get_singleton().get_server_creds(self.ip_address)
@@ -366,9 +382,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         while not self.duplex_check_abort.is_set():
             if remote.status in (RemoteStatus.AWAITING_DUPLEX, RemoteStatus.ONLINE):
-                return warp_pb2.HaveDuplex(repsonse=True)
+                return warp_pb2.HaveDuplex(response=True)
             else:
-                time.sleep(1)
+                self.duplex_check_abort.wait(WAIT_FOR_DUPLEX_TIMEOUT)
 
         return warp_pb2.HaveDuplex(response=False)
 
