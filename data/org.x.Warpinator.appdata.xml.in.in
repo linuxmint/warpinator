@@ -27,10 +27,13 @@
   <developer_name>Linux Mint</developer_name>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/linuxmint/warpinator/@app_version@/data/appdata/screenshot-1.png</image>
+      <image>https://github.com/linuxmint/warpinator/raw/d72cb502b720902ba696023dd4361b44f1cb89b6/data/appdata/screenshot-1.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/linuxmint/warpinator/@app_version@/data/appdata/screenshot-2.png</image>
+      <image>https://github.com/linuxmint/warpinator/raw/d72cb502b720902ba696023dd4361b44f1cb89b6/data/appdata/screenshot-2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/linuxmint/warpinator/raw/d72cb502b720902ba696023dd4361b44f1cb89b6/data/appdata/screenshot-3.png</image>
     </screenshot>
   </screenshots>
   <update_contact>root@linuxmint.com</update_contact>
