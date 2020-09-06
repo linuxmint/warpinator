@@ -45,7 +45,7 @@
       <summary>Preserve the original user permissions of files being received.</summary>
     </key>
     <key name="network-iface" type="s">
-      <default>''</default>
+      <default>'auto'</default>
       <summary>Name of network interface the service should use.</summary>
     </key>
     <key name="fallback-to-available-iface" type="b">

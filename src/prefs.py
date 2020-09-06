@@ -33,11 +33,9 @@ RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
-#### One-time initializers
+#### One-time initializers/sanity checks
 if prefs_settings.get_string(NET_IFACE) == "":
-    default = util.get_default_net_interface()
-    if default != None:
-        prefs_settings.set_string(NET_IFACE, default)
+    prefs_settings.set_string(NET_IFACE, "auto")
 
 if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     default = Gio.File.new_for_path(os.path.join(GLib.get_home_dir(), "Warpinator"))
@@ -51,7 +49,12 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
 ####
 
 def get_net_iface():
-    return prefs_settings.get_string(NET_IFACE)
+    iface = prefs_settings.get_string(NET_IFACE)
+
+    if iface == "auto":
+        return util.get_default_net_interface()
+
+    return iface
 
 def allow_fallback_iface():
     return prefs_settings.get_boolean(USE_FALLBACK_IFACE)
@@ -186,7 +189,7 @@ class Preferences():
             print(e)
             lshw = None
 
-        options = []
+        options = [("auto", _("Automatic"))]
 
         for name in iface_names:
             found = False
@@ -204,16 +207,17 @@ class Preferences():
                 options.append((name, name))
 
         widget = GSettingsComboBox(_("Network interface to use"),
-                                   "org.x.warpinator.preferences",
-                                   "network-iface",
+                                   PREFS_SCHEMA,
+                                   NET_IFACE,
                                    options,
                                    valtype=str)
 
         section.add_row(widget)
 
-        widget = GSettingsSwitch(_("Use the default network interface if the preferred one is not found"),
+        widget = GSettingsSwitch(_("Use any available network connection if the preferred one is not found"),
                                  PREFS_SCHEMA, USE_FALLBACK_IFACE)
-        section.add_row(widget)
+
+        section.add_reveal_row(widget, PREFS_SCHEMA, NET_IFACE, check_func=lambda v, l: v != "auto")
 
         widget = PortSpinButton(_("Incoming port for transfers"),
                                 mini=1024, maxi=49151, step=1, page=10,
