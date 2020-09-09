@@ -20,7 +20,7 @@ import server
 import auth
 import networkmonitor
 from ops import SendOp, ReceiveOp
-from util import TransferDirection, OpStatus, RemoteStatus
+from util import TransferDirection, OpStatus, RemoteStatus, ServerStatus
 
 # Don't let warp run as root
 if os.getuid() == 0:
@@ -35,9 +35,11 @@ _ = gettext.gettext
 
 setproctitle.setproctitle("warpinator")
 
-SERVER_RESTART_TIMEOUT = 15
-SERVER_START_TIMEOUT = 8
-DISCOVERY_TIMEOUT = 3
+VISUAL_SERVER_RESTART_TIMEOUT = 15
+VISUAL_SERVER_START_TIMEOUT = 8
+VISUAL_DISCOVERY_TIMEOUT = 3
+
+SERVER_START_TIMEOUT = 20 * 1000 * 1000
 
 ICON_ONLINE = ""
 ICON_OFFLINE = "network-offline-symbolic"
@@ -595,7 +597,7 @@ class WarpWindow(GObject.Object):
 
         self.server_restarting = restarting
 
-        timeout = SERVER_RESTART_TIMEOUT if restarting else SERVER_START_TIMEOUT
+        timeout = VISUAL_SERVER_RESTART_TIMEOUT if restarting else VISUAL_SERVER_START_TIMEOUT
 
         self.server_start_timeout_id = GLib.timeout_add_seconds(timeout, self.server_not_started_timeout)
         self.view_stack.set_visible_child_name("startup")
@@ -604,7 +606,7 @@ class WarpWindow(GObject.Object):
         self.view_stack.set_visible_child_name("server-problem")
 
         # Should check the WarpApplication's value, but it should be a signal
-        if util.get_preferred_ip() == "0.0.0.0" or not self.netmon.online:
+        if util.get_used_ip() == "0.0.0.0" or not self.netmon.online:
             self.something_wrong_label.set_text(_("You don't appear to be connected to a network."))
         else:
             self.something_wrong_label.set_text(_("Startup was unsuccessful, please check your logs."))
@@ -767,7 +769,7 @@ class WarpWindow(GObject.Object):
         if self.server_restarting:
             return
 
-        self.discovery_time_out_id = GLib.timeout_add_seconds(DISCOVERY_TIMEOUT, self.discovery_timed_out)
+        self.discovery_time_out_id = GLib.timeout_add_seconds(VISUAL_DISCOVERY_TIMEOUT, self.discovery_timed_out)
         self.view_stack.set_visible_child_name("discovery")
 
     def discovery_timed_out(self):
@@ -963,8 +965,6 @@ class WarpApplication(Gtk.Application):
         self.window = None
         self.status_icon = None
         self.prefs_changed_source_id = 0
-        self.server_starting = False
-        self.recheck_server_after_start = False
 
         self.test_mode = testing
 
@@ -976,10 +976,15 @@ class WarpApplication(Gtk.Application):
         self.netmon = None
         self.server = None
 
+        self.server_starting = False
+        self.server_status = ServerStatus.NO_SERVER
+        self.recheck_server_after_start = False
+        self.server_fail_timeout_id = 0
+
         # This is only so we can check if the port changed when setting preferences
         self.current_port = prefs.get_port()
-        self.current_ip = util.get_preferred_ip()
-        self.current_iface = prefs.get_net_iface()
+        self.current_ip = util.get_used_ip()
+        self.current_iface = util.get_used_iface()
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
@@ -1045,21 +1050,41 @@ class WarpApplication(Gtk.Application):
         self.netmon.connect("state-changed", self.network_state_changed)
         self.new_server()
 
+    def server_starting_timeout(self):
+        if self.server_status != ServerStatus.AVAILABLE:
+            if self.server != None:
+                self.server = None
+
+        self.new_server()
+
+    def server_start_fail_timer(self):
+        if self.server_fail_timeout_id > 0:
+            GLib.source_remove(self.server_fail_timeout_id)
+
+        logging.debug("Starting server failure timeout")
+        self.server_fail_timeout_id = GLib.timeout_add_seconds(20, self.server_starting_timeout)
+
+    def server_stop_fail_timer(self):
+        logging.debug("Stopping server failure timeout")
+
+        if self.server_fail_timeout_id > 0:
+            GLib.source_remove(self.server_fail_timeout_id)
+            self.server_fail_timeout_id = 0
+
     def new_server(self):
-        if self.server_starting:
+        if self.server_status == ServerStatus.STARTING:
             logging.debug("Trying to start server while server already starting, will check later")
             return
 
-        self.server_starting = True
+        self.server_start_fail_timer()
+
         self.window.start_startup_timer(restarting=False)
 
         self.current_port = prefs.get_port()
-        self.current_ip = util.get_preferred_ip()
-        self.current_iface = prefs.get_net_iface()
+        self.current_ip = util.get_used_ip()
+        self.current_iface = util.get_used_iface()
 
         logging.debug("New server requested for '%s' (%s)", self.current_iface, self.current_ip)
-
-        self.netmon.update_current_network(self.current_iface, self.current_ip)
 
         if auth.singleton != None:
             try:
@@ -1073,6 +1098,7 @@ class WarpApplication(Gtk.Application):
         self.window.clear_remotes()
 
         def try_to_start(srv=None):
+            self.server_status = ServerStatus.STARTING
             try:
                 self.server.disconnect_by_func(try_to_start)
             except:
@@ -1086,7 +1112,9 @@ class WarpApplication(Gtk.Application):
 
             if self.current_ip == "0.0.0.0" or not self.netmon.online:
                 logging.info("No network access")
-                self.server_starting = False
+                self.server_status = ServerStatus.ERROR
+                self.server_stop_fail_timer()
+
                 self.window.show_no_network()
                 return
 
@@ -1097,6 +1125,7 @@ class WarpApplication(Gtk.Application):
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
 
         if self.server:
+            self.server_status = ServerStatus.STOPPING
             self.window.start_startup_timer(True)
             self.server.connect("shutdown-complete", try_to_start)
             self.server.shutdown()
@@ -1104,7 +1133,8 @@ class WarpApplication(Gtk.Application):
             try_to_start();
 
     def _server_started(self, local_machine):
-        self.server_starting = False
+        self.server_status = ServerStatus.AVAILABLE
+        self.server_stop_fail_timer()
 
         if self.state_changed_during_server_startup():
             self.new_server()
@@ -1122,6 +1152,7 @@ class WarpApplication(Gtk.Application):
         logging.debug("Beginning shutdown")
 
         self.setup_kill_as_a_last_resort()
+        self.server_stop_fail_timer()
 
         self.update_status_icon_online_state(online=False)
         self.window.display_shutdown()
@@ -1130,6 +1161,7 @@ class WarpApplication(Gtk.Application):
             self.netmon.stop()
 
         if self.server:
+            self.server_status = ServerStatus.STOPPING
             self.server.shutdown()
             # do_shutdown is called after the main loop is ended, we need to continue
             # the loop while waiting for the server to finish shutting down.  This is the
@@ -1146,8 +1178,9 @@ class WarpApplication(Gtk.Application):
         Gio.Application.do_shutdown(self)
 
     def network_state_changed(self, netmon, online):
-        self.update_status_icon_online_state(online)
-        self.new_server()
+        if not self.net_details_are_current():
+            self.update_status_icon_online_state(online)
+            self.new_server()
 
     def exit_warp(self):
         GLib.idle_add(self.quit)
@@ -1175,8 +1208,8 @@ class WarpApplication(Gtk.Application):
 
     def net_details_are_current(self):
         return prefs.get_port() == self.current_port and \
-               util.get_preferred_ip() == self.current_ip and \
-               prefs.get_net_iface() == self.current_iface
+               util.get_used_ip() == self.current_ip and \
+               util.get_used_iface() == self.current_iface
 
     def firewall_script_finished(self):
         if self.server == None:

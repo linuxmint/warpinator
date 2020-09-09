@@ -89,6 +89,8 @@ class RemoteMachine(GObject.Object):
         self.remote_thread.start()
 
     def run(self):
+        version = "1.0.9"## FIXME should be 1.0.8 for release, just easier to test while we're still tagged .8
+
         if self.remote_version == "1.0.9":
             self.run_legacy_connect()
         else:
@@ -167,8 +169,8 @@ class RemoteMachine(GObject.Object):
                                         self.remote_connection_loop_kill.wait(CHANNEL_RETRY_WAIT_TIME)
                                         return True
                         except grpc.RpcError as e:
-                            logging.debug("Remote: Ping failed, shutting down %s (%s:%d)"
-                                              % (self.display_hostname, self.ip_address, self.port))
+                            logging.debug("Remote: Ping failed, shutting down %s (%s:%d): %s"
+                                              % (self.display_hostname, self.ip_address, self.port, e.details()))
                             break
 
                     self.remote_connection_loop_kill.wait(CONNECTED_PING_TIME if self.status == RemoteStatus.ONLINE else DUPLEX_WAIT_PING_TIME)

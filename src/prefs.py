@@ -51,9 +51,6 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
 def get_net_iface():
     iface = prefs_settings.get_string(NET_IFACE)
 
-    if iface == "auto":
-        return util.get_default_net_interface()
-
     return iface
 
 def allow_fallback_iface():
@@ -182,6 +179,8 @@ class Preferences():
         section.add_row(widget)
 
         iface_names = util.get_net_interface_list()
+        pref_iface_name = get_net_iface()
+        pref_iface_present = False
 
         try:
             lshw = json.loads(subprocess.getoutput("lshw -sanitize -class network -json 2>/dev/null"))
@@ -192,6 +191,9 @@ class Preferences():
         options = [("auto", _("Automatic"))]
 
         for name in iface_names:
+            if name == pref_iface_name:
+                pref_iface_present = True
+
             found = False
             if lshw:
                 for entry in lshw:
@@ -205,6 +207,9 @@ class Preferences():
 
             if not found:
                 options.append((name, name))
+
+        if not pref_iface_present and pref_iface_name != "auto":
+            options.append((pref_iface_name, _("%s (Not found)") % pref_iface_name))
 
         widget = GSettingsComboBox(_("Network interface to use"),
                                    PREFS_SCHEMA,

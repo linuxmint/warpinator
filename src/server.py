@@ -126,7 +126,17 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         remote.has_zc_presence = False
 
     # Zeroconf worker thread
+    def update_service(self, zeroconf, _type, name):
+        if name == self.service_name:
+            return
+
+        logging.debug(">>> Discovery: update service: %s" % name)
+
+    # Zeroconf worker thread
     def add_service(self, zeroconf, _type, name):
+        if name == self.service_name:
+            return
+
         info = zeroconf.get_service_info(_type, name)
 
         if info:
@@ -146,7 +156,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 return
 
             try:
-                # Check if this is a flush registration to reset the remote servier's presence.
+                # Check if this is a flush registration to reset the remote server's presence.
                 if info.properties[b"type"].decode() == "flush":
                     logging.debug(">>> Discovery: received flush service info (ignoring): %s (%s:%d)"
                                       % (remote_hostname, remote_ip, info.port))
@@ -176,7 +186,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
                 return True
 
-            version = "1.0.9"
+            version = "1.0.9"## FIXME should be 1.0.8 for release, just easier to test while we're still tagged .8
 
             try:
                 version = info.properties[b"warp_version"].decode()
@@ -272,7 +282,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         #     # allow keepalive pings when there's no gRPC calls
             ('grpc.http2.max_pings_without_data', 0),
         #     # allow unlimited amount of keepalive pings without data
-            # ('grpc.http2.min_time_between_pings_ms', 30 * 1000),
+            ('grpc.http2.min_time_between_pings_ms', 20 * 1000),
         #     # allow grpc pings from client every 10 seconds
             ('grpc.http2.min_ping_interval_without_data_ms',  20 * 1000),
         #     # allow grpc pings from client without data every 5 seconds
@@ -357,6 +367,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             remote = self.remote_machines[request.id]
         except KeyError as e:
             logging.debug("Server Ping: ping is from unknown remote (or not fully online yet)")
+            # context.abort(code=grpc.StatusCode.PERMISSION_DENIED,
+            #               details="Ping not allowed yet, the remote machine hasn't completed its \
+            #                        connection with us.")
+            # return
 
         return void
 

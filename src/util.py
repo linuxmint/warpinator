@@ -41,6 +41,12 @@ FileType = IntEnum('FileType', (('REGULAR', Gio.FileType.REGULAR),
                                 ('DIRECTORY', Gio.FileType.DIRECTORY),
                                 ('SYMBOLIC_LINK', Gio.FileType.SYMBOLIC_LINK)))
 
+ServerStatus = IntEnum('ServerStatus', 'AVAILABLE \
+                                        STARTING \
+                                        STOPPING \
+                                        ERROR \
+                                        NO_SERVER')
+
 # Online - all ok
 # Offline - no presence at all
 # Init connecting - we've just discovered you
@@ -213,13 +219,16 @@ def get_ip_for_iface(iface_name):
     ip = pref_network[netifaces.AF_INET][0]["addr"]
     return ip
 
-def get_preferred_ip():
-    iface_name = prefs.get_net_iface()
+def get_used_ip():
+    iface = prefs.get_net_iface()
+
+    if iface == "auto":
+        return get_default_ip()
 
     try:
-        return get_ip_for_iface(iface_name)
+        return get_ip_for_iface(iface)
     except (KeyError, ValueError) as e:
-        logging.critical("Preferred network '%s' not found." % iface_name)
+        logging.critical("Preferred network '%s' not found." % iface)
 
         if prefs.allow_fallback_iface():
             logging.critical("Using default network")
@@ -279,7 +288,27 @@ def get_default_net_interface():
             if address["addr"] == ip:
                 return name
 
-    return None
+    return "no-device"
+
+def get_used_iface():
+    iface = prefs.get_net_iface()
+
+    if iface == "auto":
+        return get_default_net_interface()
+
+    ip = "0.0.0.0"
+
+    if iface in get_net_interface_list():
+        try:
+            ip = get_ip_for_iface(iface)
+        except:
+            pass
+
+    if ip == "0.0.0.0":
+        if prefs.allow_fallback_iface():
+            return get_default_net_interface()
+
+    return iface
 
 def same_subnet(my_ip, other_ip):
     my_net = get_my_network(my_ip)
