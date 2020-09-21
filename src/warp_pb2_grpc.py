@@ -75,6 +75,11 @@ class WarpStub(object):
         request_serializer=warp__pb2.LookupName.SerializeToString,
         response_deserializer=warp__pb2.VoidType.FromString,
         )
+    self.GetCertificate = channel.unary_unary(
+        '/Warp/GetCertificate',
+        request_serializer=warp__pb2.VoidType.SerializeToString,
+        response_deserializer=warp__pb2.Certificate.FromString,
+        )
 
 
 class WarpServicer(object):
@@ -164,6 +169,13 @@ class WarpServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetCertificate(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_WarpServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -221,6 +233,11 @@ def add_WarpServicer_to_server(servicer, server):
           servicer.Ping,
           request_deserializer=warp__pb2.LookupName.FromString,
           response_serializer=warp__pb2.VoidType.SerializeToString,
+      ),
+      'GetCertificate': grpc.unary_unary_rpc_method_handler(
+          servicer.GetCertificate,
+          request_deserializer=warp__pb2.VoidType.FromString,
+          response_serializer=warp__pb2.Certificate.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

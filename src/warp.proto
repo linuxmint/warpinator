@@ -25,6 +25,8 @@ service Warp {
     rpc StopTransfer(StopInfo) returns (VoidType) {}
 
     rpc Ping(LookupName) returns (VoidType) {}
+
+    rpc GetCertificate(VoidType) returns (Certificate) {}
 }
 
 message RemoteMachineInfo {
@@ -78,4 +80,8 @@ message FileChunk {
     string symlink_target = 3;
     bytes chunk = 4;
     uint32 file_mode = 5;
+}
+
+message Certificate {
+    bytes cert_base64 = 1;
 }

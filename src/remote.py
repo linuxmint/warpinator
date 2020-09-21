@@ -193,6 +193,31 @@ class RemoteMachine(GObject.Object):
 
         self.set_remote_status(RemoteStatus.OFFLINE)
 
+    def run_authenticate(self):
+        with grpc.insecure_channel("%s:%d" % (self.ip_address, self.port)) as channel:
+            future = grpc.channel_ready_future(channel)
+
+            try:
+                future.result(timeout=4)
+                self.stub = warp_pb2_grpc.WarpStub(channel)
+
+                if self.get_certificate():
+                    return True
+            except:
+                logging.critical("Couldn't get remote cert")
+
+        return False
+
+    def get_certificate(self):
+        logging.debug("Remote: asking for certificate from '%s'" % self.display_hostname)
+
+        ret = self.stub.GetCertificate(void)
+
+        if auth.get_singleton().process_encoded_server_cert(self.hostname, self.ip_address, ret.cert_base64):
+            return True
+
+        return False
+
     def run_connect(self):
         self.remote_connection_loop_kill.clear()
 

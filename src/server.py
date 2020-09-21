@@ -205,7 +205,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 # which we'll need when our supposedly existing connection tries to continue
                 # pinging. It will fail out and restart the connection loop, and will need
                 # this updated one.
-                if not check_cert():
+                if not machine.run_authenticate():
                     return
 
                 if machine.status == RemoteStatus.ONLINE:
@@ -219,8 +219,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 machine.port = info.port
                 machine.version = version
             except KeyError:
-                if not check_cert():
-                    return
+                # if not check_cert():
+                #     return
 
                 display_hostname = remote_hostname
                 i = 1
@@ -251,6 +251,10 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                                info.port,
                                                self.service_ident,
                                                version)
+
+                if not machine.run_authenticate():
+                    logging.critical("NEW REMOTE FAILED AUTH")
+                    return
 
                 self.remote_machines[ident] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
@@ -297,6 +301,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.server.add_secure_port('%s:%d' % (self.ip_address, self.port),
                                     server_credentials)
+
+
+        self.server.add_insecure_port('%s:%d' % (self.ip_address, self.port))
         self.server.start()
 
         self.start_zeroconf()
@@ -416,6 +423,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             return transfers.load_file_in_chunks(path)
         else:
             context.abort(code=grpc.StatusCode.NOT_FOUND, details='.face file not found!')
+
+    def GetCertificate(self, request, context):
+        logging.debug("Server RPC: GetCertificate from '%s'" % request.readable_name)
+
+        return warp_pb2.Certificate(cert_base64=auth.get_singleton().get_encoded_server_cert())
 
     def ProcessTransferOpRequest(self, request, context):
         logging.debug("Server RPC: ProcessTransferOpRequest from '%s'" % request.info.readable_name)
