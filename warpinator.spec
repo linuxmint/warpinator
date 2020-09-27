@@ -1,66 +1,61 @@
-%define name warpinator
-%define version 1.0.8
-%define release 3
-
 Summary: Send and Receive Files across the Network
-Name: %{name}
-Version: %{version}
-Release: %{release}
-License: GPL
-Group: Utilities
-Source: %{name}-%{version}.tar.gz
+Name: warpinator
+Version: 1.0.8
+Release: 3%{?dist}
+License: GPLv2+
 URL: https://github.com/linuxmint/warpinator
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-# not relocatable because the data file packages depend upon the location
-# of the data files in this package
+Source: %url/archive/%{version}/%{name}-%{version}.tar.gz
 
-Requires: python3-grpcio python3-cryptography python3-netifaces python3-pynacl python3-zeroconf python3-google-api-core python3-packaging python3-xapp python3-xapps-overrides python3-setproctitle
-BuildRequires: gcc make autoconf automake ninja-build meson python3-grpcio polkit-devel gettext libappstream-glib gtk-update-icon-cache
+BuildArch: noarch
+
+BuildRequires: gcc
+BuildRequires: meson
+BuildRequires: gettext 
+BuildRequires: libappstream-glib
+BuildRequires: desktop-file-utils
+
+
+Requires: python3-grpcio
+Requires: python3-cryptography
+Requires: python3-netifaces
+Requires: python3-pynacl
+Requires: python3-zeroconf
+Requires: python3-google-api-core
+Requires: python3-packaging
+Requires: python3-xapp
+Requires: python3-xapps-overrides
+Requires: python3-setproctitle
+
 
 %description
 Warpinator allows you to easily connect multiple computers
 on a local area network and share files quickly and securely.
 
-%global debug_package %{nil}
-
 %prep
 %setup -q
 
 %build
-meson builddir --prefix=%{buildroot}/usr
-ninja -C builddir
+%meson -Dinclude-firewall-mod=false
+%meson_build
 
 %install
-ninja -C builddir install
-mv %{buildroot}/usr/etc %{buildroot}/etc
-mkdir -p %{buildroot}/%{_docdir}/warpinator/
-echo "0" > %{buildroot}/%{_docdir}/warpinator/AUTHORS
-echo "0" > %{buildroot}/%{_docdir}/warpinator/INSTALL.Unix
-cp README.md %{buildroot}/%{_docdir}/warpinator/README
-echo "0" > %{buildroot}/%{_docdir}/warpinator/MML.html
-echo "0" > %{buildroot}/%{_docdir}/warpinator/Lua.html
-find %{buildroot} -type f -exec sed -i -e 's,%{buildroot},,g' {} \;
-find %{buildroot} -iname *.py -exec sed -i -e 's,%{buildroot},,g' {} \;
-find %{buildroot} -iname warpinator -exec sed -i -e 's,%{buildroot},,g' {} \;
+%meson_install
+desktop-file-validate %{buildroot}%{_datadir}/applications/warpinator.desktop
+desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/warpinator-autostart.desktop
+appstream-util validate --nonet %{buildroot}%{_metainfodir}/warpinator.appdata.xml
 
-%clean
-rm -rf %{buildroot}
+%find_lang %{name}
 
-%files
-%defattr(-,root,root)
-%doc AUTHORS COPYING INSTALL.Unix README docs/MML.html docs/Lua.html
+%files -f %{name}.lang
+%doc README.md
+%license  COPYING
 %{_bindir}/warpinator
 %{_datadir}/icons/hicolor/*/apps/*Warpinator*
-%{_datadir}/icons/hicolor/icon-theme.cache
-%{_datadir}/glib-2.0/schemas/gschemas.compiled
 %{_datadir}/glib-2.0/schemas/org.x.Warpinator.gschema.xml
 %{_datadir}/applications/warpinator.desktop
-%{_datadir}/locale/*/LC_MESSAGES/warpinator.mo
-%{_datadir}/metainfo/warpinator.appdata.xml
-%{_datadir}/polkit-1/actions/org.x.warpinator.policy
-%{_datadir}/warpinator/*
+%{_metainfodir}/warpinator.appdata.xml
+%{_datadir}/warpinator/
 %{_libexecdir}/warpinator/*.py
-%{_libexecdir}/warpinator/firewall/ufw-modify
 %{_sysconfdir}/xdg/autostart/warpinator-autostart.desktop
 
 
