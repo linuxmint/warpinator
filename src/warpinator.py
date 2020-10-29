@@ -478,13 +478,24 @@ class WarpWindow(GObject.Object):
         self.user_clear_ops_button = self.builder.get_object("user_clear_ops_button")
 
         # Send Files button
+        main_menu = Gtk.Menu()
+        item = Gtk.MenuItem(_("Favorites"))
+        main_menu.add(item)
+        favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
+        item.set_submenu(favorites)
+
+        item = Gtk.MenuItem(_("Recents"))
+        main_menu.add(item)
         self.recent_menu = util.get_recent_chooser_menu()
         self.recent_menu.connect("item-activated", self.recent_item_selected)
-        self.recent_menu.add(Gtk.SeparatorMenuItem(visible=True))
+        item.set_submenu(self.recent_menu)
+
+        main_menu.add(Gtk.SeparatorMenuItem(visible=True))
         picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
         picker.connect("activate", self.open_file_picker)
-        self.recent_menu.add(picker)
-        self.user_send_button.set_popup(self.recent_menu)
+        main_menu.add(picker)
+        main_menu.show_all()
+        self.user_send_button.set_popup(main_menu)
 
         self.server_start_timeout_id = 0
         self.discovery_time_out_id = 0
@@ -623,6 +634,9 @@ class WarpWindow(GObject.Object):
     def recent_item_selected(self, recent_chooser, data=None):
         uri = self.recent_menu.get_current_uri()
 
+        self.current_selected_remote_machine.send_files([uri])
+
+    def favorite_selected(self, favorites, uri):
         self.current_selected_remote_machine.send_files([uri])
 
     def open_file_picker(self, button, data=None):
@@ -1259,13 +1273,32 @@ class WarpApplication(Gtk.Application):
                         name = machine.display_name
                     else:
                         name = machine.display_hostname
-                    item = Gtk.MenuItem(label=name)
+                    user_item = Gtk.MenuItem(label=name)
                     if machine.status == RemoteStatus.ONLINE:
                         available_favorites += 1
                     else:
-                        item.set_sensitive(False)
-                    self.attach_recent_submenu(item, machine)
-                    menu.add(item)
+                        user_item.set_sensitive(False)
+
+                    file_select_menu = Gtk.Menu()
+
+                    subitem = Gtk.MenuItem(_("Favorites"))
+                    favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
+                    subitem.set_submenu(favorites)
+                    file_select_menu.add(subitem)
+
+                    subitem = Gtk.MenuItem(_("Recents"))
+                    recents = self.build_recent_submenu(subitem, machine)
+                    subitem.set_submenu(recents)
+                    file_select_menu.add(subitem)
+
+                    file_select_menu.add(Gtk.SeparatorMenuItem(visible=True))
+
+                    picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
+                    picker.connect("activate", self.open_file_picker, machine)
+                    file_select_menu.add(picker)
+
+                    user_item.set_submenu(file_select_menu)
+                    menu.add(user_item)
 
         # If there is more than one online remote, add a 'send to all'
         if available_favorites > 1:
@@ -1279,20 +1312,17 @@ class WarpApplication(Gtk.Application):
 
         menu.show_all()
 
-    def attach_recent_submenu(self, menu, machine):
-        sub = util.get_recent_chooser_menu()
-        sub.connect("item-activated", self.status_icon_recent_item_selected, machine)
-        sub.add(Gtk.SeparatorMenuItem(visible=True))
-
-        picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
-        picker.connect("activate", self.open_file_picker, machine)
-        sub.add(picker)
-
-        menu.set_submenu(sub)
+    def build_recent_submenu(self, menu, machine):
+        menu = util.get_recent_chooser_menu()
+        menu.connect("item-activated", self.status_icon_recent_item_selected, machine)
+        return menu
 
     def status_icon_recent_item_selected(self, chooser, remote_machine=None):
         uri = chooser.get_current_uri()
 
+        self.send_status_icon_selection_to_machine(uri, remote_machine)
+
+    def status_icon_favorite_selected(self, favorites, uri, remote_machine=None):
         self.send_status_icon_selection_to_machine(uri, remote_machine)
 
     def open_file_picker(self, button, remote_machine=None):
