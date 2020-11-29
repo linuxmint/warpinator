@@ -5,6 +5,7 @@ import os
 import socket
 import uuid
 import logging
+import ipaddress
 
 from cryptography import x509
 from cryptography.hazmat.primitives import serialization as crypto_serialization
@@ -205,7 +206,7 @@ class AuthManager(GObject.Object):
         builder = builder.public_key(public_key)
         builder = builder.add_extension(
             x509.SubjectAlternativeName(
-                [x509.DNSName(ip)]
+                [x509.IPAddress(ipaddress.IPv4Address(ip))]
             ),
             critical=True
         )
