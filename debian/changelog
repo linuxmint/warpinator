@@ -1,3 +1,31 @@
+warpinator (1.0.9) ulyssa; urgency=medium
+
+  [ Michael Webster ]
+  * Add flatpak folder with dependency info.
+  * Fix the icon name in a few other missed spots.
+  * appstream: Better screenshots.
+  * Update appdata screenshots.
+  * meson.build: Add a reminder to update the appdata file when tagging a new version.
+
+  [ Angedestenebres ]
+  * Add new dependency
+  * Update README.md
+  * Update README.md
+
+  [ Elagost ]
+  * add rpm specfile (#62)
+
+  [ Michael Webster ]
+  * warpinator.py: Add favorites to the send menus, move recents to its own submenu.
+
+  [ slowscript ]
+  * Put IP address into correct field on the certificate
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 02 Dec 2020 14:13:18 +0000
+
 warpinator (1.0.8) ulyana; urgency=medium
 
   [ Michael Webster ]

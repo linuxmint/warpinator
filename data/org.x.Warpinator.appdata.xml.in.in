@@ -20,7 +20,7 @@
   <url type="translate">https://translations.launchpad.net/linuxmint/latest/+pots/warpinator</url>
   <launchable type="desktop-id">@appid@.desktop</launchable>
   <releases>
-    <release version="1.0.8" date="2020-08-14" />
+    <release version="1.0.9" date="2020-12-02" />
   </releases>
   <project_license>GPL-3.0+</project_license>
   <!-- DO NOT TRANSLATE Linux Mint -->

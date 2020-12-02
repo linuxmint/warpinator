@@ -1,6 +1,6 @@
-##################### When tagging a new version, add a release entry
-##################### to data/org.x.Warpinator.appdata.xml.in.in
-project('warpinator', 'c', version: '1.0.8', meson_version: '>=0.45.0')
+##################### When tagging a new version, update the release info
+##################### in data/org.x.Warpinator.appdata.xml.in.in
+project('warpinator', 'c', version: '1.0.9', meson_version: '>=0.45.0')
 #####################
 #####################
 
