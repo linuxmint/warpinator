@@ -7,18 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-06-06 14:20+0100\n"
-"PO-Revision-Date: 2020-06-07 09:30+0000\n"
+"POT-Creation-Date: 2020-12-02 14:12+0000\n"
+"PO-Revision-Date: 2020-12-03 10:11+0000\n"
 "Last-Translator: Isidro Pisa <isidro@utils.info>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2020-06-24 10:13+0000\n"
-"X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
+"X-Launchpad-Export-Date: 2020-12-10 10:32+0000\n"
+"X-Generator: Launchpad (build 4853cb86c14c5a9e513816c8a61121c639b30835)\n"
 
-#: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
+#: resources/main-window.ui:33 src/util.py:442
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Envia i rep arxius a través de la xarxa"
 
@@ -38,11 +40,11 @@ msgstr "Esborra operacions inactives i completades"
 msgid "Send files"
 msgstr "Envia arxius"
 
-#: resources/main-window.ui:468 src/prefs.py:125
+#: resources/main-window.ui:468 src/prefs.py:129
 msgid "File Transfers"
 msgstr "Transferències de fitxers"
 
-#: resources/main-window.ui:489 src/warpinator.py:824
+#: resources/main-window.ui:489 src/warpinator.py:838
 msgid "Online"
 msgstr "En línia"
 
@@ -259,66 +261,69 @@ msgid_plural "%d files"
 msgstr[0] "%d arxiu"
 msgstr[1] "%d arxius"
 
-#: src/prefs.py:100
+#: src/prefs.py:104
 msgid "Warpinator Preferences"
 msgstr "Preferències de Warpinator"
 
-#: src/prefs.py:110
+#: src/prefs.py:114
 msgid "Desktop"
 msgstr "Escriptori"
 
-#: src/prefs.py:112
+#: src/prefs.py:116
 msgid "Show an icon in the notification area"
 msgstr "Mostra una icona a l'àrea de notificació"
 
-#: src/prefs.py:116
+#: src/prefs.py:120
 msgid "Start with main window open"
 msgstr "Inicia amb la finestra principal oberta"
 
-#: src/prefs.py:121
+#: src/prefs.py:125
 msgid "Start automatically"
 msgstr "Inicia automàticament"
 
-#: src/prefs.py:127
+#: src/prefs.py:131
 msgid "Location for received files"
 msgstr "Ubicació dels arxius rebuts"
 
-#: src/prefs.py:132
+#. widget = GSettingsSwitch(_("Preserve original file permissions"),
+#. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
+#. section.add_row(widget)
+#: src/prefs.py:140
 msgid "Require approval before accepting files"
 msgstr "Requereix aprovació per acceptar arxius"
 
-#: src/prefs.py:136
+#: src/prefs.py:144
 msgid "Require approval when files would be overwritten"
 msgstr "Requereix aprovació per sobreescriure arxius"
 
-#: src/prefs.py:140
+#: src/prefs.py:148
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Mostrar una notificació quan algú us envia (o intenta enviar-vos) arxius"
 
-#: src/prefs.py:144
+#: src/prefs.py:152
 msgid "Network"
 msgstr "Xarxa"
 
-#: src/prefs.py:149
+#: src/prefs.py:157
 msgid "Group Code"
 msgstr "Codi de grup"
 
-#: src/prefs.py:150
+#: src/prefs.py:158
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "No podeu comunicar-vos amb equips que no facin servir el mateix codi."
 
-#: src/prefs.py:156
+#: src/prefs.py:164
 msgid "Incoming port for transfers"
 msgstr "Port entrant per a transferències"
 
-#: src/prefs.py:167
+#: src/prefs.py:175
 msgid "Update firewall rules"
 msgstr "Actualitza les regles del tallafocs"
 
-#: src/prefs.py:179
+#: src/prefs.py:187
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -327,73 +332,73 @@ msgstr ""
 "mateix port en tots els equips pot facilitar la creació d'excepcions de "
 "tallafocs si cal."
 
-#: src/prefs.py:211
+#: src/prefs.py:219
 msgid "Change port"
 msgstr "Canvia el port"
 
-#: src/prefs.py:256
+#: src/prefs.py:264
 msgid "Set code"
 msgstr "Defineix el codi"
 
-#: src/prefs.py:271
+#: src/prefs.py:279
 msgid "A group code is required."
 msgstr "Cal un codi de grup"
 
-#: src/prefs.py:277
+#: src/prefs.py:285
 msgid "The group code should be longer if possible."
 msgstr "El codi de grup hauria de ser més llarg si és possible."
 
-#: src/remote.py:484 src/remote.py:488
+#: src/remote.py:487 src/remote.py:491
 msgid "Connection has been lost"
 msgstr "S'ha perdut la connexió"
 
-#: src/server.py:458
+#: src/server.py:459
 msgid "An error occurred on the remote machine"
 msgstr "S'ha produït un error a la màquina remota"
 
-#: src/util.py:80
+#: src/util.py:81
 msgid "Select file(s) to send"
 msgstr "Seleccioneu arxiu(s) per enviar"
 
-#: src/util.py:84
+#: src/util.py:85
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/util.py:85
+#: src/util.py:86
 msgid "Send"
 msgstr "Envia"
 
-#: src/util.py:271
+#: src/util.py:288
 msgid "A few seconds remaining"
 msgstr "Queden pocs segons"
 
-#: src/util.py:274
+#: src/util.py:291
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d segonds restants"
 
-#: src/util.py:278 src/util.py:286
+#: src/util.py:295 src/util.py:303
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minut"
 msgstr[1] "%d minuts"
 
-#: src/util.py:285
+#: src/util.py:302
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
 msgstr[1] "%d hores"
 
-#: src/util.py:290
+#: src/util.py:307
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "aproximadament %d hora"
 msgstr[1] "aproximadament %d hores"
 
-#: src/util.py:415 src/warpinator.py:506
+#: src/util.py:438 src/warpinator.py:517
 msgid "About"
 msgstr "Quant a"
 
@@ -444,7 +449,7 @@ msgstr "Alguns arxius no es troben"
 msgid "Completed"
 msgstr "Completat"
 
-#: src/warpinator.py:331 src/warpinator.py:852
+#: src/warpinator.py:331 src/warpinator.py:866
 msgid "Connecting"
 msgstr "Connectant"
 
@@ -475,42 +480,76 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] "%d transferència entrant nova"
 msgstr[1] "%d transferències entrants noves"
 
-#: src/warpinator.py:484 src/warpinator.py:1286
+#: src/warpinator.py:482 src/warpinator.py:1284
+msgid "Favorites"
+msgstr "Favorits"
+
+#: src/warpinator.py:487 src/warpinator.py:1289
+msgid "Recents"
+msgstr "Recents"
+
+#: src/warpinator.py:494 src/warpinator.py:1296
 msgid "Browse..."
 msgstr "Explora..."
 
-#: src/warpinator.py:498 src/warpinator.py:1237
+#: src/warpinator.py:509 src/warpinator.py:1252
 msgid "Open save folder"
 msgstr "Obre la carpeta de desament"
 
-#: src/warpinator.py:502
+#: src/warpinator.py:513
 msgid "Preferences"
 msgstr "Preferències"
 
-#: src/warpinator.py:510 src/warpinator.py:1240
+#: src/warpinator.py:521 src/warpinator.py:1255
 msgid "Quit"
 msgstr "Surt"
 
-#: src/warpinator.py:604
+#: src/warpinator.py:615
 msgid "You don't appear to be connected to a network."
 msgstr "Sembla que no esteu connectat a una xarxa."
 
-#: src/warpinator.py:606
+#: src/warpinator.py:617
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "L'inici ha fallat, comproveu els registres."
 
-#: src/warpinator.py:831
+#: src/warpinator.py:845
 msgid "Offline"
 msgstr "Fora de línia"
 
-#: src/warpinator.py:838
+#: src/warpinator.py:852
 msgid "Unable to connect"
 msgstr "No s'ha pogut connectar"
 
-#: src/warpinator.py:845
+#: src/warpinator.py:859
 msgid "Waiting for two-way connection"
 msgstr "Esperant la connexió bidireccional"
 
-#: src/warpinator.py:1272
+#: src/warpinator.py:1306
 msgid "Send to favorites"
 msgstr "Envia a favorits"
+
+#: data/org.x.warpinator.policy.in.in:12
+msgid "Open a firewall port for Warpinator"
+msgstr "Obre un port de el tallafocs per Warpinator"
+
+#: data/org.x.warpinator.policy.in.in:13
+msgid "To modify firewall settings, you need to authenticate."
+msgstr "Heu d'autenticar-vos per modificar la configuració del tallafocs."
+
+#. DO NOT TRANSLATE Warpinator
+#: data/org.x.Warpinator.appdata.xml.in.in:6
+msgid "Warpinator"
+msgstr "Warpinator"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:9
+msgid ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and share files quickly and securely."
+msgstr ""
+"Warpinator us permet connectar fàcilment amb múltiples equips, en una xarxa "
+"d'àrea local i compartir arxius de manera ràpida i segura."
+
+#. DO NOT TRANSLATE Linux Mint
+#: data/org.x.Warpinator.appdata.xml.in.in:27
+msgid "Linux Mint"
+msgstr "Linux Mint"

@@ -7,18 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-06-06 14:20+0100\n"
-"PO-Revision-Date: 2020-06-07 09:47+0000\n"
+"POT-Creation-Date: 2020-12-02 14:12+0000\n"
+"PO-Revision-Date: 2020-12-06 10:18+0000\n"
 "Last-Translator: Asier Iturralde Sarasola <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2020-06-24 10:13+0000\n"
-"X-Generator: Launchpad (build 1cbd0aa39df153c901321817f9b57cf3f232b507)\n"
+"X-Launchpad-Export-Date: 2020-12-10 10:32+0000\n"
+"X-Generator: Launchpad (build 4853cb86c14c5a9e513816c8a61121c639b30835)\n"
 
-#: resources/main-window.ui:33 src/util.py:419 data/warpinator.desktop.in:5
+#: resources/main-window.ui:33 src/util.py:442
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Bidali eta jaso fitxategiak sarean zehar"
 
@@ -38,11 +40,11 @@ msgstr "Garbitu osatutako eta aktibitaterik ez duten eragiketak"
 msgid "Send files"
 msgstr "Bidali fitxategiak"
 
-#: resources/main-window.ui:468 src/prefs.py:125
+#: resources/main-window.ui:468 src/prefs.py:129
 msgid "File Transfers"
 msgstr "Fitxategi-transferentziak"
 
-#: resources/main-window.ui:489 src/warpinator.py:824
+#: resources/main-window.ui:489 src/warpinator.py:838
 msgid "Online"
 msgstr "Konektatuta"
 
@@ -261,67 +263,70 @@ msgid_plural "%d files"
 msgstr[0] "Fitxategi %d"
 msgstr[1] "%d fitxategi"
 
-#: src/prefs.py:100
+#: src/prefs.py:104
 msgid "Warpinator Preferences"
 msgstr "Warpinator hobespenak"
 
-#: src/prefs.py:110
+#: src/prefs.py:114
 msgid "Desktop"
 msgstr "Mahaigaina"
 
-#: src/prefs.py:112
+#: src/prefs.py:116
 msgid "Show an icon in the notification area"
 msgstr "Erakutsi ikono bat jakinarazpen-arean"
 
-#: src/prefs.py:116
+#: src/prefs.py:120
 msgid "Start with main window open"
 msgstr "Hasi leiho nagusia irekita"
 
-#: src/prefs.py:121
+#: src/prefs.py:125
 msgid "Start automatically"
 msgstr "Hasi automatikoki"
 
-#: src/prefs.py:127
+#: src/prefs.py:131
 msgid "Location for received files"
 msgstr "Jasotako fitxategien kokalekua"
 
-#: src/prefs.py:132
+#. widget = GSettingsSwitch(_("Preserve original file permissions"),
+#. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
+#. section.add_row(widget)
+#: src/prefs.py:140
 msgid "Require approval before accepting files"
 msgstr "Eskatu onarpena fitxategiak onartu aurretik"
 
-#: src/prefs.py:136
+#: src/prefs.py:144
 msgid "Require approval when files would be overwritten"
 msgstr "Eskatu onarpena fitxategiak gainidatziko badira"
 
-#: src/prefs.py:140
+#: src/prefs.py:148
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Bistaratu jakinarazpen bat norbaitek fitxategiak bidaltzen dizkizunean (edo "
 "saiatzen denean)"
 
-#: src/prefs.py:144
+#: src/prefs.py:152
 msgid "Network"
 msgstr "Sarea"
 
-#: src/prefs.py:149
+#: src/prefs.py:157
 msgid "Group Code"
 msgstr "Talde-kodea"
 
-#: src/prefs.py:150
+#: src/prefs.py:158
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Ezin duzu komunikatu talde-kode bera erabiltzen ez duten ordenagailuekin."
 
-#: src/prefs.py:156
+#: src/prefs.py:164
 msgid "Incoming port for transfers"
 msgstr "Transferentzien sarrerako atakak"
 
-#: src/prefs.py:167
+#: src/prefs.py:175
 msgid "Update firewall rules"
 msgstr "Eguneratu suebakiaren arauak"
 
-#: src/prefs.py:179
+#: src/prefs.py:187
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -330,73 +335,73 @@ msgstr ""
 "guztietan ataka berdina erabiltzeak, behar izanez gero, suebakian "
 "salbuespenak gehitzea erraztu dezake."
 
-#: src/prefs.py:211
+#: src/prefs.py:219
 msgid "Change port"
 msgstr "Aldatu ataka"
 
-#: src/prefs.py:256
+#: src/prefs.py:264
 msgid "Set code"
 msgstr "Ezarri kodea"
 
-#: src/prefs.py:271
+#: src/prefs.py:279
 msgid "A group code is required."
 msgstr "Talde-kodea beharrezkoa da."
 
-#: src/prefs.py:277
+#: src/prefs.py:285
 msgid "The group code should be longer if possible."
 msgstr "Talde-kodeak luzeagoa izan behar luke ahal izanez gero."
 
-#: src/remote.py:484 src/remote.py:488
+#: src/remote.py:487 src/remote.py:491
 msgid "Connection has been lost"
 msgstr "Konexioa galdu egin da"
 
-#: src/server.py:458
+#: src/server.py:459
 msgid "An error occurred on the remote machine"
 msgstr "Errore bat gertatu da urruneko makinan"
 
-#: src/util.py:80
+#: src/util.py:81
 msgid "Select file(s) to send"
 msgstr "Hautatu fitxategia(k) bidaltzeko"
 
-#: src/util.py:84
+#: src/util.py:85
 msgid "Cancel"
 msgstr "Utzi"
 
-#: src/util.py:85
+#: src/util.py:86
 msgid "Send"
 msgstr "Bidali"
 
-#: src/util.py:271
+#: src/util.py:288
 msgid "A few seconds remaining"
 msgstr "Segundo batzuk geratzen dira"
 
-#: src/util.py:274
+#: src/util.py:291
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d segundo geratzen dira"
 
-#: src/util.py:278 src/util.py:286
+#: src/util.py:295 src/util.py:303
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "Minutu %d"
 msgstr[1] "%d minutu"
 
-#: src/util.py:285
+#: src/util.py:302
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "Ordu %d"
 msgstr[1] "%d ordu"
 
-#: src/util.py:290
+#: src/util.py:307
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "gutxi gorabehera ordu %d"
 msgstr[1] "gutxi gorabehera %d ordu"
 
-#: src/util.py:415 src/warpinator.py:506
+#: src/util.py:438 src/warpinator.py:517
 msgid "About"
 msgstr "Honi buruz"
 
@@ -447,7 +452,7 @@ msgstr "Fitxategi batzuk ez dira aurkitu"
 msgid "Completed"
 msgstr "Osatuta"
 
-#: src/warpinator.py:331 src/warpinator.py:852
+#: src/warpinator.py:331 src/warpinator.py:866
 msgid "Connecting"
 msgstr "Konektatzen"
 
@@ -478,42 +483,76 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] "Sarrerako fitxategi berri %d"
 msgstr[1] "Sarrerako %d fitxategi berri"
 
-#: src/warpinator.py:484 src/warpinator.py:1286
+#: src/warpinator.py:482 src/warpinator.py:1284
+msgid "Favorites"
+msgstr "Gogokoak"
+
+#: src/warpinator.py:487 src/warpinator.py:1289
+msgid "Recents"
+msgstr "Azkenak"
+
+#: src/warpinator.py:494 src/warpinator.py:1296
 msgid "Browse..."
 msgstr "Arakatu..."
 
-#: src/warpinator.py:498 src/warpinator.py:1237
+#: src/warpinator.py:509 src/warpinator.py:1252
 msgid "Open save folder"
 msgstr "Ireki gordetzeko karpeta"
 
-#: src/warpinator.py:502
+#: src/warpinator.py:513
 msgid "Preferences"
 msgstr "Hobespenak"
 
-#: src/warpinator.py:510 src/warpinator.py:1240
+#: src/warpinator.py:521 src/warpinator.py:1255
 msgid "Quit"
 msgstr "Irten"
 
-#: src/warpinator.py:604
+#: src/warpinator.py:615
 msgid "You don't appear to be connected to a network."
 msgstr "Sare batera konektatu gabe zaudela dirudi."
 
-#: src/warpinator.py:606
+#: src/warpinator.py:617
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Abioak huts egin du, begiratu egunkariak."
 
-#: src/warpinator.py:831
+#: src/warpinator.py:845
 msgid "Offline"
 msgstr "Lineaz kanpo"
 
-#: src/warpinator.py:838
+#: src/warpinator.py:852
 msgid "Unable to connect"
 msgstr "Ezin da konektatu"
 
-#: src/warpinator.py:845
+#: src/warpinator.py:859
 msgid "Waiting for two-way connection"
 msgstr "Bi noranzkoko konexioaren zain"
 
-#: src/warpinator.py:1272
+#: src/warpinator.py:1306
 msgid "Send to favorites"
 msgstr "Bidali gogokoei"
+
+#: data/org.x.warpinator.policy.in.in:12
+msgid "Open a firewall port for Warpinator"
+msgstr "Ireki suebakiko ataka bat Warpinatorrentzat"
+
+#: data/org.x.warpinator.policy.in.in:13
+msgid "To modify firewall settings, you need to authenticate."
+msgstr "Suebakiaren ezarpenak aldatzeko autentifikatu beharra dago."
+
+#. DO NOT TRANSLATE Warpinator
+#: data/org.x.Warpinator.appdata.xml.in.in:6
+msgid "Warpinator"
+msgstr "Warpinator"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:9
+msgid ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and share files quickly and securely."
+msgstr ""
+"Warpinatorrek aukera ematen dizu hainbat ordenagailu sare lokal batean modu "
+"errazean konektatu eta fitxategiak azkar eta seguru partekatzeko."
+
+#. DO NOT TRANSLATE Linux Mint
+#: data/org.x.Warpinator.appdata.xml.in.in:27
+msgid "Linux Mint"
+msgstr "Linux Mint"
