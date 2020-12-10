@@ -1,3 +1,9 @@
+warpinator (1.1.0) ulyssa; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 10 Dec 2020 12:41:08 +0000
+
 warpinator (1.0.9) ulyssa; urgency=medium
 
   [ Michael Webster ]
