@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-12-02 14:12+0000\n"
-"PO-Revision-Date: 2020-11-28 22:16+0000\n"
+"PO-Revision-Date: 2020-12-11 11:00+0000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2020-12-10 10:32+0000\n"
-"X-Generator: Launchpad (build 4853cb86c14c5a9e513816c8a61121c639b30835)\n"
+"X-Launchpad-Export-Date: 2021-01-02 14:19+0000\n"
+"X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
 "Language: sr\n"
 
 #: resources/main-window.ui:33 src/util.py:442
@@ -487,11 +487,11 @@ msgstr[2] "%d нових долазних преноса"
 
 #: src/warpinator.py:482 src/warpinator.py:1284
 msgid "Favorites"
-msgstr ""
+msgstr "Омиљено"
 
 #: src/warpinator.py:487 src/warpinator.py:1289
 msgid "Recents"
-msgstr ""
+msgstr "Скорашње"
 
 #: src/warpinator.py:494 src/warpinator.py:1296
 msgid "Browse..."

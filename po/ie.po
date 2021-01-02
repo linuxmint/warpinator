@@ -1,4 +1,4 @@
-# Finnish translation for linuxmint
+# Interlingue translation for linuxmint
 # Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
 # This file is distributed under the same license as the linuxmint package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
@@ -8,61 +8,59 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-12-02 14:12+0000\n"
-"PO-Revision-Date: 2020-12-03 17:32+0000\n"
-"Last-Translator: Kimmo Kujansuu <Unknown>\n"
-"Language-Team: Finnish <fi@li.org>\n"
+"PO-Revision-Date: 2020-12-22 11:46+0000\n"
+"Last-Translator: Silvara <Unknown>\n"
+"Language-Team: Interlingue <ie@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-01-02 14:18+0000\n"
+"X-Launchpad-Export-Date: 2021-01-02 14:19+0000\n"
 "X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
 
 #: resources/main-window.ui:33 src/util.py:442
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr "Lähetä ja vastaanota tiedostoja verkossa"
+msgstr "Inviar e reciver files tra li rete"
 
 #: resources/main-window.ui:193
 msgid "No matching results"
-msgstr "Ei vastaavia tuloksia"
+msgstr "Null resultates"
 
 #: resources/main-window.ui:349
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Tee tästä etäkoneesta suosikki päänäkymässä"
+msgstr ""
 
 #: resources/main-window.ui:423
 msgid "Clear inactive and completed operations"
-msgstr "Tyhjennä passiiviset ja valmiit toiminnot"
+msgstr "Rader ínactiv e completat operationes"
 
 #: resources/main-window.ui:442
 msgid "Send files"
-msgstr "Lähetä tiedostoja"
+msgstr "Inviar files"
 
 #: resources/main-window.ui:468 src/prefs.py:129
 msgid "File Transfers"
-msgstr "Tiedostojen siirrot"
+msgstr "Transferte de files"
 
 #: resources/main-window.ui:489 src/warpinator.py:838
 msgid "Online"
-msgstr "Verkossa"
+msgstr "In li rete"
 
 #: resources/main-window.ui:609
 msgid "No other computers found..."
-msgstr "Muita tietokoneita ei löytynyt..."
+msgstr "Null altri computatores es trovat..."
 
 #: resources/main-window.ui:673
 msgid "Make sure your network connection is active."
-msgstr "Varmista, että verkkoyhteys on aktiivinen."
+msgstr "Controla que vor conexion al rete es activ."
 
 #: resources/main-window.ui:688
 msgid ""
 "Check your firewall rules.  The port number can be changed.  See preferences "
 "for more details."
 msgstr ""
-"Tarkista palomuurisäännöt. Portin numeroa voidaan muuttaa. Katso lisätietoja "
-"asetuksista."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:704
@@ -70,176 +68,174 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Onko Warpinator käynnissä muissa tietokoneissa tässä verkossa? Varmista, "
-"että ne kaikki käyttävät samaa ryhmäkoodia asetuksissa."
+"Esque Warpinator es lansat sur altri computatores in li rete? Si yes, "
+"controla que li sam code de gruppe in li Preferenties es usat."
 
 #: resources/main-window.ui:722
 msgid "Possible solutions:"
-msgstr "Mahdolliset ratkaisut:"
+msgstr "Possibil solutiones:"
 
 #: resources/main-window.ui:788
 msgid "Initializing, please wait..."
-msgstr "Valmistellaan, odota..."
+msgstr "Inicialisation, ples atender..."
 
 #: resources/main-window.ui:846
 msgid "Something went wrong"
-msgstr "Jotain meni pieleen"
+msgstr "Un problema evenit"
 
 #: resources/main-window.ui:921
 msgid "Invalid save location"
-msgstr "Virheellinen tallennuspaikka"
+msgstr "Ínvalid location por gardar"
 
 #: resources/main-window.ui:958
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
-"Tätä kansiota ei voi käyttää, tai sitä ei ole. Valitse uusi sijainti "
-"Asetuksista tai varmista, että nykyinen sijainti on asennettu."
+"Ti fólder es ínaccessibil o ne existe. Selecte un nov localisation in "
+"Preferenties o monta ti fólder."
 
 #: resources/main-window.ui:1014
 msgid "Searching for other computers"
-msgstr "Etsitään muita tietokoneita"
+msgstr "Serchante por altri computatores"
 
 #: resources/main-window.ui:1073
 msgid "Shutting down..."
-msgstr "Sammutetaan..."
+msgstr "Terminante..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Odottaa hyväksyntää"
+msgstr "Atende li aprobation"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Ei riittävästi levytilaa!"
+msgstr "Ínsuficent spacie sur disco!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "Lasketaan"
+msgstr "Calculante"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Hyväksy tämä pyyntö"
+msgstr "Acceptar ti demande"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Hylkää tämä pyyntö"
+msgstr "Refusar ti demande"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Peruuta tämä pyyntö"
+msgstr "Anullar ti demande"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Käynnistä tämä toiminto uudelleen"
+msgstr "Inicialisar ti operation denov"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Keskeytä tämä toimenpide"
+msgstr "Pausar ti operation"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Jatka tätä toimintoa"
+msgstr "Reprender ti operation"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Peruuta tämä toiminto"
+msgstr "Anullar ti operation"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Poista tämä toiminto luettelosta"
+msgstr "Remover ti operation ex li liste"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Avaa sisällön kansio"
+msgstr "Aperter li contenent fólder"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Note on port numbers:"
+msgstr ""
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Warpinator asetukset"
+msgstr "Preferenties de Warpinator"
 
 #: src/notifications.py:20
 msgid "New incoming files"
-msgstr "Uudet saapuvat tiedostot"
+msgstr "Nov recivet files"
 
 #: src/notifications.py:26
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s haluaisi lähettää sinulle %(file_count)d tiedostoa "
-"(%(file_name)s)."
+"%(sender_name)s vole inviar a vos %(file_count)d file(s) (%(file_name)s)."
 
 #: src/notifications.py:27
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s haluaisi lähettää sinulle %(file_count)d tiedostoa"
+msgstr "%(sender_name)s vole inviar a vos %(file_count)d file(s)"
 
 #: src/notifications.py:37
 msgid "Accept"
-msgstr "Hyväksy"
+msgstr "Acceptar"
 
 #: src/notifications.py:38
 msgid "Decline"
-msgstr "Kieltäydy"
+msgstr "Refusar"
 
 #: src/notifications.py:52
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
-"%(sender_name)s lähettää sinulle %(file_count)d tiedosto (%(file_name)s)."
+msgstr "%(sender_name)s invia a vos %(file_count)d file(s) (%(file_name)s)."
 
 #: src/notifications.py:53
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s lähettää sinulle %(file_count)d tiedostoa"
+msgstr "%(sender_name)s invia a vos %(file_count)d file(s)"
 
 #: src/notifications.py:88
 msgid "Transfer complete"
-msgstr "Siirto valmis"
+msgstr "Transferte sta completat"
 
 #: src/notifications.py:90
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "Siirto kohteeseen %s onnistui"
+msgstr "Li transferte a %s ha finit successosimen"
 
 #: src/notifications.py:92
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "Siirto kohteesta %s onnistui"
+msgstr "Li transferte de %s ha finit successosimen"
 
 #: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
-msgstr "Siirto epäonnistui"
+msgstr "Transferte ne successat"
 
 #: src/notifications.py:124
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Jokin meni vikaan siirrossa kohteeseen %s"
+msgstr ""
 
 #: src/notifications.py:126
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Jokin meni vikaan siirrossa kohteesta %s"
+msgstr ""
 
 #: src/notifications.py:155 src/warpinator.py:158
 msgid "Transfer cancelled"
-msgstr "Siirto peruutettu"
+msgstr "Transferte sta anullat"
 
 #: src/notifications.py:158
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Siirto kohteeseen %s peruutettiin"
+msgstr "Vor transferte a %s esset anullat"
 
 #: src/notifications.py:160
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Saapuva siirto kohteesta %s peruutettiin"
+msgstr ""
 
 #: src/ops.py:47
 #, python-format
@@ -252,290 +248,285 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] ""
-msgstr[1] "%d tiedostoa"
+msgstr[1] "%d files"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%d tiedosto"
-msgstr[1] "%d tiedostoa"
+msgstr[0] ""
+msgstr[1] "%d files"
 
 #: src/prefs.py:104
 msgid "Warpinator Preferences"
-msgstr "Warpinator asetukset"
+msgstr "Preferenties de Warpinator"
 
 #: src/prefs.py:114
 msgid "Desktop"
-msgstr "Työpöytä"
+msgstr "Pupitre"
 
 #: src/prefs.py:116
 msgid "Show an icon in the notification area"
-msgstr "Näytä kuvake ilmoitusalueella"
+msgstr "Monstrar un icone in li area de notificationes"
 
 #: src/prefs.py:120
 msgid "Start with main window open"
-msgstr "Aloita kun pääikkuna aukeaa"
+msgstr ""
 
 #: src/prefs.py:125
 msgid "Start automatically"
-msgstr "Käynnistä automaattisesti"
+msgstr "Lansar automaticmen"
 
 #: src/prefs.py:131
 msgid "Location for received files"
-msgstr "Vastaanotettujen tiedostojen sijainti"
+msgstr "Localisation de recivet files"
 
 #. widget = GSettingsSwitch(_("Preserve original file permissions"),
 #. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
 #. section.add_row(widget)
 #: src/prefs.py:140
 msgid "Require approval before accepting files"
-msgstr "Vaadi lupa ennen tiedostojen hyväksymistä"
+msgstr "Besona un aprobation ante que acceptar files"
 
 #: src/prefs.py:144
 msgid "Require approval when files would be overwritten"
-msgstr "Vaadi lupa kun tiedostot korvataan"
+msgstr "Besona un aprobation ante que superscrir files"
 
 #: src/prefs.py:148
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
-msgstr ""
-"Näytä ilmoitus kun joku lähettää (tai yrittää lähettää) sinulle tiedostoja"
+msgstr "Monstrar un notification quande on invia a vos files"
 
 #: src/prefs.py:152
 msgid "Network"
-msgstr "Lähiverkko"
+msgstr "Rete"
 
 #: src/prefs.py:157
 msgid "Group Code"
-msgstr "Ryhmäkoodi"
+msgstr "Code de gruppe"
 
 #: src/prefs.py:158
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
-"Et voi olla yhteydessä tietokoneisiin, jotka eivät käytä samaa koodia."
+msgstr "On ne posse communicar con computatores que have un altri code."
 
 #: src/prefs.py:164
 msgid "Incoming port for transfers"
-msgstr "Saapuva portti siirtoihin"
+msgstr ""
 
 #: src/prefs.py:175
 msgid "Update firewall rules"
-msgstr "Päivitä palomuurin säännöt"
+msgstr ""
 
 #: src/prefs.py:187
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Mikä tahansa porttinumero toimii sovelluksessa, mutta saman portin "
-"käyttäminen kaikissa tietokoneissa voi helpottaa palomuurin poikkeusten "
-"lisäämistä tarvittaessa."
 
 #: src/prefs.py:219
 msgid "Change port"
-msgstr "Vaihda portti"
+msgstr "Cambiar li portu"
 
 #: src/prefs.py:264
 msgid "Set code"
-msgstr "Aseta koodi"
+msgstr "Cambiar li portu"
 
 #: src/prefs.py:279
 msgid "A group code is required."
-msgstr "Ryhmäkoodi vaaditaan."
+msgstr "Un code de gruppe es besonat"
 
 #: src/prefs.py:285
 msgid "The group code should be longer if possible."
-msgstr "Ryhmäkoodin pitäisi olla pidempi, jos mahdollista."
+msgstr "Li code de gruppe deve esser long quam possibil."
 
 #: src/remote.py:487 src/remote.py:491
 msgid "Connection has been lost"
-msgstr "Yhteys katkesi"
+msgstr "Conexion terminat"
 
 #: src/server.py:459
 msgid "An error occurred on the remote machine"
-msgstr "Etäkoneessa tapahtui virhe"
+msgstr ""
 
 #: src/util.py:81
 msgid "Select file(s) to send"
-msgstr "Valitse lähetettävät tiedostot"
+msgstr "Selecte file(s) por inviar"
 
 #: src/util.py:85
 msgid "Cancel"
-msgstr "Peru"
+msgstr "Anullar"
 
 #: src/util.py:86
 msgid "Send"
-msgstr "Lähetä"
+msgstr "Inviar"
 
 #: src/util.py:288
 msgid "A few seconds remaining"
-msgstr "Muutama sekunti jäljellä"
+msgstr "Quelc secondes remane"
 
 #: src/util.py:291
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d sekuntia jäljellä"
+msgstr "%d secondes remane"
 
 #: src/util.py:295 src/util.py:303
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minuutti"
-msgstr[1] "%d minuuttia"
+msgstr[0] "%d minute"
+msgstr[1] "%d minutes"
 
 #: src/util.py:302
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d tunti"
-msgstr[1] "%d tuntia"
+msgstr[0] "%d hor"
+msgstr[1] "%d hores"
 
 #: src/util.py:307
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "arvio %d tunti"
-msgstr[1] "arvio %d tuntia"
+msgstr[0] "circa %d hor"
+msgstr[1] "circa %d hores"
 
 #: src/util.py:438 src/warpinator.py:517
 msgid "About"
-msgstr "Tietoja"
+msgstr "Pri"
 
 #: src/warpinator.py:137
 msgid "Paused"
-msgstr "Pysäytetty"
+msgstr "Pausat"
 
 #: src/warpinator.py:140
 msgid "Waiting for approval"
-msgstr "Odottaa hyväksyntää"
+msgstr ""
 
 #: src/warpinator.py:142
 msgid "Waiting for your approval"
-msgstr "Odottaa hyväksyntääsi"
+msgstr "Atende vor aprobation"
 
 #: src/warpinator.py:145
 msgid "Files may be overwritten"
-msgstr "Tiedostot voidaan korvata"
+msgstr ""
 
 #: src/warpinator.py:148
 msgid "Not enough disk space"
-msgstr "Levytilaa ei ole riittävästi"
+msgstr ""
 
 #: src/warpinator.py:151
 msgid "Request cancelled"
-msgstr "Pyyntö peruutettu"
+msgstr "Demande sta anullat"
 
 #: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "%s peruutti pyynnön"
+msgstr ""
 
 #: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "%s peruutti siirron"
+msgstr ""
 
 #: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
-msgstr "Tiedostoa '%s' ei löydy"
+msgstr "File «%s» ne esset trovat"
 
 #: src/warpinator.py:171
 msgid "Some files not found"
-msgstr "Joitakin tiedostoja ei löydy"
+msgstr "Alcun files ne esset trovat"
 
 #: src/warpinator.py:173
 msgid "Completed"
-msgstr "Valmis"
+msgstr "Completat"
 
 #: src/warpinator.py:331 src/warpinator.py:866
 msgid "Connecting"
-msgstr "Yhdistää"
+msgstr "Conexente"
 
 #: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
-msgstr "Yhdistetään kohteeseen %s"
+msgstr "Conexente a %s"
 
 #: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
-msgstr "%s ei ole verkossa"
+msgstr "%s es éxter li rete"
 
 #: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Yhteyttä %s ei voi muodostaa"
+msgstr ""
 
 #: src/warpinator.py:353
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Odotetaan, että %s suorittaa yhteyden loppuun."
+msgstr ""
 
 #: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d uusi saapuva siirto"
-msgstr[1] "%d uusia saapuvia siirtoja"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/warpinator.py:482 src/warpinator.py:1284
 msgid "Favorites"
-msgstr "Suosikit"
+msgstr "Li preferet"
 
 #: src/warpinator.py:487 src/warpinator.py:1289
 msgid "Recents"
-msgstr "Viimeisimmät"
+msgstr "Recent"
 
 #: src/warpinator.py:494 src/warpinator.py:1296
 msgid "Browse..."
-msgstr "Selaa..."
+msgstr "Trovar..."
 
 #: src/warpinator.py:509 src/warpinator.py:1252
 msgid "Open save folder"
-msgstr "Avaa tallennuskansio"
+msgstr ""
 
 #: src/warpinator.py:513
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr "Preferenties"
 
 #: src/warpinator.py:521 src/warpinator.py:1255
 msgid "Quit"
-msgstr "Sulje"
+msgstr "Surtir"
 
 #: src/warpinator.py:615
 msgid "You don't appear to be connected to a network."
-msgstr "Et näytä olevan yhteydessä verkkoon."
+msgstr ""
 
 #: src/warpinator.py:617
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Käynnistys epäonnistui, tarkista loki."
+msgstr ""
 
 #: src/warpinator.py:845
 msgid "Offline"
-msgstr "Poissa"
+msgstr "Éxter li rete"
 
 #: src/warpinator.py:852
 msgid "Unable to connect"
-msgstr "Ei yhteyttä"
+msgstr "Conexion ne successat"
 
 #: src/warpinator.py:859
 msgid "Waiting for two-way connection"
-msgstr "Odotetaan kaksisuuntaista yhteyttä"
+msgstr "Atende li bidirectional conexion"
 
 #: src/warpinator.py:1306
 msgid "Send to favorites"
-msgstr "Lähetä suosikkeihin"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Avaa palomuurista portti Warpinatorille"
+msgstr "Aperter un portu por Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "Palomuurin asetusten muuttaminen edellyttää todennusta."
+msgstr ""
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
@@ -547,8 +538,8 @@ msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
-"Warpinatorin avulla voit helposti yhdistää useita tietokoneita lähiverkossa "
-"ja jakaa tiedostoja nopeasti sekä turvallisesti."
+"Warpinator permisse vos facilmen conexer multiplic computatores in local "
+"rete e partir files rapidmen e securimen."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27

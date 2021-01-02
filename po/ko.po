@@ -8,25 +8,25 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-12-02 14:12+0000\n"
-"PO-Revision-Date: 2020-09-17 19:16+0000\n"
-"Last-Translator: jiho son <Unknown>\n"
+"PO-Revision-Date: 2020-12-15 10:13+0000\n"
+"Last-Translator: Changmin Jang <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2020-12-10 10:32+0000\n"
-"X-Generator: Launchpad (build 4853cb86c14c5a9e513816c8a61121c639b30835)\n"
+"X-Launchpad-Export-Date: 2021-01-02 14:19+0000\n"
+"X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
 
 #: resources/main-window.ui:33 src/util.py:442
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr ""
+msgstr "네트워크를 통해 파일 보내기 및 받기"
 
 #: resources/main-window.ui:193
 msgid "No matching results"
-msgstr ""
+msgstr "일치하는 결과 없음"
 
 #: resources/main-window.ui:349
 msgid "Make this remote machine a favorite in the main view"
@@ -50,17 +50,17 @@ msgstr "온라인"
 
 #: resources/main-window.ui:609
 msgid "No other computers found..."
-msgstr ""
+msgstr "다른 컴퓨터를 찾을 수 없음..."
 
 #: resources/main-window.ui:673
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "네트워크 연결이 활성화되어 있는지 확인하세요."
 
 #: resources/main-window.ui:688
 msgid ""
 "Check your firewall rules.  The port number can be changed.  See preferences "
 "for more details."
-msgstr ""
+msgstr "방화벽 규칙을 확인하세요. 포트 번호는 변경될 수 있습니다. 설정에서 자세한 정보를 확인하세요."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:704
@@ -75,7 +75,7 @@ msgstr ""
 
 #: resources/main-window.ui:788
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "초기화 중, 기다려주세요..."
 
 #: resources/main-window.ui:846
 msgid "Something went wrong"
@@ -83,7 +83,7 @@ msgstr ""
 
 #: resources/main-window.ui:921
 msgid "Invalid save location"
-msgstr ""
+msgstr "올바르지 않은 저장 위치"
 
 #: resources/main-window.ui:958
 msgid ""
@@ -97,15 +97,15 @@ msgstr ""
 
 #: resources/main-window.ui:1073
 msgid "Shutting down..."
-msgstr ""
+msgstr "종료 중..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "승인 대기 중"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "디스크 공간이 충분하지 않습니다!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
@@ -113,15 +113,15 @@ msgstr ""
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr ""
+msgstr "이 요청을 수락"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr ""
+msgstr "이 요청을 거절"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr ""
+msgstr "이 요청을 취소"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
@@ -149,17 +149,17 @@ msgstr ""
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "포트 번호에 대한 참고 사항:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator 환경설정"
 
 #: src/notifications.py:20
 msgid "New incoming files"
-msgstr ""
+msgstr "새로 수신되는 파일"
 
 #: src/notifications.py:26
 #, python-format
@@ -174,11 +174,11 @@ msgstr ""
 
 #: src/notifications.py:37
 msgid "Accept"
-msgstr ""
+msgstr "수락"
 
 #: src/notifications.py:38
 msgid "Decline"
-msgstr ""
+msgstr "거절"
 
 #: src/notifications.py:52
 #, python-format
@@ -192,7 +192,7 @@ msgstr ""
 
 #: src/notifications.py:88
 msgid "Transfer complete"
-msgstr ""
+msgstr "전송 완료"
 
 #: src/notifications.py:90
 #, python-format
@@ -206,7 +206,7 @@ msgstr ""
 
 #: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
-msgstr ""
+msgstr "전송 실패"
 
 #: src/notifications.py:124
 #, python-format
