@@ -44,9 +44,12 @@ if include_firewall_mod
     )
 endif
 
+current_date = run_command('date', '+%Y-%m-%d').stdout().strip()
+
 appdata_conf = configuration_data()
 appdata_conf.set('appid', desktop_id)
 appdata_conf.set('app_version', meson.project_version())
+appdata_conf.set('current_date', current_date)
 
 appdata = i18n.merge_file(
     input: configure_file(
