@@ -9,6 +9,7 @@ pyconf.set('VERSION', meson.project_version())
 pyconf.set('gettext_package', gettext_package)
 pyconf.set('locale_dir', locale_dir)
 pyconf.set('include_firewall_mod', include_firewall_mod)
+pyconf.set('flatpak_build', get_option('flatpak-build'))
 
 config_py = configure_file(
   output: 'config.py',

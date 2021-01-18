@@ -429,7 +429,7 @@ class NetworkMonitor(GObject.Object):
 class AboutDialog():
     def __init__(self, parent):
         # Maybe this can be configured during the build? But this works.
-        if config.prefix == "/app":
+        if config.FLATPAK_BUILD:
             name = "Warpinator (Flatpak)"
         else:
             name = "Warpinator"

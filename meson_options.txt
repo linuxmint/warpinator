@@ -8,3 +8,8 @@ option('include-firewall-mod',
     value: true,
     description: 'Include the script/functionality that allows Warpinator to open firewall ports using ufw.'
 )
+option('flatpak-build',
+    type: 'boolean',
+    value: false,
+    description: 'Adds a flag in config.py to allow certain necessary behavioral modifications when run as a flatpak'
+)
