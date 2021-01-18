@@ -479,10 +479,14 @@ class WarpWindow(GObject.Object):
 
         # Send Files button
         main_menu = Gtk.Menu()
-        item = Gtk.MenuItem(_("Favorites"))
-        main_menu.add(item)
-        favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
-        item.set_submenu(favorites)
+
+        # Favorites are gsettings-backed - user settings aren't currently shared between the
+        # user's desktop and flatpaks.
+        if not config.FLATPAK_BUILD:
+            item = Gtk.MenuItem(_("Favorites"))
+            main_menu.add(item)
+            favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
+            item.set_submenu(favorites)
 
         item = Gtk.MenuItem(_("Recents"))
         main_menu.add(item)
@@ -1281,10 +1285,13 @@ class WarpApplication(Gtk.Application):
 
                     file_select_menu = Gtk.Menu()
 
-                    subitem = Gtk.MenuItem(_("Favorites"))
-                    favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
-                    subitem.set_submenu(favorites)
-                    file_select_menu.add(subitem)
+                    # Favorites are gsettings-backed - user settings aren't currently shared between the
+                    # user's desktop and flatpaks.
+                    if not config.FLATPAK_BUILD:
+                        subitem = Gtk.MenuItem(_("Favorites"))
+                        favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
+                        subitem.set_submenu(favorites)
+                        file_select_menu.add(subitem)
 
                     subitem = Gtk.MenuItem(_("Recents"))
                     recents = self.build_recent_submenu(subitem, machine)
