@@ -1,6 +1,6 @@
 subdir('icons')
 
-desktop_id = get_option('desktop-id')
+desktop_id = 'org.x.Warpinator'
 
 desktop_conf = configuration_data()
 desktop_conf.set('desktop_id', desktop_id)
