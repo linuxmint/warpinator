@@ -1,3 +1,16 @@
+warpinator (1.1.2) ulyssa; urgency=medium
+
+  [ Michael Webster ]
+  * data/meson.build: populate the appdata file with version and date info.
+  * build: Add 'flatpak-build' build option instead of relying on the build prefix.
+  * Disable favorites and notification actions for flatpak versions.
+  * server.py: Add update_service to make zeroconf happy.
+  * build: Hardcode org.x.Warpinator desktop id, there's no need to have an option to change this just for flatpaks.
+  * appdata: Update screenshots with proper shadows.
+  * appdata: Update screenshot urls.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 25 Feb 2021 10:27:23 +0000
+
 warpinator (1.1.1) ulyssa; urgency=medium
 
   * l10n: Update translations
