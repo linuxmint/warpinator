@@ -1239,7 +1239,7 @@ class WarpApplication(Gtk.Application):
             self.status_icon.set_icon_name("org.x.Warpinator-symbolic")
             self.status_icon.set_tooltip_text("Online")
         else:
-            self.status_icon.set_icon_name("org.x.Warpinator-offline-symbolic")
+            self.status_icon.set_icon_name("org.x.Warpinator-error-symbolic")
             self.status_icon.set_tooltip_text("Offline")
 
         self.rebuild_status_icon_menu()
