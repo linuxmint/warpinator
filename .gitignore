@@ -1,0 +1,7 @@
+obj-x86_64-linux-gnu
+debian/warpinator
+
+debian/.debhelper/generated/warpinator/installed-by-dh_installdocs
+debian/debhelper-build-stamp
+debian/files
+debian/warpinator.substvars
