@@ -3,8 +3,8 @@ Section: x11
 Priority: optional
 Maintainer: Linux Mint <root@linuxmint.com>
 Build-Depends:
+ debhelper-compat (= 12),
  appstream,
- debhelper (>= 10),
  dh-python,
  gnome-pkg-tools (>= 0.10),
  meson (>= 0.45.0),

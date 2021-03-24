@@ -2,15 +2,3 @@
 
 %:
 	dh $@ --with=python3,gir
-
-override_dh_auto_configure:
-	rm -rf debian/build
-	mkdir -p debian/build
-	meson debian/build --prefix=/usr
-
-override_dh_auto_build:
-	ninja -C debian/build
-
-override_dh_auto_install:
-	DESTDIR=${CURDIR}/debian/tmp \
-	ninja -C debian/build install
