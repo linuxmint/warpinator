@@ -575,10 +575,9 @@ class WarpWindow(GObject.Object):
 
     def show(self, time=0):
             if not self.window.get_visible():
-                self.window.present()
-            else:
-                self.window.get_window().raise_()
-                self.window.get_window().focus(time)
+                self.window.show()
+
+            self.window.present_with_time(time)
 
     def search_entry_changed(self, entry, data=None):
         query = entry.get_text()
