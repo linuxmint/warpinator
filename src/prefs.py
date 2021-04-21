@@ -2,13 +2,14 @@ import os
 import gettext
 import subprocess
 
-from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser
-from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry
+from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
+from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry, Button, ComboBox
 from gi.repository import Gtk, Gio, GLib
 
 import config
 import auth
 import util
+import networkmonitor
 
 _ = gettext.gettext
 
@@ -166,7 +167,7 @@ class Preferences():
                                  PREFS_SCHEMA, SHOW_NOTIFICATIONS_KEY)
         section.add_row(widget)
 
-        section = page.add_section(_("Network"))
+        section = page.add_section(_("Identification"))
 
         entry_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.VERTICAL)
         button_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.BOTH)
@@ -178,13 +179,67 @@ class Preferences():
 
         section.add_row(widget)
 
-        widget = PortSpinButton(_("Incoming port for transfers"),
-                                mini=1024, maxi=49151, step=1, page=10,
-                                size_group=size_group,
-                                entry_size_group=entry_size_group,
-                                button_size_group=button_size_group)
+        section = page.add_section(_("Network"))
 
-        section.add_row(widget)
+        options = []
+        options.append(("auto", _("Automatic")))
+
+        devices = networkmonitor.get_network_monitor().get_devices()
+
+        for dev in devices:
+            iface = dev.get_iface()
+            desc = dev.get_product()
+
+            if (desc != None and desc != ""):
+                orig_label = "%s - %s" % (iface, desc)
+                if len(orig_label) > 50:
+                    label = orig_label[:47] + "..."
+                else:
+                    label = orig_label
+
+                options.append((iface, label))
+            else:
+                options.append((iface, iface))
+
+        self.iface_combo = ComboBox(_("Network interface to use"),
+                                    options,
+                                    valtype=str)
+        self.iface_combo.content_widget.set_active_iter(self.iface_combo.option_map[get_preferred_iface()])
+        self.iface_combo.label.set_line_wrap(False)
+
+        section.add_row(self.iface_combo)
+
+        # widget = GSettingsSwitch(_("Use the default network interface if the preferred one is not found"),
+        #                          PREFS_SCHEMA, USE_FALLBACK_IFACE)
+        # section.add_row(widget)
+
+        self.main_port = PortSpinButton(_("Incoming port for transfers"),
+                                        mini=1024, maxi=49151, step=1, page=10,
+                                        size_group=size_group,
+                                        entry_size_group=entry_size_group,
+                                        button_size_group=button_size_group)
+        section.add_row(self.main_port)
+
+        self.auth_port = PortSpinButton(_("Incoming port for registration"),
+                                        mini=1024, maxi=49151, step=1, page=10,
+                                        size_group=size_group,
+                                        entry_size_group=entry_size_group,
+                                        button_size_group=button_size_group)
+        section.add_row(self.auth_port)
+
+        self.main_port.content_widget.set_value(get_port())
+        self.auth_port.content_widget.set_value(get_auth_port())
+
+        self.settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+        self.main_port.content_widget.connect("value-changed", self.net_values_changed)
+        self.auth_port.content_widget.connect("value-changed", self.net_values_changed)
+        self.iface_combo_id = self.iface_combo.content_widget.connect("changed", self.net_values_changed)
+
+        self.port_button = Button(_("Apply network changes"), self.apply_net_settings)
+        self.port_button.content_widget.set_sensitive(False)
+        self.port_button.content_widget.get_style_context().add_class("suggested-action")
+
+        section.add_row(self.port_button)
 
         widget = SettingsWidget()
 
@@ -211,14 +266,57 @@ can make it simpler to add firewall exceptions if necessary."""))
         self.window.show_all()
 
     def open_port(self, widget):
-        settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+        self.run_port_script(self.settings.get_int(PORT_KEY), self.settings.get_int(AUTH_PORT_KEY))
 
-        self.run_port_script(settings.get_int(PORT_KEY))
+    def net_values_changed(self, widget, data=None):
+        main_widget_value = self.main_port.content_widget.get_value()
+        auth_widget_value = self.auth_port.content_widget.get_value()
+
+        iface_widget_value = None
+        tree_iter = self.iface_combo.content_widget.get_active_iter()
+        if tree_iter != None:
+            iface_widget_value = self.iface_combo.model[tree_iter][0]
+
+        if main_widget_value == get_port() and \
+          auth_widget_value == get_auth_port() and \
+          iface_widget_value == get_preferred_iface():
+            self.port_button.content_widget.set_sensitive(False)
+            return
+
+        if (main_widget_value == auth_widget_value):
+            self.port_button.content_widget.set_sensitive(False)
+            return
+
+        self.port_button.content_widget.set_sensitive(True)
+
+    def apply_net_settings(self, widget, data=None):
+        self.settings.delay()
+
+        self.settings.set_int(PORT_KEY, self.main_port.content_widget.get_value())
+        self.settings.set_int(AUTH_PORT_KEY, self.auth_port.content_widget.get_value())
+
+        iface_widget_value = None
+        tree_iter = self.iface_combo.content_widget.get_active_iter()
+        if tree_iter != None:
+            iface_widget_value = self.iface_combo.model[tree_iter][0]
+
+        if iface_widget_value == None:
+            iface_widget_value = "auto"
+
+            self.iface_combo.content_widget.disconnect(self.iface_combo_id)
+            self.iface_combo.content_widget.set_active_iter(self.iface_combo.option_map[get_preferred_iface()])
+            self.iface_combo_id = self.iface_combo.content_widget.connect("changed", self.net_values_changed)
+
+        self.settings.set_string(NET_IFACE, iface_widget_value)
+
+        self.port_button.content_widget.set_sensitive(False)
+
+        self.settings.apply()
 
     @util._async
-    def run_port_script(self, port):
+    def run_port_script(self, port, auth_port):
         command = os.path.join(config.libexecdir, "firewall", "ufw-modify")
-        subprocess.run(["pkexec", command, str(port)])
+        subprocess.run(["pkexec", command, str(port), str(auth_port)])
 
         GLib.timeout_add_seconds(1, lambda: Gio.Application.get_default().firewall_script_finished())
 
@@ -229,22 +327,7 @@ class PortSpinButton(SpinButton):
 
         super(PortSpinButton, self).__init__(*args, **kargs)
 
-        self.old_port = get_port()
-        self.my_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
-        self.set_spacing(6)
-
-        self.accept_button = Gtk.Button(label=_("Change port"))
-        self.accept_button.show()
-        self.accept_button.set_sensitive(False)
-        self.accept_button.get_style_context().add_class("suggested-action")
-        self.accept_button.connect("clicked", self.apply_clicked)
-        button_size_group.add_widget(self.accept_button)
-
-        self.content_widget.set_value(get_port())
         entry_size_group.add_widget(self.content_widget)
-
-        self.pack_end(self.accept_button, False, False, 0)
-        self.reorder_child(self.accept_button, 1)
 
     def get_range(self):
         return None
@@ -256,11 +339,7 @@ class PortSpinButton(SpinButton):
         pass
 
     def apply_later(self, *args):
-        self.accept_button.set_sensitive(not (self.content_widget.get_value() == get_port()))
-
-    def apply_clicked(self, widget, data=None):
-        self.my_settings.set_int(PORT_KEY, int(self.content_widget.get_value()))
-        self.accept_button.set_sensitive(False)
+        pass
 
 class GroupCodeEntry(Entry):
     def __init__(self, *args, **kargs):
