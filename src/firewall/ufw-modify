@@ -13,9 +13,10 @@ if os.getuid() != 0:
 num_finder = re.compile(r'(?!\[\s+)\d+(?=\])')
 
 try:
-    port = sys.argv[1]
+    main_port = sys.argv[1]
+    auth_port = sys.argv[2]
 except IndexError:
-    print("use: ufw-modify <port number to open>")
+    print("use: ufw-modify <main port number to open> <auth port to open>")
     exit(1)
 
 # Remove any old rule for Warpinator
@@ -24,7 +25,7 @@ numbered = subprocess.check_output(["ufw", "status", "numbered"]).decode("utf-8"
 found = []
 
 for line in numbered.split("\n"):
-    if "WARPINATOR" in line:
+    if any(label in line for label in ("WARPINATOR_MAIN", "WARPINATOR_AUTH")):
         try:
             num = num_finder.search(line)[0]
             found.append(num)
@@ -38,6 +39,7 @@ if len(found) > 0:
     for number in found:
         subprocess.run(["ufw", "--force", "delete", number])
 
-subprocess.run(["ufw", "allow", "from", "any", "to", "any", "port", port, "comment", "WARPINATOR"])
+subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", main_port, "comment", "WARPINATOR_MAIN"])
+subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", auth_port, "comment", "WARPINATOR_AUTH"])
 
 exit(0)
