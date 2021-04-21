@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import gettext
 
 from gi.repository import Gio
