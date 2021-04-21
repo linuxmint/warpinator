@@ -26,6 +26,14 @@ if os.getuid() == 0:
     print("Warpinator should not be run as root. Please run it in user mode.")
     sys.exit(1)
 
+# XApp 2.0 required for favorites.
+HAVE_XAPP_FAVORITES = True
+
+try:
+    XApp.Favorites
+except:
+    HAVE_XAPP_FAVORITES = False
+
 # i18n
 locale.bindtextdomain(config.PACKAGE, config.localedir)
 gettext.bindtextdomain(config.PACKAGE, config.localedir)
@@ -482,7 +490,7 @@ class WarpWindow(GObject.Object):
 
         # Favorites are gsettings-backed - user settings aren't currently shared between the
         # user's desktop and flatpaks.
-        if not config.FLATPAK_BUILD:
+        if (not config.FLATPAK_BUILD) and HAVE_XAPP_FAVORITES:
             item = Gtk.MenuItem(_("Favorites"))
             main_menu.add(item)
             favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
@@ -1286,7 +1294,7 @@ class WarpApplication(Gtk.Application):
 
                     # Favorites are gsettings-backed - user settings aren't currently shared between the
                     # user's desktop and flatpaks.
-                    if not config.FLATPAK_BUILD:
+                    if (not config.FLATPAK_BUILD) and HAVE_XAPP_FAVORITES:
                         subitem = Gtk.MenuItem(_("Favorites"))
                         favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
                         subitem.set_submenu(favorites)
