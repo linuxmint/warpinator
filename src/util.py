@@ -1,11 +1,9 @@
 import threading
-import socket
-import netifaces
-import ipaddress
 import gettext
 import math
 import logging
 import os
+import socket
 from concurrent.futures import ThreadPoolExecutor
 
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
@@ -73,6 +71,51 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   STOP_TRANSFER_BY_SENDER \
                                   STOP_TRANSFER_BY_RECEIVER \
                                   REMOVE_TRANSFER')
+
+class IPAddresses():
+    def __init__(self, ip4, ip6):
+        self.ip4 = ip4
+        self.ip6 = ip6
+
+    def __eq__(self, other):
+        if other == None or not isinstance(other, IPAddresses):
+            return False
+
+        return self.ip4 == other.ip4 and self.ip6 == other.ip6
+
+    def __str__(self):
+        return self.ip4
+
+        # if self.ip4 == None or self.ip6 == None:
+        #     return self.ip4 if (self.ip4 != None) else self.ip6
+
+        # return "%s --- %s" % (self.ip4, self.ip6)
+
+    def __repr__(self):
+        return (str(self))
+
+    def as_binary_list(self):
+        blist = []
+
+        if self.ip4:
+            blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET, self.ip4))
+        if self.ip6:
+            blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET6, self.ip6))
+
+        return blist
+
+    @staticmethod
+    def new_from_binary_list(blist):
+        ip4 = None
+        ip6 = None
+
+        for item in blist:
+            try:
+                ip4 = socket.inet_ntop(GLib.SYSDEF_AF_INET, item)
+            except ValueError:
+                ip6 = socket.inet_ntop(GLib.SYSDEF_AF_INET6, item)
+
+        return IPAddresses(ip4, ip6)
 
 last_location = Gio.File.new_for_path(GLib.get_home_dir())
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not

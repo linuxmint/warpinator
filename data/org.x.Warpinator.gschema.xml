@@ -44,9 +44,21 @@
       <default>true</default>
       <summary>Preserve the original user permissions of files being received.</summary>
     </key>
+    <key name="preferred-network-iface" type="s">
+      <default>'auto'</default>
+      <summary>Name of network interface the service should use, or 'auto' to let the application choose automatically.</summary>
+    </key>
+    <key name="fallback-to-available-iface" type="b">
+      <default>true</default>
+      <summary>If the preferred network is unavailable, try to use the default active network, if one exists.</summary>
+    </key>
     <key name="port" type="i">
       <default>42000</default>
-      <summary>Incoming port to use (this needs to be allowed by any firewall)</summary>
+      <summary>Incoming port to use for transfers. (this needs to be allowed by any firewall)</summary>
+    </key>
+    <key name="auth-port" type="i">
+      <default>42001</default>
+      <summary>Incoming port to use for authentication. (this needs to be allowed by any firewall)</summary>
     </key>
     <key name="show-notifications" type="b">
       <default>true</default>
@@ -79,5 +91,12 @@
       <default>-1</default>
       <summary>The saved window height (this is not guaranteed, if the number of remotes changes)</summary>
     </key>
+
+    <key name="network-iface" type="s">
+      <default>''</default>
+      <summary>[UNUSED]</summary>
+    </key>
+
+
   </schema>
 </schemalist>

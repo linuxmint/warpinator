@@ -1,8 +1,6 @@
-##################### When tagging a new version, update the release info
-##################### in data/org.x.Warpinator.appdata.xml.in.in
 project('warpinator', 'c', version: '1.1.2', meson_version: '>=0.45.0')
-#####################
-#####################
+
+RPC_API_VERSION = '2'
 
 i18n = import('i18n')
 gettext_package = meson.project_name()

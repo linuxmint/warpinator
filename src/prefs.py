@@ -20,7 +20,10 @@ AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 KEEP_PERMISSIONS_KEY = "keep-permissions"
+NET_IFACE="preferred-network-iface"
+USE_FALLBACK_IFACE="fallback-to-available-iface"
 PORT_KEY = "port"
+AUTH_PORT_KEY = "auth-port"
 SHOW_NOTIFICATIONS_KEY = "show-notifications"
 FAVORITES_KEY = "favorites"
 TRAY_ICON_KEY = "use-tray-icon"
@@ -29,6 +32,7 @@ RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
+#### One-time initializers
 if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     default = Gio.File.new_for_path(os.path.join(GLib.get_home_dir(), "Warpinator"))
 
@@ -38,9 +42,22 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
         default = Gio.File.new_for_path(GLib.get_home_dir())
 
     prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
+####
+
+if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(AUTH_PORT_KEY):
+    prefs_settings.set_int(AUTH_PORT_KEY, prefs_settings.get_int(PORT_KEY + 1))
+
+def get_preferred_iface():
+    return prefs_settings.get_string(NET_IFACE)
+
+def allow_fallback_iface():
+    return prefs_settings.get_boolean(USE_FALLBACK_IFACE)
 
 def get_port():
     return prefs_settings.get_int(PORT_KEY)
+
+def get_auth_port():
+    return prefs_settings.get_int(AUTH_PORT_KEY)
 
 def get_save_uri():
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)

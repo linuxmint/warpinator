@@ -9,7 +9,11 @@ syntax = "proto3";
 
 service Warp {
     // Sender methods
+    // api v1 duplex method (ping style)
     rpc CheckDuplexConnection(LookupName) returns (HaveDuplex) {}
+    // api v2 duplex method (block/future)
+    rpc WaitingForDuplex(LookupName) returns (HaveDuplex) {}
+
     rpc GetRemoteMachineInfo(LookupName) returns (RemoteMachineInfo) {}
     rpc GetRemoteMachineAvatar(LookupName) returns (stream RemoteMachineAvatar) {}
     rpc ProcessTransferOpRequest(TransferOpRequest) returns (VoidType) {}
@@ -77,4 +81,17 @@ message FileChunk {
     string symlink_target = 3;
     bytes chunk = 4;
     uint32 file_mode = 5;
+}
+
+service WarpRegistration {
+    rpc RequestCertificate(RegRequest) returns (RegResponse) {}
+}
+
+message RegRequest {
+    string ip = 1;
+    string hostname = 2;
+}
+
+message RegResponse {
+    string locked_cert = 1;
 }
