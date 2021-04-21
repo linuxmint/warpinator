@@ -4,6 +4,7 @@ import math
 import logging
 import os
 import socket
+import traceback
 from concurrent.futures import ThreadPoolExecutor
 
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
@@ -165,6 +166,9 @@ def _idle(func):
         GLib.idle_add(func, *args, **kwargs)
     return wrapper
 
+def print_stack():
+    traceback.print_stack()
+
 def open_save_folder(filename=None):
     bus = Gio.Application.get_default().get_dbus_connection()
 
@@ -238,51 +242,6 @@ def files_exist(base_names):
 def check_ml(fid):
     on_ml = threading.current_thread() == threading.main_thread()
     print("%s on mainloop: " % fid, on_ml)
-
-def get_ip():
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-        try:
-            s.connect(("8.8.8.8", 80))
-        except OSError as e:
-            # print("Unable to retrieve IP address: %s" % str(e))
-            return "0.0.0.0"
-        ans = s.getsockname()[0]
-        return ans
-
-def get_my_network():
-    for name in netifaces.interfaces():
-        net = netifaces.ifaddresses(name)
-
-        try:
-            addresses = net[netifaces.AF_INET]
-        except KeyError:
-            continue
-        for address in addresses:
-            try:
-                if address["addr"] == get_ip():
-                    iface = ipaddress.IPv4Interface("%s/%s" % (address["addr"], address["netmask"]))
-                    return iface.network
-            except:
-                pass
-
-    return None
-
-def same_subnet(other_ip):
-    my_net = get_my_network()
-
-    if my_net == None:
-        # We're more likely to have failed here than to have found something on a different subnet.
-        return True
-
-    if my_net.netmask.exploded == "255.255.255.255":
-        logging.warning("Discovery: netmask is 255.255.255.255 - are you on a vpn?")
-        return False
-
-    for addr in list(my_net.hosts()):
-        if other_ip == addr.exploded:
-            return True
-
-    return False
 
 def get_hostname():
     return GLib.get_host_name()
@@ -425,49 +384,6 @@ class CairoSurfaceLoader(GObject.Object):
                 return surface
         except:
             self.emit("error")
-
-class NetworkMonitor(GObject.Object):
-    __gsignals__ = {
-        "state-changed": (GObject.SignalFlags.RUN_LAST, None, (bool,))
-    }
-
-    def __init__(self):
-        GObject.Object.__init__(self)
-        self.online = False
-        self.current_ip = None
-
-        self.sleep_timer = threading.Event()
-
-        ip = get_ip()
-
-        self.current_ip = ip
-        self.online = ip != "0.0.0.0"
-
-    @_async
-    def start(self):
-        logging.debug("Starting network monitor")
-        while not self.sleep_timer.is_set():
-            self.check_online()
-            self.sleep_timer.wait(4)
-
-    def stop(self):
-        logging.debug("Stopping network monitor")
-        self.sleep_timer.set()
-
-    def check_online(self):
-        old_online = self.online
-        old_ip = self.current_ip
-
-        self.current_ip = get_ip()
-        self.online = self.current_ip != "0.0.0.0"
-
-        if (self.online != old_online) or (self.current_ip != old_ip):
-            self.emit_state_changed()
-
-    @_idle
-    def emit_state_changed(self):
-        logging.debug("Network state changed: online = %s" % str(self.online))
-        self.emit("state-changed", self.online)
 
 class AboutDialog():
     def __init__(self, parent):
