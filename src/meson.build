@@ -30,8 +30,7 @@ libexec_py = [
   'util.py',
   'warpinator.py',
   'warp_pb2.py',
-  'warp_pb2_grpc.py',
-  'wrappers.py'
+  'warp_pb2_grpc.py'
 ]
 
 install_data(libexec_py,
