@@ -29,8 +29,8 @@ Depends:
  python3-protobuf (>= 3.6.1),
  python3-cryptography,
  python3-nacl,
+ python3-netaddr,
  python3-netifaces,
- python3-packaging,
  ${misc:Depends},
  ${python3:Depends}
 Description: Allows simple local network file sharing.

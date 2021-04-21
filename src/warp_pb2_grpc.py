@@ -25,6 +25,11 @@ class WarpStub(object):
         request_serializer=warp__pb2.LookupName.SerializeToString,
         response_deserializer=warp__pb2.HaveDuplex.FromString,
         )
+    self.WaitingForDuplex = channel.unary_unary(
+        '/Warp/WaitingForDuplex',
+        request_serializer=warp__pb2.LookupName.SerializeToString,
+        response_deserializer=warp__pb2.HaveDuplex.FromString,
+        )
     self.GetRemoteMachineInfo = channel.unary_unary(
         '/Warp/GetRemoteMachineInfo',
         request_serializer=warp__pb2.LookupName.SerializeToString,
@@ -84,6 +89,14 @@ class WarpServicer(object):
 
   def CheckDuplexConnection(self, request, context):
     """Sender methods
+    api v1 duplex method (ping style)
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def WaitingForDuplex(self, request, context):
+    """api v2 duplex method (block/future)
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -160,6 +173,11 @@ def add_WarpServicer_to_server(servicer, server):
           request_deserializer=warp__pb2.LookupName.FromString,
           response_serializer=warp__pb2.HaveDuplex.SerializeToString,
       ),
+      'WaitingForDuplex': grpc.unary_unary_rpc_method_handler(
+          servicer.WaitingForDuplex,
+          request_deserializer=warp__pb2.LookupName.FromString,
+          response_serializer=warp__pb2.HaveDuplex.SerializeToString,
+      ),
       'GetRemoteMachineInfo': grpc.unary_unary_rpc_method_handler(
           servicer.GetRemoteMachineInfo,
           request_deserializer=warp__pb2.LookupName.FromString,
@@ -208,4 +226,46 @@ def add_WarpServicer_to_server(servicer, server):
   }
   generic_handler = grpc.method_handlers_generic_handler(
       'Warp', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class WarpRegistrationStub(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.RequestCertificate = channel.unary_unary(
+        '/WarpRegistration/RequestCertificate',
+        request_serializer=warp__pb2.RegRequest.SerializeToString,
+        response_deserializer=warp__pb2.RegResponse.FromString,
+        )
+
+
+class WarpRegistrationServicer(object):
+  # missing associated documentation comment in .proto file
+  pass
+
+  def RequestCertificate(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_WarpRegistrationServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'RequestCertificate': grpc.unary_unary_rpc_method_handler(
+          servicer.RequestCertificate,
+          request_deserializer=warp__pb2.RegRequest.FromString,
+          response_serializer=warp__pb2.RegResponse.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'WarpRegistration', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
