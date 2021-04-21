@@ -13,6 +13,7 @@ install_libdir = join_paths(get_option('prefix'), get_option('libexecdir'), 'war
 install_bindir = join_paths(get_option('prefix'), get_option('bindir'))
 
 include_firewall_mod = get_option('include-firewall-mod')
+bundle_zeroconf = get_option('bundle-zeroconf')
 
 subdir('data')
 subdir('src')

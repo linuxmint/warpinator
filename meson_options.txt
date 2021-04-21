@@ -8,3 +8,9 @@ option('flatpak-build',
     value: false,
     description: 'Adds a flag in config.py to allow certain necessary behavioral modifications when run as a flatpak'
 )
+option('bundle-zeroconf',
+    type: 'boolean',
+    value: true,
+    description: 'python-zeroconf is actively developed, with api changes/breaks occasionally - it is safer to bundle a static version where permitted.'
+)
+

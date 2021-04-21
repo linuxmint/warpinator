@@ -4,10 +4,10 @@ import threading
 import gettext
 import logging
 import time
+import pkg_resources
 from concurrent import futures
 
 from gi.repository import GObject, GLib
-from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
 
 import grpc
 import warp_pb2
@@ -21,6 +21,21 @@ import transfers
 import wrappers
 from ops import ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
+
+if config.bundle_zeroconf:
+    import zeroconf_
+    from zeroconf_ import ServiceInfo, Zeroconf, ServiceBrowser
+else:
+    import zeroconf
+
+    zc_version = pkg_resources.parse_version(zeroconf.__version__)
+    zc_min_version = pkg_resources.parse_version("0.27.0")
+
+    if zc_version < zc_min_version:
+        print("Python3 zeroconf must be >= %s" % zc_min_version)
+        exit(1)
+
+    from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
 
 _ = gettext.gettext
 
@@ -64,6 +79,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.start()
 
     def start_zeroconf(self):
+        try:
+            logging.info("Using bundled zeroconf v%s" % zeroconf_.__version__)
+        except:
+            logging.info("Using system zeroconf v%s" % zeroconf.__version__)
+
         self.zeroconf = Zeroconf()
 
         self.service_ident = auth.get_singleton().get_ident()
