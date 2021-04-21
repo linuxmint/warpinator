@@ -48,6 +48,10 @@ _____
 - python3-protobuf (>= 3.6.1)
 - gobject-introspection
 
+##### required only for makepot
+- appstream,
+- policykit-1,
+
 ##### runtime deps
 - gir1.2-glib-2.0
 - gir1.2-gtk-3.0 (>= 3.20.0)
@@ -56,11 +60,10 @@ _____
 - python3-gi
 - python3-setproctitle
 - python3-xapp (>= 1.6.0)
-- python3-zeroconf
+- python3-zeroconf (>= 0.27.0)
 - python3-grpcio (>= 1.16.0)
 - python3-cryptography
 - python3-nacl
-- python3-packaging
 
 ##### You can get grpcio and grpc-tools from pip3 also:
 ```
