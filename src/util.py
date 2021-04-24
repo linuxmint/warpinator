@@ -85,15 +85,15 @@ class IPAddresses():
         return self.ip4 == other.ip4 and self.ip6 == other.ip6
 
     def __str__(self):
+        # Only supporting ipv4 for now, so pretend IPAddresses is just
+        # a string in most cases.
+
         return self.ip4
 
         # if self.ip4 == None or self.ip6 == None:
         #     return self.ip4 if (self.ip4 != None) else self.ip6
 
         # return "%s --- %s" % (self.ip4, self.ip6)
-
-    def __repr__(self):
-        return (str(self))
 
     def as_binary_list(self):
         blist = []

@@ -1,7 +1,8 @@
 import datetime
 import stat
 import os
-import uuid
+from pathlib import Path
+import secrets
 import logging
 import ipaddress
 
@@ -50,39 +51,109 @@ class AuthManager(GObject.Object):
     def __init__(self):
         GObject.Object.__init__(self)
         self.hostname = util.get_hostname()
-        self.ident = None
+        self.ident = ""
         self.ips = None
         self.port = None
-        self.code = None
+        self.code = ""
 
         self.private_key = None
         self.server_cert = None
 
         self.remote_certs = {}
 
-        self.keyfile = GLib.KeyFile()
+        os.makedirs(CONFIG_FOLDER, exist_ok=True)
+        self.path = Path(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME))
 
     def update(self, ips, port):
         self.ips = ips
         self.port = port
 
+        self._load_keyfile()
+
+        self._read_ident()
+        self._read_group_code()
+
+        self._make_key_cert_pair()
+
+    def get_ident(self):
+        return self.ident
+
+    def get_group_code(self):
+        return self.code;
+
+    def update_group_code(self, code):
+        if code == self.code:
+            return
+
+        self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
+        self._save_keyfile()
+
+        self.emit("group-code-changed")
+
+    def get_server_creds(self):
+        return (self.server_private_key, self.server_pub_key)
+
+    def get_cached_cert(self, hostname, ips):
         try:
-            self.keyfile.load_from_file(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME), GLib.KeyFileFlags.NONE)
+            return self.remote_certs["%s.%s" % (hostname, ips)]
+        except KeyError:
+            return None
+
+    def process_remote_cert(self, hostname, ips, server_data):
+        if server_data == None:
+            return False
+        decoded = base64.decodebytes(server_data)
+
+        hasher = hashlib.sha256()
+        hasher.update(bytes(self.code, "utf-8"))
+        key = hasher.digest()
+        decoder = secret.SecretBox(key)
+
+        try:
+            cert = decoder.decrypt(decoded)
+        except nacl.exceptions.CryptoError as e:
+            print(e)
+            cert = None
+
+        if cert:
+            self.remote_certs["%s.%s" % (hostname, ips)] = cert
+            return True
+        else:
+            return False
+
+    def get_encoded_local_cert(self):
+        hasher = hashlib.sha256()
+        hasher.update(bytes(self.code, "utf-8"))
+        key = hasher.digest()
+
+        encoder = secret.SecretBox(key)
+
+        encrypted = encoder.encrypt(self.server_pub_key)
+        encoded = base64.encodebytes(encrypted)
+        return encoded
+
+
+
+# Internals
+    def _load_keyfile(self):
+        self.keyfile = GLib.KeyFile()
+
+        try:
+            self.keyfile.load_from_file(self.path.as_posix(), GLib.KeyFileFlags.NONE)
         except GLib.Error as e:
             if e.code == GLib.FileError.NOENT:
                 logging.debug("Auth: No group code file, making one.")
-                pass
+                self.path.touch()
             else:
                 logging.debug("Auth: Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
+                self.path.unlink()
+                self.path.touch()
 
-        self.ident = self.get_ident()
-        self.code = self.get_group_code()
+    def _save_keyfile(self):
+        keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
 
-        self.make_key_cert_pair()
-
-    def _save_bytes(self, path, file_bytes):
         try:
-            os.remove(path)
+            self.path.unlink()
         except OSError:
             pass
 
@@ -93,79 +164,53 @@ class AuthManager(GObject.Object):
         umask_original = os.umask(umask)
 
         try:
-            fdesc = os.open(path, flags, mode)
+            fdesc = os.open(self.path, flags, mode)
         finally:
             os.umask(umask_original)
 
         with os.fdopen(fdesc, 'wb') as f:
-            f.write(file_bytes)
+            f.write(keyfile_bytes)
 
-    def _load_bytes(self, path):
-        ret = None
-
-        try:
-            with open(path, "rb") as f:
-                ret = f.read()
-        except FileNotFoundError:
-            pass
-
-        return ret
-
-    def get_ident(self):
-        if self.ident != None:
-            return self.ident
+    def _read_ident(self):
+        gen_new = False
 
         try:
             self.ident = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY)
         except GLib.Error as e:
             if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
-                logging.critical("Could not read group code from settings file: %s" % e.message)
+                logging.critical("Could not read uuid (ident) from settings file: %s" % e.message)
 
-            self.ident = str(uuid.uuid4())
+            gen_new = True
+
+        if len(self.ident.split("-")) == 5:
+            gen_new = True
+
+        if gen_new:
+            self.ident = "%s-%s" % (self.hostname.upper(), secrets.token_hex(10).upper())
             self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY, self.ident)
+            self._save_keyfile()
 
-            path = os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME)
-
-            keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
-
-            self._save_bytes(path, keyfile_bytes)
-
-        return self.ident
-
-    def get_group_code(self):
-        code = DEFAULT_GROUP_CODE
+    def _read_group_code(self):
+        reset = False
+        code = None
 
         try:
             code = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY)
         except GLib.Error as e:
             if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
                 logging.warn("Could not read group code from settings file (%s): %s" % (CONFIG_FOLDER, e.message))
-            self.save_group_code(DEFAULT_GROUP_CODE)
 
-        if code == "":
-            logging.warn("Settings file contains no code, setting to default (%s)" % CONFIG_FOLDER)
-            self.save_group_code(DEFAULT_GROUP_CODE)
+        if code == None or code == "":
+            self.code = DEFAULT_GROUP_CODE
+            self._save_keyfile()
+            return
 
         if len(code) < 8:
             logging.warn("Group Code is short, consider something longer than 8 characters.")
 
-        return bytes(code, "utf-8")
+        self.code = code
 
-    def save_group_code(self, code):
-        if bytes(code, "utf-8") == self.code:
-            return
-
-        self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
-
-        path = os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME)
-
-        self.code = bytes(code,  "utf-8")
-        keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
-
-        self._save_bytes(path, keyfile_bytes)
-        self.emit("group-code-changed")
-
-    def make_key_cert_pair(self):
+    def _make_key_cert_pair(self):
         logging.debug("Auth: Creating server credentials")
 
         private_key = rsa.generate_private_key(
@@ -192,8 +237,6 @@ class AuthManager(GObject.Object):
 
         if self.ips.ip4 != None:
             alt_names.append(x509.IPAddress(ipaddress.IPv4Address(self.ips.ip4)))
-        if self.ips.ip6 != None:
-            alt_names.append(x509.IPAddress(ipaddress.IPv6Address(self.ips.ip6)))
 
         builder = builder.add_extension(x509.SubjectAlternativeName(alt_names), critical=True)
 
@@ -213,45 +256,3 @@ class AuthManager(GObject.Object):
 
         self.server_pub_key = ser_public_key
         self.server_private_key = ser_private_key
-
-    def get_server_creds(self):
-        return (self.server_private_key, self.server_pub_key)
-
-    def load_cert(self, hostname, ips):
-        try:
-            return self.remote_certs["%s.%s" % (hostname, ips)]
-        except KeyError:
-            return None
-
-    def process_remote_cert(self, hostname, ips, server_data):
-        if server_data == None:
-            return False
-        decoded = base64.decodebytes(server_data)
-
-        hasher = hashlib.sha256()
-        hasher.update(self.code)
-        key = hasher.digest()
-        decoder = secret.SecretBox(key)
-
-        try:
-            cert = decoder.decrypt(decoded)
-        except nacl.exceptions.CryptoError as e:
-            print(e)
-            cert = None
-
-        if cert:
-            self.remote_certs["%s.%s" % (hostname, ips)] = cert
-            return True
-        else:
-            return False
-
-    def get_encoded_local_cert(self):
-        hasher = hashlib.sha256()
-        hasher.update(self.code)
-        key = hasher.digest()
-
-        encoder = secret.SecretBox(key)
-
-        encrypted = encoder.encrypt(self.server_pub_key)
-        encoded = base64.encodebytes(encrypted)
-        return encoded

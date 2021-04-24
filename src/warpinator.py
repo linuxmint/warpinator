@@ -1133,7 +1133,6 @@ class WarpApplication(Gtk.Application):
             self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
 
         if self.server:
-            print("shutting down")
             self.window.start_startup_timer(True)
             self.server.connect("shutdown-complete", try_to_start)
             self.server.shutdown()
