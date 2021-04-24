@@ -437,8 +437,8 @@ class AboutDialog():
         dialog = Gtk.AboutDialog(parent=parent,
                                  title=_("About"),
                                  program_name=name,
-                                 icon_name="warpinator",
-                                 logo_icon_name="warpinator",
+                                 icon_name="org.x.Warpinator",
+                                 logo_icon_name="org.x.Warpinator",
                                  comments=_("Send and Receive Files across the Network"),
                                  version=config.VERSION,
                                  license_type=Gtk.License.GPL_3_0)
