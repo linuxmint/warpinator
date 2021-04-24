@@ -184,10 +184,14 @@ class Preferences():
         options = []
         options.append(("auto", _("Automatic")))
 
+        current_selection_exists = get_preferred_iface() == "auto" or False
         devices = networkmonitor.get_network_monitor().get_devices()
 
         for dev in devices:
             iface = dev.get_iface()
+            if iface == get_preferred_iface():
+                current_selection_exists = True
+
             desc = dev.get_product()
 
             if (desc != None and desc != ""):
@@ -200,6 +204,9 @@ class Preferences():
                 options.append((iface, label))
             else:
                 options.append((iface, iface))
+
+        if not current_selection_exists:
+            options.append((get_preferred_iface(), _("%s - not found") % get_preferred_iface()))
 
         self.iface_combo = ComboBox(_("Network interface to use"),
                                     options,
@@ -348,7 +355,7 @@ class GroupCodeEntry(Entry):
 
         super(GroupCodeEntry, self).__init__(*args, **kargs)
 
-        self.code = auth.get_singleton().get_group_code().decode()
+        self.code = auth.get_singleton().get_group_code()
         self.content_widget.set_text(self.code)
 
         entry_size_group.add_widget(self.content_widget)
@@ -387,6 +394,6 @@ class GroupCodeEntry(Entry):
     def apply_clicked(self, widget, data=None):
         self.code = self.content_widget.get_text()
         self.accept_button.set_sensitive(False)
-        auth.get_singleton().save_group_code(self.code)
+        auth.get_singleton().update_group_code(self.code)
 
 

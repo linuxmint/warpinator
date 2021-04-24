@@ -2,7 +2,8 @@
 
 import threading
 import logging
-import netaddr
+import netifaces
+import ipaddress
 
 import gi
 gi.require_version('NM', '1.0')
@@ -92,14 +93,18 @@ class NetworkMonitor(GObject.Object):
         if new_iface:
             new_device = self.nm_client.get_device_by_iface(new_iface)
 
-        if new_device == None or new_device == None:
+        need_restart = False
+
+        if new_device == None or new_iface == None:
             self.device = None
             self.current_iface = None
             self.online = False
+            need_restart = True
         elif new_device != self.device or new_iface != self.current_iface:
             self.device = new_device
             self.current_iface = new_iface
             self.online = self.check_online()
+            need_restart = True
 
         self.main_port = prefs.get_port()
         self.auth_port = prefs.get_auth_port()
@@ -107,7 +112,7 @@ class NetworkMonitor(GObject.Object):
         if self.initing:
             return
 
-        if self.online != old_online:
+        if need_restart:
             self.emit_state_changed()
             logging.debug("Current network changed (%s), connectivity: %s" % (prefs.get_preferred_iface(), str(self.online)))
 
@@ -204,6 +209,31 @@ class NetworkMonitor(GObject.Object):
                 devices.append(device)
 
         return devices
+
+    # TODO: Do this with libnm
+    def same_subnet(self, other_ips):
+        net = netifaces.ifaddresses(self.device.get_ip_iface())
+
+        addresses = net[netifaces.AF_INET]
+        for address in addresses:
+            if address["addr"] == self.get_ipv4():
+                iface = ipaddress.IPv4Interface("%s/%s" % (address["addr"], address["netmask"]))
+
+        my_net = iface.network
+
+        if my_net == None:
+            # We're more likely to have failed here than to have found something on a different subnet.
+            return True
+
+        if my_net.netmask.exploded == "255.255.255.255":
+            logging.warning("Discovery: netmask is 255.255.255.255 - are you on a vpn?")
+            return False
+
+        for addr in list(my_net.hosts()):
+            if other_ips.ip4 == addr.exploded:
+                return True
+
+        return False
 
     @util._idle
     def emit_state_changed(self):

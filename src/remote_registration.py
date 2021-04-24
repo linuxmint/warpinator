@@ -10,14 +10,17 @@ import warp_pb2_grpc
 import warp_pb2
 
 import auth
+import util
 
 class RegRequest():
-    def __init__(self, ident, hostname, ips, port, auth_port, api_version):
+    def __init__(self, ident, hostname, ips, port, auth_port, api_version, my_ips):
         self.api_version = api_version
         self.ident = ident
         self.hostname = hostname
         self.ips = ips
         self.port = port
+
+        self.my_ips = my_ips
 
         #v1 only
         self.request_loop = None
@@ -34,11 +37,13 @@ class RegRequest():
             self.retry_keepalive.set()
 
 class Registrar():
-    def __init__(self, ips, port, auth_port):
+    def __init__(self, ips, port, auth_port, my_ips):
         self.reg_server_v1 = None
         self.reg_server_v2 = None
         self.active_registrations = {}
         self.reg_lock = threading.Lock()
+
+        self.my_ips = my_ips
 
         self.ips = ips
         self.port = port
@@ -76,7 +81,7 @@ class Registrar():
             self.reg_server_v2 = None
 
     def register(self, ident, hostname, ips, port, auth_port, api_version):
-        details = RegRequest(ident, hostname, ips, port, auth_port, api_version)
+        details = RegRequest(ident, hostname, ips, port, auth_port, api_version, self.my_ips)
 
         with self.reg_lock:
             self.active_registrations[ident] = details
@@ -88,7 +93,8 @@ class Registrar():
         elif api_version == "2":
             ret = register_v2(details)
 
-        del self.active_registrations[ident]
+        with self.reg_lock:
+            del self.active_registrations[ident]
 
         return ret
 
@@ -258,7 +264,7 @@ def register_with_remote_thread(details):
             future.result(timeout=5)
             stub = warp_pb2_grpc.WarpRegistrationStub(channel)
 
-            ret = stub.RequestCertificate(warp_pb2.RegRequest(ip=details.ips.ip4, hostname=details.hostname),
+            ret = stub.RequestCertificate(warp_pb2.RegRequest(ip=details.my_ips.ip4, hostname=util.get_hostname()),
                                           timeout=5)
 
             details.locked_cert = ret.locked_cert.encode("utf-8")

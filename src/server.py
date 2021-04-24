@@ -90,7 +90,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         except:
             logging.info("Using system zeroconf v%s" % zeroconf.__version__)
 
-        self.zeroconf = Zeroconf()
+        self.zeroconf = Zeroconf(interfaces=[str(self.ips)])
 
         self.service_ident = auth.get_singleton().get_ident()
         self.service_name = "%s.%s" % (self.service_ident, SERVICE_TYPE)
@@ -124,7 +124,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                              'type': 'real' })
 
         self.zeroconf.register_service(self.info)
-        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self)
+        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=str(self.ips))
 
         return False
 
@@ -185,6 +185,13 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 api_version = "1"
                 auth_port = 0
 
+            # FIXME: I'm not sure why we still get discovered by other networks in some cases -
+            # The Zeroconf object has a specific ip it is set to, what more do I need to do?
+            if not self.netmon.same_subnet(remote_ips):
+                if remote_ips != self.ips:
+                    logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ips))
+                return
+
             try:
                 machine = self.remote_machines[ident]
                 machine.has_zc_presence = True
@@ -232,6 +239,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     if not found:
                         break
 
+                logging.debug(">>> Discovery: new remote: %s (%s:%d)"
+                                  % (display_hostname, remote_ips, info.port))
+
                 machine = remote.RemoteMachine(ident,
                                                remote_hostname,
                                                display_hostname,
@@ -244,9 +254,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
                                      % (remote_hostname, remote_ips, info.port, auth_port))
                     return
-
-                logging.debug(">>> Discovery: new remote: %s (%s:%d)"
-                                  % (display_hostname, remote_ips, info.port))
 
                 self.remote_machines[ident] = machine
                 machine.connect("ops-changed", self.remote_ops_changed)
@@ -265,8 +272,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
     def run(self):
         logging.debug("Server: starting server on %s (%s)" % (self.ips, self.iface))
+        logging.info("Using api version %s" % config.RPC_API_VERSION)
+        logging.info("Our uuid: %s" % auth.get_singleton().get_ident())
 
-        self.remote_registrar = remote_registration.Registrar(self.ips, self.port, self.auth_port)
+
+        self.remote_registrar = remote_registration.Registrar(self.ips, self.port, self.auth_port, self.ips)
         util.initialize_rpc_threadpool()
 
         options=(

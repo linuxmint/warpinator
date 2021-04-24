@@ -105,7 +105,7 @@ class RemoteMachine(GObject.Object):
             logging.debug("Remote: Starting a new connection loop for %s (%s:%d)"
                               % (self.display_hostname, self.ips, self.port))
 
-            cert = auth.get_singleton().load_cert(self.hostname, self.ips)
+            cert = auth.get_singleton().get_cached_cert(self.hostname, self.ips)
             creds = grpc.ssl_channel_credentials(cert)
 
             with grpc.secure_channel("%s:%d" % (self.ips, self.port), creds) as channel:
@@ -198,7 +198,7 @@ class RemoteMachine(GObject.Object):
 
         self.set_remote_status(RemoteStatus.INIT_CONNECTING)
 
-        cert = auth.get_singleton().load_cert(self.hostname, self.ips)
+        cert = auth.get_singleton().get_cached_cert(self.hostname, self.ips)
         creds = grpc.ssl_channel_credentials(cert)
 
         def run_secure_loop():
