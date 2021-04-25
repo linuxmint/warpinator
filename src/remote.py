@@ -57,13 +57,7 @@ class RemoteMachine(GObject.Object):
         self.avatar_surface = None
         self.transfer_ops = []
 
-        self.stub = None
-
-        self.busy = False # Skip keepalive ping when we're busy.
-        self.authenticated = False
-
         self.sort_key = self.hostname
-
         self.status = RemoteStatus.INIT_CONNECTING
 
         self.machine_info_changed_source_id = 0
@@ -72,6 +66,9 @@ class RemoteMachine(GObject.Object):
         self.status_idle_source_id = 0
         self.status_lock = threading.Lock()
 
+        self.stub = None
+
+        self.busy = False # Skip keepalive ping when we're busy.
         self.ping_timer = threading.Event()
 
         self.channel_keepalive = threading.Event()
