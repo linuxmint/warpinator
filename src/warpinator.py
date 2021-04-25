@@ -1284,41 +1284,20 @@ class WarpApplication(Gtk.Application):
                         name = machine.display_name
                     else:
                         name = machine.display_hostname
-                    user_item = Gtk.MenuItem(label=name)
+
+                    item = self.create_submenu(name, machine)
+
                     if machine.status == RemoteStatus.ONLINE:
                         available_favorites += 1
                     else:
-                        user_item.set_sensitive(False)
+                        item.set_sensitive(False)
 
-                    file_select_menu = Gtk.Menu()
-
-                    # Favorites are gsettings-backed - user settings aren't currently shared between the
-                    # user's desktop and flatpaks.
-                    if (not config.FLATPAK_BUILD) and HAVE_XAPP_FAVORITES:
-                        subitem = Gtk.MenuItem(_("Favorites"))
-                        favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
-                        subitem.set_submenu(favorites)
-                        file_select_menu.add(subitem)
-
-                    subitem = Gtk.MenuItem(_("Recents"))
-                    recents = self.build_recent_submenu(subitem, machine)
-                    subitem.set_submenu(recents)
-                    file_select_menu.add(subitem)
-
-                    file_select_menu.add(Gtk.SeparatorMenuItem(visible=True))
-
-                    picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
-                    picker.connect("activate", self.open_file_picker, machine)
-                    file_select_menu.add(picker)
-
-                    user_item.set_submenu(file_select_menu)
-                    menu.add(user_item)
+                    menu.add(item)
 
         # If there is more than one online remote, add a 'send to all'
         if available_favorites > 1:
             menu.add(Gtk.SeparatorMenuItem())
-            item = Gtk.MenuItem(label=_("Send to favorites"))
-            self.attach_recent_submenu(item, None)
+            item = self.create_submenu(_("Send to all"), None)
             menu.add(item)
 
         if available_favorites > 0:
@@ -1326,10 +1305,34 @@ class WarpApplication(Gtk.Application):
 
         menu.show_all()
 
-    def build_recent_submenu(self, menu, machine):
-        menu = util.get_recent_chooser_menu()
-        menu.connect("item-activated", self.status_icon_recent_item_selected, machine)
-        return menu
+    def create_submenu(self, name, machine=None):
+        item = Gtk.MenuItem(label=name)
+
+        file_select_menu = Gtk.Menu()
+
+        # Favorites are gsettings-backed - user settings aren't currently shared between the
+        # user's desktop and flatpaks.
+        if not config.FLATPAK_BUILD:
+            subitem = Gtk.MenuItem(_("Favorites"))
+            favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
+            subitem.set_submenu(favorites)
+            file_select_menu.add(subitem)
+
+        subitem = Gtk.MenuItem(_("Recents"))
+
+        recents = util.get_recent_chooser_menu()
+        recents.connect("item-activated", self.status_icon_recent_item_selected, machine)
+        subitem.set_submenu(recents)
+        file_select_menu.add(subitem)
+
+        file_select_menu.add(Gtk.SeparatorMenuItem(visible=True))
+
+        picker = Gtk.MenuItem(label=_("Browse..."), visible=True)
+        picker.connect("activate", self.open_file_picker, machine)
+        file_select_menu.add(picker)
+
+        item.set_submenu(file_select_menu)
+        return item
 
     def status_icon_recent_item_selected(self, chooser, remote_machine=None):
         uri = chooser.get_current_uri()
