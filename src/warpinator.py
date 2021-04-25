@@ -491,10 +491,11 @@ class WarpWindow(GObject.Object):
         # Favorites are gsettings-backed - user settings aren't currently shared between the
         # user's desktop and flatpaks.
         if (not config.FLATPAK_BUILD) and HAVE_XAPP_FAVORITES:
-            item = Gtk.MenuItem(_("Favorites"))
-            main_menu.add(item)
-            favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
-            item.set_submenu(favorites)
+            if XApp.Favorites.get_default().get_n_favorites() > 0:
+                item = Gtk.MenuItem(_("Favorites"))
+                main_menu.add(item)
+                favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
+                item.set_submenu(favorites)
 
         item = Gtk.MenuItem(_("Recents"))
         main_menu.add(item)
@@ -1312,11 +1313,12 @@ class WarpApplication(Gtk.Application):
 
         # Favorites are gsettings-backed - user settings aren't currently shared between the
         # user's desktop and flatpaks.
-        if not config.FLATPAK_BUILD:
-            subitem = Gtk.MenuItem(_("Favorites"))
-            favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
-            subitem.set_submenu(favorites)
-            file_select_menu.add(subitem)
+        if not config.FLATPAK_BUILD and HAVE_XAPP_FAVORITES:
+            if XApp.Favorites.get_default().get_n_favorites() > 0:
+                subitem = Gtk.MenuItem(_("Favorites"))
+                favorites = XApp.Favorites.get_default().create_menu(None, self.status_icon_favorite_selected, machine)
+                subitem.set_submenu(favorites)
+                file_select_menu.add(subitem)
 
         subitem = Gtk.MenuItem(_("Recents"))
 
