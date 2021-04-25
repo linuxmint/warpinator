@@ -117,12 +117,12 @@ def register_v1(details):
     # or we tell the auth object to shutdown, in which case the request timer will cancel and return
     # here immediately (with None)
 
-    logging.info("Authenticating with %s (%s:%d) - api version 1" % (details.hostname, details.ips, details.port))
+    logging.info("Registering with %s (%s:%d) - api version 1" % (details.hostname, details.ips, details.port))
 
     success = retrieve_remote_cert(details)
 
     if not success:
-        logging.critical("Unable to authenticate with %s (%s:%d) - api version 1"
+        logging.critical("Unable to register with %s (%s:%d) - api version 1"
                              % (details.hostname, details.ips, details.port))
         return False
 
@@ -231,7 +231,7 @@ def register_v2(details):
     # or we tell the auth object to shutdown, in which case the request timer will cancel and return
     # here immediately (with None)
 
-    logging.info("Authenticating with %s (%s:%d) - api version 2" % (details.hostname, details.ips, details.auth_port))
+    logging.info("Registering with %s (%s:%d) - api version 2" % (details.hostname, details.ips, details.auth_port))
 
     success = False
 
@@ -247,7 +247,7 @@ def register_v2(details):
                                                                details.locked_cert)
 
         if not success:
-            logging.critical("Unable to authenticate with %s (%s:%d) - api version 2"
+            logging.critical("Unable to register with %s (%s:%d) - api version 2"
                                  % (details.hostname, details.ips, details.auth_port))
             details.retry_keepalive.wait(10)
         else:
@@ -255,7 +255,7 @@ def register_v2(details):
     return True
 
 def register_with_remote_thread(details):
-    logging.debug("Remote: Attempting to authenticate %s (%s)" % (details.hostname, details.ips))
+    logging.debug("Remote: Attempting to register %s (%s)" % (details.hostname, details.ips))
 
     with grpc.insecure_channel("%s:%d" % (details.ips.ip4, details.auth_port)) as channel:
         future = grpc.channel_ready_future(channel)

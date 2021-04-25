@@ -24,9 +24,8 @@ ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 KEEP_PERMISSIONS_KEY = "keep-permissions"
 NET_IFACE="preferred-network-iface"
-USE_FALLBACK_IFACE="fallback-to-available-iface"
 PORT_KEY = "port"
-AUTH_PORT_KEY = "auth-port"
+REG_PORT_KEY = "reg-port"
 SHOW_NOTIFICATIONS_KEY = "show-notifications"
 FAVORITES_KEY = "favorites"
 TRAY_ICON_KEY = "use-tray-icon"
@@ -47,20 +46,17 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
 ####
 
-if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(AUTH_PORT_KEY):
-    prefs_settings.set_int(AUTH_PORT_KEY, prefs_settings.get_int(PORT_KEY + 1))
+if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(REG_PORT_KEY):
+    prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY + 1))
 
 def get_preferred_iface():
     return prefs_settings.get_string(NET_IFACE)
-
-def allow_fallback_iface():
-    return prefs_settings.get_boolean(USE_FALLBACK_IFACE)
 
 def get_port():
     return prefs_settings.get_int(PORT_KEY)
 
 def get_auth_port():
-    return prefs_settings.get_int(AUTH_PORT_KEY)
+    return prefs_settings.get_int(REG_PORT_KEY)
 
 def get_save_uri():
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)
@@ -208,6 +204,7 @@ class Preferences():
                 options.append((iface, iface))
 
         if not current_selection_exists:
+            # translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
             options.append((get_preferred_iface(), _("%s - not found") % get_preferred_iface()))
 
         self.iface_combo = ComboBox(_("Network interface to use"),
@@ -217,10 +214,6 @@ class Preferences():
         self.iface_combo.label.set_line_wrap(False)
 
         section.add_row(self.iface_combo)
-
-        # widget = GSettingsSwitch(_("Use the default network interface if the preferred one is not found"),
-        #                          PREFS_SCHEMA, USE_FALLBACK_IFACE)
-        # section.add_row(widget)
 
         self.main_port = PortSpinButton(_("Incoming port for transfers"),
                                         mini=1024, maxi=49151, step=1, page=10,
@@ -275,7 +268,7 @@ can make it simpler to add firewall exceptions if necessary."""))
         self.window.show_all()
 
     def open_port(self, widget):
-        self.run_port_script(self.settings.get_int(PORT_KEY), self.settings.get_int(AUTH_PORT_KEY))
+        self.run_port_script(self.settings.get_int(PORT_KEY), self.settings.get_int(REG_PORT_KEY))
 
     def net_values_changed(self, widget, data=None):
         main_widget_value = self.main_port.content_widget.get_value()
@@ -302,7 +295,7 @@ can make it simpler to add firewall exceptions if necessary."""))
         self.settings.delay()
 
         self.settings.set_int(PORT_KEY, self.main_port.content_widget.get_value())
-        self.settings.set_int(AUTH_PORT_KEY, self.auth_port.content_widget.get_value())
+        self.settings.set_int(REG_PORT_KEY, self.auth_port.content_widget.get_value())
 
         iface_widget_value = None
         tree_iter = self.iface_combo.content_widget.get_active_iter()
