@@ -129,9 +129,9 @@ class Preferences():
 
         section = page.add_section(_("Desktop"))
 
-        self.settings_widget = GSettingsSwitch(_("Show an icon in the notification area"),
+        widget = GSettingsSwitch(_("Show an icon in the notification area"),
                                                PREFS_SCHEMA, TRAY_ICON_KEY)
-        section.add_row(self.settings_widget)
+        section.add_row(widget)
 
         widget = GSettingsSwitch(_("Start with main window open"),
                                  PREFS_SCHEMA, START_WITH_WINDOW_KEY)
@@ -259,7 +259,7 @@ class Preferences():
         box.pack_start(self.builder.get_object("port_help_heading"), False, False, 0)
 
         label = Gtk.Label(wrap=True, xalign=0.0, label=_("""\
-Any port number will work for the application, but using the same port for all computers \
+Any port numbers will work for the application, but using the same ports for all computers \
 can make it simpler to add firewall exceptions if necessary."""))
         box.pack_start(label, False, False, 0)
 
