@@ -33,4 +33,4 @@ else:
     print("\n\nDownloading and installing zeroconf %s in %s\n\n" % (version, install_dir))
 
 os.system('curl -s https://raw.githubusercontent.com/jstasiak/python-zeroconf/%s/zeroconf/__init__.py > %s/__init__.py' % (version, install_dir))
-os.system('curl -s https://raw.githubusercontent.com/jstasiak/python-zeroconf/%s/zeroconf/py.typed > %s/py.typed' % (version, install_dir))
+os.system('touch %s/py.typed' % install_dir)
