@@ -56,6 +56,7 @@ _____
 - gir1.2-glib-2.0
 - gir1.2-gtk-3.0 (>= 3.20.0)
 - gir1.2-xapp-1.0 (>= 1.6.0)
+- gir1.2-nm-1.0
 - python3
 - python3-gi
 - python3-setproctitle
