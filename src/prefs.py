@@ -3,9 +3,10 @@
 import os
 import gettext
 import subprocess
+import logging
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
-from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SpinButton, Entry, Button, ComboBox
+from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
 from gi.repository import Gtk, Gio, GLib
 
 import config
@@ -31,6 +32,8 @@ FAVORITES_KEY = "favorites"
 TRAY_ICON_KEY = "use-tray-icon"
 SERVER_THREAD_POOL_SIZE_KEY = "server-thread-pool-size"
 RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
+USE_COMPRESSION_KEY = "use-compression"
+COMPRESSION_LEVEL_KEY = "zlib-compression-level"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -110,12 +113,24 @@ def get_server_pool_max_threads():
 
     return max(setting_value, 2)
 
+def use_compression():
+    return prefs_settings.get_boolean(USE_COMPRESSION_KEY)
+
+def get_compression_level():
+    level = prefs_settings.get_int(COMPRESSION_LEVEL_KEY)
+    if level in range(-1, 9 + 1):
+        return level
+
+    logging.warning("Compression setting out of range (must be -1 thru 9), using default.")
+    return -1
+
 class Preferences():
     def __init__(self, transient_for):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "prefs-window.ui"))
 
         self.window = self.builder.get_object("prefs_window")
         self.content_box = self.builder.get_object("content_box")
+        self.page_switcher = self.builder.get_object("page_switcher")
 
         self.window.set_title(title=_("Warpinator Preferences"))
         self.window.set_icon_name("preferences-system")
@@ -124,8 +139,13 @@ class Preferences():
 
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
+        page_stack = SettingsStack()
+        self.content_box.pack_start(page_stack, True, True, 0)
+        self.page_switcher.set_stack(page_stack)
+
+        # Settings
         page = SettingsPage()
-        self.content_box.pack_start(page, True, True, 0)
+        page_stack.add_titled(page, "general", _("General"))
 
         section = page.add_section(_("Desktop"))
 
@@ -144,14 +164,15 @@ class Preferences():
 
         section = page.add_section(_("File Transfers"))
 
+        widget = GSettingsSwitch(_("Use compression when possible."),
+                                 PREFS_SCHEMA, USE_COMPRESSION_KEY,
+                                 tooltip=_("Warning: This may have a negative impact on performance on some faster networks."))
+        section.add_row(widget)
+
         widget = GSettingsFileChooser(_("Location for received files"),
                                       PREFS_SCHEMA, FOLDER_NAME_KEY,
                                       size_group=size_group, dir_select=True)
         section.add_row(widget)
-
-        # widget = GSettingsSwitch(_("Preserve original file permissions"),
-        #                          PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
-        # section.add_row(widget)
 
         widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
@@ -164,6 +185,9 @@ class Preferences():
         widget = GSettingsSwitch(_("Display a notification when someone sends (or tries to send) you files"),
                                  PREFS_SCHEMA, SHOW_NOTIFICATIONS_KEY)
         section.add_row(widget)
+
+        page = SettingsPage()
+        page_stack.add_titled(page, "network", _("Connection"))
 
         section = page.add_section(_("Identification"))
 

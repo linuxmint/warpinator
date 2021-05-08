@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='warp.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"A\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"o\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r\"*\n\nRegRequest\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x10\n\x08hostname\x18\x02 \x01(\t\"\"\n\x0bRegResponse\x12\x13\n\x0blocked_cert\x18\x01 \x01(\t2\xa3\x04\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12.\n\x10WaitingForDuplex\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12/\n\x17\x41\x63\x63\x65ptTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x32\x45\n\x10WarpRegistration\x12\x31\n\x12RequestCertificate\x12\x0b.RegRequest\x1a\x0c.RegResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"Z\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\x12\x17\n\x0fuse_compression\x18\x04 \x01(\x08\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"o\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r\"*\n\nRegRequest\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x10\n\x08hostname\x18\x02 \x01(\t\"\"\n\x0bRegResponse\x12\x13\n\x0blocked_cert\x18\x01 \x01(\t2\xf2\x03\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12.\n\x10WaitingForDuplex\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x32\x45\n\x10WarpRegistration\x12\x31\n\x12RequestCertificate\x12\x0b.RegRequest\x1a\x0c.RegResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -222,6 +222,13 @@ _OPINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='use_compression', full_name='OpInfo.use_compression', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -235,7 +242,7 @@ _OPINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=229,
-  serialized_end=294,
+  serialized_end=319,
 )
 
 
@@ -272,8 +279,8 @@ _STOPINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=296,
-  serialized_end=344,
+  serialized_start=321,
+  serialized_end=369,
 )
 
 
@@ -359,8 +366,8 @@ _TRANSFEROPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=347,
-  serialized_end=555,
+  serialized_start=372,
+  serialized_end=580,
 )
 
 
@@ -418,8 +425,8 @@ _FILECHUNK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=557,
-  serialized_end=668,
+  serialized_start=582,
+  serialized_end=693,
 )
 
 
@@ -456,8 +463,8 @@ _REGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=670,
-  serialized_end=712,
+  serialized_start=695,
+  serialized_end=737,
 )
 
 
@@ -487,8 +494,8 @@ _REGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=714,
-  serialized_end=748,
+  serialized_start=739,
+  serialized_end=773,
 )
 
 _STOPINFO.fields_by_name['info'].message_type = _OPINFO
@@ -591,8 +598,8 @@ _WARP = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=751,
-  serialized_end=1298,
+  serialized_start=776,
+  serialized_end=1274,
   methods=[
   _descriptor.MethodDescriptor(
     name='CheckDuplexConnection',
@@ -649,18 +656,9 @@ _WARP = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='AcceptTransferOpRequest',
-    full_name='Warp.AcceptTransferOpRequest',
-    index=6,
-    containing_service=None,
-    input_type=_OPINFO,
-    output_type=_VOIDTYPE,
-    options=None,
-  ),
-  _descriptor.MethodDescriptor(
     name='StartTransfer',
     full_name='Warp.StartTransfer',
-    index=7,
+    index=6,
     containing_service=None,
     input_type=_OPINFO,
     output_type=_FILECHUNK,
@@ -669,7 +667,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='CancelTransferOpRequest',
     full_name='Warp.CancelTransferOpRequest',
-    index=8,
+    index=7,
     containing_service=None,
     input_type=_OPINFO,
     output_type=_VOIDTYPE,
@@ -678,7 +676,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='StopTransfer',
     full_name='Warp.StopTransfer',
-    index=9,
+    index=8,
     containing_service=None,
     input_type=_STOPINFO,
     output_type=_VOIDTYPE,
@@ -687,7 +685,7 @@ _WARP = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='Ping',
     full_name='Warp.Ping',
-    index=10,
+    index=9,
     containing_service=None,
     input_type=_LOOKUPNAME,
     output_type=_VOIDTYPE,
@@ -705,8 +703,8 @@ _WARPREGISTRATION = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   options=None,
-  serialized_start=1300,
-  serialized_end=1369,
+  serialized_start=1276,
+  serialized_end=1345,
   methods=[
   _descriptor.MethodDescriptor(
     name='RequestCertificate',

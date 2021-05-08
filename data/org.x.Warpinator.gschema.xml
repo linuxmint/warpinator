@@ -69,6 +69,15 @@
       <default>4</default>
       <summary>Number of threads to allow the server, for handling incoming rpcs.</summary>
     </key>
+    <key name="use-compression" type="b">
+      <default>false</default>
+      <summary>Apply zlib compression to data stream (if both ends support it).</summary>
+    </key>
+    <key name="zlib-compression-level" type="i">
+      <default>-1</default>
+      <summary>zlib compression level (-1, 0-9) - 0 favor speed, 9 favor compression, -1 = default of 6.</summary>
+    </key>
+
   </schema>
   <schema id="org.x.warpinator.window-state" path="/org/x/warpinator/window-state/" gettext-domain="warpinator">
     <key name="x" type="i">
@@ -87,12 +96,5 @@
       <default>-1</default>
       <summary>The saved window height (this is not guaranteed, if the number of remotes changes)</summary>
     </key>
-
-    <key name="network-iface" type="s">
-      <default>''</default>
-      <summary>[UNUSED]</summary>
-    </key>
-
-
   </schema>
 </schemalist>

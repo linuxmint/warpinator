@@ -20,7 +20,6 @@ service Warp {
     rpc PauseTransferOp(OpInfo) returns (VoidType) {}
 
     // Receiver methods
-    rpc AcceptTransferOpRequest(OpInfo) returns (VoidType) {}
     rpc StartTransfer(OpInfo) returns (stream FileChunk) {}
 
     // Both
@@ -56,6 +55,7 @@ message OpInfo {
     string ident = 1;
     uint64 timestamp = 2;
     string readable_name = 3;
+    bool use_compression = 4;
 }
 
 message StopInfo {

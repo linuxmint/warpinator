@@ -33,7 +33,6 @@ FILE_INFOS_SINGLE_FILE = ",".join([
 
 MODE_MASK = (stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
 
-CHUNK_SIZE = 1024 * 1024
 PROGRESS_UPDATE_FREQ = 2 * 1000 * 1000
 
 def load_file_in_chunks(path):
@@ -45,7 +44,7 @@ def load_file_in_chunks(path):
         return
 
     while True:
-        bytes = stream.read_bytes(CHUNK_SIZE, None)
+        bytes = stream.read_bytes(util.TRANSFER_CHUNK_SIZE, None)
         if bytes.get_size() == 0:
             break
 
@@ -111,7 +110,7 @@ class FileSender(GObject.Object):
                         if self.cancellable.is_set():
                             return
 
-                        b = stream.read_bytes(CHUNK_SIZE, None)
+                        b = stream.read_bytes(util.TRANSFER_CHUNK_SIZE, None)
                         last_size_read = b.get_size()
                         self.op.progress_tracker.update_progress(last_size_read)
 

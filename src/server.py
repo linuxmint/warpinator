@@ -16,6 +16,7 @@ import warp_pb2_grpc
 
 import config
 import auth
+import interceptors
 import networkmonitor
 import remote
 import remote_registration
@@ -122,7 +123,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                 addresses=self.ips.as_binary_list(),
                                 properties={ 'hostname': util.get_hostname(),
                                              'api-version': config.RPC_API_VERSION,
-                                             "auth-port": str(prefs.get_auth_port()),
+                                             'auth-port': str(prefs.get_auth_port()),
                                              'type': 'real' })
 
         self.zeroconf.register_service(self.info)
@@ -291,7 +292,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         )
 
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=prefs.get_server_pool_max_threads()),
-                                  options=options)
+                                  options=options,
+                                  interceptors=[interceptors.ChunkCompressor()])
         warp_pb2_grpc.add_WarpServicer_to_server(self, self.server)
 
         pair = auth.get_singleton().get_server_creds()
@@ -444,6 +446,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         for existing_op in remote_machine.transfer_ops:
             if existing_op.start_time == request.info.timestamp:
+                # Compression could have changed for a restart, as it's not tied to the op.
+                try:
+                    op.use_compression = request.info.use_compression
+                except AttributeError:
+                    op.use_compression = False
                 existing_op.set_status(OpStatus.WAITING_PERMISSION)
                 self.add_receive_op_to_remote_machine(existing_op)
                 return void
@@ -461,6 +468,13 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         op.mime_if_single = request.mime_if_single
         op.name_if_single = request.name_if_single
         op.top_dir_basenames = request.top_dir_basenames
+
+        # If request.info (grpc_pb2.OpInfo) doesn't have a use_compression field,
+        # If doesn't support compression (older version of warp).
+        try:
+            op.use_compression = request.info.use_compression
+        except AttributeError:
+            op.use_compression = False
 
         op.connect("initial-setup-complete", self.add_receive_op_to_remote_machine)
         op.prepare_receive_info()

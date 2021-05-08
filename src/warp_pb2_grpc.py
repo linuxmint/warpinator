@@ -50,11 +50,6 @@ class WarpStub(object):
         request_serializer=warp__pb2.OpInfo.SerializeToString,
         response_deserializer=warp__pb2.VoidType.FromString,
         )
-    self.AcceptTransferOpRequest = channel.unary_unary(
-        '/Warp/AcceptTransferOpRequest',
-        request_serializer=warp__pb2.OpInfo.SerializeToString,
-        response_deserializer=warp__pb2.VoidType.FromString,
-        )
     self.StartTransfer = channel.unary_stream(
         '/Warp/StartTransfer',
         request_serializer=warp__pb2.OpInfo.SerializeToString,
@@ -130,16 +125,9 @@ class WarpServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def AcceptTransferOpRequest(self, request, context):
+  def StartTransfer(self, request, context):
     """Receiver methods
     """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def StartTransfer(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -195,11 +183,6 @@ def add_WarpServicer_to_server(servicer, server):
       ),
       'PauseTransferOp': grpc.unary_unary_rpc_method_handler(
           servicer.PauseTransferOp,
-          request_deserializer=warp__pb2.OpInfo.FromString,
-          response_serializer=warp__pb2.VoidType.SerializeToString,
-      ),
-      'AcceptTransferOpRequest': grpc.unary_unary_rpc_method_handler(
-          servicer.AcceptTransferOpRequest,
           request_deserializer=warp__pb2.OpInfo.FromString,
           response_serializer=warp__pb2.VoidType.SerializeToString,
       ),

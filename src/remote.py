@@ -11,6 +11,7 @@ import grpc
 import warp_pb2
 import warp_pb2_grpc
 
+import interceptors
 import prefs
 import util
 import transfers
@@ -220,12 +221,15 @@ class RemoteMachine(GObject.Object):
                         except:
                             pass
 
-                future = grpc.channel_ready_future(channel)
+                intercepted_channel = grpc.intercept_channel(channel,
+                                                             interceptors.ChunkDecompressor())
+
+                future = grpc.channel_ready_future(intercepted_channel)
 
                 try:
                     future.result(timeout=4)
                     channel.subscribe(channel_state_changed)
-                    self.stub = warp_pb2_grpc.WarpStub(channel)
+                    self.stub = warp_pb2_grpc.WarpStub(intercepted_channel)
 
                     self.set_remote_status(RemoteStatus.AWAITING_DUPLEX)
 
@@ -403,7 +407,8 @@ class RemoteMachine(GObject.Object):
 
         transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(ident=op.sender,
                                                                       timestamp=op.start_time,
-                                                                      readable_name=util.get_hostname()),
+                                                                      readable_name=util.get_hostname(),
+                                                                      use_compression=prefs.use_compression()),
                                                  sender_name=op.sender_name,
                                                  receiver=self.ident,
                                                  size=op.total_size,
@@ -439,7 +444,8 @@ class RemoteMachine(GObject.Object):
 
         op.file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
                                                                    ident=self.local_ident,
-                                                                   readable_name=util.get_hostname()))
+                                                                   readable_name=util.get_hostname(),
+                                                                   use_compression=op.use_compression and prefs.use_compression()))
 
         def report_receive_error(error):
             op.set_error(error)
