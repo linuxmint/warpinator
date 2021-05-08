@@ -77,6 +77,11 @@
       <default>-1</default>
       <summary>zlib compression level (-1, 0-9) - 0 favor speed, 9 favor compression, -1 = default of 6.</summary>
     </key>
+    <key name="transfer-block-size" type="i">
+      <range min="1" max="4094"/>
+      <default>1024</default>
+      <summary>Size (in kb) of each block of data sent over the network. Max is 4094</summary>
+    </key>
 
   </schema>
   <schema id="org.x.warpinator.window-state" path="/org/x/warpinator/window-state/" gettext-domain="warpinator">

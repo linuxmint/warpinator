@@ -34,6 +34,7 @@ SERVER_THREAD_POOL_SIZE_KEY = "server-thread-pool-size"
 RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 USE_COMPRESSION_KEY = "use-compression"
 COMPRESSION_LEVEL_KEY = "zlib-compression-level"
+BLOCK_SIZE_KEY = "transfer-block-size"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -123,6 +124,9 @@ def get_compression_level():
 
     logging.warning("Compression setting out of range (must be -1 thru 9), using default.")
     return -1
+
+def get_block_size():
+    return prefs_settings.get_int(BLOCK_SIZE_KEY) * 1024
 
 class Preferences():
     def __init__(self, transient_for):

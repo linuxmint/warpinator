@@ -25,8 +25,6 @@ _ = gettext.gettext
 # Both server and remote thread pool sizes can be adjusted in dconf.
 global_rpc_threadpool = None
 
-TRANSFER_CHUNK_SIZE = 1024 * 1024
-
 # Initializing in thie function avoids a circular import due to prefs.get_thread_count()
 def initialize_rpc_threadpool():
     global global_rpc_threadpool

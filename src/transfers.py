@@ -44,7 +44,7 @@ def load_file_in_chunks(path):
         return
 
     while True:
-        bytes = stream.read_bytes(util.TRANSFER_CHUNK_SIZE, None)
+        bytes = stream.read_bytes(1024 * 1024, None)
         if bytes.get_size() == 0:
             break
 
@@ -77,6 +77,7 @@ class FileSender(GObject.Object):
         self.op = op
         self.timestamp = timestamp
         self.cancellable = cancellable
+        self.block_size = prefs.get_block_size()
 
         self.error = None
 
@@ -101,17 +102,21 @@ class FileSender(GObject.Object):
                     gfile = Gio.File.new_for_uri(file.uri)
                     stream = gfile.read(None)
 
-                    last_size_read = 1
+                    file_done = False
 
                     while True:
-                        if last_size_read == 0:
+                        if file_done:
                             break
 
                         if self.cancellable.is_set():
                             return
 
-                        b = stream.read_bytes(util.TRANSFER_CHUNK_SIZE, None)
+                        b = stream.read_bytes(self.block_size, None)
+
                         last_size_read = b.get_size()
+                        if last_size_read < self.block_size:
+                            file_done = True
+
                         self.op.progress_tracker.update_progress(last_size_read)
 
                         yield warp_pb2.FileChunk(relative_path=file.relative_path,
@@ -186,12 +191,11 @@ class FileReceiver(GObject.Object):
                 flags = Gio.FileCreateFlags.REPLACE_DESTINATION
                 self.current_stream = self.current_gfile.replace(None, False, flags, None)
 
-            length = len(s.chunk)
-            if length == 0:
+            if not s.chunk:
                 return
 
             self.current_stream.write_bytes(GLib.Bytes(s.chunk), None)
-            self.op.progress_tracker.update_progress(length)
+            self.op.progress_tracker.update_progress(len(s.chunk))
 
     def close_current_file(self):
         if self.current_stream:

@@ -39,7 +39,7 @@ class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
                     if not chunk.chunk:
                         yield chunk
                     else:
-                        dcchunk = zlib.decompress(chunk.chunk, bufsize=util.TRANSFER_CHUNK_SIZE)
+                        dcchunk = zlib.decompress(chunk.chunk)
                         chunk.chunk = dcchunk
                         yield chunk
                 except Exception as e:
