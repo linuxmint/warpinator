@@ -466,6 +466,7 @@ class WarpWindow(GObject.Object):
         self.search_entry = self.builder.get_object("search_entry")
         self.app_display_name_label = self.builder.get_object("app_display_name")
         self.app_ip_label = self.builder.get_object("app_ip")
+        self.app_iface_label = self.builder.get_object("app_iface")
         self.app_local_name_label = self.builder.get_object("app_local_name")
         self.something_wrong_label = self.builder.get_object("something_went_wrong_label")
         self.bad_save_folder_label = self.builder.get_object("bad_save_folder_label")
@@ -699,9 +700,9 @@ class WarpWindow(GObject.Object):
         Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
-    def update_local_user_info(self, ips=util.IPAddresses("0.0.0.0", None)):
+    def update_local_user_info(self, ips=util.IPAddresses("0.0.0.0", None), iface=""):
         self.app_local_name_label.set_text(util.get_local_name())
-
+        self.app_iface_label.set_text(iface)
         self.app_ip_label.set_text(str(ips))
 
     def menu_quit(self, widget, data=None):
@@ -1099,7 +1100,7 @@ class WarpApplication(Gtk.Application):
 
         logging.debug("New server requested for '%s' (%s)", self.current_iface, self.current_ips)
 
-        self.window.update_local_user_info(self.current_ips)
+        self.window.update_local_user_info(self.current_ips, self.current_iface)
 
         self.window.clear_remotes()
 
