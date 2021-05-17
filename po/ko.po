@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2020-12-02 14:12+0000\n"
-"PO-Revision-Date: 2020-12-15 10:13+0000\n"
-"Last-Translator: Changmin Jang <Unknown>\n"
+"PO-Revision-Date: 2021-05-17 12:20+0000\n"
+"Last-Translator: Donghyun Bae <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2021-01-02 14:19+0000\n"
+"X-Launchpad-Export-Date: 2021-05-17 13:59+0000\n"
 "X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
 
 #: resources/main-window.ui:33 src/util.py:442
@@ -30,11 +30,11 @@ msgstr "일치하는 결과 없음"
 
 #: resources/main-window.ui:349
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "이 원격 시스템을 기본보기에서 즐겨 찾기로 설정"
 
 #: resources/main-window.ui:423
 msgid "Clear inactive and completed operations"
-msgstr ""
+msgstr "비활성 및 완료된 작업 지우기"
 
 #: resources/main-window.ui:442
 msgid "Send files"
@@ -68,10 +68,12 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"이 네트워크의 다른 컴퓨터에서 Warpinator가 실행되고 있습니까? "
+"그렇다면 환경설정에서 모두 동일한 그룹 코드를 사용하고 있는지 확인하십시오."
 
 #: resources/main-window.ui:722
 msgid "Possible solutions:"
-msgstr ""
+msgstr "가능한 해결책:"
 
 #: resources/main-window.ui:788
 msgid "Initializing, please wait..."
@@ -79,21 +81,19 @@ msgstr "초기화 중, 기다려주세요..."
 
 #: resources/main-window.ui:846
 msgid "Something went wrong"
-msgstr ""
+msgstr "문제가 발생했습니다"
 
 #: resources/main-window.ui:921
 msgid "Invalid save location"
 msgstr "올바르지 않은 저장 위치"
 
 #: resources/main-window.ui:958
-msgid ""
-"This folder is inaccessible or does not exist.  Please select a new location "
-"in Preferences or ensure that the current one is mounted."
-msgstr ""
+msgid "This folder is inaccessible or does not exist.  Please select a new location in Preferences or ensure that the current one is mounted."
+msgstr "이 폴더는 액세스 할 수 없거나 존재하지 않습니다. 환경설정에서 새 위치를 선택하거나 현재 위치가 마운트되었는지 확인하십시오."
 
 #: resources/main-window.ui:1014
 msgid "Searching for other computers"
-msgstr ""
+msgstr "다른 컴퓨터 검색"
 
 #: resources/main-window.ui:1073
 msgid "Shutting down..."
@@ -109,7 +109,7 @@ msgstr "디스크 공간이 충분하지 않습니다!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr ""
+msgstr "계산 중"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
@@ -145,7 +145,7 @@ msgstr "목록에서 이 작업 지우기"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "포함 된 폴더 열기"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -166,11 +166,12 @@ msgstr "새로 수신되는 파일"
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"%(sender_name)s이 (가) %(file_count)d 개의 파일 (%(file_name)s)을 보내려고 합니다."
 
 #: src/notifications.py:27
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s 님이 %(file_count)d 개의 파일을 보내려고 합니다."
 
 #: src/notifications.py:37
 msgid "Accept"
@@ -183,12 +184,12 @@ msgstr "거절"
 #: src/notifications.py:52
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
+msgstr "%(sender_name)s이 (가) %(file_count)d 개의 파일 (%(file_name)s)을 전송합니다."
 
 #: src/notifications.py:53
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s이 (가) %(file_count)d 개의 파일을 보냅니다."
 
 #: src/notifications.py:88
 msgid "Transfer complete"
@@ -197,12 +198,12 @@ msgstr "전송 완료"
 #: src/notifications.py:90
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "%s 로의 전송이 성공적으로 완료되었습니다."
 
 #: src/notifications.py:92
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "%s 에서 전송이 성공적으로 완료되었습니다."
 
 #: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
 msgid "Transfer failed"
@@ -211,330 +212,326 @@ msgstr "전송 실패"
 #: src/notifications.py:124
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "%s (으)로 전송하는 중에 문제가 발생했습니다."
 
 #: src/notifications.py:126
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "%s에서 전송하는 중에 문제가 발생했습니다."
 
 #: src/notifications.py:155 src/warpinator.py:158
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "전송이 취소되었습니다."
 
 #: src/notifications.py:158
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "%s 로의 전송이 취소되었습니다."
 
 #: src/notifications.py:160
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "%s에서 들어오는 전송이 취소되었습니다."
 
 #: src/ops.py:47
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:146
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 개의 파일 번역 금지"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:231
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 파일"
 
 #: src/prefs.py:104
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator 환경설정"
 
 #: src/prefs.py:114
 msgid "Desktop"
-msgstr ""
+msgstr "데스크탑"
 
 #: src/prefs.py:116
 msgid "Show an icon in the notification area"
-msgstr ""
+msgstr "알림 영역에 아이콘 표시"
 
 #: src/prefs.py:120
 msgid "Start with main window open"
-msgstr ""
+msgstr "메인 창을 열고 시작"
 
 #: src/prefs.py:125
 msgid "Start automatically"
-msgstr ""
+msgstr "자동으로 시작"
 
 #: src/prefs.py:131
 msgid "Location for received files"
-msgstr ""
+msgstr "받은 파일의 위치"
 
 #. widget = GSettingsSwitch(_("Preserve original file permissions"),
 #. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
 #. section.add_row(widget)
 #: src/prefs.py:140
 msgid "Require approval before accepting files"
-msgstr ""
+msgstr "파일을 수락하기 전에 승인 필요"
 
 #: src/prefs.py:144
 msgid "Require approval when files would be overwritten"
-msgstr ""
+msgstr "파일을 덮어 쓸 때 승인 필요"
 
 #: src/prefs.py:148
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+"누군가 파일을 보내거나 보내려고 할 때 알림을 표시합니다."
 
 #: src/prefs.py:152
 msgid "Network"
-msgstr ""
+msgstr "네트워크"
 
 #: src/prefs.py:157
 msgid "Group Code"
-msgstr ""
+msgstr "그룹 코드"
 
 #: src/prefs.py:158
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
+msgstr "동일한 코드를 사용하지 않는 컴퓨터와 통신 할 수 없습니다."
 
 #: src/prefs.py:164
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "전송을 위한 수신 포트"
 
 #: src/prefs.py:175
 msgid "Update firewall rules"
-msgstr ""
+msgstr "방화벽 규칙 업데이트"
 
 #: src/prefs.py:187
 msgid ""
 "Any port number will work for the application, but using the same port for "
 "all computers can make it simpler to add firewall exceptions if necessary."
-msgstr ""
+msgstr "모든 포트 번호는 응용 프로그램에서 작동하지만 모든 컴퓨터에 동일한 포트를 사용하면 필요한 경우 방화벽 예외를 더 쉽게 추가 할 수 있습니다."
 
 #: src/prefs.py:219
 msgid "Change port"
-msgstr ""
+msgstr "포트 변경"
 
 #: src/prefs.py:264
 msgid "Set code"
-msgstr ""
+msgstr "코드 설정"
 
 #: src/prefs.py:279
 msgid "A group code is required."
-msgstr ""
+msgstr "그룹 코드가 필요합니다."
 
 #: src/prefs.py:285
 msgid "The group code should be longer if possible."
-msgstr ""
+msgstr "그룹 코드는 가능하면 더 길어야합니다."
 
 #: src/remote.py:487 src/remote.py:491
 msgid "Connection has been lost"
-msgstr ""
+msgstr "연결이 끊어졌습니다."
 
 #: src/server.py:459
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "원격 시스템에서 오류가 발생했습니다."
 
 #: src/util.py:81
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "보낼 파일 선택"
 
 #: src/util.py:85
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: src/util.py:86
 msgid "Send"
-msgstr ""
+msgstr "보내기"
 
 #: src/util.py:288
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "몇 초 남음"
 
 #: src/util.py:291
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d 초 남음"
 
 #: src/util.py:295 src/util.py:303
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 분"
 
 #: src/util.py:302
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 시간"
 
 #: src/util.py:307
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "약 %d 시간"
 
 #: src/util.py:438 src/warpinator.py:517
 msgid "About"
-msgstr ""
+msgstr "프로그램 정보"
 
 #: src/warpinator.py:137
 msgid "Paused"
-msgstr ""
+msgstr "일시 중지"
 
 #: src/warpinator.py:140
 msgid "Waiting for approval"
-msgstr ""
+msgstr "승인 대기 중"
 
 #: src/warpinator.py:142
 msgid "Waiting for your approval"
-msgstr ""
+msgstr "승인을 기다리는 중"
 
 #: src/warpinator.py:145
 msgid "Files may be overwritten"
-msgstr ""
+msgstr "파일을 덮어 쓸 수 있음"
 
 #: src/warpinator.py:148
 msgid "Not enough disk space"
-msgstr ""
+msgstr "디스크 공간 부족"
 
 #: src/warpinator.py:151
 msgid "Request cancelled"
-msgstr ""
+msgstr "요청이 취소되었습니다."
 
 #: src/warpinator.py:153 src/warpinator.py:155
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "%s에 의해 취소 된 요청"
 
 #: src/warpinator.py:160 src/warpinator.py:162
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "%s에 의해 전송이 취소되었습니다."
 
 #: src/warpinator.py:169
 #, python-format
 msgid "File '%s' not found"
-msgstr ""
+msgstr "'%s'파일을 찾을 수 없습니다."
 
 #: src/warpinator.py:171
 msgid "Some files not found"
-msgstr ""
+msgstr "일부 파일을 찾을 수 없습니다."
 
 #: src/warpinator.py:173
 msgid "Completed"
-msgstr ""
+msgstr "완료"
 
 #: src/warpinator.py:331 src/warpinator.py:866
 msgid "Connecting"
-msgstr ""
+msgstr "연결"
 
 #: src/warpinator.py:333
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "%s에 연결"
 
 #: src/warpinator.py:343
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s이 (가) 온라인 상태가 아닙니다."
 
 #: src/warpinator.py:348
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "%s에 연결할 수 없습니다."
 
 #: src/warpinator.py:353
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr ""
+msgstr "%s이 (가) 연결을 완료 할 때까지 기다리는 중입니다."
 
 #: src/warpinator.py:382
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 새 수신 전송"
 
 #: src/warpinator.py:482 src/warpinator.py:1284
 msgid "Favorites"
-msgstr ""
+msgstr "즐겨찾기"
 
 #: src/warpinator.py:487 src/warpinator.py:1289
 msgid "Recents"
-msgstr ""
+msgstr "최근에 사용한 파일"
 
 #: src/warpinator.py:494 src/warpinator.py:1296
 msgid "Browse..."
-msgstr ""
+msgstr "참조..."
 
 #: src/warpinator.py:509 src/warpinator.py:1252
 msgid "Open save folder"
-msgstr ""
+msgstr "저장 폴더 열기"
 
 #: src/warpinator.py:513
 msgid "Preferences"
-msgstr ""
+msgstr "환경 설정"
 
 #: src/warpinator.py:521 src/warpinator.py:1255
 msgid "Quit"
-msgstr ""
+msgstr "종료"
 
 #: src/warpinator.py:615
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "네트워크에 연결되어 있지 않은 것 같습니다."
 
 #: src/warpinator.py:617
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
+msgstr "시작에 실패했습니다. 로그를 확인하십시오."
 
 #: src/warpinator.py:845
 msgid "Offline"
-msgstr ""
+msgstr "오프라인"
 
 #: src/warpinator.py:852
 msgid "Unable to connect"
-msgstr ""
+msgstr "연결할 수 없습니다"
 
 #: src/warpinator.py:859
 msgid "Waiting for two-way connection"
-msgstr ""
+msgstr "양방향 연결 대기 중"
 
 #: src/warpinator.py:1306
 msgid "Send to favorites"
-msgstr ""
+msgstr "즐겨찾기로 보내기"
+
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Warpinator용 방화벽 포트 열기"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
+msgstr "방화벽 설정을 변경하려면 인증이 필요합니다."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
 msgid "Warpinator"
-msgstr ""
+msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:9
 msgid ""
-"Warpinator allows you to easily connect multiple computers on a local area "
-"network and share files quickly and securely."
+"Warpinator allows you to easily connect multiple computers on a local area network and share files quickly and securely."
 msgstr ""
+"Warpinator로 로컬 영역 네트워크상의 여러 컴퓨터에 간단히 접속하여 파일을 빠르고 안전하게 공유할 수 있습니다."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27
 msgid "Linux Mint"
-msgstr ""
+msgstr "Linux Mint"
