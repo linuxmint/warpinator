@@ -178,7 +178,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             except KeyError:
                 logging.warning("No type in service info properties, assuming this is a real connect attempt")
 
-            if ident == self.service_ident:
+            if name.partition('.%s' % SERVICE_TYPE)[0] == self.service_ident:
                 return
 
             try:
