@@ -140,7 +140,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         if name == self.service_name:
             return
 
-        ident = name.partition(".")[0]
+        ident = name.partition(".%s" % SERVICE_TYPE)[0]
         self.remote_registrar.cancel_registration(ident)
 
         try:
@@ -159,7 +159,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         info = zeroconf.get_service_info(_type, name)
 
         if info:
-            ident = name.partition(".")[0]
+            ident = name.partition(".%s" % SERVICE_TYPE)[0]
 
             try:
                 remote_hostname = info.properties[b"hostname"].decode()
@@ -178,7 +178,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             except KeyError:
                 logging.warning("No type in service info properties, assuming this is a real connect attempt")
 
-            if name.partition('.%s' % SERVICE_TYPE)[0] == self.service_ident:
+            if ident == self.service_ident:
                 return
 
             try:
