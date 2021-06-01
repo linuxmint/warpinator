@@ -1,3 +1,47 @@
+warpinator (1.2.0) uma; urgency=medium
+
+  [ Michael Webster ]
+  * debian: modernize build.
+  * Add .gitignore
+  * status icon: Add a new icon to represent offline/error state.
+  * warpinator.py: Fix status icon activation.
+  * Update README.md.
+  * Remove unused install script.
+  * Allow bundling of zeroconf.
+  * Don't insist on libxapp 2.0 - favorites aren't essential, and this allows warpinator to work on systems without the latest version.
+  * Fix regressions caused by 0331df4d287561a.
+
+  [ Balló György ]
+  * Fix icon name on About dialog
+
+  [ Michael Webster ]
+  * warpinator.py: Fix status icon menus.
+  * warpinator.py: Don't show the favorites submenu if there are no favorites.
+  * Add libnm (network-manager) interface.
+  * Various: Allow selection of network interface, improve registration and connection stability.
+  * Update prefs and firewall script to accommodate new port setting.
+  * util.py: Remove some unused remnants, add a utility debugging function.
+  * auth.py: refactor, simplify - keys are no longer written to disk, so we only need to worry about the keyfile.
+  * Add missing shebangs.
+  * some cleanup
+  * Add libnm dependency.
+  * download_zeroconf.py: Only download the python module, not the empty py.typed file.
+  * Hide warpinator's autostart entry.
+  * prefs.py: Fix segfault when opening the prefs window for a second time and toggling the tray icon switch.
+  * main-window.ui: Change a string in the troubleshooting page to reflect having multiple ports.
+  * Transfers: Allow compression when both sides have support and have it enabled.
+  * Show current network interface in the status bar next to the ip address, and some minor ui tweaks.
+  * transfers: Make block size configurable (not user-exposed), optimize a couple of transfer details.
+
+  [ Cobinja ]
+  * Fix connecting to self
+  * Retrieve complete ident
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 01 Jun 2021 15:03:21 +0100
+
 warpinator (1.1.2) ulyssa; urgency=medium
 
   [ Michael Webster ]
