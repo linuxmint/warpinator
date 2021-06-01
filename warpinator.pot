@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-25 16:35-0400\n"
+"POT-Creation-Date: 2021-06-01 15:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,78 +24,78 @@ msgstr ""
 msgid "Send and Receive Files across the Network"
 msgstr ""
 
-#: resources/main-window.ui:193
+#: resources/main-window.ui:140
 msgid "No matching results"
 msgstr ""
 
-#: resources/main-window.ui:349
+#: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
 msgstr ""
 
-#: resources/main-window.ui:423
+#: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
 msgstr ""
 
-#: resources/main-window.ui:442
+#: resources/main-window.ui:389
 msgid "Send files"
 msgstr ""
 
-#: resources/main-window.ui:468 src/prefs.py:149
+#: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
 msgstr ""
 
-#: resources/main-window.ui:489 src/warpinator.py:865
+#: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
 msgstr ""
 
-#: resources/main-window.ui:609
+#: resources/main-window.ui:556
 msgid "No other computers found..."
 msgstr ""
 
-#: resources/main-window.ui:673
+#: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
 msgstr ""
 
-#: resources/main-window.ui:688
+#: resources/main-window.ui:635
 msgid ""
-"Check your firewall rules.  The port number can be changed.  See preferences "
-"for more details."
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
 msgstr ""
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:704
+#: resources/main-window.ui:651
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
 
-#: resources/main-window.ui:722
+#: resources/main-window.ui:669
 msgid "Possible solutions:"
 msgstr ""
 
-#: resources/main-window.ui:788
+#: resources/main-window.ui:735
 msgid "Initializing, please wait..."
 msgstr ""
 
-#: resources/main-window.ui:846
+#: resources/main-window.ui:793
 msgid "Something went wrong"
 msgstr ""
 
-#: resources/main-window.ui:921
+#: resources/main-window.ui:868
 msgid "Invalid save location"
 msgstr ""
 
-#: resources/main-window.ui:958
+#: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
 
-#: resources/main-window.ui:1014
+#: resources/main-window.ui:961
 msgid "Searching for other computers"
 msgstr ""
 
-#: resources/main-window.ui:1073
+#: resources/main-window.ui:1020
 msgid "Shutting down..."
 msgstr ""
 
@@ -253,114 +253,129 @@ msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/prefs.py:124
+#: src/prefs.py:139
 msgid "Warpinator Preferences"
 msgstr ""
 
-#: src/prefs.py:134
+#: src/prefs.py:152
+msgid "General"
+msgstr ""
+
+#: src/prefs.py:154
 msgid "Desktop"
 msgstr ""
 
-#: src/prefs.py:136
+#: src/prefs.py:156
 msgid "Show an icon in the notification area"
 msgstr ""
 
-#: src/prefs.py:140
+#: src/prefs.py:160
 msgid "Start with main window open"
 msgstr ""
 
-#: src/prefs.py:145
+#: src/prefs.py:165
 msgid "Start automatically"
 msgstr ""
 
-#: src/prefs.py:151
+#: src/prefs.py:171
+msgid "Use compression when possible."
+msgstr ""
+
+#: src/prefs.py:173
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr ""
+
+#: src/prefs.py:176
 msgid "Location for received files"
 msgstr ""
 
-#. widget = GSettingsSwitch(_("Preserve original file permissions"),
-#. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
-#. section.add_row(widget)
-#: src/prefs.py:160
+#: src/prefs.py:181
 msgid "Require approval before accepting files"
 msgstr ""
 
-#: src/prefs.py:164
+#: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
 msgstr ""
 
-#: src/prefs.py:168
+#: src/prefs.py:189
 msgid "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 
-#: src/prefs.py:172
+#: src/prefs.py:194
+msgid "Connection"
+msgstr ""
+
+#: src/prefs.py:196
 msgid "Identification"
 msgstr ""
 
-#: src/prefs.py:177
+#: src/prefs.py:201
 msgid "Group Code"
 msgstr ""
 
-#: src/prefs.py:178
+#: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 
-#: src/prefs.py:184
+#: src/prefs.py:208
 msgid "Network"
 msgstr ""
 
-#: src/prefs.py:187
+#: src/prefs.py:211
 msgid "Automatic"
 msgstr ""
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:212
+#: src/prefs.py:236
 #, python-format
 msgid "%s - not found"
 msgstr ""
 
-#: src/prefs.py:214
+#: src/prefs.py:238
 msgid "Network interface to use"
 msgstr ""
 
-#: src/prefs.py:222
+#: src/prefs.py:246
 msgid "Incoming port for transfers"
 msgstr ""
 
-#: src/prefs.py:229
+#: src/prefs.py:253
 msgid "Incoming port for registration"
 msgstr ""
 
-#: src/prefs.py:244
+#: src/prefs.py:268
 msgid "Apply network changes"
 msgstr ""
 
-#: src/prefs.py:253
+#: src/prefs.py:277
 msgid "Update firewall rules"
 msgstr ""
 
-#: src/prefs.py:265
+#: src/prefs.py:289
 msgid ""
-"Any port number will work for the application, but using the same port for "
+"Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
 
-#: src/prefs.py:366
+#: src/prefs.py:390
 msgid "Set code"
 msgstr ""
 
-#: src/prefs.py:381
+#: src/prefs.py:405
 msgid "A group code is required."
 msgstr ""
 
-#: src/prefs.py:387
+#: src/prefs.py:411
 msgid "The group code should be longer if possible."
 msgstr ""
 
-#: src/remote.py:581 src/remote.py:585
+#: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
 msgstr ""
 
-#: src/server.py:543
+#: src/server.py:557
 msgid "An error occurred on the remote machine"
 msgstr ""
 
@@ -406,7 +421,7 @@ msgid_plural "approximately %d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:399 src/warpinator.py:532
+#: src/util.py:399 src/warpinator.py:534
 msgid "About"
 msgstr ""
 
@@ -457,7 +472,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: src/warpinator.py:339 src/warpinator.py:893
+#: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
 msgstr ""
 
@@ -488,52 +503,52 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/warpinator.py:497 src/warpinator.py:1319
+#: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
 msgstr ""
 
-#: src/warpinator.py:502 src/warpinator.py:1324
+#: src/warpinator.py:504 src/warpinator.py:1345
 msgid "Recents"
 msgstr ""
 
-#: src/warpinator.py:509 src/warpinator.py:1331
+#: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
 msgstr ""
 
-#: src/warpinator.py:524 src/warpinator.py:1284
+#: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
 msgstr ""
 
-#: src/warpinator.py:528
+#: src/warpinator.py:530
 msgid "Preferences"
 msgstr ""
 
-#: src/warpinator.py:536 src/warpinator.py:1287
+#: src/warpinator.py:538 src/warpinator.py:1289
 msgid "Quit"
 msgstr ""
 
-#: src/warpinator.py:629
+#: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
 msgstr ""
 
-#: src/warpinator.py:631
+#: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
 msgstr ""
 
-#: src/warpinator.py:872
+#: src/warpinator.py:874
 msgid "Offline"
 msgstr ""
 
-#: src/warpinator.py:879
+#: src/warpinator.py:881
 msgid "Unable to connect"
 msgstr ""
 
-#: src/warpinator.py:886
+#: src/warpinator.py:888
 msgid "Waiting for two-way connection"
 msgstr ""
 
-#: src/warpinator.py:1341
-msgid "Send to favorites"
+#: src/warpinator.py:1323
+msgid "Send to all"
 msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
