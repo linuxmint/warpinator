@@ -19,3 +19,16 @@ subdir('bin')
 subdir('po')
 subdir('resources')
 subdir('install-scripts')
+
+message('\n'.join(['',
+'',
+'    @0@-@1@'.format(meson.project_name(), meson.project_version()),
+'',
+'    prefix:                 @0@'.format(get_option('prefix')),
+'    source code location:   @0@'.format(meson.source_root()),
+'',
+'    building for flatpak:   @0@'.format(get_option('flatpak-build')),
+'    including ufw script:   @0@'.format(include_firewall_mod),
+'    bundling zeroconf:      @0@'.format(bundle_zeroconf),
+'',
+]))

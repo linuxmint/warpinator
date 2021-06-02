@@ -37,7 +37,7 @@ Add this PPA to satisfy dependencies, then you can follow steps above:
 
 #### Otherwise (and this is valid anywhere if you want to avoid packaging):
 ```
-meson builddir --prefix=/usr  (This is typical).
+meson builddir --prefix=/usr  (This is typical - /usr/local is another common choice for non-package-manager installs).
 ninja -C builddir
 sudo ninja -C builddir install
 ```
@@ -61,10 +61,18 @@ _____
 - python3-gi
 - python3-setproctitle
 - python3-xapp (>= 1.6.0)
-- python3-zeroconf (>= 0.27.0)
+- python3-zeroconf (>= 0.27.0) *** see note below
 - python3-grpcio (>= 1.16.0)
 - python3-cryptography
 - python3-nacl
+
+##### Note about zeroconf
+As of v1.2.0, the build attempts to download and install/package zeroconf to the warpinator install dir (or package). To disable this and have warpinator use the system's version, set the 'bundle-zeroconf' build option to false:
+```
+meson builddir --prefix=/usr -Dbundle-zeroconf=false
+ninja -C builddir
+sudo ninja -C builddir install
+```
 
 ##### You can get grpcio and grpc-tools from pip3 also:
 ```

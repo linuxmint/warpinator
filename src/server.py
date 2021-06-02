@@ -26,10 +26,10 @@ import transfers
 from ops import ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
-if config.bundle_zeroconf:
+try:
     import zeroconf_
     from zeroconf_ import ServiceInfo, Zeroconf, ServiceBrowser
-else:
+except:
     import zeroconf
 
     zc_version = pkg_resources.parse_version(zeroconf.__version__)

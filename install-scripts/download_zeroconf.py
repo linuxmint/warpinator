@@ -20,17 +20,30 @@
 
 import sys
 import os
+import tempfile
 
 relative_path = os.path.join("libexec", "warpinator", "zeroconf_")
 install_dir = os.path.join(os.environ['MESON_INSTALL_DESTDIR_PREFIX'], relative_path)
-os.makedirs(install_dir, exist_ok=True)
 
 version = "0.29.0"
+gh_url = "https://raw.githubusercontent.com/jstasiak/python-zeroconf"
+full_url = os.path.join(gh_url, version, "zeroconf", "__init__.py")
 
 if os.environ.get('DESTDIR'):
-    print("\n\nDownloading and packaging zeroconf %s in %s\n\n" % (version, relative_path))
+    print("\n\nDownloading and packaging zeroconf %s in %s" % (version, relative_path))
 else:
-    print("\n\nDownloading and installing zeroconf %s in %s\n\n" % (version, install_dir))
+    print("\n\nDownloading and installing zeroconf %s in %s" % (version, install_dir))
 
-os.system('curl -s https://raw.githubusercontent.com/jstasiak/python-zeroconf/%s/zeroconf/__init__.py > %s/__init__.py' % (version, install_dir))
-os.system('touch %s/py.typed' % install_dir)
+print("Package url: %s" % full_url)
+with tempfile.NamedTemporaryFile() as f:
+    if (os.system('curl -sS %s > %s' % (full_url, f.name))) == 0:
+        os.makedirs(install_dir, exist_ok=True)
+        os.system("cp %s %s/__init__.py" % (f.name, install_dir))
+        os.system('touch %s/py.typed' % install_dir)
+    else:
+        print("\nCould not download zeroconf. If you wish skip this and install it via package manager, "
+              "set the 'use-zeroconf' build option to false. See the README.\n")
+        exit(1)
+
+exit(0)
+
