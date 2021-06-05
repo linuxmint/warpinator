@@ -5,6 +5,7 @@ Maintainer: Linux Mint <root@linuxmint.com>
 Build-Depends:
  debhelper-compat (= 12),
  appstream,
+ curl,
  dh-python,
  gnome-pkg-tools (>= 0.10),
  meson (>= 0.45.0),
