@@ -24,7 +24,7 @@ git checkout 1.2.0
 sudo apt-get -y install debhelper dh-python gnome-pkg-tools meson gobject-introspection appstream
 
 # Take note of these packages, install them using apt-get:
-dpkg-buildpackage --no-sign
+sudo dpkg-buildpackage --no-sign
 
 # Once that succeeds, install:
 cd ..
