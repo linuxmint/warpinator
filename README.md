@@ -16,8 +16,8 @@ git clone https://github.com/linuxmint/warpinator.git
 # Enter the folder, specify version:
 cd warpinator
 
-# Check out appropriate branch (1.0.6 is current official, master is development)
-git checkout 1.0.6
+# Check out appropriate branch (1.2.0 is current official, master is development)
+git checkout 1.2.0
 
 # Try to build. If this fails, it's probably due to missing dependencies.
 sudo apt-get -y install debhelper dh-python gnome-pkg-tools meson gobject-introspection
