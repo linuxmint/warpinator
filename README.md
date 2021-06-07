@@ -20,6 +20,8 @@ cd warpinator
 git checkout 1.0.6
 
 # Try to build. If this fails, it's probably due to missing dependencies.
+sudo apt-get -y install debhelper dh-python gnome-pkg-tools meson gobject-introspection
+
 # Take note of these packages, install them using apt-get:
 dpkg-buildpackage --no-sign
 
