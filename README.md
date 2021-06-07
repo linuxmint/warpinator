@@ -20,6 +20,7 @@ cd warpinator
 git checkout 1.2.0
 
 # Try to build. If this fails, it's probably due to missing dependencies.
+# If you use GitHub Actions to compile, please install the following dependencies.
 sudo apt-get -y install debhelper dh-python gnome-pkg-tools meson gobject-introspection
 
 # Take note of these packages, install them using apt-get:
