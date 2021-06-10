@@ -1,3 +1,18 @@
+warpinator (1.2.1) uma; urgency=medium
+
+  [ Michael Webster ]
+  * Improve zeroconf handling and documentation.
+  * debian/control: Add curl to build deps.
+  * networkmonitor.py: Make get_ipv6() and get_ipv4() safe against a missing configuration.
+
+  [ Tony ]
+  * Improve the introduction of compilation methods (#89)
+
+  [ Clement Lefebvre ]
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 10 Jun 2021 10:58:04 +0100
+
 warpinator (1.2.0) uma; urgency=medium
 
   [ Michael Webster ]
