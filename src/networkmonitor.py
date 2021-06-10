@@ -154,23 +154,28 @@ class NetworkMonitor(GObject.Object):
 
             if con != None:
                 ip4c = con.get_ip4_config()
-                addrs = ip4c.get_addresses()
+                if ip4c != None:
+                    addrs = ip4c.get_addresses()
 
-                if addrs != []:
-                    return addrs[0].get_address()
+                    if addrs != []:
+                        return addrs[0].get_address()
 
         return "0.0.0.0"
 
     def get_ipv6(self):
+        # We don't actually support ipv6 currently.
+        return None
+
         if self.device != None:
             con = self.device.get_active_connection()
 
             if con != None:
-                ip4c = con.get_ip6_config()
-                addrs = ip4c.get_addresses()
+                ip6c = con.get_ip6_config()
+                if ip6c != None:
+                    addrs = ip6c.get_addresses()
 
-                if addrs != []:
-                    return addrs[0].get_address()
+                    if addrs != []:
+                        return addrs[0].get_address()
 
         return None
 

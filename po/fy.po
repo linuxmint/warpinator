@@ -1,16 +1,16 @@
-# Standard Moroccan Tamazight translation for linuxmint
-# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# Frisian translation for linuxmint
+# Copyright (c) 2021 Rosetta Contributors and Canonical Ltd 2021
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2020-10-19 22:49+0000\n"
-"Last-Translator: Hakim Oubouali <Unknown>\n"
-"Language-Team: Standard Moroccan Tamazight <zgh@li.org>\n"
+"PO-Revision-Date: 2021-05-18 09:27+0000\n"
+"Last-Translator: vancha <Unknown>\n"
+"Language-Team: Frisian <fy@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,39 +22,39 @@ msgstr ""
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr ""
+msgstr "Triemen oer it netwurk ferstjoere en oannime"
 
 #: resources/main-window.ui:140
 msgid "No matching results"
-msgstr ""
+msgstr "Gjin oerienkommende fertuten"
 
 #: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "Meitsje disse machine op ôfstân favoryt yn it haadoersjoch."
 
 #: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
-msgstr ""
+msgstr "Ynaktive en foltôge operaasjes fuortsmite"
 
 #: resources/main-window.ui:389
 msgid "Send files"
-msgstr "ⴰⵣⵏ ⵉⴼⵓⵢⵍⴰ"
+msgstr "Triemen stjoere"
 
 #: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
-msgstr ""
+msgstr "Bestân Oerdrachten"
 
 #: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
-msgstr ""
+msgstr "Online"
 
 #: resources/main-window.ui:556
 msgid "No other computers found..."
-msgstr ""
+msgstr "Gjin oare kompûter fûn..."
 
 #: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "Wês der wis fan dat jo netwurk ferbining aktyf is."
 
 #: resources/main-window.ui:635
 msgid ""
@@ -68,174 +68,179 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"Rint Warpinator op oare kompûters yn it netwurk? oft dot ol sa is, wés der "
+"don wis fan dat se ollegearre deselfde groepskoade yn foarkarren brûke."
 
 #: resources/main-window.ui:669
 msgid "Possible solutions:"
-msgstr ""
+msgstr "Moochlike oplossings:"
 
 #: resources/main-window.ui:735
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "Inisjalisearje, graach efkes wachtsje..."
 
 #: resources/main-window.ui:793
 msgid "Something went wrong"
-msgstr ""
+msgstr "Der is wot ferkeard gien"
 
 #: resources/main-window.ui:868
 msgid "Invalid save location"
-msgstr ""
+msgstr "Unjildiche  opslachlokaasje"
 
 #: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
+"Disse folder kin net iepene wurde of bestiet net. Selektearje in oare "
+"lokaasje yn Foarkarren of wés der wis fan dot disse oankeppele is."
 
 #: resources/main-window.ui:961
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Om oare kompûters sykje"
 
 #: resources/main-window.ui:1020
 msgid "Shutting down..."
-msgstr ""
+msgstr "Útskeakelje"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "goedkarring ôfwachtsje"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "Net genôch opslachromte!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "ⴰⵙⵉⴹⵏ"
+msgstr "Útrekkenje"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "ⴷⴳⴳⵉ ⵜⵓⵜⵜⵔⴰ ⴰⴷ"
+msgstr "Oanfraach akseptearje"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "ⴰⴳⵉ ⵜⵓⵜⵜⵔⴰ ⴰⴷ"
+msgstr "Oanfraach net akseptearje"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "ⵙⵔ ⵜⵓⵜⵜⵔⴰ ⴰⴷ"
+msgstr "Oanfraach ofbrekke"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr ""
+msgstr "Disse operaasje opnij starte"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Disse operaasje skoftsje"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr ""
+msgstr "Disse operaasje ferfetsje"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "ⵙⵔ ⵜⴰⵎⵀⵍⵜ ⴰⴷ"
+msgstr "Disse operaasje ofbrekke"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Disse operaasje út de list wei smite"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Folder wer oft disse triem sich yn befynt iepenje."
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "Opmerkings by poartnûmers:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator Foarkarren"
 
 #: src/notifications.py:23
 msgid "New incoming files"
-msgstr ""
+msgstr "Nije ynkommende triemen"
 
 #: src/notifications.py:29
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"%(sender_name)s wol jo graach %(file_count)d triemen stjoere (%(file_name)s)."
 
 #: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "ⵉⵙ ⵜⵅⵙⴷ ⴰⴷ ⴰⴽ ⵢⴰⵣⵏ %(sender_name)s %(file_count)d ⵉⴼⵓⵢⵍⴰ"
+msgstr "%(sender_name)s wol dy graach %(file_count)d triemen stjoere"
 
 #: src/notifications.py:42
 msgid "Accept"
-msgstr "ⴷⴳⴳⵉ"
+msgstr "Akseptearje"
 
 #: src/notifications.py:43
 msgid "Decline"
-msgstr "ⴰⴳⵉ"
+msgstr "Ôfslaan"
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
+msgstr "%(sender_name)s stjoerd dy %(file_count)d triemen (%(file_name)s)."
 
 #: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s stjoert dy %(file_count)d triemen"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Oerdracht foltôge"
 
 #: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "Oerdracht nei %s is mei sukses foltôge"
 
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "Oerdracht fan %s is mei sukses foltôge"
 
 #: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
-msgstr ""
+msgstr "Oerdracht mislearre"
 
 #: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "Der gie wot ferkeard mei de oerdracht nei %s"
 
 #: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "Der gie wot ferkeard mei de oerdracht fan %s"
 
 #: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "Oerdracht ôfbrutsen"
 
 #: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "Dyn oerdracht nei %s is ôfbrutsen"
 
 #: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "In ynkommende oerdracht fan %s is ôfbrutsen"
 
 #: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:148
@@ -243,7 +248,7 @@ msgstr ""
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "%d triemen"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:233
@@ -251,11 +256,11 @@ msgstr[1] ""
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "%d triemen"
 
 #: src/prefs.py:139
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator foarkarren"
 
 #: src/prefs.py:152
 msgid "General"
@@ -263,19 +268,19 @@ msgstr ""
 
 #: src/prefs.py:154
 msgid "Desktop"
-msgstr ""
+msgstr "Búroblêd"
 
 #: src/prefs.py:156
 msgid "Show an icon in the notification area"
-msgstr ""
+msgstr "In plaatsje yn it notifikaasjefjild sjen litte"
 
 #: src/prefs.py:160
 msgid "Start with main window open"
-msgstr ""
+msgstr "Haadfinster by it starten iepenje"
 
 #: src/prefs.py:165
 msgid "Start automatically"
-msgstr ""
+msgstr "Automatysk starte"
 
 #: src/prefs.py:171
 msgid "Use compression when possible."
@@ -289,20 +294,22 @@ msgstr ""
 
 #: src/prefs.py:176
 msgid "Location for received files"
-msgstr ""
+msgstr "Lokaasje foar ûntfongen triemen"
 
 #: src/prefs.py:181
 msgid "Require approval before accepting files"
-msgstr ""
+msgstr "Goedkarring fereaskje foar it akseptearjen fan triemen"
 
 #: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
-msgstr ""
+msgstr "Goedkarring fereaskje foar it oerskrieuwen fan triemen"
 
 #: src/prefs.py:189
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+"Notifikaasje sjen litte wanneer oft guon dy triemen stjoere (of probearje te "
+"stjoeren)"
 
 #: src/prefs.py:194
 msgid "Connection"
@@ -314,15 +321,17 @@ msgstr ""
 
 #: src/prefs.py:201
 msgid "Group Code"
-msgstr ""
+msgstr "Groepskoade"
 
 #: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
+"Do kinst gjin berjochten ferstjoere nei kompûters oft dy net deselfde koade "
+"brûke."
 
 #: src/prefs.py:208
 msgid "Network"
-msgstr ""
+msgstr "Netwurk"
 
 #: src/prefs.py:211
 msgid "Automatic"
@@ -340,7 +349,7 @@ msgstr ""
 
 #: src/prefs.py:246
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "Ynkommende poarte foar oerdrachten"
 
 #: src/prefs.py:253
 msgid "Incoming port for registration"
@@ -352,7 +361,7 @@ msgstr ""
 
 #: src/prefs.py:277
 msgid "Update firewall rules"
-msgstr ""
+msgstr "Fjoermuorre regels bywurkje"
 
 #: src/prefs.py:289
 msgid ""
@@ -362,191 +371,191 @@ msgstr ""
 
 #: src/prefs.py:390
 msgid "Set code"
-msgstr ""
+msgstr "Koade ynstelle"
 
 #: src/prefs.py:405
 msgid "A group code is required."
-msgstr ""
+msgstr "In groepskoade is fereaske"
 
 #: src/prefs.py:411
 msgid "The group code should be longer if possible."
-msgstr ""
+msgstr "De groepskoade mat langer wêze oft dot kin."
 
 #: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Ferbining is útfallen"
 
 #: src/server.py:557
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "Der is iets ferkeard gien op de kompûter of ôfstân"
 
 #: src/util.py:127
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "Triem(en) om te stjoeren selektearje"
 
 #: src/util.py:131
 msgid "Cancel"
-msgstr ""
+msgstr "Ôfbrekke"
 
 #: src/util.py:132
 msgid "Send"
-msgstr ""
+msgstr "Stjoere"
 
 #: src/util.py:292
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "In pear sekonden te gean"
 
 #: src/util.py:295
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d sekonden te gean"
 
 #: src/util.py:299 src/util.py:307
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minút"
+msgstr[1] "%d minuten"
 
 #: src/util.py:306
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d oere"
+msgstr[1] "%d oeren"
 
 #: src/util.py:311
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "likernôch %d oere"
+msgstr[1] "likernôch %d oeren"
 
 #: src/util.py:399 src/warpinator.py:534
 msgid "About"
-msgstr ""
+msgstr "Oer"
 
 #: src/warpinator.py:145
 msgid "Paused"
-msgstr ""
+msgstr "Skoftsje"
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr ""
+msgstr "Op goedkarring wachtsje"
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr ""
+msgstr "Op dyn goedkarring wachtsje"
 
 #: src/warpinator.py:153
 msgid "Files may be overwritten"
-msgstr ""
+msgstr "Triemen kin oerskreun wurde"
 
 #: src/warpinator.py:156
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Net genôch skiifromte"
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr ""
+msgstr "Oanfraach ôfbrutsen"
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "Oanfraach ôfbrutsen troch %s"
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "Oerdracht ôfbrutsen troch %s"
 
 #: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
-msgstr ""
+msgstr "Triem '%s' net fûn"
 
 #: src/warpinator.py:179
 msgid "Some files not found"
-msgstr ""
+msgstr "Guon triemen net fûn"
 
 #: src/warpinator.py:181
 msgid "Completed"
-msgstr ""
+msgstr "Foltôge"
 
 #: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
-msgstr ""
+msgstr "Oan it ferbinen"
 
 #: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Oan it ferbinen mei %s"
 
 #: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s is net online"
 
 #: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "Kin net ferbine mei %s"
 
 #: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr ""
+msgstr "Oan it wachtsjen op %s om de ferbining te foltôgjen."
 
 #: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d nije ynkommende oerdracht"
+msgstr[1] "%d nije ynkommende oerdrachten"
 
 #: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
-msgstr ""
+msgstr "Favoriten"
 
 #: src/warpinator.py:504 src/warpinator.py:1345
 msgid "Recents"
-msgstr ""
+msgstr "Resintelik"
 
 #: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
-msgstr ""
+msgstr "Blêdzje..."
 
 #: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
-msgstr ""
+msgstr "Opslach folder iepenje"
 
 #: src/warpinator.py:530
 msgid "Preferences"
-msgstr ""
+msgstr "Foarkarren"
 
 #: src/warpinator.py:538 src/warpinator.py:1289
 msgid "Quit"
-msgstr ""
+msgstr "Ôfslute"
 
 #: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "Jo binne skynber net mei in netwurk ferbûn."
 
 #: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
+msgstr "It starten is mislearre, graach de lochs besjen."
 
 #: src/warpinator.py:874
 msgid "Offline"
-msgstr ""
+msgstr "Offline"
 
 #: src/warpinator.py:881
 msgid "Unable to connect"
-msgstr ""
+msgstr "Kin net ferbine"
 
 #: src/warpinator.py:888
 msgid "Waiting for two-way connection"
-msgstr ""
+msgstr "Op ferbining fan twa kanten wachtsje"
 
 #: src/warpinator.py:1323
 msgid "Send to all"
@@ -554,24 +563,27 @@ msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Fjoermuorrepoarte foar Warpinator iepenje"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
 msgstr ""
+"Om dyn fjoermuorre ynstellings te feroaren, moatte jo jo ferifiearje."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
 msgid "Warpinator"
-msgstr ""
+msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:9
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
+"Warpinator lit jo maklik ferskiedene kompûters mei inoar ferbine op in "
+"lokaal netwurk en flug en feilich triemen stjoere."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27
 msgid "Linux Mint"
-msgstr ""
+msgstr "Linux Mint"
