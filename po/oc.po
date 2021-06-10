@@ -1,20 +1,20 @@
-# Standard Moroccan Tamazight translation for linuxmint
-# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# Occitan (post 1500) translation for linuxmint
+# Copyright (c) 2021 Rosetta Contributors and Canonical Ltd 2021
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2020-10-19 22:49+0000\n"
-"Last-Translator: Hakim Oubouali <Unknown>\n"
-"Language-Team: Standard Moroccan Tamazight <zgh@li.org>\n"
+"PO-Revision-Date: 2021-01-02 18:34+0000\n"
+"Last-Translator: Quentin PAGÈS <Unknown>\n"
+"Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
 "X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
 
@@ -38,15 +38,15 @@ msgstr ""
 
 #: resources/main-window.ui:389
 msgid "Send files"
-msgstr "ⴰⵣⵏ ⵉⴼⵓⵢⵍⴰ"
+msgstr ""
 
 #: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
-msgstr ""
+msgstr "Transferiments de fichièrs"
 
 #: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
-msgstr ""
+msgstr "En linha"
 
 #: resources/main-window.ui:556
 msgid "No other computers found..."
@@ -109,19 +109,19 @@ msgstr ""
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "ⴰⵙⵉⴹⵏ"
+msgstr ""
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "ⴷⴳⴳⵉ ⵜⵓⵜⵜⵔⴰ ⴰⴷ"
+msgstr ""
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "ⴰⴳⵉ ⵜⵓⵜⵜⵔⴰ ⴰⴷ"
+msgstr ""
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "ⵙⵔ ⵜⵓⵜⵜⵔⴰ ⴰⴷ"
+msgstr ""
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
@@ -137,7 +137,7 @@ msgstr ""
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "ⵙⵔ ⵜⴰⵎⵀⵍⵜ ⴰⴷ"
+msgstr ""
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
@@ -170,15 +170,15 @@ msgstr ""
 #: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "ⵉⵙ ⵜⵅⵙⴷ ⴰⴷ ⴰⴽ ⵢⴰⵣⵏ %(sender_name)s %(file_count)d ⵉⴼⵓⵢⵍⴰ"
+msgstr ""
 
 #: src/notifications.py:42
 msgid "Accept"
-msgstr "ⴷⴳⴳⵉ"
+msgstr ""
 
 #: src/notifications.py:43
 msgid "Decline"
-msgstr "ⴰⴳⵉ"
+msgstr ""
 
 #: src/notifications.py:57
 #, python-format

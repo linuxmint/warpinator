@@ -7,67 +7,65 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-12-02 14:12+0000\n"
+"POT-Creation-Date: 2021-06-01 15:02+0100\n"
 "PO-Revision-Date: 2020-12-14 09:43+0000\n"
-"Last-Translator: Rhoslyn Prys <rprys@yahoo.com>\n"
+"Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2021-01-02 14:19+0000\n"
-"X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
+"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
+"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
 "Language: cy\n"
 
-#: resources/main-window.ui:33 src/util.py:442
+#: resources/main-window.ui:33 src/util.py:403
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Anfon a Derbyn Ffeiliau ar draws y Rhwydwaith"
 
-#: resources/main-window.ui:193
+#: resources/main-window.ui:140
 msgid "No matching results"
 msgstr "Dim canlyniadau sy'n cydweddu"
 
-#: resources/main-window.ui:349
+#: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Gwneud y peiriant pell hwn yn ffefryn yn y brif olwg"
 
-#: resources/main-window.ui:423
+#: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
 msgstr "Clirio gweithrediadau anweithredol a'r rhai a chwblhawyd"
 
-#: resources/main-window.ui:442
+#: resources/main-window.ui:389
 msgid "Send files"
 msgstr "Anfon ffeiliau"
 
-#: resources/main-window.ui:468 src/prefs.py:129
+#: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
 msgstr "Trosglwyddiadau Ffeiliau"
 
-#: resources/main-window.ui:489 src/warpinator.py:838
+#: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
 msgstr "Ar-lein"
 
-#: resources/main-window.ui:609
+#: resources/main-window.ui:556
 msgid "No other computers found..."
 msgstr "Heb ganfod unrhyw gyfrifiaduron eraill ..."
 
-#: resources/main-window.ui:673
+#: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
 msgstr "Gwnewch yn siŵr fod eich cysylltiad rhwydwaith yn weithredol."
 
-#: resources/main-window.ui:688
+#: resources/main-window.ui:635
 msgid ""
-"Check your firewall rules.  The port number can be changed.  See preferences "
-"for more details."
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
 msgstr ""
-"Gwiriwch eich rheolau mur cadarn. Mae modd newid rhif y porth. Gweler y "
-"dewisiadau am fwy o fanylion."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:704
+#: resources/main-window.ui:651
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -76,23 +74,23 @@ msgstr ""
 "hwn? Os felly, gwnewch yn siŵr eu bod i gyd yn defnyddio'r un cod grŵp yn "
 "eich dewisiadau."
 
-#: resources/main-window.ui:722
+#: resources/main-window.ui:669
 msgid "Possible solutions:"
 msgstr "Atebion posib:"
 
-#: resources/main-window.ui:788
+#: resources/main-window.ui:735
 msgid "Initializing, please wait..."
 msgstr "Yn cychwyn, arhoswch ..."
 
-#: resources/main-window.ui:846
+#: resources/main-window.ui:793
 msgid "Something went wrong"
 msgstr "Aeth rhywbeth o'i le."
 
-#: resources/main-window.ui:921
+#: resources/main-window.ui:868
 msgid "Invalid save location"
 msgstr "Lleoliad arbed annilys"
 
-#: resources/main-window.ui:958
+#: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -100,11 +98,11 @@ msgstr ""
 "Mae'r ffolder hon yn anhygyrch neu nid yw'n bodoli. Dewiswch leoliad newydd "
 "yn y Dewisiadau neu sicrhau bod yr un cyfredol wedi'i osod."
 
-#: resources/main-window.ui:1014
+#: resources/main-window.ui:961
 msgid "Searching for other computers"
 msgstr "Chwilio am gyfrifiaduron eraill"
 
-#: resources/main-window.ui:1073
+#: resources/main-window.ui:1020
 msgid "Shutting down..."
 msgstr "Yn cau..."
 
@@ -166,90 +164,90 @@ msgctxt "preferences window title"
 msgid "Warpinator Preferences"
 msgstr "Dewisiadau Warpinator"
 
-#: src/notifications.py:20
+#: src/notifications.py:23
 msgid "New incoming files"
 msgstr "Ffeiliau newydd sy'n dod i mewn"
 
-#: src/notifications.py:26
+#: src/notifications.py:29
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
 "Hoffai %(sender_name)s anfon %(file_count)d ffeil (%(file_name)s) atoch."
 
-#: src/notifications.py:27
+#: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
 msgstr "Hoffai %(sender_name)s anfon %(file_count)d ffeil atoch."
 
-#: src/notifications.py:37
+#: src/notifications.py:42
 msgid "Accept"
 msgstr "Derbyn"
 
-#: src/notifications.py:38
+#: src/notifications.py:43
 msgid "Decline"
 msgstr "Gwrthod"
 
-#: src/notifications.py:52
+#: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr ""
 "Mae %(sender_name)s yn anfon %(file_count)d ffeil (%(file_name)s) atoch."
 
-#: src/notifications.py:53
+#: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
 msgstr "Mae %(sender_name)s yn anfon %(file_count)d ffeil atoch."
 
-#: src/notifications.py:88
+#: src/notifications.py:93
 msgid "Transfer complete"
 msgstr "Trosglwyddo wedi'i gwblhau"
 
-#: src/notifications.py:90
+#: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
 msgstr "Mae'r trosglwyddiad i %s wedi gorffen yn llwyddiannus"
 
-#: src/notifications.py:92
+#: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
 msgstr "Mae'r trosglwyddiad o %s wedi gorffen yn llwyddiannus"
 
-#: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
+#: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
 msgstr "Methodd y trosglwyddo"
 
-#: src/notifications.py:124
+#: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
 msgstr "Aeth rhywbeth o'i le gyda'r trosglwyddiad i %s"
 
-#: src/notifications.py:126
+#: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
 msgstr "Aeth rhywbeth o'i le gyda'r trosglwyddiad o %s"
 
-#: src/notifications.py:155 src/warpinator.py:158
+#: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
 msgstr "Trosglwyddo wedi'i ddiddymu"
 
-#: src/notifications.py:158
+#: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
 msgstr "Cafodd eich trosglwyddiad i %s ei ddiddymu"
 
-#: src/notifications.py:160
+#: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
 msgstr "Cafodd trosglwyddiad i mewn o %s ei ddiddymu"
 
-#: src/ops.py:47
+#: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:146
+#: src/ops.py:148
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
@@ -259,7 +257,7 @@ msgstr[2] "%d ffeil"
 msgstr[3] "%d ffeil"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:231
+#: src/ops.py:233
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -268,123 +266,157 @@ msgstr[1] "%d ffeil"
 msgstr[2] "%d ffeil"
 msgstr[3] "%d ffeil"
 
-#: src/prefs.py:104
+#: src/prefs.py:139
 msgid "Warpinator Preferences"
 msgstr "Dewisiadau Warpinator"
 
-#: src/prefs.py:114
+#: src/prefs.py:152
+msgid "General"
+msgstr ""
+
+#: src/prefs.py:154
 msgid "Desktop"
 msgstr "Bwrdd Gwaith"
 
-#: src/prefs.py:116
+#: src/prefs.py:156
 msgid "Show an icon in the notification area"
 msgstr "Dangos eicon yn yr ardal hysbysu"
 
-#: src/prefs.py:120
+#: src/prefs.py:160
 msgid "Start with main window open"
 msgstr "Cychwyn gyda'r brif ffenestr ar agor"
 
-#: src/prefs.py:125
+#: src/prefs.py:165
 msgid "Start automatically"
 msgstr "Cychwyn yn awtomatig"
 
-#: src/prefs.py:131
+#: src/prefs.py:171
+msgid "Use compression when possible."
+msgstr ""
+
+#: src/prefs.py:173
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr ""
+
+#: src/prefs.py:176
 msgid "Location for received files"
 msgstr "Lleoliad ar gyfer ffeiliau a dderbynnir"
 
-#. widget = GSettingsSwitch(_("Preserve original file permissions"),
-#. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
-#. section.add_row(widget)
-#: src/prefs.py:140
+#: src/prefs.py:181
 msgid "Require approval before accepting files"
 msgstr "Gofyn am gymeradwyaeth cyn derbyn ffeiliau"
 
-#: src/prefs.py:144
+#: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
 msgstr "Gofyn am cymeradwyaeth pan fyddai ffeiliau'n cael eu trosysgrifo"
 
-#: src/prefs.py:148
+#: src/prefs.py:189
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Dangos hysbysiad pan fydd rhywun yn anfon (neu'n ceisio anfon) ffeiliau atoch"
 
-#: src/prefs.py:152
-msgid "Network"
-msgstr "Rhwydwaith"
+#: src/prefs.py:194
+msgid "Connection"
+msgstr ""
 
-#: src/prefs.py:157
+#: src/prefs.py:196
+msgid "Identification"
+msgstr ""
+
+#: src/prefs.py:201
 msgid "Group Code"
 msgstr "Cod Grŵp"
 
-#: src/prefs.py:158
+#: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Nid oes modd cyfathrebu â chyfrifiaduron nad ydynt yn defnyddio'r un cod."
 
-#: src/prefs.py:164
+#: src/prefs.py:208
+msgid "Network"
+msgstr "Rhwydwaith"
+
+#: src/prefs.py:211
+msgid "Automatic"
+msgstr ""
+
+#. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
+#: src/prefs.py:236
+#, python-format
+msgid "%s - not found"
+msgstr ""
+
+#: src/prefs.py:238
+msgid "Network interface to use"
+msgstr ""
+
+#: src/prefs.py:246
 msgid "Incoming port for transfers"
 msgstr "Porth i mewn ar gyfer trosglwyddiadau"
 
-#: src/prefs.py:175
+#: src/prefs.py:253
+msgid "Incoming port for registration"
+msgstr ""
+
+#: src/prefs.py:268
+msgid "Apply network changes"
+msgstr ""
+
+#: src/prefs.py:277
 msgid "Update firewall rules"
 msgstr "Diweddaru rheolau mur cadarn"
 
-#: src/prefs.py:187
+#: src/prefs.py:289
 msgid ""
-"Any port number will work for the application, but using the same port for "
+"Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Bydd unrhyw rif porth yn gweithio ar gyfer y rhaglen, ond gall defnyddio'r "
-"un porth ar gyfer pob cyfrifiadur ei gwneud hi'n symlach i ychwanegu "
-"eithriadau mur cadarn os oes angen."
 
-#: src/prefs.py:219
-msgid "Change port"
-msgstr "Newid porth"
-
-#: src/prefs.py:264
+#: src/prefs.py:390
 msgid "Set code"
 msgstr "Gosod y cod"
 
-#: src/prefs.py:279
+#: src/prefs.py:405
 msgid "A group code is required."
 msgstr "Mae angen cod grŵp."
 
-#: src/prefs.py:285
+#: src/prefs.py:411
 msgid "The group code should be longer if possible."
 msgstr "Dylai'r cod grŵp fod yn hirach, os yn bosibl."
 
-#: src/remote.py:487 src/remote.py:491
+#: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
 msgstr "Collwyd y cysylltiad"
 
-#: src/server.py:459
+#: src/server.py:557
 msgid "An error occurred on the remote machine"
 msgstr "Digwyddodd gwall ar y peiriant pell"
 
-#: src/util.py:81
+#: src/util.py:127
 msgid "Select file(s) to send"
 msgstr "Dewiswch ffeil(iau) i'w hanfon"
 
-#: src/util.py:85
+#: src/util.py:131
 msgid "Cancel"
 msgstr "Diddymu"
 
-#: src/util.py:86
+#: src/util.py:132
 msgid "Send"
 msgstr "Anfon"
 
-#: src/util.py:288
+#: src/util.py:292
 msgid "A few seconds remaining"
 msgstr "Mae ychydig eiliadau ar ôl"
 
-#: src/util.py:291
+#: src/util.py:295
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d o eiliadau ar ôl"
 
-#: src/util.py:295 src/util.py:303
+#: src/util.py:299 src/util.py:307
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -393,7 +425,7 @@ msgstr[1] "%d funud"
 msgstr[2] "%d munud"
 msgstr[3] "%d munud"
 
-#: src/util.py:302
+#: src/util.py:306
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -402,7 +434,7 @@ msgstr[1] "%d awr"
 msgstr[2] "%d awr"
 msgstr[3] "%d awr"
 
-#: src/util.py:307
+#: src/util.py:311
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
@@ -411,82 +443,82 @@ msgstr[1] "tua %d awr"
 msgstr[2] "tua %d awr"
 msgstr[3] "tua %d awr"
 
-#: src/util.py:438 src/warpinator.py:517
+#: src/util.py:399 src/warpinator.py:534
 msgid "About"
 msgstr "Tua"
 
-#: src/warpinator.py:137
+#: src/warpinator.py:145
 msgid "Paused"
 msgstr "Oedwyd"
 
-#: src/warpinator.py:140
+#: src/warpinator.py:148
 msgid "Waiting for approval"
 msgstr "Yn aros am gymeradwyaeth"
 
-#: src/warpinator.py:142
+#: src/warpinator.py:150
 msgid "Waiting for your approval"
 msgstr "Yn aros am gymeradwyaeth"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:153
 msgid "Files may be overwritten"
 msgstr "Gall ffeiliau gael eu trosysgrifo"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "Dim digon o le ar y ddisg"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Request cancelled"
 msgstr "Cais wedi'i ddiddymu"
 
-#: src/warpinator.py:153 src/warpinator.py:155
+#: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "Cais wedi'i ddiddymu gan %s"
 
-#: src/warpinator.py:160 src/warpinator.py:162
+#: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Trosglwyddo wedi'i ddiddymu gan %s"
 
-#: src/warpinator.py:169
+#: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
 msgstr "Heb ganfod ffeil '%s'"
 
-#: src/warpinator.py:171
+#: src/warpinator.py:179
 msgid "Some files not found"
 msgstr "Heb ganfod rhai ffeiliau."
 
-#: src/warpinator.py:173
+#: src/warpinator.py:181
 msgid "Completed"
 msgstr "Cwblhawyd"
 
-#: src/warpinator.py:331 src/warpinator.py:866
+#: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
 msgstr "Yn cysylltu"
 
-#: src/warpinator.py:333
+#: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
 msgstr "Yn cysylltu â %s"
 
-#: src/warpinator.py:343
+#: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
 msgstr "Nid yw %s ar-lein"
 
-#: src/warpinator.py:348
+#: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Methu cysylltu â %s"
 
-#: src/warpinator.py:353
+#: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Yn aros am %s i gwblhau'r cysylltiad."
 
-#: src/warpinator.py:382
+#: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
@@ -495,53 +527,53 @@ msgstr[1] "%d drosglwyddiad newydd i mewn"
 msgstr[2] "%d trosglwyddiad newydd i mewn"
 msgstr[3] "%d trosglwyddiad newydd i mewn"
 
-#: src/warpinator.py:482 src/warpinator.py:1284
+#: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
 msgstr "Ffefrynnau"
 
-#: src/warpinator.py:487 src/warpinator.py:1289
+#: src/warpinator.py:504 src/warpinator.py:1345
 msgid "Recents"
 msgstr "Diweddar"
 
-#: src/warpinator.py:494 src/warpinator.py:1296
+#: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
 msgstr "Pori..."
 
-#: src/warpinator.py:509 src/warpinator.py:1252
+#: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
 msgstr "Agor ffolder cadw"
 
-#: src/warpinator.py:513
+#: src/warpinator.py:530
 msgid "Preferences"
 msgstr "Dewisiadau"
 
-#: src/warpinator.py:521 src/warpinator.py:1255
+#: src/warpinator.py:538 src/warpinator.py:1289
 msgid "Quit"
 msgstr "Gadael"
 
-#: src/warpinator.py:615
+#: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
 msgstr "Nid yw'n ymddangos eich bod wedi'ch cysylltu â rhwydwaith."
 
-#: src/warpinator.py:617
+#: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Methodd y cychwyn, gwiriwch eich cofnodion."
 
-#: src/warpinator.py:845
+#: src/warpinator.py:874
 msgid "Offline"
 msgstr "All-lein"
 
-#: src/warpinator.py:852
+#: src/warpinator.py:881
 msgid "Unable to connect"
 msgstr "Methu cysylltu"
 
-#: src/warpinator.py:859
+#: src/warpinator.py:888
 msgid "Waiting for two-way connection"
 msgstr "Yn aros am gysylltiad dwy ffordd"
 
-#: src/warpinator.py:1306
-msgid "Send to favorites"
-msgstr "Anfon at ffefrynnau"
+#: src/warpinator.py:1323
+msgid "Send to all"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

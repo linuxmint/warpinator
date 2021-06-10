@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-12-02 14:12+0000\n"
+"POT-Creation-Date: 2021-06-01 15:02+0100\n"
 "PO-Revision-Date: 2020-07-26 02:50+0000\n"
 "Last-Translator: Robert K <Unknown>\n"
 "Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
@@ -15,87 +15,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2021-01-02 14:19+0000\n"
-"X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
+"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
+"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
 
-#: resources/main-window.ui:33 src/util.py:442
+#: resources/main-window.ui:33 src/util.py:403
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "通過網絡發送和接收文件"
 
-#: resources/main-window.ui:193
+#: resources/main-window.ui:140
 msgid "No matching results"
 msgstr "沒有相符的結果"
 
-#: resources/main-window.ui:349
+#: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
 msgstr "使此遠程計算機成為主視圖中的最愛"
 
-#: resources/main-window.ui:423
+#: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
 msgstr "清除無效和已完成的操作"
 
-#: resources/main-window.ui:442
+#: resources/main-window.ui:389
 msgid "Send files"
 msgstr "發送文件"
 
-#: resources/main-window.ui:468 src/prefs.py:129
+#: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
 msgstr "檔案傳送"
 
-#: resources/main-window.ui:489 src/warpinator.py:838
+#: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
 msgstr "線上"
 
-#: resources/main-window.ui:609
+#: resources/main-window.ui:556
 msgid "No other computers found..."
 msgstr "找不到其他電腦..."
 
-#: resources/main-window.ui:673
+#: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
 msgstr "確保您的網絡連接處於活動狀態。"
 
-#: resources/main-window.ui:688
+#: resources/main-window.ui:635
 msgid ""
-"Check your firewall rules.  The port number can be changed.  See preferences "
-"for more details."
-msgstr "檢查您的防火牆規則。 端口號可以更改。 有關更多詳細信息，請參見首選項。"
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
+msgstr ""
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:704
+#: resources/main-window.ui:651
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr "Warpinator是否在該網絡上的任何其他計算機上運行？ 如果是這樣，請確保他們在首選項中都使用相同的組代碼。"
 
-#: resources/main-window.ui:722
+#: resources/main-window.ui:669
 msgid "Possible solutions:"
 msgstr "可能的解決方案："
 
-#: resources/main-window.ui:788
+#: resources/main-window.ui:735
 msgid "Initializing, please wait..."
 msgstr "初始化中，請稍候..."
 
-#: resources/main-window.ui:846
+#: resources/main-window.ui:793
 msgid "Something went wrong"
 msgstr "有東西出問題了"
 
-#: resources/main-window.ui:921
+#: resources/main-window.ui:868
 msgid "Invalid save location"
 msgstr "無效的保存位置"
 
-#: resources/main-window.ui:958
+#: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr "該文件夾不可訪問或不存在。 請在“偏好設置”中選擇一個新位置，或確保已安裝當前位置。"
 
-#: resources/main-window.ui:1014
+#: resources/main-window.ui:961
 msgid "Searching for other computers"
 msgstr "搜索其他計算機"
 
-#: resources/main-window.ui:1073
+#: resources/main-window.ui:1020
 msgid "Shutting down..."
 msgstr "正在關機..."
 
@@ -157,357 +157,394 @@ msgctxt "preferences window title"
 msgid "Warpinator Preferences"
 msgstr "Warpinator首選項"
 
-#: src/notifications.py:20
+#: src/notifications.py:23
 msgid "New incoming files"
 msgstr "新的傳入文件"
 
-#: src/notifications.py:26
+#: src/notifications.py:29
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr "%(sender_name)s  想向您發送  %(file_count)d 個文件  (%(file_name)s)。"
 
-#: src/notifications.py:27
+#: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
 msgstr "%(sender_name)s 想向您發送  %(file_count)d 個文件"
 
-#: src/notifications.py:37
+#: src/notifications.py:42
 msgid "Accept"
 msgstr "接受"
 
-#: src/notifications.py:38
+#: src/notifications.py:43
 msgid "Decline"
 msgstr "拒絕"
 
-#: src/notifications.py:52
+#: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr "%(sender_name)s 發送給你 %(file_count)d 個文件 (%(file_name)s)。"
 
-#: src/notifications.py:53
+#: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
 msgstr "%(sender_name)s 發送給你 %(file_count)d  個文件"
 
-#: src/notifications.py:88
+#: src/notifications.py:93
 msgid "Transfer complete"
 msgstr "發送完成"
 
-#: src/notifications.py:90
+#: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
 msgstr "已成功轉移到%s"
 
-#: src/notifications.py:92
+#: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
 msgstr "從%s的轉移已成功完成"
 
-#: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
+#: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
 msgstr "傳輸失敗"
 
-#: src/notifications.py:124
+#: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
 msgstr "轉移到%s時出了點問題"
 
-#: src/notifications.py:126
+#: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
 msgstr "從%s進行的轉移出了點問題"
 
-#: src/notifications.py:155 src/warpinator.py:158
+#: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
 msgstr "轉移已取消"
 
-#: src/notifications.py:158
+#: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
 msgstr "您轉移到%s的操作已被取消"
 
-#: src/notifications.py:160
+#: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
 msgstr "來自%s的傳入轉帳已取消"
 
-#: src/ops.py:47
+#: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:146
+#: src/ops.py:148
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] "%d 檔案"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:231
+#: src/ops.py:233
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d 個檔案"
 
-#: src/prefs.py:104
+#: src/prefs.py:139
 msgid "Warpinator Preferences"
 msgstr "Warpinator首選項"
 
-#: src/prefs.py:114
+#: src/prefs.py:152
+msgid "General"
+msgstr ""
+
+#: src/prefs.py:154
 msgid "Desktop"
 msgstr "桌面"
 
-#: src/prefs.py:116
+#: src/prefs.py:156
 msgid "Show an icon in the notification area"
 msgstr "在通知區域顯示圖標"
 
-#: src/prefs.py:120
+#: src/prefs.py:160
 msgid "Start with main window open"
 msgstr "從打開主窗口開始"
 
-#: src/prefs.py:125
+#: src/prefs.py:165
 msgid "Start automatically"
 msgstr "自動開始"
 
-#: src/prefs.py:131
+#: src/prefs.py:171
+msgid "Use compression when possible."
+msgstr ""
+
+#: src/prefs.py:173
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr ""
+
+#: src/prefs.py:176
 msgid "Location for received files"
 msgstr "接收文件的位置"
 
-#. widget = GSettingsSwitch(_("Preserve original file permissions"),
-#. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
-#. section.add_row(widget)
-#: src/prefs.py:140
+#: src/prefs.py:181
 msgid "Require approval before accepting files"
 msgstr "接受文件之前需要批准"
 
-#: src/prefs.py:144
+#: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
 msgstr "文件將被覆蓋時需要批准"
 
-#: src/prefs.py:148
+#: src/prefs.py:189
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr "當有人發送（或嘗試發送）您的文件時顯示通知"
 
-#: src/prefs.py:152
-msgid "Network"
-msgstr "網路"
+#: src/prefs.py:194
+msgid "Connection"
+msgstr ""
 
-#: src/prefs.py:157
+#: src/prefs.py:196
+msgid "Identification"
+msgstr ""
+
+#: src/prefs.py:201
 msgid "Group Code"
 msgstr "組碼"
 
-#: src/prefs.py:158
+#: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "您無法與不使用相同代碼的計算機進行通信。"
 
-#: src/prefs.py:164
+#: src/prefs.py:208
+msgid "Network"
+msgstr "網路"
+
+#: src/prefs.py:211
+msgid "Automatic"
+msgstr ""
+
+#. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
+#: src/prefs.py:236
+#, python-format
+msgid "%s - not found"
+msgstr ""
+
+#: src/prefs.py:238
+msgid "Network interface to use"
+msgstr ""
+
+#: src/prefs.py:246
 msgid "Incoming port for transfers"
 msgstr "輸入端口轉賬"
 
-#: src/prefs.py:175
+#: src/prefs.py:253
+msgid "Incoming port for registration"
+msgstr ""
+
+#: src/prefs.py:268
+msgid "Apply network changes"
+msgstr ""
+
+#: src/prefs.py:277
 msgid "Update firewall rules"
 msgstr "更新防火牆規則"
 
-#: src/prefs.py:187
+#: src/prefs.py:289
 msgid ""
-"Any port number will work for the application, but using the same port for "
+"Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
-msgstr "任何端口號都適用於該應用程序，但是如果需要，對所有計算機使用相同的端口可以使添加防火牆例外更加容易。"
+msgstr ""
 
-#: src/prefs.py:219
-msgid "Change port"
-msgstr "變更端口"
-
-#: src/prefs.py:264
+#: src/prefs.py:390
 msgid "Set code"
 msgstr "設定密碼"
 
-#: src/prefs.py:279
+#: src/prefs.py:405
 msgid "A group code is required."
 msgstr "必須輸入組碼。"
 
-#: src/prefs.py:285
+#: src/prefs.py:411
 msgid "The group code should be longer if possible."
 msgstr "如果可能，組代碼應該更長。"
 
-#: src/remote.py:487 src/remote.py:491
+#: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
 msgstr "已失去連線"
 
-#: src/server.py:459
+#: src/server.py:557
 msgid "An error occurred on the remote machine"
 msgstr "遠端機器發生錯誤"
 
-#: src/util.py:81
+#: src/util.py:127
 msgid "Select file(s) to send"
 msgstr "選擇要發送的文件"
 
-#: src/util.py:85
+#: src/util.py:131
 msgid "Cancel"
 msgstr "取消"
 
-#: src/util.py:86
+#: src/util.py:132
 msgid "Send"
 msgstr "傳送"
 
-#: src/util.py:288
+#: src/util.py:292
 msgid "A few seconds remaining"
 msgstr "剩下幾秒鐘"
 
-#: src/util.py:291
+#: src/util.py:295
 #, python-format
 msgid "%d seconds remaining"
 msgstr "剩餘%d秒"
 
-#: src/util.py:295 src/util.py:303
+#: src/util.py:299 src/util.py:307
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分鐘"
 
-#: src/util.py:302
+#: src/util.py:306
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 小時"
 
-#: src/util.py:307
+#: src/util.py:311
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "大約%d小時"
 
-#: src/util.py:438 src/warpinator.py:517
+#: src/util.py:399 src/warpinator.py:534
 msgid "About"
 msgstr "關於"
 
-#: src/warpinator.py:137
+#: src/warpinator.py:145
 msgid "Paused"
 msgstr "暫停"
 
-#: src/warpinator.py:140
+#: src/warpinator.py:148
 msgid "Waiting for approval"
 msgstr "等待批准"
 
-#: src/warpinator.py:142
+#: src/warpinator.py:150
 msgid "Waiting for your approval"
 msgstr "等待您的批准"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:153
 msgid "Files may be overwritten"
 msgstr "文件可能會被覆蓋"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "沒有足夠的磁盤空間"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Request cancelled"
 msgstr "請求已取消"
 
-#: src/warpinator.py:153 src/warpinator.py:155
+#: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "請求已被%s取消"
 
-#: src/warpinator.py:160 src/warpinator.py:162
+#: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "轉移已被%s取消"
 
-#: src/warpinator.py:169
+#: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
 msgstr "找不到文件'%s'"
 
-#: src/warpinator.py:171
+#: src/warpinator.py:179
 msgid "Some files not found"
 msgstr "找不到某些文件"
 
-#: src/warpinator.py:173
+#: src/warpinator.py:181
 msgid "Completed"
 msgstr "已完成"
 
-#: src/warpinator.py:331 src/warpinator.py:866
+#: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
 msgstr "連接中"
 
-#: src/warpinator.py:333
+#: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
 msgstr "正在連接到 %s"
 
-#: src/warpinator.py:343
+#: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
 msgstr "%s不在線"
 
-#: src/warpinator.py:348
+#: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "無法連接到%s"
 
-#: src/warpinator.py:353
+#: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "等待%s完成連接。"
 
-#: src/warpinator.py:382
+#: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d次新收款"
 
-#: src/warpinator.py:482 src/warpinator.py:1284
+#: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
 msgstr ""
 
-#: src/warpinator.py:487 src/warpinator.py:1289
+#: src/warpinator.py:504 src/warpinator.py:1345
 msgid "Recents"
 msgstr ""
 
-#: src/warpinator.py:494 src/warpinator.py:1296
+#: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
 msgstr "瀏覽..."
 
-#: src/warpinator.py:509 src/warpinator.py:1252
+#: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
 msgstr "打開保存文件夾"
 
-#: src/warpinator.py:513
+#: src/warpinator.py:530
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: src/warpinator.py:521 src/warpinator.py:1255
+#: src/warpinator.py:538 src/warpinator.py:1289
 msgid "Quit"
 msgstr "結束"
 
-#: src/warpinator.py:615
+#: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
 msgstr "您似乎沒有連接到網絡。"
 
-#: src/warpinator.py:617
+#: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "啟動失敗，請檢查您的日誌。"
 
-#: src/warpinator.py:845
+#: src/warpinator.py:874
 msgid "Offline"
 msgstr "離線"
 
-#: src/warpinator.py:852
+#: src/warpinator.py:881
 msgid "Unable to connect"
 msgstr "無法連線"
 
-#: src/warpinator.py:859
+#: src/warpinator.py:888
 msgid "Waiting for two-way connection"
 msgstr "等待雙向連接"
 
-#: src/warpinator.py:1306
-msgid "Send to favorites"
-msgstr "發送至收藏夾"
+#: src/warpinator.py:1323
+msgid "Send to all"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

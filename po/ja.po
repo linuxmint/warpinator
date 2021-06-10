@@ -7,64 +7,64 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2020-12-02 14:12+0000\n"
-"PO-Revision-Date: 2020-12-17 10:51+0000\n"
-"Last-Translator: kmyyfz8q <Unknown>\n"
+"POT-Creation-Date: 2021-06-01 15:02+0100\n"
+"PO-Revision-Date: 2021-06-04 23:23+0000\n"
+"Last-Translator: vega m57 <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2021-01-02 14:18+0000\n"
-"X-Generator: Launchpad (build 34b3ffd45c9543b7f7aa5aa313925241e9e7ca3f)\n"
+"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
+"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
 "Language: ja\n"
 
-#: resources/main-window.ui:33 src/util.py:442
+#: resources/main-window.ui:33 src/util.py:403
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "ネットワーク経由でファイルを送受信します"
 
-#: resources/main-window.ui:193
+#: resources/main-window.ui:140
 msgid "No matching results"
 msgstr "一致する結果はありません"
 
-#: resources/main-window.ui:349
+#: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
 msgstr "このリモートマシンをメインビューのお気に入りに表示します"
 
-#: resources/main-window.ui:423
+#: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
 msgstr "非アクティブの操作と、完了した操作を消去します"
 
-#: resources/main-window.ui:442
+#: resources/main-window.ui:389
 msgid "Send files"
 msgstr "ファイルの送信"
 
-#: resources/main-window.ui:468 src/prefs.py:129
+#: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
 msgstr "ファイル転送"
 
-#: resources/main-window.ui:489 src/warpinator.py:838
+#: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
 msgstr "オンライン"
 
-#: resources/main-window.ui:609
+#: resources/main-window.ui:556
 msgid "No other computers found..."
 msgstr "他のコンピューターが見つかりません..."
 
-#: resources/main-window.ui:673
+#: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
 msgstr "ネットワークへの接続が正常であるかを確認してください。"
 
-#: resources/main-window.ui:688
+#: resources/main-window.ui:635
 msgid ""
-"Check your firewall rules.  The port number can be changed.  See preferences "
-"for more details."
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
 msgstr "ファイアウォールのルールを確認してください。ポート番号は変更できます。詳細については設定を参照してください。"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:704
+#: resources/main-window.ui:651
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -72,33 +72,33 @@ msgstr ""
 "Warpinator "
 "がネットワーク上の他のコンピューターでも実行されていますか？もしそうなら、グループコードの設定値が全てのマシンで同じになっていることを確認してください。"
 
-#: resources/main-window.ui:722
+#: resources/main-window.ui:669
 msgid "Possible solutions:"
 msgstr "可能な解決策:"
 
-#: resources/main-window.ui:788
+#: resources/main-window.ui:735
 msgid "Initializing, please wait..."
 msgstr "初期化しています、お待ちください..."
 
-#: resources/main-window.ui:846
+#: resources/main-window.ui:793
 msgid "Something went wrong"
 msgstr "問題が発生しました"
 
-#: resources/main-window.ui:921
+#: resources/main-window.ui:868
 msgid "Invalid save location"
 msgstr "保存先の場所が無効です"
 
-#: resources/main-window.ui:958
+#: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr "このフォルダーにはアクセスできないか、存在しません。設定で新しい場所を選択するか、現在の場所がマウントされていることを確認してください。"
 
-#: resources/main-window.ui:1014
+#: resources/main-window.ui:961
 msgid "Searching for other computers"
 msgstr "他のコンピューターの検索中"
 
-#: resources/main-window.ui:1073
+#: resources/main-window.ui:1020
 msgid "Shutting down..."
 msgstr "シャットダウン中..."
 
@@ -160,359 +160,396 @@ msgctxt "preferences window title"
 msgid "Warpinator Preferences"
 msgstr "Warpinator の設定"
 
-#: src/notifications.py:20
+#: src/notifications.py:23
 msgid "New incoming files"
 msgstr "新しい着信ファイル"
 
-#: src/notifications.py:26
+#: src/notifications.py:29
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
 "%(sender_name)s が %(file_count)d 個のファイル (%(file_name)s) を送信しようとしています。"
 
-#: src/notifications.py:27
+#: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
 msgstr "%(sender_name)s が %(file_count)d 個のファイルを送信しようとしています"
 
-#: src/notifications.py:37
+#: src/notifications.py:42
 msgid "Accept"
 msgstr "承認"
 
-#: src/notifications.py:38
+#: src/notifications.py:43
 msgid "Decline"
 msgstr "拒否"
 
-#: src/notifications.py:52
+#: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr "%(sender_name)s が %(file_count)d 個のファイル (%(file_name)s) を送信しています。"
 
-#: src/notifications.py:53
+#: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
 msgstr "%(sender_name)s が %(file_count)d 個のファイルを送信しています"
 
-#: src/notifications.py:88
+#: src/notifications.py:93
 msgid "Transfer complete"
 msgstr "転送完了"
 
-#: src/notifications.py:90
+#: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
 msgstr "%s への転送に成功しました"
 
-#: src/notifications.py:92
+#: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
 msgstr "%s からの転送に成功しました"
 
-#: src/notifications.py:121 src/warpinator.py:164 src/warpinator.py:167
+#: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
 msgstr "転送失敗"
 
-#: src/notifications.py:124
+#: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
 msgstr "%s への転送中に問題が発生しました"
 
-#: src/notifications.py:126
+#: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
 msgstr "%s からの転送中に問題が発生しました"
 
-#: src/notifications.py:155 src/warpinator.py:158
+#: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
 msgstr "転送がキャンセルされました"
 
-#: src/notifications.py:158
+#: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
 msgstr "%s への転送がキャンセルされました"
 
-#: src/notifications.py:160
+#: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
 msgstr "%s からの転送がキャンセルされました"
 
-#: src/ops.py:47
+#: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/秒)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:146
+#: src/ops.py:148
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] "%d 個のファイル"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:231
+#: src/ops.py:233
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d 個のファイル"
 
-#: src/prefs.py:104
+#: src/prefs.py:139
 msgid "Warpinator Preferences"
 msgstr "Warpinator の設定"
 
-#: src/prefs.py:114
+#: src/prefs.py:152
+msgid "General"
+msgstr "一般"
+
+#: src/prefs.py:154
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: src/prefs.py:116
+#: src/prefs.py:156
 msgid "Show an icon in the notification area"
 msgstr "通知領域にアイコンを表示"
 
-#: src/prefs.py:120
+#: src/prefs.py:160
 msgid "Start with main window open"
 msgstr "開始時にメインウィンドウを開く"
 
-#: src/prefs.py:125
+#: src/prefs.py:165
 msgid "Start automatically"
 msgstr "自動的に開始"
 
-#: src/prefs.py:131
+#: src/prefs.py:171
+msgid "Use compression when possible."
+msgstr "可能であれば圧縮。"
+
+#: src/prefs.py:173
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr "注: これは､高速ネットワークでパフォーマンスに悪影響をもたらすかもしれません。"
+
+#: src/prefs.py:176
 msgid "Location for received files"
 msgstr "受信ファイルの場所"
 
-#. widget = GSettingsSwitch(_("Preserve original file permissions"),
-#. PREFS_SCHEMA, KEEP_PERMISSIONS_KEY)
-#. section.add_row(widget)
-#: src/prefs.py:140
+#: src/prefs.py:181
 msgid "Require approval before accepting files"
 msgstr "ファイルを受け入れる前に承認を要求"
 
-#: src/prefs.py:144
+#: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
 msgstr "ファイルが上書きされる時に承認を要求"
 
-#: src/prefs.py:148
+#: src/prefs.py:189
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr "このマシンにファイルが送信されたり、送信されようとしたら通知を表示"
 
-#: src/prefs.py:152
-msgid "Network"
-msgstr "ネットワーク"
+#: src/prefs.py:194
+msgid "Connection"
+msgstr "接続"
 
-#: src/prefs.py:157
+#: src/prefs.py:196
+msgid "Identification"
+msgstr "識別"
+
+#: src/prefs.py:201
 msgid "Group Code"
 msgstr "グループコード"
 
-#: src/prefs.py:158
+#: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "同じコードを使用していないコンピューターとは通信できません。"
 
-#: src/prefs.py:164
+#: src/prefs.py:208
+msgid "Network"
+msgstr "ネットワーク"
+
+#: src/prefs.py:211
+msgid "Automatic"
+msgstr "自動"
+
+#. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
+#: src/prefs.py:236
+#, python-format
+msgid "%s - not found"
+msgstr "%s - 見つかりません"
+
+#: src/prefs.py:238
+msgid "Network interface to use"
+msgstr "使用するネットワークインタフェース"
+
+#: src/prefs.py:246
 msgid "Incoming port for transfers"
 msgstr "転送用の着信ポート"
 
-#: src/prefs.py:175
+#: src/prefs.py:253
+msgid "Incoming port for registration"
+msgstr "登録用の着信ポート"
+
+#: src/prefs.py:268
+msgid "Apply network changes"
+msgstr "ネットワークの変更を適用"
+
+#: src/prefs.py:277
 msgid "Update firewall rules"
 msgstr "ファイアウォールのルールを更新"
 
-#: src/prefs.py:187
+#: src/prefs.py:289
 msgid ""
-"Any port number will work for the application, but using the same port for "
+"Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"アプリケーションはどのポート番号でも機能しますが、全てのコンピューターで同じポート番号を使用すると、ファイアウォールの例外が設定しやすくなります。"
+"どのポート番号でもアプリケーションは機能しますが、全てのコンピューターで同じポート番号を使用すると、ファイアウォールの例外が設定しやすくなります。"
 
-#: src/prefs.py:219
-msgid "Change port"
-msgstr "ポートを変更"
-
-#: src/prefs.py:264
+#: src/prefs.py:390
 msgid "Set code"
 msgstr "コードを設定"
 
-#: src/prefs.py:279
+#: src/prefs.py:405
 msgid "A group code is required."
 msgstr "グループコードが必要です。"
 
-#: src/prefs.py:285
+#: src/prefs.py:411
 msgid "The group code should be longer if possible."
 msgstr "可能であれば、もう少し長いグループコードを使ってください。"
 
-#: src/remote.py:487 src/remote.py:491
+#: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
 msgstr "接続が切断されました"
 
-#: src/server.py:459
+#: src/server.py:557
 msgid "An error occurred on the remote machine"
 msgstr "リモートマシンでエラーが発生しました"
 
-#: src/util.py:81
+#: src/util.py:127
 msgid "Select file(s) to send"
 msgstr "送信するファイルを選択"
 
-#: src/util.py:85
+#: src/util.py:131
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/util.py:86
+#: src/util.py:132
 msgid "Send"
 msgstr "送信"
 
-#: src/util.py:288
+#: src/util.py:292
 msgid "A few seconds remaining"
 msgstr "残り数秒"
 
-#: src/util.py:291
+#: src/util.py:295
 #, python-format
 msgid "%d seconds remaining"
 msgstr "残り %d 秒"
 
-#: src/util.py:295 src/util.py:303
+#: src/util.py:299 src/util.py:307
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分"
 
-#: src/util.py:302
+#: src/util.py:306
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 時間"
 
-#: src/util.py:307
+#: src/util.py:311
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "およそ %d 時間"
 
-#: src/util.py:438 src/warpinator.py:517
+#: src/util.py:399 src/warpinator.py:534
 msgid "About"
 msgstr "このアプリケーションについて"
 
-#: src/warpinator.py:137
+#: src/warpinator.py:145
 msgid "Paused"
 msgstr "一時停止"
 
-#: src/warpinator.py:140
+#: src/warpinator.py:148
 msgid "Waiting for approval"
 msgstr "承認待ち"
 
-#: src/warpinator.py:142
+#: src/warpinator.py:150
 msgid "Waiting for your approval"
 msgstr "あなたの承認待ち"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:153
 msgid "Files may be overwritten"
 msgstr "ファイルが上書きされる可能性があります"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "ディスクの容量が足りません"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Request cancelled"
 msgstr "要求をキャンセルしました"
 
-#: src/warpinator.py:153 src/warpinator.py:155
+#: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "要求が %s によってキャンセルされました"
 
-#: src/warpinator.py:160 src/warpinator.py:162
+#: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "転送が %s によってキャンセルされました"
 
-#: src/warpinator.py:169
+#: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
 msgstr "ファイル '%s' が見つかりません"
 
-#: src/warpinator.py:171
+#: src/warpinator.py:179
 msgid "Some files not found"
 msgstr "一部のファイルが見つかりません"
 
-#: src/warpinator.py:173
+#: src/warpinator.py:181
 msgid "Completed"
 msgstr "完了"
 
-#: src/warpinator.py:331 src/warpinator.py:866
+#: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
 msgstr "接続中"
 
-#: src/warpinator.py:333
+#: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s に接続中"
 
-#: src/warpinator.py:343
+#: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
 msgstr "%s はオフラインです"
 
-#: src/warpinator.py:348
+#: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "%s に接続できません"
 
-#: src/warpinator.py:353
+#: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "%s の接続が完了するのを待機しています。"
 
-#: src/warpinator.py:382
+#: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "新しい %d 件の転送が受信できます"
 
-#: src/warpinator.py:482 src/warpinator.py:1284
+#: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
 msgstr "お気に入り"
 
-#: src/warpinator.py:487 src/warpinator.py:1289
+#: src/warpinator.py:504 src/warpinator.py:1345
 msgid "Recents"
 msgstr "最近使ったファイル"
 
-#: src/warpinator.py:494 src/warpinator.py:1296
+#: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
 msgstr "参照..."
 
-#: src/warpinator.py:509 src/warpinator.py:1252
+#: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
 msgstr "保存フォルダーを開く"
 
-#: src/warpinator.py:513
+#: src/warpinator.py:530
 msgid "Preferences"
 msgstr "設定"
 
-#: src/warpinator.py:521 src/warpinator.py:1255
+#: src/warpinator.py:538 src/warpinator.py:1289
 msgid "Quit"
 msgstr "終了"
 
-#: src/warpinator.py:615
+#: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
 msgstr "ネットワークに接続されていないようです。"
 
-#: src/warpinator.py:617
+#: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "開始に失敗しました。ログを確認してください。"
 
-#: src/warpinator.py:845
+#: src/warpinator.py:874
 msgid "Offline"
 msgstr "オフライン"
 
-#: src/warpinator.py:852
+#: src/warpinator.py:881
 msgid "Unable to connect"
 msgstr "接続できません"
 
-#: src/warpinator.py:859
+#: src/warpinator.py:888
 msgid "Waiting for two-way connection"
 msgstr "双方向接続を待機しています"
 
-#: src/warpinator.py:1306
-msgid "Send to favorites"
-msgstr "お気に入りに送る"
+#: src/warpinator.py:1323
+msgid "Send to all"
+msgstr "全てに送信"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
