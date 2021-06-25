@@ -8,34 +8,34 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-04-18 21:18+0000\n"
+"PO-Revision-Date: 2021-06-25 07:49+0000\n"
 "Last-Translator: Davide Novemila <Unknown>\n"
 "Language-Team: Latin <la@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
-"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
+"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
+"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
 "Language: la\n"
 
 #: resources/main-window.ui:33 src/util.py:403
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr ""
+msgstr "Plicas per Rete Mitte atque Recipe"
 
 #: resources/main-window.ui:140
 msgid "No matching results"
-msgstr ""
+msgstr "Nullum responsum congruens"
 
 #: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "Hoc computatrum remotum in praeposita expositionis praecipuae serva"
 
 #: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
-msgstr ""
+msgstr "Actiones non actuosas aut perfectas remove"
 
 #: resources/main-window.ui:389
 msgid "Send files"
@@ -43,7 +43,7 @@ msgstr "Plicas mitte"
 
 #: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
-msgstr ""
+msgstr "Translationes Plicarum"
 
 #: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
@@ -51,11 +51,11 @@ msgstr "In linea"
 
 #: resources/main-window.ui:556
 msgid "No other computers found..."
-msgstr ""
+msgstr "Alia computatra non inventa sunt ..."
 
 #: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "Fac ut conexus retis operetur."
 
 #: resources/main-window.ui:635
 msgid ""
@@ -69,44 +69,48 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"An Warpinator in computatris huis retis operatur?  Si ita, fac ut omnia "
+"eodem codice collectionis utantur."
 
 #: resources/main-window.ui:669
 msgid "Possible solutions:"
-msgstr ""
+msgstr "Solutiones temptandae:"
 
 #: resources/main-window.ui:735
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "Initiatio, expecta quaeso ..."
 
 #: resources/main-window.ui:793
 msgid "Something went wrong"
-msgstr ""
+msgstr "Aliquid putuit"
 
 #: resources/main-window.ui:868
 msgid "Invalid save location"
-msgstr ""
+msgstr "Locus servandi mendosus"
 
 #: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
+"Directorium non est pervium aut non extat.  Novum locum in Praepositionibus "
+"elige quaeso aut fac ut colligatus sit."
 
 #: resources/main-window.ui:961
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Alia computatra quaere"
 
 #: resources/main-window.ui:1020
 msgid "Shutting down..."
-msgstr ""
+msgstr "Extinguitur ..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "Comprobatio expectatur"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "Area disci deficit!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
@@ -114,43 +118,43 @@ msgstr "Computatur"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr ""
+msgstr "Rogationem recipe"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr ""
+msgstr "Rogationem repudia"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr ""
+msgstr "Rogationem interrumpe"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr ""
+msgstr "Operationem iterum suscita"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Operationem intermitte"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr ""
+msgstr "Operationem resume"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr ""
+msgstr "Operationem interrumpe"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Operationem ex indice remove"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Directorium aperi"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "De numeris portus:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
@@ -160,18 +164,19 @@ msgstr "Warpinatoris Praepositiones"
 
 #: src/notifications.py:23
 msgid "New incoming files"
-msgstr ""
+msgstr "Novae plicae accipiendae"
 
 #: src/notifications.py:29
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"%(sender_name)s tibi %(file_count)d plicas mittere vult (%(file_name)s)."
 
 #: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s tibi %(file_count)d plicas mittere vult"
 
 #: src/notifications.py:42
 msgid "Accept"
@@ -185,25 +190,26 @@ msgstr "Recusa"
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"A %(sender_name)s tibi %(file_count)d plicae mittuntur (%(file_name)s)."
 
 #: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "A %(sender_name)s tibi %(file_count)d plicae mittuntur"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Translatio perfecta"
 
 #: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "Translatio ad %s bene perfecta est"
 
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "Tranlsatio ex %s bene perfecta est"
 
 #: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
@@ -212,39 +218,39 @@ msgstr "Translatio non expleta"
 #: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "Aliquid putuit ad %s mittendo"
 
 #: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "Aliquid putuit ex %s accipiendo"
 
 #: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "Translatio interrupta"
 
 #: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "Tua translatio to %s interrupta est"
 
 #: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "Translatio ex %s interrupta est"
 
 #: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:148
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d file-do-not-translate"
+msgstr[1] "%d plicae"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:233
@@ -268,15 +274,15 @@ msgstr "Scriptorium"
 
 #: src/prefs.py:156
 msgid "Show an icon in the notification area"
-msgstr ""
+msgstr "Iconem in aream notificationis ostende"
 
 #: src/prefs.py:160
 msgid "Start with main window open"
-msgstr ""
+msgstr "Cum fenestra praecipua incipe"
 
 #: src/prefs.py:165
 msgid "Start automatically"
-msgstr ""
+msgstr "Automatice pellere"
 
 #: src/prefs.py:171
 msgid "Use compression when possible."
@@ -290,20 +296,21 @@ msgstr ""
 
 #: src/prefs.py:176
 msgid "Location for received files"
-msgstr ""
+msgstr "Locus ad plicas recipiendas"
 
 #: src/prefs.py:181
 msgid "Require approval before accepting files"
-msgstr ""
+msgstr "Approbatio necessaria ad plicas accipiendas"
 
 #: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
-msgstr ""
+msgstr "Approbatio necessaria ad scribendum supra plicas"
 
 #: src/prefs.py:189
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+"Notationem ostende cum aliquis tibi plicas mittat (aut mittere temptet)"
 
 #: src/prefs.py:194
 msgid "Connection"
@@ -315,11 +322,11 @@ msgstr ""
 
 #: src/prefs.py:201
 msgid "Group Code"
-msgstr ""
+msgstr "Codex Collectionis"
 
 #: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
+msgstr "Computatris cum codice diverso communicare non potest."
 
 #: src/prefs.py:208
 msgid "Network"
@@ -341,7 +348,7 @@ msgstr ""
 
 #: src/prefs.py:246
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "Portus aditus translationibus"
 
 #: src/prefs.py:253
 msgid "Incoming port for registration"
@@ -353,7 +360,7 @@ msgstr ""
 
 #: src/prefs.py:277
 msgid "Update firewall rules"
-msgstr ""
+msgstr "Regulas muri incendiarii renova"
 
 #: src/prefs.py:289
 msgid ""
@@ -363,27 +370,27 @@ msgstr ""
 
 #: src/prefs.py:390
 msgid "Set code"
-msgstr ""
+msgstr "Codicem scribe"
 
 #: src/prefs.py:405
 msgid "A group code is required."
-msgstr ""
+msgstr "Codex collectionis opus est."
 
 #: src/prefs.py:411
 msgid "The group code should be longer if possible."
-msgstr ""
+msgstr "Codex collectionis longior esse oportet si fieri potest."
 
 #: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Conexus amissus"
 
 #: src/server.py:557
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "Error evenit in computatro remoto"
 
 #: src/util.py:127
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "Plicas mittendas elige"
 
 #: src/util.py:131
 msgid "Cancel"
@@ -395,7 +402,7 @@ msgstr "Mitte"
 
 #: src/util.py:292
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "Pauca secunda relinquuntur"
 
 #: src/util.py:295
 #, python-format
@@ -420,8 +427,8 @@ msgstr[1] "%d horae"
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "fere %d hora"
+msgstr[1] "fere %d horae"
 
 #: src/util.py:399 src/warpinator.py:534
 msgid "About"
@@ -433,33 +440,33 @@ msgstr "Quiescens"
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr ""
+msgstr "Comprobatio expectatur"
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr ""
+msgstr "Comprobatio tua expectatur"
 
 #: src/warpinator.py:153
 msgid "Files may be overwritten"
-msgstr ""
+msgstr "Supra plicas scribere potest"
 
 #: src/warpinator.py:156
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Area disci deficit"
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr ""
+msgstr "Rogatio interrupta"
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "Rogatio ab %s interrupta est"
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "Translatio ab %s interrupta est"
 
 #: src/warpinator.py:177
 #, python-format
@@ -476,34 +483,34 @@ msgstr "Perfectum"
 
 #: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
-msgstr ""
+msgstr "Conectitur"
 
 #: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Ad %s conectitur"
 
 #: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s non est in linea"
 
 #: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "Ad %s conecti non potest"
 
 #: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr ""
+msgstr "Conexum perfecturus %s expectatur."
 
 #: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d nova translatio iniens"
+msgstr[1] "%d novae translationes inientes"
 
 #: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
@@ -515,11 +522,11 @@ msgstr "Recentes"
 
 #: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
-msgstr "Naviga..."
+msgstr "Naviga ..."
 
 #: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
-msgstr ""
+msgstr "Directorium ad servanda aperi"
 
 #: src/warpinator.py:530
 msgid "Preferences"
@@ -531,11 +538,11 @@ msgstr "Relinque"
 
 #: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "Ad rete conexus non videris."
 
 #: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
+msgstr "Initiatio deficit, relationes inspice quaero."
 
 #: src/warpinator.py:874
 msgid "Offline"
@@ -543,11 +550,11 @@ msgstr "Extra lineam"
 
 #: src/warpinator.py:881
 msgid "Unable to connect"
-msgstr ""
+msgstr "Conecti non potuit"
 
 #: src/warpinator.py:888
 msgid "Waiting for two-way connection"
-msgstr ""
+msgstr "Conexus duabus-viabus expectatur"
 
 #: src/warpinator.py:1323
 msgid "Send to all"
@@ -555,11 +562,11 @@ msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Portum muri incendiarii pro Warpinator aperi"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
+msgstr "Comprobatio petita ad configurationem muri incendiarii mutandam."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
@@ -571,6 +578,8 @@ msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
+"Warpinator tibi permittit ut facile plura computatra in rete locale conectas "
+"et plicas celeriter tuteque communices."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27

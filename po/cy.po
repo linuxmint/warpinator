@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2020-12-14 09:43+0000\n"
-"Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
+"PO-Revision-Date: 2021-06-10 11:13+0000\n"
+"Last-Translator: Rhoslyn Prys <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
-"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
+"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
+"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
 "Language: cy\n"
 
 #: resources/main-window.ui:33 src/util.py:403
@@ -63,6 +63,8 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Gwiriwch eich rheolau mur cadarn. Mae modd newid rhifau'r pyrth. Gweler y "
+"dewisiadau am fwy o fanylion."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -272,7 +274,7 @@ msgstr "Dewisiadau Warpinator"
 
 #: src/prefs.py:152
 msgid "General"
-msgstr ""
+msgstr "Cyffredinol"
 
 #: src/prefs.py:154
 msgid "Desktop"
@@ -292,13 +294,15 @@ msgstr "Cychwyn yn awtomatig"
 
 #: src/prefs.py:171
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Defnyddio gywasgiad pan fo hynny'n bosibl."
 
 #: src/prefs.py:173
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
+"Rhybudd: Gall hyn gael effaith negyddol ar berfformiad ar rai rhwydweithiau "
+"cyflymach."
 
 #: src/prefs.py:176
 msgid "Location for received files"
@@ -320,11 +324,11 @@ msgstr ""
 
 #: src/prefs.py:194
 msgid "Connection"
-msgstr ""
+msgstr "Cysylltiad"
 
 #: src/prefs.py:196
 msgid "Identification"
-msgstr ""
+msgstr "Adnabyddiaeth"
 
 #: src/prefs.py:201
 msgid "Group Code"
@@ -341,17 +345,17 @@ msgstr "Rhwydwaith"
 
 #: src/prefs.py:211
 msgid "Automatic"
-msgstr ""
+msgstr "Awtomatig"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:236
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "Heb ganfod - \"%s\""
 
 #: src/prefs.py:238
 msgid "Network interface to use"
-msgstr ""
+msgstr "Rhyngwyneb rhwydwaith i'w ddefnyddio"
 
 #: src/prefs.py:246
 msgid "Incoming port for transfers"
@@ -359,11 +363,11 @@ msgstr "Porth i mewn ar gyfer trosglwyddiadau"
 
 #: src/prefs.py:253
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Porth derbyn ar gyfer cofrestru"
 
 #: src/prefs.py:268
 msgid "Apply network changes"
-msgstr ""
+msgstr "Gosod y  newidiadau rhwydwaith"
 
 #: src/prefs.py:277
 msgid "Update firewall rules"
@@ -374,6 +378,9 @@ msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Bydd unrhyw rifau pyrth yn gweithio ar gyfer y rhaglen, ond gall defnyddio'r "
+"un pyrth ar gyfer pob cyfrifiadur ei gwneud hi'n symlach i ychwanegu "
+"eithriadau mur cadarn os oes angen."
 
 #: src/prefs.py:390
 msgid "Set code"
@@ -573,7 +580,7 @@ msgstr "Yn aros am gysylltiad dwy ffordd"
 
 #: src/warpinator.py:1323
 msgid "Send to all"
-msgstr ""
+msgstr "Anfon at bawb"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

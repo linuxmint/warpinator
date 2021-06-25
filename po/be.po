@@ -1,20 +1,21 @@
-# Danish translation for linuxmint
-# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# Belarusian translation for linuxmint
+# Copyright (c) 2021 Rosetta Contributors and Canonical Ltd 2021
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-06-03 18:09+0000\n"
-"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
-"Language-Team: Danish <da@li.org>\n"
+"PO-Revision-Date: 2021-06-09 16:41+0000\n"
+"Last-Translator: Anton Hryb <Unknown>\n"
+"Language-Team: Belarusian <be@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
 "X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
 
@@ -22,47 +23,47 @@ msgstr ""
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr "Send og modtag filer over netværket"
+msgstr "Пасылайце і атрымілвайце файлы па сетцы"
 
 #: resources/main-window.ui:140
 msgid "No matching results"
-msgstr "Ingen resultater fundet"
+msgstr "Няма супадзенняў"
 
 #: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Gør denne fjernmaskine til en favorit i hovedvinduet"
+msgstr "Зрабіць аддаленую машыну абранай у галоўным рэжыме"
 
 #: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
-msgstr "Ryd inaktive og gennemførte handlinger"
+msgstr "Ачысціць неактыўныя і завершаныя аперацыі"
 
 #: resources/main-window.ui:389
 msgid "Send files"
-msgstr "Send filer"
+msgstr "Паслаць файлы"
 
 #: resources/main-window.ui:415 src/prefs.py:169
 msgid "File Transfers"
-msgstr "Filoverførsler"
+msgstr "Перадача файлаў"
 
 #: resources/main-window.ui:436 src/warpinator.py:867
 msgid "Online"
-msgstr "Online"
+msgstr "У сеціве"
 
 #: resources/main-window.ui:556
 msgid "No other computers found..."
-msgstr "Ingen andre computere fundet …"
+msgstr "Іншыя камп'ютары не знойдзены..."
 
 #: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
-msgstr "Sørg for, din netværksforbindelse er aktiv."
+msgstr "Упэўніцеся што ваша сеткавае злучэнне ўключана."
 
 #: resources/main-window.ui:635
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Tjek dine firewallregler. Portnumrene kan ændres. Se indstillinger for flere "
-"detaljer."
+"Праверце налады вашага фаервола. Нумар порта можна змяніць. Глядзіце "
+"параметры для падрабязнасцей."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -70,179 +71,179 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Kører Warpinator på nogen anden computer på netværket? Er det tilfældet, så "
-"sikr dig, at alle bruger samme gruppekode i indstillinger."
+"Ці запушчаны Warpinator на іншых камп'ютарах у гэтай сетцы?  Калі так, то "
+"ўпэўніцеся, што выкарыстоўваеце аднолькавы код групы ў параметрах."
 
 #: resources/main-window.ui:669
 msgid "Possible solutions:"
-msgstr "Mulige løsninger:"
+msgstr "Магчымыя рашэнні:"
 
 #: resources/main-window.ui:735
 msgid "Initializing, please wait..."
-msgstr "Forbereder, vent venligst …"
+msgstr "Ініцыялізацыя, пачакайце..."
 
 #: resources/main-window.ui:793
 msgid "Something went wrong"
-msgstr "Noget gik galt"
+msgstr "Нешта пайшло не так"
 
 #: resources/main-window.ui:868
 msgid "Invalid save location"
-msgstr "Ugyldig placering til at gemme på"
+msgstr "Няправільнае месца захавання"
 
 #: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
-"Mappen er ikke tilgængelig eller findes ikke. Vælg en ny placering i "
-"Indstillinger eller sikr dig, at den aktuelle er monteret."
+"Гэта папка недаступна або не існуе. Выберыце новае месца ў параметрах або "
+"пераканайцеся, што бягучае прымантавана."
 
 #: resources/main-window.ui:961
 msgid "Searching for other computers"
-msgstr "Søger efter andre computere"
+msgstr "Пошук іншых камп'ютараў"
 
 #: resources/main-window.ui:1020
 msgid "Shutting down..."
-msgstr "Lukker ned …"
+msgstr "Выключэнне..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Venter på godkendelse"
+msgstr "Чакаецца адабрэнне"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Ikke nok pladsen på disken!"
+msgstr "Недастаткова месца на дыску!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "Beregner"
+msgstr "Падлік"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Acceptér anmodningen"
+msgstr "Прыняць гэты запыт"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Afvis anmodningen"
+msgstr "Адмовіць гэтаму запыту"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Annullér anmodningen"
+msgstr "Скасаваць гэты запыт"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Genstart handlingen"
+msgstr "Перазапусціць гэту аперацыю"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Sæt handlingen på pause"
+msgstr "Прыпыніць гэту аперацыю"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Genoptag handlingen"
+msgstr "Узнавіць гэту аперацыю"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Annullér handlingen"
+msgstr "Скасаваць гэту аперацыю"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Fjern handlingen fra listen"
+msgstr "Выдаліць гэту аперацыю са спіса"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Åbn indeholdende mappe"
+msgstr "Адкрыць папку, якая змяшчае"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Bemærkning vedrørende portnummer:"
+msgstr "Звярніце ўвагу на нумары партоў:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Indstillinger for Warpinator"
+msgstr "Параметры Warpinator"
 
 #: src/notifications.py:23
 msgid "New incoming files"
-msgstr "Nye indgående filer"
+msgstr "Новыя ўваходныя файлы"
 
 #: src/notifications.py:29
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s vil gerne sende %(file_count)d fil (%(file_name)s) til dig."
+"%(sender_name)s жадае паслаць вам %(file_count)d файл (%(file_name)s)."
 
 #: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s vil gerne sende %(file_count)d filer til dig"
+msgstr "%(sender_name)s жадае паслаць вам %(file_count)d файлаў"
 
 #: src/notifications.py:42
 msgid "Accept"
-msgstr "Acceptér"
+msgstr "Прыняць"
 
 #: src/notifications.py:43
 msgid "Decline"
-msgstr "Afvis"
+msgstr "Адмовіцца"
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s sender %(file_count)d fil (%(file_name)s) til dig."
+msgstr "%(sender_name)s перасылае вам %(file_count)d файл (%(file_name)s)."
 
 #: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s sender %(file_count)d filer til dig"
+msgstr "%(sender_name)s перасылае вам %(file_count)d файлаў"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Overførsel gennemført"
+msgstr "Перасылка завершана"
 
 #: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "Overførslen til %s er gennemført"
+msgstr "Перадача да %s завершана"
 
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "Overførslen fra %s er gennemført"
+msgstr "Перадача ад %s завершана"
 
 #: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
-msgstr "Overførsel mislykkedes"
+msgstr "Збой перадачы"
 
 #: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Noget gik galt med overførslen til %s"
+msgstr "Нешта пайшло не так пры перадачы да %s"
 
 #: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Noget gik galt med overførslen fra %s"
+msgstr "Нешта пайшло не так пры перадачы ад %s"
 
 #: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr "Overførsel annulleret"
+msgstr "Перадача скасавана"
 
 #: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Din overførsel til %s blev annulleret"
+msgstr "Ваша перадача да %s скасавана"
 
 #: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "En indgående overførsel fra %s blev annulleret"
+msgstr "Уваходная перадача ад %s скасавана"
 
 #: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/с)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:148
@@ -250,7 +251,8 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] "%d file-do-not-translate"
-msgstr[1] "%d filer"
+msgstr[1] "%d файлы"
+msgstr[2] "%d файлаў"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:233
@@ -258,320 +260,326 @@ msgstr[1] "%d filer"
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d file"
-msgstr[1] "%d filer"
+msgstr[1] "%d файлы"
+msgstr[2] "%d файлаў"
 
 #: src/prefs.py:139
 msgid "Warpinator Preferences"
-msgstr "Indstillinger for Warpinator"
+msgstr "Параметры Warpinator"
 
 #: src/prefs.py:152
 msgid "General"
-msgstr "Generelt"
+msgstr "Асноўныя"
 
 #: src/prefs.py:154
 msgid "Desktop"
-msgstr "Skrivebord"
+msgstr "Працоўны стол"
 
 #: src/prefs.py:156
 msgid "Show an icon in the notification area"
-msgstr "Vis et ikon i underretningsområdet"
+msgstr "Паказаць значок у вобласці апавяшчэнняў"
 
 #: src/prefs.py:160
 msgid "Start with main window open"
-msgstr "Start med hovedvinduet åbent"
+msgstr "Стартаваць з адрыцця галоўнага акна"
 
 #: src/prefs.py:165
 msgid "Start automatically"
-msgstr "Start automatisk"
+msgstr "Стартаваць аўтаматычна"
 
 #: src/prefs.py:171
 msgid "Use compression when possible."
-msgstr "Anvend komprimering når muligt."
+msgstr "Ужываць сцісканне калі магчыма."
 
 #: src/prefs.py:173
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Advarsel: Det kan have en negativ effekt på ydeevnen på nogle hurtige "
-"netværk."
+"Папярэджанне: гэта можа адмоўна паўплываць на прадукцыйнасць найбольш хуткіх "
+"сетак."
 
 #: src/prefs.py:176
 msgid "Location for received files"
-msgstr "Placering af modtagne filer"
+msgstr "Месца для атрыманых файлаў"
 
 #: src/prefs.py:181
 msgid "Require approval before accepting files"
-msgstr "Kræv godkendelse, før filer accepteres"
+msgstr "Патрабаваць адабрэння перад прыняццем файлаў"
 
 #: src/prefs.py:185
 msgid "Require approval when files would be overwritten"
-msgstr "Kræv godkendelse, når filer vil blive overskrevet"
+msgstr "Патрабаваць адабрэння калі файлы будуць перапісаны"
 
 #: src/prefs.py:189
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Vis en underretning, når nogen sender (eller prøver at sende) dig filer"
+"Паказаць апавяшчэнне калі нехта пасылае (або спрабуе паслаць) вам файлы"
 
 #: src/prefs.py:194
 msgid "Connection"
-msgstr "Forbindelse"
+msgstr "Злучэнне"
 
 #: src/prefs.py:196
 msgid "Identification"
-msgstr "Identifikation"
+msgstr "Ідэнтыфікацыя"
 
 #: src/prefs.py:201
 msgid "Group Code"
-msgstr "Gruppekode"
+msgstr "Код групы"
 
 #: src/prefs.py:202
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
-"Du kan ikke kommunikere med computere, som ikke bruger den samme kode."
+"Вы не можаце мець зносіны з камп'ютарамі, якія не выкарыстоўваюць той жа код."
 
 #: src/prefs.py:208
 msgid "Network"
-msgstr "Netværk"
+msgstr "Сетка"
 
 #: src/prefs.py:211
 msgid "Automatic"
-msgstr "Automatisk"
+msgstr "Аўтаматычна"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:236
 #, python-format
 msgid "%s - not found"
-msgstr "%s ikke fundet"
+msgstr "%s - не знойдзена"
 
 #: src/prefs.py:238
 msgid "Network interface to use"
-msgstr "Netværksgrænseflade der skal anvendes"
+msgstr "Сеткавы інтэрфейс для выкарыстання"
 
 #: src/prefs.py:246
 msgid "Incoming port for transfers"
-msgstr "Port til indgående overførsler"
+msgstr "Уваходзячы порт для перадачы"
 
 #: src/prefs.py:253
 msgid "Incoming port for registration"
-msgstr "Indgående port til registrering"
+msgstr "Уваходзячы порт для рэгістрацыі"
 
 #: src/prefs.py:268
 msgid "Apply network changes"
-msgstr "Anvend netværksændringer"
+msgstr "Ужыць сеткавыя змены"
 
 #: src/prefs.py:277
 msgid "Update firewall rules"
-msgstr "Opdatér firewallregler"
+msgstr "Абнавіць налады фаервола"
 
 #: src/prefs.py:289
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Alle portnumre kan bruges, men brug af den samme port på alle computere kan "
-"gøre det nemmere at tilføje firewallundtagelser om nødvendigt."
+"Любыя нумары порта будуць працаваць з праграмай, але выкарыстанне такога ж "
+"порта для ўсіх камп'ютараў можа спрасціць даданне выключэнняў для фаервола, "
+"калі спатрэбіцца."
 
 #: src/prefs.py:390
 msgid "Set code"
-msgstr "Angiv kode"
+msgstr "Задаць код"
 
 #: src/prefs.py:405
 msgid "A group code is required."
-msgstr "En gruppekode er nødvendig."
+msgstr "Патрабуецца код групы."
 
 #: src/prefs.py:411
 msgid "The group code should be longer if possible."
-msgstr "Gruppekoden bør om muligt være længere."
+msgstr "Код групы павінен быць даўжэйшым, калі магчыма."
 
 #: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
-msgstr "Forbindelsen blev afbrudt"
+msgstr "Злучэнне страчана"
 
 #: src/server.py:557
 msgid "An error occurred on the remote machine"
-msgstr "Der opstod en fejl på fjernmaskinen"
+msgstr "Здарылася памылка на аддаленай машыне"
 
 #: src/util.py:127
 msgid "Select file(s) to send"
-msgstr "Vælg fil(er), der skal sendes"
+msgstr "Выбраць файл(ы) для адпраўкі"
 
 #: src/util.py:131
 msgid "Cancel"
-msgstr "Annullér"
+msgstr "Скасаваць"
 
 #: src/util.py:132
 msgid "Send"
-msgstr "Send"
+msgstr "Адправіць"
 
 #: src/util.py:292
 msgid "A few seconds remaining"
-msgstr "Et par sekunder tilbage"
+msgstr "Засталося некалькі секунд"
 
 #: src/util.py:295
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d sekunder tilbage"
+msgstr "Засталося %d секунд"
 
 #: src/util.py:299 src/util.py:307
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minut"
-msgstr[1] "%d minutter"
+msgstr[0] "%d хвіліна"
+msgstr[1] "%d хвіліны"
+msgstr[2] "%d хвілін"
 
 #: src/util.py:306
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d time"
-msgstr[1] "%d timer"
+msgstr[0] "%d гадзіна"
+msgstr[1] "%d гадзіны"
+msgstr[2] "%d гадзін"
 
 #: src/util.py:311
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "ca. %d time"
-msgstr[1] "ca. %d timer"
+msgstr[0] "прыблізна %d гадзіна"
+msgstr[1] "прыблізна %d гадзіны"
+msgstr[2] "прыблізна %d гадзін"
 
 #: src/util.py:399 src/warpinator.py:534
 msgid "About"
-msgstr "Om"
+msgstr "Аб праграме"
 
 #: src/warpinator.py:145
 msgid "Paused"
-msgstr "På pause"
+msgstr "Прыпынена"
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr "Venter på godkendelse"
+msgstr "Чаканне адабрэння"
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr "Venter på din godkendelse"
+msgstr "Чаканне вашага адабрэння"
 
 #: src/warpinator.py:153
 msgid "Files may be overwritten"
-msgstr "Filer kan blive overskrevet"
+msgstr "Файлы могуць быць перапісаны"
 
 #: src/warpinator.py:156
 msgid "Not enough disk space"
-msgstr "Ikke tilstrækkelig ledig diskplads"
+msgstr "Недастаткова месца на дыску"
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr "Anmodning annulleret"
+msgstr "Запыт скасаваны"
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "Anmodning annulleret af %s"
+msgstr "Запыт скасаваў %s"
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Overførsel annulleret af %s"
+msgstr "Перадачу скасаваў %s"
 
 #: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
-msgstr "Filen \"%s\" blev ikke fundet"
+msgstr "Файл '%s' не знойдзены"
 
 #: src/warpinator.py:179
 msgid "Some files not found"
-msgstr "Nogle filer blev ikke fundet"
+msgstr "Некаторыя файлы не знойдзены"
 
 #: src/warpinator.py:181
 msgid "Completed"
-msgstr "Gennemført"
+msgstr "Завершана"
 
 #: src/warpinator.py:339 src/warpinator.py:895
 msgid "Connecting"
-msgstr "Opretter forbindelse"
+msgstr "Злучэнне"
 
 #: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
-msgstr "Opretter forbindelse til %s"
+msgstr "Злучэнне з %s"
 
 #: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
-msgstr "%s er ikke online"
+msgstr "%s зараз не ў сетцы"
 
 #: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Kan ikke oprette forbindelse til %s"
+msgstr "Немагчыма злучыцца з %s"
 
 #: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Venter på at %s gennemfører forbindelsen."
+msgstr "Чаканне %s каб завяршыць злучэнне."
 
 #: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d ny indgående overførsel"
-msgstr[1] "%d nye indgående overførsler"
+msgstr[0] "%d нова ўваходзячая перадача"
+msgstr[1] "%d новыя ўваходзячыя перадачы"
+msgstr[2] "%d новых уваходзячых перадач"
 
 #: src/warpinator.py:499 src/warpinator.py:1340
 msgid "Favorites"
-msgstr "Favoritter"
+msgstr "Абраныя"
 
 #: src/warpinator.py:504 src/warpinator.py:1345
 msgid "Recents"
-msgstr "Seneste"
+msgstr "Нядаўнія"
 
 #: src/warpinator.py:511 src/warpinator.py:1354
 msgid "Browse..."
-msgstr "Gennemse …"
+msgstr "Агляд..."
 
 #: src/warpinator.py:526 src/warpinator.py:1286
 msgid "Open save folder"
-msgstr "Åbn mappen med gemte filer"
+msgstr "Адкрыць папку з захаванымі"
 
 #: src/warpinator.py:530
 msgid "Preferences"
-msgstr "Indstillinger"
+msgstr "Параметры"
 
 #: src/warpinator.py:538 src/warpinator.py:1289
 msgid "Quit"
-msgstr "Afslut"
+msgstr "Выйсці"
 
 #: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
-msgstr "Det lader ikke til, du er forbundet til et netværk."
+msgstr "Вы не падлучаны да сеткі."
 
 #: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Opstart mislykkedes, tjek dine logger."
+msgstr "Запуск быў няўдалым, праверце вашы логі."
 
 #: src/warpinator.py:874
 msgid "Offline"
-msgstr "Offline"
+msgstr "Па-за сеткай"
 
 #: src/warpinator.py:881
 msgid "Unable to connect"
-msgstr "Kunne ikke oprette forbindelse"
+msgstr "Немагчыма злучыцца"
 
 #: src/warpinator.py:888
 msgid "Waiting for two-way connection"
-msgstr "Venter på tovejsforbindelse"
+msgstr "Чаканне двухбаковага злучэння"
 
 #: src/warpinator.py:1323
 msgid "Send to all"
-msgstr "Send til alle"
+msgstr "Паслаць усім"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Åbn en firewallport til Warpinator"
+msgstr "Адкрыць порт фаервола для Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "For at ændre firewallindstillinger skal du bekræfte."
+msgstr "Неабходна аўтэнтыфікавацца, каб змяняць налады фаервола."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
@@ -583,8 +591,8 @@ msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
-"Med Warpinator kan du nemt forbinde flere computere på et lokalt netværk og "
-"dele filer hurtigt og sikkert."
+"Warpinator дазваляе вам лёгка злучаць некалькі камп'ютараў у лакальнай сетцы "
+"і дзяліцца файламі хутка і бяспечна."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27
