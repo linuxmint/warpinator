@@ -666,8 +666,7 @@ class WarpWindow(GObject.Object):
         dialog = util.create_file_and_folder_picker(self.window)
 
         res = dialog.run()
-
-        if res == Gtk.ResponseType.ACCEPT:
+        if res == Gtk.ResponseType.OK:
             uri_list = dialog.get_uris()
             self.current_selected_remote_machine.send_files(uri_list)
 
