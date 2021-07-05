@@ -1036,7 +1036,8 @@ class WarpApplication(Gtk.Application):
         self.add_window(self.window.window)
 
         if prefs.get_start_with_window() or not prefs.use_tray_icon():
-            self.window.window.present()
+            self.window.window.show()
+            self.window.window.present_with_time(Gtk.get_current_event_time())
 
         self.update_status_icon_from_preferences()
 
