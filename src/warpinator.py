@@ -1040,37 +1040,36 @@ class WarpApplication(Gtk.Application):
 
         self.update_status_icon_from_preferences()
 
+        GLib.timeout_add(200, self.check_save_folder)
+
+    def check_save_folder(self, data=None):
         if not util.verify_save_folder():
-            file = Gio.File.new_for_path(prefs.get_save_path())
-
-            def monitor_change_event(monitor, file, other_file, event_type, data=None):
-                logging.debug("UI: State of save folder changed: %s (%s)", str(event_type), file.get_path())
-                if not util.verify_save_folder():
-                    return
-
-                try:
-                    self.save_folder_monitor.disconnect_by_func(monitor_change_event)
-                except:
-                    pass
-
-                self.new_server()
-
-            try:
-                self.save_folder_monitor = file.monitor_directory(Gio.FileMonitorFlags.WATCH_MOUNTS, None)
-                self.save_folder_monitor.connect("changed", monitor_change_event)
-            except GLib.Error as e:
-                logging.warn("Could not create a monitor for the save folder: %s"% e.message)
+            if not self.window.window.get_visible():
+                self.window.window.show()
+                self.window.window.present_with_time(Gtk.get_current_event_time())
 
             self.window.report_bad_save_folder()
-            self.window.window.present()
-            return
+            return GLib.SOURCE_CONTINUE
 
+        GLib.idle_add(self.start_network_monitor)
+        return GLib.SOURCE_REMOVE
+
+    def start_network_monitor(self):
         self.netmon = networkmonitor.get_network_monitor()
-        self.netmon.connect("ready", self.netmon_ready)
+
+        if not self.netmon.ready():
+            self.netmon.connect("ready", self.netmon_ready)
+        else:
+            self.netmon_ready(self.netmon)
 
     def netmon_ready(self, netmon):
         logging.debug("Network client initialized")
-        self.netmon.disconnect_by_func(self.netmon_ready)
+
+        try:
+            self.netmon.disconnect_by_func(self.netmon_ready)
+        except:
+            pass
+
         self.netmon.connect("state-changed", self.network_state_changed)
         self.netmon.connect("details-changed", self.network_details_changed)
         self.new_server()

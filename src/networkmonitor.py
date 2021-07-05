@@ -57,6 +57,9 @@ class NetworkMonitor(GObject.Object):
         except GLib.Error as e:
             logging.critical("NetworkMonitor: Could not create NM Client: %s" % e.message)
 
+    def ready(self):
+        return self.nm_client != None
+
     def on_prefs_changed(self, settings, key, data=None):
         new_main_port = prefs.get_port()
         new_auth_port = prefs.get_auth_port()
