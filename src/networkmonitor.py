@@ -7,7 +7,7 @@ import ipaddress
 
 import gi
 gi.require_version('NM', '1.0')
-from gi.repository import GLib, GObject, NM
+from gi.repository import GLib, Gio, GObject, NM
 
 import prefs
 import util
@@ -41,6 +41,7 @@ class NetworkMonitor(GObject.Object):
         self.details_idle_id = 0
 
         self.initing = True
+        self.gio_monitor = Gio.NetworkMonitor.get_default()
         NM.Client.new_async(None, self.nm_client_acquired);
 
     def nm_client_acquired(self, source, res, data=None):
@@ -123,10 +124,23 @@ class NetworkMonitor(GObject.Object):
         if self.device == None or self.current_iface == None:
             return False
 
-        reqd_states = (NM.ConnectivityState.LIMITED, NM.ConnectivityState.FULL)
+        try:
+            reqd_states = (NM.ConnectivityState.LIMITED, NM.ConnectivityState.FULL)
 
-        return self.device.get_connectivity(GLib.SYSDEF_AF_INET) in reqd_states or \
-               self.device.get_connectivity(GLib.SYSDEF_AF_INET6) in reqd_states
+            return self.device.get_connectivity(GLib.SYSDEF_AF_INET) in reqd_states or \
+                   self.device.get_connectivity(GLib.SYSDEF_AF_INET6) in reqd_states
+        except AttributeError:
+            # libnm < 1.16
+            conn = self.device.get_active_connection()
+            if conn:
+                config = conn.get_ip4_config()
+                if config:
+                    gateway = config.get_gateway()
+                    try:
+                        connectable = Gio.NetworkAddress.parse(gateway, 53)
+                        return self.gio_monitor.can_reach(connectable, None)
+                    except Exception as e:
+                        return False
 
     def nm_client_connectivity_changed(self, client, pspec, data=None):
         logging.debug("NM client connectivity prop changed: %s" % client.props.connectivity)
