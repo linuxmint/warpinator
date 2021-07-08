@@ -90,10 +90,6 @@ class NetworkMonitor(GObject.Object):
         new_device = None
         new_iface = self.get_preferred_or_default_iface()
 
-        if self.device != None:
-            if new_iface == self.device.get_iface():
-                return
-
         if new_iface:
             new_device = self.nm_client.get_device_by_iface(new_iface)
 
@@ -107,7 +103,11 @@ class NetworkMonitor(GObject.Object):
         elif new_device != self.device or new_iface != self.current_iface:
             self.device = new_device
             self.current_iface = new_iface
-            self.online = self.check_online()
+            need_restart = True
+
+        self.online = self.check_online()
+
+        if old_online != self.online:
             need_restart = True
 
         self.main_port = prefs.get_port()
