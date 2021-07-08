@@ -1095,7 +1095,7 @@ class WarpApplication(Gtk.Application):
         self.current_port = prefs.get_port()
         self.current_auth_port = prefs.get_auth_port()
         self.current_ips = self.netmon.get_ips()
-        self.current_iface = self.netmon.get_current_iface()
+        self.current_iface = self.netmon.get_current_iface() or ""
 
         logging.debug("New server requested for '%s' (%s)", self.current_iface, self.current_ips)
 
