@@ -307,9 +307,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         #                                 server_credentials)
         self.server.start()
 
-        self.start_zeroconf()
-
         self.server_thread_keepalive.clear()
+
+        try:
+            self.start_zeroconf()
+        except:
+            logging.critical("Zeroconf failed to start, server will terminate.")
+            self.server_thread_keepalive.set()
+
         self.idle_emit("server-started")
 
         logging.info("Server: ACTIVE")
@@ -326,7 +331,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         # If the network is down, this will probably print an exception - it's ok,
         # zeroconf catches it.
-        self.zeroconf.close()
+        try:
+            self.zeroconf.close()
+        except:
+            logging.critical("Can't close Zeroconf - maybe it failed to start")
+            pass
 
         remote_machines = list(self.remote_machines.values())
         for remote in remote_machines:
