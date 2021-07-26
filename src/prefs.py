@@ -214,22 +214,9 @@ class Preferences():
         devices = networkmonitor.get_network_monitor().get_devices()
 
         for dev in devices:
-            iface = dev.get_iface()
-            if iface == get_preferred_iface():
+            if dev == get_preferred_iface():
                 current_selection_exists = True
-
-            desc = dev.get_product()
-
-            if (desc != None and desc != ""):
-                orig_label = "%s - %s" % (iface, desc)
-                if len(orig_label) > 50:
-                    label = orig_label[:47] + "..."
-                else:
-                    label = orig_label
-
-                options.append((iface, label))
-            else:
-                options.append((iface, iface))
+            options.append((dev, dev))
 
         if not current_selection_exists:
             # translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'

@@ -6,8 +6,7 @@ import netifaces
 import ipaddress
 
 import gi
-gi.require_version('NM', '1.0')
-from gi.repository import GLib, Gio, GObject, NM
+from gi.repository import GLib, GObject
 
 import prefs
 import util
@@ -32,34 +31,19 @@ class NetworkMonitor(GObject.Object):
     def __init__(self):
         GObject.Object.__init__(self)
         logging.debug("Starting network monitor")
-        self.nm_client = None
         self.device = None
-        self.current_iface = None
-        self.online = False
+        self.online = True
 
-        self.signals_connected = False
         self.details_idle_id = 0
 
-        self.initing = True
-        self.gio_monitor = Gio.NetworkMonitor.get_default()
-        NM.Client.new_async(None, self.nm_client_acquired);
+        self.reload_state()
 
-    def nm_client_acquired(self, source, res, data=None):
-        try:
-            self.nm_client = NM.Client.new_finish(res)
-            self.nm_client.connect("notify::connectivity", self.nm_client_connectivity_changed)
-            self.signals_connected = True
-            self.reload_state()
+        prefs.prefs_settings.connect("changed", self.on_prefs_changed)
 
-            prefs.prefs_settings.connect("changed", self.on_prefs_changed)
-
-            self.initing = False
-            self.emit("ready")
-        except GLib.Error as e:
-            logging.critical("NetworkMonitor: Could not create NM Client: %s" % e.message)
+        self.emit("ready")
 
     def ready(self):
-        return self.nm_client != None
+        return True
 
     def on_prefs_changed(self, settings, key, data=None):
         new_main_port = prefs.get_port()
@@ -68,7 +52,7 @@ class NetworkMonitor(GObject.Object):
 
         emit = False
 
-        if self.device == None or self.device.get_iface() != new_iface:
+        if self.device != new_iface:
             self.reload_state()
             return
 
@@ -83,99 +67,36 @@ class NetworkMonitor(GObject.Object):
             self.emit_details_changed()
 
     def reload_state(self):
-        if self.nm_client == None:
-            return
-
-        old_online = self.online
-        new_device = None
-        new_iface = self.get_preferred_or_default_iface()
-
-        if new_iface:
-            new_device = self.nm_client.get_device_by_iface(new_iface)
+        new_device = self.get_preferred_or_default_iface()
 
         need_restart = False
 
-        if new_device == None or new_iface == None:
-            self.device = None
-            self.current_iface = None
-            self.online = False
-            need_restart = True
-        elif new_device != self.device or new_iface != self.current_iface:
+        if new_device == None or new_device != self.device:
             self.device = new_device
-            self.current_iface = new_iface
-            need_restart = True
-
-        self.online = self.check_online()
-
-        if old_online != self.online:
             need_restart = True
 
         self.main_port = prefs.get_port()
         self.auth_port = prefs.get_auth_port()
 
-        if self.initing:
-            return
-
         if need_restart:
             self.emit_state_changed()
             logging.debug("Current network changed (%s), connectivity: %s" % (prefs.get_preferred_iface(), str(self.online)))
 
-    def check_online(self):
-        if self.device == None or self.current_iface == None:
-            return False
-
-        try:
-            reqd_states = (NM.ConnectivityState.LIMITED, NM.ConnectivityState.FULL)
-
-            return self.device.get_connectivity(GLib.SYSDEF_AF_INET) in reqd_states or \
-                   self.device.get_connectivity(GLib.SYSDEF_AF_INET6) in reqd_states
-        except AttributeError:
-            # libnm < 1.16
-            conn = self.device.get_active_connection()
-            if conn:
-                config = conn.get_ip4_config()
-                if config:
-                    gateway = config.get_gateway()
-                    try:
-                        connectable = Gio.NetworkAddress.parse(gateway, 53)
-                        return self.gio_monitor.can_reach(connectable, None)
-                    except Exception as e:
-                        return False
-
-    def nm_client_connectivity_changed(self, client, pspec, data=None):
-        logging.debug("NM client connectivity prop changed: %s" % client.props.connectivity)
-        self.reload_state()
-
     def stop(self):
         logging.debug("Stopping network monitor")
-        try:
-            self.nm_client.disconnect_by_func(self.nm_client_connectivity_changed)
-        except:
-            pass
-
-        self.nm_client = None
-
-    def get_interface_names(self):
-        names = []
-        for device in self.nm_client.get_devices():
-            names.append(device.get_ip_iface())
-
-        return names
 
     def get_ips(self):
         return util.IPAddresses(self.get_ipv4(), self.get_ipv6())
 
     def get_ipv4(self):
         if self.device != None:
-            con = self.device.get_active_connection()
-
-            if con != None:
-                ip4c = con.get_ip4_config()
-                if ip4c != None:
-                    addrs = ip4c.get_addresses()
-
-                    if addrs != []:
-                        return addrs[0].get_address()
+            interface_addresses = netifaces.interfaces()
+            if not self.device in netifaces.interfaces():
+                return None
+            interface_addresses = netifaces.ifaddresses(self.device)
+            if not netifaces.AF_INET in interface_addresses:
+                return None
+            return interface_addresses[netifaces.AF_INET][0]['addr']
 
         return "0.0.0.0"
 
@@ -184,15 +105,13 @@ class NetworkMonitor(GObject.Object):
         return None
 
         if self.device != None:
-            con = self.device.get_active_connection()
-
-            if con != None:
-                ip6c = con.get_ip6_config()
-                if ip6c != None:
-                    addrs = ip6c.get_addresses()
-
-                    if addrs != []:
-                        return addrs[0].get_address()
+            interface_addresses = netifaces.interfaces()
+            if not self.device in netifaces.interfaces():
+                return None
+            interface_addresses = netifaces.ifaddresses(self.device)
+            if not netifaces.AF_INET6 in interface_addresses:
+                return None
+            return interface_addresses[netifaces.AF_INET6][0]['addr']
 
         return None
 
@@ -206,35 +125,34 @@ class NetworkMonitor(GObject.Object):
 
         if iface != "auto":
             for dev in self.get_devices():
-                if dev.get_iface() == iface:
+                if dev == iface:
                     return iface
 
         logging.warning("Preferred interface (%s) not available.")
         return None
 
     def get_current_iface(self):
-        return self.current_iface
+        return self.device
 
     def get_default_interface(self):
-        con = self.nm_client.get_primary_connection()
-
-        if con != None:
-            return con.get_devices()[0].get_iface()
-
-        return None
+        return self.get_devices()[0]
 
     def get_devices(self):
         devices = []
 
-        for device in self.nm_client.get_devices():
-            if device.get_device_type() in (NM.DeviceType.ETHERNET, NM.DeviceType.WIFI):
+        for device in netifaces.interfaces():
+            if device == "lo0":
+                continue
+            addrs = netifaces.ifaddresses(device)
+            if netifaces.AF_LINK not in addrs:
+                continue
+            if netifaces.AF_INET in addrs or netifaces.AF_INET6 in addrs:
                 devices.append(device)
 
         return devices
 
-    # TODO: Do this with libnm
     def same_subnet(self, other_ips):
-        net = netifaces.ifaddresses(self.device.get_ip_iface())
+        net = netifaces.ifaddresses(self.device)
 
         addresses = net[netifaces.AF_INET]
         for address in addresses:
@@ -265,7 +183,7 @@ class NetworkMonitor(GObject.Object):
     def emit_details_changed(self):
         def cb(data=None):
             if self.device != None:
-                iface = self.device.get_iface()
+                iface = self.device
             else:
                 iface = "none"
 
