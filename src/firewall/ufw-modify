@@ -25,7 +25,7 @@ numbered = subprocess.check_output(["ufw", "status", "numbered"]).decode("utf-8"
 found = []
 
 for line in numbered.split("\n"):
-    if any(label in line for label in ("WARPINATOR_MAIN", "WARPINATOR_AUTH")):
+    if any(label in line for label in ("WARPINATOR_MAIN", "WARPINATOR_AUTH", "WARPINATOR")):
         try:
             num = num_finder.search(line)[0]
             found.append(num)
@@ -39,7 +39,8 @@ if len(found) > 0:
     for number in found:
         subprocess.run(["ufw", "--force", "delete", number])
 
-subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", main_port, "comment", "WARPINATOR_MAIN"])
+# Backwards compatibility requires we keep doing both udp and tcp on the main port.
+subprocess.run(["ufw", "allow", "from", "any", "to", "any", "port", main_port, "comment", "WARPINATOR_MAIN"])
 subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", auth_port, "comment", "WARPINATOR_AUTH"])
 
 exit(0)
