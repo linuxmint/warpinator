@@ -54,7 +54,7 @@ class AuthManager(GObject.Object):
         GObject.Object.__init__(self)
         self.hostname = util.get_hostname()
         self.ident = ""
-        self.ips = None
+        self.ip_info = None
         self.port = None
         self.code = ""
 
@@ -66,8 +66,8 @@ class AuthManager(GObject.Object):
         os.makedirs(CONFIG_FOLDER, exist_ok=True)
         self.path = Path(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME))
 
-    def update(self, ips, port):
-        self.ips = ips
+    def update(self, ip_info, port):
+        self.ip_info = ip_info;
         self.port = port
 
         self._load_keyfile()
@@ -95,13 +95,13 @@ class AuthManager(GObject.Object):
     def get_server_creds(self):
         return (self.server_private_key, self.server_pub_key)
 
-    def get_cached_cert(self, hostname, ips):
+    def get_cached_cert(self, hostname, ip_info):
         try:
-            return self.remote_certs["%s.%s" % (hostname, ips)]
+            return self.remote_certs["%s.%s" % (hostname, ip_info.ip4_address)]
         except KeyError:
             return None
 
-    def process_remote_cert(self, hostname, ips, server_data):
+    def process_remote_cert(self, hostname, ip_info, server_data):
         if server_data == None:
             return False
         decoded = base64.decodebytes(server_data)
@@ -118,7 +118,7 @@ class AuthManager(GObject.Object):
             cert = None
 
         if cert:
-            self.remote_certs["%s.%s" % (hostname, ips)] = cert
+            self.remote_certs["%s.%s" % (hostname, ip_info.ip4_address)] = cert
             return True
         else:
             return False
@@ -133,8 +133,6 @@ class AuthManager(GObject.Object):
         encrypted = encoder.encrypt(self.server_pub_key)
         encoded = base64.encodebytes(encrypted)
         return encoded
-
-
 
 # Internals
     def _load_keyfile(self):
@@ -237,8 +235,8 @@ class AuthManager(GObject.Object):
 
         alt_names = []
 
-        if self.ips.ip4 != None:
-            alt_names.append(x509.IPAddress(ipaddress.IPv4Address(self.ips.ip4)))
+        if self.ip_info.ip4_address != None:
+            alt_names.append(x509.IPAddress(ipaddress.IPv4Address(self.ip_info.ip4_address)))
 
         builder = builder.add_extension(x509.SubjectAlternativeName(alt_names), critical=True)
 

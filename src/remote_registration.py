@@ -11,16 +11,15 @@ import warp_pb2
 
 import auth
 import util
+import prefs
 
 class RegRequest():
-    def __init__(self, ident, hostname, ips, port, auth_port, api_version, my_ips):
+    def __init__(self, ident, hostname, ip_info, port, auth_port, api_version):
         self.api_version = api_version
         self.ident = ident
         self.hostname = hostname
-        self.ips = ips
+        self.ip_info = ip_info
         self.port = port
-
-        self.my_ips = my_ips
 
         #v1 only
         self.request_loop = None
@@ -37,15 +36,13 @@ class RegRequest():
             self.retry_keepalive.set()
 
 class Registrar():
-    def __init__(self, ips, port, auth_port, my_ips):
+    def __init__(self, ip_info, port, auth_port):
         self.reg_server_v1 = None
         self.reg_server_v2 = None
         self.active_registrations = {}
         self.reg_lock = threading.Lock()
 
-        self.my_ips = my_ips
-
-        self.ips = ips
+        self.ip_info = ip_info
         self.port = port
         self.auth_port = auth_port
 
@@ -59,10 +56,10 @@ class Registrar():
             self.reg_server_v2.stop(grace=2).wait()
             self.reg_server_v2 = None
 
-        logging.debug("Starting v1 registration server (%s) with port %d" % (self.ips, self.port))
-        self.reg_server_v1 = RegistrationServer_v1(self.ips, self.port)
-        logging.debug("Starting v2 registration server (%s) with auth port %d" % (self.ips, self.auth_port))
-        self.reg_server_v2 = RegistrationServer_v2(self.ips, self.auth_port)
+        logging.debug("Starting v1 registration server (%s) with port %d" % (self.ip_info.ip4_address, self.port))
+        self.reg_server_v1 = RegistrationServer_v1(self.ip_info, self.port)
+        logging.debug("Starting v2 registration server (%s) with auth port %d" % (self.ip_info.ip4_address, self.auth_port))
+        self.reg_server_v2 = RegistrationServer_v2(self.ip_info, self.auth_port)
 
     def shutdown_registration_servers(self):
         with self.reg_lock:
@@ -80,9 +77,8 @@ class Registrar():
             self.reg_server_v2.stop()
             self.reg_server_v2 = None
 
-    def register(self, ident, hostname, ips, port, auth_port, api_version):
-        details = RegRequest(ident, hostname, ips, port, auth_port, api_version, self.my_ips)
-
+    def register(self, ident, hostname, ip_info, port, auth_port, api_version):
+        details = RegRequest(ident, hostname, ip_info, port, auth_port, api_version)
         with self.reg_lock:
             self.active_registrations[ident] = details
 
@@ -94,7 +90,11 @@ class Registrar():
             ret = register_v2(details)
 
         with self.reg_lock:
-            del self.active_registrations[ident]
+            # shutdown_registration_servers may have been called on a different thread.
+            try:
+                del self.active_registrations[ident]
+            except KeyError:
+                pass
 
         return ret
 
@@ -117,70 +117,70 @@ def register_v1(details):
     # or we tell the auth object to shutdown, in which case the request timer will cancel and return
     # here immediately (with None)
 
-    logging.info("Registering with %s (%s:%d) - api version 1" % (details.hostname, details.ips, details.port))
+    logging.info("Registering with %s (%s:%d) - api version 1" % (details.hostname, details.ip_info.ip4_address, details.port))
 
     success = retrieve_remote_cert(details)
 
     if not success:
         logging.critical("Unable to register with %s (%s:%d) - api version 1"
-                             % (details.hostname, details.ips, details.port))
+                             % (details.hostname, details.ip_info.ip4_address, details.port))
         return False
 
     return True
 
 def retrieve_remote_cert(details):
-    logging.debug("Auth: Starting a new RequestLoop for '%s' (%s:%d)" % (details.hostname, details.ips, details.port))
+    logging.debug("Auth: Starting a new RequestLoop for '%s' (%s:%d)" % (details.hostname, details.ip_info.ip4_address, details.port))
 
-    details.request_loop = RequestLoop(details.ips, details.port)
+    details.request_loop = RequestLoop(details.ip_info, details.port)
     data = details.request_loop.request()
 
     if data == None:
         return False
 
     return auth.get_singleton().process_remote_cert(details.hostname,
-                                                    details.ips,
+                                                    details.ip_info,
                                                     data)
 
 REQUEST = b"REQUEST"
 
 #v1 client
 class RequestLoop():
-    def __init__(self, ips, port):
-        self.ips = ips
+    def __init__(self, ip_info, port):
+        self.ip_info = ip_info
         self.port = port
 
         self.timer = threading.Event()
 
     def request(self):
         while not self.timer.is_set():
-            logging.debug("Auth: Requesting cert from remote (%s:%d)" % (self.ips, self.port))
+            logging.debug("Auth: Requesting cert from remote (%s:%d)" % (self.ip_info.ip4_address, self.port))
             try_count = 0
 
             while try_count < 3:
                 try:
                     server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                     server_sock.settimeout(1.0)
-                    server_sock.sendto(REQUEST, (self.ips.ip4, self.port))
+                    server_sock.sendto(REQUEST, (self.ip_info.ip4_address, self.port))
 
                     reply, addr = server_sock.recvfrom(2000)
 
                     if self.timer.is_set():
                         return None
 
-                    if addr == (self.ips.ip4, self.port):
+                    if addr == (self.ip_info.ip4_address, self.port):
                         return reply
                 except socket.timeout:
                     try_count += 1
                     continue
                 except socket.error as e:
-                    logging.critical("Something wrong with cert request (%s:%s): " % (self.ips, self.port, e))
+                    logging.critical("Something wrong with cert request (%s:%s): " % (self.ip_info.ip4_address, self.port, e))
                     break
 
             logging.debug("Auth: Cert request failed from remote (%s:%d), waiting 30s to try again. (Is their udp port blocked?"
-                              % (self.ip, self.port))
+                              % (self.ip_info.ip4_address, self.port))
             self.timer.wait(30)
 
-        logging.debug("Auth: RequestLoop canceled (event set) for (%s:%s)" % (self.ips, self.port))
+        logging.debug("Auth: RequestLoop canceled (event set) for (%s:%s)" % (self.ip_info.ip4_address, self.port))
         return None
 
     def cancel(self):
@@ -188,9 +188,9 @@ class RequestLoop():
 
 # v1 server
 class RegistrationServer_v1():
-    def __init__(self, ips, port):
+    def __init__(self, ip_info, port):
         self.exit = False
-        self.ips = ips
+        self.ip_info = ip_info
         self.port = port
 
         self.thread = threading.Thread(target=self.serve_cert_thread)
@@ -201,7 +201,7 @@ class RegistrationServer_v1():
             server_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             # server_sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
             server_sock.settimeout(1.0)
-            server_sock.bind((self.ips.ip4, self.port))
+            server_sock.bind((self.ip_info.ip4_address, self.port))
         except socket.error as e:
             logging.critical("Could not create udp socket for cert requests: %s" % str(e))
             return
@@ -231,52 +231,52 @@ def register_v2(details):
     # or we tell the auth object to shutdown, in which case the request timer will cancel and return
     # here immediately (with None)
 
-    logging.info("Registering with %s (%s:%d) - api version 2" % (details.hostname, details.ips, details.auth_port))
+    logging.info("Registering with %s (%s:%d) - api version 2" % (details.hostname, details.ip_info.ip4_address, details.auth_port))
 
     success = False
 
     while not details.retry_keepalive.is_set():
         remote_thread = threading.Thread(target=register_with_remote_thread, args=(details,), name="remote-auth-thread-%s" % id)
-        logging.debug("remote-registration-thread-%s-%s:%d-%s" % (details.hostname, details.ips, details.auth_port, details.ident))
+        logging.debug("remote-registration-thread-%s-%s:%d-%s" % (details.hostname, details.ip_info.ip4_address, details.auth_port, details.ident))
         remote_thread.start()
         remote_thread.join()
 
         if details.locked_cert != None:
             success = auth.get_singleton().process_remote_cert(details.hostname,
-                                                               details.ips,
+                                                               details.ip_info,
                                                                details.locked_cert)
 
         if not success:
             logging.critical("Unable to register with %s (%s:%d) - api version 2"
-                                 % (details.hostname, details.ips, details.auth_port))
+                                 % (details.hostname, details.ip_info.ip4_address, details.auth_port))
             details.retry_keepalive.wait(10)
         else:
             details.retry_keepalive.set()
     return True
 
 def register_with_remote_thread(details):
-    logging.debug("Remote: Attempting to register %s (%s)" % (details.hostname, details.ips))
+    logging.debug("Remote: Attempting to register %s (%s)" % (details.hostname, details.ip_info.ip4_address))
 
-    with grpc.insecure_channel("%s:%d" % (details.ips.ip4, details.auth_port)) as channel:
+    with grpc.insecure_channel("%s:%d" % (details.ip_info.ip4_address, details.auth_port)) as channel:
         future = grpc.channel_ready_future(channel)
 
         try:
             future.result(timeout=5)
             stub = warp_pb2_grpc.WarpRegistrationStub(channel)
 
-            ret = stub.RequestCertificate(warp_pb2.RegRequest(ip=details.my_ips.ip4, hostname=util.get_hostname()),
+            ret = stub.RequestCertificate(warp_pb2.RegRequest(ip=details.ip_info.ip4_address, hostname=util.get_hostname()),
                                           timeout=5)
 
             details.locked_cert = ret.locked_cert.encode("utf-8")
         except Exception as e:
             future.cancel()
             logging.critical("Problem with remote registration thread: %s (%s:%d) - api version 2: %s"
-                     % (details.hostname, details.ips, details.auth_port, e))
+                     % (details.hostname, details.ip_info.ip4_address, details.auth_port, e))
 
 class RegistrationServer_v2():
-    def __init__(self, ips, auth_port):
+    def __init__(self, ip_info, auth_port):
         self.exit = False
-        self.ips = ips
+        self.ip_info = ip_info
         self.auth_port = auth_port
 
         self.server = None
@@ -289,7 +289,7 @@ class RegistrationServer_v2():
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
         warp_pb2_grpc.add_WarpRegistrationServicer_to_server(self, self.server)
 
-        self.server.add_insecure_port('%s:%d' % (self.ips.ip4, self.auth_port))
+        self.server.add_insecure_port('%s:%d' % (self.ip_info.ip4_address, self.auth_port))
         self.server.start()
 
         while not self.server_thread_keepalive.is_set():

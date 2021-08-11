@@ -4,6 +4,7 @@ import os
 import gettext
 import subprocess
 import logging
+import json
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
@@ -210,15 +211,20 @@ class Preferences():
         options = []
         options.append(("auto", _("Automatic")))
 
-        current_selection_exists = get_preferred_iface() == "auto" or False
-        devices = networkmonitor.get_network_monitor().get_devices()
+        current = get_preferred_iface()
+        current_selection_exists = current == "auto" or False
 
-        for dev in devices:
-            iface = dev.get_iface()
-            if iface == get_preferred_iface():
+        lshw_out = subprocess.check_output(["lshw", "-class", "network", "-sanitize", "-json"], stderr=subprocess.DEVNULL).decode("utf-8")
+
+        j = json.loads(lshw_out)
+        infos = networkmonitor.get_network_monitor().get_valid_interface_infos()
+
+        for dev in j:
+            iface = dev["logicalname"]
+            desc = dev["product"]
+
+            if iface == current:
                 current_selection_exists = True
-
-            desc = dev.get_product()
 
             if (desc != None and desc != ""):
                 orig_label = "%s - %s" % (iface, desc)
