@@ -214,10 +214,21 @@ class Preferences():
         current = get_preferred_iface()
         current_selection_exists = current == "auto" or False
 
-        lshw_out = subprocess.check_output(["lshw", "-class", "network", "-sanitize", "-json"], stderr=subprocess.DEVNULL).decode("utf-8")
+        try:
+            lshw_out = subprocess.check_output(["lshw", "-class", "network", "-sanitize", "-json"],
+                                               stderr=subprocess.DEVNULL
+                                              ).decode("utf-8")
+            j = json.loads(lshw_out)
+        except:
+            # Flatpak probably - just show the iface name.
+            available = networkmonitor.get_network_monitor().get_valid_interface_infos()
+            j = []
 
-        j = json.loads(lshw_out)
-        infos = networkmonitor.get_network_monitor().get_valid_interface_infos()
+            for info in available:
+                item = {}
+                item["logicalname"] = info.iface
+                item["product"] = ""
+                j.append(item)
 
         for dev in j:
             iface = dev["logicalname"]
