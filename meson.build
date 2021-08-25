@@ -29,6 +29,6 @@ message('\n'.join(['',
 '',
 '    building for flatpak:   @0@'.format(get_option('flatpak-build')),
 '    including ufw script:   @0@'.format(include_firewall_mod),
-'    bundling zeroconf:      @0@'.format(bundle_zeroconf),
+'    bundling zeroconf:      @0@'.format(bundle_zeroconf and not get_option('flatpak-build')),
 '',
 ]))
