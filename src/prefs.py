@@ -25,6 +25,7 @@ AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 KEEP_PERMISSIONS_KEY = "keep-permissions"
+PRESERVE_TIMESTAMP_KEY = "preserve-timestamp"
 NET_IFACE="preferred-network-iface"
 PORT_KEY = "port"
 REG_PORT_KEY = "reg-port"
@@ -85,6 +86,9 @@ def prevent_overwriting():
 
 def preserve_permissions():
     return prefs_settings.get_boolean(KEEP_PERMISSIONS_KEY)
+
+def preserve_timestamp():
+    return prefs_settings.get_boolean(PRESERVE_TIMESTAMP_KEY)
 
 def get_show_notifications():
     return prefs_settings.get_boolean(SHOW_NOTIFICATIONS_KEY)

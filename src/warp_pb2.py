@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='warp.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"Z\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\x12\x17\n\x0fuse_compression\x18\x04 \x01(\x08\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"o\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r\"*\n\nRegRequest\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x10\n\x08hostname\x18\x02 \x01(\t\"\"\n\x0bRegResponse\x12\x13\n\x0blocked_cert\x18\x01 \x01(\t2\xf2\x03\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12.\n\x10WaitingForDuplex\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x32\x45\n\x10WarpRegistration\x12\x31\n\x12RequestCertificate\x12\x0b.RegRequest\x1a\x0c.RegResponse\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"Z\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\x12\x17\n\x0fuse_compression\x18\x04 \x01(\x08\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"\x88\x01\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r\x12\x17\n\x04time\x18\x06 \x01(\x0b\x32\t.FileTime\"-\n\x08\x46ileTime\x12\r\n\x05mtime\x18\x01 \x01(\x04\x12\x12\n\nmtime_usec\x18\x02 \x01(\r\"*\n\nRegRequest\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x10\n\x08hostname\x18\x02 \x01(\t\"\"\n\x0bRegResponse\x12\x13\n\x0blocked_cert\x18\x01 \x01(\t2\xf2\x03\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12.\n\x10WaitingForDuplex\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x32\x45\n\x10WarpRegistration\x12\x31\n\x12RequestCertificate\x12\x0b.RegRequest\x1a\x0c.RegResponse\"\x00\x62\x06proto3')
 )
 
 
@@ -413,6 +413,13 @@ _FILECHUNK = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='time', full_name='FileChunk.time', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -425,8 +432,46 @@ _FILECHUNK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=582,
-  serialized_end=693,
+  serialized_start=583,
+  serialized_end=719,
+)
+
+
+_FILETIME = _descriptor.Descriptor(
+  name='FileTime',
+  full_name='FileTime',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='mtime', full_name='FileTime.mtime', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='mtime_usec', full_name='FileTime.mtime_usec', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=721,
+  serialized_end=766,
 )
 
 
@@ -463,8 +508,8 @@ _REGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=695,
-  serialized_end=737,
+  serialized_start=768,
+  serialized_end=810,
 )
 
 
@@ -494,12 +539,13 @@ _REGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=739,
-  serialized_end=773,
+  serialized_start=812,
+  serialized_end=846,
 )
 
 _STOPINFO.fields_by_name['info'].message_type = _OPINFO
 _TRANSFEROPREQUEST.fields_by_name['info'].message_type = _OPINFO
+_FILECHUNK.fields_by_name['time'].message_type = _FILETIME
 DESCRIPTOR.message_types_by_name['RemoteMachineInfo'] = _REMOTEMACHINEINFO
 DESCRIPTOR.message_types_by_name['RemoteMachineAvatar'] = _REMOTEMACHINEAVATAR
 DESCRIPTOR.message_types_by_name['LookupName'] = _LOOKUPNAME
@@ -509,6 +555,7 @@ DESCRIPTOR.message_types_by_name['OpInfo'] = _OPINFO
 DESCRIPTOR.message_types_by_name['StopInfo'] = _STOPINFO
 DESCRIPTOR.message_types_by_name['TransferOpRequest'] = _TRANSFEROPREQUEST
 DESCRIPTOR.message_types_by_name['FileChunk'] = _FILECHUNK
+DESCRIPTOR.message_types_by_name['FileTime'] = _FILETIME
 DESCRIPTOR.message_types_by_name['RegRequest'] = _REGREQUEST
 DESCRIPTOR.message_types_by_name['RegResponse'] = _REGRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -576,6 +623,13 @@ FileChunk = _reflection.GeneratedProtocolMessageType('FileChunk', (_message.Mess
   ))
 _sym_db.RegisterMessage(FileChunk)
 
+FileTime = _reflection.GeneratedProtocolMessageType('FileTime', (_message.Message,), dict(
+  DESCRIPTOR = _FILETIME,
+  __module__ = 'warp_pb2'
+  # @@protoc_insertion_point(class_scope:FileTime)
+  ))
+_sym_db.RegisterMessage(FileTime)
+
 RegRequest = _reflection.GeneratedProtocolMessageType('RegRequest', (_message.Message,), dict(
   DESCRIPTOR = _REGREQUEST,
   __module__ = 'warp_pb2'
@@ -598,8 +652,8 @@ _WARP = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=776,
-  serialized_end=1274,
+  serialized_start=849,
+  serialized_end=1347,
   methods=[
   _descriptor.MethodDescriptor(
     name='CheckDuplexConnection',
@@ -703,8 +757,8 @@ _WARPREGISTRATION = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   options=None,
-  serialized_start=1276,
-  serialized_end=1345,
+  serialized_start=1349,
+  serialized_end=1418,
   methods=[
   _descriptor.MethodDescriptor(
     name='RequestCertificate',
