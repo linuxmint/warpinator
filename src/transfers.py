@@ -92,7 +92,7 @@ class FileSender(GObject.Object):
             if self.cancellable.is_set():
                 return # StopIteration as different behaviors between 3.5 and 3.7, this works as well.
 
-            logging.debug("get mtime: %lu.%u -- %s" % (self.current_mtime, self.current_mtime_usec, self.current_path))
+            logging.debug("get mtime: %lu.%u -- %s" % (file.mtime, file.mtime_usec, file.relative_path))
 
             ftime = warp_pb2.FileTime(mtime=file.mtime,
                                       mtime_usec = file.mtime_usec)
