@@ -53,7 +53,7 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
 ####
 
 if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(REG_PORT_KEY):
-    prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY + 1))
+    prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY) + 1)
 
 def get_preferred_iface():
     return prefs_settings.get_string(NET_IFACE)
