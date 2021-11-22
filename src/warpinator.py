@@ -334,7 +334,7 @@ class OverviewButton(GObject.Object):
         if remote_machine.status == RemoteStatus.INIT_CONNECTING:
             self.overview_user_connecting_spinner.show()
             self.overview_user_status_icon.hide()
-            self.ip_label.set_text(str(self.remote_machine.ips))
+            self.ip_label.set_text(str(self.remote_machine.ip_info.ip4_address))
             if have_info:
                 self.button.set_tooltip_text(_("Connecting"))
             else:
@@ -371,7 +371,7 @@ class OverviewButton(GObject.Object):
         else:
             self.overview_user_hostname.set_text(self.remote_machine.display_hostname)
 
-        self.ip_label.set_text(str(self.remote_machine.ips))
+        self.ip_label.set_text(str(self.remote_machine.ip_info.ip4_address))
 
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)
@@ -601,7 +601,7 @@ class WarpWindow(GObject.Object):
         for button in self.user_list_box.get_children():
             joined = " ".join([button.remote_machine.display_name,
                                ("%s@%s" % (button.remote_machine.user_name, button.remote_machine.hostname)),
-                               button.remote_machine.ips])
+                               button.remote_machine.ip_info.ip4_address])
             normalized_contents = GLib.utf8_normalize(joined, len(joined), GLib.NormalizeMode.DEFAULT).lower()
 
             if normalized_query in normalized_contents:
@@ -666,8 +666,7 @@ class WarpWindow(GObject.Object):
         dialog = util.create_file_and_folder_picker(self.window)
 
         res = dialog.run()
-
-        if res == Gtk.ResponseType.ACCEPT:
+        if res == Gtk.ResponseType.OK:
             uri_list = dialog.get_uris()
             self.current_selected_remote_machine.send_files(uri_list)
 
@@ -700,10 +699,10 @@ class WarpWindow(GObject.Object):
         Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
-    def update_local_user_info(self, ips=util.IPAddresses("0.0.0.0", None), iface=""):
+    def update_local_user_info(self, ip="0.0.0.0", iface=""):
         self.app_local_name_label.set_text(util.get_local_name())
         self.app_iface_label.set_text(iface)
-        self.app_ip_label.set_text(str(ips))
+        self.app_ip_label.set_text(ip)
 
     def menu_quit(self, widget, data=None):
         self.display_shutdown()
@@ -847,7 +846,7 @@ class WarpWindow(GObject.Object):
         else:
             self.user_hostname_label.set_text(remote.display_hostname)
 
-        self.user_ip_label.set_text(str(remote.ips))
+        self.user_ip_label.set_text(str(remote.ip_info.ip4_address))
 
         if remote.avatar_surface != None:
             self.user_avatar_image.set_from_surface(remote.avatar_surface)
@@ -1009,8 +1008,7 @@ class WarpApplication(Gtk.Application):
 
         self.current_port = None
         self.current_auth_port = None
-        self.current_ips = None
-        self.current_iface = None
+        self.current_ip_info = None
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
@@ -1037,49 +1035,33 @@ class WarpApplication(Gtk.Application):
         self.add_window(self.window.window)
 
         if prefs.get_start_with_window() or not prefs.use_tray_icon():
-            self.window.window.present()
+            self.window.window.show()
+            self.window.window.present_with_time(Gtk.get_current_event_time())
 
         self.update_status_icon_from_preferences()
 
+        GLib.timeout_add(200, self.check_save_folder)
+
+    def check_save_folder(self, data=None):
         if not util.verify_save_folder():
-            file = Gio.File.new_for_path(prefs.get_save_path())
-
-            def monitor_change_event(monitor, file, other_file, event_type, data=None):
-                logging.debug("UI: State of save folder changed: %s (%s)", str(event_type), file.get_path())
-                if not util.verify_save_folder():
-                    return
-
-                try:
-                    self.save_folder_monitor.disconnect_by_func(monitor_change_event)
-                except:
-                    pass
-
-                self.new_server()
-
-            try:
-                self.save_folder_monitor = file.monitor_directory(Gio.FileMonitorFlags.WATCH_MOUNTS, None)
-                self.save_folder_monitor.connect("changed", monitor_change_event)
-            except GLib.Error as e:
-                logging.warn("Could not create a monitor for the save folder: %s"% e.message)
+            if not self.window.window.get_visible():
+                self.window.window.show()
+                self.window.window.present_with_time(Gtk.get_current_event_time())
 
             self.window.report_bad_save_folder()
-            self.window.window.present()
-            return
+            return GLib.SOURCE_CONTINUE
 
+        GLib.idle_add(self.start_network_monitor)
+        return GLib.SOURCE_REMOVE
+
+    def start_network_monitor(self):
         self.netmon = networkmonitor.get_network_monitor()
-        self.netmon.connect("ready", self.netmon_ready)
-
-    def netmon_ready(self, netmon):
-        logging.debug("Network client initialized")
-        self.netmon.disconnect_by_func(self.netmon_ready)
+        self.netmon.start()
         self.netmon.connect("state-changed", self.network_state_changed)
-        self.netmon.connect("details-changed", self.network_details_changed)
+
         self.new_server()
 
     def network_state_changed(self, netmon, online):
-        self.new_server()
-
-    def network_details_changed(self, netmon):
         self.new_server()
 
     def new_server(self):
@@ -1095,12 +1077,11 @@ class WarpApplication(Gtk.Application):
 
         self.current_port = prefs.get_port()
         self.current_auth_port = prefs.get_auth_port()
-        self.current_ips = self.netmon.get_ips()
-        self.current_iface = self.netmon.get_current_iface()
+        self.current_ip_info = self.netmon.get_current_ip_info()
 
-        logging.debug("New server requested for '%s' (%s)", self.current_iface, self.current_ips)
+        logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info.ip4_address)
 
-        self.window.update_local_user_info(self.current_ips, self.current_iface)
+        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface)
 
         self.window.clear_remotes()
 
@@ -1118,7 +1099,7 @@ class WarpApplication(Gtk.Application):
             except:
                 pass
 
-            auth_singleton.update(self.current_ips, self.current_port)
+            auth_singleton.update(self.current_ip_info, self.current_port)
             auth_singleton.connect("group-code-changed", self.on_group_code_changed)
 
             if not self.netmon.online:
@@ -1127,7 +1108,7 @@ class WarpApplication(Gtk.Application):
                 self.window.show_no_network()
                 return
 
-            self.server = server.Server(self.current_iface, self.current_ips, self.current_port, self.current_auth_port)
+            self.server = server.Server(self.current_ip_info, self.current_port, self.current_auth_port)
             self.server.connect("server-started", self._server_started)
             self.server.connect("remote-machine-added", self._remote_added)
             self.server.connect("remote-machine-removed", self._remote_removed)

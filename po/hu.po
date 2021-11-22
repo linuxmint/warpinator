@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2020-12-05 18:21+0000\n"
+"PO-Revision-Date: 2021-06-25 08:10+0000\n"
 "Last-Translator: KAMI <kami911@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
-"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
+"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
+"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
 "Language: hu_HU\n"
 
 #: resources/main-window.ui:33 src/util.py:403
@@ -57,6 +57,8 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Ellenőrizze a tűzfalszabályokat. A portszám megváltoztatható. További "
+"részleteket a beállítások között talál."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -260,7 +262,7 @@ msgstr "Beállítások"
 
 #: src/prefs.py:152
 msgid "General"
-msgstr ""
+msgstr "Általános"
 
 #: src/prefs.py:154
 msgid "Desktop"
@@ -280,13 +282,15 @@ msgstr "Automatikus indítás"
 
 #: src/prefs.py:171
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Tömörítés használata, amennyiben lehetséges"
 
 #: src/prefs.py:173
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
+"Figyelmeztetés: Ez a beállítás gyorsabb hálózatokon ronthatja a "
+"teljesítményt."
 
 #: src/prefs.py:176
 msgid "Location for received files"
@@ -308,11 +312,11 @@ msgstr ""
 
 #: src/prefs.py:194
 msgid "Connection"
-msgstr ""
+msgstr "Kapcsolat"
 
 #: src/prefs.py:196
 msgid "Identification"
-msgstr ""
+msgstr "Azonosítás"
 
 #: src/prefs.py:201
 msgid "Group Code"
@@ -330,17 +334,17 @@ msgstr "Hálózat"
 
 #: src/prefs.py:211
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikus"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:236
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "„%s” nem található"
 
 #: src/prefs.py:238
 msgid "Network interface to use"
-msgstr ""
+msgstr "Használni kívánt hálózati csatoló"
 
 #: src/prefs.py:246
 msgid "Incoming port for transfers"
@@ -348,11 +352,11 @@ msgstr "Beérkező átvitel forgalmának portja"
 
 #: src/prefs.py:253
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Beérkező átvitel forgalmának portja"
 
 #: src/prefs.py:268
 msgid "Apply network changes"
-msgstr ""
+msgstr "Hálózati változtatások alkalmazása"
 
 #: src/prefs.py:277
 msgid "Update firewall rules"
@@ -363,6 +367,9 @@ msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Bármilyen nem foglalt portszám használható az alkalmazás számára. Ugyanazt a "
+"portot használva az összes gépen egyszerűbbé teheti a tűzfalszabályok "
+"beállítását, amennyiben ez szükséges."
 
 #: src/prefs.py:390
 msgid "Set code"
@@ -555,7 +562,7 @@ msgstr "Várakozás a kétirányú kapcsolat lét"
 
 #: src/warpinator.py:1323
 msgid "Send to all"
-msgstr ""
+msgstr "Küldés mindenkinek"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-03-10 08:48+0000\n"
+"PO-Revision-Date: 2021-06-24 18:37+0000\n"
 "Last-Translator: karm <melo@carmu.com>\n"
 "Language-Team: Interlingua <ia@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-09 14:22+0000\n"
-"X-Generator: Launchpad (build b45bdbe3a00b6b668fa7f2069bd545c35c41f7f4)\n"
+"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
+"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
 
 #: resources/main-window.ui:33 src/util.py:403
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -61,6 +61,8 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Controla le regulas de tu firewall. Le numero de porta ah cambiate. Vide "
+"preferentia pro plu de detalios."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -264,7 +266,7 @@ msgstr "Preferentias de Warpinator"
 
 #: src/prefs.py:152
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/prefs.py:154
 msgid "Desktop"
@@ -284,13 +286,15 @@ msgstr "Initiar automaticamente"
 
 #: src/prefs.py:171
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Usar compression quando possibile."
 
 #: src/prefs.py:173
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
+"Attention: isto poterea haber impacto negative sur le prestationes sur alcun "
+"retes plus veloce."
 
 #: src/prefs.py:176
 msgid "Location for received files"
@@ -311,11 +315,11 @@ msgstr "Monstrar un aviso quando qualcuno te invia (o tenta inviar) files"
 
 #: src/prefs.py:194
 msgid "Connection"
-msgstr ""
+msgstr "Connexion"
 
 #: src/prefs.py:196
 msgid "Identification"
-msgstr ""
+msgstr "Identification"
 
 #: src/prefs.py:201
 msgid "Group Code"
@@ -331,17 +335,17 @@ msgstr "Rete"
 
 #: src/prefs.py:211
 msgid "Automatic"
-msgstr ""
+msgstr "Automatic"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:236
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "%s - non trovate"
 
 #: src/prefs.py:238
 msgid "Network interface to use"
-msgstr ""
+msgstr "Interfacie de rete a usar"
 
 #: src/prefs.py:246
 msgid "Incoming port for transfers"
@@ -349,11 +353,11 @@ msgstr "Porta in ingresso pro transferimentos"
 
 #: src/prefs.py:253
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Porta de entrata pro registration"
 
 #: src/prefs.py:268
 msgid "Apply network changes"
-msgstr ""
+msgstr "Applicar le cambios de rete"
 
 #: src/prefs.py:277
 msgid "Update firewall rules"
@@ -364,6 +368,9 @@ msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Tote le numeros de porta functionara pro le application, ma le empleo del "
+"mesme porta pro tote le computatores, pote render plus simple adder eventual "
+"exceptiones al firewall."
 
 #: src/prefs.py:390
 msgid "Set code"
@@ -555,15 +562,15 @@ msgstr "Attendente connexion a two-ways"
 
 #: src/warpinator.py:1323
 msgid "Send to all"
-msgstr ""
+msgstr "Inviar a totes"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Aperir un porta de firewall pro Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
+msgstr "Pro modificar le parametros de firewall, tu debe authenticar te."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
@@ -575,6 +582,8 @@ msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
+"Warpinator te permitte facilemente connecter multiple computers su un rete "
+"de area local e de facilemente e securmente  compartir files."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27

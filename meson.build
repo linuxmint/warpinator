@@ -1,4 +1,4 @@
-project('warpinator', 'c', version: '1.2.1', meson_version: '>=0.45.0')
+project('warpinator', 'c', version: '1.2.4', meson_version: '>=0.45.0')
 
 RPC_API_VERSION = '2'
 
@@ -29,6 +29,6 @@ message('\n'.join(['',
 '',
 '    building for flatpak:   @0@'.format(get_option('flatpak-build')),
 '    including ufw script:   @0@'.format(include_firewall_mod),
-'    bundling zeroconf:      @0@'.format(bundle_zeroconf),
+'    bundling zeroconf:      @0@'.format(bundle_zeroconf and not get_option('flatpak-build')),
 '',
 ]))

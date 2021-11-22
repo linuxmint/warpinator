@@ -1,3 +1,30 @@
+warpinator (1.2.4) uma; urgency=medium
+
+  [ Michael Webster ]
+  * Fix readme - dpkg-buildpackage doesn't need sudo and git checkout is optional.
+  * file picker: Don't lose a multi-selection when enter is pressed.
+  * warpinator.py: Fix connecting network monitor signals when starting out with a bad save folder.
+  * warpinator.py: Use window.present_with_time().
+  * warpinator.py: Use an empty string instead of null when there is no valid interface.
+  * networkmonitor.py: Use a different connectivity check for older libnm.
+  * server.py: Catch zeroconf failing to start.
+  * networkmonitor.py: Don't check online state only when device or interface details change.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 23 Jul 2021 12:17:57 +0100
+
+warpinator (1.2.3) uma; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 25 Jun 2021 15:15:36 +0100
+
+warpinator (1.2.2) uma; urgency=medium
+
+  [ Michael Webster ]
+  * debian/control: Add missing runtime dep for zeroconf.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 14 Jun 2021 12:31:23 +0100
+
 warpinator (1.2.1) uma; urgency=medium
 
   [ Michael Webster ]

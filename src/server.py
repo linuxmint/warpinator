@@ -58,7 +58,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         "server-started": (GObject.SignalFlags.RUN_LAST, None, ()),
         "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
     }
-    def __init__(self, iface, ips, port, auth_port):
+    def __init__(self, ip_info, port, auth_port):
         threading.Thread.__init__(self, name="server-thread")
         super(Server, self).__init__()
         GObject.Object.__init__(self)
@@ -66,10 +66,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.service_name = None
         self.service_ident = None
 
-        self.ips = ips
+        self.ip_info = ip_info
         self.port = port
         self.auth_port = auth_port
-        self.iface = iface
 
         self.untrusted_remote_machines = {}
         self.remote_machines = {}
@@ -93,7 +92,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         except:
             logging.info("Using system zeroconf v%s" % zeroconf.__version__)
 
-        self.zeroconf = Zeroconf(interfaces=[str(self.ips)])
+        self.zeroconf = Zeroconf(interfaces=[self.ip_info.ip4_address])
 
         self.service_ident = auth.get_singleton().get_ident()
         self.service_name = "%s.%s" % (self.service_ident, SERVICE_TYPE)
@@ -108,7 +107,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         init_info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
                                 port=self.port,
-                                addresses=self.ips.as_binary_list(),
+                                addresses=self.ip_info.as_binary_list(),
                                 properties={ 'hostname': util.get_hostname(),
                                              'type': 'flush' })
 
@@ -120,14 +119,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.info = ServiceInfo(SERVICE_TYPE,
                                 self.service_name,
                                 port=self.port,
-                                addresses=self.ips.as_binary_list(),
+                                addresses=self.ip_info.as_binary_list(),
                                 properties={ 'hostname': util.get_hostname(),
                                              'api-version': config.RPC_API_VERSION,
                                              'auth-port': str(prefs.get_auth_port()),
                                              'type': 'real' })
 
         self.zeroconf.register_service(self.info)
-        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=str(self.ips))
+        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=self.ip_info.ip4_address)
 
         return False
 
@@ -150,7 +149,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             return
 
         logging.debug(">>> Discovery: service %s (%s:%d) has disappeared."
-                          % (remote.display_hostname, remote.ips, remote.port))
+                          % (remote.display_hostname, remote.ip_info.ip4_address, remote.port))
 
         remote.has_zc_presence = False
 
@@ -167,13 +166,16 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 logging.critical(">>> Discovery: no hostname in service info properties.  Is this an old version?")
                 return
 
-            remote_ips = util.IPAddresses.new_from_binary_list(info.addresses)
+            remote_ip_info = util.RemoteInterfaceInfo(info.addresses)
+
+            if remote_ip_info == self.ip_info:
+                return
 
             try:
                 # Check if this is a flush registration to reset the remote server's presence.
                 if info.properties[b"type"].decode() == "flush":
                     logging.debug(">>> Discovery: received flush service info (ignoring): %s (%s:%d)"
-                                      % (remote_hostname, remote_ips, info.port))
+                                      % (remote_hostname, remote_ip_info.ip4_address, info.port))
                     return
             except KeyError:
                 logging.warning("No type in service info properties, assuming this is a real connect attempt")
@@ -190,16 +192,15 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
             # FIXME: I'm not sure why we still get discovered by other networks in some cases -
             # The Zeroconf object has a specific ip it is set to, what more do I need to do?
-            if not self.netmon.same_subnet(remote_ips):
-                if remote_ips != self.ips:
-                    logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ips))
+            if not self.netmon.same_subnet(remote_ip_info):
+                logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ip_info.ip4_address))
                 return
 
             try:
                 machine = self.remote_machines[ident]
                 machine.has_zc_presence = True
                 logging.debug(">>> Discovery: existing remote: %s (%s:%d)"
-                                  % (machine.display_hostname, remote_ips, info.port))
+                                  % (machine.display_hostname, remote_ip_info.ip4_address, info.port))
 
                 # If the remote truly is the same one (our service info just dropped out
                 # momentarily), this will end up just retrieving the current cert again.
@@ -207,19 +208,19 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 # which we'll need when our supposedly existing connection tries to continue
                 # pinging. It will fail out and restart the connection loop, and will need
                 # this updated one.
-                if not self.remote_registrar.register(ident, remote_hostname, remote_ips, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
+                if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
                     logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
-                                     % (remote_hostname, remote_ips, info.port, auth_port))
+                                     % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
                     return
 
                 if machine.status == RemoteStatus.ONLINE:
                     logging.debug(">>> Discovery: rejoining existing connect with %s (%s:%d)"
-                                  % (machine.display_hostname, remote_ips, info.port))
+                                  % (machine.display_hostname, remote_ip_info.ip4_address, info.port))
                     return
 
                 # Update our connect info if it changed.
                 machine.hostname = remote_hostname
-                machine.ips = remote_ips
+                machine.ip_info = remote_ip_info
                 machine.port = info.port
                 machine.api_version = api_version
             except KeyError:
@@ -243,19 +244,19 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                         break
 
                 logging.debug(">>> Discovery: new remote: %s (%s:%d)"
-                                  % (display_hostname, remote_ips, info.port))
+                                  % (display_hostname, remote_ip_info.ip4_address, info.port))
 
                 machine = remote.RemoteMachine(ident,
                                                remote_hostname,
                                                display_hostname,
-                                               remote_ips,
+                                               remote_ip_info,
                                                info.port,
                                                self.service_ident,
                                                api_version)
 
-                if not self.remote_registrar.register(ident, remote_hostname, remote_ips, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
+                if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
                     logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
-                                     % (remote_hostname, remote_ips, info.port, auth_port))
+                                     % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
                     return
 
                 self.remote_machines[ident] = machine
@@ -274,12 +275,12 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             machine.start_remote_thread()
 
     def run(self):
-        logging.debug("Server: starting server on %s (%s)" % (self.ips, self.iface))
+        logging.debug("Server: starting server on %s (%s)" % (self.ip_info.ip4_address, self.ip_info.iface))
         logging.info("Using api version %s" % config.RPC_API_VERSION)
         logging.info("Our uuid: %s" % auth.get_singleton().get_ident())
 
 
-        self.remote_registrar = remote_registration.Registrar(self.ips, self.port, self.auth_port, self.ips)
+        self.remote_registrar = remote_registration.Registrar(self.ip_info, self.port, self.auth_port)
         util.initialize_rpc_threadpool()
 
         options=(
@@ -299,17 +300,22 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         pair = auth.get_singleton().get_server_creds()
         server_credentials = grpc.ssl_server_credentials((pair,))
 
-        if self.ips.ip4:
-            self.server.add_secure_port('%s:%d' % (self.ips.ip4, self.port),
+        if self.ip_info.ip4_address:
+            self.server.add_secure_port('%s:%d' % (self.ip_info.ip4_address, self.port),
                                         server_credentials)
-        # if self.ips.ip6:
-        #     self.server.add_secure_port('%s:%d' % (self.ips.ip6, self.port),
+        # if self.ip_info.ip6_address:
+        #     self.server.add_secure_port('%s:%d' % (self.ip_info.ip6_address, self.port),
         #                                 server_credentials)
         self.server.start()
 
-        self.start_zeroconf()
-
         self.server_thread_keepalive.clear()
+
+        try:
+            self.start_zeroconf()
+        except Exception as e:
+            logging.critical("Zeroconf failed to start, server will terminate: %s" % e)
+            self.server_thread_keepalive.set()
+
         self.idle_emit("server-started")
 
         logging.info("Server: ACTIVE")
@@ -326,13 +332,17 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         # If the network is down, this will probably print an exception - it's ok,
         # zeroconf catches it.
-        self.zeroconf.close()
+        try:
+            self.zeroconf.close()
+        except:
+            logging.critical("Can't close Zeroconf - maybe it failed to start")
+            pass
 
         remote_machines = list(self.remote_machines.values())
         for remote in remote_machines:
             self.idle_emit("remote-machine-removed", remote)
             logging.debug("Server: Closing connection to remote machine %s (%s:%d)"
-                              % (remote.display_hostname, remote.ips, remote.port))
+                              % (remote.display_hostname, remote.ip_info.ip4_address, remote.port))
 
             remote.shutdown()
 

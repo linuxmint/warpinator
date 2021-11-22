@@ -81,6 +81,12 @@ message FileChunk {
     string symlink_target = 3;
     bytes chunk = 4;
     uint32 file_mode = 5;
+    FileTime time = 6;
+}
+
+message FileTime {
+    uint64 mtime = 1;
+    uint32 mtime_usec = 2;
 }
 
 service WarpRegistration {

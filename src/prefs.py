@@ -4,6 +4,7 @@ import os
 import gettext
 import subprocess
 import logging
+import json
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
@@ -24,6 +25,7 @@ AUTOSTART_KEY = "autostart"
 ASK_PERMISSION_KEY = "ask-for-send-permission"
 NO_OVERWRITE_KEY = "no-overwrite"
 KEEP_PERMISSIONS_KEY = "keep-permissions"
+PRESERVE_TIMESTAMP_KEY = "preserve-timestamp"
 NET_IFACE="preferred-network-iface"
 PORT_KEY = "port"
 REG_PORT_KEY = "reg-port"
@@ -51,7 +53,7 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
 ####
 
 if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(REG_PORT_KEY):
-    prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY + 1))
+    prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY) + 1)
 
 def get_preferred_iface():
     return prefs_settings.get_string(NET_IFACE)
@@ -84,6 +86,9 @@ def prevent_overwriting():
 
 def preserve_permissions():
     return prefs_settings.get_boolean(KEEP_PERMISSIONS_KEY)
+
+def preserve_timestamp():
+    return prefs_settings.get_boolean(PRESERVE_TIMESTAMP_KEY)
 
 def get_show_notifications():
     return prefs_settings.get_boolean(SHOW_NOTIFICATIONS_KEY)
@@ -210,15 +215,31 @@ class Preferences():
         options = []
         options.append(("auto", _("Automatic")))
 
-        current_selection_exists = get_preferred_iface() == "auto" or False
-        devices = networkmonitor.get_network_monitor().get_devices()
+        current = get_preferred_iface()
+        current_selection_exists = current == "auto" or False
 
-        for dev in devices:
-            iface = dev.get_iface()
-            if iface == get_preferred_iface():
+        try:
+            lshw_out = subprocess.check_output(["lshw", "-class", "network", "-sanitize", "-json"],
+                                               stderr=subprocess.DEVNULL
+                                              ).decode("utf-8")
+            j = json.loads(lshw_out)
+        except:
+            # Flatpak probably - just show the iface name.
+            available = networkmonitor.get_network_monitor().get_valid_interface_infos()
+            j = []
+
+            for info in available:
+                item = {}
+                item["logicalname"] = info.iface
+                item["product"] = ""
+                j.append(item)
+
+        for dev in j:
+            iface = dev["logicalname"]
+            desc = dev["product"]
+
+            if iface == current:
                 current_selection_exists = True
-
-            desc = dev.get_product()
 
             if (desc != None and desc != ""):
                 orig_label = "%s - %s" % (iface, desc)

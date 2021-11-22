@@ -75,83 +75,109 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   STOP_TRANSFER_BY_RECEIVER \
                                   REMOVE_TRANSFER')
 
-class IPAddresses():
-    def __init__(self, ip4, ip6):
+class InterfaceInfo():
+    def __init__(self, ip4, ip6, iface=None):
+        self.iface = iface
+        # netifaces AF_INET and AF_INET6 dicts
         self.ip4 = ip4
-        self.ip6 = ip6
+        self.ip4_address = self.ip4["addr"]
+
+        try:
+            self.ip6 = ip6
+            self.ip6_address = self.ip6["addr"]
+        except:
+            self.ip6 = None
+            self.ip6_address = None
 
     def __eq__(self, other):
-        if other == None or not isinstance(other, IPAddresses):
+        if other == None:
             return False
 
-        return self.ip4 == other.ip4 and self.ip6 == other.ip6
-
-    def __str__(self):
-        # Only supporting ipv4 for now, so pretend IPAddresses is just
-        # a string in most cases.
-
-        return self.ip4
-
-        # if self.ip4 == None or self.ip6 == None:
-        #     return self.ip4 if (self.ip4 != None) else self.ip6
-
-        # return "%s --- %s" % (self.ip4, self.ip6)
+        return self.ip4_address == other.ip4_address
 
     def as_binary_list(self):
         blist = []
 
         if self.ip4:
-            blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET, self.ip4))
+            try:
+                blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET, self.ip4_address))
+            except:
+                pass
         if self.ip6:
-            blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET6, self.ip6))
+            try:
+                blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET6, self.ip6_address))
+            except:
+                pass
 
         return blist
 
-    @staticmethod
-    def new_from_binary_list(blist):
+class RemoteInterfaceInfo():
+    def __init__(self, blist):
         ip4 = None
         ip6 = None
 
         for item in blist:
             try:
-                ip4 = socket.inet_ntop(GLib.SYSDEF_AF_INET, item)
+                ip4 = socket.inet_ntop(socket.AF_INET, item)
             except ValueError:
-                ip6 = socket.inet_ntop(GLib.SYSDEF_AF_INET6, item)
+                ip6 = socket.inet_ntop(socket.AF_INET6, item)
 
-        return IPAddresses(ip4, ip6)
+        if ip4:
+            self.ip4_address = ip4
+        if ip6:
+            self.ip6_address = ip6
+
+    def __eq__(self, other):
+        if other == None:
+            return False
+
+        return self.ip4_address == other.ip4_address
 
 last_location = Gio.File.new_for_path(GLib.get_home_dir())
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not
 # both in the same dialog.  This does.
+
+class FolderFileChooserDialog(Gtk.Dialog):
+    def __init__(self, window_title, transient_parent, starting_location):
+        super(FolderFileChooserDialog, self).__init__(title=window_title,
+                                                      parent=transient_parent,
+                                                      default_width=750,
+                                                      default_height=500)
+
+        self.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL,
+                         _("Add"), Gtk.ResponseType.OK)
+
+        self.chooser = Gtk.FileChooserWidget(action=Gtk.FileChooserAction.OPEN, select_multiple=True)
+        self.chooser.set_current_folder_file(starting_location)
+        self.chooser.connect("file-activated", lambda chooser: self.response(Gtk.ResponseType.OK))
+        self.chooser.show_all()
+
+        self.get_content_area().add(self.chooser)
+        self.get_content_area().set_border_width(0)
+        self.get_uris = self.chooser.get_uris
+        self.get_current_folder_file = self.chooser.get_current_folder_file
+        self.connect("key-press-event", self.on_button_press)
+
+    def on_button_press(self, widget, event, data=None):
+        multi = len(self.chooser.get_uris()) != 1
+        if event.keyval in (Gdk.KEY_KP_Enter, Gdk.KEY_Return) and multi:
+            self.response(Gtk.ResponseType.OK)
+            return Gdk.EVENT_STOP
+
+        return Gdk.EVENT_PROPAGATE
+
 def create_file_and_folder_picker(dialog_parent=None):
-    window = Gtk.Dialog(title=_("Select file(s) to send"),
-                        parent=dialog_parent,
-                        default_width=750,
-                        default_height=500)
-    window.add_buttons(_("Cancel"), Gtk.ResponseType.CANCEL,
-                       _("Send"), Gtk.ResponseType.ACCEPT)
-
-    chooser = Gtk.FileChooserWidget(action=Gtk.FileChooserAction.OPEN,
-                                    select_multiple=True)
-
-    chooser.set_current_folder_file(last_location)
-    chooser.connect("file-activated", lambda chooser: window.response(Gtk.ResponseType.ACCEPT))
+    chooser = FolderFileChooserDialog(_("Select file(s) to send"), dialog_parent, last_location)
 
     def update_last_location(dialog, response_id, data=None):
-        if response_id != Gtk.ResponseType.ACCEPT:
+        if response_id != Gtk.ResponseType.OK:
             return
 
         global last_location
         last_location = chooser.get_current_folder_file()
 
-    window.connect("response", update_last_location)
-
-    chooser.show_all()
-    window.get_content_area().add(chooser)
-    window.get_content_area().set_border_width(0)
-
-    window.get_uris = chooser.get_uris
-    return window
+    chooser.connect("response", update_last_location)
+    return chooser
 
 # Used as a decorator to run things in the background
 def _async(func):
@@ -210,7 +236,8 @@ def verify_save_folder(transient_for=None):
     return os.access(prefs.get_save_path(), os.R_OK | os.W_OK)
 
 def save_folder_is_native_fs():
-    return True
+    file = Gio.File.new_for_path(prefs.get_save_path())
+    return file.is_native()
 
 def have_free_space(size):
     save_file = Gio.File.new_for_path(prefs.get_save_path())
