@@ -1,3 +1,29 @@
+warpinator (1.2.5) una; urgency=medium
+
+  [ Michael Webster ]
+  * ufw-modify: Keep allowing udp+tcp on the main port for backward compatibility.
+  * Go back to not using network-manager.
+  * prefs.py: Don't break if lshw isn't available (like in a flatpak).
+  * meson.build: Fix false reporting of zeroconf download when building as a flatpak.
+  * Preserve file modification times during transfer.
+  * Add 128x128 fullcolor icons.
+  * Fix 128px icon names.
+  * transfers.py: Log mtime using correct variable names when sending a file.
+
+  [ Dušan Kazik ]
+  * Add Slovak language to LINGUAS file
+
+  [ Michael Webster ]
+  * prefs.py: Fix typo in port dupe guard.
+
+  [ Tony ]
+  * README: Add dependencies (#91)
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 23 Nov 2021 11:05:28 +0000
+
 warpinator (1.2.4) uma; urgency=medium
 
   [ Michael Webster ]
