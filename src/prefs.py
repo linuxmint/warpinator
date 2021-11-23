@@ -236,7 +236,11 @@ class Preferences():
 
         for dev in j:
             iface = dev["logicalname"]
-            desc = dev["product"]
+
+            try:
+                desc = dev["product"]
+            except KeyError:
+                desc = ""
 
             if iface == current:
                 current_selection_exists = True
