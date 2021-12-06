@@ -1,3 +1,13 @@
+warpinator (1.2.6) una; urgency=medium
+
+  [ Michael Webster ]
+  * prefs.py: don't assume every interface listed by lshw has a 'product' key.
+
+  [ Clement Lefebvre ]
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 06 Dec 2021 15:51:44 +0000
+
 warpinator (1.2.5) una; urgency=medium
 
   [ Michael Webster ]
