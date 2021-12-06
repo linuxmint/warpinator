@@ -7,19 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-06-07 17:29+0000\n"
+"POT-Creation-Date: 2021-11-23 11:04+0000\n"
+"PO-Revision-Date: 2021-12-04 12:32+0000\n"
 "Last-Translator: Yacine Bouklif <yacinebouklif@gmail.com>\n"
 "Language-Team: Kabyle <kab@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
-"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
+"X-Launchpad-Export-Date: 2021-12-06 15:07+0000\n"
+"X-Generator: Launchpad (build f92b6e0bb2624f8a9125e3f45b7621c6e230c5ff)\n"
 "Language: kab\n"
 
-#: resources/main-window.ui:33 src/util.py:403
+#: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -41,11 +41,11 @@ msgstr "Sfeḍ timehlin ur nermid ara akked tid immeden"
 msgid "Send files"
 msgstr "Azen ifuyla"
 
-#: resources/main-window.ui:415 src/prefs.py:169
+#: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
 msgstr "Asiweḍ n yifuyla"
 
-#: resources/main-window.ui:436 src/warpinator.py:867
+#: resources/main-window.ui:436 src/warpinator.py:866
 msgid "Online"
 msgstr "Srid"
 
@@ -262,112 +262,112 @@ msgid_plural "%d files"
 msgstr[0] "%d n ufaylu"
 msgstr[1] "%d n yifuyla"
 
-#: src/prefs.py:139
+#: src/prefs.py:144
 msgid "Warpinator Preferences"
 msgstr "Ismenyifen n Warpinator"
 
-#: src/prefs.py:152
+#: src/prefs.py:157
 msgid "General"
 msgstr "Amatu"
 
-#: src/prefs.py:154
+#: src/prefs.py:159
 msgid "Desktop"
 msgstr "Tanarit"
 
-#: src/prefs.py:156
+#: src/prefs.py:161
 msgid "Show an icon in the notification area"
 msgstr "Sken tignit di tmennaḍt n telɣut"
 
-#: src/prefs.py:160
+#: src/prefs.py:165
 msgid "Start with main window open"
 msgstr "Bdu s usfaylu agejdan yeldi"
 
-#: src/prefs.py:165
+#: src/prefs.py:170
 msgid "Start automatically"
 msgstr "Bdu s wudem awurman"
 
-#: src/prefs.py:171
+#: src/prefs.py:176
 msgid "Use compression when possible."
 msgstr "Seqdec asekkusem melmi yella wamek."
 
-#: src/prefs.py:173
+#: src/prefs.py:178
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 
-#: src/prefs.py:176
+#: src/prefs.py:181
 msgid "Location for received files"
 msgstr "Ideg i yifuyla i d-yettwaṭṭfen"
 
-#: src/prefs.py:181
+#: src/prefs.py:186
 msgid "Require approval before accepting files"
 msgstr "Suter aqbal send ad tqebleḍ ifuyla"
 
-#: src/prefs.py:185
+#: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
 msgstr "Suter aqbal ticki yewwi-d ad ttusfesxen yifuyla"
 
-#: src/prefs.py:189
+#: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Beqqeḍ talɣut ticki yebɣa wabɛaḍ ad k-d-yazen (neɣ yettaɛraḍ ad k-d-yazen) "
 "ifuyla"
 
-#: src/prefs.py:194
+#: src/prefs.py:199
 msgid "Connection"
 msgstr "Tuqqna"
 
-#: src/prefs.py:196
+#: src/prefs.py:201
 msgid "Identification"
 msgstr "Asmagi"
 
-#: src/prefs.py:201
+#: src/prefs.py:206
 msgid "Group Code"
 msgstr "Tangalt n ugraw"
 
-#: src/prefs.py:202
+#: src/prefs.py:207
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Ur tezmireḍ ara ad tmeslayeḍ akked yiselkimen ur nsseqdac ara tangalt am "
 "tagi."
 
-#: src/prefs.py:208
+#: src/prefs.py:213
 msgid "Network"
 msgstr "Aẓeḍḍa"
 
-#: src/prefs.py:211
+#: src/prefs.py:216
 msgid "Automatic"
 msgstr "Awurman"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:236
+#: src/prefs.py:257
 #, python-format
 msgid "%s - not found"
 msgstr "%s - ur yettwaf ara"
 
-#: src/prefs.py:238
+#: src/prefs.py:259
 msgid "Network interface to use"
 msgstr "Agrudem n uzeṭṭa ara yettwasqedcen"
 
-#: src/prefs.py:246
+#: src/prefs.py:267
 msgid "Incoming port for transfers"
 msgstr "Tawwurt n wekcam i wesiweḍ"
 
-#: src/prefs.py:253
+#: src/prefs.py:274
 msgid "Incoming port for registration"
 msgstr "Tawwurt n unekcum i usekles"
 
-#: src/prefs.py:268
+#: src/prefs.py:289
 msgid "Apply network changes"
 msgstr "Snes ibeddilen n uzeṭṭa"
 
-#: src/prefs.py:277
+#: src/prefs.py:298
 msgid "Update firewall rules"
 msgstr "Leqqem ilugan n uɣrab n tmes"
 
-#: src/prefs.py:289
+#: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -376,15 +376,15 @@ msgstr ""
 "n wuṭṭun i yiselkimen meṛṛa ad yesishel timerna n twuriwin n uɣrab n tmes "
 "ticki ilaq."
 
-#: src/prefs.py:390
+#: src/prefs.py:411
 msgid "Set code"
 msgstr "Seɣwer tangalt"
 
-#: src/prefs.py:405
+#: src/prefs.py:426
 msgid "A group code is required."
 msgstr "Tettwasra tengalt n wegraw."
 
-#: src/prefs.py:411
+#: src/prefs.py:432
 msgid "The group code should be longer if possible."
 msgstr "Tangalt n wegraw ilaq ad tiɣzif ma yella wamek."
 
@@ -392,53 +392,53 @@ msgstr "Tangalt n wegraw ilaq ad tiɣzif ma yella wamek."
 msgid "Connection has been lost"
 msgstr "Tuqqna truḥ"
 
-#: src/server.py:557
+#: src/server.py:567
 msgid "An error occurred on the remote machine"
 msgstr "Teḍra-d tuccḍa di tmacint tanmeggagt"
 
-#: src/util.py:127
-msgid "Select file(s) to send"
-msgstr "Fren afaylu (ifuyla) ara tazneḍ"
-
-#: src/util.py:131
+#: src/util.py:147
 msgid "Cancel"
 msgstr "Sefsex"
 
-#: src/util.py:132
-msgid "Send"
-msgstr "Azen"
+#: src/util.py:148
+msgid "Add"
+msgstr "Rnu"
 
-#: src/util.py:292
+#: src/util.py:170
+msgid "Select file(s) to send"
+msgstr "Fren afaylu (ifuyla) ara tazneḍ"
+
+#: src/util.py:319
 msgid "A few seconds remaining"
 msgstr "Kra n tasinin i d-yeggran"
 
-#: src/util.py:295
+#: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d n tasinin i d-yeggran"
 
-#: src/util.py:299 src/util.py:307
+#: src/util.py:326 src/util.py:334
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d n tesdidt"
 msgstr[1] "%d n tesdidin"
 
-#: src/util.py:306
+#: src/util.py:333
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d n usrag"
 msgstr[1] "%d n yisragen"
 
-#: src/util.py:311
+#: src/util.py:338
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "azal n %d n wesrag"
 msgstr[1] "azal n %d n yisragen"
 
-#: src/util.py:399 src/warpinator.py:534
+#: src/util.py:426 src/warpinator.py:534
 msgid "About"
 msgstr "Ɣef"
 
@@ -489,7 +489,7 @@ msgstr "Kra n yifuyla ur ttwafen ara"
 msgid "Completed"
 msgstr "Yemmed"
 
-#: src/warpinator.py:339 src/warpinator.py:895
+#: src/warpinator.py:339 src/warpinator.py:894
 msgid "Connecting"
 msgstr "Itteqqen"
 
@@ -520,19 +520,19 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] "%d n usiweḍ anekcm"
 msgstr[1] "%d n yisiweḍen inekcamen"
 
-#: src/warpinator.py:499 src/warpinator.py:1340
+#: src/warpinator.py:499 src/warpinator.py:1321
 msgid "Favorites"
 msgstr "Inurifen"
 
-#: src/warpinator.py:504 src/warpinator.py:1345
+#: src/warpinator.py:504 src/warpinator.py:1326
 msgid "Recents"
 msgstr "N melmi kan"
 
-#: src/warpinator.py:511 src/warpinator.py:1354
+#: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
 msgstr "Snirem..."
 
-#: src/warpinator.py:526 src/warpinator.py:1286
+#: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
 msgstr "Ldi akaram n usekles"
 
@@ -540,7 +540,7 @@ msgstr "Ldi akaram n usekles"
 msgid "Preferences"
 msgstr "Ismenyifen"
 
-#: src/warpinator.py:538 src/warpinator.py:1289
+#: src/warpinator.py:538 src/warpinator.py:1270
 msgid "Quit"
 msgstr "Ffeɣ"
 
@@ -552,19 +552,19 @@ msgstr "Ur tettbaneḍ ara teqqneḍ ɣer uzeḍḍa."
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Asekker yedda akken iwata, ttxil-k selken aɣemis-inek."
 
-#: src/warpinator.py:874
+#: src/warpinator.py:873
 msgid "Offline"
 msgstr "War tuqqna"
 
-#: src/warpinator.py:881
+#: src/warpinator.py:880
 msgid "Unable to connect"
 msgstr "Ulamek tuqqna"
 
-#: src/warpinator.py:888
+#: src/warpinator.py:887
 msgid "Waiting for two-way connection"
 msgstr "Yettraǧu tuqqna mm sin n yiberdan"
 
-#: src/warpinator.py:1323
+#: src/warpinator.py:1304
 msgid "Send to all"
 msgstr "Azen i meṛṛa"
 

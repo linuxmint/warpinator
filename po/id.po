@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-05-07 03:26+0000\n"
-"Last-Translator: Arief Setiadi Wibowo <q_thrynx@yahoo.com>\n"
+"POT-Creation-Date: 2021-11-23 11:04+0000\n"
+"PO-Revision-Date: 2021-10-23 05:25+0000\n"
+"Last-Translator: Roffan <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
-"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
+"X-Launchpad-Export-Date: 2021-12-06 15:07+0000\n"
+"X-Generator: Launchpad (build f92b6e0bb2624f8a9125e3f45b7621c6e230c5ff)\n"
 
-#: resources/main-window.ui:33 src/util.py:403
+#: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -40,11 +40,11 @@ msgstr "Operasi yang jelas tidak aktif dan selesai"
 msgid "Send files"
 msgstr "Mengirimkan berkas"
 
-#: resources/main-window.ui:415 src/prefs.py:169
+#: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
 msgstr "Transfer Berkas"
 
-#: resources/main-window.ui:436 src/warpinator.py:867
+#: resources/main-window.ui:436 src/warpinator.py:866
 msgid "Online"
 msgstr "Daring"
 
@@ -61,6 +61,8 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Silakan cek pengaturan firewall anda. Nomor port yang digunakan dapat "
+"diganti. Lihat preferensi untuk lebih detailnya."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -257,126 +259,129 @@ msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d berkas"
 
-#: src/prefs.py:139
+#: src/prefs.py:144
 msgid "Warpinator Preferences"
 msgstr "Pengaturan Warpinator"
 
-#: src/prefs.py:152
+#: src/prefs.py:157
 msgid "General"
-msgstr ""
+msgstr "Umum"
 
-#: src/prefs.py:154
+#: src/prefs.py:159
 msgid "Desktop"
 msgstr "Desktop"
 
-#: src/prefs.py:156
+#: src/prefs.py:161
 msgid "Show an icon in the notification area"
 msgstr "Tampilkan ikon di area notifikasi"
 
-#: src/prefs.py:160
+#: src/prefs.py:165
 msgid "Start with main window open"
 msgstr "Mulai dengan jendela utama terbuka"
 
-#: src/prefs.py:165
+#: src/prefs.py:170
 msgid "Start automatically"
 msgstr "Memulai otomatis"
 
-#: src/prefs.py:171
+#: src/prefs.py:176
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Gunakan kompresi jika memungkinkan"
 
-#: src/prefs.py:173
+#: src/prefs.py:178
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 
-#: src/prefs.py:176
+#: src/prefs.py:181
 msgid "Location for received files"
 msgstr "Lokasi untuk menerima berkas"
 
-#: src/prefs.py:181
+#: src/prefs.py:186
 msgid "Require approval before accepting files"
 msgstr "Membutuhkan persetujuan sebelum menerima berkas"
 
-#: src/prefs.py:185
+#: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
 msgstr "Membutuhkan persetujuan ketika berkas akan ditimpa"
 
-#: src/prefs.py:189
+#: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Tampilkan pemberitahuan ketika seseorang mengirim (atau mencoba mengirim) "
 "berkas ke Anda"
 
-#: src/prefs.py:194
+#: src/prefs.py:199
 msgid "Connection"
-msgstr ""
-
-#: src/prefs.py:196
-msgid "Identification"
-msgstr ""
+msgstr "Koneksi"
 
 #: src/prefs.py:201
+msgid "Identification"
+msgstr "Identifikasi"
+
+#: src/prefs.py:206
 msgid "Group Code"
 msgstr "Kode Grup"
 
-#: src/prefs.py:202
+#: src/prefs.py:207
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Anda tidak dapat berkomunikasi dengan komputer yang tidak menggunakan kode "
 "yang sama."
 
-#: src/prefs.py:208
+#: src/prefs.py:213
 msgid "Network"
 msgstr "Jaringan"
 
-#: src/prefs.py:211
+#: src/prefs.py:216
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatis"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:236
+#: src/prefs.py:257
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "%s - tidak ditemukan"
 
-#: src/prefs.py:238
+#: src/prefs.py:259
 msgid "Network interface to use"
-msgstr ""
+msgstr "Antarmuka jaringan yang akan digunakan"
 
-#: src/prefs.py:246
+#: src/prefs.py:267
 msgid "Incoming port for transfers"
 msgstr "Port masuk untuk transfer"
 
-#: src/prefs.py:253
+#: src/prefs.py:274
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Port masuk untuk registrasi"
 
-#: src/prefs.py:268
+#: src/prefs.py:289
 msgid "Apply network changes"
-msgstr ""
+msgstr "Terapkan perubahan jaringan"
 
-#: src/prefs.py:277
+#: src/prefs.py:298
 msgid "Update firewall rules"
 msgstr "Mutahirkan aturan firewall"
 
-#: src/prefs.py:289
+#: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Nomor port berapa pun dapat dipakai di aplikasi, akan tetapi menggunakan "
+"port yang sama untuk semua komputer dapat memudahkan untuk menambah "
+"pengecualian firewall jika diperlukan."
 
-#: src/prefs.py:390
+#: src/prefs.py:411
 msgid "Set code"
 msgstr "Atur kode"
 
-#: src/prefs.py:405
+#: src/prefs.py:426
 msgid "A group code is required."
 msgstr "Kode grup dibutuhkan"
 
-#: src/prefs.py:411
+#: src/prefs.py:432
 msgid "The group code should be longer if possible."
 msgstr "Kode grup harus lebih panjang bila memungkinkan"
 
@@ -384,50 +389,50 @@ msgstr "Kode grup harus lebih panjang bila memungkinkan"
 msgid "Connection has been lost"
 msgstr "Koneksi telah terputus"
 
-#: src/server.py:557
+#: src/server.py:567
 msgid "An error occurred on the remote machine"
 msgstr "Terjadi kesalahan pada mesin jarak jauh"
 
-#: src/util.py:127
-msgid "Select file(s) to send"
-msgstr "Pilih berkas untuk dikirim"
-
-#: src/util.py:131
+#: src/util.py:147
 msgid "Cancel"
 msgstr "Batal"
 
-#: src/util.py:132
-msgid "Send"
-msgstr "Kirim"
+#: src/util.py:148
+msgid "Add"
+msgstr ""
 
-#: src/util.py:292
+#: src/util.py:170
+msgid "Select file(s) to send"
+msgstr "Pilih berkas untuk dikirim"
+
+#: src/util.py:319
 msgid "A few seconds remaining"
 msgstr "Beberapa detik tersisa"
 
-#: src/util.py:295
+#: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
 msgstr "tersisa %d detik"
 
-#: src/util.py:299 src/util.py:307
+#: src/util.py:326 src/util.py:334
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d menit"
 
-#: src/util.py:306
+#: src/util.py:333
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d jam"
 
-#: src/util.py:311
+#: src/util.py:338
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "kira-kira %d jam"
 
-#: src/util.py:399 src/warpinator.py:534
+#: src/util.py:426 src/warpinator.py:534
 msgid "About"
 msgstr "Perihal"
 
@@ -478,7 +483,7 @@ msgstr "Beberapa berkas tidak ditemukan"
 msgid "Completed"
 msgstr "Selesai"
 
-#: src/warpinator.py:339 src/warpinator.py:895
+#: src/warpinator.py:339 src/warpinator.py:894
 msgid "Connecting"
 msgstr "Menghubungkan"
 
@@ -508,19 +513,19 @@ msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d transfer baru masuk"
 
-#: src/warpinator.py:499 src/warpinator.py:1340
+#: src/warpinator.py:499 src/warpinator.py:1321
 msgid "Favorites"
 msgstr "Favorit"
 
-#: src/warpinator.py:504 src/warpinator.py:1345
+#: src/warpinator.py:504 src/warpinator.py:1326
 msgid "Recents"
 msgstr "Terkini"
 
-#: src/warpinator.py:511 src/warpinator.py:1354
+#: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
 msgstr "Jelajahi..."
 
-#: src/warpinator.py:526 src/warpinator.py:1286
+#: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
 msgstr "Buka folder simpan"
 
@@ -528,7 +533,7 @@ msgstr "Buka folder simpan"
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: src/warpinator.py:538 src/warpinator.py:1289
+#: src/warpinator.py:538 src/warpinator.py:1270
 msgid "Quit"
 msgstr "Keluar"
 
@@ -540,21 +545,21 @@ msgstr "Tampaknya Anda tidak terhubung ke jaringan."
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Startup tidak berhasil, silakan periksa log Anda."
 
-#: src/warpinator.py:874
+#: src/warpinator.py:873
 msgid "Offline"
 msgstr "Luring"
 
-#: src/warpinator.py:881
+#: src/warpinator.py:880
 msgid "Unable to connect"
 msgstr "Tidak dapat terhubung"
 
-#: src/warpinator.py:888
+#: src/warpinator.py:887
 msgid "Waiting for two-way connection"
 msgstr "Menunggu koneksi dua-arah"
 
-#: src/warpinator.py:1323
+#: src/warpinator.py:1304
 msgid "Send to all"
-msgstr ""
+msgstr "Kirim ke semua"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

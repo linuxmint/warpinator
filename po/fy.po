@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-06-01 15:02+0100\n"
+"POT-Creation-Date: 2021-11-23 11:04+0000\n"
 "PO-Revision-Date: 2021-05-18 09:27+0000\n"
 "Last-Translator: vancha <Unknown>\n"
 "Language-Team: Frisian <fy@li.org>\n"
@@ -15,10 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
-"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
+"X-Launchpad-Export-Date: 2021-12-06 15:07+0000\n"
+"X-Generator: Launchpad (build f92b6e0bb2624f8a9125e3f45b7621c6e230c5ff)\n"
 
-#: resources/main-window.ui:33 src/util.py:403
+#: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -40,11 +40,11 @@ msgstr "Ynaktive en foltôge operaasjes fuortsmite"
 msgid "Send files"
 msgstr "Triemen stjoere"
 
-#: resources/main-window.ui:415 src/prefs.py:169
+#: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
 msgstr "Bestân Oerdrachten"
 
-#: resources/main-window.ui:436 src/warpinator.py:867
+#: resources/main-window.ui:436 src/warpinator.py:866
 msgid "Online"
 msgstr "Online"
 
@@ -258,126 +258,126 @@ msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] "%d triemen"
 
-#: src/prefs.py:139
+#: src/prefs.py:144
 msgid "Warpinator Preferences"
 msgstr "Warpinator foarkarren"
 
-#: src/prefs.py:152
+#: src/prefs.py:157
 msgid "General"
 msgstr ""
 
-#: src/prefs.py:154
+#: src/prefs.py:159
 msgid "Desktop"
 msgstr "Búroblêd"
 
-#: src/prefs.py:156
+#: src/prefs.py:161
 msgid "Show an icon in the notification area"
 msgstr "In plaatsje yn it notifikaasjefjild sjen litte"
 
-#: src/prefs.py:160
+#: src/prefs.py:165
 msgid "Start with main window open"
 msgstr "Haadfinster by it starten iepenje"
 
-#: src/prefs.py:165
+#: src/prefs.py:170
 msgid "Start automatically"
 msgstr "Automatysk starte"
 
-#: src/prefs.py:171
+#: src/prefs.py:176
 msgid "Use compression when possible."
 msgstr ""
 
-#: src/prefs.py:173
+#: src/prefs.py:178
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 
-#: src/prefs.py:176
+#: src/prefs.py:181
 msgid "Location for received files"
 msgstr "Lokaasje foar ûntfongen triemen"
 
-#: src/prefs.py:181
+#: src/prefs.py:186
 msgid "Require approval before accepting files"
 msgstr "Goedkarring fereaskje foar it akseptearjen fan triemen"
 
-#: src/prefs.py:185
+#: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
 msgstr "Goedkarring fereaskje foar it oerskrieuwen fan triemen"
 
-#: src/prefs.py:189
+#: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Notifikaasje sjen litte wanneer oft guon dy triemen stjoere (of probearje te "
 "stjoeren)"
 
-#: src/prefs.py:194
+#: src/prefs.py:199
 msgid "Connection"
 msgstr ""
 
-#: src/prefs.py:196
+#: src/prefs.py:201
 msgid "Identification"
 msgstr ""
 
-#: src/prefs.py:201
+#: src/prefs.py:206
 msgid "Group Code"
 msgstr "Groepskoade"
 
-#: src/prefs.py:202
+#: src/prefs.py:207
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Do kinst gjin berjochten ferstjoere nei kompûters oft dy net deselfde koade "
 "brûke."
 
-#: src/prefs.py:208
+#: src/prefs.py:213
 msgid "Network"
 msgstr "Netwurk"
 
-#: src/prefs.py:211
+#: src/prefs.py:216
 msgid "Automatic"
 msgstr ""
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:236
+#: src/prefs.py:257
 #, python-format
 msgid "%s - not found"
 msgstr ""
 
-#: src/prefs.py:238
+#: src/prefs.py:259
 msgid "Network interface to use"
 msgstr ""
 
-#: src/prefs.py:246
+#: src/prefs.py:267
 msgid "Incoming port for transfers"
 msgstr "Ynkommende poarte foar oerdrachten"
 
-#: src/prefs.py:253
+#: src/prefs.py:274
 msgid "Incoming port for registration"
 msgstr ""
 
-#: src/prefs.py:268
+#: src/prefs.py:289
 msgid "Apply network changes"
 msgstr ""
 
-#: src/prefs.py:277
+#: src/prefs.py:298
 msgid "Update firewall rules"
 msgstr "Fjoermuorre regels bywurkje"
 
-#: src/prefs.py:289
+#: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
 
-#: src/prefs.py:390
+#: src/prefs.py:411
 msgid "Set code"
 msgstr "Koade ynstelle"
 
-#: src/prefs.py:405
+#: src/prefs.py:426
 msgid "A group code is required."
 msgstr "In groepskoade is fereaske"
 
-#: src/prefs.py:411
+#: src/prefs.py:432
 msgid "The group code should be longer if possible."
 msgstr "De groepskoade mat langer wêze oft dot kin."
 
@@ -385,53 +385,53 @@ msgstr "De groepskoade mat langer wêze oft dot kin."
 msgid "Connection has been lost"
 msgstr "Ferbining is útfallen"
 
-#: src/server.py:557
+#: src/server.py:567
 msgid "An error occurred on the remote machine"
 msgstr "Der is iets ferkeard gien op de kompûter of ôfstân"
 
-#: src/util.py:127
-msgid "Select file(s) to send"
-msgstr "Triem(en) om te stjoeren selektearje"
-
-#: src/util.py:131
+#: src/util.py:147
 msgid "Cancel"
 msgstr "Ôfbrekke"
 
-#: src/util.py:132
-msgid "Send"
-msgstr "Stjoere"
+#: src/util.py:148
+msgid "Add"
+msgstr ""
 
-#: src/util.py:292
+#: src/util.py:170
+msgid "Select file(s) to send"
+msgstr "Triem(en) om te stjoeren selektearje"
+
+#: src/util.py:319
 msgid "A few seconds remaining"
 msgstr "In pear sekonden te gean"
 
-#: src/util.py:295
+#: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d sekonden te gean"
 
-#: src/util.py:299 src/util.py:307
+#: src/util.py:326 src/util.py:334
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minút"
 msgstr[1] "%d minuten"
 
-#: src/util.py:306
+#: src/util.py:333
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d oere"
 msgstr[1] "%d oeren"
 
-#: src/util.py:311
+#: src/util.py:338
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "likernôch %d oere"
 msgstr[1] "likernôch %d oeren"
 
-#: src/util.py:399 src/warpinator.py:534
+#: src/util.py:426 src/warpinator.py:534
 msgid "About"
 msgstr "Oer"
 
@@ -482,7 +482,7 @@ msgstr "Guon triemen net fûn"
 msgid "Completed"
 msgstr "Foltôge"
 
-#: src/warpinator.py:339 src/warpinator.py:895
+#: src/warpinator.py:339 src/warpinator.py:894
 msgid "Connecting"
 msgstr "Oan it ferbinen"
 
@@ -513,19 +513,19 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] "%d nije ynkommende oerdracht"
 msgstr[1] "%d nije ynkommende oerdrachten"
 
-#: src/warpinator.py:499 src/warpinator.py:1340
+#: src/warpinator.py:499 src/warpinator.py:1321
 msgid "Favorites"
 msgstr "Favoriten"
 
-#: src/warpinator.py:504 src/warpinator.py:1345
+#: src/warpinator.py:504 src/warpinator.py:1326
 msgid "Recents"
 msgstr "Resintelik"
 
-#: src/warpinator.py:511 src/warpinator.py:1354
+#: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
 msgstr "Blêdzje..."
 
-#: src/warpinator.py:526 src/warpinator.py:1286
+#: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
 msgstr "Opslach folder iepenje"
 
@@ -533,7 +533,7 @@ msgstr "Opslach folder iepenje"
 msgid "Preferences"
 msgstr "Foarkarren"
 
-#: src/warpinator.py:538 src/warpinator.py:1289
+#: src/warpinator.py:538 src/warpinator.py:1270
 msgid "Quit"
 msgstr "Ôfslute"
 
@@ -545,19 +545,19 @@ msgstr "Jo binne skynber net mei in netwurk ferbûn."
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "It starten is mislearre, graach de lochs besjen."
 
-#: src/warpinator.py:874
+#: src/warpinator.py:873
 msgid "Offline"
 msgstr "Offline"
 
-#: src/warpinator.py:881
+#: src/warpinator.py:880
 msgid "Unable to connect"
 msgstr "Kin net ferbine"
 
-#: src/warpinator.py:888
+#: src/warpinator.py:887
 msgid "Waiting for two-way connection"
 msgstr "Op ferbining fan twa kanten wachtsje"
 
-#: src/warpinator.py:1323
+#: src/warpinator.py:1304
 msgid "Send to all"
 msgstr ""
 

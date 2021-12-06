@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-01-13 16:16+0000\n"
+"POT-Creation-Date: 2021-11-23 11:04+0000\n"
+"PO-Revision-Date: 2021-11-29 09:54+0000\n"
 "Last-Translator: Vasilis Kosmidis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
-"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
+"X-Launchpad-Export-Date: 2021-12-06 15:07+0000\n"
+"X-Generator: Launchpad (build f92b6e0bb2624f8a9125e3f45b7621c6e230c5ff)\n"
 
-#: resources/main-window.ui:33 src/util.py:403
+#: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -40,11 +40,11 @@ msgstr "Εκκαθάριση αδρανών και ολοκληρωμένων ε
 msgid "Send files"
 msgstr "Αποστολή αρχείων"
 
-#: resources/main-window.ui:415 src/prefs.py:169
+#: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
 msgstr "Μεταφορές Αρχείων"
 
-#: resources/main-window.ui:436 src/warpinator.py:867
+#: resources/main-window.ui:436 src/warpinator.py:866
 msgid "Online"
 msgstr "Σε Σύνδεση"
 
@@ -61,6 +61,8 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Ελέγξτε τους κανόνες του τείχους προστασίας σας. Ο αριθμός θύρας μπορεί να "
+"αλλαχθεί. Δείτε τις ρυθμίσεις για περισσότερες λεπτομέρειες."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -260,126 +262,131 @@ msgid_plural "%d files"
 msgstr[0] "%d αρχείο"
 msgstr[1] "%d αρχεία"
 
-#: src/prefs.py:139
+#: src/prefs.py:144
 msgid "Warpinator Preferences"
 msgstr "Προτιμήσεις του Warpinator"
 
-#: src/prefs.py:152
+#: src/prefs.py:157
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
-#: src/prefs.py:154
+#: src/prefs.py:159
 msgid "Desktop"
 msgstr "Επιφάνεια Εργασίας"
 
-#: src/prefs.py:156
+#: src/prefs.py:161
 msgid "Show an icon in the notification area"
 msgstr "Εμφάνιση εικόνας στη περιοχή ειδοποιήσεων"
 
-#: src/prefs.py:160
+#: src/prefs.py:165
 msgid "Start with main window open"
 msgstr "Εκκίνηση με το κύριο παράθυρο ανοιχτό"
 
-#: src/prefs.py:165
+#: src/prefs.py:170
 msgid "Start automatically"
 msgstr "Εκκίνηση αυτόματα"
 
-#: src/prefs.py:171
+#: src/prefs.py:176
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Χρήση συμπίεσης όταν είναι δυνατόν."
 
-#: src/prefs.py:173
+#: src/prefs.py:178
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
+"Προειδοποίηση: αυτό μπορεί να έχει αρνητικές συνέπειες στην επίδοση, σε "
+"ορισμένα γρήγορα δίκτυα."
 
-#: src/prefs.py:176
+#: src/prefs.py:181
 msgid "Location for received files"
 msgstr "Τοποθεσία για ληφθέντα αρχεία"
 
-#: src/prefs.py:181
+#: src/prefs.py:186
 msgid "Require approval before accepting files"
 msgstr "Απαίτηση έγκρισης πριν την αποδοχή αρχείων"
 
-#: src/prefs.py:185
+#: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
 msgstr "Απαίτηση έγκρισης όταν τα αρχεία θα γράφονται από πάνω"
 
-#: src/prefs.py:189
+#: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Εμφάνιση ειδοποίησης όταν κάποιος στέλνει (ή προσπαθεί να στείλε) αρχεία σε "
 "εσάς"
 
-#: src/prefs.py:194
+#: src/prefs.py:199
 msgid "Connection"
-msgstr ""
-
-#: src/prefs.py:196
-msgid "Identification"
-msgstr ""
+msgstr "Σύνδεση"
 
 #: src/prefs.py:201
+msgid "Identification"
+msgstr "Ταυτοποίηση"
+
+#: src/prefs.py:206
 msgid "Group Code"
 msgstr "Κωδικός ομάδας"
 
-#: src/prefs.py:202
+#: src/prefs.py:207
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Δε μπορείτε να επικοινωνήσετε με υπολογιστές που δε χρησιμοποιούν τον ίδιο "
 "κωδικό ομάδας."
 
-#: src/prefs.py:208
+#: src/prefs.py:213
 msgid "Network"
 msgstr "Δίκτυο"
 
-#: src/prefs.py:211
+#: src/prefs.py:216
 msgid "Automatic"
-msgstr ""
+msgstr "Αυτόματα"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:236
+#: src/prefs.py:257
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "Το %s δε βρέθηκε"
 
-#: src/prefs.py:238
+#: src/prefs.py:259
 msgid "Network interface to use"
-msgstr ""
+msgstr "Διεπαφή δικτύου για χρήση"
 
-#: src/prefs.py:246
+#: src/prefs.py:267
 msgid "Incoming port for transfers"
 msgstr "Θύρα για εισερχόμενες μεταφορές"
 
-#: src/prefs.py:253
+#: src/prefs.py:274
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Θύρα εισαγωγής για καταχώρηση"
 
-#: src/prefs.py:268
+#: src/prefs.py:289
 msgid "Apply network changes"
-msgstr ""
+msgstr "Εφαρμογή αλλαγών δικτύου"
 
-#: src/prefs.py:277
+#: src/prefs.py:298
 msgid "Update firewall rules"
 msgstr "Ενημέρωση κανόνων firewall"
 
-#: src/prefs.py:289
+#: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Οποιοιδήποτε αριθμοί θύρας θα λειτουργήσουν στην εφαρμογή, αλλά η χρήση των "
+"ίδιων θυρών σε όλους τους υπολογιστές μπορεί να απλοποιήσει τη διαδικασία "
+"προσθήκης εξαιρέσεων στο τείχος προστασίας, αν χρειαστεί."
 
-#: src/prefs.py:390
+#: src/prefs.py:411
 msgid "Set code"
 msgstr "Ορισμός κωδικού"
 
-#: src/prefs.py:405
+#: src/prefs.py:426
 msgid "A group code is required."
 msgstr "Ένας κωδικός ομάδας χρειάζεται"
 
-#: src/prefs.py:411
+#: src/prefs.py:432
 msgid "The group code should be longer if possible."
 msgstr "Ο κωδικός ομάδας θα έπρεπε να ήταν μεγαλύτερος αν γίνεται"
 
@@ -387,53 +394,53 @@ msgstr "Ο κωδικός ομάδας θα έπρεπε να ήταν μεγα�
 msgid "Connection has been lost"
 msgstr "Η σύνδεση χάθηκε"
 
-#: src/server.py:557
+#: src/server.py:567
 msgid "An error occurred on the remote machine"
 msgstr "Εμφανίστηκε σφάλμα στον απομακρυσμένο υπολογιστή"
 
-#: src/util.py:127
-msgid "Select file(s) to send"
-msgstr "Επιλογή αρχείου(ών) για αποστολή"
-
-#: src/util.py:131
+#: src/util.py:147
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: src/util.py:132
-msgid "Send"
-msgstr "Αποστολή"
+#: src/util.py:148
+msgid "Add"
+msgstr "Προσθήκη"
 
-#: src/util.py:292
+#: src/util.py:170
+msgid "Select file(s) to send"
+msgstr "Επιλογή αρχείου(ών) για αποστολή"
+
+#: src/util.py:319
 msgid "A few seconds remaining"
 msgstr "Απομένουν μερικά δευτερόλεπτα"
 
-#: src/util.py:295
+#: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
 msgstr "Απομένουν %d δευτερόλεπτα"
 
-#: src/util.py:299 src/util.py:307
+#: src/util.py:326 src/util.py:334
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d λεπτό"
 msgstr[1] "%d λεπτά"
 
-#: src/util.py:306
+#: src/util.py:333
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ώρα"
 msgstr[1] "%d ώρες"
 
-#: src/util.py:311
+#: src/util.py:338
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "Περίπου %d ώρα"
 msgstr[1] "Περίπου %d ώρες"
 
-#: src/util.py:399 src/warpinator.py:534
+#: src/util.py:426 src/warpinator.py:534
 msgid "About"
 msgstr "Σχετικά"
 
@@ -484,7 +491,7 @@ msgstr "Μερικά αρχεία δε βρέθηκαν"
 msgid "Completed"
 msgstr "Ολοκληρώθηκε"
 
-#: src/warpinator.py:339 src/warpinator.py:895
+#: src/warpinator.py:339 src/warpinator.py:894
 msgid "Connecting"
 msgstr "Γίνεται σύνδεση"
 
@@ -515,19 +522,19 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] "%d νέα εισερχόμενη μεταφορά"
 msgstr[1] "%d νέες εισερχόμενες μεταφορές"
 
-#: src/warpinator.py:499 src/warpinator.py:1340
+#: src/warpinator.py:499 src/warpinator.py:1321
 msgid "Favorites"
 msgstr "Αγαπημένα"
 
-#: src/warpinator.py:504 src/warpinator.py:1345
+#: src/warpinator.py:504 src/warpinator.py:1326
 msgid "Recents"
 msgstr "Πρόσφατα"
 
-#: src/warpinator.py:511 src/warpinator.py:1354
+#: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
 msgstr "Περιήγηση..."
 
-#: src/warpinator.py:526 src/warpinator.py:1286
+#: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
 msgstr "Άνοιγμα φακέλου αποθήκευσης"
 
@@ -535,7 +542,7 @@ msgstr "Άνοιγμα φακέλου αποθήκευσης"
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: src/warpinator.py:538 src/warpinator.py:1289
+#: src/warpinator.py:538 src/warpinator.py:1270
 msgid "Quit"
 msgstr "Έξοδος"
 
@@ -547,21 +554,21 @@ msgstr "Δεν φαίνεται να είστε συνδεδεμένοι σε δ
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Η εκκίνηση απέτυχε, παρακαλώ ελέγξτε τα αρχεία καταγραφής."
 
-#: src/warpinator.py:874
+#: src/warpinator.py:873
 msgid "Offline"
 msgstr "Εκτός σύνδεσης"
 
-#: src/warpinator.py:881
+#: src/warpinator.py:880
 msgid "Unable to connect"
 msgstr "Αδυναμία σύνδεσης"
 
-#: src/warpinator.py:888
+#: src/warpinator.py:887
 msgid "Waiting for two-way connection"
 msgstr "Αναμονή για αμφίδρομη σύνδεση ανάμεσα στους υπολογιστές"
 
-#: src/warpinator.py:1323
+#: src/warpinator.py:1304
 msgid "Send to all"
-msgstr ""
+msgstr "Αποστολή σε όλους"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

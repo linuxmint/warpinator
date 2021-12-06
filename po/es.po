@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-06-01 15:02+0100\n"
-"PO-Revision-Date: 2021-06-06 09:25+0000\n"
+"POT-Creation-Date: 2021-11-23 11:04+0000\n"
+"PO-Revision-Date: 2021-11-30 20:09+0000\n"
 "Last-Translator: Toni Estevez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-06-25 10:43+0000\n"
-"X-Generator: Launchpad (build 40cc6dba4163ba9ca785b26ad91f43c87d70ba4d)\n"
+"X-Launchpad-Export-Date: 2021-12-06 15:07+0000\n"
+"X-Generator: Launchpad (build f92b6e0bb2624f8a9125e3f45b7621c6e230c5ff)\n"
 
-#: resources/main-window.ui:33 src/util.py:403
+#: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -41,11 +41,11 @@ msgstr "Borrar operaciones inactivas y completadas"
 msgid "Send files"
 msgstr "Enviar archivos"
 
-#: resources/main-window.ui:415 src/prefs.py:169
+#: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
 msgstr "Transferencias de archivos"
 
-#: resources/main-window.ui:436 src/warpinator.py:867
+#: resources/main-window.ui:436 src/warpinator.py:866
 msgid "Online"
 msgstr "En línea"
 
@@ -55,7 +55,7 @@ msgstr "No se han encontrado otros equipos..."
 
 #: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
-msgstr "Compruebe que su conexión de red esté activa."
+msgstr "Compruebe que la conexión de red esté activa."
 
 #: resources/main-window.ui:635
 msgid ""
@@ -207,12 +207,12 @@ msgstr "Transferencia completa"
 #: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "La transferencia a %s ha finalizado correctamente"
+msgstr "Ha finalizado correctamente la transferencia a %s"
 
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "La transferencia desde %s ha finalizado correctamente"
+msgstr "Ha finalizado correctamente la transferencia desde %s."
 
 #: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
@@ -263,35 +263,35 @@ msgid_plural "%d files"
 msgstr[0] "%d archivo"
 msgstr[1] "%d archivos"
 
-#: src/prefs.py:139
+#: src/prefs.py:144
 msgid "Warpinator Preferences"
 msgstr "Preferencias de Warpinator"
 
-#: src/prefs.py:152
+#: src/prefs.py:157
 msgid "General"
 msgstr "General"
 
-#: src/prefs.py:154
+#: src/prefs.py:159
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: src/prefs.py:156
+#: src/prefs.py:161
 msgid "Show an icon in the notification area"
 msgstr "Mostrar un icono en el área de notificación"
 
-#: src/prefs.py:160
+#: src/prefs.py:165
 msgid "Start with main window open"
 msgstr "Iniciar con la ventana principal abierta"
 
-#: src/prefs.py:165
+#: src/prefs.py:170
 msgid "Start automatically"
 msgstr "Iniciar automáticamente"
 
-#: src/prefs.py:171
+#: src/prefs.py:176
 msgid "Use compression when possible."
 msgstr "Use la compresión cuando sea posible."
 
-#: src/prefs.py:173
+#: src/prefs.py:178
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
@@ -299,76 +299,76 @@ msgstr ""
 "Advertencia: puede tener un impacto negativo en el rendimiento de algunas "
 "redes más rápidas."
 
-#: src/prefs.py:176
+#: src/prefs.py:181
 msgid "Location for received files"
 msgstr "Ubicación de los archivos recibidos"
 
-#: src/prefs.py:181
+#: src/prefs.py:186
 msgid "Require approval before accepting files"
 msgstr "Requerir la aprobación para aceptar archivos"
 
-#: src/prefs.py:185
+#: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
 msgstr "Requerir la aprobación para sobreescribir archivos"
 
-#: src/prefs.py:189
+#: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Mostrar una notificación cuando alguien le envía (o intenta enviarle) "
+"Mostrar una notificación cuando alguien le envíe (o intenta enviarle) "
 "archivos"
 
-#: src/prefs.py:194
+#: src/prefs.py:199
 msgid "Connection"
 msgstr "Conexión"
 
-#: src/prefs.py:196
+#: src/prefs.py:201
 msgid "Identification"
 msgstr "Identificación"
 
-#: src/prefs.py:201
+#: src/prefs.py:206
 msgid "Group Code"
 msgstr "Código de grupo"
 
-#: src/prefs.py:202
+#: src/prefs.py:207
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "No puede comunicarse con equipos que no usen el mismo código."
 
-#: src/prefs.py:208
+#: src/prefs.py:213
 msgid "Network"
 msgstr "Red"
 
-#: src/prefs.py:211
+#: src/prefs.py:216
 msgid "Automatic"
 msgstr "Modo automático"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:236
+#: src/prefs.py:257
 #, python-format
 msgid "%s - not found"
 msgstr "%s - interfaz no encontrada"
 
-#: src/prefs.py:238
+#: src/prefs.py:259
 msgid "Network interface to use"
 msgstr "Interfaz de red que se usará"
 
-#: src/prefs.py:246
+#: src/prefs.py:267
 msgid "Incoming port for transfers"
 msgstr "Puerto de entrada para transferencias"
 
-#: src/prefs.py:253
+#: src/prefs.py:274
 msgid "Incoming port for registration"
 msgstr "Puerto de entrada para el registro"
 
-#: src/prefs.py:268
+#: src/prefs.py:289
 msgid "Apply network changes"
 msgstr "Aplicar los cambios en la red"
 
-#: src/prefs.py:277
+#: src/prefs.py:298
 msgid "Update firewall rules"
 msgstr "Actualizar las reglas del cortafuegos"
 
-#: src/prefs.py:289
+#: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -377,15 +377,15 @@ msgstr ""
 "mismos puertos para todos los equipos puede simplificar la adición de "
 "excepciones al cortafuegos si es necesario."
 
-#: src/prefs.py:390
+#: src/prefs.py:411
 msgid "Set code"
 msgstr "Configurar el código"
 
-#: src/prefs.py:405
+#: src/prefs.py:426
 msgid "A group code is required."
 msgstr "Se requiere un código de grupo."
 
-#: src/prefs.py:411
+#: src/prefs.py:432
 msgid "The group code should be longer if possible."
 msgstr "El código de grupo debería ser más largo si es posible."
 
@@ -393,53 +393,53 @@ msgstr "El código de grupo debería ser más largo si es posible."
 msgid "Connection has been lost"
 msgstr "Se ha perdido la conexión"
 
-#: src/server.py:557
+#: src/server.py:567
 msgid "An error occurred on the remote machine"
 msgstr "Se ha producido un error en la máquina remota"
 
-#: src/util.py:127
-msgid "Select file(s) to send"
-msgstr "Seleccione archivos para enviar"
-
-#: src/util.py:131
+#: src/util.py:147
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/util.py:132
-msgid "Send"
-msgstr "Enviar"
+#: src/util.py:148
+msgid "Add"
+msgstr "Añadir"
 
-#: src/util.py:292
+#: src/util.py:170
+msgid "Select file(s) to send"
+msgstr "Seleccione archivos para enviar"
+
+#: src/util.py:319
 msgid "A few seconds remaining"
 msgstr "Quedan pocos segundos"
 
-#: src/util.py:295
+#: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d segundos restantes"
 
-#: src/util.py:299 src/util.py:307
+#: src/util.py:326 src/util.py:334
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
-#: src/util.py:306
+#: src/util.py:333
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
 msgstr[1] "%d horas"
 
-#: src/util.py:311
+#: src/util.py:338
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "aproximadamente %d hora"
 msgstr[1] "aproximadamente %d horas"
 
-#: src/util.py:399 src/warpinator.py:534
+#: src/util.py:426 src/warpinator.py:534
 msgid "About"
 msgstr "Acerca de"
 
@@ -490,7 +490,7 @@ msgstr "No se han encontrado algunos archivos"
 msgid "Completed"
 msgstr "Completado"
 
-#: src/warpinator.py:339 src/warpinator.py:895
+#: src/warpinator.py:339 src/warpinator.py:894
 msgid "Connecting"
 msgstr "Conectando"
 
@@ -521,19 +521,19 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] "%d transferencia entrante nueva"
 msgstr[1] "%d transferencias entrantes nuevas"
 
-#: src/warpinator.py:499 src/warpinator.py:1340
+#: src/warpinator.py:499 src/warpinator.py:1321
 msgid "Favorites"
 msgstr "Favoritos"
 
-#: src/warpinator.py:504 src/warpinator.py:1345
+#: src/warpinator.py:504 src/warpinator.py:1326
 msgid "Recents"
 msgstr "Recientes"
 
-#: src/warpinator.py:511 src/warpinator.py:1354
+#: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
 msgstr "Examinar..."
 
-#: src/warpinator.py:526 src/warpinator.py:1286
+#: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
 msgstr "Abrir la carpeta para guardar"
 
@@ -541,7 +541,7 @@ msgstr "Abrir la carpeta para guardar"
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: src/warpinator.py:538 src/warpinator.py:1289
+#: src/warpinator.py:538 src/warpinator.py:1270
 msgid "Quit"
 msgstr "Salir"
 
@@ -553,19 +553,19 @@ msgstr "No parece que esté conectado a una red."
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Ha fallado el inicio. Compruebe los registros."
 
-#: src/warpinator.py:874
+#: src/warpinator.py:873
 msgid "Offline"
 msgstr "Fuera de línea"
 
-#: src/warpinator.py:881
+#: src/warpinator.py:880
 msgid "Unable to connect"
 msgstr "No se puede conectar"
 
-#: src/warpinator.py:888
+#: src/warpinator.py:887
 msgid "Waiting for two-way connection"
 msgstr "Esperando a una conexión bidireccional"
 
-#: src/warpinator.py:1323
+#: src/warpinator.py:1304
 msgid "Send to all"
 msgstr "Enviar a todos"
 
@@ -575,7 +575,8 @@ msgstr "Abrir un puerto del cortafuegos para Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "Necesita autenticarse para modificar los ajustes del cortafuegos."
+msgstr ""
+"Necesita autenticarse para modificar la configuración del cortafuegos."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
