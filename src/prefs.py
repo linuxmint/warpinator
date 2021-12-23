@@ -218,23 +218,53 @@ class Preferences():
         current = get_preferred_iface()
         current_selection_exists = current == "auto" or False
 
+        # use lshw to get any interface 'product' names (Intel blah blah)
+        j = []
         try:
             lshw_out = subprocess.check_output(["lshw", "-class", "network", "-sanitize", "-json"],
                                                stderr=subprocess.DEVNULL
                                               ).decode("utf-8")
             j = json.loads(lshw_out)
         except:
-            # Flatpak probably - just show the iface name.
-            available = networkmonitor.get_network_monitor().get_valid_interface_infos()
-            j = []
+            pass
 
-            for info in available:
-                item = {}
-                item["logicalname"] = info.iface
-                item["product"] = ""
-                j.append(item)
+        def lookup_name(iface, node):
+            for entry in node:
+                try:
+                    entry_product = entry["product"]
+                except KeyError:
+                    entry_product = ""
 
-        for dev in j:
+                try:
+                    entry_iface = entry["logicalname"]
+                    if entry_iface == iface:
+                        return entry_product
+                    else:
+                        continue
+                except KeyError:
+                    try:
+                        children = entry["children"]
+                        name = lookup_name(iface, children)
+                        if name != "":
+                            return name
+                        # Use the parent product if it had one
+                        elif entry_product != "":
+                            return entry_product
+                    except KeyError:
+                        continue
+
+            return ""
+
+        available = networkmonitor.get_network_monitor().get_valid_interface_infos()
+        valid_info = []
+
+        for info in available:
+            item = {}
+            item["logicalname"] = info.iface
+            item["product"] = lookup_name(info.iface, j)
+            valid_info.append(item)
+
+        for dev in valid_info:
             iface = dev["logicalname"]
 
             try:

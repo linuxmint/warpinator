@@ -44,7 +44,7 @@ class NetworkMonitor(GObject.Object):
                        "port",
                        "reg-port"):
             return
-        print("key", key)
+
         self.stop()
         self.start()
 
@@ -86,8 +86,6 @@ class NetworkMonitor(GObject.Object):
         if new_ip_info == None:
             new_ip_info = util.InterfaceInfo({ "addr": "0.0.0.0" }, { "addr": "[::]" }, new_iface_setting)
 
-        self.current_ip_info = new_ip_info
-
         if new_online != self.online or self.current_ip_info != new_ip_info or self.current_iface_setting != new_iface_setting:
             self.current_ip_info = new_ip_info
             self.online = new_online
@@ -119,15 +117,18 @@ class NetworkMonitor(GObject.Object):
 
     def get_default_interface_info(self):
         ip = self.get_default_ip()
+        fallback_info = None
 
         for info in self.get_valid_interface_infos():
+            if fallback_info == None:
+                fallback_info = info
             try:
                 if ip == info.ip4["addr"]:
                     return info
             except:
                 pass
 
-        return None
+        return fallback_info
 
     def get_default_ip(self):
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
