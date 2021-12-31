@@ -1,3 +1,10 @@
+warpinator (1.2.7) una; urgency=medium
+
+  [ Michael Webster ]
+  * network: Improve interface detection in the monitor and preferences.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 31 Dec 2021 11:30:03 +0000
+
 warpinator (1.2.6) una; urgency=medium
 
   [ Michael Webster ]
