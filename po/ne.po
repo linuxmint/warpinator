@@ -1,4 +1,4 @@
-# Vietnamese translation for linuxmint
+# Nepali translation for linuxmint
 # Copyright (c) 2021 Rosetta Contributors and Canonical Ltd 2021
 # This file is distributed under the same license as the linuxmint package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2021-12-06 13:01+0000\n"
-"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
-"Language-Team: Vietnamese <vi@li.org>\n"
+"PO-Revision-Date: 2021-12-09 07:20+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Nepali <ne@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2021-12-31 12:26+0000\n"
 "X-Generator: Launchpad (build adb364d6a74a28e7b95d51cd30446ec16160de6c)\n"
 
@@ -22,23 +22,23 @@ msgstr ""
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr "Gửi và nhận tệp qua mạng"
+msgstr ""
 
 #: resources/main-window.ui:140
 msgid "No matching results"
-msgstr "Không có kết quả phù hợp"
+msgstr ""
 
 #: resources/main-window.ui:296
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Làm cho máy từ xa này trở thành mục yêu thích trong giao diện chính"
+msgstr ""
 
 #: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
-msgstr "Xóa các hoạt động không hoạt động và đã hoàn thành"
+msgstr ""
 
 #: resources/main-window.ui:389
 msgid "Send files"
-msgstr "Gữi tệp"
+msgstr ""
 
 #: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
@@ -50,19 +50,17 @@ msgstr ""
 
 #: resources/main-window.ui:556
 msgid "No other computers found..."
-msgstr "Không tìm thấy máy tính nào khác ..."
+msgstr ""
 
 #: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
-msgstr "Đảm bảo kết nối mạng của bạn đang hoạt động."
+msgstr ""
 
 #: resources/main-window.ui:635
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Kiểm tra các quy tắc tường lửa của bạn. Số cổng có thể được thay đổi. Xem "
-"trong mục sở thích để biết thêm chi tiết."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:651
@@ -70,17 +68,14 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Warpinator có đang chạy trên bất kỳ máy tính nào khác trong mạng này không? "
-"Nếu vậy, hãy đảm bảo rằng tất cả đang sử dụng cùng một mã nhóm trong tùy "
-"chọn."
 
 #: resources/main-window.ui:669
 msgid "Possible solutions:"
-msgstr "Phương pháp khả thi:"
+msgstr ""
 
 #: resources/main-window.ui:735
 msgid "Initializing, please wait..."
-msgstr "Đang khởi tạo, vui lòng đợi ..."
+msgstr ""
 
 #: resources/main-window.ui:793
 msgid "Something went wrong"
@@ -88,31 +83,29 @@ msgstr ""
 
 #: resources/main-window.ui:868
 msgid "Invalid save location"
-msgstr "Vị trí lưu không hợp lệ"
+msgstr ""
 
 #: resources/main-window.ui:905
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
 msgstr ""
-"Thư mục này không thể truy cập được hoặc không tồn tại. Vui lòng chọn một vị "
-"trí mới trong mục ưa thích hoặc đảm bảo rằng vị trí hiện tại đã được gắn kết."
 
 #: resources/main-window.ui:961
 msgid "Searching for other computers"
-msgstr "Tìm kiếm các máy tính khác"
+msgstr ""
 
 #: resources/main-window.ui:1020
 msgid "Shutting down..."
-msgstr "Đang Tắt..."
+msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Chờ phê duyệt"
+msgstr ""
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Không đủ dung lượng đĩa!"
+msgstr ""
 
 #: resources/op-item.ui:219
 msgid "Calculating"
@@ -120,43 +113,43 @@ msgstr ""
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Chấp nhận yêu cầu này"
+msgstr ""
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Từ chối yêu cầu này"
+msgstr ""
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Hủy yêu cầu này"
+msgstr ""
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Khởi động lại hoạt động này"
+msgstr ""
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Tạm dừng hoạt động này"
+msgstr ""
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Tiếp tục hoạt động này"
+msgstr ""
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Hủy hoạt động này"
+msgstr ""
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Xóa thao tác này khỏi danh sách"
+msgstr ""
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Mở thư mục chứa"
+msgstr ""
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Lưu ý về số cổng:"
+msgstr ""
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
@@ -166,7 +159,7 @@ msgstr ""
 
 #: src/notifications.py:23
 msgid "New incoming files"
-msgstr "Các tệp mới  đang đến"
+msgstr ""
 
 #: src/notifications.py:29
 #, python-format
@@ -195,21 +188,21 @@ msgstr ""
 #: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s đang gửi cho bạn %(file_count)d files"
+msgstr ""
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Chuyển hoàn tất"
+msgstr ""
 
 #: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "Quá trình chuyển đến %s đã hoàn tất thành công"
+msgstr ""
 
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "Quá trình chuyển từ %s đã hoàn tất thành công"
+msgstr ""
 
 #: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
@@ -218,31 +211,31 @@ msgstr ""
 #: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Đã xảy ra sự cố với quá trình chuyển đến %s"
+msgstr ""
 
 #: src/notifications.py:131
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Đã xảy ra sự cố với quá trình chuyển từ %s"
+msgstr ""
 
 #: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr "Đã hủy chuyển"
+msgstr ""
 
 #: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Chuyển khoản của bạn đến %s đã bị hủy"
+msgstr ""
 
 #: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Chuyển khoản đến từ %s đã bị hủy"
+msgstr ""
 
 #: src/ops.py:49
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr ""
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:148
@@ -262,7 +255,7 @@ msgstr[1] ""
 
 #: src/prefs.py:144
 msgid "Warpinator Preferences"
-msgstr "Tùy chọn Warpinator"
+msgstr ""
 
 #: src/prefs.py:157
 msgid "General"
@@ -274,11 +267,11 @@ msgstr ""
 
 #: src/prefs.py:161
 msgid "Show an icon in the notification area"
-msgstr "Hiển thị biểu tượng trong khu vực thông báo"
+msgstr ""
 
 #: src/prefs.py:165
 msgid "Start with main window open"
-msgstr "Bắt đầu với cửa sổ chính đang mở"
+msgstr ""
 
 #: src/prefs.py:170
 msgid "Start automatically"
@@ -286,32 +279,30 @@ msgstr ""
 
 #: src/prefs.py:176
 msgid "Use compression when possible."
-msgstr "Sử dụng bộ nén khi có thể."
+msgstr ""
 
 #: src/prefs.py:178
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Cảnh báo: Điều này có thể có tác động tiêu cực đến hiệu suất trên một số "
-"mạng nhanh hơn."
 
 #: src/prefs.py:181
 msgid "Location for received files"
-msgstr "Vị trí cho các tệp đã nhận"
+msgstr ""
 
 #: src/prefs.py:186
 msgid "Require approval before accepting files"
-msgstr "Yêu cầu phê duyệt trước khi chấp nhận tệp"
+msgstr ""
 
 #: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
-msgstr "Yêu cầu phê duyệt khi tệp sẽ bị ghi đè"
+msgstr ""
 
 #: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
-msgstr "Hiển thị thông báo khi ai đó gửi (hoặc cố gắng gửi) tệp cho bạn"
+msgstr ""
 
 #: src/prefs.py:199
 msgid "Connection"
@@ -323,11 +314,11 @@ msgstr ""
 
 #: src/prefs.py:206
 msgid "Group Code"
-msgstr "Mã nhóm"
+msgstr ""
 
 #: src/prefs.py:207
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr "Bạn không thể giao tiếp với các máy tính không sử dụng cùng một mã."
+msgstr ""
 
 #: src/prefs.py:213
 msgid "Network"
@@ -341,56 +332,53 @@ msgstr ""
 #: src/prefs.py:257
 #, python-format
 msgid "%s - not found"
-msgstr "%s - không tìm thấy"
+msgstr ""
 
 #: src/prefs.py:259
 msgid "Network interface to use"
-msgstr "Giao diện mạng để sử dụng"
+msgstr ""
 
 #: src/prefs.py:267
 msgid "Incoming port for transfers"
-msgstr "Cổng đến để chuyển"
+msgstr ""
 
 #: src/prefs.py:274
 msgid "Incoming port for registration"
-msgstr "Cổng đến để đăng ký"
+msgstr ""
 
 #: src/prefs.py:289
 msgid "Apply network changes"
-msgstr "Áp dụng các thay đổi mạng"
+msgstr ""
 
 #: src/prefs.py:298
 msgid "Update firewall rules"
-msgstr "Cập nhật các quy tắc tường lửa"
+msgstr ""
 
 #: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Bất kỳ số cổng nào cũng sẽ hoạt động cho ứng dụng, nhưng việc sử dụng các "
-"cổng giống nhau cho tất cả các máy tính có thể khiến việc thêm các ngoại lệ "
-"tường lửa nếu cần thiết trở nên đơn giản hơn."
 
 #: src/prefs.py:411
 msgid "Set code"
-msgstr "Đặt mã"
+msgstr ""
 
 #: src/prefs.py:426
 msgid "A group code is required."
-msgstr "Bắt buộc có mã nhóm"
+msgstr ""
 
 #: src/prefs.py:432
 msgid "The group code should be longer if possible."
-msgstr "Mã nhóm nên dài hơn nếu có thể."
+msgstr ""
 
 #: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
-msgstr "Kết nối đã bị mất"
+msgstr ""
 
 #: src/server.py:567
 msgid "An error occurred on the remote machine"
-msgstr "Đã xảy ra lỗi trên máy điều khiển từ xa"
+msgstr ""
 
 #: src/util.py:147
 msgid "Cancel"
@@ -402,16 +390,16 @@ msgstr ""
 
 #: src/util.py:170
 msgid "Select file(s) to send"
-msgstr "Chọn (các) tệp để gửi"
+msgstr ""
 
 #: src/util.py:319
 msgid "A few seconds remaining"
-msgstr "Một vài giây còn lại"
+msgstr ""
 
 #: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d giây còn lại"
+msgstr ""
 
 #: src/util.py:326 src/util.py:334
 #, python-format
@@ -431,7 +419,8 @@ msgstr[1] ""
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "khoảng %d giờ"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/util.py:426 src/warpinator.py:534
 msgid "About"
@@ -443,42 +432,42 @@ msgstr ""
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr "Chờ phê duyệt"
+msgstr ""
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr "Chờ đợi sự chấp nhận của bạn"
+msgstr ""
 
 #: src/warpinator.py:153
 msgid "Files may be overwritten"
-msgstr "Các tệp có thể bị ghi đè"
+msgstr ""
 
 #: src/warpinator.py:156
 msgid "Not enough disk space"
-msgstr "Không đủ dung lượng đĩa"
+msgstr ""
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr "Yêu cầu đã bị hủy"
+msgstr ""
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "Yêu cầu bị hủy bởi %s"
+msgstr ""
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Đã hủy quá trình chuyển khoản trước %s"
+msgstr ""
 
 #: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
-msgstr "Không tìm thấy tệp '%s'"
+msgstr ""
 
 #: src/warpinator.py:179
 msgid "Some files not found"
-msgstr "Không tìm thấy một số tệp"
+msgstr ""
 
 #: src/warpinator.py:181
 msgid "Completed"
@@ -496,23 +485,24 @@ msgstr ""
 #: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
-msgstr "%s không trực tuyến"
+msgstr ""
 
 #: src/warpinator.py:356
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Không thể kết nối với %s"
+msgstr ""
 
 #: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Đang đợi %s hoàn tất kết nối."
+msgstr ""
 
 #: src/warpinator.py:390
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d chuyển khoản mới đến"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/warpinator.py:499 src/warpinator.py:1321
 msgid "Favorites"
@@ -520,7 +510,7 @@ msgstr ""
 
 #: src/warpinator.py:504 src/warpinator.py:1326
 msgid "Recents"
-msgstr "Gần đây"
+msgstr ""
 
 #: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
@@ -528,7 +518,7 @@ msgstr ""
 
 #: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
-msgstr "Mở thư mục lưu"
+msgstr ""
 
 #: src/warpinator.py:530
 msgid "Preferences"
@@ -540,11 +530,11 @@ msgstr ""
 
 #: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
-msgstr "Có vẻ như bạn không kết nối với mạng."
+msgstr ""
 
 #: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Khởi động không thành công, vui lòng kiểm tra logs của bạn."
+msgstr ""
 
 #: src/warpinator.py:873
 msgid "Offline"
@@ -556,19 +546,19 @@ msgstr ""
 
 #: src/warpinator.py:887
 msgid "Waiting for two-way connection"
-msgstr "Đang chờ kết nối hai chiều"
+msgstr ""
 
 #: src/warpinator.py:1304
 msgid "Send to all"
-msgstr "Gửi cho tất cả"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Mở cổng tường lửa cho Warpinator"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "Để sửa đổi cài đặt tường lửa, bạn cần xác thực."
+msgstr ""
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
@@ -580,8 +570,6 @@ msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
-"Warpinator cho phép bạn dễ dàng kết nối nhiều máy tính trong mạng cục bộ và "
-"chia sẻ tệp một cách nhanh chóng và an toàn."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27

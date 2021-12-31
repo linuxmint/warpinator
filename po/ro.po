@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2021-06-27 21:11+0000\n"
-"Last-Translator: Nicolae Crefelean <Unknown>\n"
+"PO-Revision-Date: 2021-12-22 11:16+0000\n"
+"Last-Translator: Vladm <Unknown>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2021-12-06 15:07+0000\n"
-"X-Generator: Launchpad (build f92b6e0bb2624f8a9125e3f45b7621c6e230c5ff)\n"
+"X-Launchpad-Export-Date: 2021-12-31 12:26+0000\n"
+"X-Generator: Launchpad (build adb364d6a74a28e7b95d51cd30446ec16160de6c)\n"
 
 #: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr "Trimite și Primește Fișiere peste Rețea"
+msgstr "Trimite și primește fișiere prin rețea"
 
 #: resources/main-window.ui:140
 msgid "No matching results"
@@ -62,7 +62,7 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Verifică regulile parafocului. Numerele porturilor se pot schimba. Vezi "
+"Verifică regulile firewallului. Numerele porturilor se pot schimba. Vezi "
 "preferințele pentru detalii."
 
 #. Do not translate 'Warpinator'
@@ -403,7 +403,7 @@ msgstr "Renunță"
 
 #: src/util.py:148
 msgid "Add"
-msgstr ""
+msgstr "Adaugă"
 
 #: src/util.py:170
 msgid "Select file(s) to send"
