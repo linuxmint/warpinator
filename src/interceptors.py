@@ -12,16 +12,12 @@ class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
         pass
 
     # Intercept the RPC response after it returns from the server but before it reaches
-    # the re
+    # the remote.
     def intercept_unary_stream(self, continuation, client_call_details, request):
-        # We told the sender already what our preference was for compression. We
-        # can be confident we won't be receiving compressed chunks.
-
         # Only intercept transfer ops.
         if client_call_details.method != "/Warp/StartTransfer":
             return continuation(client_call_details, request)
 
-        # Outbound message (request)
         try:
             use_comp = request.use_compression
         except AttributeError:
@@ -29,8 +25,12 @@ class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
 
         logging.debug("Transfer using compression: %d" % use_comp)
 
+        # When always need to return the original response along with
+        # whatever the remote will be iterating over. If there's no
+        # compression, we just return the same response twice.
         if not use_comp:
-            return continuation(client_call_details, request)
+            response = continuation(client_call_details, request)
+            return response, response
 
         def decomp_stream(response):
             # Inbound response (returned from continuation())
@@ -47,8 +47,13 @@ class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
                     # this will go to remote.start_transfer_op()'s handler.
                     raise
 
-        return decomp_stream(continuation(client_call_details, request))
+        response = continuation(client_call_details, request)
 
+        # With compression, decomp_stream returns a simple generator
+        # function. The response is still needed for its future.cancel()
+        # method.
+
+        return response, decomp_stream(response)
 
 def _wrap_rpc_behavior(handler, fn):
         if handler is None:

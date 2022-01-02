@@ -197,9 +197,12 @@ class ReceiveOp(CommonOp):
         self.have_space = False
         self.existing = False
 
-        # This is set when a transfer starts - it's a grpc.Future that we can cancel() if the user
-        # wants the transfer to stop.
+        # This will always be the Response returned from StartTransfer, and is used to cancel
+        # transfers from the receiver's end.
+        self.file_iter_cancellable = None
+        # This will be a generator if compression is enabled, and the original Response (again) if not..
         self.file_iterator = None
+
         self.current_progress_report = None
         # These are the first-level base names (no path, just the filename) that we'll send to the server
         # to check for pre-existence.  We know that if these files/folders don't exist, none of their children

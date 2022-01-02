@@ -567,7 +567,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             op.error_msg = _("An error occurred on the remote machine")
 
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
-            op.file_send_cancellable.set()
+            if op.file_send_cancellable != None:
+                op.file_send_cancellable.set()
             logging.debug("Server: sender received stop transfer by receiver: %s" % op.error_msg)
             if op.error_msg == "":
                 op.set_status(OpStatus.STOPPED_BY_RECEIVER)
@@ -575,7 +576,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 op.set_status(OpStatus.FAILED)
         else:
             try:
-                op.file_iterator.cancel()
+                op.file_iter_cancellable.cancel()
             except AttributeError:
                 # we may not have this yet if the transfer fails upon the initial response
                 # (meaning we haven't returned the generator)

@@ -442,12 +442,25 @@ class RemoteMachine(GObject.Object):
         receiver = transfers.FileReceiver(op)
         op.set_status(OpStatus.TRANSFERRING)
 
-        op.file_iterator = self.stub.StartTransfer(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                                   ident=self.local_ident,
-                                                                   readable_name=util.get_hostname(),
-                                                                   use_compression=op.use_compression and prefs.use_compression()))
+        # This is ugly because StartTransfer only returns file_iterator. The
+        # interceptor returns the cancellable with it, because file_iterator
+        # is not a future if compression is active, it's just a generator.
+        op.file_iter_cancellable, op.file_iterator = self.stub.StartTransfer(
+            warp_pb2.OpInfo(
+                timestamp=op.start_time,
+                ident=self.local_ident,
+                readable_name=util.get_hostname(),
+                use_compression=op.use_compression and prefs.use_compression()
+            )
+        )
 
         def report_receive_error(error):
+            op.file_iterator = None
+            op.file_iter_cancellable = None
+            
+            if error == None:
+                return
+
             op.set_error(error)
 
             try:
@@ -466,18 +479,19 @@ class RemoteMachine(GObject.Object):
         try:
             for data in op.file_iterator:
                 receiver.receive_data(data)
-        except grpc.RpcError:
-            if op.file_iterator.code() == grpc.StatusCode.CANCELLED:
-                op.file_iterator = None
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.CANCELLED:
+                report_receive_error(None)
                 return
             else:
-                report_receive_error(op.file_iterator)
+                report_receive_error(e)
                 return
         except Exception as e:
             report_receive_error(e)
             return
 
         op.file_iterator = None
+        op.file_iter_cancellable = None
         receiver.receive_finished()
 
         logging.debug("Remote: receipt of %s files (%s) finished in %s" % \
@@ -506,8 +520,8 @@ class RemoteMachine(GObject.Object):
                 else:
                     op.set_status(OpStatus.FAILED)
         else:
-            if op.file_iterator:
-                op.file_iterator.cancel()
+            if op.file_iter_cancellable:
+                op.file_iter_cancellable.cancel()
             if not lost_connection:
                 logging.debug("Remote: stop transfer initiated by receiver")
                 if op.error_msg == "":
