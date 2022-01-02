@@ -458,9 +458,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             if existing_op.start_time == request.info.timestamp:
                 # Compression could have changed for a restart, as it's not tied to the op.
                 try:
-                    op.use_compression = request.info.use_compression
+                    existing_op.use_compression = request.info.use_compression
                 except AttributeError:
-                    op.use_compression = False
+                    existing_op.use_compression = False
                 existing_op.set_status(OpStatus.WAITING_PERMISSION)
                 self.add_receive_op_to_remote_machine(existing_op)
                 return void
