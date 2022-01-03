@@ -7,6 +7,32 @@ import logging
 import prefs
 import util
 
+class StreamReponseWrapper():
+    def __init__(self, response):
+        self.response = response
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        chunk = self.response.__next__()
+
+        try:
+            if not chunk.chunk:
+                return chunk
+            else:
+                dcchunk = zlib.decompress(chunk.chunk)
+                chunk.chunk = dcchunk
+                return chunk
+        except Exception as e:
+            logging.warning("Decompression error: %s" % e)
+            # this will go to remote.start_transfer_op()'s handler.
+            raise
+
+    # Future
+    def cancel(self):
+        self.response.cancel()
+
 class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
     def __init__(self):
         pass
@@ -29,31 +55,9 @@ class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
         # whatever the remote will be iterating over. If there's no
         # compression, we just return the same response twice.
         if not use_comp:
-            response = continuation(client_call_details, request)
-            return response, response
+            return continuation(client_call_details, request)
 
-        def decomp_stream(response):
-            # Inbound response (returned from continuation())
-            for chunk in response:
-                try:
-                    if not chunk.chunk:
-                        yield chunk
-                    else:
-                        dcchunk = zlib.decompress(chunk.chunk)
-                        chunk.chunk = dcchunk
-                        yield chunk
-                except Exception as e:
-                    logging.warning("Decompression error: %s" % e)
-                    # this will go to remote.start_transfer_op()'s handler.
-                    raise
-
-        response = continuation(client_call_details, request)
-
-        # With compression, decomp_stream returns a simple generator
-        # function. The response is still needed for its future.cancel()
-        # method.
-
-        return response, decomp_stream(response)
+        return StreamReponseWrapper(continuation(client_call_details, request))
 
 def _wrap_rpc_behavior(handler, fn):
         if handler is None:

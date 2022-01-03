@@ -197,10 +197,8 @@ class ReceiveOp(CommonOp):
         self.have_space = False
         self.existing = False
 
-        # This will always be the Response returned from StartTransfer, and is used to cancel
-        # transfers from the receiver's end.
-        self.file_iter_cancellable = None
-        # This will be a generator if compression is enabled, and the original Response (again) if not..
+        # This will be a <_Rendezvous object of in-flight RPC> if no compression is used, and a
+        # SteamResponseWrapper (interceptors.py) if it is.
         self.file_iterator = None
 
         self.current_progress_report = None

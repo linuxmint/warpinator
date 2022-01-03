@@ -576,7 +576,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 op.set_status(OpStatus.FAILED)
         else:
             try:
-                op.file_iter_cancellable.cancel()
+                op.file_iterator.cancel()
             except AttributeError:
                 # we may not have this yet if the transfer fails upon the initial response
                 # (meaning we haven't returned the generator)

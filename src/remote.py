@@ -445,7 +445,7 @@ class RemoteMachine(GObject.Object):
         # This is ugly because StartTransfer only returns file_iterator. The
         # interceptor returns the cancellable with it, because file_iterator
         # is not a future if compression is active, it's just a generator.
-        op.file_iter_cancellable, op.file_iterator = self.stub.StartTransfer(
+        op.file_iterator = self.stub.StartTransfer(
             warp_pb2.OpInfo(
                 timestamp=op.start_time,
                 ident=self.local_ident,
@@ -456,8 +456,7 @@ class RemoteMachine(GObject.Object):
 
         def report_receive_error(error):
             op.file_iterator = None
-            op.file_iter_cancellable = None
-            
+
             if error == None:
                 return
 
@@ -491,7 +490,6 @@ class RemoteMachine(GObject.Object):
             return
 
         op.file_iterator = None
-        op.file_iter_cancellable = None
         receiver.receive_finished()
 
         logging.debug("Remote: receipt of %s files (%s) finished in %s" % \
@@ -520,8 +518,8 @@ class RemoteMachine(GObject.Object):
                 else:
                     op.set_status(OpStatus.FAILED)
         else:
-            if op.file_iter_cancellable:
-                op.file_iter_cancellable.cancel()
+            if op.file_iterator:
+                op.file_iterator.cancel()
             if not lost_connection:
                 logging.debug("Remote: stop transfer initiated by receiver")
                 if op.error_msg == "":
