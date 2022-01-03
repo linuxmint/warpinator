@@ -1,3 +1,13 @@
+warpinator (1.2.9) una; urgency=medium
+
+  [ Michael Webster ]
+  * Add some flatpak build notes.
+  * Transfers: Make transfers cancellable by the receiving computer once more.
+  * server.py: Fix regression from 2cd3b660c that was preventing existing ops from being restarted by the sender.
+  * transfers: Improve on 069cf5f57e6 by creating a generator object to wrap the origin response instead of returning two objects.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 03 Jan 2022 13:54:59 +0000
+
 warpinator (1.2.8) una; urgency=medium
 
   * l10n: Update translations
