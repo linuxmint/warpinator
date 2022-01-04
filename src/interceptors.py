@@ -51,9 +51,6 @@ class ChunkDecompressor(grpc.UnaryStreamClientInterceptor):
 
         logging.debug("Transfer using compression: %d" % use_comp)
 
-        # When always need to return the original response along with
-        # whatever the remote will be iterating over. If there's no
-        # compression, we just return the same response twice.
         if not use_comp:
             return continuation(client_call_details, request)
 
