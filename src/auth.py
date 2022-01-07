@@ -186,7 +186,9 @@ class AuthManager(GObject.Object):
             gen_new = True
 
         if gen_new:
-            self.ident = "%s-%s" % (self.hostname.upper(), secrets.token_hex(10).upper())
+            # Max 'instance' length is 63.
+            # https://datatracker.ietf.org/doc/html/rfc6763#section-7.2
+            self.ident = "%s-%s" % (self.hostname.upper()[:42], secrets.token_hex(10).upper())
             self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY, self.ident)
             self._save_keyfile()
 
