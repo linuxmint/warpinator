@@ -170,6 +170,7 @@ class FileReceiver(GObject.Object):
 
         self.current_path = None
         self.current_gfile = None
+        self.current_type = None
         self.current_stream = None
         self.current_mode = 0
         self.current_mtime = 0
@@ -201,6 +202,7 @@ class FileReceiver(GObject.Object):
             self.close_current_file()
             self.current_path = path
             self.current_mode = s.file_mode
+            self.current_type = s.file_type
             self.current_mtime = s.time.mtime
             self.current_mtime_usec = s.time.mtime_usec
 
@@ -208,7 +210,7 @@ class FileReceiver(GObject.Object):
             self.current_gfile = Gio.File.new_for_path(path)
 
         if s.file_type == FileType.DIRECTORY:
-            os.makedirs(path, mode=s.file_mode if (s.file_mode > 0) else 0o777, exist_ok=True)
+            os.makedirs(path, exist_ok=True)
         elif s.file_type == FileType.SYMBOLIC_LINK:
             make_symbolic_link(self.op, path, s.symlink_target)
         else:
@@ -231,22 +233,35 @@ class FileReceiver(GObject.Object):
             self.current_stream.close()
             self.current_stream = None
 
-        if self.preserve_timestamp and self.current_mtime > 0:
-            logging.debug("set mtime: %lu.%u -- %s" % (self.current_mtime, self.current_mtime_usec, self.current_path))
+        # set_attributes and os.chmod don't support operating on symlinks directly.
+
+        if self.preserve_timestamp and self.current_mtime > 0 and self.current_type != FileType.SYMBOLIC_LINK:
+            logging.debug("Restoring mtime: %s --> %lu.%u" \
+                % (self.current_path, self.current_mtime, self.current_mtime_usec))
 
             info = Gio.FileInfo.new()
             info.set_attribute_uint64(Gio.FILE_ATTRIBUTE_TIME_MODIFIED, self.current_mtime)
             info.set_attribute_uint32(Gio.FILE_ATTRIBUTE_TIME_MODIFIED_USEC, self.current_mtime_usec)
             try:
                 self.current_gfile.set_attributes_from_info(info, Gio.FileQueryInfoFlags.NONE, None)
-            except GLib.Error:
-                pass
-            self.current_mtime = 0
-            self.current_mtime_usec = 0
+            except GLib.Error as e:
+                logging.warning("Unable to restore original mtime to '%s': %s" % (self.current_path, e.message))
 
-        if self.preserve_perms and self.current_mode > 0:
-            os.chmod(self.current_path, mode=self.current_mode)
+        # Only restore permissions on normal files here.
+        # Folder permissions are set in reverse order at the end of the op,
+        if self.preserve_perms and self.current_mode > 0 and self.current_type != FileType.SYMBOLIC_LINK:
+            try:
+                if self.current_type == FileType.REGULAR:
+                    logging.debug("Restoring permissions: %s --> %s" % (self.current_path, self.current_mode))
+                    os.chmod(self.current_path, mode=self.current_mode)
+                else:
+                    self.folder_permission_change_list.append((self.current_path, self.current_mode))
+            except Exception as e:
+                logging.warning("Unable to restore original permissions to '%s': %s" % (self.current_path, str(e)))
 
+        self.current_mtime = 0
+        self.current_mtime_usec = 0
+        self.current_type = None
         self.current_mode = 0
         self.current_path = None
         self.current_gfile = None
@@ -256,7 +271,12 @@ class FileReceiver(GObject.Object):
             while self.folder_permission_change_list:
                 # We added folders from parent->children, this will apply permissions
                 # from child to parent.
-                os.chmod(*self.folder_permission_change_list.pop())
+                path, mode = self.folder_permission_change_list.pop()
+                try:
+                    logging.debug("Restoring folder permissions: %s --> %s" % (path, mode))
+                    os.chmod(path, mode)
+                except Exception as e:
+                    logging.warning("Unable to restore original permissions to folder '%s': %s" % (self.current_path, str(e)))
 
     def receive_finished(self):
         # We left the last (or only) file open
@@ -340,7 +360,7 @@ def gather_file_info(op):
                 file = Gio.File.new_for_uri(uri)
                 top_dir_basenames.append(file.get_basename())
 
-                info = file.query_info(infos, Gio.FileQueryInfoFlags.NONE, None)
+                info = file.query_info(infos, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None)
                 basename = file.get_basename()
                 if len(uri_list) == 1:
                     op.mime_if_single = info.get_content_type()
