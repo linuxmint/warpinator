@@ -5,6 +5,7 @@ import gettext
 import subprocess
 import logging
 import json
+import re
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
@@ -224,6 +225,10 @@ class Preferences():
             lshw_out = subprocess.check_output(["lshw", "-class", "network", "-sanitize", "-json"],
                                                stderr=subprocess.DEVNULL
                                               ).decode("utf-8")
+
+            lshw_out = re.sub("\A\s*{", "[{", lshw_out)
+            lshw_out = re.sub("}\s*{", "}, {", lshw_out)
+            lshw_out = re.sub("}\s*\\n\Z", "}]\n", lshw_out)
             j = json.loads(lshw_out)
         except:
             pass
