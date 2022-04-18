@@ -5,4 +5,4 @@ Comment=Send and Receive Files across the Network
 Icon=org.x.Warpinator
 Exec=warpinator
 Categories=GNOME;GTK;Utility;
-Keywords=send receive transfer exchange files LAN network wire local internet ethernet connection
+Keywords=send;receive;transfer;exchange;files;lan;network;wire;local;internet;ethernet;connection;
