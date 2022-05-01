@@ -4,7 +4,7 @@
 
 - Android: https://github.com/slowscript/warpinator-android
 - Windows: https://winpinator.swisz.cz
-- Windows: https://github.com/slowscript/warpinator-windows (under development)
+- Windows: https://github.com/slowscript/warpinator-windows
 
 ### How to build and install for Linux
 ________
