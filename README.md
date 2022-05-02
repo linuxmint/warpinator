@@ -3,12 +3,13 @@
 ##### Other platforms (unofficial):
 
 - Android: https://github.com/slowscript/warpinator-android
+- iOS: https://github.com/williamMillington/warpinator-iOS (beta)
 - Windows: https://winpinator.swisz.cz
 - Windows: https://github.com/slowscript/warpinator-windows
 
 ### How to build and install for Linux
 ________
-#### Mint 20, LMDE 4:
+#### Mint 20, LMDE 4+:
 ```
 sudo apt-get install warpinator
 ```
@@ -51,6 +52,12 @@ Add this PPA to satisfy dependencies, then you can follow steps above:
 meson builddir --prefix=/usr  (This is typical - /usr/local is another common choice for non-package-manager installs).
 ninja -C builddir
 sudo ninja -C builddir install
+```
+#### Flatpak
+
+For any Linux distro with flatpak support you can also install it from [Flathub](https://flathub.org/apps/details/org.x.Warpinator):
+```
+flatpak install flathub org.x.Warpinator
 ```
 _____
 ##### build deps (ref: debian/control)
