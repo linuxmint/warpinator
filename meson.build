@@ -1,4 +1,4 @@
-project('warpinator', 'c', version: '1.2.9', meson_version: '>=0.45.0')
+project('warpinator', 'c', version: '1.2.9', meson_version: '>=0.47.0')
 
 RPC_API_VERSION = '2'
 
@@ -12,6 +12,13 @@ install_bindir = join_paths(get_option('prefix'), get_option('bindir'))
 
 include_firewall_mod = get_option('include-firewall-mod')
 bundle_zeroconf = get_option('bundle-zeroconf')
+
+# grpc 1.30.2 on ubuntu 22.04 is broken
+pymod = import('python')
+python3 = pymod.find_installation('python3')
+bundle_grpc = python3.language_version().version_compare('3.10') and \
+              get_option('bundle-grpc-with-py310') and \
+              host_machine.cpu() == 'x86_64'
 
 subdir('data')
 subdir('src')
@@ -30,5 +37,6 @@ message('\n'.join(['',
 '    building for flatpak:   @0@'.format(get_option('flatpak-build')),
 '    including ufw script:   @0@'.format(include_firewall_mod),
 '    bundling zeroconf:      @0@'.format(bundle_zeroconf and not get_option('flatpak-build')),
+'    bundling grpc:          @0@'.format(bundle_grpc),
 '',
 ]))

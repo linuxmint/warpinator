@@ -2,3 +2,7 @@
 
 %:
 	dh $@ --with=python3,gir
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+	    -Dbundle-grpc-with-py310=true

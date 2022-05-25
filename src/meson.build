@@ -44,3 +44,11 @@ install_data(libexec_py,
 if include_firewall_mod
     subdir('firewall')
 endif
+
+if bundle_grpc
+    install_subdir(
+        'grpc-py310-x86_64',
+        install_dir: join_paths(install_libdir, 'grpc'),
+        strip_directory: true
+    )
+endif

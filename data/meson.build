@@ -44,7 +44,7 @@ if include_firewall_mod
     )
 endif
 
-current_date = run_command('date', '+%Y-%m-%d').stdout().strip()
+current_date = run_command('date', '+%Y-%m-%d', check: false).stdout().strip()
 
 appdata_conf = configuration_data()
 appdata_conf.set('appid', desktop_id)

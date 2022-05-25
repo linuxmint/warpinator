@@ -14,3 +14,8 @@ option('bundle-zeroconf',
     description: 'python-zeroconf is actively developed, with api changes/breaks occasionally - it is safer to bundle a static version where permitted.'
 )
 
+option('bundle-grpc-with-py310',
+    type: 'boolean',
+    value: false,
+    description: 'grpc 1.30.2 is broken on Ubuntu 22.04. Setting this to true will bundle 1.46.3 IF python version is 3.10.'
+)
