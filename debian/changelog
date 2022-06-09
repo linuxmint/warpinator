@@ -1,3 +1,32 @@
+warpinator (1.2.10) vanessa; urgency=medium
+
+  [ Michael Webster ]
+  * Remove a comment that no longer applies.
+  * auth.py: Limit the length of the zeroconf service name.
+  * transfers: Don't try to set mtime or mode on symlinks, and fix folder permission setting.
+  * Update readme.
+
+  [ Vincent Vermeulen ]
+  * make other platforms a bulleted list
+
+  [ Michael Webster ]
+  * Add some troubleshooting tips to the readme.
+
+  [ Cobinja ]
+  * Fix network device name fetching
+
+  [ Vincent Vermeulen ]
+  * Update README.md
+  * Update README.md
+
+  [ Michael Webster ]
+  * build: Add an option to include grpc to workaround broken version in ubuntu 22.04.
+
+  [ Clement Lefebvre ]
+  * Add keywords to .desktop file
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 09 Jun 2022 15:52:02 +0200
+
 warpinator (1.2.9) una; urgency=medium
 
   [ Michael Webster ]
