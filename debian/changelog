@@ -1,3 +1,9 @@
+warpinator (1.2.11) vanessa; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 27 Jun 2022 13:46:27 +0200
+
 warpinator (1.2.10) vanessa; urgency=medium
 
   [ Michael Webster ]
