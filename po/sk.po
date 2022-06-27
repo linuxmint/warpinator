@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2021-06-22 09:00+0000\n"
+"PO-Revision-Date: 2022-02-14 13:30+0000\n"
 "Last-Translator: Dusan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2021-12-31 12:26+0000\n"
-"X-Generator: Launchpad (build adb364d6a74a28e7b95d51cd30446ec16160de6c)\n"
+"X-Launchpad-Export-Date: 2022-06-26 11:30+0000\n"
+"X-Generator: Launchpad (build 51a2e4fa2e9b8e45f00904ad7f53546f45ac48a5)\n"
 "Language: sk\n"
 
 #: resources/main-window.ui:33 src/util.py:430
@@ -185,12 +185,15 @@ msgstr "Nové prichádzajúce súbory"
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s by vám chcel odoslať %(file_count)d súbor (%(file_name)s)."
+"Odosielateľ %(sender_name)s by vám chcel odoslať %(file_count)d súbor "
+"(%(file_name)s)."
 
 #: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s by vám chcel odoslať %(file_count)d súbory/súborov"
+msgstr ""
+"Odosielateľ %(sender_name)s by vám chcel odoslať %(file_count)d "
+"súbory/súborov"
 
 #: src/notifications.py:42
 msgid "Accept"
@@ -203,12 +206,15 @@ msgstr "Odmietnuť"
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s vám odosiela %(file_count)d súbor (%(file_name)s)."
+msgstr ""
+"Odosielateľ %(sender_name)s vám odosiela %(file_count)d súbor "
+"(%(file_name)s)."
 
 #: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s vám odosiela %(file_count)d súbory/súborov"
+msgstr ""
+"Odosielateľ %(sender_name)s vám odosiela %(file_count)d súbory/súborov"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
@@ -412,7 +418,7 @@ msgstr "Zrušiť"
 
 #: src/util.py:148
 msgid "Add"
-msgstr ""
+msgstr "Pridať"
 
 # dialog title
 #: src/util.py:170

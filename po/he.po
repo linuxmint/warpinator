@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2021-12-08 10:08+0000\n"
-"Last-Translator: Rony Alaluf <Unknown>\n"
+"PO-Revision-Date: 2022-03-18 11:29+0000\n"
+"Last-Translator: Avi Markovitz <avi.markovitz@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2021-12-31 12:26+0000\n"
-"X-Generator: Launchpad (build adb364d6a74a28e7b95d51cd30446ec16160de6c)\n"
+"X-Launchpad-Export-Date: 2022-06-26 11:30+0000\n"
+"X-Generator: Launchpad (build 51a2e4fa2e9b8e45f00904ad7f53546f45ac48a5)\n"
 "Language: he\n"
 
 #: resources/main-window.ui:33 src/util.py:430
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr "שליחת וקבלת קבצים ברחבי הרשת"
+msgstr "שליחה וקבלה של קבצים ברחבי הרשת"
 
 #: resources/main-window.ui:140
 msgid "No matching results"
@@ -35,7 +35,7 @@ msgstr "הפיכת מחשב מרוחק זה  למועדף בתצוגה הראש�
 
 #: resources/main-window.ui:370
 msgid "Clear inactive and completed operations"
-msgstr "ניקוי פעולות לא פעילות או כאלו שהושלמו"
+msgstr "ניקוי פעולות לא פעילות ופעולות שהושלמו"
 
 #: resources/main-window.ui:389
 msgid "Send files"
@@ -43,11 +43,11 @@ msgstr "שליחת קבצים"
 
 #: resources/main-window.ui:415 src/prefs.py:174
 msgid "File Transfers"
-msgstr "העברות קבצים"
+msgstr "תעבורת קבצים"
 
 #: resources/main-window.ui:436 src/warpinator.py:866
 msgid "Online"
-msgstr "מקוון"
+msgstr "מחובר"
 
 #: resources/main-window.ui:556
 msgid "No other computers found..."
@@ -55,7 +55,7 @@ msgstr "לא נמצאו מחשבים אחרים..."
 
 #: resources/main-window.ui:620
 msgid "Make sure your network connection is active."
-msgstr "נא לוודא שחיבור הרשת פעיל."
+msgstr "נא לוודא שהחיבור לרשת פעיל."
 
 #: resources/main-window.ui:635
 msgid ""
@@ -79,7 +79,7 @@ msgstr "פתרונות אפשריים:"
 
 #: resources/main-window.ui:735
 msgid "Initializing, please wait..."
-msgstr "מתבצע אתחל, נא להמתין..."
+msgstr "מתבצע אתחול, נא להמתין..."
 
 #: resources/main-window.ui:793
 msgid "Something went wrong"
@@ -99,23 +99,23 @@ msgstr ""
 
 #: resources/main-window.ui:961
 msgid "Searching for other computers"
-msgstr "חיפוש מחשבים אחרים"
+msgstr "מתבצע חיפוש אחר מחשבים אחרים"
 
 #: resources/main-window.ui:1020
 msgid "Shutting down..."
-msgstr "כיבוי..."
+msgstr "מתבצע כיבוי..."
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "המתנה לאישור"
+msgstr "בהמתנה לאישור"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "נפח דיסק לא מספיק!"
+msgstr "אין מספיק שטח בכונן!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "חישוב"
+msgstr "מתבצע חישוב"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
@@ -123,7 +123,7 @@ msgstr "קבלת בקשה זו"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "דחית בקשה זו"
+msgstr "דחיית בקשה זו"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
@@ -155,7 +155,7 @@ msgstr "פתיחת התיקייה המכילה"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "הערה על מספרי פיתחות:"
+msgstr "הערה על מספרי פתחות:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
@@ -171,12 +171,13 @@ msgstr "קבצים נכנסים חדשים"
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s בהליך העברת %(file_count)d (%(file_name)s) קבצים."
+msgstr ""
+"‏%(sender_name)s רוצה לשלוח למחשבך %(file_count)d (%(file_name)s) קבצים."
 
 #: src/notifications.py:30
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s בהליך העברת %(file_count)d קבצים"
+msgstr "%(sender_name)s רוצה לשלוח למחשבך %(file_count)d קבצים"
 
 #: src/notifications.py:42
 msgid "Accept"
@@ -184,7 +185,7 @@ msgstr "קבלה"
 
 #: src/notifications.py:43
 msgid "Decline"
-msgstr "דחיה"
+msgstr "דחייה"
 
 #: src/notifications.py:57
 #, python-format
@@ -194,30 +195,30 @@ msgstr "קבלת %(file_count)d קובצים (%(file_name)s) מ%(sender_name)s."
 #: src/notifications.py:58
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "קבלת %(file_count)d קבצים מ%(sender_name)s"
+msgstr "נשלחים למחשבך %(file_count)d קבצים מאת %(sender_name)s"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "העברה הושלמה"
+msgstr "ההעברה הושלמה"
 
 #: src/notifications.py:95
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "ההעברה ל־%s הסתימה בהצלחה"
+msgstr "ההעברה אל %s הסתיימה בהצלחה"
 
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "ההעברה מ־%s הסתימה בהצלחה"
+msgstr "ההעברה מ־%s הסתיימה בהצלחה"
 
 #: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
-msgstr "העברה כשלה"
+msgstr "ההעברה נכשלה"
 
 #: src/notifications.py:129
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "משהו השתבש בהעברה ל־%s"
+msgstr "משהו השתבש בהעברה אל %s"
 
 #: src/notifications.py:131
 #, python-format
@@ -226,17 +227,17 @@ msgstr "משהו השתבש בהעברה מ־%s"
 
 #: src/notifications.py:160 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr "העברה בוטלה"
+msgstr "ההעברה בוטלה"
 
 #: src/notifications.py:163
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "ההעברה ל־%s בוטלה"
+msgstr "ההעברה אל %s בוטלה"
 
 #: src/notifications.py:165
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "העברה נכנסת מ־%s, בוטלה"
+msgstr "בוטלה העברה נכנסת מ־%s"
 
 #: src/ops.py:49
 #, python-format
@@ -273,15 +274,15 @@ msgstr "שולחן העבודה"
 
 #: src/prefs.py:161
 msgid "Show an icon in the notification area"
-msgstr "הצג סמלון באזור ההתרעות"
+msgstr "הצגת סמל באזור הדיווחים"
 
 #: src/prefs.py:165
 msgid "Start with main window open"
-msgstr "התחל עם החלון הראשי פתוח"
+msgstr "התחלה עם החלון הראשי פתוח"
 
 #: src/prefs.py:170
 msgid "Start automatically"
-msgstr "התחל באופן אוטומטי"
+msgstr "התחלה אוטומטית"
 
 #: src/prefs.py:176
 msgid "Use compression when possible."
@@ -303,12 +304,12 @@ msgstr "דרישת אישור לפני קבלת קבצים"
 
 #: src/prefs.py:190
 msgid "Require approval when files would be overwritten"
-msgstr "דרישת אישור כאשר קבצים עומדים להשתכתב"
+msgstr "דרישת אישור לפני החלפת קבצים"
 
 #: src/prefs.py:194
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
-msgstr "הצגת התראה כאשר מישהו שולח (או מנסה לשלוח) אליך קבצים"
+msgstr "הצגת התראה כאשר נשלחים למחשבך קבצים ממחשב אחר (או בעת ניסיון שליחה)"
 
 #: src/prefs.py:199
 msgid "Connection"
@@ -342,7 +343,7 @@ msgstr "%s - לא נמצא"
 
 #: src/prefs.py:259
 msgid "Network interface to use"
-msgstr "מנשק רשת לשימוש"
+msgstr "ממשק רשת לשימוש"
 
 #: src/prefs.py:267
 msgid "Incoming port for transfers"
@@ -358,27 +359,27 @@ msgstr "החלת שינויי רשת"
 
 #: src/prefs.py:298
 msgid "Update firewall rules"
-msgstr "עדכון חוקי חומת האש"
+msgstr "עדכון כללי חומת האש"
 
 #: src/prefs.py:310
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"היישום יקבל כל מספר פיתחה, אך שימוש באותה פיתחה בכל המחשבים עשוי להקל על "
+"היישום יקבל כל מספר פתחה, אך שימוש באותה הפתחה בכל המחשבים עשוי להקל על "
 "הוספת החרגות לחומת האש, במידת הצורך."
 
 #: src/prefs.py:411
 msgid "Set code"
-msgstr "קבע קוד"
+msgstr "קביעת קוד"
 
 #: src/prefs.py:426
 msgid "A group code is required."
-msgstr "דרוש קוד קבוצה."
+msgstr "נדרש קוד קבוצה."
 
 #: src/prefs.py:432
 msgid "The group code should be longer if possible."
-msgstr "אם אפשרי רצוי שקוד הקבוצה יהיה ארוך יותר."
+msgstr "רצוי שקוד הקבוצה יהיה ארוך יותר במידה ואפשר."
 
 #: src/remote.py:587 src/remote.py:591
 msgid "Connection has been lost"
@@ -390,7 +391,7 @@ msgstr "אירעה שגיאה במכונה המרוחקת"
 
 #: src/util.py:147
 msgid "Cancel"
-msgstr "בטל"
+msgstr "ביטול"
 
 #: src/util.py:148
 msgid "Add"
@@ -402,12 +403,12 @@ msgstr "בחירת קבצים לשליחה"
 
 #: src/util.py:319
 msgid "A few seconds remaining"
-msgstr "נשארו מספר שניות"
+msgstr "נותרו מספר שניות"
 
 #: src/util.py:322
 #, python-format
 msgid "%d seconds remaining"
-msgstr "נשארו %d שניות"
+msgstr "נותרו %d שניות"
 
 #: src/util.py:326 src/util.py:334
 #, python-format
@@ -427,12 +428,12 @@ msgstr[1] "%d שעות"
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "כשעה %d"
-msgstr[1] "כ-%d שעות"
+msgstr[0] "בסביבות שעה %d"
+msgstr[1] "בסביבות %d שעות"
 
 #: src/util.py:426 src/warpinator.py:534
 msgid "About"
-msgstr "אודות"
+msgstr "על אודות"
 
 #: src/warpinator.py:145
 msgid "Paused"
@@ -440,38 +441,38 @@ msgstr "מושהה"
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr "ממתין לאישור"
+msgstr "בהמתנה לאישור"
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr "ממתין לאישורך"
+msgstr "בהמתנה לאישורך"
 
 #: src/warpinator.py:153
 msgid "Files may be overwritten"
-msgstr "קבצים עלולים להשתכתב"
+msgstr "חלק מהקבצים עלולים להיות מוחלפים"
 
 #: src/warpinator.py:156
 msgid "Not enough disk space"
-msgstr "אין מספיק שטח אכסון"
+msgstr "אין מספיק שטח בכונן"
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr "בקשה בוטלה"
+msgstr "הבקשה בוטלה"
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "בקשה בוטלה ע\"י %s"
+msgstr "הבקשה בוטלה על ידי %s"
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "העברה בוטלה ע\"י %s"
+msgstr "ההעברה בוטלה על ידי %s"
 
 #: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
-msgstr "קובץ '%s' לא נמצא"
+msgstr "הקובץ \"%s\" לא נמצא"
 
 #: src/warpinator.py:179
 msgid "Some files not found"
@@ -483,17 +484,17 @@ msgstr "הושלם"
 
 #: src/warpinator.py:339 src/warpinator.py:894
 msgid "Connecting"
-msgstr "מתחבר"
+msgstr "מתבצעת התחברות"
 
 #: src/warpinator.py:341
 #, python-format
 msgid "Connecting to %s"
-msgstr "מתחבר אל %s"
+msgstr "מתבצעת התחברות אל %s"
 
 #: src/warpinator.py:351
 #, python-format
 msgid "%s is not online"
-msgstr "%s לא מקוון"
+msgstr "%s לא מחובר"
 
 #: src/warpinator.py:356
 #, python-format
@@ -503,7 +504,7 @@ msgstr "לא ניתן להתחבר אל %s"
 #: src/warpinator.py:361
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "ממתין ל-%s לסיום החיבור."
+msgstr "בהמתנה להשלמת ההתחברות על ידי %s."
 
 #: src/warpinator.py:390
 #, python-format
@@ -522,11 +523,11 @@ msgstr "אחרונים"
 
 #: src/warpinator.py:511 src/warpinator.py:1335
 msgid "Browse..."
-msgstr "סייר..."
+msgstr "עיון..."
 
 #: src/warpinator.py:526 src/warpinator.py:1267
 msgid "Open save folder"
-msgstr "פתח תיקיית שמירה"
+msgstr "פתיחת תיקיית השמירה"
 
 #: src/warpinator.py:530
 msgid "Preferences"
@@ -538,15 +539,15 @@ msgstr "יציאה"
 
 #: src/warpinator.py:631
 msgid "You don't appear to be connected to a network."
-msgstr "נראה שהנך לא מחובר לרשת."
+msgstr "נראה שמחשבך אינו מחובר לרשת."
 
 #: src/warpinator.py:633
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "הפעלה נכשלה, אנא בדוק/י בתיעוד."
+msgstr "היו בעיות בהפעלה, נא לבדוק את קובצי היומן."
 
 #: src/warpinator.py:873
 msgid "Offline"
-msgstr "לא מקוון"
+msgstr "לא מחובר"
 
 #: src/warpinator.py:880
 msgid "Unable to connect"
@@ -554,7 +555,7 @@ msgstr "לא ניתן להתחבר"
 
 #: src/warpinator.py:887
 msgid "Waiting for two-way connection"
-msgstr "ממתין לחיבור דו-כיווני"
+msgstr "בהמתנה לחיבור דו־כיווני"
 
 #: src/warpinator.py:1304
 msgid "Send to all"
@@ -566,7 +567,7 @@ msgstr "פתיחת פתחה בחומת האש עבור Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "נא לאמת, על מנת לשנות את הגדרות חומת האש."
+msgstr "נדרש אימות לשינוי הגדרות חומת האש"
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
