@@ -1,3 +1,10 @@
+warpinator (1.2.12) vanessa; urgency=medium
+
+  * UI: Add links to altinators
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 01 Jul 2022 16:59:31 +0200
+
 warpinator (1.2.11) vanessa; urgency=medium
 
   * l10n: Update translations
