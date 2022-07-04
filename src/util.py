@@ -428,6 +428,7 @@ class AboutDialog():
                                  icon_name="org.x.Warpinator",
                                  logo_icon_name="org.x.Warpinator",
                                  comments=_("Send and Receive Files across the Network"),
+                                 website="https://github.com/linuxmint/warpinator",
                                  version=config.VERSION,
                                  license_type=Gtk.License.GPL_3_0)
 
