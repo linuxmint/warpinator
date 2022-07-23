@@ -141,6 +141,10 @@ It's possible there is something else causing your connection issues that is not
 - Then, open a terminal and run:
 ```
 warpinator --debug
+
+# If you're running the Flatpak version, use this instead:
+
+flatpak run --command=warpinator org.x.Warpinator --debug
 ```
 This will cause a great deal of useful information to be logged to the terminal. You can copy this and attach it to a bug report here. This will give us a good head start on assisting you.
 
