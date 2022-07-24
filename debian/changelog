@@ -1,3 +1,14 @@
+warpinator (1.2.13) vanessa; urgency=medium
+
+  [ Michael Webster ]
+  * Add github link to the About dialog.
+  * Explain how to debug the flatpak version
+
+  [ Clement Lefebvre ]
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 24 Jul 2022 12:33:04 +0200
+
 warpinator (1.2.12) vanessa; urgency=medium
 
   * UI: Add links to altinators
