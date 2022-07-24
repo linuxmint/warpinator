@@ -7,56 +7,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2021-11-23 16:57+0000\n"
+"POT-Creation-Date: 2022-07-01 16:56+0200\n"
+"PO-Revision-Date: 2022-07-01 18:53+0000\n"
 "Last-Translator: Jan-Olof Svensson <jan-olof.svensson@abc.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-06-26 11:30+0000\n"
-"X-Generator: Launchpad (build 51a2e4fa2e9b8e45f00904ad7f53546f45ac48a5)\n"
+"X-Launchpad-Export-Date: 2022-07-24 09:43+0000\n"
+"X-Generator: Launchpad (build 025a39fd866a641b6ae33074cda0d02a2c712d38)\n"
 
-#: resources/main-window.ui:33 src/util.py:430
-#: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
-msgid "Send and Receive Files across the Network"
-msgstr "Skicka och ta emot filer via nätverket"
-
-#: resources/main-window.ui:140
+#: resources/main-window.ui:106
 msgid "No matching results"
 msgstr "Inga sökträffar"
 
-#: resources/main-window.ui:296
+#: resources/main-window.ui:262
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Gör denna fjärranslutna dator till favorit i huvudvyn"
 
-#: resources/main-window.ui:370
+#: resources/main-window.ui:336
 msgid "Clear inactive and completed operations"
 msgstr "Ta bort inaktiva och avslutade åtgärder"
 
-#: resources/main-window.ui:389
+#: resources/main-window.ui:355
 msgid "Send files"
 msgstr "Skicka filer"
 
-#: resources/main-window.ui:415 src/prefs.py:174
+#: resources/main-window.ui:381 src/prefs.py:175
 msgid "File Transfers"
 msgstr "Filöverföringar"
 
-#: resources/main-window.ui:436 src/warpinator.py:866
+#: resources/main-window.ui:402 src/warpinator.py:866
 msgid "Online"
 msgstr "Uppkopplad"
 
-#: resources/main-window.ui:556
+#: resources/main-window.ui:522
 msgid "No other computers found..."
 msgstr "Hittade inga andra datorer..."
 
-#: resources/main-window.ui:620
+#: resources/main-window.ui:587
 msgid "Make sure your network connection is active."
 msgstr "Kontrollera att nätverksförbindelsen fungerar."
 
-#: resources/main-window.ui:635
+#: resources/main-window.ui:602
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -65,7 +59,7 @@ msgstr ""
 "inställningarna för mer information."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:651
+#: resources/main-window.ui:618
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -73,23 +67,40 @@ msgstr ""
 "Körs Warpinator av någon annat dator i det här nätverket? Kontrollera då i "
 "inställningar att alla använder samma gruppkod."
 
-#: resources/main-window.ui:669
+#: resources/main-window.ui:636
 msgid "Possible solutions:"
 msgstr "Möjliga lösningar:"
 
-#: resources/main-window.ui:735
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:671
+msgid "Warpinator is also available on:"
+msgstr "Warpinator finns också för:"
+
+#: resources/main-window.ui:686
+msgid "Android"
+msgstr "Android"
+
+#: resources/main-window.ui:702
+msgid "iOS"
+msgstr "iOS"
+
+#: resources/main-window.ui:718
+msgid "Windows"
+msgstr "Windows"
+
+#: resources/main-window.ui:807
 msgid "Initializing, please wait..."
 msgstr "Initierar, var god vänta..."
 
-#: resources/main-window.ui:793
+#: resources/main-window.ui:865
 msgid "Something went wrong"
 msgstr "Något blev fel"
 
-#: resources/main-window.ui:868
+#: resources/main-window.ui:940
 msgid "Invalid save location"
 msgstr "Kan inte spara på denna plats"
 
-#: resources/main-window.ui:905
+#: resources/main-window.ui:977
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -97,13 +108,19 @@ msgstr ""
 "Mappen är otillgänglig eller finns inte. Var god välj en ny i Inställningar "
 "eller kontrollera att den valda finns på en monterad enhet."
 
-#: resources/main-window.ui:961
+#: resources/main-window.ui:1033
 msgid "Searching for other computers"
 msgstr "Söker efter andra datorer"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1092
 msgid "Shutting down..."
 msgstr "Stänger av..."
+
+#: resources/main-window.ui:1202 src/util.py:430
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:7
+msgid "Send and Receive Files across the Network"
+msgstr "Skicka och ta emot filer via nätverket"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -253,117 +270,117 @@ msgstr[0] "%d fil"
 msgstr[1] "%d filer"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:233
+#: src/ops.py:234
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fil"
 msgstr[1] "%d filer"
 
-#: src/prefs.py:144
+#: src/prefs.py:145
 msgid "Warpinator Preferences"
 msgstr "Inställningar för Warpinator"
 
-#: src/prefs.py:157
+#: src/prefs.py:158
 msgid "General"
 msgstr "Allmänt"
 
-#: src/prefs.py:159
+#: src/prefs.py:160
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: src/prefs.py:161
+#: src/prefs.py:162
 msgid "Show an icon in the notification area"
 msgstr "Visa ikon i meddelandefältet"
 
-#: src/prefs.py:165
+#: src/prefs.py:166
 msgid "Start with main window open"
 msgstr "Starta med huvudfönstret öppet"
 
-#: src/prefs.py:170
+#: src/prefs.py:171
 msgid "Start automatically"
 msgstr "Starta automatiskt"
 
-#: src/prefs.py:176
+#: src/prefs.py:177
 msgid "Use compression when possible."
 msgstr "Använd komprimering när detta är möjligt."
 
-#: src/prefs.py:178
+#: src/prefs.py:179
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 "Varning: Detta kan inverka negativt på prestandan i vissa snabba nätverk."
 
-#: src/prefs.py:181
+#: src/prefs.py:182
 msgid "Location for received files"
 msgstr "Plats för mottagna filer"
 
-#: src/prefs.py:186
+#: src/prefs.py:187
 msgid "Require approval before accepting files"
 msgstr "Begär godkännande innan filer tas emot"
 
-#: src/prefs.py:190
+#: src/prefs.py:191
 msgid "Require approval when files would be overwritten"
 msgstr "Begär godkännande innan filer skrivs över"
 
-#: src/prefs.py:194
+#: src/prefs.py:195
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Visa ett meddelande när någon skickar (eller försöker skicka) filer till dig"
 
-#: src/prefs.py:199
+#: src/prefs.py:200
 msgid "Connection"
 msgstr "Anslutning"
 
-#: src/prefs.py:201
+#: src/prefs.py:202
 msgid "Identification"
 msgstr "Identifiering"
 
-#: src/prefs.py:206
+#: src/prefs.py:207
 msgid "Group Code"
 msgstr "Gruppkod"
 
-#: src/prefs.py:207
+#: src/prefs.py:208
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "Du kan inte kommunicera med datorer som använder en annan kod."
 
-#: src/prefs.py:213
+#: src/prefs.py:214
 msgid "Network"
 msgstr "Nätverk"
 
-#: src/prefs.py:216
+#: src/prefs.py:217
 msgid "Automatic"
 msgstr "Automatisk"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:257
+#: src/prefs.py:296
 #, python-format
 msgid "%s - not found"
 msgstr "%s hittades inte"
 
-#: src/prefs.py:259
+#: src/prefs.py:298
 msgid "Network interface to use"
 msgstr "Aktuellt gränssnitt för nätverket"
 
-#: src/prefs.py:267
+#: src/prefs.py:306
 msgid "Incoming port for transfers"
 msgstr "Ingångsport för överföringar"
 
-#: src/prefs.py:274
+#: src/prefs.py:313
 msgid "Incoming port for registration"
 msgstr "Inport för registrering"
 
-#: src/prefs.py:289
+#: src/prefs.py:328
 msgid "Apply network changes"
 msgstr "Använd de nya inställningarna för nätverket"
 
-#: src/prefs.py:298
+#: src/prefs.py:337
 msgid "Update firewall rules"
 msgstr "Uppdatera reglerna för brandväggen"
 
-#: src/prefs.py:310
+#: src/prefs.py:349
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -372,19 +389,19 @@ msgstr ""
 "alla datorer kan göra det enklare att, vid behov, lägga till nya regler för "
 "brandväggen."
 
-#: src/prefs.py:411
+#: src/prefs.py:450
 msgid "Set code"
 msgstr "Ange kod"
 
-#: src/prefs.py:426
+#: src/prefs.py:465
 msgid "A group code is required."
 msgstr "Gruppkod krävs."
 
-#: src/prefs.py:432
+#: src/prefs.py:471
 msgid "The group code should be longer if possible."
 msgstr "Gruppkoden bör vara längre."
 
-#: src/remote.py:587 src/remote.py:591
+#: src/remote.py:599 src/remote.py:603
 msgid "Connection has been lost"
 msgstr "Anslutningen förlorades"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-11-23 11:04+0000\n"
+"POT-Creation-Date: 2022-07-01 16:56+0200\n"
 "PO-Revision-Date: 2021-06-03 02:57+0000\n"
 "Last-Translator: Silvara <Unknown>\n"
 "Language-Team: Interlingue <ie@li.org>\n"
@@ -15,55 +15,49 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-06-26 11:30+0000\n"
-"X-Generator: Launchpad (build 51a2e4fa2e9b8e45f00904ad7f53546f45ac48a5)\n"
+"X-Launchpad-Export-Date: 2022-07-24 09:43+0000\n"
+"X-Generator: Launchpad (build 025a39fd866a641b6ae33074cda0d02a2c712d38)\n"
 
-#: resources/main-window.ui:33 src/util.py:430
-#: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
-msgid "Send and Receive Files across the Network"
-msgstr "Inviar e reciver files tra li rete"
-
-#: resources/main-window.ui:140
+#: resources/main-window.ui:106
 msgid "No matching results"
 msgstr "Null resultates"
 
-#: resources/main-window.ui:296
+#: resources/main-window.ui:262
 msgid "Make this remote machine a favorite in the main view"
 msgstr ""
 
-#: resources/main-window.ui:370
+#: resources/main-window.ui:336
 msgid "Clear inactive and completed operations"
 msgstr "Rader ínactiv e completat operationes"
 
-#: resources/main-window.ui:389
+#: resources/main-window.ui:355
 msgid "Send files"
 msgstr "Inviar files"
 
-#: resources/main-window.ui:415 src/prefs.py:174
+#: resources/main-window.ui:381 src/prefs.py:175
 msgid "File Transfers"
 msgstr "Transferte de files"
 
-#: resources/main-window.ui:436 src/warpinator.py:866
+#: resources/main-window.ui:402 src/warpinator.py:866
 msgid "Online"
 msgstr "In li rete"
 
-#: resources/main-window.ui:556
+#: resources/main-window.ui:522
 msgid "No other computers found..."
 msgstr "Null altri computatores es trovat..."
 
-#: resources/main-window.ui:620
+#: resources/main-window.ui:587
 msgid "Make sure your network connection is active."
 msgstr "Controla que vor conexion al rete es activ."
 
-#: resources/main-window.ui:635
+#: resources/main-window.ui:602
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:651
+#: resources/main-window.ui:618
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -71,23 +65,40 @@ msgstr ""
 "Esque Warpinator es lansat sur altri computatores in li rete? Si yes, "
 "controla que li sam code de gruppe in li Preferenties es usat."
 
-#: resources/main-window.ui:669
+#: resources/main-window.ui:636
 msgid "Possible solutions:"
 msgstr "Possibil solutiones:"
 
-#: resources/main-window.ui:735
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:671
+msgid "Warpinator is also available on:"
+msgstr ""
+
+#: resources/main-window.ui:686
+msgid "Android"
+msgstr ""
+
+#: resources/main-window.ui:702
+msgid "iOS"
+msgstr ""
+
+#: resources/main-window.ui:718
+msgid "Windows"
+msgstr ""
+
+#: resources/main-window.ui:807
 msgid "Initializing, please wait..."
 msgstr "Inicialisation, ples atender..."
 
-#: resources/main-window.ui:793
+#: resources/main-window.ui:865
 msgid "Something went wrong"
 msgstr "Un problema evenit"
 
-#: resources/main-window.ui:868
+#: resources/main-window.ui:940
 msgid "Invalid save location"
 msgstr "Ínvalid location por gardar"
 
-#: resources/main-window.ui:905
+#: resources/main-window.ui:977
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -95,13 +106,19 @@ msgstr ""
 "Ti fólder es ínaccessibil o ne existe. Selecte un nov localisation in "
 "Preferenties o monta ti fólder."
 
-#: resources/main-window.ui:961
+#: resources/main-window.ui:1033
 msgid "Searching for other computers"
 msgstr "Serchante por altri computatores"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1092
 msgid "Shutting down..."
 msgstr "Terminante..."
+
+#: resources/main-window.ui:1202 src/util.py:430
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:7
+msgid "Send and Receive Files across the Network"
+msgstr "Inviar e reciver files tra li rete"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -251,133 +268,133 @@ msgstr[0] ""
 msgstr[1] "%d files"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:233
+#: src/ops.py:234
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] "%d files"
 
-#: src/prefs.py:144
+#: src/prefs.py:145
 msgid "Warpinator Preferences"
 msgstr "Preferenties de Warpinator"
 
-#: src/prefs.py:157
+#: src/prefs.py:158
 msgid "General"
 msgstr "General"
 
-#: src/prefs.py:159
+#: src/prefs.py:160
 msgid "Desktop"
 msgstr "Pupitre"
 
-#: src/prefs.py:161
+#: src/prefs.py:162
 msgid "Show an icon in the notification area"
 msgstr "Monstrar un icone in li area de notificationes"
 
-#: src/prefs.py:165
+#: src/prefs.py:166
 msgid "Start with main window open"
 msgstr "Aperter li fenestre al inicie"
 
-#: src/prefs.py:170
+#: src/prefs.py:171
 msgid "Start automatically"
 msgstr "Lansar automaticmen"
 
-#: src/prefs.py:176
+#: src/prefs.py:177
 msgid "Use compression when possible."
 msgstr "Usar compression si possibil."
 
-#: src/prefs.py:178
+#: src/prefs.py:179
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 
-#: src/prefs.py:181
+#: src/prefs.py:182
 msgid "Location for received files"
 msgstr "Localisation de recivet files"
 
-#: src/prefs.py:186
+#: src/prefs.py:187
 msgid "Require approval before accepting files"
 msgstr "Besona un aprobation ante que acceptar files"
 
-#: src/prefs.py:190
+#: src/prefs.py:191
 msgid "Require approval when files would be overwritten"
 msgstr "Besona un aprobation ante que superscrir files"
 
-#: src/prefs.py:194
+#: src/prefs.py:195
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr "Monstrar un notification quande on invia a vos files"
 
-#: src/prefs.py:199
+#: src/prefs.py:200
 msgid "Connection"
 msgstr "Conexion"
 
-#: src/prefs.py:201
+#: src/prefs.py:202
 msgid "Identification"
 msgstr "Identification"
 
-#: src/prefs.py:206
+#: src/prefs.py:207
 msgid "Group Code"
 msgstr "Code de gruppe"
 
-#: src/prefs.py:207
+#: src/prefs.py:208
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "On ne posse communicar con computatores que have un altri code."
 
-#: src/prefs.py:213
+#: src/prefs.py:214
 msgid "Network"
 msgstr "Rete"
 
-#: src/prefs.py:216
+#: src/prefs.py:217
 msgid "Automatic"
 msgstr "Automatic"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:257
+#: src/prefs.py:296
 #, python-format
 msgid "%s - not found"
 msgstr "%s - ne trovat"
 
-#: src/prefs.py:259
+#: src/prefs.py:298
 msgid "Network interface to use"
 msgstr "Li interfacie del rete usat"
 
-#: src/prefs.py:267
+#: src/prefs.py:306
 msgid "Incoming port for transfers"
 msgstr ""
 
-#: src/prefs.py:274
+#: src/prefs.py:313
 msgid "Incoming port for registration"
 msgstr ""
 
-#: src/prefs.py:289
+#: src/prefs.py:328
 msgid "Apply network changes"
 msgstr "Applicar modificationes del rete"
 
-#: src/prefs.py:298
+#: src/prefs.py:337
 msgid "Update firewall rules"
 msgstr ""
 
-#: src/prefs.py:310
+#: src/prefs.py:349
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
 
-#: src/prefs.py:411
+#: src/prefs.py:450
 msgid "Set code"
 msgstr "Cambiar li portu"
 
-#: src/prefs.py:426
+#: src/prefs.py:465
 msgid "A group code is required."
 msgstr "Un code de gruppe es besonat"
 
-#: src/prefs.py:432
+#: src/prefs.py:471
 msgid "The group code should be longer if possible."
 msgstr "Li code de gruppe deve esser long quam possibil."
 
-#: src/remote.py:587 src/remote.py:591
+#: src/remote.py:599 src/remote.py:603
 msgid "Connection has been lost"
 msgstr "Conexion terminat"
 

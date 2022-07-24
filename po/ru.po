@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2022-01-07 06:55+0000\n"
+"POT-Creation-Date: 2022-07-01 16:56+0200\n"
+"PO-Revision-Date: 2022-07-02 17:57+0000\n"
 "Last-Translator: Dmitriy Kulikov <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,49 +16,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2022-06-26 11:30+0000\n"
-"X-Generator: Launchpad (build 51a2e4fa2e9b8e45f00904ad7f53546f45ac48a5)\n"
+"X-Launchpad-Export-Date: 2022-07-24 09:43+0000\n"
+"X-Generator: Launchpad (build 025a39fd866a641b6ae33074cda0d02a2c712d38)\n"
 "Language: ru\n"
 
-#: resources/main-window.ui:33 src/util.py:430
-#: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
-msgid "Send and Receive Files across the Network"
-msgstr "Отправка и получение файлов по сети"
-
-#: resources/main-window.ui:140
+#: resources/main-window.ui:106
 msgid "No matching results"
 msgstr "Нет подходящих результатов"
 
-#: resources/main-window.ui:296
+#: resources/main-window.ui:262
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Сделать эту удаленную машину главной в списке"
 
-#: resources/main-window.ui:370
+#: resources/main-window.ui:336
 msgid "Clear inactive and completed operations"
 msgstr "Очистить неактивные и завершенные операции"
 
-#: resources/main-window.ui:389
+#: resources/main-window.ui:355
 msgid "Send files"
 msgstr "Отправить файлы"
 
-#: resources/main-window.ui:415 src/prefs.py:174
+#: resources/main-window.ui:381 src/prefs.py:175
 msgid "File Transfers"
 msgstr "Передача файлов"
 
-#: resources/main-window.ui:436 src/warpinator.py:866
+#: resources/main-window.ui:402 src/warpinator.py:866
 msgid "Online"
 msgstr "В сети"
 
-#: resources/main-window.ui:556
+#: resources/main-window.ui:522
 msgid "No other computers found..."
 msgstr "Не найдено других компьютеров..."
 
-#: resources/main-window.ui:620
+#: resources/main-window.ui:587
 msgid "Make sure your network connection is active."
 msgstr "Убедитесь, что ваше сетевое подключение активно."
 
-#: resources/main-window.ui:635
+#: resources/main-window.ui:602
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -67,7 +61,7 @@ msgstr ""
 "Дополнительные сведения смотрите в настройках приложения."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:651
+#: resources/main-window.ui:618
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -76,23 +70,40 @@ msgstr ""
 "это так, убедитесь, что все они используют один и тот же код группы в "
 "настройках."
 
-#: resources/main-window.ui:669
+#: resources/main-window.ui:636
 msgid "Possible solutions:"
 msgstr "Возможные решения:"
 
-#: resources/main-window.ui:735
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:671
+msgid "Warpinator is also available on:"
+msgstr "Warpinator еще доступен для:"
+
+#: resources/main-window.ui:686
+msgid "Android"
+msgstr "Android"
+
+#: resources/main-window.ui:702
+msgid "iOS"
+msgstr "iOS"
+
+#: resources/main-window.ui:718
+msgid "Windows"
+msgstr "Windows"
+
+#: resources/main-window.ui:807
 msgid "Initializing, please wait..."
 msgstr "Инициализация, пожалуйста подождите..."
 
-#: resources/main-window.ui:793
+#: resources/main-window.ui:865
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
 
-#: resources/main-window.ui:868
+#: resources/main-window.ui:940
 msgid "Invalid save location"
 msgstr "Недопустимое место сохранения"
 
-#: resources/main-window.ui:905
+#: resources/main-window.ui:977
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -100,13 +111,19 @@ msgstr ""
 "Эта папка недоступна или вообще не существует.  Пожалуйста, выберите новое "
 "место в настройках или убедитесь, что смонтировано текущее."
 
-#: resources/main-window.ui:961
+#: resources/main-window.ui:1033
 msgid "Searching for other computers"
 msgstr "Поиск других компьютеров"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1092
 msgid "Shutting down..."
 msgstr "Завершение работы..."
+
+#: resources/main-window.ui:1202 src/util.py:430
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:7
+msgid "Send and Receive Files across the Network"
+msgstr "Отправка и получение файлов по сети"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -257,7 +274,7 @@ msgstr[1] "%d файла"
 msgstr[2] "%d файлов"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:233
+#: src/ops.py:234
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -265,35 +282,35 @@ msgstr[0] "%d файл"
 msgstr[1] "%d файла"
 msgstr[2] "%d файлов"
 
-#: src/prefs.py:144
+#: src/prefs.py:145
 msgid "Warpinator Preferences"
 msgstr "Настройки Warpinator"
 
-#: src/prefs.py:157
+#: src/prefs.py:158
 msgid "General"
 msgstr "Общие"
 
-#: src/prefs.py:159
+#: src/prefs.py:160
 msgid "Desktop"
 msgstr "Рабочий стол"
 
-#: src/prefs.py:161
+#: src/prefs.py:162
 msgid "Show an icon in the notification area"
 msgstr "Показывать значок в области уведомлений"
 
-#: src/prefs.py:165
+#: src/prefs.py:166
 msgid "Start with main window open"
 msgstr "Начать с главного экрана"
 
-#: src/prefs.py:170
+#: src/prefs.py:171
 msgid "Start automatically"
 msgstr "Запускать автоматически"
 
-#: src/prefs.py:176
+#: src/prefs.py:177
 msgid "Use compression when possible."
 msgstr "Использовать сжатие, когда это возможно."
 
-#: src/prefs.py:178
+#: src/prefs.py:179
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
@@ -301,78 +318,78 @@ msgstr ""
 "Предупреждение: Это может негативно сказаться на производительности в "
 "некоторых более быстрых сетях."
 
-#: src/prefs.py:181
+#: src/prefs.py:182
 msgid "Location for received files"
 msgstr "Место для полученных файлов"
 
-#: src/prefs.py:186
+#: src/prefs.py:187
 msgid "Require approval before accepting files"
 msgstr "Запрашивать подтверждение перед приёмом файлов"
 
-#: src/prefs.py:190
+#: src/prefs.py:191
 msgid "Require approval when files would be overwritten"
 msgstr "Запрашивать подтверждение на перезапись файлов"
 
-#: src/prefs.py:194
+#: src/prefs.py:195
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Отображение уведомления, когда кто-то отправляет (или пытается отправить) "
 "вам файлы"
 
-#: src/prefs.py:199
+#: src/prefs.py:200
 msgid "Connection"
 msgstr "Соединение"
 
-#: src/prefs.py:201
+#: src/prefs.py:202
 msgid "Identification"
 msgstr "Идентификация"
 
-#: src/prefs.py:206
+#: src/prefs.py:207
 msgid "Group Code"
 msgstr "Групповой код"
 
-#: src/prefs.py:207
+#: src/prefs.py:208
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Вы не можете общаться с компьютерами, которые не используют один и тот же "
 "код."
 
-#: src/prefs.py:213
+#: src/prefs.py:214
 msgid "Network"
 msgstr "Сеть"
 
-#: src/prefs.py:216
+#: src/prefs.py:217
 msgid "Automatic"
 msgstr "Автоматически"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:257
+#: src/prefs.py:296
 #, python-format
 msgid "%s - not found"
 msgstr "%s - не найден"
 
-#: src/prefs.py:259
+#: src/prefs.py:298
 msgid "Network interface to use"
 msgstr "Сетевой интерфейс для использования"
 
-#: src/prefs.py:267
+#: src/prefs.py:306
 msgid "Incoming port for transfers"
 msgstr "Входящий порт для передачи"
 
-#: src/prefs.py:274
+#: src/prefs.py:313
 msgid "Incoming port for registration"
 msgstr "Входящий порт для регистрации"
 
-#: src/prefs.py:289
+#: src/prefs.py:328
 msgid "Apply network changes"
 msgstr "Применить изменения настроек сети"
 
-#: src/prefs.py:298
+#: src/prefs.py:337
 msgid "Update firewall rules"
 msgstr "Обновить правила сетевого экрана"
 
-#: src/prefs.py:310
+#: src/prefs.py:349
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -381,19 +398,19 @@ msgstr ""
 "портов для всех компьютеров может упростить добавление исключений "
 "межсетевого экрана, если это необходимо."
 
-#: src/prefs.py:411
+#: src/prefs.py:450
 msgid "Set code"
 msgstr "Установить код"
 
-#: src/prefs.py:426
+#: src/prefs.py:465
 msgid "A group code is required."
 msgstr "Требуется код группы."
 
-#: src/prefs.py:432
+#: src/prefs.py:471
 msgid "The group code should be longer if possible."
 msgstr "Код группы должен быть по возможности длиннее."
 
-#: src/remote.py:587 src/remote.py:591
+#: src/remote.py:599 src/remote.py:603
 msgid "Connection has been lost"
 msgstr "Соединение потеряно"
 

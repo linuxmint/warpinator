@@ -7,57 +7,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2021-11-23 11:04+0000\n"
-"PO-Revision-Date: 2022-05-04 12:34+0000\n"
+"POT-Creation-Date: 2022-07-01 16:56+0200\n"
+"PO-Revision-Date: 2022-07-02 09:35+0000\n"
 "Last-Translator: Umidjon Almasov <umidjon@almasov.uz>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2022-06-26 11:30+0000\n"
-"X-Generator: Launchpad (build 51a2e4fa2e9b8e45f00904ad7f53546f45ac48a5)\n"
+"X-Launchpad-Export-Date: 2022-07-24 09:43+0000\n"
+"X-Generator: Launchpad (build 025a39fd866a641b6ae33074cda0d02a2c712d38)\n"
 "Language: uz\n"
 
-#: resources/main-window.ui:33 src/util.py:430
-#: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
-msgid "Send and Receive Files across the Network"
-msgstr "Tarmoq bo‘ylab fayllarni yuborish va qabul qilish"
-
-#: resources/main-window.ui:140
+#: resources/main-window.ui:106
 msgid "No matching results"
 msgstr "Mos natijalar yo‘q"
 
-#: resources/main-window.ui:296
+#: resources/main-window.ui:262
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Ushbu masofaviy mashinani asosiy ko‘rinishda sevimliga aylantirish"
 
-#: resources/main-window.ui:370
+#: resources/main-window.ui:336
 msgid "Clear inactive and completed operations"
 msgstr "Faol bo‘lmagan va tugallangan amallarni o‘chirish"
 
-#: resources/main-window.ui:389
+#: resources/main-window.ui:355
 msgid "Send files"
 msgstr "Fayllarni yuborish"
 
-#: resources/main-window.ui:415 src/prefs.py:174
+#: resources/main-window.ui:381 src/prefs.py:175
 msgid "File Transfers"
 msgstr "Fayllarni uzatish"
 
-#: resources/main-window.ui:436 src/warpinator.py:866
+#: resources/main-window.ui:402 src/warpinator.py:866
 msgid "Online"
 msgstr "Onlayn"
 
-#: resources/main-window.ui:556
+#: resources/main-window.ui:522
 msgid "No other computers found..."
 msgstr "Boshqa kompyuterlar topilmadi..."
 
-#: resources/main-window.ui:620
+#: resources/main-window.ui:587
 msgid "Make sure your network connection is active."
 msgstr "Tarmoq ulanishingiz faol ekanligiga ishonch hosil qiling."
 
-#: resources/main-window.ui:635
+#: resources/main-window.ui:602
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -66,7 +60,7 @@ msgstr ""
 "mumkin. Batafsil ma'lumot uchun sozlamalarga qarang."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:651
+#: resources/main-window.ui:618
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -75,23 +69,40 @@ msgstr ""
 "bo‘lsa, ularning barchasi sozlamalarda bir xil guruh kodidan "
 "foydalanayotganligiga ishonch hosil qiling."
 
-#: resources/main-window.ui:669
+#: resources/main-window.ui:636
 msgid "Possible solutions:"
 msgstr "Mumkin bo‘lgan yechimlar:"
 
-#: resources/main-window.ui:735
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:671
+msgid "Warpinator is also available on:"
+msgstr "Warpinator quyidagilar uchun ham mavjud:"
+
+#: resources/main-window.ui:686
+msgid "Android"
+msgstr "Android"
+
+#: resources/main-window.ui:702
+msgid "iOS"
+msgstr "iOS"
+
+#: resources/main-window.ui:718
+msgid "Windows"
+msgstr "Windows"
+
+#: resources/main-window.ui:807
 msgid "Initializing, please wait..."
 msgstr "Boshlanmoqda, kuting..."
 
-#: resources/main-window.ui:793
+#: resources/main-window.ui:865
 msgid "Something went wrong"
 msgstr "Nimadir noto‘g‘ri bajarildi"
 
-#: resources/main-window.ui:868
+#: resources/main-window.ui:940
 msgid "Invalid save location"
 msgstr "Saqlash joyi noto‘g‘ri"
 
-#: resources/main-window.ui:905
+#: resources/main-window.ui:977
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -99,13 +110,19 @@ msgstr ""
 "Ushbu jildga kirish imkonsiz yoki mavjud emas. Sozlamalarda yangi joyni "
 "tanlang yoki joriy joy ulanganligiga ishonch hosil qiling."
 
-#: resources/main-window.ui:961
+#: resources/main-window.ui:1033
 msgid "Searching for other computers"
 msgstr "Boshqa kompyuterlar qidirilmoqda"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1092
 msgid "Shutting down..."
 msgstr "Oʻchirilmoqda..."
+
+#: resources/main-window.ui:1202 src/util.py:430
+#: data/org.x.Warpinator.desktop.in.in:5
+#: data/org.x.Warpinator.appdata.xml.in.in:7
+msgid "Send and Receive Files across the Network"
+msgstr "Tarmoq bo‘ylab fayllarni yuborish va qabul qilish"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -255,41 +272,41 @@ msgid_plural "%d files"
 msgstr[0] "%d fayl"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:233
+#: src/ops.py:234
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fayl"
 
-#: src/prefs.py:144
+#: src/prefs.py:145
 msgid "Warpinator Preferences"
 msgstr "Warpinator sozlamalari"
 
-#: src/prefs.py:157
+#: src/prefs.py:158
 msgid "General"
 msgstr "Umumiy"
 
-#: src/prefs.py:159
+#: src/prefs.py:160
 msgid "Desktop"
 msgstr "Ish stoli"
 
-#: src/prefs.py:161
+#: src/prefs.py:162
 msgid "Show an icon in the notification area"
 msgstr "Bildirishnoma sohasida belgini ko‘rsatish"
 
-#: src/prefs.py:165
+#: src/prefs.py:166
 msgid "Start with main window open"
 msgstr "Asosiy oynani ochish bilan boshlash"
 
-#: src/prefs.py:170
+#: src/prefs.py:171
 msgid "Start automatically"
 msgstr "Avtomatik ishga tushirish"
 
-#: src/prefs.py:176
+#: src/prefs.py:177
 msgid "Use compression when possible."
 msgstr "Iloji bo‘lsa, siqishni qo‘llash."
 
-#: src/prefs.py:178
+#: src/prefs.py:179
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
@@ -297,77 +314,77 @@ msgstr ""
 "Ogohlantirish: Bu ba'zi tezroq tarmoqlarda ishlashga salbiy ta'sir "
 "ko‘rsatishi mumkin."
 
-#: src/prefs.py:181
+#: src/prefs.py:182
 msgid "Location for received files"
 msgstr "Qabul qilingan fayllar uchun joy"
 
-#: src/prefs.py:186
+#: src/prefs.py:187
 msgid "Require approval before accepting files"
 msgstr "Fayllarni qabul qilishdan oldin tasdiqlashni talab qilish"
 
-#: src/prefs.py:190
+#: src/prefs.py:191
 msgid "Require approval when files would be overwritten"
 msgstr "Fayllar qayta yozilishi uchun tasdiqlashni talab qilish"
 
-#: src/prefs.py:194
+#: src/prefs.py:195
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Kimdir sizga fayllar yuborganda (yoki yuborishga harakat qilganda) "
 "bildirishnomani ko‘rsatish"
 
-#: src/prefs.py:199
+#: src/prefs.py:200
 msgid "Connection"
 msgstr "Ulanish"
 
-#: src/prefs.py:201
+#: src/prefs.py:202
 msgid "Identification"
 msgstr "Identifikatsiya"
 
-#: src/prefs.py:206
+#: src/prefs.py:207
 msgid "Group Code"
 msgstr "Guruh kodi"
 
-#: src/prefs.py:207
+#: src/prefs.py:208
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
 "Siz bir xil kodni ishlatmaydigan kompyuterlar bilan bog‘lana olmaysiz."
 
-#: src/prefs.py:213
+#: src/prefs.py:214
 msgid "Network"
 msgstr "Tarmoq"
 
-#: src/prefs.py:216
+#: src/prefs.py:217
 msgid "Automatic"
 msgstr "Avtomatik"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:257
+#: src/prefs.py:296
 #, python-format
 msgid "%s - not found"
 msgstr "%s - topilmadi"
 
-#: src/prefs.py:259
+#: src/prefs.py:298
 msgid "Network interface to use"
 msgstr "Foydalanish uchun tarmoq interfeysi"
 
-#: src/prefs.py:267
+#: src/prefs.py:306
 msgid "Incoming port for transfers"
 msgstr "Uzatishlar uchun kirish porti"
 
-#: src/prefs.py:274
+#: src/prefs.py:313
 msgid "Incoming port for registration"
 msgstr "Ro‘yxatdan o‘tish uchun kirish porti"
 
-#: src/prefs.py:289
+#: src/prefs.py:328
 msgid "Apply network changes"
 msgstr "Tarmoq o‘zgarishlarini qo‘llash"
 
-#: src/prefs.py:298
+#: src/prefs.py:337
 msgid "Update firewall rules"
 msgstr "Xavfsizlik devori qoidalarini yangilash"
 
-#: src/prefs.py:310
+#: src/prefs.py:349
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -376,19 +393,19 @@ msgstr ""
 "uchun bir xil portlardan foydalanish, agar kerak bo‘lsa, xavfsizlik devori "
 "istisnolarini qo‘shishni osonlashtiradi."
 
-#: src/prefs.py:411
+#: src/prefs.py:450
 msgid "Set code"
 msgstr "Kodni sozlash"
 
-#: src/prefs.py:426
+#: src/prefs.py:465
 msgid "A group code is required."
 msgstr "Guruh kodi talab qilinadi."
 
-#: src/prefs.py:432
+#: src/prefs.py:471
 msgid "The group code should be longer if possible."
 msgstr "Iloji bo‘lsa, guruh kodi uzunroq bo‘lishi kerak."
 
-#: src/remote.py:587 src/remote.py:591
+#: src/remote.py:599 src/remote.py:603
 msgid "Connection has been lost"
 msgstr "Ulanish uzildi"
 
