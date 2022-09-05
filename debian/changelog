@@ -1,3 +1,10 @@
+warpinator (1.2.14) vanessa; urgency=medium
+
+  [ Michael Webster ]
+  * grpc: Use 1.44 instead of 1.46 for now - there is a polling issue in 1.46+ that causes excessive CPU use.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 05 Sep 2022 15:38:59 +0100
+
 warpinator (1.2.13) vanessa; urgency=medium
 
   [ Michael Webster ]
