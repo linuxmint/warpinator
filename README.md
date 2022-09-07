@@ -1,4 +1,5 @@
-## Send and receive files across a local network
+# Warpinator - send and receive files across a local network
+![build](https://github.com/linuxmint/warpinator/actions/workflows/build.yml/badge.svg)
 
 ##### Other platforms (unofficial):
 
