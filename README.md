@@ -10,7 +10,7 @@
 
 ### How to build and install for Linux
 ________
-#### Mint 20, LMDE 4+:
+#### Mint 20+, LMDE 4+:
 ```
 sudo apt-get install warpinator
 ```
