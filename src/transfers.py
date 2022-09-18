@@ -4,6 +4,7 @@ import os
 import logging
 import stat
 import shutil
+import gettext
 
 from gi.repository import GLib, Gio, GObject
 
@@ -11,6 +12,8 @@ import util
 from util import FileType
 import prefs
 import warp_pb2
+
+_ = gettext.gettext
 
 FILE_INFOS = ",".join([
     "standard::size",
@@ -164,6 +167,7 @@ class FileReceiver(GObject.Object):
     def __init__(self, op):
         super(FileReceiver, self).__init__()
         self.save_path = prefs.get_save_path()
+        self.save_path_file = Gio.File.new_for_path(self.save_path)
         self.op = op
         self.preserve_perms = prefs.preserve_permissions() and util.save_folder_is_native_fs()
         self.preserve_timestamp = prefs.preserve_timestamp() and util.save_folder_is_native_fs()
@@ -208,6 +212,9 @@ class FileReceiver(GObject.Object):
 
         if not self.current_gfile:
             self.current_gfile = Gio.File.new_for_path(path)
+            # Check for valid path (GFile resolves paths upon creation).
+            if self.save_path_file.get_relative_path(self.current_gfile) is None:
+                raise Exception(_("Resolved path is not valid: %s -> %s") % (path, self.current_gfile.get_path()))
 
         if s.file_type == FileType.DIRECTORY:
             os.makedirs(path, exist_ok=True)
