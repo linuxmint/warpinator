@@ -180,18 +180,17 @@ class FileReceiver(GObject.Object):
         self.current_mtime = 0
         self.current_mtime_usec = 0
 
-        if op.existing:
-            for name in op.top_dir_basenames:
-                try:
-                    path = os.path.join(self.save_path, name)
-                    if os.path.isdir(path): # file not found is ok
-                        shutil.rmtree(path)
-                    else:
-                        os.remove(path)
-                except FileNotFoundError:
-                    pass
-                except Exception as e:
-                    logging.warning("Problem removing existing files.  Transfer may not succeed: %s" % e)
+        for name in op.top_dir_basenames:
+            try:
+                path = os.path.join(self.save_path, name)
+                if os.path.isdir(path): # file not found is ok
+                    shutil.rmtree(path)
+                else:
+                    os.remove(path)
+            except FileNotFoundError:
+                pass
+            except Exception as e:
+                logging.warning("Problem removing existing files.  Transfer may not succeed: %s" % e)
 
         # We write files top-down.  If we're preserving permissions and we receive
         # a folder in some hierarchy that is not writable, we won't be able to create
@@ -222,8 +221,7 @@ class FileReceiver(GObject.Object):
             make_symbolic_link(self.op, path, s.symlink_target)
         else:
             if self.current_stream == None:
-                flags = Gio.FileCreateFlags.REPLACE_DESTINATION
-                self.current_stream = self.current_gfile.replace(None, False, flags, None)
+                self.current_stream = self.current_gfile.create(Gio.FileCreateFlags.NONE, None)
 
             if not s.chunk:
                 return
