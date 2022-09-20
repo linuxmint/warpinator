@@ -263,7 +263,8 @@ def files_exist(base_names):
     for name in base_names:
         path = os.path.join(prefs.get_save_path(), name)
         logging.debug("(server side) Checking if file or folder %s already exists." % (path,))
-        if GLib.file_test(path, GLib.FileTest.EXISTS):
+        file = Gio.File.new_for_path(path)
+        if file.query_exists(None):
             return True
 
     return False
