@@ -5,6 +5,7 @@ import logging
 import stat
 import shutil
 import gettext
+from pathlib import Path
 
 from gi.repository import GLib, Gio, GObject
 
@@ -167,7 +168,7 @@ class FileReceiver(GObject.Object):
     def __init__(self, op):
         super(FileReceiver, self).__init__()
         self.save_path = prefs.get_save_path()
-        self.save_path_file = Gio.File.new_for_path(self.save_path)
+        self.save_path_obj = Path(self.save_path).resolve()
         self.op = op
         self.preserve_perms = prefs.preserve_permissions() and util.save_folder_is_native_fs()
         self.preserve_timestamp = prefs.preserve_timestamp() and util.save_folder_is_native_fs()
@@ -210,10 +211,12 @@ class FileReceiver(GObject.Object):
             self.current_mtime_usec = s.time.mtime_usec
 
         if not self.current_gfile:
+            # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)
+            test_path = Path(path).resolve()
+            if not test_path.is_relative_to(self.save_path_obj):
+                raise Exception(_("Resolved path is not valid: %s -> %s") % (path, str(test_path)))
+
             self.current_gfile = Gio.File.new_for_path(path)
-            # Check for valid path (GFile resolves paths upon creation).
-            if self.save_path_file.get_relative_path(self.current_gfile) is None:
-                raise Exception(_("Resolved path is not valid: %s -> %s") % (path, self.current_gfile.get_path()))
 
         if s.file_type == FileType.DIRECTORY:
             os.makedirs(path, exist_ok=True)
