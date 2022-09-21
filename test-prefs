@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+import sys
+
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+sys.path.append("/usr/libexec/warpinator")
+
+import config
+import prefs
+import auth
+import networkmonitor
+
+net = networkmonitor.NetworkMonitor()
+net.start()
+
+auth.get_singleton().update(net.get_current_ip_info(), prefs.get_port())
+
+p = prefs.Preferences(None)
+p.window.connect("delete-event", Gtk.main_quit)
+Gtk.main()
+
