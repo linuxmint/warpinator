@@ -255,6 +255,8 @@ def have_free_space(size):
     if free == 0:
         return True
 
+    free -= prefs.get_min_free_space() * 1024
+
     logging.debug("need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
 
     return size < free

@@ -86,6 +86,11 @@
       <default>1024</default>
       <summary>Size (in kb) of each block of data sent over the network. Max is 4094</summary>
     </key>
+    <key name="minimum-free-space" type="u">
+      <default>100</default>
+      <summary>Minimum free space (in mb) allowed in the save location</summary>
+      <description>If a transfer would cause the save location's free space to drop below this value, the transfer is refused</description>
+    </key>
 
   </schema>
   <schema id="org.x.warpinator.window-state" path="/org/x/warpinator/window-state/" gettext-domain="warpinator">

@@ -38,6 +38,7 @@ RPC_THREAD_POOL_SIZE_KEY = "rpc-thread-pool-size"
 USE_COMPRESSION_KEY = "use-compression"
 COMPRESSION_LEVEL_KEY = "zlib-compression-level"
 BLOCK_SIZE_KEY = "transfer-block-size"
+MIN_FREE_SPACE_KEY = "minimum-free-space"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
@@ -133,6 +134,9 @@ def get_compression_level():
 
 def get_block_size():
     return prefs_settings.get_int(BLOCK_SIZE_KEY) * 1024
+
+def get_min_free_space():
+    return prefs_settings.get_uint(MIN_FREE_SPACE_KEY)
 
 class Preferences():
     def __init__(self, transient_for):
