@@ -5,6 +5,10 @@ import os
 import argparse
 
 from gi.repository import Gio, GLib
+sys.path.insert(0, os.path.join("@prefix@", "libexec/warpinator/"))
+
+# Secure mode enforcement
+import prefs
 
 parser = argparse.ArgumentParser(description="Send and Receive Files across the Network")
 parser.add_argument("-d", "--debug", help="Print debugging information.",
@@ -14,12 +18,10 @@ parser.add_argument("-a", "--autostart", help="Exit if (dconf) org.x.warpinator.
 args = parser.parse_args()
 
 if args.autostart:
-    settings = Gio.Settings(schema_id="org.x.warpinator.preferences")
-    if not settings.get_boolean("autostart"):
+    if not prefs.get_should_autostart():
         sys.exit(0)
 
 del sys.argv[1:]
-sys.path.insert(0, os.path.join("@prefix@", "libexec/warpinator/"))
 
 try:
     import warpinator

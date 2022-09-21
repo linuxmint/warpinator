@@ -7,6 +7,7 @@ import gettext
 import functools
 import logging
 import time
+import math
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -46,6 +47,8 @@ setproctitle.setproctitle("warpinator")
 SERVER_RESTART_TIMEOUT = 15
 SERVER_START_TIMEOUT = 8
 DISCOVERY_TIMEOUT = 3
+
+SECURE_MODE_EXIT_TIME_SECONDS = 60 * 60 # 60 minutes in seconds
 
 ICON_ONLINE = ""
 ICON_OFFLINE = "network-offline-symbolic"
@@ -474,6 +477,14 @@ class WarpWindow(GObject.Object):
         self.something_wrong_label = self.builder.get_object("something_went_wrong_label")
         self.bad_save_folder_label = self.builder.get_object("bad_save_folder_label")
 
+        self.secmo_exit_start_time = 0
+        self.secmo_timer_id = 0
+        self.secmo_infobar = self.builder.get_object("secmo_infobar")
+        self.secmo_infobar_label = self.builder.get_object("secmo_infobar_label")
+        self.secmo_infobar_prefs_button = self.builder.get_object("secmo_infobar_prefs_button")
+        self.secmo_infobar.set_revealed(False)
+        self.secmo_infobar_prefs_button.connect("clicked", self.open_prefs_networking)
+
         # user view
         self.user_back_button = self.builder.get_object("user_back")
         self.user_back_button.connect("clicked", self.back_to_overview)
@@ -708,6 +719,44 @@ class WarpWindow(GObject.Object):
         self.app_iface_label.set_text(iface)
         self.app_ip_label.set_text(ip)
 
+    def update_secure_mode_info(self, is_secure):
+        if is_secure:
+            self.stop_secure_mode_timer()
+            self.secmo_infobar.set_revealed(False)
+            self.secmo_infobar.hide()
+        else:
+            self.start_secure_mode_timer()
+
+    def start_secure_mode_timer(self):
+        self.stop_secure_mode_timer()
+        self.secmo_exit_start_time = GLib.get_monotonic_time()
+        self.secmo_timer_id = GLib.timeout_add_seconds(1, self.secure_mode_wake)
+
+    def secure_mode_wake(self, data=None):
+        elapsed_sec = (GLib.get_monotonic_time() - self.secmo_exit_start_time) / 1000 / 1000 # microsec to min
+        remaining = math.ceil((SECURE_MODE_EXIT_TIME_SECONDS - elapsed_sec) / 60)
+        label = gettext.ngettext(
+                    _("Warpinator is running with limited functionality, and will exit in %d minute. "
+                      "To enable Secure Mode, set a unique group code."),
+                    _("Warpinator is running with limited functionality, and will exit in %d minutes. "
+                      "To enable Secure Mode, set a unique group code."), remaining) % (remaining,)
+
+        self.secmo_infobar_label.set_label(label)
+
+        if remaining == 0:
+            self.display_shutdown()
+            self.emit("exit")
+            return GLib.SOURCE_REMOVE
+
+        self.secmo_infobar.show()
+        self.secmo_infobar.set_revealed(True)
+        return GLib.SOURCE_CONTINUE
+
+    def stop_secure_mode_timer(self):
+        if self.secmo_timer_id > 0:
+            GLib.source_remove(self.secmo_timer_id)
+            self.secmo_timer_id = 0
+
     def menu_quit(self, widget, data=None):
         self.display_shutdown()
         self.emit("exit")
@@ -715,8 +764,11 @@ class WarpWindow(GObject.Object):
     def on_open_location_clicked(self, widget, data=None):
         util.open_save_folder()
 
+    def open_prefs_networking(self, button):
+        prefs.Preferences(self.window, "network")
+
     def open_preferences(self, menuitem, data=None):
-        prefs.Preferences(self.window)
+        prefs.Preferences(self.window, "general")
 
     def report_bad_save_folder(self):
         self.bad_save_folder_label.set_text(prefs.get_save_path())
@@ -1105,6 +1157,14 @@ class WarpApplication(Gtk.Application):
 
             auth_singleton.update(self.current_ip_info, self.current_port)
             auth_singleton.connect("group-code-changed", self.on_group_code_changed)
+            
+            if auth.get_secure_mode():
+                self.window.update_secure_mode_info(True)
+            else:
+                logging.warn("Secure mode not enabled, restricting preferences.")
+                logging.warn("-- See https://github.com/linuxmint/warpinator/blob/master/README.md")
+                self.window.update_secure_mode_info(False)
+            prefs.secure_mode_blocker.enforce_secure_mode()
 
             if not self.netmon.online:
                 logging.info("No network access")

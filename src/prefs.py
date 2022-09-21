@@ -6,10 +6,11 @@ import subprocess
 import logging
 import json
 import re
+import cairo
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
-from gi.repository import Gtk, Gio, GLib
+from gi.repository import Gtk, Gdk, Gio, GLib
 
 import config
 import auth
@@ -54,8 +55,54 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
 ####
 
+#### Secure mode
+
+class SecureModePrefsBlocker():
+    # This prevents external changes to Warpinator (like from a terminal or dconf-editor) while warpinator
+    # is running
+    def __init__(self):
+        self.active = False
+        self.settings_changed_id = 0
+
+    def set_active(self, active):
+        if self.active == active:
+            return
+
+        if self.settings_changed_id > 0:
+            prefs_settings.disconnect(self.settings_changed_id)
+            self.settings_changed_id = 0
+
+        if active:
+            self.settings_changed_id = prefs_settings.connect("changed", self._enforce_settings)
+            self._enforce_settings(self)
+
+        self.active = active
+
+    def _enforce_settings(self, settings=None, key=None):
+        prefs_settings.handler_block(self.settings_changed_id)
+
+        prefs_settings.delay()
+        prefs_settings.set_boolean(AUTOSTART_KEY, False)
+        prefs_settings.set_boolean(ASK_PERMISSION_KEY, True)
+        prefs_settings.set_boolean(NO_OVERWRITE_KEY, True)
+        prefs_settings.apply()
+        prefs_settings.sync() # when this is used in /usr/bin/warpinator to check for autostart, there's no main loop yet.
+
+        prefs_settings.handler_unblock(self.settings_changed_id)
+
+    def enforce_secure_mode(self):
+        self.set_active(not auth.get_secure_mode())
+
+secure_mode_blocker = SecureModePrefsBlocker()
+secure_mode_blocker.enforce_secure_mode()
+
+####
+
 if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(REG_PORT_KEY):
     prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY) + 1)
+
+def get_should_autostart():
+    return prefs_settings.get_boolean(AUTOSTART_KEY)
 
 def get_preferred_iface():
     return prefs_settings.get_string(NET_IFACE)
@@ -139,7 +186,7 @@ def get_min_free_space():
     return prefs_settings.get_uint(MIN_FREE_SPACE_KEY)
 
 class Preferences():
-    def __init__(self, transient_for):
+    def __init__(self, main_window, page_name):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "prefs-window.ui"))
 
         self.window = self.builder.get_object("prefs_window")
@@ -149,13 +196,16 @@ class Preferences():
         self.window.set_title(title=_("Warpinator Preferences"))
         self.window.set_icon_name("preferences-system")
 
-        self.window.set_transient_for(transient_for)
+        self.window.set_transient_for(main_window)
 
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
         page_stack = SettingsStack()
         self.content_box.pack_start(page_stack, True, True, 0)
         self.page_switcher.set_stack(page_stack)
+
+        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
+        self.unsafe_options = []
 
         # Settings
         page = SettingsPage()
@@ -174,6 +224,7 @@ class Preferences():
 
         widget = GSettingsSwitch(_("Start automatically"),
                                  PREFS_SCHEMA, AUTOSTART_KEY)
+        self.unsafe_options.append(widget)
         section.add_row(widget)
 
         section = page.add_section(_("File Transfers"))
@@ -190,10 +241,12 @@ class Preferences():
 
         widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
+        self.unsafe_options.append(widget)
         section.add_row(widget)
 
         widget = GSettingsSwitch(_("Require approval when files would be overwritten"),
                                  PREFS_SCHEMA, NO_OVERWRITE_KEY)
+        self.unsafe_options.append(widget)
         section.add_row(widget)
 
         widget = GSettingsSwitch(_("Display a notification when someone sends (or tries to send) you files"),
@@ -203,16 +256,12 @@ class Preferences():
         page = SettingsPage()
         page_stack.add_titled(page, "network", _("Connection"))
 
-        section = page.add_section(_("Identification"))
+        section = page.add_section(_("Group Code"))
 
         entry_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.VERTICAL)
         button_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.BOTH)
 
-        widget = GroupCodeEntry(_("Group Code"),
-                                tooltip=_("You cannot communicate with computers that do not use the same code."),
-                                entry_size_group=entry_size_group,
-                                button_size_group=button_size_group)
-
+        widget = GroupCodeEntry(focus_entry = page_name == "network")
         section.add_row(widget)
 
         section = page.add_section(_("Network"))
@@ -357,7 +406,10 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         section.add_row(widget)
 
+        self.on_group_code_changed(self)
+
         self.window.show_all()
+        page_stack.set_visible_child_full(page_name, transition=Gtk.StackTransitionType.NONE)
 
     def open_port(self, widget):
         self.run_port_script(self.settings.get_int(PORT_KEY), self.settings.get_int(REG_PORT_KEY))
@@ -414,6 +466,17 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         GLib.timeout_add_seconds(1, lambda: Gio.Application.get_default().firewall_script_finished())
 
+    def on_group_code_changed(self, singleton=None):
+        is_default_code = auth.get_group_code() == auth.DEFAULT_GROUP_CODE
+
+        for widget in self.unsafe_options:
+            if is_default_code:
+                widget.set_sensitive(False)
+                widget.set_tooltip_text(_("Only available in secure mode."))
+            else:
+                widget.set_sensitive(True)
+                widget.set_tooltip_text(None)
+
 class PortSpinButton(SpinButton):
     def __init__(self, *args, **kargs):
         button_size_group = kargs.pop("button_size_group")
@@ -435,52 +498,98 @@ class PortSpinButton(SpinButton):
     def apply_later(self, *args):
         pass
 
-class GroupCodeEntry(Entry):
-    def __init__(self, *args, **kargs):
-        button_size_group = kargs.pop("button_size_group")
-        entry_size_group = kargs.pop("entry_size_group")
+class GroupCodeEntry(SettingsWidget):
+    def __init__(self, focus_entry=False):
+        super(GroupCodeEntry, self).__init__()
 
-        super(GroupCodeEntry, self).__init__(*args, **kargs)
+        self.code = auth.get_group_code()
+        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
 
-        self.code = auth.get_singleton().get_group_code()
-        self.content_widget.set_text(self.code)
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "group-code.ui"))
 
-        entry_size_group.add_widget(self.content_widget)
-        self.content_widget.connect("changed", self.text_changed)
+        self.toplevel = self.builder.get_object("toplevel")
+        self.pack_start(self.toplevel, True, True, 0)
 
-        self.set_child_packing(self.content_widget, False, False, 0, Gtk.PackType.END)
-        self.set_spacing(6)
+        self.entry = self.builder.get_object("code_entry")
 
-        self.accept_button = Gtk.Button(label=_("Set code"))
-        self.accept_button.show()
-        self.accept_button.set_sensitive(False)
-        self.accept_button.get_style_context().add_class("suggested-action")
-        self.accept_button.connect("clicked", self.apply_clicked)
-        button_size_group.add_widget(self.accept_button)
+        if focus_entry:
+            self.entry.connect("realize", lambda w: w.grab_focus())
 
-        self.pack_end(self.accept_button, False, False, 0)
-        self.reorder_child(self.accept_button, 1)
+        self.set_code_button = self.builder.get_object("set_code_button")
+        self.more_info_link_button = self.builder.get_object("more_info_link_button")
+        self.secure_mode_label = self.builder.get_object("secure_mode_label")
+        self.reason_label = self.builder.get_object("reason_label")
+        self.status_bar = self.builder.get_object("status_bar")
+
+        self.entry.set_text(self.code)
+        self.entry.connect("changed", self.text_changed)
+
+        self.set_code_button.set_sensitive(False)
+        self.set_code_button.get_style_context().add_class("suggested-action")
+        self.set_code_button.connect("clicked", self.set_code_clicked)
+
+        context = self.get_style_context()
+
+        ret, self.secure_color = context.lookup_color("success_color")
+        if not ret:
+            self.secure_color = Gdk.RGBA()
+            self.secure_color.parse("green")
+
+        ret, self.insecure_color = context.lookup_color("error_color")
+        if not ret:
+            self.insecure_color = Gdk.RGBA()
+            self.insecure_color.parse("red")
+
+        self.status_bar.connect("draw", self.status_bar_draw)
+
+        self.on_group_code_changed(auth.get_singleton())
 
     def text_changed(self, widget, data=None):
-        text = self.content_widget.get_text()
+        text = widget.get_text()
 
         if text == "":
             widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
             widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("A group code is required."))
-            self.accept_button.set_sensitive(False)
+            self.set_code_button.set_sensitive(False)
             return
-
-        if len(text) < 8:
-            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-warning-symbolic")
-            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code should be longer if possible."))
+        elif len(text) < 4:
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
+            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code is too short."))
+            self.set_code_button.set_sensitive(False)
+            return
         else:
             widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
 
-        self.accept_button.set_sensitive(self.content_widget.get_text() != self.code)
+        self.set_code_button.set_sensitive(widget.get_text() != self.code)
 
-    def apply_clicked(self, widget, data=None):
-        self.code = self.content_widget.get_text()
-        self.accept_button.set_sensitive(False)
+    def set_code_clicked(self, widget, data=None):
+        self.code = self.entry.get_text()
+        self.set_code_button.set_sensitive(False)
         auth.get_singleton().update_group_code(self.code)
 
+    def status_bar_draw(self, widget, cr):
+        if auth.get_secure_mode():
+            color = self.secure_color
+        else:
+            color = self.insecure_color
 
+        allocation = self.get_allocation()
+        cr.set_antialias(cairo.ANTIALIAS_SUBPIXEL)
+
+        cr.save()
+
+        Gdk.cairo_set_source_rgba(cr, color)
+        cr.rectangle(0, 0, allocation.width, allocation.height)
+        cr.fill()
+
+        cr.restore()
+
+        return True
+
+    def on_group_code_changed(self, singleton):
+        if auth.get_secure_mode():
+            self.secure_mode_label.set_text(_("ON"))
+            self.reason_label.set_text(_("All options are unlocked."))
+        else:
+            self.secure_mode_label.set_text(_("OFF"))
+            self.reason_label.set_text(_("You must set a custom group code to run in secure mode. Some options are currently disabled."))
