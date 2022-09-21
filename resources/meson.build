@@ -1,4 +1,5 @@
 data = [
+  'group-code.ui',
   'main-window.ui',
   'op-item.ui',
   'overview-button.ui',

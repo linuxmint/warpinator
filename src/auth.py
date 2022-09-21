@@ -83,10 +83,14 @@ class AuthManager(GObject.Object):
     def get_group_code(self):
         return self.code;
 
+    def get_secure_mode(self):
+        return self.code != DEFAULT_GROUP_CODE
+
     def update_group_code(self, code):
         if code == self.code:
             return
 
+        self.code = code
         self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
         self._save_keyfile()
 
