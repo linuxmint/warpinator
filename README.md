@@ -10,6 +10,14 @@
 
 ### How to build and install for Linux
 ________
+#### Arch Linux:
+
+For any desktop environment (DE)
+```
+sudo pacman -S warpinator
+```
+
+
 #### Mint 20+, LMDE 4+:
 ```
 sudo apt-get install warpinator
