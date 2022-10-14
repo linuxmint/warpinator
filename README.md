@@ -10,6 +10,7 @@
 
 ### How to build and install for Linux
 ________
+
 #### Mint 20+, LMDE 4+:
 ```
 sudo apt-get install warpinator
@@ -47,6 +48,13 @@ sudo dpkg -i *warp*.deb
 
 Add this PPA to satisfy dependencies, then you can follow steps above:
 <https://launchpad.net/~clementlefebvre/+archive/ubuntu/grpc?field.series_filter=bionic>
+
+#### Arch Linux:
+
+For any desktop environment (DE)
+```
+sudo pacman -S warpinator
+```
 
 #### Otherwise (and this is valid anywhere if you want to avoid packaging):
 ```
