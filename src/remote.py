@@ -17,7 +17,7 @@ import util
 import transfers
 import auth
 from ops import SendOp, ReceiveOp
-from util import TransferDirection, OpStatus, OpCommand, RemoteStatus
+from util import TransferDirection, OpStatus, OpCommand, RemoteStatus, ReceiveError
 
 _ = gettext.gettext
 
@@ -478,6 +478,18 @@ class RemoteMachine(GObject.Object):
         try:
             for data in op.file_iterator:
                 receiver.receive_data(data)
+
+            op.file_iterator = None
+            receiver.receive_finished()
+
+            logging.debug("Remote: receipt of %s files (%s) finished in %s" % \
+                          (op.total_count, GLib.format_size(op.total_size),\
+                           util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
+
+            if receiver.remaining_files > 0:
+                raise ReceiveError(_("Transfer completed, but the number of files received is less than the original request size (expected %d, received %d)"
+                                       % (op.total_count, op.total_count - receiver.remaining_files)),
+                                   fatal=False)
         except grpc.RpcError as e:
             if e.code() == grpc.StatusCode.CANCELLED:
                 report_receive_error(None)
@@ -485,16 +497,18 @@ class RemoteMachine(GObject.Object):
             else:
                 report_receive_error(e)
                 return
+        except ReceiveError as e:
+            if e.fatal:
+                report_receive_error(e)
+                return
+            else:
+                logging.critical(str(e))
+                op.set_error(e)
+                op.set_status(OpStatus.FINISHED_WARNING)
+                return
         except Exception as e:
             report_receive_error(e)
             return
-
-        op.file_iterator = None
-        receiver.receive_finished()
-
-        logging.debug("Remote: receipt of %s files (%s) finished in %s" % \
-              (op.total_count, GLib.format_size(op.total_size),\
-               util.precise_format_time_span(GLib.get_monotonic_time() - start_time)))
 
         op.set_status(OpStatus.FINISHED)
 

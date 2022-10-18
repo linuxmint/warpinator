@@ -81,9 +81,10 @@ class NewOpUserNotification():
         app.lookup_action("notification-response").disconnect_by_func(self._notification_response)
 
 class TransferCompleteNotification():
-    def __init__(self, op, sender=True):
+    def __init__(self, op, sender=True, warn=False):
         self.op = op
         self.sender = sender
+        self.warn = warn
 
         self.send_notification()
 
@@ -92,12 +93,23 @@ class TransferCompleteNotification():
         if prefs.get_show_notifications():
             notification = Gio.Notification.new(_("Transfer complete"))
             if self.sender:
-                body = (_("The transfer to %s has finished successfully") % self.op.receiver_name)
+                if self.warn:
+                    body = (_("The transfer to %s has finished, but with errors") % self.op.receiver_name)
+                else:
+                    body = (_("The transfer to %s has finished successfully") % self.op.receiver_name)
             else:
-                body = (_("The transfer from %s has finished successfully") % self.op.sender_name)
+                if self.warn:
+                    body = (_("The transfer from %s has finished, but with errors") % self.op.sender_name)
+                else:
+                    body = (_("The transfer from %s has finished successfully") % self.op.sender_name)
 
             notification.set_body(body)
-            notification.set_icon(Gio.ThemedIcon(name="emblem-ok-symbolic"))
+
+            if self.warn:
+                icon_name = "dialog-warning-symbolic"
+            else:
+                icon_name = "emblem-ok-symbolic"
+            notification.set_icon(Gio.ThemedIcon(name=icon_name))
             notification.set_default_action("app.notification-response::focus")
 
             notification.set_priority(Gio.NotificationPriority.NORMAL)

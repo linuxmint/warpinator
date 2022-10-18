@@ -539,7 +539,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         def transfer_done():
             if sender.error != None:
                 op.set_error(sender.error)
-                op.stop_transfer()
                 op.set_status(OpStatus.FAILED_UNRECOVERABLE)
             elif op.file_send_cancellable.is_set():
                 logging.debug("Server: file send cancelled")

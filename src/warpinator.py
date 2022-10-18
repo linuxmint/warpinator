@@ -179,6 +179,8 @@ class OpItem(object):
                 self.op_transfer_problem_label.set_text(_("Some files not found"))
         elif self.op.status == OpStatus.FINISHED:
             self.op_transfer_status_message.set_text(_("Completed"))
+        elif self.op.status == OpStatus.FINISHED_WARNING:
+            self.op_transfer_status_message.set_text(_("Completed, but with errors"))
 
     def refresh_buttons_and_icons(self):
         if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
@@ -227,7 +229,8 @@ class OpItem(object):
         elif self.op.status == OpStatus.FILE_NOT_FOUND:
             self.op_status_stack.set_visible_child_name("message")
             self.set_visible_buttons(TRANSFER_FILE_NOT_FOUND_BUTTONS)
-        elif self.op.status == OpStatus.FINISHED:
+        elif self.op.status in (OpStatus.FINISHED,
+                                OpStatus.FINISHED_WARNING):
             self.op_status_stack.set_visible_child_name("message")
             if isinstance(self.op, SendOp):
                 self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
@@ -651,7 +654,8 @@ class WarpWindow(GObject.Object):
                              OpStatus.FAILED,
                              OpStatus.FAILED_UNRECOVERABLE,
                              OpStatus.FILE_NOT_FOUND,
-                             OpStatus.FINISHED):
+                             OpStatus.FINISHED,
+                             OpStatus.FINISHED_WARNING):
                 op.remove_transfer()
 
     def recent_item_selected(self, recent_chooser, data=None):

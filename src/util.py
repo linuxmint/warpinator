@@ -63,7 +63,8 @@ OpStatus = IntEnum('OpStatus', 'INIT \
                                 FAILED \
                                 FAILED_UNRECOVERABLE \
                                 FILE_NOT_FOUND \
-                                FINISHED')
+                                FINISHED \
+                                FINISHED_WARNING')
 
 OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   UPDATE_PROGRESS \
@@ -74,6 +75,11 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   STOP_TRANSFER_BY_SENDER \
                                   STOP_TRANSFER_BY_RECEIVER \
                                   REMOVE_TRANSFER')
+
+class ReceiveError(Exception):
+    def __init__(self, message, fatal=True):
+        self.fatal = fatal
+        super().__init__(message)
 
 class InterfaceInfo():
     def __init__(self, ip4, ip6, iface=None):

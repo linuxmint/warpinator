@@ -11,7 +11,7 @@ import transfers
 import prefs
 import util
 import notifications
-from util import OpStatus, OpCommand, TransferDirection
+from util import OpStatus, OpCommand, TransferDirection, ReceiveError
 
 _ = gettext.gettext
 
@@ -81,6 +81,8 @@ class CommonOp(GObject.Object):
             self.error_msg = e.message
         elif isinstance(e, grpc.RpcError):
             self.error_msg = e.details()
+        elif isinstance(e, ReceiveError):
+            self.error_msg = str(e)
         else:
             self.error_msg = str(e)
 
@@ -212,6 +214,8 @@ class ReceiveOp(CommonOp):
 
         if status == OpStatus.FINISHED:
             notifications.TransferCompleteNotification(self, sender=False)
+        elif status == OpStatus.FINISHED_WARNING:
+            notifications.TransferCompleteNotification(self, sender=False, warn=True)
         elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED):
             notifications.TransferFailedNotification(self, sender=False)
          # We only care if the other remote cancelled.  If we did it, we don't need a notification.
