@@ -218,8 +218,10 @@ class FileReceiver(GObject.Object):
         if not self.current_gfile:
             # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)
             test_path = Path(path).resolve()
-            if not test_path.is_relative_to(self.save_path_obj):
-                raise Exception(_("Resolved path is not valid: %s -> %s") % (path, str(test_path)))
+            try:
+                test_path.relative_to(self.save_path_obj)
+            except ValueError:
+                raise ReceiveError(_("Resolved path is not valid: %s -> %s") % (path, str(test_path)), fatel=True)
 
             self.current_gfile = Gio.File.new_for_path(path)
 
