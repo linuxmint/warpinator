@@ -1,3 +1,28 @@
+warpinator (1.2.15) vera; urgency=medium
+
+  [ Michael Webster ]
+  * Add github workflow.
+
+  [ dogey11 ]
+  * Update README.md
+
+  [ Michael Webster ]
+  * transfers: Don't allow a received file to be saved outside of the transfer folder.
+  * transfers: Use g_file_query_exists() instead of g_file_test().
+  * transfers: Always remove existing files before beginning a transfer.
+  * transfers: Use Pathlib.Path instead of GFile for path safety check.
+  * Add a script to allow testing the preferences window directly.
+  * Don't allow incoming transfers to fill the disk.
+
+  [ Juliano Marcelino ]
+  * Added instructions for Arch Linux via pacman (#144)
+
+  [ Michael Webster ]
+  * Check number of files received against the original request.
+  * transfers: Change method used to check relative paths.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 22 Nov 2022 11:37:29 +0000
+
 warpinator (1.2.14) vanessa; urgency=medium
 
   [ Michael Webster ]
