@@ -34,8 +34,10 @@ KEYFILE_UUID_KEY = "connect_id"
 CONFIG_FILE_NAME = ".group"
 
 CONFIG_FOLDER = os.path.join(GLib.get_user_config_dir(), "warpinator")
+os.makedirs(CONFIG_FOLDER, exist_ok=True)
 
 singleton = None
+keyfile = None
 
 def get_singleton():
     global singleton
@@ -44,6 +46,79 @@ def get_singleton():
         singleton = AuthManager()
 
     return singleton
+
+def _ensure_keyfile_loaded():
+    global keyfile
+
+    if keyfile is not None:
+        return
+
+    path = Path(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME))
+    keyfile = GLib.KeyFile()
+
+    try:
+        keyfile.load_from_file(path.as_posix(), GLib.KeyFileFlags.NONE)
+    except GLib.Error as e:
+        if e.code == GLib.FileError.NOENT:
+            logging.debug("Auth: No group code file, making one.")
+            path.touch()
+        else:
+            logging.debug("Auth: Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
+            path.unlink()
+            path.touch()
+
+def _save_keyfile():
+    _ensure_keyfile_loaded()
+    global keyfile
+
+    keyfile_bytes = bytes(keyfile.to_data()[0], "utf-8")
+
+    path = Path(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME))
+
+    try:
+        path.unlink()
+    except OSError:
+        pass
+
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    mode = stat.S_IRUSR | stat.S_IWUSR
+    umask = 0o777 ^ mode  # Prevents always downgrading umask to 0.
+
+    umask_original = os.umask(umask)
+
+    try:
+        fdesc = os.open(path, flags, mode)
+    finally:
+        os.umask(umask_original)
+
+    with os.fdopen(fdesc, 'wb') as f:
+        f.write(keyfile_bytes)
+
+def get_group_code():
+    reset = False
+    code = None
+
+    _ensure_keyfile_loaded()
+    global keyfile
+
+    try:
+        code = keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY)
+    except GLib.Error as e:
+        if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
+            logging.warn("Could not read group code from settings file (%s): %s" % (CONFIG_FOLDER, e.message))
+
+    if code == None or code == "":
+        self.code = DEFAULT_GROUP_CODE
+        _save_keyfile()
+        return
+
+    if len(code) < 8:
+        logging.warn("Group Code is short, consider something longer than 8 characters.")
+
+    return code
+
+def get_secure_mode():
+    return get_group_code() != DEFAULT_GROUP_CODE
 
 class AuthManager(GObject.Object):
     __gsignals__ = {
@@ -63,36 +138,26 @@ class AuthManager(GObject.Object):
 
         self.remote_certs = {}
 
-        os.makedirs(CONFIG_FOLDER, exist_ok=True)
-        self.path = Path(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME))
-
     def update(self, ip_info, port):
         self.ip_info = ip_info;
         self.port = port
 
-        self._load_keyfile()
-
         self._read_ident()
-        self._read_group_code()
-
+        self.code = get_group_code()
         self._make_key_cert_pair()
 
     def get_ident(self):
         return self.ident
 
-    def get_group_code(self):
-        return self.code;
-
-    def get_secure_mode(self):
-        return self.code != DEFAULT_GROUP_CODE
-
     def update_group_code(self, code):
         if code == self.code:
             return
 
+        _ensure_keyfile_loaded()
+
         self.code = code
-        self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
-        self._save_keyfile()
+        keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY, code)
+        _save_keyfile()
 
         self.emit("group-code-changed")
 
@@ -138,48 +203,14 @@ class AuthManager(GObject.Object):
         encoded = base64.encodebytes(encrypted)
         return encoded
 
-# Internals
-    def _load_keyfile(self):
-        self.keyfile = GLib.KeyFile()
-
-        try:
-            self.keyfile.load_from_file(self.path.as_posix(), GLib.KeyFileFlags.NONE)
-        except GLib.Error as e:
-            if e.code == GLib.FileError.NOENT:
-                logging.debug("Auth: No group code file, making one.")
-                self.path.touch()
-            else:
-                logging.debug("Auth: Could not load existing keyfile (%s): %s" %(CONFIG_FOLDER, e.message))
-                self.path.unlink()
-                self.path.touch()
-
-    def _save_keyfile(self):
-        keyfile_bytes = bytes(self.keyfile.to_data()[0], "utf-8")
-
-        try:
-            self.path.unlink()
-        except OSError:
-            pass
-
-        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
-        mode = stat.S_IRUSR | stat.S_IWUSR
-        umask = 0o777 ^ mode  # Prevents always downgrading umask to 0.
-
-        umask_original = os.umask(umask)
-
-        try:
-            fdesc = os.open(self.path, flags, mode)
-        finally:
-            os.umask(umask_original)
-
-        with os.fdopen(fdesc, 'wb') as f:
-            f.write(keyfile_bytes)
-
     def _read_ident(self):
         gen_new = False
 
+        _ensure_keyfile_loaded()
+        global keyfile
+
         try:
-            self.ident = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY)
+            self.ident = keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY)
         except GLib.Error as e:
             if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
                 logging.critical("Could not read uuid (ident) from settings file: %s" % e.message)
@@ -193,28 +224,8 @@ class AuthManager(GObject.Object):
             # Max 'instance' length is 63.
             # https://datatracker.ietf.org/doc/html/rfc6763#section-7.2
             self.ident = "%s-%s" % (self.hostname.upper()[:42], secrets.token_hex(10).upper())
-            self.keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY, self.ident)
-            self._save_keyfile()
-
-    def _read_group_code(self):
-        reset = False
-        code = None
-
-        try:
-            code = self.keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY)
-        except GLib.Error as e:
-            if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
-                logging.warn("Could not read group code from settings file (%s): %s" % (CONFIG_FOLDER, e.message))
-
-        if code == None or code == "":
-            self.code = DEFAULT_GROUP_CODE
-            self._save_keyfile()
-            return
-
-        if len(code) < 8:
-            logging.warn("Group Code is short, consider something longer than 8 characters.")
-
-        self.code = code
+            keyfile.set_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY, self.ident)
+            _save_keyfile()
 
     def _make_key_cert_pair(self):
         logging.debug("Auth: Creating server credentials")

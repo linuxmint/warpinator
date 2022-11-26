@@ -708,6 +708,9 @@ class WarpWindow(GObject.Object):
         self.app_iface_label.set_text(iface)
         self.app_ip_label.set_text(ip)
 
+    def update_secure_mode_info(self, is_secure):
+        pass
+
     def menu_quit(self, widget, data=None):
         self.display_shutdown()
         self.emit("exit")
@@ -1105,6 +1108,14 @@ class WarpApplication(Gtk.Application):
 
             auth_singleton.update(self.current_ip_info, self.current_port)
             auth_singleton.connect("group-code-changed", self.on_group_code_changed)
+            
+            if auth.get_secure_mode():
+                self.window.update_secure_mode_info(True)
+            else:
+                logging.warn("Secure mode not enabled, restricting preferences.")
+                logging.warn("-- See https://github.com/linuxmint/warpinator/blob/master/README.md")
+                self.window.update_secure_mode_info(False)
+            prefs.secure_mode_blocker.enforce_secure_mode()
 
             if not self.netmon.online:
                 logging.info("No network access")

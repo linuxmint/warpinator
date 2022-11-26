@@ -55,8 +55,54 @@ if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
     prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
 ####
 
+#### Secure mode
+
+class SecureModePrefsBlocker():
+    # This prevents external changes to Warpinator (like from a terminal or dconf-editor) while warpinator
+    # is running
+    def __init__(self):
+        self.active = False
+        self.settings_changed_id = 0
+
+    def set_active(self, active):
+        if self.active == active:
+            return
+
+        if self.settings_changed_id > 0:
+            prefs_settings.disconnect(self.settings_changed_id)
+            self.settings_changed_id = 0
+
+        if active:
+            self.settings_changed_id = prefs_settings.connect("changed", self._enforce_settings)
+            self._enforce_settings(self)
+
+        self.active = active
+
+    def _enforce_settings(self, settings=None, key=None):
+        prefs_settings.handler_block(self.settings_changed_id)
+
+        prefs_settings.delay()
+        prefs_settings.set_boolean(AUTOSTART_KEY, False)
+        prefs_settings.set_boolean(ASK_PERMISSION_KEY, True)
+        prefs_settings.set_boolean(NO_OVERWRITE_KEY, True)
+        prefs_settings.apply()
+        prefs_settings.sync() # when this is used in /usr/bin/warpinator to check for autostart, there's no main loop yet.
+
+        prefs_settings.handler_unblock(self.settings_changed_id)
+
+    def enforce_secure_mode(self):
+        self.set_active(not auth.get_secure_mode())
+
+secure_mode_blocker = SecureModePrefsBlocker()
+secure_mode_blocker.enforce_secure_mode()
+
+####
+
 if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(REG_PORT_KEY):
     prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY) + 1)
+
+def get_should_autostart():
+    return prefs_settings.get_boolean(AUTOSTART_KEY)
 
 def get_preferred_iface():
     return prefs_settings.get_string(NET_IFACE)
@@ -420,12 +466,11 @@ can make it simpler to add firewall exceptions if necessary."""))
         GLib.timeout_add_seconds(1, lambda: Gio.Application.get_default().firewall_script_finished())
 
     def on_group_code_changed(self, singleton=None):
-        is_default_code = auth.get_singleton().get_group_code() == auth.DEFAULT_GROUP_CODE
+        is_default_code = auth.get_group_code() == auth.DEFAULT_GROUP_CODE
 
         for widget in self.unsafe_options:
             if is_default_code:
                 widget.set_sensitive(False)
-                widget.settings.reset(widget.key)
                 widget.set_tooltip_text(_("Only available in secure mode."))
             else:
                 widget.set_sensitive(True)
@@ -456,7 +501,7 @@ class GroupCodeEntry(SettingsWidget):
     def __init__(self, *args, **kargs):
         super(GroupCodeEntry, self).__init__(*args, **kargs)
 
-        self.code = auth.get_singleton().get_group_code()
+        self.code = auth.get_group_code()
         auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
 
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "group-code.ui"))
@@ -471,9 +516,7 @@ class GroupCodeEntry(SettingsWidget):
         self.reason_label = self.builder.get_object("reason_label")
         self.status_bar = self.builder.get_object("status_bar")
 
-        self.code = auth.get_singleton().get_group_code()
         self.entry.set_text(self.code)
-
         self.entry.connect("changed", self.text_changed)
 
         self.set_code_button.set_sensitive(False)
@@ -529,7 +572,7 @@ class GroupCodeEntry(SettingsWidget):
         auth.get_singleton().update_group_code(self.code)
 
     def status_bar_draw(self, widget, cr):
-        if auth.get_singleton().get_secure_mode():
+        if auth.get_secure_mode():
             color = self.secure_color
         else:
             color = self.insecure_color
@@ -548,7 +591,7 @@ class GroupCodeEntry(SettingsWidget):
         return True
 
     def on_group_code_changed(self, singleton):
-        if singleton.get_secure_mode():
+        if auth.get_secure_mode():
             self.secure_mode_label.set_text(_("ON"))
             self.reason_label.set_text(_("All options are unlocked."))
         else:
