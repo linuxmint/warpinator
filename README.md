@@ -105,18 +105,19 @@ sudo ninja -C builddir install
 pip3 install grpcio grpcio-tools
 ```
 
-# Group Codes
-### Purpose
-The group code is a shared key that allows trusted devices on the local network to see one another in Warpinator. Any devices you wish to connect with *must* be using the same group code.
-### Security considerations
-For the sake of 'out-of-the-box' convenience, Warpinator has a default group code of "Warpinator". It is *highly recommended* that you change this to something unique, as anyone that gets on your network would then be able to connect with you with little effort.
+# Secure Mode
+### Group codes
+The group code is a shared key that allows trusted devices on the local network to see one another in Warpinator. Any devices you wish to connect with *must* be using the same group code. This code is set to 'Warpinator' by default.
+### Enabling secure mode
+Secure mode can be enabled simply by changing the group code to something unique. It is *highly recommended* that you do this as soon as possible, as anyone else that gets on your network would then be able to connect with you with little effort.
 
-##### Certain rules are enforced until Secure Mode is enabled by customizing the group code:
+##### Certain restrictions are put in place until Secure Mode is enabled:
 - Starting automatically at login is disabled.
 - All incoming transfers *must* be approved by the user.
+- Warpinator will exit after sixty minutes.
 ##### Additional information:
 - It is recommended that the code only consist of standard alphanumeric characters.
-- The code must between 8 and 32 characters. If you decide to use non-ascii characters, the maximum length may be shorter.
+- The code must between 8 and 32 characters. If you decide to use non-ascii characters, the maximum length may end up being shorter.
 
 # Troubleshooting tips
 

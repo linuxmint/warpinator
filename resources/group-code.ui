@@ -151,7 +151,7 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="relief">none</property>
-            <property name="uri">https://github.com/linuxmint/warpinator#group-codes</property>
+            <property name="uri">https://github.com/linuxmint/warpinator#secure-mode</property>
           </object>
           <packing>
             <property name="expand">False</property>
