@@ -186,7 +186,7 @@ def get_min_free_space():
     return prefs_settings.get_uint(MIN_FREE_SPACE_KEY)
 
 class Preferences():
-    def __init__(self, transient_for=None):
+    def __init__(self, main_window, page_name):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "prefs-window.ui"))
 
         self.window = self.builder.get_object("prefs_window")
@@ -196,7 +196,7 @@ class Preferences():
         self.window.set_title(title=_("Warpinator Preferences"))
         self.window.set_icon_name("preferences-system")
 
-        self.window.set_transient_for(transient_for)
+        self.window.set_transient_for(main_window)
 
         size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.HORIZONTAL)
 
@@ -261,7 +261,7 @@ class Preferences():
         entry_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.VERTICAL)
         button_size_group = Gtk.SizeGroup.new(Gtk.SizeGroupMode.BOTH)
 
-        widget = GroupCodeEntry()
+        widget = GroupCodeEntry(focus_entry = page_name == "network")
         section.add_row(widget)
 
         section = page.add_section(_("Network"))
@@ -409,6 +409,7 @@ can make it simpler to add firewall exceptions if necessary."""))
         self.on_group_code_changed(self)
 
         self.window.show_all()
+        page_stack.set_visible_child_full(page_name, transition=Gtk.StackTransitionType.NONE)
 
     def open_port(self, widget):
         self.run_port_script(self.settings.get_int(PORT_KEY), self.settings.get_int(REG_PORT_KEY))
@@ -498,8 +499,8 @@ class PortSpinButton(SpinButton):
         pass
 
 class GroupCodeEntry(SettingsWidget):
-    def __init__(self, *args, **kargs):
-        super(GroupCodeEntry, self).__init__(*args, **kargs)
+    def __init__(self, focus_entry=False):
+        super(GroupCodeEntry, self).__init__()
 
         self.code = auth.get_group_code()
         auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
@@ -510,6 +511,10 @@ class GroupCodeEntry(SettingsWidget):
         self.pack_start(self.toplevel, True, True, 0)
 
         self.entry = self.builder.get_object("code_entry")
+
+        if focus_entry:
+            self.entry.connect("realize", lambda w: w.grab_focus())
+
         self.set_code_button = self.builder.get_object("set_code_button")
         self.more_info_link_button = self.builder.get_object("more_info_link_button")
         self.secure_mode_label = self.builder.get_object("secure_mode_label")
