@@ -552,18 +552,9 @@ class GroupCodeEntry(SettingsWidget):
             widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("A group code is required."))
             self.set_code_button.set_sensitive(False)
             return
-        # We recommend ascii-only, so bytes == characters there, but if they insist on using utf-8, which can
-        # take up to 4 bytes per character, then 8 'characters' could then potentially be the maximum, so restrict to
-        # larger than 8 bytes, not characters.
-        elif len(text.encode()) < 8:
-            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "error-symbolic")
+        elif len(text) < 4:
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
             widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code is too short."))
-            self.set_code_button.set_sensitive(False)
-            return
-        # PyNaCl SecretBox has a maximum of 32 bytes.
-        elif len(text.encode()) > 32:
-            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "error-symbolic")
-            widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code is too long."))
             self.set_code_button.set_sensitive(False)
             return
         else:

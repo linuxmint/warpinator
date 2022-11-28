@@ -112,7 +112,7 @@ def get_group_code():
         _save_keyfile()
         return
 
-    if len(code) < 8:
+    if len(code) < 4:
         logging.warn("Group Code is short, consider something longer than 8 characters.")
 
     return code
