@@ -48,7 +48,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="secmo_infobar_prefs_button">
-                    <property name="label" translatable="yes">Fix this</property>
+                    <property name="label" translatable="yes">Set code</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -118,6 +118,73 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="app_status_bar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-left">10</property>
+            <property name="margin-right">10</property>
+            <property name="margin-bottom">6</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel" id="app_ip">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">192.168.10.2</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack-type">end</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="sep">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">|</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack-type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="app_iface">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">eth0</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="pack-type">end</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="app_local_name">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label">joe@hostname</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack-type">end</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -1194,73 +1261,6 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox" id="app_status_bar">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-left">10</property>
-            <property name="margin-right">10</property>
-            <property name="margin-bottom">6</property>
-            <property name="spacing">6</property>
-            <child>
-              <object class="GtkLabel" id="app_ip">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label">192.168.10.2</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack-type">end</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="sep">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label">|</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack-type">end</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="app_iface">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label">eth0</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="pack-type">end</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="app_local_name">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label">joe@hostname</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
