@@ -1,3 +1,13 @@
+warpinator (1.4.0) vera; urgency=medium
+
+  [ Michael Webster ]
+  * Rework group code presentation and enforcement in preferences.
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 29 Nov 2022 10:56:04 +0000
+
 warpinator (1.2.15) vera; urgency=medium
 
   [ Michael Webster ]
