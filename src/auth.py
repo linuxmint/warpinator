@@ -108,9 +108,9 @@ def get_group_code():
             logging.warn("Could not read group code from settings file (%s): %s" % (CONFIG_FOLDER, e.message))
 
     if code == None or code == "":
-        self.code = DEFAULT_GROUP_CODE
+        code = DEFAULT_GROUP_CODE
         _save_keyfile()
-        return
+        return code
 
     if len(code) < 4:
         logging.warn("Group Code is short, consider something longer than 8 characters.")
