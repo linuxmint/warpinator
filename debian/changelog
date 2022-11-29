@@ -1,3 +1,10 @@
+warpinator (1.4.1) vera; urgency=medium
+
+  [ Michael Webster ]
+  * auth.py: remove leftover self, and get_group_code() always needs to return a code.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 29 Nov 2022 14:50:00 +0000
+
 warpinator (1.4.0) vera; urgency=medium
 
   [ Michael Webster ]

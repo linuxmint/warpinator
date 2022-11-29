@@ -1,4 +1,4 @@
-project('warpinator', 'c', version: '1.4.0', meson_version: '>=0.47.0')
+project('warpinator', 'c', version: '1.4.1', meson_version: '>=0.47.0')
 
 RPC_API_VERSION = '2'
 
