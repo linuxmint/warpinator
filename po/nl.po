@@ -7,50 +7,79 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2022-07-01 16:56+0200\n"
-"PO-Revision-Date: 2022-07-01 20:09+0000\n"
+"POT-Creation-Date: 2022-11-29 10:55+0000\n"
+"PO-Revision-Date: 2022-11-29 16:06+0000\n"
 "Last-Translator: Pjotr12345 <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-07-24 09:43+0000\n"
-"X-Generator: Launchpad (build 025a39fd866a641b6ae33074cda0d02a2c712d38)\n"
+"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
+"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
 
-#: resources/main-window.ui:106
+#: resources/group-code.ui:16 src/prefs.py:259
+msgid "Group Code"
+msgstr "Groepscode"
+
+#: resources/group-code.ui:39
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr ""
+"U kunt alleen communiceren met computers die dezelfde code gebruiken."
+
+#: resources/group-code.ui:49 resources/main-window.ui:51
+msgid "Set code"
+msgstr "Code instellen"
+
+#: resources/group-code.ui:93
+msgid "Secure mode:"
+msgstr "Veilige modus:"
+
+#: resources/group-code.ui:106 src/prefs.py:594
+msgid "OFF"
+msgstr "UIT"
+
+#: resources/group-code.ui:148
+msgid "More information"
+msgstr "Meer informatie"
+
+#: resources/main-window.ui:80
+msgid "Secure Mode disabled"
+msgstr "Veilige modus uitgeschakeld"
+
+#: resources/main-window.ui:263
 msgid "No matching results"
 msgstr "Geen overeenkomende resultaten"
 
-#: resources/main-window.ui:262
+#: resources/main-window.ui:419
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Maak deze machine-op-afstand een favoriet in het hoofdvenster"
 
-#: resources/main-window.ui:336
+#: resources/main-window.ui:493
 msgid "Clear inactive and completed operations"
 msgstr "Wis inactieve en voltooide bewerkingen"
 
-#: resources/main-window.ui:355
+#: resources/main-window.ui:512
 msgid "Send files"
 msgstr "Bestanden verzenden"
 
-#: resources/main-window.ui:381 src/prefs.py:175
+#: resources/main-window.ui:538 src/prefs.py:230
 msgid "File Transfers"
 msgstr "Bestandsoverdrachten"
 
-#: resources/main-window.ui:402 src/warpinator.py:866
+#: resources/main-window.ui:559 src/warpinator.py:922
 msgid "Online"
 msgstr "Verbonden"
 
-#: resources/main-window.ui:522
+#: resources/main-window.ui:679
 msgid "No other computers found..."
 msgstr "Geen andere computers gevonden...."
 
-#: resources/main-window.ui:587
+#: resources/main-window.ui:744
 msgid "Make sure your network connection is active."
 msgstr "Zorg ervoor dat uw netwerkverbinding actief is."
 
-#: resources/main-window.ui:602
+#: resources/main-window.ui:759
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -59,7 +88,7 @@ msgstr ""
 "voorkeuren voor meer bijzonderheden."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:618
+#: resources/main-window.ui:775
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -67,40 +96,40 @@ msgstr ""
 "Draait Warpinator ook op andere computers in dit netwerk? Zo ja, zorg er dan "
 "voor dat ze alle dezelfde groepscode gebruiken in de Voorkeuren."
 
-#: resources/main-window.ui:636
+#: resources/main-window.ui:793
 msgid "Possible solutions:"
 msgstr "Mogelijke oplossingen:"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:671
+#: resources/main-window.ui:828
 msgid "Warpinator is also available on:"
 msgstr "Warpinator is ook beschikbaar op:"
 
-#: resources/main-window.ui:686
+#: resources/main-window.ui:843
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:702
+#: resources/main-window.ui:859
 msgid "iOS"
 msgstr "iOS"
 
-#: resources/main-window.ui:718
+#: resources/main-window.ui:875
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:807
+#: resources/main-window.ui:949
 msgid "Initializing, please wait..."
 msgstr "Bezig met opstarten, een ogenblik a.u.b...."
 
-#: resources/main-window.ui:865
+#: resources/main-window.ui:1007
 msgid "Something went wrong"
 msgstr "Er is iets misgegaan"
 
-#: resources/main-window.ui:940
+#: resources/main-window.ui:1082
 msgid "Invalid save location"
 msgstr "Ongeldige opslaglocatie"
 
-#: resources/main-window.ui:977
+#: resources/main-window.ui:1119
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -108,15 +137,15 @@ msgstr ""
 "Deze map is ontoegankelijk of bestaat niet. Kies a.u.b. een nieuwe locatie "
 "in de Voorkeuren of zorg ervoor dat de huidige locatie is aangekoppeld."
 
-#: resources/main-window.ui:1033
+#: resources/main-window.ui:1175
 msgid "Searching for other computers"
 msgstr "Zoeken naar andere computers..."
 
-#: resources/main-window.ui:1092
+#: resources/main-window.ui:1234
 msgid "Shutting down..."
 msgstr "Afsluiten..."
 
-#: resources/main-window.ui:1202 src/util.py:430
+#: resources/main-window.ui:1277 src/util.py:439
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -216,44 +245,54 @@ msgstr ""
 msgid "%(sender_name)s is sending you %(file_count)d files"
 msgstr "%(sender_name)s is u %(file_count)d bestanden aan het sturen."
 
-#: src/notifications.py:93
+#: src/notifications.py:94
 msgid "Transfer complete"
 msgstr "Overdracht voltooid"
 
-#: src/notifications.py:95
+#: src/notifications.py:97
+#, python-format
+msgid "The transfer to %s has finished, but with errors"
+msgstr "De overdracht naar %s is voltooid, maar met fouten"
+
+#: src/notifications.py:99
 #, python-format
 msgid "The transfer to %s has finished successfully"
 msgstr "De overdracht naar %s is met succes voltooid"
 
-#: src/notifications.py:97
+#: src/notifications.py:102
+#, python-format
+msgid "The transfer from %s has finished, but with errors"
+msgstr "De overdracht vanaf %s is voltooid, maar met fouten"
+
+#: src/notifications.py:104
 #, python-format
 msgid "The transfer from %s has finished successfully"
 msgstr "De overdracht vanaf %s is met succes voltooid"
 
-#: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
+#: src/notifications.py:138 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
 msgstr "Overdracht mislukt"
 
-#: src/notifications.py:129
+#: src/notifications.py:141
 #, python-format
 msgid "Something went wrong with the transfer to %s"
 msgstr "Er is iets mis gegaan met de overdracht naar %s"
 
-#: src/notifications.py:131
+#: src/notifications.py:143
 #, python-format
 msgid "Something went wrong with the transfer from %s"
 msgstr "Er is iets mis gegaan met de overdracht vanaf %s"
 
-#: src/notifications.py:160 src/warpinator.py:166
+#: src/notifications.py:172 src/warpinator.py:169
 msgid "Transfer cancelled"
 msgstr "Overdracht afgebroken"
 
-#: src/notifications.py:163
+#: src/notifications.py:175
 #, python-format
 msgid "Your transfer to %s was cancelled"
 msgstr "Uw overdracht naar %s werd geannuleerd"
 
-#: src/notifications.py:165
+#: src/notifications.py:177
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
 msgstr "Een binnenkomende overdracht vanaf %s werd geannuleerd"
@@ -264,7 +303,7 @@ msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:148
+#: src/ops.py:150
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
@@ -272,42 +311,42 @@ msgstr[0] "%d file-do-not-translate"
 msgstr[1] "%d bestanden"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:234
+#: src/ops.py:238
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d file"
 msgstr[1] "%d bestanden"
 
-#: src/prefs.py:145
+#: src/prefs.py:196
 msgid "Warpinator Preferences"
 msgstr "Voorkeuren van Warpinator"
 
-#: src/prefs.py:158
+#: src/prefs.py:212
 msgid "General"
 msgstr "Algemeen"
 
-#: src/prefs.py:160
+#: src/prefs.py:214
 msgid "Desktop"
 msgstr "Bureaublad"
 
-#: src/prefs.py:162
+#: src/prefs.py:216
 msgid "Show an icon in the notification area"
 msgstr "Toon een pictogram in het meldingsvak"
 
-#: src/prefs.py:166
+#: src/prefs.py:220
 msgid "Start with main window open"
 msgstr "Start met geopend hoofdvenster"
 
-#: src/prefs.py:171
+#: src/prefs.py:225
 msgid "Start automatically"
 msgstr "Automatisch starten"
 
-#: src/prefs.py:177
+#: src/prefs.py:232
 msgid "Use compression when possible."
 msgstr "Gebruik compressie wanneer mogelijk."
 
-#: src/prefs.py:179
+#: src/prefs.py:234
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
@@ -315,75 +354,62 @@ msgstr ""
 "Waarschuwing: dit kan een negatieve invloed hebben op de prestaties bij "
 "sommige snellere netwerken."
 
-#: src/prefs.py:182
+#: src/prefs.py:237
 msgid "Location for received files"
 msgstr "Locatie voor ontvangen bestanden"
 
-#: src/prefs.py:187
+#: src/prefs.py:242
 msgid "Require approval before accepting files"
 msgstr "Verg toestemming alvorens bestanden te aanvaarden"
 
-#: src/prefs.py:191
+#: src/prefs.py:247
 msgid "Require approval when files would be overwritten"
 msgstr "Verg toestemming wanneer er bestanden overschreven zouden worden"
 
-#: src/prefs.py:195
+#: src/prefs.py:252
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr "Toon een melding wanneer iemand u bestanden (probeert te) sturen"
 
-#: src/prefs.py:200
+#: src/prefs.py:257
 msgid "Connection"
 msgstr "Verbinding"
 
-#: src/prefs.py:202
-msgid "Identification"
-msgstr "Identificatie"
-
-#: src/prefs.py:207
-msgid "Group Code"
-msgstr "Groepscode"
-
-#: src/prefs.py:208
-msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
-"U kunt alleen communiceren met computers die dezelfde code gebruiken."
-
-#: src/prefs.py:214
+#: src/prefs.py:267
 msgid "Network"
 msgstr "Netwerk"
 
-#: src/prefs.py:217
+#: src/prefs.py:270
 msgid "Automatic"
 msgstr "Automatisch"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:296
+#: src/prefs.py:349
 #, python-format
 msgid "%s - not found"
 msgstr "%s - niet gevonden"
 
-#: src/prefs.py:298
+#: src/prefs.py:351
 msgid "Network interface to use"
 msgstr "Te gebruiken netwerkapparaat"
 
-#: src/prefs.py:306
+#: src/prefs.py:359
 msgid "Incoming port for transfers"
 msgstr "Binnenkomende poort voor overdrachten"
 
-#: src/prefs.py:313
+#: src/prefs.py:366
 msgid "Incoming port for registration"
 msgstr "Ingaande poort voor registratie"
 
-#: src/prefs.py:328
+#: src/prefs.py:381
 msgid "Apply network changes"
 msgstr "Netwerkwijzigingen toepassen"
 
-#: src/prefs.py:337
+#: src/prefs.py:390
 msgid "Update firewall rules"
 msgstr "Firewall-regels bijwerken"
 
-#: src/prefs.py:349
+#: src/prefs.py:402
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -392,195 +418,253 @@ msgstr ""
 "dezelfde poorten voor alle computers kan het eenvoudiger maken om, indien "
 "nodig, firewalluitzonderingen toe te voegen."
 
-#: src/prefs.py:450
-msgid "Set code"
-msgstr "Code instellen"
+#: src/prefs.py:475
+msgid "Only available in secure mode."
+msgstr "Uitsluitend beschikbaar in veilige modus."
 
-#: src/prefs.py:465
+#: src/prefs.py:552
 msgid "A group code is required."
 msgstr "Een groepscode is vereist."
 
-#: src/prefs.py:471
-msgid "The group code should be longer if possible."
-msgstr "De groepscode zou, indien mogelijk, langer moeten zijn."
+#: src/prefs.py:557
+msgid "The group code is too short."
+msgstr "De groepscode is te kort."
 
-#: src/remote.py:599 src/remote.py:603
+#: src/prefs.py:591
+msgid "ON"
+msgstr "AAN"
+
+#: src/prefs.py:592
+msgid "All options are unlocked."
+msgstr "Alle opties zijn ontgrendeld."
+
+#: src/prefs.py:595
+msgid ""
+"You must set a custom group code to run in secure mode. Some options are "
+"currently disabled."
+msgstr ""
+"U dient een aangepaste groepscode in te stellen om in veilige modus te "
+"draaien. Sommige opties zijn thans uitgeschakeld."
+
+#: src/remote.py:490
+#, python-format
+msgid ""
+"Transfer completed, but the number of files received is less than the "
+"original request size (expected %d, received %d)"
+msgstr ""
+"Overdracht is voltooid, maar het aantal ontvangen bestanden is kleiner dan "
+"het aantal van het oorspronkelijke verzoek (verwacht %d, ontvangen %d)"
+
+#: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
 msgstr "Verbinding is verbroken"
 
-#: src/server.py:567
+#: src/server.py:566
 msgid "An error occurred on the remote machine"
 msgstr "Er is een fout opgetreden op de machine-op-afstand"
 
-#: src/util.py:147
+#: src/transfers.py:216
+msgid "File count exceeds original request size"
+msgstr "Bestandentelling is groter dan die van het oorspronkelijke verzoek"
+
+#: src/transfers.py:224
+#, python-format
+msgid "Resolved path is not valid: %s -> %s"
+msgstr "Pad is niet geldig: %s -> %s"
+
+#: src/util.py:153
 msgid "Cancel"
 msgstr "Afbreken"
 
-#: src/util.py:148
+#: src/util.py:154
 msgid "Add"
 msgstr "Toevoegen"
 
-#: src/util.py:170
+#: src/util.py:176
 msgid "Select file(s) to send"
 msgstr "Kies bestand(en) om te verzenden"
 
-#: src/util.py:319
+#: src/util.py:328
 msgid "A few seconds remaining"
 msgstr "Nog enkele seconden te gaan"
 
-#: src/util.py:322
+#: src/util.py:331
 #, python-format
 msgid "%d seconds remaining"
 msgstr "Nog %d seconden te gaan"
 
-#: src/util.py:326 src/util.py:334
+#: src/util.py:335 src/util.py:343
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuut"
 msgstr[1] "%d minuten"
 
-#: src/util.py:333
+#: src/util.py:342
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d uur"
 msgstr[1] "%d uren"
 
-#: src/util.py:338
+#: src/util.py:347
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "ongeveer %d uur"
 msgstr[1] "ongeveer %d uren"
 
-#: src/util.py:426 src/warpinator.py:534
+#: src/util.py:435 src/warpinator.py:548
 msgid "About"
 msgstr "Over"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Paused"
 msgstr "Gepauzeerd"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Waiting for approval"
 msgstr "Wachten op goedkeuring...."
 
-#: src/warpinator.py:150
+#: src/warpinator.py:153
 msgid "Waiting for your approval"
 msgstr "Wachtend op uw goedkeuring..."
 
-#: src/warpinator.py:153
+#: src/warpinator.py:156
 msgid "Files may be overwritten"
 msgstr "Er zouden bestanden kunnen worden overschreven"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:159
 msgid "Not enough disk space"
 msgstr "Niet genoeg schijfruimte"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "Verzoek afgebroken"
 
-#: src/warpinator.py:161 src/warpinator.py:163
+#: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "Verzoek afgebroken door %s"
 
-#: src/warpinator.py:168 src/warpinator.py:170
+#: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Overdracht afgebroken door %s"
 
-#: src/warpinator.py:177
+#: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
 msgstr "Bestand '%s' niet gevonden"
 
-#: src/warpinator.py:179
+#: src/warpinator.py:182
 msgid "Some files not found"
 msgstr "Sommige bestanden niet gevonden"
 
-#: src/warpinator.py:181
+#: src/warpinator.py:184
 msgid "Completed"
 msgstr "Voltooid"
 
-#: src/warpinator.py:339 src/warpinator.py:894
+#: src/warpinator.py:186
+msgid "Completed, but with errors"
+msgstr "Voltooid, maar met fouten"
+
+#: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
 msgstr "Verbinden...."
 
-#: src/warpinator.py:341
+#: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
 msgstr "Aan het verbinden met %s ...."
 
-#: src/warpinator.py:351
+#: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
 msgstr "%s heeft geen internetverbinding"
 
-#: src/warpinator.py:356
+#: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Kan niet verbinden met %s"
 
-#: src/warpinator.py:361
+#: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Aan het wachten op %s om de verbinding te voltooien."
 
-#: src/warpinator.py:390
+#: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d nieuwe binnenkomende overdracht"
 msgstr[1] "%d nieuwe binnenkomende overdrachten"
 
-#: src/warpinator.py:499 src/warpinator.py:1321
+#: src/warpinator.py:513 src/warpinator.py:1385
 msgid "Favorites"
 msgstr "Favorieten"
 
-#: src/warpinator.py:504 src/warpinator.py:1326
+#: src/warpinator.py:518 src/warpinator.py:1390
 msgid "Recents"
 msgstr "Recente bestanden"
 
-#: src/warpinator.py:511 src/warpinator.py:1335
+#: src/warpinator.py:525 src/warpinator.py:1399
 msgid "Browse..."
 msgstr "Verkennen..."
 
-#: src/warpinator.py:526 src/warpinator.py:1267
+#: src/warpinator.py:540 src/warpinator.py:1331
 msgid "Open save folder"
 msgstr "Opslagmap openen"
 
-#: src/warpinator.py:530
+#: src/warpinator.py:544
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: src/warpinator.py:538 src/warpinator.py:1270
+#: src/warpinator.py:552 src/warpinator.py:1334
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: src/warpinator.py:631
+#: src/warpinator.py:645
 msgid "You don't appear to be connected to a network."
 msgstr "U lijkt niet verbonden te zijn met een netwerk."
 
-#: src/warpinator.py:633
+#: src/warpinator.py:647
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Opstarten is niet gelukt, kijk a.u.b. uw logboeken na."
 
-#: src/warpinator.py:873
+#: src/warpinator.py:739
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minute. To enable Secure Mode, set a unique group code."
+msgstr ""
+"Warpinator draait met beperkte functionaliteit, en zal zich afsluiten over "
+"%d minuut. Om veilige modus aan te zetten dient u een unieke groepscode in "
+"te stellen."
+
+#: src/warpinator.py:741
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minutes. To enable Secure Mode, set a unique group code."
+msgstr ""
+"Warpinator draait met beperkte functionaliteit, en zal zich afsluiten over "
+"%d minuten. Om veilige modus aan te zetten dient u een unieke groepscode in "
+"te stellen."
+
+#: src/warpinator.py:929
 msgid "Offline"
 msgstr "Niet verbonden"
 
-#: src/warpinator.py:880
+#: src/warpinator.py:936
 msgid "Unable to connect"
 msgstr "Kan geen verbinding maken"
 
-#: src/warpinator.py:887
+#: src/warpinator.py:943
 msgid "Waiting for two-way connection"
 msgstr "Aan het wachten op een tweewegverbinding"
 
-#: src/warpinator.py:1304
+#: src/warpinator.py:1368
 msgid "Send to all"
 msgstr "Naar allemaal versturen"
 

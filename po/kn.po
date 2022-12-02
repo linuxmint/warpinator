@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2022-07-01 16:56+0200\n"
+"POT-Creation-Date: 2022-11-29 10:55+0000\n"
 "PO-Revision-Date: 2020-09-08 14:42+0000\n"
 "Last-Translator: Sai Vinoba <Unknown>\n"
 "Language-Team: Kannada <kn@li.org>\n"
@@ -15,49 +15,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-07-24 09:43+0000\n"
-"X-Generator: Launchpad (build 025a39fd866a641b6ae33074cda0d02a2c712d38)\n"
+"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
+"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
 
-#: resources/main-window.ui:106
+#: resources/group-code.ui:16 src/prefs.py:259
+msgid "Group Code"
+msgstr "ಗುಂಪು ಸಂಕೇತ"
+
+#: resources/group-code.ui:39
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr "ಒಂದೇ ಸಂಕೇತ ಬಳಸದ ಗಣಕಗಳೊಂದಿಗೆ ನೀವು ಸಂವಹನ ನಡೆಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
+
+#: resources/group-code.ui:49 resources/main-window.ui:51
+msgid "Set code"
+msgstr "ಸಂಕೇತವನ್ನು ಹೊಂದಿಸು"
+
+#: resources/group-code.ui:93
+msgid "Secure mode:"
+msgstr ""
+
+#: resources/group-code.ui:106 src/prefs.py:594
+msgid "OFF"
+msgstr ""
+
+#: resources/group-code.ui:148
+msgid "More information"
+msgstr ""
+
+#: resources/main-window.ui:80
+msgid "Secure Mode disabled"
+msgstr ""
+
+#: resources/main-window.ui:263
 msgid "No matching results"
 msgstr "ಹೊಂದಾಣಿಕೆಯ ಫಲಿತಾಂಶಗಳಿಲ್ಲ"
 
-#: resources/main-window.ui:262
+#: resources/main-window.ui:419
 msgid "Make this remote machine a favorite in the main view"
 msgstr "ಈ ದೂರಸ್ಥ ಯಂತ್ರವನ್ನು ಮುಖ್ಯ ವೀಕ್ಷಣೆಯಲ್ಲಿ ನೆಚ್ಚಿನದು ಆಗಿ ಮಾಡಿ"
 
-#: resources/main-window.ui:336
+#: resources/main-window.ui:493
 msgid "Clear inactive and completed operations"
 msgstr "ನಿಷ್ಕ್ರಿಯ ಮತ್ತು ಪೂರ್ಣಗೊಂಡ ಕಾರ್ಯಾಚರಣೆಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ"
 
-#: resources/main-window.ui:355
+#: resources/main-window.ui:512
 msgid "Send files"
 msgstr "ಕಡತಗಳನ್ನು ಕಳುಹಿಸು"
 
-#: resources/main-window.ui:381 src/prefs.py:175
+#: resources/main-window.ui:538 src/prefs.py:230
 msgid "File Transfers"
 msgstr "ಕಡತ ವರ್ಗಾವಣೆಗಳು"
 
-#: resources/main-window.ui:402 src/warpinator.py:866
+#: resources/main-window.ui:559 src/warpinator.py:922
 msgid "Online"
 msgstr "ಆನ್‌ಲೈನ್"
 
-#: resources/main-window.ui:522
+#: resources/main-window.ui:679
 msgid "No other computers found..."
 msgstr "ಬೇರೆ ಯಾವುದೇ ಗಣಕಗಳು ಕಂಡುಬಂದಿಲ್ಲ..."
 
-#: resources/main-window.ui:587
+#: resources/main-window.ui:744
 msgid "Make sure your network connection is active."
 msgstr "ನಿಮ್ಮ ಜಾಲಬಂಧ ಸಂಪರ್ಕವು ಸಕ್ರಿಯವಾಗಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
 
-#: resources/main-window.ui:602
+#: resources/main-window.ui:759
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:618
+#: resources/main-window.ui:775
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -66,40 +94,40 @@ msgstr ""
 "ಹಾಗಿದ್ದಲ್ಲಿ, ಅವರೆಲ್ಲರೂ ಆದ್ಯತೆಗಳಲ್ಲಿ ಅದೇ ಗುಂಪು ಸಂಕೇತವನ್ನು ಬಳಸುತ್ತಿದ್ದಾರೆ ಎಂದು "
 "ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
 
-#: resources/main-window.ui:636
+#: resources/main-window.ui:793
 msgid "Possible solutions:"
 msgstr "ಸಂಭಾವ್ಯ ಪರಿಹಾರಗಳು:"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:671
+#: resources/main-window.ui:828
 msgid "Warpinator is also available on:"
 msgstr ""
 
-#: resources/main-window.ui:686
+#: resources/main-window.ui:843
 msgid "Android"
 msgstr ""
 
-#: resources/main-window.ui:702
+#: resources/main-window.ui:859
 msgid "iOS"
 msgstr ""
 
-#: resources/main-window.ui:718
+#: resources/main-window.ui:875
 msgid "Windows"
 msgstr ""
 
-#: resources/main-window.ui:807
+#: resources/main-window.ui:949
 msgid "Initializing, please wait..."
 msgstr "ಪ್ರಾರಂಭಿಸಲಾಗುತ್ತಿದೆ, ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ..."
 
-#: resources/main-window.ui:865
+#: resources/main-window.ui:1007
 msgid "Something went wrong"
 msgstr "ಏನೋ ತಪ್ಪಾಗಿದೆ"
 
-#: resources/main-window.ui:940
+#: resources/main-window.ui:1082
 msgid "Invalid save location"
 msgstr "ಅಮಾನ್ಯ ಉಳಿಸುವ ಸ್ಥಳ"
 
-#: resources/main-window.ui:977
+#: resources/main-window.ui:1119
 msgid ""
 "This folder is inaccessible or does not exist.  Please select a new location "
 "in Preferences or ensure that the current one is mounted."
@@ -108,15 +136,15 @@ msgstr ""
 "ಸ್ಥಳವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ ಅಥವಾ ಪ್ರಸ್ತುತ ಸ್ಥಳವನ್ನು ಆರೋಹಿಸಲಾಗಿದೆ ಎಂದು "
 "ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
 
-#: resources/main-window.ui:1033
+#: resources/main-window.ui:1175
 msgid "Searching for other computers"
 msgstr "ಇತರ ಗಣಕಗಳಿಗಾಗಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ"
 
-#: resources/main-window.ui:1092
+#: resources/main-window.ui:1234
 msgid "Shutting down..."
 msgstr "ಸ್ಥಗಿತಗೊಳಿಸಲಾಗುತ್ತಿದೆ..."
 
-#: resources/main-window.ui:1202 src/util.py:430
+#: resources/main-window.ui:1277 src/util.py:439
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -216,44 +244,54 @@ msgstr ""
 msgid "%(sender_name)s is sending you %(file_count)d files"
 msgstr "%(sender_name)s ನಿಮಗೆ %(file_count)d ಕಡತಗಳನ್ನು ಕಳುಹಿಸುತ್ತಿದ್ದಾರೆ"
 
-#: src/notifications.py:93
+#: src/notifications.py:94
 msgid "Transfer complete"
 msgstr "ವರ್ಗಾವಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ"
 
-#: src/notifications.py:95
+#: src/notifications.py:97
+#, python-format
+msgid "The transfer to %s has finished, but with errors"
+msgstr ""
+
+#: src/notifications.py:99
 #, python-format
 msgid "The transfer to %s has finished successfully"
 msgstr "%s ಗೆ ವರ್ಗಾವಣೆ ಯಶಸ್ವಿಯಾಗಿ ಮುಗಿದಿದೆ"
 
-#: src/notifications.py:97
+#: src/notifications.py:102
+#, python-format
+msgid "The transfer from %s has finished, but with errors"
+msgstr ""
+
+#: src/notifications.py:104
 #, python-format
 msgid "The transfer from %s has finished successfully"
 msgstr "%s ನಿಂದ ವರ್ಗಾವಣೆ ಯಶಸ್ವಿಯಾಗಿ ಮುಗಿದಿದೆ"
 
-#: src/notifications.py:126 src/warpinator.py:172 src/warpinator.py:175
+#: src/notifications.py:138 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
 msgstr "ವರ್ಗಾವಣೆ ವಿಫಲಗೊಂಡಿದೆ"
 
-#: src/notifications.py:129
+#: src/notifications.py:141
 #, python-format
 msgid "Something went wrong with the transfer to %s"
 msgstr "%s ಗೆ ವರ್ಗಾವಣೆಯಲ್ಲಿ ಏನೋ ತಪ್ಪಾಗಿದೆ"
 
-#: src/notifications.py:131
+#: src/notifications.py:143
 #, python-format
 msgid "Something went wrong with the transfer from %s"
 msgstr "%s ನಿಂದ ವರ್ಗಾವಣೆಯಲ್ಲಿ ಏನೋ ತಪ್ಪಾಗಿದೆ"
 
-#: src/notifications.py:160 src/warpinator.py:166
+#: src/notifications.py:172 src/warpinator.py:169
 msgid "Transfer cancelled"
 msgstr "ವರ್ಗಾವಣೆ ರದ್ದುಗೊಂಡಿದೆ"
 
-#: src/notifications.py:163
+#: src/notifications.py:175
 #, python-format
 msgid "Your transfer to %s was cancelled"
 msgstr "%s ಗೆ ನಿಮ್ಮ ವರ್ಗಾವಣೆ ರದ್ದುಗೊಂಡಿದೆ"
 
-#: src/notifications.py:165
+#: src/notifications.py:177
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
 msgstr "%s ನಿಂದ ಒಳಬರುವ ವರ್ಗಾವಣೆಯನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ"
@@ -264,7 +302,7 @@ msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:148
+#: src/ops.py:150
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
@@ -272,311 +310,347 @@ msgstr[0] "%d file-do-not-translate"
 msgstr[1] "%d ಕಡತಗಳು"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:234
+#: src/ops.py:238
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d file"
 msgstr[1] "%d ಕಡತಗಳು"
 
-#: src/prefs.py:145
+#: src/prefs.py:196
 msgid "Warpinator Preferences"
 msgstr "ವಾರ್ಪಿನೇಟರ್ ಆದ್ಯತೆಗಳು"
 
-#: src/prefs.py:158
+#: src/prefs.py:212
 msgid "General"
 msgstr ""
 
-#: src/prefs.py:160
+#: src/prefs.py:214
 msgid "Desktop"
 msgstr "ಡೆಸ್ಕ್ ಟಾಪ್"
 
-#: src/prefs.py:162
+#: src/prefs.py:216
 msgid "Show an icon in the notification area"
 msgstr "ಅಧಿಸೂಚನೆ ಪ್ರದೇಶದಲ್ಲಿ ಚಿಹ್ನೆಯನ್ನು ತೋರಿಸು"
 
-#: src/prefs.py:166
+#: src/prefs.py:220
 msgid "Start with main window open"
 msgstr "ಮುಖ್ಯ ವಿಂಡೋವನ್ನು ತೆರೆದಿರುವಾಗ ಆರಂಭಿಸು"
 
-#: src/prefs.py:171
+#: src/prefs.py:225
 msgid "Start automatically"
 msgstr "ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪ್ರಾರಂಭಿಸು"
 
-#: src/prefs.py:177
+#: src/prefs.py:232
 msgid "Use compression when possible."
 msgstr ""
 
-#: src/prefs.py:179
+#: src/prefs.py:234
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 
-#: src/prefs.py:182
+#: src/prefs.py:237
 msgid "Location for received files"
 msgstr "ಸ್ವೀಕರಿಸಿದ ಕಡತಗಳಿಗೆ ಸ್ಥಳ"
 
-#: src/prefs.py:187
+#: src/prefs.py:242
 msgid "Require approval before accepting files"
 msgstr "ಕಡತಗಳನ್ನು ಸ್ವೀಕರಿಸುವ ಮೊದಲು ಅನುಮೋದನೆ ಅಗತ್ಯವಿದೆ"
 
-#: src/prefs.py:191
+#: src/prefs.py:247
 msgid "Require approval when files would be overwritten"
 msgstr "ಕಡತಗಳನ್ನು ತಿದ್ದಿ ಬರೆಯುವಾಗ ಅನುಮೋದನೆ ಅಗತ್ಯವಿದೆ"
 
-#: src/prefs.py:195
+#: src/prefs.py:252
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "ಯಾರಾದರೂ ನಿಮಗೆ ಕಡತಗಳನ್ನು ಕಳುಹಿಸಿದಾಗ (ಅಥವಾ ಕಳುಹಿಸಲು ಪ್ರಯತ್ನಿಸಿದಾಗ) "
 "ಅಧಿಸೂಚನೆಯನ್ನು ಪ್ರದರ್ಶಿಸು"
 
-#: src/prefs.py:200
+#: src/prefs.py:257
 msgid "Connection"
 msgstr ""
 
-#: src/prefs.py:202
-msgid "Identification"
-msgstr ""
-
-#: src/prefs.py:207
-msgid "Group Code"
-msgstr "ಗುಂಪು ಸಂಕೇತ"
-
-#: src/prefs.py:208
-msgid "You cannot communicate with computers that do not use the same code."
-msgstr "ಒಂದೇ ಸಂಕೇತ ಬಳಸದ ಗಣಕಗಳೊಂದಿಗೆ ನೀವು ಸಂವಹನ ನಡೆಸಲು ಸಾಧ್ಯವಿಲ್ಲ."
-
-#: src/prefs.py:214
+#: src/prefs.py:267
 msgid "Network"
 msgstr "ಜಾಲಬಂಧ"
 
-#: src/prefs.py:217
+#: src/prefs.py:270
 msgid "Automatic"
 msgstr ""
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:296
+#: src/prefs.py:349
 #, python-format
 msgid "%s - not found"
 msgstr ""
 
-#: src/prefs.py:298
+#: src/prefs.py:351
 msgid "Network interface to use"
 msgstr ""
 
-#: src/prefs.py:306
+#: src/prefs.py:359
 msgid "Incoming port for transfers"
 msgstr "ವರ್ಗಾವಣೆಗಳಿಗಾಗಿ ಒಳಬರುವ ಪೋರ್ಟ್"
 
-#: src/prefs.py:313
+#: src/prefs.py:366
 msgid "Incoming port for registration"
 msgstr ""
 
-#: src/prefs.py:328
+#: src/prefs.py:381
 msgid "Apply network changes"
 msgstr ""
 
-#: src/prefs.py:337
+#: src/prefs.py:390
 msgid "Update firewall rules"
 msgstr "ಫೈರ್‌ವಾಲ್ ನಿಯಮಗಳನ್ನು ನವೀಕರಿಸು"
 
-#: src/prefs.py:349
+#: src/prefs.py:402
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
 
-#: src/prefs.py:450
-msgid "Set code"
-msgstr "ಸಂಕೇತವನ್ನು ಹೊಂದಿಸು"
+#: src/prefs.py:475
+msgid "Only available in secure mode."
+msgstr ""
 
-#: src/prefs.py:465
+#: src/prefs.py:552
 msgid "A group code is required."
 msgstr "ಗುಂಪು ಸಂಕೇತ ಒಂದರ ಅಗತ್ಯವಿದೆ."
 
-#: src/prefs.py:471
-msgid "The group code should be longer if possible."
-msgstr "ಗುಂಪು ಸಂಕೇತ ಸಾಧ್ಯವಾದರೆ ಉದ್ದವಾಗಿರಬೇಕು."
+#: src/prefs.py:557
+msgid "The group code is too short."
+msgstr ""
 
-#: src/remote.py:599 src/remote.py:603
+#: src/prefs.py:591
+msgid "ON"
+msgstr ""
+
+#: src/prefs.py:592
+msgid "All options are unlocked."
+msgstr ""
+
+#: src/prefs.py:595
+msgid ""
+"You must set a custom group code to run in secure mode. Some options are "
+"currently disabled."
+msgstr ""
+
+#: src/remote.py:490
+#, python-format
+msgid ""
+"Transfer completed, but the number of files received is less than the "
+"original request size (expected %d, received %d)"
+msgstr ""
+
+#: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
 msgstr "ಸಂಪರ್ಕವು ಕಡಿದು ಹೋಗಿದೆ"
 
-#: src/server.py:567
+#: src/server.py:566
 msgid "An error occurred on the remote machine"
 msgstr "ದೂರಸ್ಥ ಯಂತ್ರದಲ್ಲಿ ದೋಷ ಸಂಭವಿಸಿದೆ"
 
-#: src/util.py:147
+#: src/transfers.py:216
+msgid "File count exceeds original request size"
+msgstr ""
+
+#: src/transfers.py:224
+#, python-format
+msgid "Resolved path is not valid: %s -> %s"
+msgstr ""
+
+#: src/util.py:153
 msgid "Cancel"
 msgstr "ರದ್ದು ಮಾಡು"
 
-#: src/util.py:148
+#: src/util.py:154
 msgid "Add"
 msgstr ""
 
-#: src/util.py:170
+#: src/util.py:176
 msgid "Select file(s) to send"
 msgstr "ಕಳುಹಿಸಲು ಕಡತ(ಗಳನ್ನು) ಆಯ್ಕೆಮಾಡಿ"
 
-#: src/util.py:319
+#: src/util.py:328
 msgid "A few seconds remaining"
 msgstr "ಕೆಲವು ಸೆಕೆಂಡುಗಳು ಉಳಿದಿವೆ"
 
-#: src/util.py:322
+#: src/util.py:331
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d ಸೆಕೆಂಡುಗಳು ಉಳಿದಿವೆ"
 
-#: src/util.py:326 src/util.py:334
+#: src/util.py:335 src/util.py:343
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d ನಿಮಿಷ"
 msgstr[1] "%d ನಿಮಿಷಗಳು"
 
-#: src/util.py:333
+#: src/util.py:342
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ಗಂಟೆ"
 msgstr[1] "%d ಗಂಟೆಗಳು"
 
-#: src/util.py:338
+#: src/util.py:347
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "ಸರಿಸುಮಾರು %d ಗಂಟೆ"
 msgstr[1] "ಸರಿಸುಮಾರು %d ಗಂಟೆಗಳು"
 
-#: src/util.py:426 src/warpinator.py:534
+#: src/util.py:435 src/warpinator.py:548
 msgid "About"
 msgstr "ಕುರಿತು"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Paused"
 msgstr "ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Waiting for approval"
 msgstr "ಅನುಮೋದನೆಗೆ ಕಾಯುಲಾಗುತ್ತಿದೆ"
 
-#: src/warpinator.py:150
+#: src/warpinator.py:153
 msgid "Waiting for your approval"
 msgstr "ನಿಮ್ಮ ಅನುಮೋದನೆಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:156
 msgid "Files may be overwritten"
 msgstr "ಕಡತಗಳನ್ನು ತಿದ್ದಿ ಬರೆಯಬಹುದು"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:159
 msgid "Not enough disk space"
 msgstr "ಸಾಕಷ್ಟು ಡಿಸ್ಕ್ ಸ್ಥಳವಿಲ್ಲ"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "ವಿನಂತಿ ರದ್ದುಗೊಂಡಿದೆ"
 
-#: src/warpinator.py:161 src/warpinator.py:163
+#: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "%s ನಿಂದ ವಿನಂತಿ ರದ್ದುಪಡಿಸಲಾಗಿದೆ"
 
-#: src/warpinator.py:168 src/warpinator.py:170
+#: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "%s ನಿಂದ ವರ್ಗಾವಣೆ ರದ್ದುಪಡಿಸಲಾಗಿದೆ"
 
-#: src/warpinator.py:177
+#: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
 msgstr "ಕಡತ '%s' ಕಂಡುಬಂದಿಲ್ಲ"
 
-#: src/warpinator.py:179
+#: src/warpinator.py:182
 msgid "Some files not found"
 msgstr "ಕೆಲವು ಕಡತಗಳು ಕಂಡುಬಂದಿಲ್ಲ"
 
-#: src/warpinator.py:181
+#: src/warpinator.py:184
 msgid "Completed"
 msgstr "ಪೂರ್ಣಗೊಂಡಿದೆ"
 
-#: src/warpinator.py:339 src/warpinator.py:894
+#: src/warpinator.py:186
+msgid "Completed, but with errors"
+msgstr ""
+
+#: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
 msgstr "ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ"
 
-#: src/warpinator.py:341
+#: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s ನೊಂದಿಗೆ ಸಂಪರ್ಕಸಾಧಿಸಲಾಗುತ್ತಿದೆ"
 
-#: src/warpinator.py:351
+#: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
 msgstr "%s ಆನ್‌ಲೈನ್‌ ಇಲ್ಲ"
 
-#: src/warpinator.py:356
+#: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "%s ಅನ್ನು ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ"
 
-#: src/warpinator.py:361
+#: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "ಸಂಪರ್ಕವನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು %s ಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ."
 
-#: src/warpinator.py:390
+#: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d ಹೊಸ ಒಳಬರುವ ವರ್ಗಾವಣೆ"
 msgstr[1] "%d ಹೊಸ ಒಳಬರುವ ವರ್ಗಾವಣೆಗಳು"
 
-#: src/warpinator.py:499 src/warpinator.py:1321
+#: src/warpinator.py:513 src/warpinator.py:1385
 msgid "Favorites"
 msgstr ""
 
-#: src/warpinator.py:504 src/warpinator.py:1326
+#: src/warpinator.py:518 src/warpinator.py:1390
 msgid "Recents"
 msgstr ""
 
-#: src/warpinator.py:511 src/warpinator.py:1335
+#: src/warpinator.py:525 src/warpinator.py:1399
 msgid "Browse..."
 msgstr "ಬ್ರೌಸ್..."
 
-#: src/warpinator.py:526 src/warpinator.py:1267
+#: src/warpinator.py:540 src/warpinator.py:1331
 msgid "Open save folder"
 msgstr "ಉಳಿಸುವ ಕಡತಕೋಶವನ್ನು ತೆರೆ"
 
-#: src/warpinator.py:530
+#: src/warpinator.py:544
 msgid "Preferences"
 msgstr "ಆದ್ಯತೆಗಳು"
 
-#: src/warpinator.py:538 src/warpinator.py:1270
+#: src/warpinator.py:552 src/warpinator.py:1334
 msgid "Quit"
 msgstr "ತ್ಯಜಿಸು"
 
-#: src/warpinator.py:631
+#: src/warpinator.py:645
 msgid "You don't appear to be connected to a network."
 msgstr "ನೀವು  ಜಾಲಬಂಧಕ್ಕೆ ಸಂಪರ್ಕ ಹೊಂದಿದಂತೆ ಕಾಣುತ್ತಿಲ್ಲ."
 
-#: src/warpinator.py:633
+#: src/warpinator.py:647
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "ಪ್ರಾರಂಭವು ವಿಫಲವಾಗಿದೆ, ದಯವಿಟ್ಟು ನಿಮ್ಮ ಲಾಗ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ."
 
-#: src/warpinator.py:873
+#: src/warpinator.py:739
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minute. To enable Secure Mode, set a unique group code."
+msgstr ""
+
+#: src/warpinator.py:741
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minutes. To enable Secure Mode, set a unique group code."
+msgstr ""
+
+#: src/warpinator.py:929
 msgid "Offline"
 msgstr "ಆಫ್‍಼ಲೈನ್"
 
-#: src/warpinator.py:880
+#: src/warpinator.py:936
 msgid "Unable to connect"
 msgstr "ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ"
 
-#: src/warpinator.py:887
+#: src/warpinator.py:943
 msgid "Waiting for two-way connection"
 msgstr "ದ್ವಿಮುಖ ಸಂಪರ್ಕಕ್ಕಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ"
 
-#: src/warpinator.py:1304
+#: src/warpinator.py:1368
 msgid "Send to all"
 msgstr ""
 
