@@ -1,3 +1,9 @@
+warpinator (1.4.2) vera; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 02 Dec 2022 17:36:01 +0000
+
 warpinator (1.4.1) vera; urgency=medium
 
   [ Michael Webster ]
