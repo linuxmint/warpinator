@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-11-29 11:24+0000\n"
+"PO-Revision-Date: 2022-12-08 08:29+0000\n"
 "Last-Translator: Rostyslav Haitkulov <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
-"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
+"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
+"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:259
 msgid "Group Code"
@@ -448,6 +448,8 @@ msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Необхідно встановити спеціальний код групи, для того щоб працювати в "
+"безпечному режимі. Деякі опції наразі вимкнено."
 
 #: src/remote.py:490
 #, python-format
@@ -455,6 +457,8 @@ msgid ""
 "Transfer completed, but the number of files received is less than the "
 "original request size (expected %d, received %d)"
 msgstr ""
+"Передавання завершено, але кількість отриманих файлів менша за оригінальний "
+"розмір запиту (очікується %d, отримано %d)"
 
 #: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
@@ -466,12 +470,12 @@ msgstr "Помилка на віддаленому комп'ютері"
 
 #: src/transfers.py:216
 msgid "File count exceeds original request size"
-msgstr ""
+msgstr "Кількість файлів перевищує початковий розмір запиту"
 
 #: src/transfers.py:224
 #, python-format
 msgid "Resolved path is not valid: %s -> %s"
-msgstr ""
+msgstr "Визначений шлях невірний: %s -> %s"
 
 #: src/util.py:153
 msgid "Cancel"
@@ -571,7 +575,7 @@ msgstr "Завершено"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Завершено, але з помилками"
 
 #: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
@@ -643,6 +647,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator працює з обмеженою функціональністю та завершить роботу через %d "
+"хвилин. Щоб увімкнути захищений режим, установіть унікальний код групи."
 
 #: src/warpinator.py:741
 #, python-format
@@ -650,6 +656,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator працює з обмеженою функціональністю та завершить роботу через %d "
+"хвилин. Щоб увімкнути захищений режим, установіть унікальний код групи."
 
 #: src/warpinator.py:929
 msgid "Offline"

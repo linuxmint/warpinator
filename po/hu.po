@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-07-04 16:24+0000\n"
+"PO-Revision-Date: 2022-12-06 14:06+0000\n"
 "Last-Translator: KAMI <kami911@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
-"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
+"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
+"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
 "Language: hu_HU\n"
 
 #: resources/group-code.ui:16 src/prefs.py:259
@@ -34,11 +34,11 @@ msgstr ""
 
 #: resources/group-code.ui:106 src/prefs.py:594
 msgid "OFF"
-msgstr ""
+msgstr "KI"
 
 #: resources/group-code.ui:148
 msgid "More information"
-msgstr ""
+msgstr "További információ"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
@@ -428,7 +428,7 @@ msgstr ""
 
 #: src/prefs.py:591
 msgid "ON"
-msgstr ""
+msgstr "BE"
 
 #: src/prefs.py:592
 msgid "All options are unlocked."

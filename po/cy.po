@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-07-13 08:40+0000\n"
+"PO-Revision-Date: 2022-12-05 10:36+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
-"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
+"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
+"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
 "Language: cy\n"
 
 #: resources/group-code.ui:16 src/prefs.py:259
@@ -35,19 +35,19 @@ msgstr "Gosod y cod"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Y modd diogel:"
 
 #: resources/group-code.ui:106 src/prefs.py:594
 msgid "OFF"
-msgstr ""
+msgstr "DIFFODD"
 
 #: resources/group-code.ui:148
 msgid "More information"
-msgstr ""
+msgstr "Rhagor o wybodaeth"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Mae'r modd diogel wedi'i analluogi"
 
 #: resources/main-window.ui:263
 msgid "No matching results"
@@ -254,7 +254,7 @@ msgstr "Mae'r trosglwyddiad wedi'i gwblhau"
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Gorffennodd trosglwyddo i %s ond gyda gwallau"
 
 #: src/notifications.py:99
 #, python-format
@@ -264,7 +264,7 @@ msgstr "Mae'r trosglwyddiad i %s wedi gorffen yn llwyddiannus"
 #: src/notifications.py:102
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Gorffennodd trosglwyddo o %s ond gyda gwallau"
 
 #: src/notifications.py:104
 #, python-format
@@ -427,7 +427,7 @@ msgstr ""
 
 #: src/prefs.py:475
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Dim ond ar gael yn y modd diogel"
 
 #: src/prefs.py:552
 msgid "A group code is required."
@@ -435,21 +435,23 @@ msgstr "Mae angen cod grŵp."
 
 #: src/prefs.py:557
 msgid "The group code is too short."
-msgstr ""
+msgstr "Mae'r cod grŵp yn rhy fyr"
 
 #: src/prefs.py:591
 msgid "ON"
-msgstr ""
+msgstr "YMLAEN"
 
 #: src/prefs.py:592
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Mae pob dewis ar agor."
 
 #: src/prefs.py:595
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Rhaid i chi osod cod grŵp cyfaddas i redeg yn y modd diogel. Mae rhai "
+"dewisiadau wedi'u analluogi, ar hyn o bryd."
 
 #: src/remote.py:490
 #, python-format
@@ -457,6 +459,8 @@ msgid ""
 "Transfer completed, but the number of files received is less than the "
 "original request size (expected %d, received %d)"
 msgstr ""
+"Cwblhawyd y trosglwyddo, ond mae'r nifer o ffeiliau a dderbyniwyd yn llai "
+"na'r maint gofyn gwreiddiol (disgyw %d, derbyniwyd %d)"
 
 #: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
@@ -468,12 +472,12 @@ msgstr "Digwyddodd gwall ar y peiriant pell"
 
 #: src/transfers.py:216
 msgid "File count exceeds original request size"
-msgstr ""
+msgstr "Mae'r cyfrif o ffeiliau'n fwy na'r maint gofyn gwreiddiol"
 
 #: src/transfers.py:224
 #, python-format
 msgid "Resolved path is not valid: %s -> %s"
-msgstr ""
+msgstr "Nid yw'r llwybr datrys yn ddilys:  %s -> %s"
 
 #: src/util.py:153
 msgid "Cancel"
@@ -576,7 +580,7 @@ msgstr "Cwblhawyd"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Cwblhawyd, ond gyda gwallau"
 
 #: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
@@ -649,6 +653,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Mae Warpinator yn rhedeg rhai swyddogaethau cyfyngedig a bydd yn gorffen "
+"ymhen %d munud. I alluogi'r Modd Diogel, gosodwch god grŵp unigryw."
 
 #: src/warpinator.py:741
 #, python-format
@@ -656,6 +662,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Mae Warpinator yn rhedeg rhai swyddogaethau cyfyngedig a bydd yn gorffen "
+"ymhen %d munud. I alluogi'r Modd Diogel, gosodwch god grŵp unigryw."
 
 #: src/warpinator.py:929
 msgid "Offline"

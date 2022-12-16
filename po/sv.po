@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-11-29 20:13+0000\n"
+"PO-Revision-Date: 2022-12-05 18:12+0000\n"
 "Last-Translator: Jan-Olof Svensson <jan-olof.svensson@abc.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
-"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
+"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
+"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:259
 msgid "Group Code"
@@ -32,7 +32,7 @@ msgstr "Ange kod"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Säkert läge:"
 
 #: resources/group-code.ui:106 src/prefs.py:594
 msgid "OFF"
@@ -44,7 +44,7 @@ msgstr "Mer information"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Säkert läge inaktiverat"
 
 #: resources/main-window.ui:263
 msgid "No matching results"
@@ -249,7 +249,7 @@ msgstr "Överföringen genomförd"
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Överföringen till %s har slutförts, men med fel"
 
 #: src/notifications.py:99
 #, python-format
@@ -259,7 +259,7 @@ msgstr "Överföringen till %s har genomförts korrekt"
 #: src/notifications.py:102
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Överföringen från %s har slutförts, men med fel"
 
 #: src/notifications.py:104
 #, python-format
@@ -417,7 +417,7 @@ msgstr ""
 
 #: src/prefs.py:475
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Endast tillgängligt i säkert läge."
 
 #: src/prefs.py:552
 msgid "A group code is required."
@@ -433,13 +433,15 @@ msgstr "PÅ"
 
 #: src/prefs.py:592
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Alla val är tillgängliga."
 
 #: src/prefs.py:595
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Du måste välja en anpassad gruppkod för att köra i säkert läge. Några val är "
+"inaktiverade."
 
 #: src/remote.py:490
 #, python-format
@@ -447,6 +449,8 @@ msgid ""
 "Transfer completed, but the number of files received is less than the "
 "original request size (expected %d, received %d)"
 msgstr ""
+"Överföringen har slutförts, men antalet mottagna filer är mindre än vad som "
+"begärts (förväntat %d, mottagit %d)"
 
 #: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
@@ -458,12 +462,12 @@ msgstr "Ett fel uppstod i den andra datorn"
 
 #: src/transfers.py:216
 msgid "File count exceeds original request size"
-msgstr ""
+msgstr "Antalet filer överstiger vad som begärts"
 
 #: src/transfers.py:224
 #, python-format
 msgid "Resolved path is not valid: %s -> %s"
-msgstr ""
+msgstr "Angiven sökväg är felaktig: %s -> %s"
 
 #: src/util.py:153
 msgid "Cancel"
@@ -560,7 +564,7 @@ msgstr "Slutförd"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Slutfördes, men med fel"
 
 #: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
@@ -631,6 +635,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator körs med begränsad funktionalitet och kommer att avslutas om %d "
+"minut. Ange en unik gruppkod för att aktivera säkert läge."
 
 #: src/warpinator.py:741
 #, python-format
@@ -638,6 +644,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator körs med begränsad funktionalitet och kommer att avslutas om %d "
+"minuter. Ange en unik gruppkod för att aktivera säkert läge."
 
 #: src/warpinator.py:929
 msgid "Offline"

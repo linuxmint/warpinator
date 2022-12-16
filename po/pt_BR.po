@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-07-11 12:40+0000\n"
+"PO-Revision-Date: 2022-12-06 22:19+0000\n"
 "Last-Translator: Gilberto vagner <vagner.unix@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
-"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
+"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
+"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:259
 msgid "Group Code"
@@ -33,19 +33,19 @@ msgstr "Definir código"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Modo seguro:"
 
 #: resources/group-code.ui:106 src/prefs.py:594
 msgid "OFF"
-msgstr ""
+msgstr "Desligado"
 
 #: resources/group-code.ui:148
 msgid "More information"
-msgstr ""
+msgstr "Mais informações"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Modo seguro desativado"
 
 #: resources/main-window.ui:263
 msgid "No matching results"
@@ -253,7 +253,7 @@ msgstr "Transferência concluída"
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "A transferência para %s terminou, mas com erros"
 
 #: src/notifications.py:99
 #, python-format
@@ -263,7 +263,7 @@ msgstr "A transferência para %s foi concluída com sucesso"
 #: src/notifications.py:102
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "A transferência de %s terminou, mas com erros"
 
 #: src/notifications.py:104
 #, python-format
@@ -421,7 +421,7 @@ msgstr ""
 
 #: src/prefs.py:475
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Disponível apenas no modo seguro."
 
 #: src/prefs.py:552
 msgid "A group code is required."
@@ -429,21 +429,23 @@ msgstr "É necessário ter um código de grupo."
 
 #: src/prefs.py:557
 msgid "The group code is too short."
-msgstr ""
+msgstr "O código do grupo é muito curto."
 
 #: src/prefs.py:591
 msgid "ON"
-msgstr ""
+msgstr "Ligado"
 
 #: src/prefs.py:592
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Todas as opções estão desbloqueadas."
 
 #: src/prefs.py:595
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Você deve definir um código de grupo personalizado para executar no modo "
+"seguro. Algumas opções estão desativadas no momento."
 
 #: src/remote.py:490
 #, python-format
@@ -451,6 +453,8 @@ msgid ""
 "Transfer completed, but the number of files received is less than the "
 "original request size (expected %d, received %d)"
 msgstr ""
+"Transferência concluída, mas o número de arquivos recebidos é menor que o "
+"tamanho da solicitação original (esperado %d, recebido %d)"
 
 #: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
@@ -462,12 +466,12 @@ msgstr "Ocorreu um erro no computador remoto"
 
 #: src/transfers.py:216
 msgid "File count exceeds original request size"
-msgstr ""
+msgstr "A contagem de arquivos excede o tamanho da solicitação original"
 
 #: src/transfers.py:224
 #, python-format
 msgid "Resolved path is not valid: %s -> %s"
-msgstr ""
+msgstr "O caminho resolvido não é válido: %s -> %s"
 
 #: src/util.py:153
 msgid "Cancel"
@@ -564,7 +568,7 @@ msgstr "Concluído"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Concluído, mas com erros"
 
 #: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
@@ -635,6 +639,9 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"O Warpinator está sendo executado com funcionalidade limitada e será "
+"encerrado em %d minuto. Para ativar o Modo seguro, defina um código de grupo "
+"exclusivo."
 
 #: src/warpinator.py:741
 #, python-format
@@ -642,6 +649,9 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"O Warpinator está sendo executado com funcionalidade limitada e será "
+"encerrado em %d minutos. Para ativar o Modo seguro, defina um código de "
+"grupo exclusivo."
 
 #: src/warpinator.py:929
 msgid "Offline"

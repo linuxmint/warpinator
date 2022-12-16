@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-07-01 18:19+0000\n"
+"PO-Revision-Date: 2022-12-03 15:33+0000\n"
 "Last-Translator: menom <Unknown>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2022-12-02 14:23+0000\n"
-"X-Generator: Launchpad (build 51cef3d08dff1e227b5ada709bd67280c567d4be)\n"
+"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
+"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
 "Language: sk\n"
 
 #: resources/group-code.ui:16 src/prefs.py:259
@@ -33,19 +33,19 @@ msgstr "Nastaviť kód"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Zabezpečený režim:"
 
 #: resources/group-code.ui:106 src/prefs.py:594
 msgid "OFF"
-msgstr ""
+msgstr "Vypnuté"
 
 #: resources/group-code.ui:148
 msgid "More information"
-msgstr ""
+msgstr "Viac informácií"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Zabezpečený režim je vypnutý"
 
 #: resources/main-window.ui:263
 msgid "No matching results"
@@ -268,7 +268,7 @@ msgstr "Prenos dokončený"
 #: src/notifications.py:97
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Prenos do %s bol dokončený, ale s chybami"
 
 #: src/notifications.py:99
 #, python-format
@@ -278,7 +278,7 @@ msgstr "Prenos do %s bol úspešne dokončený"
 #: src/notifications.py:102
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Prenos z %s bol dokončený, ale s chybami"
 
 #: src/notifications.py:104
 #, python-format
@@ -437,7 +437,7 @@ msgstr ""
 
 #: src/prefs.py:475
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "K dispozícii iba v zabezpečenom režime."
 
 #: src/prefs.py:552
 msgid "A group code is required."
@@ -445,21 +445,23 @@ msgstr "Vyžaduje sa kód skupiny."
 
 #: src/prefs.py:557
 msgid "The group code is too short."
-msgstr ""
+msgstr "Kód skupiny je príliš krátky."
 
 #: src/prefs.py:591
 msgid "ON"
-msgstr ""
+msgstr "Zapnuté"
 
 #: src/prefs.py:592
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Všetky možnosti sú odomknuté."
 
 #: src/prefs.py:595
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Na spustenie v zabezpečenom režime musíte nastaviť vlastný kód skupiny. "
+"Niektoré možnosti sú momentálne vypnuté."
 
 #: src/remote.py:490
 #, python-format
@@ -467,6 +469,8 @@ msgid ""
 "Transfer completed, but the number of files received is less than the "
 "original request size (expected %d, received %d)"
 msgstr ""
+"Prenos bol dokončený, ale počet prijatých súborov je menší ako veľkosť "
+"pôvodnej požiadavky (očakávané %d, prijaté %d)"
 
 #: src/remote.py:613 src/remote.py:617
 msgid "Connection has been lost"
@@ -478,12 +482,12 @@ msgstr "Na vzdialenom počítači sa vyskytla chyba"
 
 #: src/transfers.py:216
 msgid "File count exceeds original request size"
-msgstr ""
+msgstr "Počet súborov presahuje pôvodnú veľkosť požiadavky"
 
 #: src/transfers.py:224
 #, python-format
 msgid "Resolved path is not valid: %s -> %s"
-msgstr ""
+msgstr "Určená cesta nie je platná: %s -> %s"
 
 #: src/util.py:153
 msgid "Cancel"
@@ -584,7 +588,7 @@ msgstr "Dokončené"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Dokončené, ale s chybami"
 
 #: src/warpinator.py:345 src/warpinator.py:950
 msgid "Connecting"
@@ -656,6 +660,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator beží s obmedzenou funkčnosťou a ukončí sa o %d minútu. Ak chcete "
+"povoliť bezpečný režim, nastavte jedinečný kód skupiny."
 
 #: src/warpinator.py:741
 #, python-format
@@ -663,6 +669,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator beží s obmedzenou funkčnosťou a ukončí sa o %d minút. Ak chcete "
+"povoliť bezpečný režim, nastavte jedinečný kód skupiny."
 
 #: src/warpinator.py:929
 msgid "Offline"
