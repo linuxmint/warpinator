@@ -73,7 +73,7 @@ class CommonOp(GObject.Object):
             return 0
 
     def set_error(self, e=None):
-        if e == None:
+        if e is None:
             self.error_msg = ""
             return
 
@@ -141,7 +141,7 @@ class SendOp(CommonOp):
         self.update_ui_info(error)
 
     def update_ui_info(self, error):
-        if error == None:
+        if error is None:
             self.size_string = GLib.format_size(self.total_size)
             logging.debug("Op: calculated %d files, with a size of %s" % (self.total_count, self.size_string))
 

@@ -49,10 +49,10 @@ class Registrar():
         self.start_registration_servers()
 
     def start_registration_servers(self):
-        if self.reg_server_v1 != None:
+        if self.reg_server_v1 is not None:
             self.reg_server_v1.stop()
 
-        if self.reg_server_v2 != None:
+        if self.reg_server_v2 is not None:
             self.reg_server_v2.stop(grace=2).wait()
             self.reg_server_v2 = None
 
@@ -67,7 +67,7 @@ class Registrar():
                 self.active_registrations[key].cancel()
             self.active_registrations = {}
 
-        if self.reg_server_v1 != None:
+        if self.reg_server_v1 is not None:
             logging.debug("Stopping v1 registration server.")
             self.reg_server_v1.stop()
             self.reg_server_v1 = None
@@ -134,7 +134,7 @@ def retrieve_remote_cert(details):
     details.request_loop = RequestLoop(details.ip_info, details.port)
     data = details.request_loop.request()
 
-    if data == None:
+    if data is None:
         return False
 
     return auth.get_singleton().process_remote_cert(details.hostname,
@@ -241,7 +241,7 @@ def register_v2(details):
         remote_thread.start()
         remote_thread.join()
 
-        if details.locked_cert != None:
+        if details.locked_cert is not None:
             success = auth.get_singleton().process_remote_cert(details.hostname,
                                                                details.ip_info,
                                                                details.locked_cert)

@@ -42,7 +42,7 @@ keyfile = None
 def get_singleton():
     global singleton
 
-    if singleton == None:
+    if singleton is None:
         singleton = AuthManager()
 
     return singleton
@@ -107,7 +107,7 @@ def get_group_code():
         if e.code not in (GLib.KeyFileError.KEY_NOT_FOUND, GLib.KeyFileError.GROUP_NOT_FOUND):
             logging.warn("Could not read group code from settings file (%s): %s" % (CONFIG_FOLDER, e.message))
 
-    if code == None or code == "":
+    if code is None or code == "":
         code = DEFAULT_GROUP_CODE
         _save_keyfile()
         return code
@@ -171,7 +171,7 @@ class AuthManager(GObject.Object):
             return None
 
     def process_remote_cert(self, hostname, ip_info, server_data):
-        if server_data == None:
+        if server_data is None:
             return False
         decoded = base64.decodebytes(server_data)
 
@@ -252,7 +252,7 @@ class AuthManager(GObject.Object):
 
         alt_names = []
 
-        if self.ip_info.ip4_address != None:
+        if self.ip_info.ip4_address is not None:
             alt_names.append(x509.IPAddress(ipaddress.IPv4Address(self.ip_info.ip4_address)))
 
         builder = builder.add_extension(x509.SubjectAlternativeName(alt_names), critical=True)

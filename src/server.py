@@ -537,7 +537,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         sender = transfers.FileSender(op, request.timestamp, cancellable)
 
         def transfer_done():
-            if sender.error != None:
+            if sender.error is not None:
                 op.set_error(sender.error)
                 op.set_status(OpStatus.FAILED_UNRECOVERABLE)
             elif op.file_send_cancellable.is_set():
@@ -566,7 +566,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             op.error_msg = _("An error occurred on the remote machine")
 
         if op.direction == TransferDirection.TO_REMOTE_MACHINE:
-            if op.file_send_cancellable != None:
+            if op.file_send_cancellable is not None:
                 op.file_send_cancellable.set()
             logging.debug("Server: sender received stop transfer by receiver: %s" % op.error_msg)
             if op.error_msg == "":

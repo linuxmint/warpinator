@@ -333,7 +333,7 @@ class Preferences():
             if iface == current:
                 current_selection_exists = True
 
-            if (desc != None and desc != ""):
+            if desc is not None and desc != "":
                 orig_label = "%s - %s" % (iface, desc)
                 if len(orig_label) > 50:
                     label = orig_label[:47] + "..."
@@ -420,7 +420,7 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         iface_widget_value = None
         tree_iter = self.iface_combo.content_widget.get_active_iter()
-        if tree_iter != None:
+        if tree_iter is not None:
             iface_widget_value = self.iface_combo.model[tree_iter][0]
 
         if main_widget_value == get_port() and \
@@ -443,10 +443,10 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         iface_widget_value = None
         tree_iter = self.iface_combo.content_widget.get_active_iter()
-        if tree_iter != None:
+        if tree_iter is not None:
             iface_widget_value = self.iface_combo.model[tree_iter][0]
 
-        if iface_widget_value == None:
+        if iface_widget_value is None:
             iface_widget_value = "auto"
 
             self.iface_combo.content_widget.disconnect(self.iface_combo_id)

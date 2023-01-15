@@ -230,7 +230,7 @@ class FileReceiver(GObject.Object):
         elif s.file_type == FileType.SYMBOLIC_LINK:
             make_symbolic_link(self.op, path, s.symlink_target)
         else:
-            if self.current_stream == None:
+            if self.current_stream is None:
                 self.current_stream = self.current_gfile.create(Gio.FileCreateFlags.NONE, None)
 
             if not s.chunk:
@@ -240,7 +240,7 @@ class FileReceiver(GObject.Object):
             self.op.progress_tracker.update_progress(len(s.chunk))
 
     def close_current_file(self):
-        if self.current_gfile == None:
+        if self.current_gfile is None:
             # First block received we self.close_current_file() with an empty path.
             return
 
