@@ -1050,7 +1050,6 @@ class WarpApplication(Gtk.Application):
         self.test_mode = testing
 
         self.bad_folder = False
-        self.save_folder_monitor = None
 
         self.inhibit_count = 0
         self.inhibit_cookie = 0
@@ -1096,17 +1095,19 @@ class WarpApplication(Gtk.Application):
 
         self.update_status_icon_from_preferences()
 
-        GLib.timeout_add(200, self.check_save_folder)
+        GLib.timeout_add(1000, self.check_save_folder)
 
     def check_save_folder(self, data=None):
         if not util.verify_save_folder():
-            if not self.window.window.get_visible():
+            if not self.bad_folder and not self.window.window.get_visible():
                 self.window.window.show()
                 self.window.window.present_with_time(Gtk.get_current_event_time())
+                self.bad_folder = True
 
             self.window.report_bad_save_folder()
             return GLib.SOURCE_CONTINUE
 
+        self.bad_folder = False
         GLib.idle_add(self.start_network_monitor)
         return GLib.SOURCE_REMOVE
 
