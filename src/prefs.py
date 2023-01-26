@@ -43,20 +43,7 @@ MIN_FREE_SPACE_KEY = "minimum-free-space"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
-#### One-time initializers
-if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
-    default = Gio.File.new_for_path(os.path.join(GLib.get_home_dir(), "Warpinator"))
-
-    try:
-        os.makedirs(default.get_path(), exist_ok=True)
-    except:
-        default = Gio.File.new_for_path(GLib.get_home_dir())
-
-    prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
-####
-
 #### Secure mode
-
 class SecureModePrefsBlocker():
     # This prevents external changes to Warpinator (like from a terminal or dconf-editor) while warpinator
     # is running
@@ -114,6 +101,25 @@ def get_auth_port():
     return prefs_settings.get_int(REG_PORT_KEY)
 
 def get_save_uri():
+    if prefs_settings.get_string(FOLDER_NAME_KEY) == "":
+        logging.info("No save location set")
+        parent = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
+
+        if not parent:
+            parent = GLib.get_home_dir()
+
+        default = Gio.File.new_for_path(os.path.join(parent, "Warpinator"))
+
+        try:
+            os.makedirs(default.get_path(), exist_ok=True)
+            logging.info("Created default save directory: '%s'" % default.get_path())
+        except:
+            default = Gio.File.new_for_path(GLib.get_home_dir())
+            logging.warning("Could not create default save directory - using '%s'" % default.get_path())
+
+        prefs_settings.set_string(FOLDER_NAME_KEY, default.get_uri())
+        prefs_settings.sync()
+
     uri = prefs_settings.get_string(FOLDER_NAME_KEY)
 
     return uri
