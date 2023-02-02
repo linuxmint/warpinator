@@ -96,7 +96,7 @@ class InterfaceInfo():
             self.ip6_address = None
 
     def __eq__(self, other):
-        if other == None:
+        if other is None:
             return False
 
         return self.ip4_address == other.ip4_address
@@ -134,7 +134,7 @@ class RemoteInterfaceInfo():
             self.ip6_address = ip6
 
     def __eq__(self, other):
-        if other == None:
+        if other is None:
             return False
 
         return self.ip4_address == other.ip4_address
@@ -206,7 +206,7 @@ def print_stack():
 def open_save_folder(filename=None):
     bus = Gio.Application.get_default().get_dbus_connection()
 
-    if filename != None:
+    if filename is not None:
         abs_path = os.path.join(prefs.get_save_path(), filename)
 
         if os.path.isfile(abs_path):

@@ -176,7 +176,7 @@ class OpItem(object):
         elif self.op.status == OpStatus.FILE_NOT_FOUND:
             self.op_transfer_problem_label.show()
             self.op_transfer_status_message.set_text(_("Transfer failed"))
-            if self.op.first_missing_file != None:
+            if self.op.first_missing_file is not None:
                 self.op_transfer_problem_label.set_text(_("File '%s' not found") % self.op.first_missing_file)
             else:
                 self.op_transfer_problem_label.set_text(_("Some files not found"))
@@ -816,7 +816,7 @@ class WarpWindow(GObject.Object):
             self.user_list_box.remove(child)
 
     def focus_remote_machine(self, remote_machine, data=None):
-        if self.current_selected_remote_machine != None:
+        if self.current_selected_remote_machine is not None:
             self.cleanup_user_view()
 
         self.switch_to_user_view(remote_machine)
@@ -904,7 +904,7 @@ class WarpWindow(GObject.Object):
 
         self.user_ip_label.set_text(str(remote.ip_info.ip4_address))
 
-        if remote.avatar_surface != None:
+        if remote.avatar_surface is not None:
             self.user_avatar_image.set_from_surface(remote.avatar_surface)
         else:
             self.user_avatar_image.set_from_icon_name("avatar-default-symbolic", Gtk.IconSize.DND)
@@ -993,7 +993,7 @@ class WarpWindow(GObject.Object):
         # we just visited.
         buttons = self.user_list_box.get_children()
 
-        if self.current_selected_remote_machine != None:
+        if self.current_selected_remote_machine is not None:
             self.current_selected_remote_machine.stamp_recent_time()
 
             for child in buttons:
@@ -1078,7 +1078,7 @@ class WarpApplication(Gtk.Application):
     def do_activate(self):
         Gtk.Application.do_activate(self)
 
-        if self.window != None:
+        if self.window is not None:
             self.window.show()
             return
 
@@ -1295,20 +1295,20 @@ class WarpApplication(Gtk.Application):
 
     def update_status_icon_from_preferences(self):
         if prefs.use_tray_icon():
-            if self.status_icon == None:
+            if self.status_icon is None:
                 self.status_icon = XApp.StatusIcon()
                 self.status_icon.connect("activate", self.on_tray_icon_activate)
-                self.update_status_icon_online_state(self.server != None)
+                self.update_status_icon_online_state(self.server is not None)
                 self.hold()
             self.rebuild_status_icon_menu()
         else:
-            if self.status_icon != None:
+            if self.status_icon is not None:
                 self.status_icon.set_visible(False)
                 self.status_icon = None
                 self.release()
 
     def update_status_icon_online_state(self, online=True):
-        if self.status_icon == None:
+        if self.status_icon is None:
             return
 
         if online:
@@ -1321,12 +1321,12 @@ class WarpApplication(Gtk.Application):
         self.rebuild_status_icon_menu()
 
     def rebuild_status_icon_menu(self, remote_machine=None):
-        if self.status_icon == None:
+        if self.status_icon is None:
             return
 
         menu = Gtk.Menu()
 
-        if self.server != None:
+        if self.server is not None:
             self.add_favorite_entries(menu)
 
         item = Gtk.MenuItem(label=_("Open save folder"))

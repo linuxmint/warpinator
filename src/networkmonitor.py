@@ -17,7 +17,7 @@ network_monitor = None
 def get_network_monitor():
     global network_monitor
 
-    if network_monitor == None:
+    if network_monitor is None:
         network_monitor = NetworkMonitor()
 
     return network_monitor
@@ -83,7 +83,7 @@ class NetworkMonitor(GObject.Object):
                 new_ip_info = info
                 new_online = True
 
-        if new_ip_info == None:
+        if new_ip_info is None:
             new_ip_info = util.InterfaceInfo({ "addr": "0.0.0.0" }, { "addr": "[::]" }, new_iface_setting)
 
         if new_online != self.online or self.current_ip_info != new_ip_info or self.current_iface_setting != new_iface_setting:
@@ -120,7 +120,7 @@ class NetworkMonitor(GObject.Object):
         fallback_info = None
 
         for info in self.get_valid_interface_infos():
-            if fallback_info == None:
+            if fallback_info is None:
                 fallback_info = info
             try:
                 if ip == info.ip4["addr"]:
@@ -151,7 +151,7 @@ class NetworkMonitor(GObject.Object):
 
         my_net = iface.network
 
-        if my_net == None:
+        if my_net is None:
             # We're more likely to have failed here than to have found something on a different subnet.
             return True
 

@@ -380,7 +380,7 @@ class RemoteMachine(GObject.Object):
         loader = None
         try:
             for info in iterator:
-                if loader == None:
+                if loader is None:
                     loader = util.CairoSurfaceLoader()
                 loader.add_bytes(info.avatar_chunk)
         except grpc.RpcError as e:
@@ -457,7 +457,7 @@ class RemoteMachine(GObject.Object):
         def report_receive_error(error):
             op.file_iterator = None
 
-            if error == None:
+            if error is None:
                 return
 
             op.set_error(error)
@@ -466,7 +466,7 @@ class RemoteMachine(GObject.Object):
                 # If we leave an io stream open, it locks the location.  For instance,
                 # if this was a mounted location, we wouldn't be able to terminate until
                 # we closed warp.
-                if receiver.current_stream != None:
+                if receiver.current_stream is not None:
                     receiver.current_stream.close()
             except GLib.Error:
                 pass
