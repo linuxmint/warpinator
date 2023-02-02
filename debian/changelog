@@ -1,3 +1,12 @@
+warpinator (1.4.4) vera; urgency=medium
+
+  [ Michael Webster ]
+  * transfers.py: Fix typo.
+  * transfers.py: Add missing import.
+  * Notifications: re-enable actions in the flatpak version.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 26 Jan 2023 14:16:19 +0000
+
 warpinator (1.4.3) vera; urgency=medium
 
   * l10n: Update translations

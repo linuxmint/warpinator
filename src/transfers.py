@@ -10,7 +10,7 @@ from pathlib import Path
 from gi.repository import GLib, Gio, GObject
 
 import util
-from util import FileType
+from util import FileType, ReceiveError
 import prefs
 import warp_pb2
 
@@ -221,7 +221,7 @@ class FileReceiver(GObject.Object):
             try:
                 test_path.relative_to(self.save_path_obj)
             except ValueError:
-                raise ReceiveError(_("Resolved path is not valid: %s -> %s") % (path, str(test_path)), fatel=True)
+                raise ReceiveError(_("Resolved path is not valid: %s -> %s") % (path, str(test_path)), fatal=True)
 
             self.current_gfile = Gio.File.new_for_path(path)
 

@@ -140,7 +140,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             return
 
         ident = name.partition(".%s" % SERVICE_TYPE)[0]
-        self.remote_registrar.cancel_registration(ident)
 
         try:
             remote = self.remote_machines[ident]
@@ -208,6 +207,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 # which we'll need when our supposedly existing connection tries to continue
                 # pinging. It will fail out and restart the connection loop, and will need
                 # this updated one.
+
+                # This blocks the zeroconf thread.
                 if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
                     logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
                                      % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
@@ -254,6 +255,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                                self.service_ident,
                                                api_version)
 
+                # This blocks the zeroconf thread. Registration will timeout
                 if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
                     logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
                                      % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
