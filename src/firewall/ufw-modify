@@ -42,5 +42,11 @@ if len(found) > 0:
 # Backwards compatibility requires we keep doing both udp and tcp on the main port.
 subprocess.run(["ufw", "allow", "from", "any", "to", "any", "port", main_port, "comment", "WARPINATOR_MAIN"])
 subprocess.run(["ufw", "allow", "proto", "tcp", "from", "any", "to", "any", "port", auth_port, "comment", "WARPINATOR_AUTH"])
-
+# Zeroconf has discovery issues when two flatpaks are attempting to connect. Explicitly opening udp port 5353
+# resolves this. It's already open using the default ufw profile, as it is required for network device discovery
+# (for things like printers).
+#
+# This script is only available to non-flatpak versions, but this way it'll already be set if the user decides to switch to
+# the flatpak.
+subprocess.run(["ufw", "allow", "proto", "udp", "from", "any", "to", "any", "port", "5353", "comment", "WARPINATOR_FLATPAK_ZC_FIX"])
 exit(0)

@@ -141,20 +141,30 @@ All devices must be on the same local subnet in order to connect. While Warpinat
 
 - Make sure you don't have a VPN currently enabled on the device. Allowing 'LAN traffic' in your VPN configuration can sometimes avoid this problem, though you should disable the VPN entirely until you can confirm there are no connection issues without it.
 #### **Make sure your firewall is configured properly, if one is being used:**
-In order for devices to connect with one another, allowances must be made for Warpinator in your firewall rules, to allow incoming traffic for the specific ports Warpinator uses. By default, port 42000 is used for transfers, and 42001 is used for authentication. In current versions of Warpinator (after 1.2.0), only TCP is required, but you should also allow UDP traffic on the transfer port to allow connections with older Warpinator versions.
+In order for devices to connect with one another, rules must be added for Warpinator, to allow incoming traffic for the specific ports Warpinator uses.
+
+ By default, port 42000 is used for transfers, and 42001 is used for authentication. In current versions of Warpinator (after 1.2.0), only TCP is required, but you should also allow UDP traffic on the transfer port to allow connections with older Warpinator versions.
+ 
+ **Note: If you are planning to use the Flatpak version to connect to other machines using Flatpak, you need to open UDP port 5353 as well as those mentioned above. Even if the port is already opened according to gufw, it must be explicitly opened here.**
+
 - If you use [gufw](https://gufw.org), Warpinator can add the rules for you (this is not available for the Flatpak version):
 ![image](https://user-images.githubusercontent.com/262776/162268196-3f3ca9af-09a5-4c67-ac2e-7a5fdbc952da.png)
 - If you're using the Flatpak version, you can add the rules to gufw by adding 'Simple' rules:
 
-![Screenshot from 2022-04-07 14-15-47](https://user-images.githubusercontent.com/262776/162269941-060768f3-5c25-412b-a729-8927d9f2a7fa.png)
+![Transfers: TCP port](doc/firewall-1.png)
 
 and
 
-![Screenshot from 2022-04-07 14-15-06](https://user-images.githubusercontent.com/262776/162269960-1bf3df22-acbb-4e6e-8b1a-c813d136345b.png)
+![Authentication: TCP port](doc/firewall-2.png)
+
+and
+
+![Zeroconf flatpak fix: UDP 5353](doc/firewall-3.png)
 
 You should end up with:
 
-![Screenshot from 2022-04-07 14-19-24](https://user-images.githubusercontent.com/262776/162270427-46c2e2ce-f9e4-4c13-a51d-a0e0fafb903b.png)
+![Correct gufw rule list](doc/firewall-4.png)
+
 #### **Check under the hood:**
 It's possible there is something else causing your connection issues that is not covered here. You can run Warpinator in debug mode to gather additional information to troubleshoot (or to attach to an Issue report here).
 - First, make sure Warpinator isn't already running - open the menu and click 'Quit'. Simply closing the window will not necessarily end the program, if you have the status icon enabled.
