@@ -1,3 +1,18 @@
+warpinator (1.4.5) vera; urgency=medium
+
+  [ Michael Webster ]
+  * Move default save folder to ~/Downloads/Warpinator.
+  * Only raise the window the first time it's noticed that the save folder is bad.
+  * remote_registration: Do not loop registration attempts.
+
+  [ hduelme ]
+  * replace equality None check with identity None check (#152)
+
+  [ Michael Webster ]
+  * Update README.md firewall section, and update the ufw script.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 19 Feb 2023 09:55:21 +0000
+
 warpinator (1.4.4) vera; urgency=medium
 
   [ Michael Webster ]
