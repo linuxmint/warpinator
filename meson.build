@@ -14,6 +14,7 @@ meson_source_root = meson.current_source_dir()
 
 include_firewall_mod = get_option('include-firewall-mod')
 bundle_zeroconf = get_option('bundle-zeroconf')
+bundle_landlock = get_option('bundle-landlock')
 
 # grpc 1.30.2 on ubuntu 22.04 is broken
 pymod = import('python')
@@ -39,6 +40,7 @@ message('\n'.join(['',
 '    building for flatpak:   @0@'.format(get_option('flatpak-build')),
 '    including ufw script:   @0@'.format(include_firewall_mod),
 '    bundling zeroconf:      @0@'.format(bundle_zeroconf and not get_option('flatpak-build')),
+'    bundling landlock:      @0@'.format(bundle_landlock),
 '    bundling grpc:          @0@'.format(bundle_grpc),
 '',
 ]))

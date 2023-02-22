@@ -52,3 +52,11 @@ if bundle_grpc
         strip_directory: true
     )
 endif
+
+if bundle_landlock
+    install_subdir(
+        'landlock',
+        install_dir: join_paths(install_libdir, 'landlock'),
+        strip_directory: true
+    )
+endif
