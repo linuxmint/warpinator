@@ -94,7 +94,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
         self.zeroconf = Zeroconf(interfaces=[self.ip_info.ip4_address])
 
-        self.service_ident = auth.get_singleton().get_ident()
+        self.service_ident = prefs.get_connect_id()
         self.service_name = "%s.%s" % (self.service_ident, SERVICE_TYPE)
 
         # If this process is killed (either kill or network issue), the service
@@ -279,7 +279,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def run(self):
         logging.debug("Server: starting server on %s (%s)" % (self.ip_info.ip4_address, self.ip_info.iface))
         logging.info("Using api version %s" % config.RPC_API_VERSION)
-        logging.info("Our uuid: %s" % auth.get_singleton().get_ident())
+        logging.info("Our uuid: %s" % prefs.get_connect_id())
 
 
         self.remote_registrar = remote_registration.Registrar(self.ip_info, self.port, self.auth_port)

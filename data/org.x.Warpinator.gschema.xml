@@ -90,6 +90,13 @@
       <default>100</default>
       <summary>Minimum free space (in mb) allowed in the save location</summary>
       <description>If a transfer would cause the save location's free space to drop below this value, the transfer is refused</description>
+    <key name="group-code" type="s">
+      <default>'Warpinator'</default>
+      <summary>The group code to share between machines that wish to connect.</summary>
+    </key>
+    <key name="connect-id" type="s">
+      <default>''</default>
+      <summary>The unique identifier used for discovery on the network, starting with your hostname. This is automatically generated, though it can be changed (max length is 63 characters).</summary>
     </key>
 
   </schema>
