@@ -181,8 +181,6 @@ class FileReceiver(GObject.Object):
         self.current_mtime = 0
         self.current_mtime_usec = 0
 
-        self.remaining_files = op.total_count
-        self.remaining_bytes = op.total_size
 
         for name in op.top_dir_basenames:
             try:
@@ -214,6 +212,8 @@ class FileReceiver(GObject.Object):
             self.current_mtime_usec = s.time.mtime_usec
         if self.remaining_files == 0:
             raise Exception(_("File count exceeds original request size"))
+            if self.op.remaining_count == 0:
+                raise ReceiveError("File count exceeds original request size")
 
         if not self.current_gfile:
             # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)
@@ -280,7 +280,7 @@ class FileReceiver(GObject.Object):
         self.current_mode = 0
         self.current_path = None
         self.current_gfile = None
-        self.remaining_files -= 1
+        self.op.remaining_count -= 1
 
     def apply_folder_permissions(self):
         if self.preserve_perms:

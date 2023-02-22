@@ -15,6 +15,13 @@ gi.require_version('XApp', '1.0')
 from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 
 import config
+try:
+    config.sandbox_mode = os.environ["WARPINATOR_SANDBOX_MODE"]
+    config.using_landlock = config.sandbox_mode == "landlock"
+except:
+    config.sandbox_mode = "legacy"
+    config.using_landlock = False
+
 import prefs
 import util
 import server
@@ -22,11 +29,6 @@ import auth
 import networkmonitor
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
-
-# Don't let warp run as root
-if os.getuid() == 0:
-    print("Warpinator should not be run as root. Please run it in user mode.")
-    sys.exit(1)
 
 # XApp 2.0 required for favorites.
 HAVE_XAPP_FAVORITES = True
@@ -151,12 +153,12 @@ class OpItem(object):
                 self.op_transfer_status_message.set_text(_("Waiting for approval"))
             else:
                 self.op_transfer_status_message.set_text(_("Waiting for your approval"))
-                if self.op.existing and prefs.prevent_overwriting():
-                    self.op_transfer_problem_label.show()
-                    self.op_transfer_problem_label.set_text(_("Files may be overwritten"))
-                elif not self.op.have_space:
+                if not self.op.have_space:
                     self.op_transfer_problem_label.show()
                     self.op_transfer_problem_label.set_text(_("Not enough disk space"))
+                elif self.op.existing and prefs.prevent_overwriting():
+                    self.op_transfer_problem_label.show()
+                    self.op_transfer_problem_label.set_text(_("Files may be overwritten"))
         elif (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_SENDER and isinstance(self.op, SendOp)) or \
             (self.op.status == OpStatus.CANCELLED_PERMISSION_BY_RECEIVER and isinstance(self.op, ReceiveOp)):
             self.op_transfer_status_message.set_text(_("Request cancelled"))
@@ -503,6 +505,22 @@ class WarpWindow(GObject.Object):
         self.user_online_spinner = self.builder.get_object("user_online_spinner")
         self.user_clear_ops_button = self.builder.get_object("user_clear_ops_button")
 
+        self.app_restart_ops_count_label = self.builder.get_object("app_restart_ops_count_label")
+        self.app_restart_spinner = self.builder.get_object("app_restart_spinner")
+        self.app_restart_icon = self.builder.get_object("app_restart_icon")
+        self.app_restart_button = self.builder.get_object("app_restart_button")
+        self.app_restart_button.connect("clicked", self.app_restart_button_clicked)
+
+        self.no_disk_space_label = self.builder.get_object("no_disk_space_label")
+        self.no_disk_space_trash_button = self.builder.get_object("no_disk_space_trash_button")
+        self.no_disk_space_trash_button.connect("clicked", self.no_disk_space_trash_clicked)
+        self.no_disk_space_trash_button.set_visible(util.trash_uri_supported())
+        self.no_disk_space_open_save_button = self.builder.get_object("no_disk_space_open_save_button")
+        self.no_disk_space_open_save_button.connect("clicked", self.no_disk_space_open_save_clicked)
+        self.no_disk_space_baobab_button = self.builder.get_object("no_disk_space_baobab_button")
+        self.no_disk_space_baobab_button.connect("clicked", self.no_disk_space_baobab_clicked)
+        self.no_disk_space_baobab_button.set_visible(util.disk_usage_available())
+
         # Send Files button
         main_menu = Gtk.Menu()
 
@@ -594,6 +612,13 @@ class WarpWindow(GObject.Object):
 
         return Gdk.EVENT_PROPAGATE
 
+    def show_page(self, page):
+        # If we need to restart, don't let anything interrupt it.
+        if self.view_stack.get_visible_child_name() == "restart":
+            return
+
+        self.view_stack.set_visible_child_name(page)
+
     def toggle_visibility(self, time=0):
         if self.window.is_active():
             self.window.hide()
@@ -636,10 +661,10 @@ class WarpWindow(GObject.Object):
         timeout = SERVER_RESTART_TIMEOUT if restarting else SERVER_START_TIMEOUT
 
         self.server_start_timeout_id = GLib.timeout_add_seconds(timeout, self.server_not_started_timeout)
-        self.view_stack.set_visible_child_name("startup")
+        self.show_page("startup")
 
     def server_not_started_timeout(self):
-        self.view_stack.set_visible_child_name("server-problem")
+        self.show_page("server-problem")
 
         if not self.netmon.online:
             self.something_wrong_label.set_text(_("You don't appear to be connected to a network."))
@@ -764,15 +789,36 @@ class WarpWindow(GObject.Object):
     def on_open_location_clicked(self, widget, data=None):
         util.open_save_folder()
 
-    def open_prefs_networking(self, button):
-        prefs.Preferences(self.window, "network")
+    def open_prefs_networking(self, button, data=None):
+        self.open_preferences(None, "network")
 
-    def open_preferences(self, menuitem, data=None):
-        prefs.Preferences(self.window, "general")
+    def open_preferences(self, menuitem, data="general"):
+        self.prefs_window = prefs.Preferences(self.window, data)
+        self.prefs_window.window.connect("destroy", self.on_prefs_destroy)
+
+    def on_prefs_destroy(self, window):
+        self.prefs_window = None
 
     def report_bad_save_folder(self):
         self.bad_save_folder_label.set_text(prefs.get_save_path())
-        self.view_stack.set_visible_child_name("bad-save-folder")
+        self.show_page("bad-save-folder")
+
+    def report_no_disk_space(self):
+        self.no_disk_space_label.set_label(
+            _("Not enough disk space remaining to receive files (%s is reserved).") % \
+                GLib.format_size(prefs.get_min_free_space() * 1024 * 1024)
+        )
+
+        self.show_page("no-disk-space")
+
+    def no_disk_space_trash_clicked(self, button):
+        util.open_trash()
+
+    def no_disk_space_open_save_clicked(self, button):
+        util.open_save_folder()
+
+    def no_disk_space_baobab_clicked(self, button):
+        util.open_disk_usage()
 
     def add_remote_button(self, remote_machine, simulated=False):
         if self.discovery_time_out_id > 0:
@@ -793,7 +839,7 @@ class WarpWindow(GObject.Object):
 
         self.user_list_box.add(button.button)
 
-        self.view_stack.set_visible_child_name("overview")
+        self.show_page("overview")
         self.sort_buttons()
 
     def remove_remote_button(self, remote_machine):
@@ -825,7 +871,38 @@ class WarpWindow(GObject.Object):
             self.toggle_visibility()
 
     def display_shutdown(self):
-        self.view_stack.set_visible_child_name("shutdown")
+        self.show_page("shutdown")
+
+    def display_restart(self):
+        if self.prefs_window is not None:
+            self.prefs_window.destroy()
+            self.prefs_window = None
+
+        self.show_page("restart")
+
+    def update_restart_dialog_status(self, active_ops):
+        if active_ops > 0:
+            label = gettext.ngettext(
+                _("Waiting for %d operation to complete"),
+                _("Waiting for %d operations to complete"),
+                active_ops
+            ) % active_ops
+
+            self.app_restart_ops_count_label.set_label(label)
+            self.app_restart_ops_count_label.show()
+            self.app_restart_spinner.show()
+            self.app_restart_icon.hide()
+            self.app_restart_button.set_sensitive(False)
+        else:
+            self.app_restart_ops_count_label.set_label("")
+            self.app_restart_spinner.hide()
+            self.app_restart_icon.show()
+            self.app_restart_button.set_sensitive(True)
+            self.app_restart_button.get_style_context().add_class("suggested-action")
+
+    def app_restart_button_clicked(self, button, data=None):
+        self.display_shutdown()
+        self.emit("exit")
 
     def notify_server_started(self):
         self.server_restarting = False
@@ -850,12 +927,12 @@ class WarpWindow(GObject.Object):
             return
 
         self.discovery_time_out_id = GLib.timeout_add_seconds(DISCOVERY_TIMEOUT, self.discovery_timed_out)
-        self.view_stack.set_visible_child_name("discovery")
+        self.show_page("discovery")
 
     def discovery_timed_out(self):
         logging.debug("UI: Discovery timed out (no remotes)")
 
-        self.view_stack.set_visible_child_name("no-remotes")
+        self.show_page("no-remotes")
         self.discovery_time_out_id = 0
         return False
 
@@ -872,7 +949,7 @@ class WarpWindow(GObject.Object):
             self.window.set_urgency_hint(True)
 
     def switch_to_user_view(self, remote_machine):
-        self.view_stack.set_visible_child_name("user")
+        self.show_page("user")
         self.current_selected_remote_machine = remote_machine
 
         self.refresh_remote_machine_view()
@@ -984,7 +1061,7 @@ class WarpWindow(GObject.Object):
 
     def back_to_overview(self, button=None, data=None):
         if not self.server_restarting:
-            self.view_stack.set_visible_child_name("overview")
+            self.show_page("overview")
 
         self.cleanup_user_view()
 
@@ -1054,6 +1131,8 @@ class WarpApplication(Gtk.Application):
         self.inhibit_count = 0
         self.inhibit_cookie = 0
 
+        self.save_folder_poll_timer_id = 0
+        self.app_restarting = False
         self.netmon = None
         self.server = None
 
@@ -1075,6 +1154,12 @@ class WarpApplication(Gtk.Application):
         action = Gio.SimpleAction.new("notification-response", vt)
         self.add_action(action)
 
+        self.secure_mode_enforcer = prefs.SecureModePrefsBlocker()
+        self.secure_mode_enforcer.start_monitor()
+        util.initialize_free_space_monitor()
+        util.free_space_monitor.connect("low-space", self.handle_low_disk_space)
+        util.free_space_monitor.connect("folder-changed", self.on_receiving_folder_changed)
+
     def do_activate(self):
         Gtk.Application.do_activate(self)
 
@@ -1095,40 +1180,66 @@ class WarpApplication(Gtk.Application):
 
         self.update_status_icon_from_preferences()
 
-        GLib.timeout_add(1000, self.check_save_folder)
-
-    def check_save_folder(self, data=None):
-        if not util.verify_save_folder():
-            if not self.bad_folder and not self.window.window.get_visible():
-                self.window.window.show()
-                self.window.window.present_with_time(Gtk.get_current_event_time())
-                self.bad_folder = True
-
-            self.window.report_bad_save_folder()
-            return GLib.SOURCE_CONTINUE
-
-        self.bad_folder = False
-        GLib.idle_add(self.start_network_monitor)
-        return GLib.SOURCE_REMOVE
-
-    def start_network_monitor(self):
         self.netmon = networkmonitor.get_network_monitor()
         self.netmon.start()
         self.netmon.connect("state-changed", self.network_state_changed)
-
         self.new_server()
 
     def network_state_changed(self, netmon, online):
         self.new_server()
 
+    def start_save_folder_check(self, server=None):
+        self.stop_save_folder_check()
+        self.save_folder_poll_timer_id = GLib.timeout_add(1000, self.check_save_folder)
+
+    def stop_save_folder_check(self):
+        if self.save_folder_poll_timer_id > 0:
+            GLib.source_remove(self.save_folder_poll_timer_id)
+            self.save_folder_poll_timer_id = 0
+
+    def check_save_folder(self, data=None):
+        perms_ok = util.verify_save_folder()
+        space_ok = util.free_space_monitor.have_enough_free(0)
+
+        if not (perms_ok and space_ok):
+            if not self.bad_folder and not self.window.window.get_visible():
+                self.window.window.show()
+                self.window.window.present_with_time(Gtk.get_current_event_time())
+                self.bad_folder = True
+            print(perms_ok, space_ok)
+            if not perms_ok:
+                self.window.report_bad_save_folder()
+            elif not space_ok:
+                self.window.report_no_disk_space()
+
+            return GLib.SOURCE_CONTINUE
+
+        self.bad_folder = False
+        GLib.idle_add(self.new_server_continue)
+        self.save_folder_poll_timer_id = 0
+        return GLib.SOURCE_REMOVE
+
     def new_server(self):
+        if self.app_restarting:
+            logging.debug("Trying to start server while there's a pending app restart. Ignoring.")
+            return
+
         if self.server_starting:
             logging.debug("Trying to start server while server already starting, will check later")
             self.server_state_dirty = True
             return
 
-        self.server_state_dirty = False
         self.server_starting = True
+
+        if self.server:
+            self.window.start_startup_timer(True)
+            self.server.connect("shutdown-complete", self.start_save_folder_check)
+            self.server.shutdown()
+        else:
+            self.start_save_folder_check()
+
+    def new_server_continue(self):
+        self.server_state_dirty = False
 
         self.window.start_startup_timer(restarting=False)
 
@@ -1142,49 +1253,40 @@ class WarpApplication(Gtk.Application):
 
         self.window.clear_remotes()
 
-        def try_to_start(srv=None):
-            try:
-                self.server.disconnect_by_func(try_to_start)
-            except:
-                pass
+        try:
+            self.server.disconnect_by_func(try_to_start)
+        except:
+            pass
 
-            self.server = None
+        self.server = None
 
-            auth_singleton = auth.get_singleton()
-            try:
-                auth_singleton.disconnect_by_func(self.on_group_code_changed)
-            except:
-                pass
+        auth_singleton = auth.get_singleton()
+        try:
+            prefs.prefs_settings.disconnect_by_func(self.on_group_code_changed)
+        except:
+            pass
 
-            auth_singleton.update(self.current_ip_info, self.current_port)
-            auth_singleton.connect("group-code-changed", self.on_group_code_changed)
-            
-            if auth.get_secure_mode():
-                self.window.update_secure_mode_info(True)
-            else:
-                logging.warn("Secure mode not enabled, restricting preferences.")
-                logging.warn("-- See https://github.com/linuxmint/warpinator/blob/master/README.md")
-                self.window.update_secure_mode_info(False)
-            prefs.secure_mode_blocker.enforce_secure_mode()
-
-            if not self.netmon.online:
-                logging.info("No network access")
-                self.server_starting = False
-                self.window.show_no_network()
-                return
-
-            self.server = server.Server(self.current_ip_info, self.current_port, self.current_auth_port)
-            self.server.connect("server-started", self._server_started)
-            self.server.connect("remote-machine-added", self._remote_added)
-            self.server.connect("remote-machine-removed", self._remote_removed)
-            self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
-
-        if self.server:
-            self.window.start_startup_timer(True)
-            self.server.connect("shutdown-complete", try_to_start)
-            self.server.shutdown()
+        auth_singleton.update(self.current_ip_info, self.current_port)
+        prefs.prefs_settings.connect("changed::group-code", self.on_group_code_changed)
+        
+        if prefs.get_secure_mode():
+            self.window.update_secure_mode_info(True)
         else:
-            try_to_start();
+            logging.warn("Secure mode not enabled, restricting preferences.")
+            logging.warn("-- See https://github.com/linuxmint/warpinator/blob/master/README.md")
+            self.window.update_secure_mode_info(False)
+
+        if not self.netmon.online:
+            logging.info("No network access")
+            self.server_starting = False
+            self.window.show_no_network()
+            return
+
+        self.server = server.Server(self.current_ip_info, self.current_port, self.current_auth_port)
+        self.server.connect("server-started", self._server_started)
+        self.server.connect("remote-machine-added", self._remote_added)
+        self.server.connect("remote-machine-removed", self._remote_removed)
+        self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
 
     def _server_started(self, local_machine):
         self.server_starting = False
@@ -1208,6 +1310,9 @@ class WarpApplication(Gtk.Application):
         if self.netmon:
             self.netmon.stop()
 
+        util.free_space_monitor.stop()
+        self.stop_save_folder_check()
+
         if self.server:
             self.setup_kill_as_a_last_resort()
             self.server.shutdown()
@@ -1223,6 +1328,14 @@ class WarpApplication(Gtk.Application):
         self.window.destroy()
 
         logging.debug("Shutdown complete")
+
+        if self.app_restarting:
+            os.environ["RESTART_WARPINATOR"] = "1"
+        else:
+            try:
+                del os.environ["RESTART_WARPINATOR"]
+            except KeyError:
+                pass
         Gio.Application.do_shutdown(self)
 
     def exit_warp(self):
@@ -1242,8 +1355,23 @@ class WarpApplication(Gtk.Application):
     def firewall_script_finished(self):
         self.new_server()
 
-    def on_group_code_changed(self, auth_manager):
+    def on_group_code_changed(self, settings, key):
         self.new_server()
+
+    def on_receiving_folder_changed(self, monitor):
+        if config.using_landlock:
+            self.new_server()
+            return
+
+        self.app_restarting = True
+        self.window.display_restart()
+        active_ops = self.server.get_active_op_count() if self.server else 0
+        self.window.update_restart_dialog_status(active_ops)
+
+    def handle_low_disk_space(self, monitor):
+        if self.server is not None and not self.server_starting:
+            self.server.cancel_all_ops()
+            self.new_server()
 
     def _remote_added(self, local_machine, remote_machine):
         self.window.add_remote_button(remote_machine)
@@ -1259,13 +1387,23 @@ class WarpApplication(Gtk.Application):
 
     def _remote_ops_changed(self, local_machine, name):
         self.window.refresh_remote_machine_view()
-        self.update_inhibitor_state(local_machine)
+
+        active_ops = self.server.get_active_op_count() if self.server else 0
+        self.update_inhibitor_state()
+
+        if active_ops > 0:
+            util.free_space_monitor.start()
+        else:
+            util.free_space_monitor.pause()
+
+        if self.app_restarting:
+            self.window.update_restart_dialog_status(active_ops)
 
     def add_simulated_widgets(self):
         import testing
         testing.add_simulated_widgets(self)
 
-    def update_inhibitor_state(self, local_machine):
+    def update_inhibitor_state(self):
         any_active_ops = False
 
         remotes = self.server.list_remote_machines()
@@ -1440,17 +1578,8 @@ class WarpApplication(Gtk.Application):
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
 
-def main(test=False, debug=False):
+def main(test=False):
     import signal
-
-    log_handler = logging.StreamHandler(sys.stdout)
-    log_handler.setFormatter(util.WarpLogFormatter())
-    logging.root.addHandler(log_handler)
-
-    if debug:
-        logging.root.setLevel(logging.DEBUG)
-    else:
-        logging.root.setLevel(logging.INFO)
 
     w = WarpApplication(test)
     signal.signal(signal.SIGINT, lambda s, f: w.exit_warp())

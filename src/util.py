@@ -5,7 +5,11 @@ import gettext
 import math
 import logging
 import os
+from pathlib import Path
+import queue
+import sys
 import socket
+import time
 import traceback
 from concurrent.futures import ThreadPoolExecutor
 
@@ -13,6 +17,9 @@ from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
 import prefs
 import config
+
+if config.using_landlock:
+    import landlock
 
 _ = gettext.gettext
 
@@ -28,7 +35,86 @@ global_rpc_threadpool = None
 # Initializing in thie function avoids a circular import due to prefs.get_thread_count()
 def initialize_rpc_threadpool():
     global global_rpc_threadpool
-    global_rpc_threadpool = ThreadPoolExecutor(max_workers=prefs.get_remote_pool_max_threads())
+
+    if config.using_landlock:
+        import landlock
+        global_rpc_threadpool = NewThreadExecutor()
+    else:
+        global_rpc_threadpool = ThreadPoolExecutor(max_workers=prefs.get_remote_pool_max_threads())
+
+class NewThreadExecutor():
+    def __init__(self):
+        self.max_workers = prefs.get_remote_pool_max_threads()
+        self.transfer_queue = queue.SimpleQueue()
+
+
+        self._threads_lock = threading.Lock()
+        self._threads = {}
+        self._shutdown_lock = threading.Lock()
+        self._shutdown = False
+        self.counter = 0
+        self._factory_thread_keepalive = threading.Event()
+        self._wait_semaphore = threading.Semaphore(self.max_workers)
+
+        self._factory_thread = threading.Thread(target=self.factory_thread_func, name="NewThreadExecutor-factory-thread")
+        self._factory_thread.start()
+
+    def factory_thread_func(self):
+        while True:
+            if self._factory_thread_keepalive.is_set():
+                break
+
+            if self._wait_semaphore.acquire(timeout=0.5):
+                continue
+
+            if not self.transfer_queue.empty():
+                self.spawn_thread()
+
+    def submit(self, func, *args, **kargs):
+        with self._shutdown_lock:
+            if self._shutdown:
+                raise RuntimeError("Cannot start new transfer threads, shutting down.")
+
+            self.transfer_queue.put((func, args, kargs))
+
+    def spawn_thread(self):
+        self.counter += 1
+
+        tname = "landlocked-thread-%d" % self.counter
+        t = threading.Thread(target=self._transfer_landlocked_thread_func, name=tname)
+
+        with self._threads_lock:
+            t.start()
+            self._threads[t.ident] = t
+        return True
+
+    def _transfer_landlocked_thread_func(self):
+        try:
+            opinfo = self.transfer_queue.get_nowait()
+
+            if opinfo[0].__name__ == "start_transfer_op":
+                rs = landlock.Ruleset()
+                rs.allow(prefs.get_save_path())
+                rs.apply()
+
+            opinfo[0](*opinfo[1], **opinfo[2])
+        except queue.Empty:
+            pass
+
+        with self._threads_lock:
+            del self._threads[threading.get_ident()]
+
+        self._wait_semaphore.release()
+
+    def shutdown(self, wait=True):
+        with self._shutdown_lock:
+            self._shutdown = True
+
+            for t in self._threads:
+                t.join()
+
+            self._factory_thread_keepalive.set()
+            self._factory_thread.join()
 
 from enum import IntEnum
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
@@ -79,6 +165,7 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
 class ReceiveError(Exception):
     def __init__(self, message, fatal=True):
         self.fatal = fatal
+        logging.debug("ReceiveError: (fatal: %d): %s" % (self.fatal, message))
         super().__init__(message)
 
 class InterfaceInfo():
@@ -207,28 +294,30 @@ def open_save_folder(filename=None):
     bus = Gio.Application.get_default().get_dbus_connection()
 
     if filename is not None:
+        method = "ShowItems"
         abs_path = os.path.join(prefs.get_save_path(), filename)
+    else:
+        method = "ShowFolders"
+        abs_path = prefs.get_save_path()
 
-        if os.path.isfile(abs_path):
-            file = Gio.File.new_for_path(abs_path)
+    file = Gio.File.new_for_path(abs_path)
+    startup_id = str(os.getpid())
 
-            startup_id = str(os.getpid())
-
-            try:
-                bus.call_sync("org.freedesktop.FileManager1",
-                              "/org/freedesktop/FileManager1",
-                              "org.freedesktop.FileManager1",
-                              "ShowItems",
-                              GLib.Variant("(ass)",
-                                           ([file.get_uri()], startup_id)),
-                              None,
-                              Gio.DBusCallFlags.NONE,
-                              1000,
-                              None)
-                logging.debug("Opening save folder using dbus")
-                return
-            except GLib.Error as e:
-                pass
+    try:
+        bus.call_sync("org.freedesktop.FileManager1",
+                      "/org/freedesktop/FileManager1",
+                      "org.freedesktop.FileManager1",
+                      method,
+                      GLib.Variant("(ass)",
+                                   ([file.get_uri()], startup_id)),
+                      None,
+                      Gio.DBusCallFlags.NONE,
+                      1000,
+                      None)
+        logging.debug("Opening save folder using dbus")
+        return
+    except GLib.Error as e:
+        logging.debug("Could not use dbus interface to launch file manager: %s" % e.message)
 
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
 
@@ -239,33 +328,204 @@ def open_save_folder(filename=None):
         logging.critical("Could not open received files location: %s" % e.message)
 
 def verify_save_folder(transient_for=None):
-    return os.access(prefs.get_save_path(), os.R_OK | os.W_OK)
+    return os.access(save_path, os.R_OK | os.W_OK)
 
 def save_folder_is_native_fs():
     file = Gio.File.new_for_path(prefs.get_save_path())
     return file.is_native()
 
-def have_free_space(size):
-    save_file = Gio.File.new_for_path(prefs.get_save_path())
+def trash_uri_supported():
+    vfs = Gio.Vfs.get_default()
+    return "trash" in vfs.get_supported_uri_schemes()
 
-    try:
-        info = save_file.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, None)
-    except GLib.Error:
-        logging.warning("Unable to check free space in save location (%s), but proceeding anyhow" % prefs.get_save_path())
-        return True
+def open_trash():
+    Gio.AppInfo.launch_default_for_uri("trash:///", None)
 
-    free = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE)
+def disk_usage_available():
+    return GLib.find_program_in_path("baobab")
 
-    # I guess we could have exactly 0 bytes free, but I think you'd have larger problems.  I want to make sure
-    # here that we don't fail because we didn't get a valid number.
-    if free == 0:
-        return True
+def open_disk_usage():
+    if GLib.find_program_in_path("baobab"):
+        GLib.spawn_async(["baobab", GLib.get_home_dir()], flags=GLib.SpawnFlags.SEARCH_PATH_FROM_ENVP)
 
-    free -= prefs.get_min_free_space() * 1024
+free_space_monitor = None
+MB_TO_B = 1024 * 1024
 
-    logging.debug("need: %s, have %s" % (GLib.format_size(size), GLib.format_size(free)))
+def initialize_free_space_monitor():
+    global free_space_monitor
+    free_space_monitor  = FreeSpaceMonitor()
 
-    return size < free
+class FreeSpaceMonitor(GObject.Object):
+    __gsignals__ = {
+        "low-space": (GObject.SignalFlags.RUN_LAST, None, ()),
+        "folder-changed": (GObject.SignalFlags.RUN_LAST, None, ())
+    }
+
+    poll_levels = [
+        [ 100 * MB_TO_B,     0.05 ],
+        [ 1000 * MB_TO_B,    0.50 ],
+        [ 10000 * MB_TO_B,   5.00 ],
+        [ 100000 * MB_TO_B, 30.00 ]
+    ]
+
+    def __init__(self):
+        GObject.Object.__init__(self)
+        logging.debug("FreeSpaceMonitor new")
+
+        self._monitor_thread = None
+
+        self._cancellable = Gio.Cancellable()
+        self._gate = threading.Event()
+        self._lock = threading.Lock()
+
+        self.sleep_time = 0
+        self.available_bytes = 0
+        self.min_free = prefs.get_min_free_space()
+        self.save_folder = Gio.File.new_for_path(prefs.get_save_path())
+
+        prefs.prefs_settings.connect("changed::receiving-folder", self._folder_setting_changed)
+        prefs.prefs_settings.connect("changed::minimum-free-space", self._folder_setting_changed)
+
+    def _folder_setting_changed(self, settings, key, data=None):
+        new_folder = Gio.File.new_for_path(prefs.get_save_path())
+        new_min_free = prefs.get_min_free_space()
+
+        if not self.save_folder.equal(new_folder):
+            self.save_folder = new_folder
+            self.emit("folder-changed")
+
+        if self.min_free != new_min_free:
+            self.have_enough_free(0)
+
+    def get_free(self):
+        with self._lock:
+            return self.available_bytes
+
+    def have_enough_free(self, size, top_dir_basenames=[]):
+        self.save_folder = Gio.File.new_for_path(prefs.get_save_path())
+        self.min_free = prefs.get_min_free_space()
+
+        # Existing files haven't been removed yet, so their contents' size needs to be
+        # taken into account.
+        existing_allocation = 0
+
+        for basename in top_dir_basenames:
+            path = os.path.join(prefs.get_save_path(), basename)
+            if not os.path.exists(path):
+                continue
+            folder_file = Gio.File.new_for_path(path)
+
+            def get_contents_size(file):
+                if file.query_file_type(Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None) != FileType.DIRECTORY:
+                    info = file.query_info("standard::allocated-size",
+                                           Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+                                           None)
+                    if info:
+                        return info.get_attribute_uint64("standard::allocated-size")
+                    else:
+                        return 0
+
+                size = 0
+                enumerator = file.enumerate_children("standard::allocated-size",
+                                                     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+                                                     None)
+                info = enumerator.next_file(None)
+                while info:
+                    child = enumerator.get_child(info)
+                    child_uri = child.get_uri()
+                    child_basename = child.get_basename()
+
+                    file_type = info.get_file_type()
+
+                    if file_type == FileType.DIRECTORY:
+                        size += get_contents_size(child)
+                    else:
+                        size += info.get_attribute_uint64("standard::allocated-size")
+
+                    info = enumerator.next_file(None)
+
+                return size
+            existing_allocation += get_contents_size(folder_file)
+
+        if self._gate.is_set():
+            with self._lock:
+                total = self.available_bytes + existing_allocation
+                logging.debug("FreeSpaceMonitor - op needs %s, %s available (%s of which is being overwritten)" % \
+                    (GLib.format_size(size), GLib.format_size(total), GLib.format_size(existing_allocation)))
+                return size < total
+
+        self._refresh_available(self._cancellable)
+
+        with self._lock:
+            total = self.available_bytes + existing_allocation
+            logging.debug("FreeSpaceMonitor - op needs %s, %s available (%s of which is being overwritten)" % \
+                (GLib.format_size(size), GLib.format_size(total), GLib.format_size(existing_allocation)))
+            return size < total
+
+    def start(self):
+        self.save_folder = Gio.File.new_for_path(prefs.get_save_path())
+        self.min_free = prefs.get_min_free_space()
+        logging.debug("FreeSpaceMonitor start (monitoring %s,  keeping a %s reserve" % (self.save_folder.get_path(), GLib.format_size(self.min_free * MB_TO_B)))
+
+        if self._monitor_thread is None:
+            self._monitor_thread = threading.Thread(target=self._monitor_thread_func, args=(self._cancellable,), name="FreeSpaceMonitor-thread")
+            self._monitor_thread.start()
+
+        self._gate.set()
+
+    def pause(self):
+        logging.debug("FreeSpaceMonitor pause")
+        self._gate.clear()
+
+    def stop(self):
+        logging.debug("FreeSpaceMonitor stop")
+        self._cancellable.cancel()
+        self._gate.set()
+        if self._monitor_thread is not None:
+            self._monitor_thread.join(5)
+
+    def _sleep(self):
+        duration = 30.0
+
+        for level in self.poll_levels:
+            if self.available_bytes <= level[0]:
+                duration = level[1]
+                break
+        logging.debug("FreeSpaceMonitor - sleep duration %.2fs" % duration)
+        time.sleep(duration)
+
+    def _monitor_thread_func(self, cancellable):
+        while not cancellable.is_cancelled():
+            self._refresh_available(cancellable)
+            self._sleep()
+            self._gate.wait()
+            continue
+
+    def _refresh_available(self, cancellable):
+        available_bytes = 0
+        try:
+            info = self.save_folder.query_filesystem_info(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE, cancellable)
+            available_bytes = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE)
+            if available_bytes == 0:
+                raise GLib.Error(code=GLib.FileError.FAILED, message="Save directory's filesystem doesn't report useful available space info.")
+        except GLib.Error as e:
+            logging.critical("Could not query available disk space for the save directory, allowing all transfers: %s" % e.message)
+            available_bytes = 0
+
+        with self._lock:
+            adjusted = available_bytes - (self.min_free * 1024 * 1024)
+            logging.debug("FreeSpaceMonitor - %d available (%s)" % (adjusted, GLib.format_size(adjusted if adjusted >= 0 else 0)))
+            self.available_bytes = adjusted if adjusted > 0 else 0
+            if self.available_bytes == 0:
+                self._notify_low_space()
+
+    def _notify_low_space(self):
+        self.pause()
+        GLib.idle_add(priority=GLib.PRIORITY_HIGH, function=self._notify_idle_cb)
+
+    def _notify_idle_cb(self):
+        logging.critical("FreeSpaceMonitor - out of space!")
+        self.emit("low-space")
 
 def files_exist(base_names):
     for name in base_names:
@@ -444,6 +704,7 @@ class AboutDialog():
         dialog.run()
         dialog.destroy()
 
+#### Logging
 class WarpLogFormatter(logging.Formatter):
     dbg_crit_format = "%(asctime)-15s::warpinator::%(levelname)s: %(message)s -- %(filename)s (line %(lineno)d)"
     info_format = "%(asctime)-15s::warpinator: %(message)s"
@@ -462,6 +723,21 @@ class WarpLogFormatter(logging.Formatter):
 
         return result
 
+log_handler = logging.StreamHandler(sys.stdout)
+log_handler.setFormatter(WarpLogFormatter())
+logging.root.addHandler(log_handler)
+
+try:
+    debug = os.environ["WARPINATOR_DEBUG"]
+except:
+    debug = False
+
+if debug:
+    logging.root.setLevel(logging.DEBUG)
+else:
+    logging.root.setLevel(logging.INFO)
+
+#### /Logging
 
 recent_manager = Gtk.RecentManager()
 

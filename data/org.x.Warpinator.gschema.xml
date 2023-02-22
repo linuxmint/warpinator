@@ -87,9 +87,10 @@
       <summary>Size (in kb) of each block of data sent over the network. Max is 4094</summary>
     </key>
     <key name="minimum-free-space" type="u">
-      <default>100</default>
-      <summary>Minimum free space (in mb) allowed in the save location</summary>
-      <description>If a transfer would cause the save location's free space to drop below this value, the transfer is refused</description>
+      <default>250</default>
+      <summary>Minimum free space (in mb) to reserve in the save location</summary>
+      <description>If the available space on the incoming folder's drive goes below this, existing transfers will be aborted. You will also be notified if a new transfer might cause the available space to drop below this threshold.</description>
+    </key>
     <key name="group-code" type="s">
       <default>'Warpinator'</default>
       <summary>The group code to share between machines that wish to connect.</summary>
