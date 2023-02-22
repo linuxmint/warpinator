@@ -6,7 +6,9 @@ import subprocess
 import logging
 import json
 import re
+import secrets
 import cairo
+from pathlib import Path
 
 from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
@@ -40,53 +42,77 @@ USE_COMPRESSION_KEY = "use-compression"
 COMPRESSION_LEVEL_KEY = "zlib-compression-level"
 BLOCK_SIZE_KEY = "transfer-block-size"
 MIN_FREE_SPACE_KEY = "minimum-free-space"
+GROUP_CODE_KEY = "group-code"
+CONNECT_ID_KEY = "connect-id"
+
+DEFAULT_GROUP_CODE = "Warpinator"
 
 prefs_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
 
-#### Secure mode
-class SecureModePrefsBlocker():
-    # This prevents external changes to Warpinator (like from a terminal or dconf-editor) while warpinator
-    # is running
-    def __init__(self):
-        self.active = False
-        self.settings_changed_id = 0
+## Migrate ~/.config/warpinator/.group
 
-    def set_active(self, active):
-        if self.active == active:
-            return
+KEYFILE_GROUP_NAME = "warpinator"
+KEYFILE_CODE_KEY = "code"
+KEYFILE_UUID_KEY = "connect_id"
+CONFIG_FILE_NAME = ".group"
+CONFIG_FOLDER = Path(os.path.join(GLib.get_user_config_dir(), "warpinator"))
+path = Path(os.path.join(CONFIG_FOLDER, CONFIG_FILE_NAME))
 
-        if self.settings_changed_id > 0:
-            prefs_settings.disconnect(self.settings_changed_id)
-            self.settings_changed_id = 0
+def get_new_connect_id():
+    return "%s-%s" % (util.get_hostname().upper()[:42], secrets.token_hex(10).upper())
 
-        if active:
-            self.settings_changed_id = prefs_settings.connect("changed", self._enforce_settings)
-            self._enforce_settings(self)
+try:
+    keyfile = GLib.KeyFile()
+    keyfile.load_from_file(path.as_posix(), GLib.KeyFileFlags.NONE)
 
-        self.active = active
+    try:
+        code = keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_CODE_KEY)
 
-    def _enforce_settings(self, settings=None, key=None):
-        prefs_settings.handler_block(self.settings_changed_id)
+        if code == None or code == "":
+            raise
 
-        prefs_settings.delay()
-        prefs_settings.set_boolean(AUTOSTART_KEY, False)
-        prefs_settings.set_boolean(ASK_PERMISSION_KEY, True)
-        prefs_settings.set_boolean(NO_OVERWRITE_KEY, True)
-        prefs_settings.apply()
-        prefs_settings.sync() # when this is used in /usr/bin/warpinator to check for autostart, there's no main loop yet.
+        if len(code) < 4:
+            logging.warn("Group Code is short, consider something longer than 8 characters.")
+    except:
+        code = DEFAULT_GROUP_CODE
 
-        prefs_settings.handler_unblock(self.settings_changed_id)
+    try:
+        connect_id = keyfile.get_string(KEYFILE_GROUP_NAME, KEYFILE_UUID_KEY)
+        if len(connect_id.split("-")) == 5:
+            raise
+    except:
+        # Max 'instance' length is 63.
+        # https://datatracker.ietf.org/doc/html/rfc6763#section-7.2
+        connect_id = get_new_connect_id()
 
-    def enforce_secure_mode(self):
-        self.set_active(not auth.get_secure_mode())
+    prefs_settings.set_string(GROUP_CODE_KEY, code)
+    prefs_settings.set_string(CONNECT_ID_KEY, connect_id)
 
-secure_mode_blocker = SecureModePrefsBlocker()
-secure_mode_blocker.enforce_secure_mode()
+    path.unlink()
 
-####
+    try:
+        path.parent.rmdir()
+    except (OSError, FileNotFoundError):
+        logging.warn("Could not remove obsolete group code file and directory at '%s' - maybe the directory isn't empty?")
+except GLib.Error as e:
+    logging.debug("Migration failed - either migration already happened, or there was nothing to migrate in the first place: %s" % str(e))
 
+## /migrate
+
+# Sanity checks, initial values...
 if prefs_settings.get_int(PORT_KEY) == prefs_settings.get_int(REG_PORT_KEY):
     prefs_settings.set_int(REG_PORT_KEY, prefs_settings.get_int(PORT_KEY) + 1)
+
+code = prefs_settings.get_string(GROUP_CODE_KEY)
+if code == "":
+    prefs_settings.set_string(GROUP_CODE_KEY, DEFAULT_GROUP_CODE)
+connect_id = prefs_settings.get_string(CONNECT_ID_KEY)
+if connect_id == "":
+    prefs_settings.set_string(CONNECT_ID_KEY, get_new_connect_id())
+
+prefs_settings.sync()
+
+# /sanity
 
 def get_should_autostart():
     return prefs_settings.get_boolean(AUTOSTART_KEY)
@@ -191,6 +217,50 @@ def get_block_size():
 def get_min_free_space():
     return prefs_settings.get_uint(MIN_FREE_SPACE_KEY)
 
+def get_group_code():
+    return prefs_settings.get_string(GROUP_CODE_KEY)
+
+def get_secure_mode():
+    return get_group_code() != DEFAULT_GROUP_CODE
+
+def get_connect_id():
+    return prefs_settings.get_string(CONNECT_ID_KEY)
+
+
+#### Secure mode
+class SecureModePrefsBlocker():
+    # This prevents external changes to Warpinator (like from a terminal or dconf-editor) while warpinator
+    # is running
+    def __init__(self):
+        self.active = False
+        self.blocker_settings = Gio.Settings(schema_id=PREFS_SCHEMA)
+        self.blocker_settings.delay()
+
+        self.settings_changed_id = 0
+
+        self._enforce_settings()
+
+    def _enforce_settings(self, settings=None, key=None):
+        if get_group_code() != DEFAULT_GROUP_CODE:
+            return
+
+        if self.settings_changed_id > 0:
+            self.blocker_settings.handler_block(self.settings_changed_id)
+
+        self.blocker_settings.set_boolean(AUTOSTART_KEY, False)
+        self.blocker_settings.set_boolean(ASK_PERMISSION_KEY, True)
+        self.blocker_settings.set_boolean(NO_OVERWRITE_KEY, True)
+        self.blocker_settings.apply()
+        self.blocker_settings.sync() # when this is used in /usr/bin/warpinator to check for autostart, there's no main loop yet.
+
+        if self.settings_changed_id > 0:
+            self.blocker_settings.handler_unblock(self.settings_changed_id)
+
+    def start_monitor(self):
+        self.settings_changed_id = self.blocker_settings.connect("changed", self._enforce_settings)
+
+####
+
 class Preferences():
     def __init__(self, main_window, page_name):
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "prefs-window.ui"))
@@ -210,7 +280,8 @@ class Preferences():
         self.content_box.pack_start(page_stack, True, True, 0)
         self.page_switcher.set_stack(page_stack)
 
-        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
+        prefs_settings.connect("changed::group-code", self.on_group_code_changed)
+
         self.unsafe_options = []
 
         # Settings
@@ -412,7 +483,7 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         section.add_row(widget)
 
-        self.on_group_code_changed(self)
+        self.on_group_code_changed(None, None)
 
         self.window.show_all()
         page_stack.set_visible_child_full(page_name, transition=Gtk.StackTransitionType.NONE)
@@ -472,8 +543,8 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         GLib.timeout_add_seconds(1, lambda: Gio.Application.get_default().firewall_script_finished())
 
-    def on_group_code_changed(self, singleton=None):
-        is_default_code = auth.get_group_code() == auth.DEFAULT_GROUP_CODE
+    def on_group_code_changed(self, settings, key):
+        is_default_code = not get_secure_mode()
 
         for widget in self.unsafe_options:
             if is_default_code:
@@ -508,8 +579,8 @@ class GroupCodeEntry(SettingsWidget):
     def __init__(self, focus_entry=False):
         super(GroupCodeEntry, self).__init__()
 
-        self.code = auth.get_group_code()
-        auth.get_singleton().connect("group-code-changed", self.on_group_code_changed)
+        self.code = get_group_code()
+        prefs_settings.connect("changed::group-code", self.on_group_code_changed)
 
         self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "group-code.ui"))
 
@@ -548,7 +619,7 @@ class GroupCodeEntry(SettingsWidget):
 
         self.status_bar.connect("draw", self.status_bar_draw)
 
-        self.on_group_code_changed(auth.get_singleton())
+        self.on_group_code_changed(None, None)
 
     def text_changed(self, widget, data=None):
         text = widget.get_text()
@@ -571,10 +642,10 @@ class GroupCodeEntry(SettingsWidget):
     def set_code_clicked(self, widget, data=None):
         self.code = self.entry.get_text()
         self.set_code_button.set_sensitive(False)
-        auth.get_singleton().update_group_code(self.code)
+        prefs_settings.set_string(GROUP_CODE_KEY, self.code)
 
     def status_bar_draw(self, widget, cr):
-        if auth.get_secure_mode():
+        if get_secure_mode():
             color = self.secure_color
         else:
             color = self.insecure_color
@@ -592,8 +663,8 @@ class GroupCodeEntry(SettingsWidget):
 
         return True
 
-    def on_group_code_changed(self, singleton):
-        if auth.get_secure_mode():
+    def on_group_code_changed(self, settings, key):
+        if get_secure_mode():
             self.secure_mode_label.set_text(_("ON"))
             self.reason_label.set_text(_("All options are unlocked."))
         else:
