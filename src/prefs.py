@@ -10,7 +10,7 @@ import secrets
 import cairo
 from pathlib import Path
 
-from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox
+from xapp.GSettingsWidgets import GSettingsSwitch, GSettingsFileChooser, GSettingsComboBox, GSettingsSpinButton
 from xapp.SettingsWidgets import SettingsWidget, SettingsPage, SettingsStack, SpinButton, Entry, Button, ComboBox
 from gi.repository import Gtk, Gdk, Gio, GLib
 
@@ -316,6 +316,11 @@ class Preferences():
                                       size_group=size_group, dir_select=True)
         section.add_row(widget)
 
+        widget = GSettingsSpinButton(_("Reserved free space"),
+                                     PREFS_SCHEMA, MIN_FREE_SPACE_KEY, units="MB", mini=250, maxi=GLib.MAXUINT)
+
+        section.add_row(widget)
+
         widget = GSettingsSwitch(_("Require approval before accepting files"),
                                  PREFS_SCHEMA, ASK_PERMISSION_KEY)
         self.unsafe_options.append(widget)
@@ -487,6 +492,9 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         self.window.show_all()
         page_stack.set_visible_child_full(page_name, transition=Gtk.StackTransitionType.NONE)
+
+    def destroy(self):
+        GLib.timeout_add(1000, self.window.destroy)
 
     def open_port(self, widget):
         self.run_port_script(self.settings.get_int(PORT_KEY), self.settings.get_int(REG_PORT_KEY))

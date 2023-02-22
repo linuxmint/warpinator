@@ -34,6 +34,8 @@ class CommonOp(GObject.Object):
 
         self.total_size = 0
         self.total_count = 0
+        self.remaining_count = 0
+
         self.size_string = ""
         self.description = ""
         self.name_if_single = None
@@ -228,7 +230,7 @@ class ReceiveOp(CommonOp):
         self.size_string = GLib.format_size(self.total_size)
         logging.debug("Op: details: %d files, with a size of %s" % (self.total_count, self.size_string))
 
-        self.have_space = util.have_free_space(self.total_size)
+        self.have_space = util.free_space_monitor.have_enough_free(self.total_size, self.top_dir_basenames)
         self.existing = util.files_exist(self.top_dir_basenames)
         self.update_ui_info()
 

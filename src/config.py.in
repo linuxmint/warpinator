@@ -13,3 +13,6 @@ VERSION="@VERSION@"
 GETTEXT_PACKAGE="@gettext_package@"
 FLATPAK_BUILD=@flatpak_build@
 RPC_API_VERSION=@RPC_API_VERSION@
+
+sandbox_mode = "legacy"
+using_landlock = False

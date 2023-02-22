@@ -3,7 +3,7 @@ data = [
   'main-window.ui',
   'op-item.ui',
   'overview-button.ui',
-  'prefs-window.ui',
+  'prefs-window.ui'
 ]
 
 install_data(data,

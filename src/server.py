@@ -376,6 +376,26 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def list_remote_machines(self):
         return self.remote_machines.values()
 
+    def get_active_op_count(self):
+        count = 0
+
+        for machine in self.remote_machines.values():
+            if machine.status != RemoteStatus.ONLINE:
+                continue
+            for op in machine.transfer_ops:
+                if op.status == OpStatus.TRANSFERRING:
+                    count += 1
+
+        return count
+
+    def cancel_all_ops(self):
+        for machine in self.remote_machines.values():
+            if machine.status != RemoteStatus.ONLINE:
+                continue
+            for op in machine.transfer_ops:
+                if op.status == OpStatus.TRANSFERRING:
+                    op.stop_transfer()
+
     @util._idle
     def idle_emit(self, signal, *callback_data):
         self.emit(signal, *callback_data)
@@ -453,7 +473,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         try:
             remote_machine = self.remote_machines[request.info.ident]
         except KeyError as e:
-            logging.warning("Received transfer op request for unknown op: %s" % e)
+            logging.warning("Received transfer op request for unknown remote: %s" % e)
             return
 
         for existing_op in remote_machine.transfer_ops:
@@ -476,7 +496,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         op.receiver_name = request.receiver_name
         op.status = OpStatus.WAITING_PERMISSION
         op.total_size = request.size
-        op.total_count = request.count
+        op.total_count = op.remaining_count = request.count
         op.mime_if_single = request.mime_if_single
         op.name_if_single = request.name_if_single
         op.top_dir_basenames = request.top_dir_basenames
