@@ -368,15 +368,23 @@ class RemoteMachine(GObject.Object):
             self.emit_machine_info_changed()
             self.set_remote_status(RemoteStatus.ONLINE)
         
-        future = self.stub.GetRemoteMachineInfo.future(warp_pb2.LookupName(id=self.local_ident,
-                                                                           readable_name=util.get_hostname()))
+        future = self.stub.GetRemoteMachineInfo.future(
+            warp_pb2.LookupName(
+                id=self.local_ident,
+                readable_name=util.get_hostname()
+            )
+        )
         future.add_done_callback(get_info_finished)
 
     # Run in thread pool
     def update_remote_machine_avatar(self):
         logging.debug("Remote RPC: calling GetRemoteMachineAvatar on '%s'" % self.display_hostname)
-        iterator = self.stub.GetRemoteMachineAvatar(warp_pb2.LookupName(id=self.local_ident,
-                                                                        readable_name=util.get_hostname()))
+        iterator = self.stub.GetRemoteMachineAvatar(
+            warp_pb2.LookupName(
+                id=self.local_ident,
+                readable_name=util.get_hostname()
+            )
+        )
         loader = None
         try:
             for info in iterator:
@@ -405,17 +413,22 @@ class RemoteMachine(GObject.Object):
 
         logging.debug("Remote RPC: calling TransferOpRequest on '%s'" % (self.display_hostname))
 
-        transfer_op = warp_pb2.TransferOpRequest(info=warp_pb2.OpInfo(ident=op.sender,
-                                                                      timestamp=op.start_time,
-                                                                      readable_name=util.get_hostname(),
-                                                                      use_compression=prefs.use_compression()),
-                                                 sender_name=op.sender_name,
-                                                 receiver=self.ident,
-                                                 size=op.total_size,
-                                                 count=op.total_count,
-                                                 name_if_single=op.description,
-                                                 mime_if_single=op.mime_if_single,
-                                                 top_dir_basenames=op.top_dir_basenames)
+        transfer_op = warp_pb2.TransferOpRequest(
+            info=warp_pb2.OpInfo(
+                ident=op.sender,
+                timestamp=op.start_time,
+                readable_name=util.get_hostname(),
+                use_compression=prefs.use_compression(),
+            ),
+            sender_name=op.sender_name,
+            receiver=self.ident,
+            size=op.total_size,
+            count=op.total_count,
+            name_if_single=op.description,
+            mime_if_single=op.mime_if_single,
+            top_dir_basenames=op.top_dir_basenames
+        )
+
         self.stub.ProcessTransferOpRequest(transfer_op)
 
     # Run in thread pool
@@ -426,9 +439,13 @@ class RemoteMachine(GObject.Object):
             name = op.sender
         else:
             name = self.local_ident
-        self.stub.CancelTransferOpRequest(warp_pb2.OpInfo(timestamp=op.start_time,
-                                                          ident=name,
-                                                          readable_name=util.get_hostname()))
+        self.stub.CancelTransferOpRequest(
+            warp_pb2.OpInfo(
+                timestamp=op.start_time,
+                ident=name,
+                readable_name=util.get_hostname()
+            )
+        )
         op.set_status(OpStatus.CANCELLED_PERMISSION_BY_SENDER if by_sender else OpStatus.CANCELLED_PERMISSION_BY_RECEIVER)
 
     # Run in thread pool
@@ -544,18 +561,22 @@ class RemoteMachine(GObject.Object):
         if not lost_connection:
             # We don't need to send this if it's a connection loss, the other end will handle
             # its own cleanup.
-            opinfo = warp_pb2.OpInfo(timestamp=op.start_time,
-                                     ident=name,
-                                     readable_name=util.get_hostname())
+            opinfo = warp_pb2.OpInfo(
+                timestamp=op.start_time,
+                ident=name,
+                readable_name=util.get_hostname()
+            )
             self.stub.StopTransfer(warp_pb2.StopInfo(info=opinfo, error=op.error_msg != ""))
 
     # Op handling (run in thread pool)
     def send_files(self, uri_list):
         def _send_files(uri_list):
-            op = SendOp(self.local_ident,
-                        self.ident,
-                        self.display_name,
-                        uri_list)
+            op = SendOp(
+                self.local_ident,
+                self.ident,
+                self.display_name,
+                uri_list
+            )
             self.add_op(op)
             op.prepare_send_info()
 
