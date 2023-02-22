@@ -13,7 +13,7 @@ i18n.merge_file(
     ),
     output: '@0@.desktop'.format(desktop_id),
     type: 'desktop',
-    po_dir: join_paths(meson.source_root(), 'po'),
+    po_dir: join_paths(meson_source_root, 'po'),
     install: true,
     install_dir: join_paths(get_option('datadir'), 'applications'),
 )
@@ -38,7 +38,7 @@ if include_firewall_mod
         ),
         output: 'org.x.warpinator.policy',
         type: 'xml',
-        po_dir: join_paths(meson.source_root(), 'po'),
+        po_dir: join_paths(meson_source_root, 'po'),
         install_dir: join_paths(get_option('datadir'), 'polkit-1', 'actions'),
         install: true,
     )
@@ -59,7 +59,7 @@ appdata = i18n.merge_file(
     ),
     output: '@0@.appdata.xml'.format(desktop_id),
     type: 'xml',
-    po_dir: join_paths(meson.source_root(), 'po'),
+    po_dir: join_paths(meson_source_root, 'po'),
     install_dir: join_paths(get_option('datadir'), 'metainfo'),
     install: true,
 )

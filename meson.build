@@ -10,6 +10,8 @@ install_datadir = join_paths(get_option('prefix'), get_option('datadir'), 'warpi
 install_libdir = join_paths(get_option('prefix'), get_option('libexecdir'), 'warpinator')
 install_bindir = join_paths(get_option('prefix'), get_option('bindir'))
 
+meson_source_root = meson.current_source_dir()
+
 include_firewall_mod = get_option('include-firewall-mod')
 bundle_zeroconf = get_option('bundle-zeroconf')
 
@@ -32,7 +34,7 @@ message('\n'.join(['',
 '    @0@-@1@'.format(meson.project_name(), meson.project_version()),
 '',
 '    prefix:                 @0@'.format(get_option('prefix')),
-'    source code location:   @0@'.format(meson.source_root()),
+'    source code location:   @0@'.format(meson_source_root),
 '',
 '    building for flatpak:   @0@'.format(get_option('flatpak-build')),
 '    including ufw script:   @0@'.format(include_firewall_mod),
