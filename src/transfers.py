@@ -168,7 +168,6 @@ class FileReceiver(GObject.Object):
     def __init__(self, op):
         super(FileReceiver, self).__init__()
         self.save_path = prefs.get_save_path()
-        self.save_path_obj = Path(self.save_path).resolve()
         self.op = op
         self.preserve_perms = prefs.preserve_permissions() and util.save_folder_is_native_fs()
         self.preserve_timestamp = prefs.preserve_timestamp() and util.save_folder_is_native_fs()
@@ -181,28 +180,47 @@ class FileReceiver(GObject.Object):
         self.current_mtime = 0
         self.current_mtime_usec = 0
 
-
-        for name in op.top_dir_basenames:
-            try:
-                path = os.path.join(self.save_path, name)
-                if os.path.isdir(path): # file not found is ok
-                    shutil.rmtree(path)
-                else:
-                    os.remove(path)
-            except FileNotFoundError:
-                pass
-            except Exception as e:
-                logging.warning("Problem removing existing files.  Transfer may not succeed: %s" % e)
-
         # We write files top-down.  If we're preserving permissions and we receive
         # a folder in some hierarchy that is not writable, we won't be able to create
         # anything inside it.
         self.folder_permission_change_list = []
 
-    def receive_data(self, s):
-        save_path = prefs.get_save_path()
+    def clean_existing_files(self):
+        logging.debug("Removing any existing files matching the pending transfer")
+        for name in self.op.top_dir_basenames:
+            path = Path(os.path.join(self.save_path, name))
+            self.rm_any(path)
 
-        path = os.path.join(save_path, s.relative_path)
+    def clean_current_top_dir_file(self):
+        if self.current_path is not None:
+            current = Path(self.current_path)
+            save = Path(self.save_path)
+
+            try:
+                relative = current.relative_to(save)
+                util.test_resolved_path_safety(relative.as_posix())
+            except (ValueError, ReceiveError) as e:
+                logging.critical("Partial file or directory from aborted transfer is invalid: %s" % str(e))
+                return
+
+            abs_top_dir = save.joinpath(relative.parts[0])
+            logging.debug("Removing partial file or directory: %s" % abs_top_dir)
+
+            self.rm_any(abs_top_dir)
+
+    def rm_any(self, path):
+        try:
+            try:
+                os.remove(path)
+            except IsADirectoryError:
+                shutil.rmtree(path)
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            logging.warning("Problem removing existing files: %s" % e)
+
+    def receive_data(self, s):
+        path = os.path.join(self.save_path, s.relative_path)
         if path != self.current_path:
             self.close_current_file()
             self.current_path = path
@@ -210,19 +228,13 @@ class FileReceiver(GObject.Object):
             self.current_type = s.file_type
             self.current_mtime = s.time.mtime
             self.current_mtime_usec = s.time.mtime_usec
-        if self.remaining_files == 0:
-            raise Exception(_("File count exceeds original request size"))
+            if not s.relative_path.startswith(tuple(self.op.top_dir_basenames)):
+                raise ReceiveError("File path is not descended from a valid toplevel directory: %s" % s.relative_path)
             if self.op.remaining_count == 0:
                 raise ReceiveError("File count exceeds original request size")
 
         if not self.current_gfile:
-            # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)
-            test_path = Path(path).resolve()
-            try:
-                test_path.relative_to(self.save_path_obj)
-            except ValueError:
-                raise ReceiveError(_("Resolved path is not valid: %s -> %s") % (path, str(test_path)), fatal=True)
-
+            util.test_resolved_path_safety(s.relative_path)
             self.current_gfile = Gio.File.new_for_path(path)
 
         if s.file_type == FileType.DIRECTORY:
