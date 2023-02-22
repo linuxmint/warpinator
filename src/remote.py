@@ -474,6 +474,10 @@ class RemoteMachine(GObject.Object):
         def report_receive_error(error):
             op.file_iterator = None
 
+            # Get rid of any toplevel file/folder if the transfer stops prematurely,
+            # so it or its children 
+            receiver.clean_current_top_dir_file()
+
             if error is None:
                 return
 
@@ -493,6 +497,8 @@ class RemoteMachine(GObject.Object):
             op.stop_transfer()
 
         try:
+            receiver.clean_existing_files()
+
             for data in op.file_iterator:
                 receiver.receive_data(data)
 
@@ -596,6 +602,13 @@ class RemoteMachine(GObject.Object):
         op.connect("active", lambda op: set_busy())
 
         self.emit_ops_changed()
+
+        # For now, only bad base filenames cause this (failed util.test_resolved_path_safety())
+        # We let it get this far so the UI has something to show the user.
+        if op.status == OpStatus.FAILED_UNRECOVERABLE:
+            op.decline_transfer_request()
+            return
+
         self.check_for_autostart(op)
 
     @util._idle

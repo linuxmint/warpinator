@@ -330,6 +330,29 @@ def open_save_folder(filename=None):
 def verify_save_folder(transient_for=None):
     return os.access(save_path, os.R_OK | os.W_OK)
 
+def test_resolved_path_safety(relative_path):
+    # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)
+    base = Path(prefs.get_save_path())
+    unresolved = base.joinpath(relative_path)
+
+    try:
+        resolved = unresolved.resolve()
+
+        # Not outside the base folder (raises ValueError)
+        relative = resolved.relative_to(base)
+
+        # Not the base folder (../Warpinator.. )
+        try:
+            if resolved.samefile(base):
+                raise ValueError()
+        except OSError:
+            # resolved doesn't exist, so it can't be the same
+            pass
+    except RuntimeError as e:
+        raise ReceiveError("Could not resolve path '%s': %s" % str(e))
+    except ValueError:
+        raise ReceiveError("Resolved path is not valid child of the save folder: %s -> %s" % (unresolved, str(resolved)), fatal=True)
+
 def save_folder_is_native_fs():
     file = Gio.File.new_for_path(prefs.get_save_path())
     return file.is_native()
