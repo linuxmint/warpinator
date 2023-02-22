@@ -198,7 +198,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             try:
                 machine = self.remote_machines[ident]
                 machine.has_zc_presence = True
-                logging.debug(">>> Discovery: existing remote: %s (%s:%d)"
+                logging.info(">>> Discovery: existing remote: %s (%s:%d)"
                                   % (machine.display_hostname, remote_ip_info.ip4_address, info.port))
 
                 # If the remote truly is the same one (our service info just dropped out
@@ -244,7 +244,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     if not found:
                         break
 
-                logging.debug(">>> Discovery: new remote: %s (%s:%d)"
+                logging.info(">>> Discovery: new remote: %s (%s:%d)"
                                   % (display_hostname, remote_ip_info.ip4_address, info.port))
 
                 machine = remote.RemoteMachine(ident,
@@ -257,7 +257,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
                 # This blocks the zeroconf thread. Registration will timeout
                 if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
-                    logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
+                    logging.debug("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
                                      % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
                     return
 

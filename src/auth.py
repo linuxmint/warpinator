@@ -183,7 +183,7 @@ class AuthManager(GObject.Object):
         try:
             cert = decoder.decrypt(decoded)
         except nacl.exceptions.CryptoError as e:
-            print(e)
+            logging.debug("Decryption failed for remote '%s': %s" % (hostname, str(e)))
             cert = None
 
         if cert:

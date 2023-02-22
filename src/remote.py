@@ -242,12 +242,12 @@ class RemoteMachine(GObject.Object):
                     self.rpc_call(self.update_remote_machine_avatar)
 
                     # Online loop
+                    logging.info("Connected to %s" % self.display_hostname)
                     while not self.channel_keepalive.is_set():
                         self.channel_keepalive.wait(.5)
                     ##
 
                 except Exception as e:
-                    print("exception")
                     self.set_remote_status(RemoteStatus.UNREACHABLE)
 
                     if isinstance(e, grpc.FutureTimeoutError):
