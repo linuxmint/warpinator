@@ -63,7 +63,7 @@ class NewOpUserNotification():
                 notification.set_body(body)
                 notification.set_icon(Gio.ThemedIcon(name="org.x.Warpinator-symbolic"))
 
-        Gio.Application.get_default().send_notification(self.op.sender, notification)
+            Gio.Application.get_default().send_notification(self.op.sender, notification)
 
     def _notification_response(self, action, variant, op):
         response = variant.unpack()
