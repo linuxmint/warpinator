@@ -794,6 +794,10 @@ else:
 recent_manager = Gtk.RecentManager()
 
 def add_to_recents_if_single_selection(uri_list):
+    if not os.access(GLib.get_user_data_dir(), os.W_OK):
+        logging.debug("Recents storage not writable")
+        return
+
     if len(uri_list) == 1:
         try:
             recent_manager.add_item(uri_list[0])
