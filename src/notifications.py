@@ -5,6 +5,7 @@ import gettext
 from gi.repository import Gio
 
 import config
+import misc
 import util
 from util import OpStatus
 import prefs
@@ -17,7 +18,7 @@ class NewOpUserNotification():
 
         self.send_notification()
 
-    @util._idle
+    @misc._idle
     def send_notification(self):
         if prefs.get_show_notifications():
             notification = Gio.Notification.new(_("New incoming files"))
@@ -86,7 +87,7 @@ class TransferCompleteNotification():
 
         self.send_notification()
 
-    @util._idle
+    @misc._idle
     def send_notification(self):
         if prefs.get_show_notifications():
             notification = Gio.Notification.new(_("Transfer complete"))
@@ -130,7 +131,7 @@ class TransferFailedNotification():
 
         self.send_notification()
 
-    @util._idle
+    @misc._idle
     def send_notification(self):
         if prefs.get_show_notifications():
             notification = Gio.Notification.new(_("Transfer failed"))
@@ -164,7 +165,7 @@ class TransferStoppedNotification():
 
         self.send_notification()
 
-    @util._idle
+    @misc._idle
     def send_notification(self):
         if prefs.get_show_notifications():
             notification = Gio.Notification.new(_("Transfer cancelled"))

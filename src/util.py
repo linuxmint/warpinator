@@ -272,24 +272,6 @@ def create_file_and_folder_picker(dialog_parent=None):
     chooser.connect("response", update_last_location)
     return chooser
 
-# Used as a decorator to run things in the background
-def _async(func):
-    def wrapper(*args, **kwargs):
-        thread = threading.Thread(target=func, args=args, kwargs=kwargs)
-        thread.daemon = True
-        thread.start()
-        return thread
-    return wrapper
-
-# Used as a decorator to run things in the main loop, from another thread
-def _idle(func):
-    def wrapper(*args, **kwargs):
-        GLib.idle_add(func, *args, **kwargs)
-    return wrapper
-
-def print_stack():
-    traceback.print_stack()
-
 def open_save_folder(filename=None):
     bus = Gio.Application.get_default().get_dbus_connection()
 
@@ -588,10 +570,6 @@ def files_exist(base_names):
             return True
 
     return False
-
-def check_ml(fid):
-    on_ml = threading.current_thread() == threading.main_thread()
-    print("%s on mainloop: " % fid, on_ml)
 
 def get_hostname():
     return GLib.get_host_name()

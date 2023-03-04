@@ -22,6 +22,7 @@ import remote
 import remote_registration
 import prefs
 import util
+import misc
 import transfers
 from ops import ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
@@ -369,7 +370,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def add_receive_op_to_remote_machine(self, op):
         self.remote_machines[op.sender].add_op(op)
 
-    @util._idle
+    @misc._idle
     def remote_ops_changed(self, remote_machine):
         self.emit("remote-machine-ops-changed", remote_machine.ident)
 
@@ -396,7 +397,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 if op.status == OpStatus.TRANSFERRING:
                     op.stop_transfer()
 
-    @util._idle
+    @misc._idle
     def idle_emit(self, signal, *callback_data):
         self.emit(signal, *callback_data)
 

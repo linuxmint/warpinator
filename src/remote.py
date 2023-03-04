@@ -14,6 +14,7 @@ import warp_pb2_grpc
 import interceptors
 import prefs
 import util
+import misc
 import transfers
 import auth
 from ops import SendOp, ReceiveOp
@@ -396,7 +397,7 @@ class RemoteMachine(GObject.Object):
 
         self.get_avatar_surface(loader)
 
-    @util._idle
+    @misc._idle
     def get_avatar_surface(self, loader=None):
         # This needs to be on the main loop, or else we get an x error
         if loader:
@@ -583,7 +584,7 @@ class RemoteMachine(GObject.Object):
         util.add_to_recents_if_single_selection(uri_list)
         self.rpc_call(_send_files, uri_list)
 
-    @util._idle
+    @misc._idle
     def add_op(self, op):
         if op not in self.transfer_ops:
             self.transfer_ops.append(op)
@@ -611,13 +612,13 @@ class RemoteMachine(GObject.Object):
 
         self.check_for_autostart(op)
 
-    @util._idle
+    @misc._idle
     def notify_remote_machine_of_new_op(self, op):
         if op.status == OpStatus.WAITING_PERMISSION:
             if op.direction == TransferDirection.TO_REMOTE_MACHINE:
                 self.rpc_call(self.send_transfer_op_request, op)
 
-    @util._idle
+    @misc._idle
     def check_for_autostart(self, op):
         if op.status == OpStatus.WAITING_PERMISSION:
             if isinstance(op, ReceiveOp) and \
@@ -630,7 +631,7 @@ class RemoteMachine(GObject.Object):
         self.transfer_ops.remove(op)
         self.emit_ops_changed()
 
-    @util._idle
+    @misc._idle
     def emit_ops_changed(self, op=None):
         self.emit("ops-changed")
 
@@ -645,7 +646,7 @@ class RemoteMachine(GObject.Object):
                     op.error_msg = _("Connection has been lost")
                     op.set_status(OpStatus.FAILED_UNRECOVERABLE)
 
-    @util._idle
+    @misc._idle
     def op_command_issued(self, op, command):
         # send
         if command == OpCommand.CANCEL_PERMISSION_BY_SENDER:
@@ -667,7 +668,7 @@ class RemoteMachine(GObject.Object):
         elif command == OpCommand.STOP_TRANSFER_BY_RECEIVER:
             self.rpc_call(self.stop_transfer_op, op, by_sender=False)
 
-    @util._idle
+    @misc._idle
     def op_focus(self, op):
         self.emit("focus-remote")
 
