@@ -26,6 +26,7 @@ import prefs
 import util
 import server
 import auth
+import misc
 import networkmonitor
 from ops import SendOp, ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
@@ -1341,7 +1342,7 @@ class WarpApplication(Gtk.Application):
     def exit_warp(self):
         GLib.idle_add(self.quit)
 
-    @util._async
+    @misc._async
     def setup_kill_as_a_last_resort(self):
         # There are plenty of opportunities for our threads to hang due to network
         # hangs and grpc errors.  Give 10 seconds and then just end it regardless.

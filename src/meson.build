@@ -24,6 +24,7 @@ libexec_py = [
   'auth.py',
   'launcher.py',
   'interceptors.py',
+  'misc.py',
   'networkmonitor.py',
   'notifications.py',
   'ops.py',

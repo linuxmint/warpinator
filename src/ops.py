@@ -10,6 +10,7 @@ import grpc
 
 import transfers
 import prefs
+import misc
 import util
 import notifications
 from util import OpStatus, OpCommand, TransferDirection, ReceiveError
@@ -89,11 +90,11 @@ class CommonOp(GObject.Object):
         else:
             self.error_msg = str(e)
 
-    @util._idle
+    @misc._idle
     def emit_initial_setup_complete(self):
         self.emit("initial-setup-complete")
 
-    @util._idle
+    @misc._idle
     def emit_status_changed(self):
         self.emit("status-changed")
 

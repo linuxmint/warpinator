@@ -12,6 +12,7 @@ from gi.repository import GLib, Gio, GObject
 import util
 from util import FileType, ReceiveError
 import prefs
+import misc
 import warp_pb2
 
 _ = gettext.gettext
@@ -421,7 +422,7 @@ class OpProgressTracker():
         self.transfer_start_time = GLib.get_monotonic_time()
         self.last_update_time = self.transfer_start_time
 
-    @util._idle
+    @misc._idle
     def update_progress(self, size_read):
         self.total_transferred += size_read
 

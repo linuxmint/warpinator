@@ -4,6 +4,7 @@ from gi.repository import GLib, Gio
 import remote
 import ops
 import util
+import misc
 import transfers
 from util import RemoteStatus, OpStatus, FileType
 
@@ -145,7 +146,7 @@ def add_ops(machine):
             idle_set_op_status((op, status))
 
 
-@util._idle
+@misc._idle
 def idle_set_op_status(op_and_status):
     op, status = op_and_status
     op.set_status(status)

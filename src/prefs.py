@@ -17,6 +17,7 @@ from gi.repository import Gtk, Gdk, Gio, GLib
 import config
 import auth
 import util
+import misc
 import networkmonitor
 
 _ = gettext.gettext
@@ -544,7 +545,7 @@ can make it simpler to add firewall exceptions if necessary."""))
 
         self.settings.apply()
 
-    @util._async
+    @misc._async
     def run_port_script(self, port, auth_port):
         command = os.path.join(config.libexecdir, "firewall", "ufw-modify")
         subprocess.run(["pkexec", command, str(port), str(auth_port)])
