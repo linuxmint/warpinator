@@ -191,3 +191,36 @@ class TransferStoppedNotification():
 
         app = Gio.Application.get_default()
         app.lookup_action("notification-response").disconnect_by_func(self._notification_response)
+
+class WarpinatorSendNotification():
+    def __init__(self, op):
+        self.op = op
+
+        self.send_notification()
+
+    @misc._idle
+    def send_notification(self):
+        if prefs.get_show_notifications():
+            notification = Gio.Notification.new(_("Sending files"))
+
+            if self.op.total_count > 1:
+                body = (_("Sending %d files to %s") % (self.op.total_count, self.op.receiver_name))
+            else:
+                body = (_("Sending '%s' to %s") % (self.op.top_dir_basenames[0], self.op.sender_name))
+
+            notification.set_body(body)
+            notification.set_icon(Gio.ThemedIcon(name="dialog-info-symbolic"))
+            notification.set_default_action("app.notification-response::focus")
+
+            notification.set_priority(Gio.NotificationPriority.NORMAL)
+
+            app = Gio.Application.get_default()
+            app.lookup_action("notification-response").connect("activate", self._notification_response, self.op)
+
+            app.get_default().send_notification(self.op.sender, notification)
+
+    def _notification_response(self, action, variant, op):
+        op.focus()
+
+        app = Gio.Application.get_default()
+        app.lookup_action("notification-response").disconnect_by_func(self._notification_response)

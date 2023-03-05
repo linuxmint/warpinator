@@ -110,7 +110,7 @@ class SendOp(CommonOp):
         self.receiver = receiver
         self.sender_name = GLib.get_real_name()
         self.receiver_name = receiver_name
-
+        self.dbus_op = False
         self.resolved_files = []
         self.first_missing_file = None
 
@@ -128,7 +128,7 @@ class SendOp(CommonOp):
 
         if status == OpStatus.FINISHED:
             notifications.TransferCompleteNotification(self, sender=True)
-        elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED):
+        elif status in (OpStatus.FAILED_UNRECOVERABLE, OpStatus.FAILED, OpStatus.FILE_NOT_FOUND):
             notifications.TransferFailedNotification(self, sender=True)
          # We only care if the other remote cancelled.  If we did it, we don't need a notification.
         elif status == OpStatus.STOPPED_BY_RECEIVER:
@@ -161,15 +161,23 @@ class SendOp(CommonOp):
             self.set_status(OpStatus.WAITING_PERMISSION)
         else:
             if isinstance(error, GLib.Error) and error.code == Gio.IOErrorEnum.NOT_FOUND:
-                self.status = OpStatus.FILE_NOT_FOUND
+                # self.status = OpStatus.FILE_NOT_FOUND
                 self.description = ""
                 self.error_msg = ""
-                self.first_missing_file = self.top_dir_basenames[-1]
+                try:
+                    self.first_missing_file = self.top_dir_basenames[0]
+                except IndexError:
+                    self.first_missing_file = None
                 self.gicon = Gio.ThemedIcon.new("dialog-error-symbolic")
+                self.set_status(OpStatus.FILE_NOT_FOUND)
             else:
-                self.status = OpStatus.FAILED_UNRECOVERABLE
+                # self.status = OpStatus.FAILED_UNRECOVERABLE
                 self.description = ""
                 self.set_error(error)
+                self.set_status(OpStatus.FAILED_UNRECOVERABLE)
+
+        if self.dbus_op and self.status == OpStatus.WAITING_PERMISSION:
+            notifications.WarpinatorSendNotification(self)
 
         self.emit_initial_setup_complete()
         self.emit_status_changed()

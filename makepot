@@ -8,6 +8,8 @@ xgettext --package-name=warpinator --language=Python -c --join-existing --add-co
          --output=warpinator.pot --files-from=src/gettext_files
 xgettext --package-name=warpinator --language=Desktop --join-existing \
           -k --keyword=Comment --output=warpinator.pot data/org.x.Warpinator.desktop.in.in
+xgettext --package-name=warpinator --language=Desktop --join-existing \
+         --output=warpinator.pot data/warpinator-send.nemo_action.in
 xgettext --package-name=warpinator --its=/usr/share/gettext/its/polkit.its --join-existing --add-comments \
          --output=warpinator.pot data/org.x.warpinator.policy.in.in
 xgettext --package-name=warpinator --its=/usr/share/gettext/its/metainfo.its --join-existing --add-comments \

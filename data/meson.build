@@ -63,3 +63,16 @@ appdata = i18n.merge_file(
     install_dir: join_paths(get_option('datadir'), 'metainfo'),
     install: true,
 )
+
+nemo_action = i18n.merge_file(
+    input: 'warpinator-send.nemo_action.in',
+    output: 'warpinator-send.nemo_action',
+    type: 'desktop',
+    po_dir: join_paths(meson_source_root, 'po'),
+    install_dir: join_paths(get_option('datadir'), 'nemo', 'actions'),
+    install: true,
+)
+
+install_data('warpinator-send-check',
+    install_dir: join_paths(get_option('datadir'), 'nemo', 'actions')
+)

@@ -6,5 +6,12 @@ bin_file = configure_file(
   output: 'warpinator',
   configuration: prefix_info,
 )
-
 install_data(bin_file, install_dir: get_option('bindir'))
+
+
+send_bin_file = configure_file(
+  input : 'warpinator-send.in',
+  output: 'warpinator-send',
+  configuration: prefix_info,
+)
+install_data(send_bin_file, install_dir: get_option('bindir'))

@@ -570,7 +570,7 @@ class RemoteMachine(GObject.Object):
             self.stub.StopTransfer(warp_pb2.StopInfo(info=opinfo, error=op.error_msg != ""))
 
     # Op handling (run in thread pool)
-    def send_files(self, uri_list):
+    def send_files(self, uri_list, dbus_sent=False):
         def _send_files(uri_list):
             op = SendOp(
                 self.local_ident,
@@ -578,6 +578,7 @@ class RemoteMachine(GObject.Object):
                 self.display_name,
                 uri_list
             )
+            op.dbus_op = dbus_sent
             self.add_op(op)
             op.prepare_send_info()
 

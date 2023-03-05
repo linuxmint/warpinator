@@ -22,6 +22,7 @@ config_py = configure_file(
 libexec_py = [
   config_py,
   'auth.py',
+  'dbus_service.py',
   'launcher.py',
   'interceptors.py',
   'misc.py',
