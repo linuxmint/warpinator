@@ -111,11 +111,6 @@ else:
     except KeyError:
         rundir = "/run/user/%d" % os.getuid()
 
-    try:
-        rundir_bus = os.environ["DBUS_SESSION_BUS_ADDRESS"].replace("unix:path=", "")
-    except:
-        rundir_bus = rundir + "/bus"
-
     launch_args = []
     launch_args += ["/bin/bwrap"]
     # Bind necessary system dirs
@@ -129,8 +124,7 @@ else:
     launch_args += ["--ro-bind",         rundir,                                            rundir]
     launch_args += ["--bind",            rundir + "/dconf",                                 rundir + "/dconf"]
     launch_args += ["--bind",            rundir + "/dbus-1",                                rundir + "/dbus-1"]
-    launch_args += ["--bind",            rundir + "/gvfsd",                                 rundir + "/gvfsd"]
-    launch_args += ["--bind",            rundir_bus,                                        rundir_bus]
+    launch_args += ["--bind-try",        rundir + "/gvfsd",                                 rundir + "/gvfsd"]
 
     # Use clean tmp folders
     launch_args += ["--dir",             "/tmp"]
