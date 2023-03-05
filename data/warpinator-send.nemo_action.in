@@ -1,0 +1,9 @@
+[Nemo Action]
+Active=true
+Name=Send with Warpinator
+Comment=Send a file to someone using Warpinator
+Exec=warpinator-send --xid %X %U
+Selection=notnone
+Extensions=any
+Icon-Name=org.x.Warpinator-symbolic
+Conditions=exec <warpinator-send-check>;

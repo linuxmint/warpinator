@@ -24,6 +24,7 @@ except:
 
 import prefs
 import util
+import dbus_service
 import server
 import auth
 import misc
@@ -1136,6 +1137,7 @@ class WarpApplication(Gtk.Application):
         self.app_restarting = False
         self.netmon = None
         self.server = None
+        self.dbus_service = dbus_service.WarpinatorDBusService()
 
         # Set if the network state or somethign else changes while the server is starting,
         # restart it as soon as possible.
@@ -1144,6 +1146,35 @@ class WarpApplication(Gtk.Application):
         self.current_port = None
         self.current_auth_port = None
         self.current_ip_info = None
+
+    def do_dbus_register(self, connection, path):
+        self.dbus_service.register(connection, path)
+        self.dbus_service.connect("handle-get-live-remotes", self.handle_dbus_get_live_remotes)
+        self.dbus_service.connect("handle-send-files", self.handle_dbus_send_files)
+
+        return Gio.Application.do_dbus_register(self, connection, path)
+
+    def do_dbus_unregister(self, connection, path):
+        self.dbus_service.unregister(connection, path)
+        Gio.Application.do_dbus_unregister(self, connection, path)
+
+    def handle_dbus_get_live_remotes(self, service):
+        if self.server is None:
+            return None
+
+        all_remotes = self.server.list_remote_machines()
+        online_remotes = [remote for remote in all_remotes if remote.status == RemoteStatus.ONLINE]
+        return online_remotes
+
+    def handle_dbus_send_files(self, service, remote_ident, files):
+        if self.server is None:
+            return
+
+        remotes = self.server.list_remote_machines()
+        for remote in remotes:
+            if remote.ident == remote_ident:
+                remote.send_files(files, dbus_sent=True)
+                break
 
     def do_startup(self):
         Gtk.Application.do_startup(self)

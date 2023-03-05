@@ -1,0 +1,247 @@
+#!/usr/bin/python3
+
+import signal
+import argparse
+import gettext
+import setproctitle
+import json
+import os
+import sys
+import locale
+import functools
+
+import gi
+gi.require_version('Gtk', '3.0')
+
+from gi.repository import GLib, Gio, Gtk, Gdk, GdkX11
+
+src = os.path.join("@prefix@", "libexec/warpinator/")
+sys.path.insert(0, src)
+
+import config
+import dbus_service
+import util
+
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+# i18n
+locale.bindtextdomain(config.PACKAGE, config.localedir)
+gettext.bindtextdomain(config.PACKAGE, config.localedir)
+gettext.textdomain(config.PACKAGE)
+_ = gettext.gettext
+
+setproctitle.setproctitle("warpinator-send")
+
+class WarpinatorSender:
+    """
+    This is a standalone executable that provides a simple way
+    of controlling the screensaver via its dbus interface.
+    """
+    def __init__(self):
+        self.proxy = None
+        self.ecode = 0
+
+        parser = argparse.ArgumentParser(description='warpinator-send')
+        parser.add_argument("--list-remotes", dest="list_remotes", action='store_true',
+                            help="List online remotes as JSON (any other arguments are ignored)")
+        parser.add_argument('--remote-ident', dest="ident", action='store', default="",
+                            help="Destination remote's UUID/identity, as retrieved by --list-remotes. If omitted, you will be prompted for a destination.")
+        parser.add_argument("--xid", dest="parent_window", action='store',
+                            help="Window ID of the calling application (optional)")
+        parser.add_argument("uris", type=str, nargs="*",
+                            help="List of file URIs to be sent (required unless '--list-remotes' is called).")
+
+        args = parser.parse_args()
+
+        if not args.list_remotes and len(args.uris) == 0:
+            print("Must have at least 1 uri if --get-live-remotes is not set", file=sys.stderr)
+            parser.print_help()
+            exit(1)
+
+        self.ident = args.ident
+        self.files = args.uris
+        self.list_remotes = args.list_remotes
+
+        if args.parent_window:
+            self.parent_window = int(args.parent_window, 0)  # maybe hex, detect the base
+        else:
+            self.parent_window = None
+
+        self.popup = None
+
+        Gio.DBusProxy.new_for_bus(
+            Gio.BusType.SESSION,
+            Gio.DBusProxyFlags.DO_NOT_AUTO_START,
+            dbus_service.interface_node_info.interfaces[0],
+            "org.x.Warpinator",
+            "/org/x/Warpinator",
+            "org.x.Warpinator",
+            None,
+            self._on_proxy_ready
+        )
+
+    def _on_proxy_ready(self, object, result, data=None):
+        try:
+            self.proxy = Gio.DBusProxy.new_for_bus_finish(result);
+        except GLib.Error as e:
+            print("Can't create warpinator proxy (%d): %s" % (e.code, e.message), file=sys.stderr)
+            self.ecode = 1
+            Gtk.main_quit()
+
+        self.handle_command()
+
+    def handle_command(self):
+        if self.list_remotes:
+            self.proxy.call(
+                "ListRemotes",
+                None,
+                Gio.DBusCallFlags.NO_AUTO_START,
+                -1,
+                None,
+                self.list_remotes_command_finished
+            )
+        elif self.ident != "":
+            self.send_files_to(self.ident)
+        else:
+            self.proxy.call(
+                "ListRemotes",
+                None,
+                Gio.DBusCallFlags.NO_AUTO_START,
+                -1,
+                None,
+                self.list_remotes_for_send_finished
+            )
+
+    def send_files_command_finished(self, source, res, data=None):
+        try:
+            var = source.call_finish(res)
+        except GLib.Error as e:
+            print("Could not send files: %s" % str(e), file=sys.stderr)
+            self.ecode = 1
+
+        Gtk.main_quit()
+
+    def list_remotes_command_finished(self, source, res, data=None):
+        try:
+            var = source.call_finish(res)
+            remote_list = var[0]
+
+            dump = json.dumps(remote_list, indent=2)
+            print(dump, file=sys.stdout)
+        except GLib.Error as e:
+            print("Could not list remotes: %s" % str(e), file=sys.stderr)
+            self.ecode = 1
+
+        Gtk.main_quit()
+
+    def list_remotes_for_send_finished(self, source, res, data=None):
+        try:
+            var = source.call_finish(res)
+            remote_list = var[0]
+        except GLib.Error as e:
+            print("Could not list remotes to ask user: %s" % str(e), file=sys.stderr)
+            self.ecode = 1
+            Gtk.main_quit()
+            return
+
+        popup = Gtk.Window(type_hint=Gdk.WindowTypeHint.POPUP_MENU,
+                           destroy_with_parent=True,
+
+                           resizable=False)
+
+        if self.parent_window is None:
+            popup.set_keep_above(True)
+
+        hb = Gtk.HeaderBar(title="Warpinator",
+                           subtitle=_("Choose a recipient..."),
+                           show_close_button=True)
+        popup.set_titlebar(hb)
+
+        seat = Gdk.Display.get_default().get_default_seat()
+        pointer = seat.get_pointer()
+        screen, x, y = pointer.get_position()
+
+        popup.move(x + 5, y + 5)
+
+        remote_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, margin=4)
+        popup.add(remote_box)
+
+        button_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, homogeneous=True)
+        remote_box.pack_start(button_box, True, True, 0)
+
+        class RemoteInfo:
+            def __init__(self, remote):
+                self.uuid = remote["uuid"]
+                self.display_name = remote["display-name"]
+                self.username = remote["username"]
+                self.hostname = remote["hostname"]
+                self.favorite = remote["favorite"]
+                self.recent_time = remote["recent-time"]
+
+        infos = []
+        for remote in remote_list:
+            infos.append(RemoteInfo(remote))
+
+        sorted_remotes = sorted(infos, key=functools.cmp_to_key(util.sort_remote_machines))
+
+        for info in sorted_remotes:
+            label = "<b>%s</b>  %s@%s" % (info.display_name, info.username, info.hostname)
+
+            button = Gtk.Button(always_show_image=True, image_position=Gtk.PositionType.RIGHT)
+
+            if info.favorite:
+                image = Gtk.Image.new_from_icon_name("starred-symbolic", Gtk.IconSize.BUTTON)
+            elif info.recent_time > 0:
+                image = Gtk.Image.new_from_icon_name("document-open-recent-symbolic", Gtk.IconSize.BUTTON)
+            else:
+                image = None
+
+            box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+            box.pack_start(Gtk.Label(label=label, use_markup=True), True, True, 6)
+            if image is not None:
+                box.pack_end(image, False, False, 6)
+            box.show_all()
+
+            button.set_image(box)
+            button_box.add(button)
+            button.connect("clicked", self.remote_selected, info.uuid)
+
+        self.popup = popup
+        self.popup.connect("delete-event", self.on_delete_popup)
+        self.popup.connect("realize", self.on_popup_realize)
+        self.popup.show_all()
+        self.popup.present()
+
+    def on_popup_realize(self, window):
+        if self.parent_window:
+            parent = GdkX11.X11Window.foreign_new_for_display(Gdk.Display.get_default(), self.parent_window)
+            if parent is not None:
+                window.get_window().set_transient_for(parent)
+
+    def on_delete_popup(self, window, event, data=None):
+        self.ecode = 1
+        Gtk.main_quit()
+
+        return Gdk.EVENT_PROPAGATE
+
+    def remote_selected(self, button, ident):
+        self.popup.destroy()
+        self.send_files_to(ident)
+
+    def send_files_to(self, ident):
+        files_var = GLib.Variant.new_array(None, [GLib.Variant.new_string(uri) for uri in self.files])
+        full_var = GLib.Variant("(sas)", [ident, files_var])
+
+        self.proxy.call(
+            "SendFiles",
+            full_var,
+            Gio.DBusCallFlags.NO_AUTO_START,
+            -1,
+            None,
+            self.send_files_command_finished
+        )
+
+if __name__ == "__main__":
+    sender = WarpinatorSender()
+    Gtk.main()
+    exit(sender.ecode)
