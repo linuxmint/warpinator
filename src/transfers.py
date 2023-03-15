@@ -392,7 +392,7 @@ def gather_file_info(op):
                 info = file.query_info(infos, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None)
                 basename = file.get_basename()
                 if len(uri_list) == 1:
-                    op.mime_if_single = info.get_content_type()
+                    op.mime_if_single = info.get_attribute_string(Gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)
 
                 if info and info.get_file_type() == FileType.DIRECTORY:
                     top_dir = file.get_parent().get_uri()
