@@ -6,3 +6,7 @@
 override_dh_auto_configure:
 	dh_auto_configure -- \
 	    -Dbundle-grpc-with-py310=true
+
+override_dh_python3:
+	dh_python3 usr/libexec/warpinator
+

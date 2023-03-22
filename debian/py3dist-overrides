@@ -1,0 +1,4 @@
+# Ignore Requires-Dist in our bundled grpc
+
+futures python3-futures
+enum34 python3-enum34
