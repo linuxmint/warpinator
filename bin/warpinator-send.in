@@ -15,7 +15,7 @@ gi.require_version('Gtk', '3.0')
 
 from gi.repository import GLib, Gio, Gtk, Gdk, GdkX11
 
-src = os.path.join("@prefix@", "libexec/warpinator/")
+src = "@install_libdir@"
 sys.path.insert(0, src)
 
 import config

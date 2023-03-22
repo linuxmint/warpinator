@@ -73,6 +73,8 @@ nemo_action = i18n.merge_file(
     install: true,
 )
 
-install_data('warpinator-send-check',
-    install_dir: join_paths(get_option('datadir'), 'nemo', 'actions')
+install_data(
+    'warpinator-send-check',
+    install_dir: join_paths(get_option('datadir'), 'nemo', 'actions'),
+    install_mode: 'rwxr-xr-x'
 )

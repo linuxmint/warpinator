@@ -18,7 +18,7 @@ from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 import prefs
 import config
 
-if config.using_landlock:
+if config.sandbox_mode == "landlock":
     import landlock
 
 _ = gettext.gettext
@@ -36,7 +36,7 @@ global_rpc_threadpool = None
 def initialize_rpc_threadpool():
     global global_rpc_threadpool
 
-    if config.using_landlock:
+    if config.sandbox_mode == "landlock":
         import landlock
         global_rpc_threadpool = NewThreadExecutor()
     else:

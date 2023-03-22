@@ -5,3 +5,4 @@ debian/.debhelper/generated/warpinator/installed-by-dh_installdocs
 debian/debhelper-build-stamp
 debian/files
 debian/warpinator.substvars
+debian/*.debhelper

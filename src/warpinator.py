@@ -17,10 +17,8 @@ from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 import config
 try:
     config.sandbox_mode = os.environ["WARPINATOR_SANDBOX_MODE"]
-    config.using_landlock = config.sandbox_mode == "landlock"
 except:
     config.sandbox_mode = "legacy"
-    config.using_landlock = False
 
 import prefs
 import util
@@ -530,12 +528,12 @@ class WarpWindow(GObject.Object):
         # user's desktop and flatpaks.
         if (not config.FLATPAK_BUILD) and HAVE_XAPP_FAVORITES:
             if XApp.Favorites.get_default().get_n_favorites() > 0:
-                item = Gtk.MenuItem(_("Favorites"))
+                item = Gtk.MenuItem(label=_("Favorites"))
                 main_menu.add(item)
                 favorites = XApp.Favorites.get_default().create_menu(None, self.favorite_selected)
                 item.set_submenu(favorites)
 
-        item = Gtk.MenuItem(_("Recents"))
+        item = Gtk.MenuItem(label=_("Recents"))
         main_menu.add(item)
         self.recent_menu = util.get_recent_chooser_menu()
         self.recent_menu.connect("item-activated", self.recent_item_selected)
@@ -1342,7 +1340,7 @@ class WarpApplication(Gtk.Application):
         if self.netmon:
             self.netmon.stop()
 
-        util.free_space_monitor.stop()
+        util.free_space_monitor.shutdown()
         self.stop_save_folder_check()
 
         if self.server:
@@ -1361,13 +1359,6 @@ class WarpApplication(Gtk.Application):
 
         logging.debug("Shutdown complete")
 
-        if self.app_restarting:
-            os.environ["RESTART_WARPINATOR"] = "1"
-        else:
-            try:
-                del os.environ["RESTART_WARPINATOR"]
-            except KeyError:
-                pass
         Gio.Application.do_shutdown(self)
 
     def exit_warp(self):
@@ -1391,7 +1382,7 @@ class WarpApplication(Gtk.Application):
         self.new_server()
 
     def on_receiving_folder_changed(self, monitor):
-        if config.using_landlock:
+        if config.sandbox_mode != "bubblewrap":
             self.new_server()
             return
 
@@ -1610,14 +1601,24 @@ class WarpApplication(Gtk.Application):
     def on_tray_icon_activate(self, icon, button, time):
         self.window.toggle_visibility(time)
 
-def main(test=False):
+
+def main():
     import signal
 
-    w = WarpApplication(test)
-    signal.signal(signal.SIGINT, lambda s, f: w.exit_warp())
-    signal.signal(signal.SIGTERM, lambda s, f: w.exit_warp())
+    try:
+        w = WarpApplication(testing=False)
+        signal.signal(signal.SIGINT, lambda s, f: w.exit_warp())
+        signal.signal(signal.SIGTERM, lambda s, f: w.exit_warp())
 
-    return w.run(sys.argv)
+        ret = w.run(sys.argv)
+
+        if w.app_restarting:
+            ret = 100
+    except Exception as e:
+        print(e)
+        ret = 1
+
+    return ret
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

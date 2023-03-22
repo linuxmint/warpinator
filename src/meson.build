@@ -23,7 +23,6 @@ libexec_py = [
   config_py,
   'auth.py',
   'dbus_service.py',
-  'launcher.py',
   'interceptors.py',
   'misc.py',
   'networkmonitor.py',
@@ -35,13 +34,19 @@ libexec_py = [
   'server.py',
   'transfers.py',
   'util.py',
-  'warpinator.py',
   'warp_pb2.py',
-  'warp_pb2_grpc.py'
+  'warp_pb2_grpc.py',
+  'warpinator.py',
 ]
 
 install_data(libexec_py,
   install_dir: install_libdir
+)
+
+install_data(
+    'warpinator-launch.py',
+    install_dir: install_libdir,
+    install_mode: 'rwxr-xr-x'
 )
 
 if include_firewall_mod
