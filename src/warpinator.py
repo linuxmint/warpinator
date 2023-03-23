@@ -1411,7 +1411,7 @@ class WarpApplication(Gtk.Application):
     def _remote_ops_changed(self, local_machine, name):
         self.window.refresh_remote_machine_view()
 
-        active_ops = self.server.get_active_op_count() if self.server else 0
+        active_ops = self.server.get_active_op_count(incoming_only=True) if self.server else 0
         self.update_inhibitor_state()
 
         if active_ops > 0:

@@ -377,13 +377,15 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def list_remote_machines(self):
         return self.remote_machines.values()
 
-    def get_active_op_count(self):
+    def get_active_op_count(self, incoming_only=False):
         count = 0
 
         for machine in self.remote_machines.values():
             if machine.status != RemoteStatus.ONLINE:
                 continue
             for op in machine.transfer_ops:
+                if incoming_only and not isinstance(op, ReceiveOp):
+                    continue
                 if op.status == OpStatus.TRANSFERRING:
                     count += 1
 
