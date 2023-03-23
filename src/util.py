@@ -396,7 +396,7 @@ class FreeSpaceMonitor(GObject.Object):
     }
 
     poll_levels = [
-        [ 100 * MB_TO_B,     0.05 ],
+        [ 250 * MB_TO_B,     0.05 ],
         [ 1000 * MB_TO_B,    0.50 ],
         [ 10000 * MB_TO_B,   5.00 ],
         [ 100000 * MB_TO_B, 30.00 ]
@@ -408,10 +408,12 @@ class FreeSpaceMonitor(GObject.Object):
 
         self._monitor_thread = None
 
+        # Shutdown thread when warpinator is exiting
         self._cancellable = Gio.Cancellable()
-        self._gate = threading.Event()
-        self._lock = threading.Lock()
+        # Pause/resume thread
+        self._monitor_enable = threading.Event()
 
+        self._available_bytes_lock = threading.Lock()
         self.sleep_time = 0
         self.available_bytes = 0
         self.min_free = prefs.get_min_free_space()
@@ -432,7 +434,7 @@ class FreeSpaceMonitor(GObject.Object):
             self.have_enough_free(0)
 
     def get_free(self):
-        with self._lock:
+        with self._available_bytes_lock:
             return self.available_bytes
 
     def have_enough_free(self, size, top_dir_basenames=[]):
@@ -481,16 +483,12 @@ class FreeSpaceMonitor(GObject.Object):
                 return size
             existing_allocation += get_contents_size(folder_file)
 
-        if self._gate.is_set():
-            with self._lock:
-                total = self.available_bytes + existing_allocation
-                logging.debug("FreeSpaceMonitor - op needs %s, %s available (%s of which is being overwritten)" % \
-                    (GLib.format_size(size), GLib.format_size(total), GLib.format_size(existing_allocation)))
-                return size < total
+        # Only do an explicit refresh if the monitor thread is *not* running. If it is running,
+        # refresh_available is already being called regularly.
+        if not self._monitor_enable.is_set():
+            self._refresh_available(self._cancellable)
 
-        self._refresh_available(self._cancellable)
-
-        with self._lock:
+        with self._available_bytes_lock:
             total = self.available_bytes + existing_allocation
             logging.debug("FreeSpaceMonitor - op needs %s, %s available (%s of which is being overwritten)" % \
                 (GLib.format_size(size), GLib.format_size(total), GLib.format_size(existing_allocation)))
@@ -505,16 +503,16 @@ class FreeSpaceMonitor(GObject.Object):
             self._monitor_thread = threading.Thread(target=self._monitor_thread_func, args=(self._cancellable,), name="FreeSpaceMonitor-thread")
             self._monitor_thread.start()
 
-        self._gate.set()
+        self._monitor_enable.set()
 
     def pause(self):
         logging.debug("FreeSpaceMonitor pause")
-        self._gate.clear()
+        self._monitor_enable.clear()
 
-    def stop(self):
-        logging.debug("FreeSpaceMonitor stop")
+    def shutdown(self):
+        logging.debug("FreeSpaceMonitor shutdown")
         self._cancellable.cancel()
-        self._gate.set()
+        self._monitor_enable.set()
         if self._monitor_thread is not None:
             self._monitor_thread.join(5)
 
@@ -532,7 +530,7 @@ class FreeSpaceMonitor(GObject.Object):
         while not cancellable.is_cancelled():
             self._refresh_available(cancellable)
             self._sleep()
-            self._gate.wait()
+            self._monitor_enable.wait()
             continue
 
     def _refresh_available(self, cancellable):
@@ -546,7 +544,7 @@ class FreeSpaceMonitor(GObject.Object):
             logging.critical("Could not query available disk space for the save directory, allowing all transfers: %s" % e.message)
             available_bytes = 0
 
-        with self._lock:
+        with self._available_bytes_lock:
             adjusted = available_bytes - (self.min_free * 1024 * 1024)
             logging.debug("FreeSpaceMonitor - %d available (%s)" % (adjusted, GLib.format_size(adjusted if adjusted >= 0 else 0)))
             self.available_bytes = adjusted if adjusted > 0 else 0
