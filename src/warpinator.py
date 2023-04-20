@@ -487,6 +487,14 @@ class WarpWindow(GObject.Object):
         self.secmo_infobar.set_revealed(False)
         self.secmo_infobar_prefs_button.connect("clicked", self.open_prefs_networking)
 
+        self.sandbox_mode_infobar = self.builder.get_object("sandbox_mode_infobar")
+        print(config.sandbox_mode)
+        self.sandbox_mode_infobar.set_visible(config.sandbox_mode == "legacy")
+        self.sandbox_mode_infobar_close_button = self.builder.get_object("sandbox_infobar_close_button")
+        self.sandbox_mode_infobar_close_button.connect("clicked", lambda b: self.sandbox_mode_infobar.hide())
+        self.sandbox_mode_more_info_button = self.builder.get_object("sandbox_infobar_more_info_button")
+        self.sandbox_mode_more_info_button.connect("clicked", self.sandbox_info_callback)
+
         # user view
         self.user_back_button = self.builder.get_object("user_back")
         self.user_back_button.connect("clicked", self.back_to_overview)
@@ -594,6 +602,12 @@ class WarpWindow(GObject.Object):
 
     def show_about(self, widget):
         util.AboutDialog(self.window)
+
+    def sandbox_info_callback(self, widget):
+        try:
+            Gtk.show_uri_on_window(self.window, "https://github.com/linuxmint/warp/blob/master/README.md#folder-isolation", Gtk.get_current_event_time())
+        except GLib.Error as e:
+            logging.warn("Couldn't open readme url: %s" % e.message)
 
     def window_delete_event(self, widget, event, data=None):
         if prefs.use_tray_icon():
@@ -748,8 +762,9 @@ class WarpWindow(GObject.Object):
         if is_secure:
             self.stop_secure_mode_timer()
             self.secmo_infobar.set_revealed(False)
-            self.secmo_infobar.hide()
+            self.secmo_infobar.hide() # shouldn't be needed but in some themes, the bar isn't fully hidden when revealed=false
         else:
+            self.secmo_infobar.set_revealed(True)
             self.start_secure_mode_timer()
 
     def start_secure_mode_timer(self):

@@ -13,6 +13,11 @@
     <property name="can-focus">False</property>
     <property name="icon-name">go-previous-symbolic</property>
   </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">window-close-symbolic</property>
+  </object>
   <object class="GtkImage" id="user_favorite_image">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -35,17 +40,12 @@
             <property name="can-focus">False</property>
             <property name="no-show-all">True</property>
             <property name="message-type">warning</property>
+            <property name="revealed">False</property>
             <child internal-child="action_area">
               <object class="GtkButtonBox">
                 <property name="can-focus">False</property>
                 <property name="spacing">6</property>
                 <property name="layout-style">end</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
                 <child>
                   <object class="GtkButton" id="secmo_infobar_prefs_button">
                     <property name="label" translatable="yes">Set code</property>
@@ -100,8 +100,57 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkInfoBar" id="sandbox_mode_infobar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="message-type">warning</property>
+            <child internal-child="action_area">
+              <object class="GtkButtonBox">
+                <property name="can-focus">False</property>
+                <property name="spacing">6</property>
+                <property name="layout-style">end</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkButton" id="sandbox_infobar_more_info_button">
+                    <property name="label" translatable="yes">More information</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="sandbox_infobar_close_button">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="halign">end</property>
+                    <property name="image">image3</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                    <property name="non-homogeneous">True</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -110,14 +159,37 @@
                 <property name="position">0</property>
               </packing>
             </child>
-            <child>
-              <placeholder/>
+            <child internal-child="content_area">
+              <object class="GtkBox">
+                <property name="can-focus">False</property>
+                <property name="spacing">16</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Download folder not secure</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
             </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -184,7 +256,7 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="pack-type">end</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -284,8 +356,8 @@
                           <object class="GtkBox" id="user_list_box">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="margin-left">10</property>
-                            <property name="margin-right">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
                             <property name="orientation">vertical</property>
                             <property name="spacing">6</property>
                             <child>
@@ -1523,7 +1595,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
