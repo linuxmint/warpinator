@@ -14,4 +14,8 @@ GETTEXT_PACKAGE="@gettext_package@"
 FLATPAK_BUILD=@flatpak_build@
 RPC_API_VERSION=@RPC_API_VERSION@
 
+
+
+###################### This is not a constant #########################
+# sandbox_mode is set in warpinator.py __main__ at launch.
 sandbox_mode = "legacy"

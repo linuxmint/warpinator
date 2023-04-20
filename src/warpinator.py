@@ -15,11 +15,6 @@ gi.require_version('XApp', '1.0')
 from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
 
 import config
-try:
-    config.sandbox_mode = os.environ["WARPINATOR_SANDBOX_MODE"]
-except:
-    config.sandbox_mode = "legacy"
-
 import prefs
 import util
 import dbus_service
@@ -1621,6 +1616,11 @@ def main():
     import signal
 
     try:
+        config.sandbox_mode = os.environ["WARPINATOR_SANDBOX_MODE"]
+    except KeyError as e:
+        pass
+
+    try:
         w = WarpApplication(testing=False)
         signal.signal(signal.SIGINT, lambda s, f: w.exit_warp())
         signal.signal(signal.SIGTERM, lambda s, f: w.exit_warp())
@@ -1628,7 +1628,7 @@ def main():
         ret = w.run(sys.argv)
 
         if w.app_restarting:
-            ret = 100
+            ret = misc.EXIT_CODE_RESTART_BWRAP
     except Exception as e:
         print(e)
         ret = 1

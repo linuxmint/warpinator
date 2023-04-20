@@ -5,6 +5,8 @@ import traceback
 
 from gi.repository import GLib
 
+EXIT_CODE_RESTART_BWRAP = 100
+
 # Used as a decorator to run things in the background
 def _async(func):
     def wrapper(*args, **kwargs):

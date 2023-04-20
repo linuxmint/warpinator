@@ -18,8 +18,10 @@ from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 import prefs
 import config
 
-if config.sandbox_mode == "landlock":
+try:
     import landlock
+except Exception:
+    pass
 
 _ = gettext.gettext
 
@@ -273,6 +275,13 @@ def create_file_and_folder_picker(dialog_parent=None):
     return chooser
 
 def open_save_folder(filename=None):
+    # Using the fdo FileManager1 interface is the best choice if it's available,
+    # as it won't be restricted to the bubblewrapped read-only environment.
+    #
+    # The only possible downside to this is you can't necessarily be sure which
+    # file manager might answer, if more than one is installed:
+    # https://github.com/linuxmint/nemo/commit/c9cbba6a2f08be69bf02ffcaf9b0faf4a03ace8b
+
     bus = Gio.Application.get_default().get_dbus_connection()
 
     if filename is not None:
@@ -301,6 +310,7 @@ def open_save_folder(filename=None):
     except GLib.Error as e:
         logging.debug("Could not use dbus interface to launch file manager: %s" % e.message)
 
+    # If dbus doesn't work, use xdg mimetype handlers.
     app = Gio.AppInfo.get_default_for_type("inode/directory", True)
 
     try:
