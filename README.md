@@ -105,7 +105,8 @@ sudo ninja -C builddir install
 pip3 install grpcio grpcio-tools
 ```
 
-# Secure Mode
+# Security Considerations
+## Secure Mode
 ### Group codes
 The group code is a shared key that allows trusted devices on the local network to see one another in Warpinator. Any devices you wish to connect with *must* be using the same group code. This code is set to 'Warpinator' by default.
 ### Enabling secure mode
@@ -118,6 +119,20 @@ Secure mode can be enabled simply by changing the group code to something unique
 ##### Additional information:
 - It is recommended that the code only consist of standard alphanumeric characters.
 - The code must between 8 and 32 characters. If you decide to use non-ascii characters, the maximum length may end up being shorter.
+
+## Folder Isolation
+### Overview
+There is potential for incoming files to be manipulated by a sender in a manner that might cause harm to your system, making use of symbolic links (files that point to other files or folders). Warpinator tries to detect and prevent this, but can also make use of other tools to provide more protection.
+#### [Landlock](https://docs.kernel.org/security/landlock.html):
+Landlock is a relatively new security module for the Linux Kernel that allows a program to fine-tune how it can access your filesystem. In the context of Warpinator, it allows us to completely isolate your incoming folder - it essentially exists in a vacuum during transfers. Warpinator uses this automatically if it's available.
+#### [Bubblewrap](https://github.com/containers/bubblewrap#readme):
+Bubblewrap (or bwrap) is a tool that can be used to construct an restrictive environment that a program operate in. For Warpinator, Using bubblewrap provides an experience similar to Landlock, in that only your incoming folder can be written to. There are a couple of minor disadvantages, however: Changing your incoming folder location will require Warpinator to be restarted, and the rest of your filesystem will be read-only (for instance, you won't be able to create new folders elsewhere on your system from Warpinator's file dialog). Warpinator will attempt to use this if Landlock is not available.
+#### Legacy (No isolation):
+If both Landlock and Bubblewrap are unavailable, Warpinator will operate without and folder isolation, though incoming transfers will still be analyzed to try and catch any potentially harmful files.
+### Additional information:
+- Landlock is only available in kernel version 5.13 or higher, and must also be enabled. You can check if it's available by running `cat /sys/kernel/security/lsm | grep landlock` from a terminal.
+- Bubblewrap is available in most distributions using your system's package manager.
+- You can specify a tool to use that will override Warpinator's auto-detection. See `warpinator --help` for information.
 
 # Troubleshooting tips
 

@@ -27,14 +27,16 @@ mode_help="""
 Modes:
 
 Warpinator can isolate the incoming folder so that files being received will be unable
-to modify anything outside of it (for instance, using relative symbolic links).
+to 'escape' (for instance, using relative symbolic links).
 
 landlock: only available with kernel >= 5.13, and only if enabled. Warpinator will run like normal,
-but individual transfers will be locked inside the incoming folder.
+but individual transfers will be locked inside the incoming folder. You can see if it's enabled on your
+system by running `cat /sys/kernel/security/lsm | grep landlock`.
 
-bubblewrap: requires the bubblewrap package. Warpinator run in a sandbox (similar to Flatpaks). Only
-the incoming folder will be writable. Other locations will be read-only, including the user's
-home. Changing the incoming folder location will require a restart.
+bubblewrap: requires the bwrap command. This is usually in a package called 'bubblewrap' but that may
+vary. Warpinator will run in a sandbox (similar to Flatpaks). Only the incoming folder will be writable.
+Other locations will be read-only, including the user's home. Changing the incoming folder location will
+require a program restart.
 
 legacy: Warpinator will run without any sort of protection, though some effort will still be made to
 detect relative links.
