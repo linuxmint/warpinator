@@ -1,3 +1,32 @@
+warpinator (1.6.0) vera; urgency=medium
+
+  [ Michael Webster ]
+  * build: Fix deprecation warning.
+  * notifications: Fix indentation.
+  * Improve some logging.
+  * remote: Improve readability of rpc calls.
+  * Migrate group code and connect ids to gsettings.
+  * Include the python landlock module.
+  * Implement incoming folder isolation.
+  * Improve incoming file path validation.
+  * Forbid some locations from being chosen as the save folder.
+  * Check if recents can be written to before attempting it.
+  * Move some util functions into a new file.
+  * Add warpinator-send utility.
+  * bubblewrap: Fixes for debian/lmde.
+  * transfers.py: Use generic getter for file content type.
+  * build: Fix dh_python3 byte-compilation.
+  * Simplify startup scripts.
+  * Remove some remnants of a previous grpc version.
+  * free space monitor: Improve readability, comments.
+  * free space: Don't run the monitor when only sending files.
+  * Clean up --help information, add a new section to the README to explain landlock, bubblewrap.
+  * Add an infobar for a sandbox warning.
+  * Cleanup bubblewrap arguments, sandbox_mode setting, exit if the user specifies a mode that isn't available, explain file manager launch complexities.
+  * Simpliy NewThreadExecutor a bit.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 24 Apr 2023 11:44:04 +0100
+
 warpinator (1.4.5) vera; urgency=medium
 
   [ Michael Webster ]
