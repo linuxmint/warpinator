@@ -83,6 +83,11 @@ class WarpinatorSender:
     def _on_proxy_ready(self, object, result, data=None):
         try:
             self.proxy = Gio.DBusProxy.new_for_bus_finish(result);
+
+            if self.proxy.get_name_owner() is None:
+                print("Can connect to Warpinator - is it running?")
+                self.ecode = 1
+                Gtk.main_quit()
         except GLib.Error as e:
             print("Can't create warpinator proxy (%d): %s" % (e.code, e.message), file=sys.stderr)
             self.ecode = 1
