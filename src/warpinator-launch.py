@@ -130,6 +130,7 @@ else:
 
     launch_args += ["/bin/bwrap"]
     launch_args += ["--ro-bind",         "/",                                               "/"]
+    launch_args += ["--dev",             "/dev"]
     launch_args += ["--bind",            rundir + "/dconf",                                 rundir + "/dconf"]
     launch_args += ["--bind-try",        rundir + "/gvfsd",                                 rundir + "/gvfsd"]
     launch_args += ["--tmpfs",           "/tmp"]
