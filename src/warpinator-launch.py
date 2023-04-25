@@ -147,8 +147,8 @@ else:
 
     launch_args += ["--die-with-parent"]
 
-    launch_args += ["/bin/sh"]
-    # launch_args += ["/bin/python3",      warpinator_path]
+    # launch_args += ["/bin/sh"]
+    launch_args += ["/bin/python3",      warpinator_path]
 
     ret = 0
 

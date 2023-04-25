@@ -483,7 +483,7 @@ class WarpWindow(GObject.Object):
         self.secmo_infobar_prefs_button.connect("clicked", self.open_prefs_networking)
 
         self.sandbox_mode_infobar = self.builder.get_object("sandbox_mode_infobar")
-        print(config.sandbox_mode)
+
         self.sandbox_mode_infobar.set_visible(config.sandbox_mode == "legacy")
         self.sandbox_mode_infobar_close_button = self.builder.get_object("sandbox_infobar_close_button")
         self.sandbox_mode_infobar_close_button.connect("clicked", lambda b: self.sandbox_mode_infobar.hide())
