@@ -1,3 +1,12 @@
+warpinator (1.6.1) vera; urgency=medium
+
+  [ Michael Webster ]
+  * warpinator-launch.py: Fix bubblewrap launch string.
+  * warpinator-send: Give a better error if warpinator isn't running.
+  * Add /dev back to bubblewrap args.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 25 Apr 2023 16:07:27 +0100
+
 warpinator (1.6.0) vera; urgency=medium
 
   [ Michael Webster ]
