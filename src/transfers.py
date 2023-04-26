@@ -231,8 +231,8 @@ class FileReceiver(GObject.Object):
             self.current_mtime_usec = s.time.mtime_usec
             if not s.relative_path.startswith(tuple(self.op.top_dir_basenames)):
                 raise ReceiveError("File path is not descended from a valid toplevel directory: %s" % s.relative_path)
-            if self.op.remaining_count == 0:
-                raise ReceiveError("File count exceeds original request size")
+        if self.op.remaining_count == 0:
+            raise ReceiveError("File count exceeds original request size")
 
         if not self.current_gfile:
             util.test_resolved_path_safety(s.relative_path)

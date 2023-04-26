@@ -512,7 +512,7 @@ class RemoteMachine(GObject.Object):
 
             if op.remaining_count > 0:
                 raise ReceiveError("Transfer completed, but the number of files received is less than the original request size (expected %d, received %d)"
-                                       % (op.total_count, op.total_count - receiver.remaining_count),
+                                       % (op.total_count, op.total_count - op.remaining_count),
                                    fatal=False)
             op.set_status(OpStatus.FINISHED)
         except grpc.RpcError as e:
