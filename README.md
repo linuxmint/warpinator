@@ -17,7 +17,7 @@ sudo apt-get install warpinator
 ```
 
 #### Ubuntu 20.04, related:
-```
+```bash
 # Install build dependencies listed below, note minimum versions:
 sudo apt-get install python3-grpc-tools python3-grpcio
 
@@ -57,8 +57,8 @@ sudo pacman -S warpinator
 ```
 
 #### Otherwise (and this is valid anywhere if you want to avoid packaging):
-```
-meson builddir --prefix=/usr  (This is typical - /usr/local is another common choice for non-package-manager installs).
+```bash
+meson builddir --prefix=/usr # (This is typical - /usr/local is another common choice for non-package-manager installs).
 ninja -C builddir
 sudo ninja -C builddir install
 ```
@@ -187,7 +187,7 @@ It's possible there is something else causing your connection issues that is not
 ![image](https://user-images.githubusercontent.com/262776/162272389-403407ea-0f7a-4502-85f5-93eab3f5eff4.png)
 
 - Then, open a terminal and run:
-```
+```bash
 warpinator --debug
 
 # If you're running the Flatpak version, use this instead:
