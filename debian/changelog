@@ -1,3 +1,19 @@
+warpinator (1.6.2) victoria; urgency=medium
+
+  [ Bobby Rong ]
+  * Possible remaining_count fixes (#174)
+
+  [ Benjamin Loison ]
+  * Correct a typo in `README.md` (#175)
+
+  [ Michael Webster ]
+  * github workflow: Add optional ssh session.
+
+  [ Benjamin Loison ]
+  * Add `bash` syntax highlighting to `README.md` (#176)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 01 Jun 2023 12:11:26 +0100
+
 warpinator (1.6.1) vera; urgency=medium
 
   [ Michael Webster ]
