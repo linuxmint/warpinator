@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-24 11:45+0100\n"
+"POT-Creation-Date: 2023-06-06 14:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,38 +154,30 @@ msgstr ""
 msgid "Restart"
 msgstr ""
 
-#: resources/main-window.ui:1439
-msgid "page0"
-msgstr ""
-
-#: resources/main-window.ui:1476
+#: resources/main-window.ui:1475
 msgid "Disk Full"
 msgstr ""
 
-#: resources/main-window.ui:1513
+#: resources/main-window.ui:1512
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
 
-#: resources/main-window.ui:1530
+#: resources/main-window.ui:1529
 msgid "Empty trash"
 msgstr ""
 
-#: resources/main-window.ui:1544 src/warpinator.py:561 src/warpinator.py:1503
+#: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
 msgid "Open save folder"
 msgstr ""
 
-#: resources/main-window.ui:1557
+#: resources/main-window.ui:1556
 msgid "Examine disk usage"
 msgstr ""
 
-#: resources/main-window.ui:1590
-msgid "no-disk-space"
-msgstr ""
-
-#: resources/main-window.ui:1611 src/util.py:759
+#: resources/main-window.ui:1609 src/util.py:759
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"

@@ -1436,7 +1436,6 @@
               </object>
               <packing>
                 <property name="name">restart</property>
-                <property name="title" translatable="yes">page0</property>
                 <property name="position">8</property>
               </packing>
             </child>
@@ -1587,7 +1586,6 @@
               </object>
               <packing>
                 <property name="name">no-disk-space</property>
-                <property name="title" translatable="yes">no-disk-space</property>
                 <property name="position">9</property>
               </packing>
             </child>
