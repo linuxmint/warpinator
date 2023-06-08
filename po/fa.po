@@ -1,95 +1,96 @@
-# Serbian Latin translation for linuxmint
-# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# Persian translation for linuxmint
+# Copyright (c) 2023 Rosetta Contributors and Canonical Ltd 2023
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-06-06 14:01+0100\n"
-"PO-Revision-Date: 2021-11-24 21:06+0000\n"
-"Last-Translator: Saša Marjanović <Unknown>\n"
-"Language-Team: Serbian Latin <sr@latin@li.org>\n"
+"PO-Revision-Date: 2023-05-18 19:00+0000\n"
+"Last-Translator: Mr.Ravi <Unknown>\n"
+"Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2023-06-08 10:22+0000\n"
 "X-Generator: Launchpad (build 620cd5280e3a973662e263ebf9346837ed657a46)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:342
 msgid "Group Code"
-msgstr "Grupni kod"
+msgstr "کد گروه"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr "Ne možete da komunicirate sa računarima koji ne koriste isti kod."
+msgstr ""
+"شما نمیتوانید با رایانه هایی که از همین کد استفاده نمیکنند ارتباط برقرار "
+"کنید."
 
 #: resources/group-code.ui:49 resources/main-window.ui:51
 msgid "Set code"
-msgstr "Odredi kod"
+msgstr "تنظیم کد"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "حالت امن:"
 
 #: resources/group-code.ui:106 src/prefs.py:680
 msgid "OFF"
-msgstr ""
+msgstr "خاموش"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 msgid "More information"
-msgstr ""
+msgstr "اطلاعات بیشتر"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "حالت ایمن غیر فعال شد"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "پوشه بارگیری امن نیست"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr "Nema rezultata koji se poklapaju"
+msgstr "هیچ نتیجهٔ منطبقی پیدا نشد"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Proglasi ovu udaljenu mašinu za omiljenu u glavnom prikazu"
+msgstr "قرار دادن این دستگاهِ دوربرد به عنوان علاقه‌مندی در نمای اصلی"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
-msgstr "Izbriši neaktivne i završene operacije"
+msgstr "پاکسازی عملیات های غیرفعال و به اتمام رسیده"
 
 #: resources/main-window.ui:584
 msgid "Send files"
-msgstr "Pošalji datoteke"
+msgstr "ارسال فایل ها"
 
 #: resources/main-window.ui:610 src/prefs.py:308
 msgid "File Transfers"
-msgstr "Prenos datoteka"
+msgstr "انتقالات فایل"
 
 #: resources/main-window.ui:631 src/warpinator.py:1009
 msgid "Online"
-msgstr "Na mreži"
+msgstr "آنلاین"
 
 #: resources/main-window.ui:751
 msgid "No other computers found..."
-msgstr "Nijedan drugi računar nije pronađen..."
+msgstr "هیچ رایانه دیگری یافت نشد..."
 
 #: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
-msgstr "Uverite se da je Vaša mrežna veza aktivna."
+msgstr "مطمئن شوید اتصال شبکه شما فعال است."
 
 #: resources/main-window.ui:831
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Proverite Vaša pravila u zaštitnom zidu. Brojevi portova se mogu promeniti. "
-"Pogledajte preference za više detalja."
+"قوانین دیوار آتش خود را بررسی کنید. میتوان اعداد پورت ها را تغییر داد.برای "
+"جزئیات بیشتر ترجیحات را بازدید کنید."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:847
@@ -97,71 +98,75 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Da li je Warpinator pokrenut na još nekom računaru na ovoj mreži? Ukoliko "
-"jeste, uverite se da svi koriste isti grupni kod u preferencama."
+"آیا Warpinator درحال اجرا بر هیچ رایانه دیگری در این شبکه هست؟ اگر هست، "
+"مطمئن شوید همگی آنها در ترجیحات از یک کد گروه استفاده میکنند."
 
 #: resources/main-window.ui:865
 msgid "Possible solutions:"
-msgstr "Moguća rešenja:"
+msgstr "راه حل های ممکن:"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr ""
+msgstr "همچنین Warpinator بر اینها در دسترس است:"
 
 #: resources/main-window.ui:915
 msgid "Android"
-msgstr ""
+msgstr "اندروید"
 
 #: resources/main-window.ui:931
 msgid "iOS"
-msgstr ""
+msgstr "iOS"
 
 #: resources/main-window.ui:947
 msgid "Windows"
-msgstr ""
+msgstr "ویندوز"
 
 #: resources/main-window.ui:1021
 msgid "Initializing, please wait..."
-msgstr "Inicijalizovanje, sačekajte..."
+msgstr "در حال راه اندازی، لطفا صبر کنید..."
 
 #: resources/main-window.ui:1079
 msgid "Something went wrong"
-msgstr "Nešto nije kako treba"
+msgstr "مشکلی پیش آمد"
 
 #: resources/main-window.ui:1154
 msgid "Invalid save location"
-msgstr "Neispravno mesto za snimanje"
+msgstr "مکان ذخیره نامعتبر"
 
 #: resources/main-window.ui:1191
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"این پوشه یا غیرقابل دسترسی است یا ذخیره فایل به آن ممنوع است. لطفا یک مکان "
+"جدید را در ترجیحات انتخاب کنید و مطمئن شوید قابل دسترس است."
 
 #: resources/main-window.ui:1247
 msgid "Searching for other computers"
-msgstr "Pretraga za drugim računarima"
+msgstr "درحال جست‌و‌جو برای رایانه های دیگر"
 
 #: resources/main-window.ui:1306
 msgid "Shutting down..."
-msgstr "Isključivanje..."
+msgstr "درحال خاموش کردن..."
 
 #: resources/main-window.ui:1378
 msgid "Restart required"
-msgstr ""
+msgstr "نیازمند راه‌اندازی مجدد"
 
 #: resources/main-window.ui:1395
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Warpinator نیاز به راه‌اندازی مجدد دارد قبل از اینکه مسیر ذخیره جدید را "
+"بتوان استفاده کرد"
 
 #: resources/main-window.ui:1405
 msgid "Restart"
-msgstr ""
+msgstr "راه‌اندازی مجدد"
 
 #: resources/main-window.ui:1475
 msgid "Disk Full"
-msgstr ""
+msgstr "دیسک پُر است"
 
 #: resources/main-window.ui:1512
 msgid ""
@@ -169,183 +174,186 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"فضای ناکافی در مکان ذخیره وجود دارد. شما باید برخی فایل ها را حدف کنید، "
+"کمینه فضا آزاد را در ترجیحات کاهش دهید یا یک مکان جدید انتخاب کنید."
 
 #: resources/main-window.ui:1529
 msgid "Empty trash"
-msgstr ""
+msgstr "خالی کردن زباله‌دان"
 
 #: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
 msgid "Open save folder"
-msgstr "Otvori direktorijum za čuvanje"
+msgstr "بازکردن پوشه ذخیره‌سازی"
 
 #: resources/main-window.ui:1556
 msgid "Examine disk usage"
-msgstr ""
+msgstr "بررسی مصرف دیسک"
 
 #: resources/main-window.ui:1609 src/util.py:759
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr "Šaljite i primajte datoteke preko mreže"
+msgstr "در سراسر شبکه فایل ارسال و دریافت کنید"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Čekam odobrenje"
+msgstr "در انتظار تایید"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Nema dovoljno prostora na disku!"
+msgstr "فضای دیسک کافی نیست!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "Izračunavam"
+msgstr "در حال محاسبه"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Prihvati ovaj zahtev"
+msgstr "پذیرش این درخواست"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Odbij ovaj zahtev"
+msgstr "رد این درخواست"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Otkaži ovaj zahtev"
+msgstr "لغو این درخواست"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Ponovo pokreni ovu operaciju"
+msgstr "راه‌اندازی مجدد این عملیات"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Pauziraj ovu operaciju"
+msgstr "متوقف کردن این عملیات"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Nastavi ovu operaciju"
+msgstr "ازسرگیری این عملیات"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Otkaži ovu operaciju"
+msgstr "لغو این عملیات"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Ukloni ovu operaciju sa spiska"
+msgstr "حذف این عملیات از فهرست"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Otvori direktorijum u kome se nalazi"
+msgstr "بازکردن پوشه حاوی"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Upozorenje o brojevima portova:"
+msgstr "توجه به شماره پورت:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Preferencije za Warpinator"
+msgstr "ترجیحات Warpinator"
 
 #: src/notifications.py:24
 msgid "New incoming files"
-msgstr "Nove datoteke pristižu"
+msgstr "فایل های ورودی جدید"
 
 #: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s želi da Vam pošalje %(file_count)d datoteku/e "
-"(%(file_name)s)."
+"%(sender_name)s میخواهد برای شما %(file_count)d فایل (%(file_name)s) ارسال "
+"کند."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s želi da Vam pošalje %(file_count)d datoteku/e"
+msgstr "%(sender_name)s میخواهد برای شما %(file_count)d فایل ارسال کند"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr "Prihvati"
+msgstr "پذیرش"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr "Odbij"
+msgstr "عدم پذیرش"
 
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s Vam šalje %(file_count)d datoteku/e (%(file_name)s)."
+msgstr ""
+"%(sender_name)s درحال ارسال %(file_count)d فایل (%(file_name)s) به شماست."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s Vam šalje %(file_count)d datoteku/e"
+msgstr "%(sender_name)s درحال ارسال %(file_count)d فایل به شماست."
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Prenos završen"
+msgstr "انتقال کامل شد"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "انتقال به %s به اتمام رسید، اما با خطا"
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "Prenos na %s je uspešno završen"
+msgstr "انتقال به %s با موفقیت به اتمام رسید"
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "انتقال از %s به اتمام رسید، اما با خطا"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "Prenos sa %s je uspešno završen"
+msgstr "انتقال از %s با موفقیت به اتمام رسید"
 
 #: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
-msgstr "Prenos nije uspeo"
+msgstr "انتقال با شکست مواجه شد"
 
 #: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Nešto je pošlo naopako prilikom prenosa na %s"
+msgstr "مشکلی در انتقال به %s پیش آمد"
 
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Nešto je pošlo naopako prilikom prenosa sa %s"
+msgstr "مشکلی در انتقال از %s پیش آمد"
 
 #: src/notifications.py:171 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr "Prenos je otkazan"
+msgstr "انتقال لغو شد"
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Vaš prenos na %s je bio otkazan"
+msgstr "انتقال شما به %s لغو شد"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Dolazni prenos sa %s je bio otkazan"
+msgstr "یک انتقال ورودی از %s لغو شد"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "درحال ارسال فایل ها"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "درحال ارسال %d فایل به %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "درحال اسال '%s' به %s"
 
 #: src/ops.py:53
 #, python-format
@@ -357,319 +365,304 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] "%d datoteke"
-msgstr[1] "%d datoteka"
-msgstr[2] "%d datoteka"
+msgstr[0] "%d فایل"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%d datoteka"
-msgstr[1] "%d datoteke"
-msgstr[2] "%d datoteka"
+msgstr[0] "%d فایل"
 
 #: src/prefs.py:273
 msgid "Warpinator Preferences"
-msgstr "Preferencije za Warpinator"
+msgstr "ترجیحات Warpinator"
 
 #: src/prefs.py:290
 msgid "General"
-msgstr "Opšte"
+msgstr "عمومی"
 
 #: src/prefs.py:292
 msgid "Desktop"
-msgstr "Radna površina"
+msgstr "میز‌کار"
 
 #: src/prefs.py:294
 msgid "Show an icon in the notification area"
-msgstr "Prikaži ikonu na površini za obaveštenja"
+msgstr "نشان دادن یک نماد در قسمت اعلان ها"
 
 #: src/prefs.py:298
 msgid "Start with main window open"
-msgstr "Pokreni sa otvorenim glavnim prozorom"
+msgstr "شروع با پنجره اصلی باز"
 
 #: src/prefs.py:303
 msgid "Start automatically"
-msgstr "Pokreni automatski"
+msgstr "شروع خودکار"
 
 #: src/prefs.py:310
 msgid "Use compression when possible."
-msgstr "Koristi kompresiju kada je to moguće."
+msgstr "استفاده از فشرده‌سازی در صورت امکان"
 
 #: src/prefs.py:312
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Upozorenje: Ovo može imati negativan uticaj na performanse na nekim bržim "
-"mrežama."
+"هشدار: این ممکن است در شبکه های سریع تر اثر منفی بر بازدهی داشته باشد."
 
 #: src/prefs.py:315
 msgid "Location for received files"
-msgstr "Mesto za primljene datoteke"
+msgstr "مکان فایل های دریافتی"
 
 #: src/prefs.py:320
 msgid "Reserved free space"
-msgstr ""
+msgstr "فضا آزاد رزرو شده"
 
 #: src/prefs.py:325
 msgid "Require approval before accepting files"
-msgstr "Zahtevaj odobrenje pre prihvatanja datoteka"
+msgstr "درخواست تایید قبل از پذیرش فایل ها"
 
 #: src/prefs.py:330
 msgid "Require approval when files would be overwritten"
-msgstr "Zahtevaj odobrenje kada bi datoteke bile upisane preko postojećih"
+msgstr "درخواست تایید هنگامی که فایل ها  میخواهند بازنویسی شوند"
 
 #: src/prefs.py:335
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
-msgstr ""
-"Prikaži obaveštenje kada neko šalje (ili pokušava da pošalje) datoteke"
+msgstr "نمایش اعلان هنگامی که کسی برای شما فایل میفرستد(یا تلاش میکند)"
 
 #: src/prefs.py:340
 msgid "Connection"
-msgstr "Veza"
+msgstr "اتصال"
 
 #: src/prefs.py:350
 msgid "Network"
-msgstr "Mreža"
+msgstr "شیکه"
 
 #: src/prefs.py:353
 msgid "Automatic"
-msgstr "Automatski"
+msgstr "خودکار"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:432
 #, python-format
 msgid "%s - not found"
-msgstr "%s - nije pronađen"
+msgstr "%s - پیدا نشد"
 
 #: src/prefs.py:434
 msgid "Network interface to use"
-msgstr "Mrežni interfejs koji će se koristiti"
+msgstr "رابط شبکه برای استفاده"
 
 #: src/prefs.py:442
 msgid "Incoming port for transfers"
-msgstr "Dolazni port za prenose"
+msgstr "پورت ورودی برای انتقالات"
 
 #: src/prefs.py:449
 msgid "Incoming port for registration"
-msgstr "Dolazni port za registraciju"
+msgstr "پورت ورودی برای ثبت‌نام"
 
 #: src/prefs.py:464
 msgid "Apply network changes"
-msgstr "Primeni promene mreže"
+msgstr "اعمال تغییرات شبکه"
 
 #: src/prefs.py:473
 msgid "Update firewall rules"
-msgstr "Ažuriraj pravila za zaštitni zid (firewall)"
+msgstr "بروزرسانی قوانین دیوارآتش"
 
 #: src/prefs.py:485
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Bilo koji broj porta će funkcionisati za ovu aplikaciju, ali korišćenje "
-"istih portova za sve računare možete pojednostaviti dodavanje izuzetaka od "
-"pravila za zaštitni zid, ukoliko to bude bilo potrebno."
+"هر پورتی برای برنامه کارمیکند، اما استفاده از پورت های یکسان برای تمام "
+"رایانه ها اضافه کردن به قوانین دیوارآتش را در صورت نیاز آسان‌تر میکند."
 
 #: src/prefs.py:561
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "تنها قابل دسترس در حالت امن."
 
 #: src/prefs.py:638
 msgid "A group code is required."
-msgstr "Grupni kod je neophodan."
+msgstr "یک کد گروه مورد نیاز است."
 
 #: src/prefs.py:643
 msgid "The group code is too short."
-msgstr ""
+msgstr "کد گروه خیلی کوتاه است."
 
 #: src/prefs.py:677
 msgid "ON"
-msgstr ""
+msgstr "روشن"
 
 #: src/prefs.py:678
 msgid "All options are unlocked."
-msgstr ""
+msgstr "تمام گزینه ها باز است."
 
 #: src/prefs.py:681
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"برای اجرا در حالت امن باید یک کد گروه دلخواه تنظیم کنید. درحال حاضر برخی "
+"گزینه ها غیر فعال اند."
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
-msgstr "Veza je izgubljena"
+msgstr "اتصال از دست رفت"
 
 #: src/server.py:591
 msgid "An error occurred on the remote machine"
-msgstr "Došlo je do greške na udaljenoj mašini"
+msgstr "خطایی در دستگاه راه‌دور رخ داد"
 
 #: src/util.py:264
 msgid "Cancel"
-msgstr "Otkaži"
+msgstr "لغو"
 
 #: src/util.py:265
 msgid "Add"
-msgstr "Dodaj"
+msgstr "افزودن"
 
 #: src/util.py:287
 msgid "Select file(s) to send"
-msgstr "Izaberi datoteku(e) za slanje"
+msgstr "انتخاب فایل ها برای ارسال"
 
 #: src/util.py:648
 msgid "A few seconds remaining"
-msgstr "Preostalo je još nekoliko sekundi"
+msgstr "چند ثانیه باقی مانده"
 
 #: src/util.py:651
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d sekundi preostaje"
+msgstr "%d ثانیه باقی مانده"
 
 #: src/util.py:655 src/util.py:663
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minut"
-msgstr[1] "%d minuta"
-msgstr[2] "%d minuta"
+msgstr[0] "%d دقیقه"
 
 #: src/util.py:662
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d sat"
-msgstr[1] "%d sata"
-msgstr[2] "%d sati"
+msgstr[0] "%d ساعت"
 
 #: src/util.py:667
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "oko %d sat"
-msgstr[1] "oko %d sata"
-msgstr[2] "oko %d sati"
+msgstr[0] "تقریبا %d ساعت"
 
 #: src/util.py:755 src/warpinator.py:569
 msgid "About"
-msgstr "O programu"
+msgstr "درباره"
 
 #: src/warpinator.py:145
 msgid "Paused"
-msgstr "Pauzirano"
+msgstr "مکث شده"
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr "Čekam na odobrenje"
+msgstr "در انتظار تایید"
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr "Čekam na Vaše odobrenje"
+msgstr "در انتظار تایید شما"
 
 #: src/warpinator.py:153
 msgid "Not enough disk space"
-msgstr "Nema dovoljno prostora na disku"
+msgstr "فضای دیسک کافی نیست"
 
 #: src/warpinator.py:156
 msgid "Files may be overwritten"
-msgstr "Datoteke mogu biti prepisane novijim"
+msgstr "ممکن است فایل ها بازنویسی شوند"
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr "Zahtev je otkazan"
+msgstr "درخواست لغو شد"
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "Zahtev je otkazao %s"
+msgstr "درخواست توسط %s لغو شد"
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Prenos je otkazao %s"
+msgstr "انتقال توسط %s لغو شد"
 
 #: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
-msgstr "Datoteka '%s' nije pronađena"
+msgstr "فایل «%s» یافت نشد"
 
 #: src/warpinator.py:179
 msgid "Some files not found"
-msgstr "Neke datoteke nisu pronađene"
+msgstr "برخی فایل ها یافت نشدند"
 
 #: src/warpinator.py:181
 msgid "Completed"
-msgstr "Završeno"
+msgstr "کامل شد"
 
 #: src/warpinator.py:183
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "کامل شد، اما با خطا"
 
 #: src/warpinator.py:342 src/warpinator.py:1037
 msgid "Connecting"
-msgstr "Povezujem se"
+msgstr "در حال اتصال"
 
 #: src/warpinator.py:344
 #, python-format
 msgid "Connecting to %s"
-msgstr "Povezujem se sa „%s“"
+msgstr "در حال اتصال به %s"
 
 #: src/warpinator.py:354
 #, python-format
 msgid "%s is not online"
-msgstr "%s nije na mreži"
+msgstr "%s آنلاین نیست"
 
 #: src/warpinator.py:359
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Ne mogu da se povežem na %s"
+msgstr "نمیتوان به %s وصل شد"
 
 #: src/warpinator.py:364
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Čekam da %s završi povezivanje."
+msgstr "در انتظار %s برای تکمیل اتصال."
 
 #: src/warpinator.py:393
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d novi dolazeći prenos"
-msgstr[1] "%d nova dolazeća prenosa"
-msgstr[2] "%d novih dolazećih prenosa"
+msgstr[0] "%d انتقال ورودی جدید"
 
 #: src/warpinator.py:534 src/warpinator.py:1557
 msgid "Favorites"
-msgstr "Omiljeno"
+msgstr "علاقه‌مندی ها"
 
 #: src/warpinator.py:539 src/warpinator.py:1562
 msgid "Recents"
-msgstr "Skorašnje"
+msgstr "موارد اخیر"
 
 #: src/warpinator.py:546 src/warpinator.py:1571
 msgid "Browse..."
-msgstr "Pretraži..."
+msgstr "مرور…"
 
 #: src/warpinator.py:565
 msgid "Preferences"
-msgstr "Preferencije"
+msgstr "ترجیحات"
 
 #: src/warpinator.py:573 src/warpinator.py:1506
 msgid "Quit"
-msgstr "Izađi"
+msgstr "خروج"
 
 #: src/warpinator.py:679
 msgid "You don't appear to be connected to a network."
-msgstr "Izgleda da niste povezani na mrežu."
+msgstr "به‌نظر نمیاید به شبکه ای متصل باشید."
 
 #: src/warpinator.py:681
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
-"Pokretanje nije bilo uspešno, proverite Vašu datoteku za beleženje promena "
-"(log)."
+msgstr "شروع ناموفق بود، لطفا گزارشات را بررسی کنید."
 
 #: src/warpinator.py:774
 #, python-format
@@ -677,6 +670,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator درحال اجرا با عملکرد محدود است و تا %d دقیقه بسته میشود. برای "
+"فعال‌سازی حالت امن ، یک کد گروه خاص تنظیم کنید."
 
 #: src/warpinator.py:776
 #, python-format
@@ -684,55 +679,55 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator درحال اجرا با عملکرد محدود است و تا %d دقیقه بسته میشود. برای "
+"فعال‌سازی حالت امن ، یک کد گروه خاص تنظیم کنید."
 
 #: src/warpinator.py:818
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
-msgstr ""
+msgstr "فضای خالی کافی برای دریافت فایل ها نیست (%s دریافت شده)"
 
 #: src/warpinator.py:896
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "در انتظار برای اتمام  عملیات %d"
 
 #: src/warpinator.py:897
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "در انتظار برای اتمام  عملیات %d"
 
 #: src/warpinator.py:1016
 msgid "Offline"
-msgstr "Nepovezan"
+msgstr "آفلاین"
 
 #: src/warpinator.py:1023
 msgid "Unable to connect"
-msgstr "Ne mogu da se povežem"
+msgstr "اتصال ممکن نیست"
 
 #: src/warpinator.py:1030
 msgid "Waiting for two-way connection"
-msgstr "Čekam na dvosmernu vezu"
+msgstr "در انتظار اتصال دوطرفه"
 
 #: src/warpinator.py:1540
 msgid "Send to all"
-msgstr "Pošalji svima"
+msgstr "ارسال به همه"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "ارسال با Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "ارسال فایل به یک نفر با Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Otvorite jedan port u zaštitnom zidu (``firewall``) za Warpinator."
+msgstr "بازکردن یک پورت دیوارآتش برای Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
-"Da biste izmenili podešavanja zaštitnog zida (``firewall``), morate da "
-"potvrdite svoj identitet."
+msgstr "برای تغییر تنظیمات دیوارآتش، باید احراز هویت کنید."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
@@ -744,8 +739,8 @@ msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
-"Warpinator Vam omogućava da se lako povežete sa više računara u lokalnoj "
-"mreži i delite datoteke brzo i sigurno."
+"Warpinator به شما اجازه میدهد تا به راحتی چند رایانه را در یک شبکه محلی متصل "
+"کنید و به صورت سریع و امن فایل همرسانی کنید."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27

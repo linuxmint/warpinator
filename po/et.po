@@ -7,18 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2022-11-29 10:55+0000\n"
-"PO-Revision-Date: 2022-07-13 14:58+0000\n"
-"Last-Translator: mahfiaz <mahfiaz@gmail.com>\n"
+"POT-Creation-Date: 2023-06-06 14:01+0100\n"
+"PO-Revision-Date: 2023-04-27 11:33+0000\n"
+"Last-Translator: vaba <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2022-12-16 10:41+0000\n"
-"X-Generator: Launchpad (build 31c78762a8046acf7ab47372e5d588ebb3759d2e)\n"
+"X-Launchpad-Export-Date: 2023-06-08 10:22+0000\n"
+"X-Generator: Launchpad (build 620cd5280e3a973662e263ebf9346837ed657a46)\n"
+"Language: et\n"
 
-#: resources/group-code.ui:16 src/prefs.py:259
+#: resources/group-code.ui:16 src/prefs.py:342
 msgid "Group Code"
 msgstr "Grupi kood"
 
@@ -32,53 +33,57 @@ msgstr "Määra kood"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Turvarežiim:"
 
-#: resources/group-code.ui:106 src/prefs.py:594
+#: resources/group-code.ui:106 src/prefs.py:680
 msgid "OFF"
-msgstr ""
+msgstr "VÄLJAS"
 
-#: resources/group-code.ui:148
+#: resources/group-code.ui:148 resources/main-window.ui:129
 msgid "More information"
-msgstr ""
+msgstr "Rohkem teavet"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Turvarežiim keelatud"
 
-#: resources/main-window.ui:263
+#: resources/main-window.ui:170
+msgid "Download folder not secure"
+msgstr "Allalaadimise kaust pole turvaline"
+
+#: resources/main-window.ui:335
 msgid "No matching results"
 msgstr "Sobivaid vasteid ei leitud"
 
-#: resources/main-window.ui:419
+#: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Määra see teine arvuti peaaknas lemmikuks"
 
-#: resources/main-window.ui:493
+#: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
 msgstr "Eemalda mitteaktiivsed ja lõpetatud operatsioonid"
 
-#: resources/main-window.ui:512
+#: resources/main-window.ui:584
 msgid "Send files"
 msgstr "Saada faile"
 
-#: resources/main-window.ui:538 src/prefs.py:230
+#: resources/main-window.ui:610 src/prefs.py:308
 msgid "File Transfers"
 msgstr "Failiedastus"
 
-#: resources/main-window.ui:559 src/warpinator.py:922
+#: resources/main-window.ui:631 src/warpinator.py:1009
 msgid "Online"
 msgstr "Ühendatud"
 
-#: resources/main-window.ui:679
+#: resources/main-window.ui:751
 msgid "No other computers found..."
 msgstr "Teisi arvuteid ei leitud..."
 
-#: resources/main-window.ui:744
+#: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
 msgstr "Kontrolli, kas võrguühendus on aktiivne."
 
-#: resources/main-window.ui:759
+#: resources/main-window.ui:831
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -87,7 +92,7 @@ msgstr ""
 "leiate eelistustest."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:775
+#: resources/main-window.ui:847
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -95,56 +100,93 @@ msgstr ""
 "Kas Warpinator töötab veel mõnes arvutis selles võrgus? Kui nii, siis "
 "veendu, et kõigis arvutites oleks eelistuste all määratud sama grupi kood."
 
-#: resources/main-window.ui:793
+#: resources/main-window.ui:865
 msgid "Possible solutions:"
 msgstr "Võimalikud lahendused:"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:828
+#: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
 msgstr "Warpinator on saadaval järgmistel platvormidel:"
 
-#: resources/main-window.ui:843
+#: resources/main-window.ui:915
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:859
+#: resources/main-window.ui:931
 msgid "iOS"
 msgstr "iOS"
 
-#: resources/main-window.ui:875
+#: resources/main-window.ui:947
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:949
+#: resources/main-window.ui:1021
 msgid "Initializing, please wait..."
 msgstr "Käivitamine, palun oota..."
 
-#: resources/main-window.ui:1007
+#: resources/main-window.ui:1079
 msgid "Something went wrong"
 msgstr "Midagi läks valesti"
 
-#: resources/main-window.ui:1082
+#: resources/main-window.ui:1154
 msgid "Invalid save location"
 msgstr "Vigane salvestamise asukoht"
 
-#: resources/main-window.ui:1119
+#: resources/main-window.ui:1191
 msgid ""
-"This folder is inaccessible or does not exist.  Please select a new location "
-"in Preferences or ensure that the current one is mounted."
+"This folder is either inaccessible or forbidden to save files to.  Please "
+"select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"See kaust ei ole ligipääsetav või seda pole olemas. Palun vali uus asukoht "
-"eelistustest või veendu, et praegune on haagitud."
+"Sellele kaustale pole juurdepääsu või failide salvestamine keelatud. Valige "
+"eelistustes uus asukoht ja veenduge, et see oleks juurdepääsetav."
 
-#: resources/main-window.ui:1175
+#: resources/main-window.ui:1247
 msgid "Searching for other computers"
 msgstr "Teiste arvutite otsimine"
 
-#: resources/main-window.ui:1234
+#: resources/main-window.ui:1306
 msgid "Shutting down..."
 msgstr "Lõpetamine..."
 
-#: resources/main-window.ui:1277 src/util.py:439
+#: resources/main-window.ui:1378
+msgid "Restart required"
+msgstr "Vajalik taaskäivitus"
+
+#: resources/main-window.ui:1395
+msgid "Warpinator needs to restart before the new save directory can be used"
+msgstr "Warpinator peab enne uue salvestuskataloogi kasutamist taaskäivitama"
+
+#: resources/main-window.ui:1405
+msgid "Restart"
+msgstr "Taaskäivita"
+
+#: resources/main-window.ui:1475
+msgid "Disk Full"
+msgstr "Ketas täis"
+
+#: resources/main-window.ui:1512
+msgid ""
+"There is insufficient space available in the save location. You need to "
+"delete some files, decrease the minimum free space in preferences or choose "
+"a new location."
+msgstr ""
+"Salvestuskohas pole piisavalt ruumi. Peate kustutama mõned failid, vähendama "
+"eelistustes minimaalset vaba ruumi või valima uue asukoha."
+
+#: resources/main-window.ui:1529
+msgid "Empty trash"
+msgstr "Tühjenda prügikast"
+
+#: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
+msgid "Open save folder"
+msgstr "Ava salvestamise kaust"
+
+#: resources/main-window.ui:1556
+msgid "Examine disk usage"
+msgstr "Uuri ketta kasutamist"
+
+#: resources/main-window.ui:1609 src/util.py:759
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
@@ -208,99 +250,113 @@ msgctxt "preferences window title"
 msgid "Warpinator Preferences"
 msgstr "Warpinatori eelistused"
 
-#: src/notifications.py:23
+#: src/notifications.py:24
 msgid "New incoming files"
 msgstr "Uued sissetulevad failid"
 
-#: src/notifications.py:29
+#: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
 "%(sender_name)s tahaks sulle saata %(file_count)d faili (%(file_name)s)."
 
-#: src/notifications.py:30
+#: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s tahaks sulle saata %(file_count)d faili."
+msgstr "%(sender_name)s tahaks sulle saata %(file_count)d faili"
 
-#: src/notifications.py:42
+#: src/notifications.py:41
 msgid "Accept"
 msgstr "Nõustu"
 
-#: src/notifications.py:43
+#: src/notifications.py:42
 msgid "Decline"
 msgstr "Keeldu"
 
-#: src/notifications.py:57
+#: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr "%(sender_name)s saadab sulle %(file_count)d faili (%(file_name)s)."
 
-#: src/notifications.py:58
+#: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s saadab sulle %(file_count)d faili."
+msgstr "%(sender_name)s saadab sulle %(file_count)d faili"
 
-#: src/notifications.py:94
+#: src/notifications.py:93
 msgid "Transfer complete"
 msgstr "Ülekanne lõpetatud"
 
-#: src/notifications.py:97
+#: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Ülekanne asukohta %s on lõppenud, kuid vigadega"
 
-#: src/notifications.py:99
+#: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
 msgstr "Ülekanne kasutajale %s lõppes edukalt"
 
-#: src/notifications.py:102
+#: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Ülekanne asukohast %s on lõppenud, kuid vigadega"
 
-#: src/notifications.py:104
+#: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
 msgstr "Ülekanne kasutajalt %s lõppes edukalt"
 
-#: src/notifications.py:138 src/warpinator.py:175 src/warpinator.py:178
+#: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
 msgstr "Ülekanne nurjus"
 
-#: src/notifications.py:141
+#: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
 msgstr "Midagi läks valesti ülekandega kasutajale %s"
 
-#: src/notifications.py:143
+#: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
 msgstr "Midagi läks valesti ülekandega kasutajalt %s"
 
-#: src/notifications.py:172 src/warpinator.py:169
+#: src/notifications.py:171 src/warpinator.py:166
 msgid "Transfer cancelled"
 msgstr "Ülekanne katkestatud"
 
-#: src/notifications.py:175
+#: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
 msgstr "Edastus kasutajale %s katkestati"
 
-#: src/notifications.py:177
+#: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
 msgstr "Sissetuleva faili edastus kasutajalt %s katkestati"
 
-#: src/ops.py:49
+#: src/notifications.py:204
+msgid "Sending files"
+msgstr "Failide saatmine"
+
+#: src/notifications.py:207
+#, python-format
+msgid "Sending %d files to %s"
+msgstr "%d faili saatmine kasutajale %s"
+
+#: src/notifications.py:209
+#, python-format
+msgid "Sending '%s' to %s"
+msgstr "Saatmine '%s' - %s"
+
+#: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
 msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:150
+#: src/ops.py:154
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
@@ -308,104 +364,108 @@ msgstr[0] "%d fail"
 msgstr[1] "%d faili"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
-#: src/ops.py:238
+#: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fail"
 msgstr[1] "%d faili"
 
-#: src/prefs.py:196
+#: src/prefs.py:273
 msgid "Warpinator Preferences"
 msgstr "Warpinatori eelistused"
 
-#: src/prefs.py:212
+#: src/prefs.py:290
 msgid "General"
 msgstr "Üldine"
 
-#: src/prefs.py:214
+#: src/prefs.py:292
 msgid "Desktop"
 msgstr "Töölaud"
 
-#: src/prefs.py:216
+#: src/prefs.py:294
 msgid "Show an icon in the notification area"
 msgstr "Ikooni näitamine teatealal"
 
-#: src/prefs.py:220
+#: src/prefs.py:298
 msgid "Start with main window open"
 msgstr "Käivitudes on peamine aken avatud"
 
-#: src/prefs.py:225
+#: src/prefs.py:303
 msgid "Start automatically"
 msgstr "Automaatne käivitumine"
 
-#: src/prefs.py:232
+#: src/prefs.py:310
 msgid "Use compression when possible."
 msgstr "Võimalusel kasutage kompressiooni."
 
-#: src/prefs.py:234
+#: src/prefs.py:312
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 "Hoiatus: see võib mõne kiirema võrgu toimivust negatiivselt mõjutada."
 
-#: src/prefs.py:237
+#: src/prefs.py:315
 msgid "Location for received files"
 msgstr "Vastu võetud failide asukoht"
 
-#: src/prefs.py:242
+#: src/prefs.py:320
+msgid "Reserved free space"
+msgstr "Reserveeritud vaba ruum"
+
+#: src/prefs.py:325
 msgid "Require approval before accepting files"
 msgstr "Nõusoleku küsimine enne failide vastuvõtmist"
 
-#: src/prefs.py:247
+#: src/prefs.py:330
 msgid "Require approval when files would be overwritten"
 msgstr "Nõusoleku küsimine, kui fail kirjutataks üle"
 
-#: src/prefs.py:252
+#: src/prefs.py:335
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr "Teate näitamine, kui keegi saadab (või püüab saata) sulle faile"
 
-#: src/prefs.py:257
+#: src/prefs.py:340
 msgid "Connection"
 msgstr "Ühendus"
 
-#: src/prefs.py:267
+#: src/prefs.py:350
 msgid "Network"
 msgstr "Võrk"
 
-#: src/prefs.py:270
+#: src/prefs.py:353
 msgid "Automatic"
 msgstr "Automaatne"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:349
+#: src/prefs.py:432
 #, python-format
 msgid "%s - not found"
 msgstr "%s - ei leitud"
 
-#: src/prefs.py:351
+#: src/prefs.py:434
 msgid "Network interface to use"
 msgstr "Kasutatav võrguliides"
 
-#: src/prefs.py:359
+#: src/prefs.py:442
 msgid "Incoming port for transfers"
 msgstr "Sissetulevate ülekannete port"
 
-#: src/prefs.py:366
+#: src/prefs.py:449
 msgid "Incoming port for registration"
 msgstr "Sissetulev port registreerimiseks"
 
-#: src/prefs.py:381
+#: src/prefs.py:464
 msgid "Apply network changes"
 msgstr "Rakenda võrgumuudatused"
 
-#: src/prefs.py:390
+#: src/prefs.py:473
 msgid "Update firewall rules"
 msgstr "Uuenda tulemüüri reegleid"
 
-#: src/prefs.py:402
+#: src/prefs.py:485
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -413,245 +473,255 @@ msgstr ""
 "Rakenduse jaoks sobivad kõik pordinumbrid, kuid kõigi arvutite jaoks samade "
 "portide kasutamine võib lihtsustada tulemüüri erandite lisamist vajadusel."
 
-#: src/prefs.py:475
+#: src/prefs.py:561
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Saadaval ainult turvarežiimis."
 
-#: src/prefs.py:552
+#: src/prefs.py:638
 msgid "A group code is required."
 msgstr "Vajalik on grupi kood."
 
-#: src/prefs.py:557
+#: src/prefs.py:643
 msgid "The group code is too short."
-msgstr ""
+msgstr "Grupi kood on liiga lühike."
 
-#: src/prefs.py:591
+#: src/prefs.py:677
 msgid "ON"
-msgstr ""
+msgstr "SEES"
 
-#: src/prefs.py:592
+#: src/prefs.py:678
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Kõik valikud on lubatud."
 
-#: src/prefs.py:595
+#: src/prefs.py:681
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Turvarežiimis käitamiseks peate määrama kohandatud grupi koodi. Mõned "
+"valikud on praegu keelatud."
 
-#: src/remote.py:490
-#, python-format
-msgid ""
-"Transfer completed, but the number of files received is less than the "
-"original request size (expected %d, received %d)"
-msgstr ""
-
-#: src/remote.py:613 src/remote.py:617
+#: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
 msgstr "Ühendus on katkenud"
 
-#: src/server.py:566
+#: src/server.py:591
 msgid "An error occurred on the remote machine"
 msgstr "Teises arvutis esines viga"
 
-#: src/transfers.py:216
-msgid "File count exceeds original request size"
-msgstr ""
-
-#: src/transfers.py:224
-#, python-format
-msgid "Resolved path is not valid: %s -> %s"
-msgstr ""
-
-#: src/util.py:153
+#: src/util.py:264
 msgid "Cancel"
 msgstr "Loobu"
 
-#: src/util.py:154
+#: src/util.py:265
 msgid "Add"
 msgstr "Lisa"
 
-#: src/util.py:176
+#: src/util.py:287
 msgid "Select file(s) to send"
 msgstr "Vali fail(id), mida saata"
 
-#: src/util.py:328
+#: src/util.py:648
 msgid "A few seconds remaining"
 msgstr "Jäänud mõned sekundid"
 
-#: src/util.py:331
+#: src/util.py:651
 #, python-format
 msgid "%d seconds remaining"
 msgstr "Jäänud %d sekundit"
 
-#: src/util.py:335 src/util.py:343
+#: src/util.py:655 src/util.py:663
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minut"
 msgstr[1] "%d minutit"
 
-#: src/util.py:342
+#: src/util.py:662
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d tund"
 msgstr[1] "%d tundi"
 
-#: src/util.py:347
+#: src/util.py:667
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "umbes %d tund"
 msgstr[1] "umbes %d tundi"
 
-#: src/util.py:435 src/warpinator.py:548
+#: src/util.py:755 src/warpinator.py:569
 msgid "About"
 msgstr "Lähemalt"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:145
 msgid "Paused"
 msgstr "Pausil"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:148
 msgid "Waiting for approval"
 msgstr "Nõusoleku ootel"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:150
 msgid "Waiting for your approval"
 msgstr "Sinu nõusoleku ootel"
+
+#: src/warpinator.py:153
+msgid "Not enough disk space"
+msgstr "Kõvakettal pole piisavalt ruumi"
 
 #: src/warpinator.py:156
 msgid "Files may be overwritten"
 msgstr "Faile võib üle kirjutada"
 
 #: src/warpinator.py:159
-msgid "Not enough disk space"
-msgstr "Kõvakettal pole piisavalt ruumi"
-
-#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "Ülekanne katkestati"
 
-#: src/warpinator.py:164 src/warpinator.py:166
+#: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "%s katkestas ülekande"
 
-#: src/warpinator.py:171 src/warpinator.py:173
+#: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "%s katkestas ülekande"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
 msgstr "Faili '%s' ei leitud"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:179
 msgid "Some files not found"
 msgstr "Mõnesid faile ei leitud"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:181
 msgid "Completed"
 msgstr "Lõpetatud"
 
-#: src/warpinator.py:186
+#: src/warpinator.py:183
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Lõpetatud, kuid vigadega"
 
-#: src/warpinator.py:345 src/warpinator.py:950
+#: src/warpinator.py:342 src/warpinator.py:1037
 msgid "Connecting"
 msgstr "Ühendumine"
 
-#: src/warpinator.py:347
+#: src/warpinator.py:344
 #, python-format
 msgid "Connecting to %s"
 msgstr "Ühendumine masinaga %s"
 
-#: src/warpinator.py:357
+#: src/warpinator.py:354
 #, python-format
 msgid "%s is not online"
 msgstr "%s ei ole võrgus"
 
-#: src/warpinator.py:362
+#: src/warpinator.py:359
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Ei saa ühendust arvutiga %s"
 
-#: src/warpinator.py:367
+#: src/warpinator.py:364
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Kasutaja %s järel ootamine ühenduse loomiseks."
 
-#: src/warpinator.py:396
+#: src/warpinator.py:393
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d uus sissetulev fail"
 msgstr[1] "%d uus sissetulevat faili"
 
-#: src/warpinator.py:513 src/warpinator.py:1385
+#: src/warpinator.py:534 src/warpinator.py:1557
 msgid "Favorites"
 msgstr "Lemmikud"
 
-#: src/warpinator.py:518 src/warpinator.py:1390
+#: src/warpinator.py:539 src/warpinator.py:1562
 msgid "Recents"
 msgstr "Hiljutised"
 
-#: src/warpinator.py:525 src/warpinator.py:1399
+#: src/warpinator.py:546 src/warpinator.py:1571
 msgid "Browse..."
 msgstr "Sirvi..."
 
-#: src/warpinator.py:540 src/warpinator.py:1331
-msgid "Open save folder"
-msgstr "Ava salvestamise kaust"
-
-#: src/warpinator.py:544
+#: src/warpinator.py:565
 msgid "Preferences"
 msgstr "Eelistused"
 
-#: src/warpinator.py:552 src/warpinator.py:1334
+#: src/warpinator.py:573 src/warpinator.py:1506
 msgid "Quit"
 msgstr "Välju"
 
-#: src/warpinator.py:645
+#: src/warpinator.py:679
 msgid "You don't appear to be connected to a network."
 msgstr "Tundub, et sa ei ole võrku ühendatud."
 
-#: src/warpinator.py:647
+#: src/warpinator.py:681
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Alustamine ei õnnestunud, kontrolli logifaile."
 
-#: src/warpinator.py:739
+#: src/warpinator.py:774
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator töötab piiratud funktsionaalsusega ja suletakse %d minuti pärast. "
+"Turvarežiimi lubamiseks määrake unikaalne grupikood."
 
-#: src/warpinator.py:741
+#: src/warpinator.py:776
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator töötab piiratud funktsionaalsusega ja suletakse %d minuti pärast. "
+"Turvarežiimi lubamiseks määrake unikaalne grupikood."
 
-#: src/warpinator.py:929
+#: src/warpinator.py:818
+#, python-format
+msgid "Not enough disk space remaining to receive files (%s is reserved)."
+msgstr ""
+"Failide vastuvõtmiseks pole kettaruumi piisavalt (%s on reserveeritud)."
+
+#: src/warpinator.py:896
+#, python-format
+msgid "Waiting for %d operation to complete"
+msgstr "%d toimingu lõpuleviimise ootel"
+
+#: src/warpinator.py:897
+#, python-format
+msgid "Waiting for %d operations to complete"
+msgstr "%d toimingute lõpuleviimise ootel"
+
+#: src/warpinator.py:1016
 msgid "Offline"
 msgstr "Ühendamata"
 
-#: src/warpinator.py:936
+#: src/warpinator.py:1023
 msgid "Unable to connect"
 msgstr "Ühendumine pole võimalik"
 
-#: src/warpinator.py:943
+#: src/warpinator.py:1030
 msgid "Waiting for two-way connection"
 msgstr "Kahesuunalise ühenduse järel ootamine"
 
-#: src/warpinator.py:1368
+#: src/warpinator.py:1540
 msgid "Send to all"
 msgstr "Saada kõigile"
+
+#: data/warpinator-send.nemo_action.in:4
+msgid "Send with Warpinator"
+msgstr "Saada Warpinatoriga"
+
+#: data/warpinator-send.nemo_action.in:5
+msgid "Send a file to someone using Warpinator"
+msgstr "Saatke fail kellelegi, kasutades Warpinatorit"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
