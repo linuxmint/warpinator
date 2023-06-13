@@ -44,7 +44,12 @@ if include_firewall_mod
     )
 endif
 
-current_date = run_command('date', '+%Y-%m-%d', check: false).stdout().strip()
+current_date = run_command('sh', '-c', '''
+      SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-`date +%s`}";
+      FORMAT="+%Y-%m-%d";
+      date -u -d @"$SOURCE_DATE_EPOCH" "$FORMAT" 2>/dev/null ||
+      date -u -r  "$SOURCE_DATE_EPOCH" "$FORMAT" 2>/dev/null ||
+      date -u "$FORMAT"''', check: false).stdout().strip()
 
 appdata_conf = configuration_data()
 appdata_conf.set('appid', desktop_id)
