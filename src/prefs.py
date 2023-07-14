@@ -94,7 +94,7 @@ try:
     try:
         path.parent.rmdir()
     except (OSError, FileNotFoundError):
-        logging.warn("Could not remove obsolete group code file and directory at '%s' - maybe the directory isn't empty?")
+        logging.warn("Could not remove obsolete group code file and directory at '%s' - maybe the directory isn't empty?" % str(path.parent))
 except GLib.Error as e:
     logging.debug("Migration failed - either migration already happened, or there was nothing to migrate in the first place: %s" % str(e))
 

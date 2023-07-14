@@ -341,7 +341,7 @@ def open_save_folder(filename=None):
     except GLib.Error as e:
         logging.critical("Could not open received files location: %s" % e.message)
 
-def verify_save_folder(transient_for=None):
+def verify_save_folder():
     # Forbidden locations for incoming files, relative to home.
     forbidden_folders = [
         ".config",
@@ -371,7 +371,22 @@ def verify_save_folder(transient_for=None):
         except ValueError:
             pass
 
+    # If you choose a read-only path to save to, it will create a hardlink to the real one in /run/user/...
+    # Consider this invalid to force the user to adjust their flatpak permissions to permit the normal path.
+    try:
+        if save_path.relative_to("/run"):
+            return False
+    except ValueError:
+        pass
+
     return os.access(save_path, os.R_OK | os.W_OK)
+
+def home_is_writable():
+    # For the flatpak version, if landlock is unavailable, the user will have to modify access permissions
+    # themselves using something like Flatseal. By default, the home directory is r/w because we don't know
+    # where their save folder is. The recommendation will be to specifically allow the save folder (r/w) and
+    # make the home folder readonly.
+    return os.access(Path.home(), os.W_OK)
 
 def test_resolved_path_safety(relative_path):
     # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)

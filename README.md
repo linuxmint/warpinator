@@ -129,6 +129,26 @@ Landlock is a relatively new security module for the Linux Kernel that allows a 
 Bubblewrap (or bwrap) is a tool that can be used to construct a restrictive environment that a program operate in. For Warpinator, Using bubblewrap provides an experience similar to Landlock, in that only your incoming folder can be written to. There are a couple of minor disadvantages, however: Changing your incoming folder location will require Warpinator to be restarted, and the rest of your filesystem will be read-only (for instance, you won't be able to create new folders elsewhere on your system from Warpinator's file dialog). Warpinator will attempt to use this if Landlock is not available.
 #### Legacy (No isolation):
 If both Landlock and Bubblewrap are unavailable, Warpinator will operate without and folder isolation, though incoming transfers will still be analyzed to try and catch any potentially harmful files.
+#### Flatpak users:
+Only landlock or legacy modes are available when using the Warpinator Flatpak, as bubblewrap is already utilized by Flatpak itself. If Landlock is not available (see additional information below for how to check this), you will want to lock your Home directory down yourself using either command-line arguments or the 'Flatseal' utility (which is itself a flatpak).
+
+To do this from the command line (or a custom launcher), you can use the following:
+```
+flatpak run --filesystem=home:ro --filesystem=<path-to-your-save-folder> org.x.Warpinator --mode=legacy
+```
+To make the change permanently using Flatseal:
+- Install Flatseal from [Flathub](https://flathub.org/apps/com.github.tchx84.Flatseal).
+- Launch it and select Warpinator from the Applications list.
+- Scroll down to the 'Filesystem' section
+- Turn OFF "All user files"
+- In 'Other files', click the new folder icon, and in the new field, enter the full path to your home folder with `:ro` at the end (this should look something like `/home/username:ro`).
+- Click the new folder icon again, and in the new field enter the path to the location you've selected as Warpinator's incoming folder. You can use the format `~/MyIncomingFolder` or `/home/username/MyIncomingFolder`.
+
+When you're finished, it should look something like this:
+![Flatseal filesystem permissions](doc/flatseal.png)
+
+Make sure you restart Warpinator after making these changes.
+
 ### Additional information:
 - Landlock is only available in kernel version 5.13 or higher, and must also be enabled. You can check if it's available by running `cat /sys/kernel/security/lsm | grep landlock` from a terminal.
 - Bubblewrap is available in most distributions using your system's package manager.

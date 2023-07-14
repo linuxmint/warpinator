@@ -36,14 +36,18 @@ system by running `cat /sys/kernel/security/lsm | grep landlock`.
 bubblewrap: requires the bwrap command. This is usually in a package called 'bubblewrap' but that may
 vary. Warpinator will run in a sandbox (similar to Flatpaks). Only the incoming folder will be writable.
 Other locations will be read-only, including the user's home. Changing the incoming folder location will
-require a program restart.
+require a program restart. This mode is not available in the Flatpak version
 
 legacy: Warpinator will run without any sort of protection, though some effort will still be made to
 detect relative links.
 
 Warpinator ordinarily will choose which mode to use automatically, depending on what's available. It
 will always prefer landlock over bubblewrap, with legacy as a last resort.
- 
+
+Flatpak users: If you can't use Landlock, you'll have to manage hardening yourself by adjusting runtime
+permissions. See https://github.com/linuxmint/warp/blob/master/README.md#folder-isolation for information
+on how to accomplish this.
+
 """
 
 parser = argparse.ArgumentParser(description="Send and Receive Files across the Network",
@@ -70,13 +74,16 @@ del sys.argv[1:]
 
 ###########################
 # See what mode we'll run in
+import config
+
 supported_modes = ["legacy"]
 
-if GLib.find_program_in_path("bwrap"):
-    supported_modes.insert(0, "bubblewrap")
-else:
-    if args.debug:
-        print("Bubblewrap (bwrap) not found")
+if not config.FLATPAK_BUILD:
+    if GLib.find_program_in_path("bwrap"):
+        supported_modes.insert(0, "bubblewrap")
+    else:
+        if args.debug:
+            print("Bubblewrap (bwrap) not found")
 try:
     import landlock
     landlock.landlock_abi_version()

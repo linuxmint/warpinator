@@ -483,8 +483,8 @@ class WarpWindow(GObject.Object):
         self.secmo_infobar_prefs_button.connect("clicked", self.open_prefs_networking)
 
         self.sandbox_mode_infobar = self.builder.get_object("sandbox_mode_infobar")
+        self.update_sandbox_mode_infobar()
 
-        self.sandbox_mode_infobar.set_visible(config.sandbox_mode == "legacy")
         self.sandbox_mode_infobar_close_button = self.builder.get_object("sandbox_infobar_close_button")
         self.sandbox_mode_infobar_close_button.connect("clicked", lambda b: self.sandbox_mode_infobar.hide())
         self.sandbox_mode_more_info_button = self.builder.get_object("sandbox_infobar_more_info_button")
@@ -670,6 +670,8 @@ class WarpWindow(GObject.Object):
         timeout = SERVER_RESTART_TIMEOUT if restarting else SERVER_START_TIMEOUT
 
         self.server_start_timeout_id = GLib.timeout_add_seconds(timeout, self.server_not_started_timeout)
+
+        self.update_sandbox_mode_infobar()
         self.show_page("startup")
 
     def server_not_started_timeout(self):
@@ -682,6 +684,10 @@ class WarpWindow(GObject.Object):
 
         self.server_start_timeout_id = 0
         return False
+
+    def update_sandbox_mode_infobar(self):
+        insecure = (config.sandbox_mode == "legacy") and (util.home_is_writable() if config.FLATPAK_BUILD else True)
+        self.sandbox_mode_infobar.set_visible(insecure)
 
     def show_no_network(self):
         if self.server_start_timeout_id > 0:
@@ -810,7 +816,10 @@ class WarpWindow(GObject.Object):
         self.prefs_window = None
 
     def report_bad_save_folder(self):
-        self.bad_save_folder_label.set_text(prefs.get_save_path())
+        path = prefs.get_save_path()
+        if path.startswith("/run"):
+            path = os.path.basename(path)
+        self.bad_save_folder_label.set_text(path)
         self.show_page("bad-save-folder")
 
     def report_no_disk_space(self):
