@@ -145,6 +145,7 @@ To make the change permanently using Flatseal:
 - Click the new folder icon again, and in the new field enter the path to the location you've selected as Warpinator's incoming folder. You can use the format `~/MyIncomingFolder` or `/home/username/MyIncomingFolder`.
 
 When you're finished, it should look something like this:
+
 ![Flatseal filesystem permissions](doc/flatseal.png)
 
 Make sure you restart Warpinator after making these changes.
@@ -159,7 +160,8 @@ Make sure you restart Warpinator after making these changes.
 ### Improving transfer speeds
 #### **Enable compression**:
 Beginning in version 1.2.0, transfers can potentially be sped up by enabling compression. **Note:** this will only work if the sending and receiving machine *both support it*. It can be enabled in General Preferences:
-![image](https://user-images.githubusercontent.com/262776/162252856-56698570-f951-4b64-b938-df902f2b6872.png)
+
+![Compression switch](doc/compression.png)
 
 ### Solving connection issues
 #### **Check your group code**:
@@ -169,10 +171,11 @@ All devices must be on the same local subnet in order to connect. While Warpinat
 
 - If you're running Warpinator in a virtual machine, make sure you've set it up to use a 'bridged' network adapter. This enables the VM to appear as a real computer on the network. If you don't do this, it won't be visible to other Warpinator devices on the network. In VirtualBox, this can be changed as shown:
 
-![image](https://user-images.githubusercontent.com/262776/162258158-5f10b8b9-7f46-44b9-a799-aee67a069977.png)
+![VBox guest network settings](doc/vbox-net-1.png)
 
 - If you are connected to multiple networks, you may need to select a specific interface in Preferences:
-![image](https://user-images.githubusercontent.com/262776/162258962-a0bb3e25-2e41-44ac-b078-c12fad2292b9.png)
+
+![VBox guest network interface selection](doc/vbox-net-2.png)
 
 - Make sure you don't have a VPN currently enabled on the device. Allowing 'LAN traffic' in your VPN configuration can sometimes avoid this problem, though you should disable the VPN entirely until you can confirm there are no connection issues without it.
 #### **Make sure your firewall is configured properly, if one is being used:**
@@ -183,7 +186,9 @@ In order for devices to connect with one another, rules must be added for Warpin
  **Note: If you are planning to use the Flatpak version to connect to other machines using Flatpak, you need to open UDP port 5353 as well as those mentioned above. Even if the port is already opened according to gufw, it must be explicitly opened here.**
 
 - If you use [gufw](https://gufw.org), Warpinator can add the rules for you (this is not available for the Flatpak version):
-![image](https://user-images.githubusercontent.com/262776/162268196-3f3ca9af-09a5-4c67-ac2e-7a5fdbc952da.png)
+
+![Preferences firewall info](doc/firewall.png)
+
 - If you're using the Flatpak version, you can add the rules to gufw by adding 'Simple' rules:
 
 ![Transfers: TCP port](doc/firewall-1.png)
@@ -204,7 +209,7 @@ You should end up with:
 It's possible there is something else causing your connection issues that is not covered here. You can run Warpinator in debug mode to gather additional information to troubleshoot (or to attach to an Issue report here).
 - First, make sure Warpinator isn't already running - open the menu and click 'Quit'. Simply closing the window will not necessarily end the program, if you have the status icon enabled.
 
-![image](https://user-images.githubusercontent.com/262776/162272389-403407ea-0f7a-4502-85f5-93eab3f5eff4.png)
+![Quit Warpinator](doc/quit.png)
 
 - Then, open a terminal and run:
 ```bash
