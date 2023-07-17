@@ -9,7 +9,7 @@ body:
         - Run warpinator from a terminal to see if any errors or warnings are printed while reproducing the issue: `warpinator --debug`
         - Check your logs - there may be some obvious cause for your trouble - in Linux Mint you can check ~/.xsession-errors (a hidden file in your Home folder).
         - If this is a *crash*, provide information about it if possible (CoreDump file, stack trace, etc...). In Linux Mint you can check the System Reports program. For Warpinator, it may show up as a python crash.
-        - The [README.md](../../README.md) file has a great deal of troubleshooting information as well. Please have a look there before reporting your issue.
+        - The [README.md](/linuxmint/warpinator/blob/master/README.md) file has a great deal of troubleshooting information as well. Please have a look there before reporting your issue.
         ---
 
         Thank you for taking the time to report this issue. To allow us to work as efficiently as possible at resolving this, we need some information from you.
