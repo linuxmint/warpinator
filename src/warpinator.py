@@ -8,11 +8,13 @@ import functools
 import logging
 import time
 import math
+import qrcode
+from io import BytesIO
 
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('XApp', '1.0')
-from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
+from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk, GdkPixbuf
 
 import config
 import prefs
@@ -562,6 +564,10 @@ class WarpWindow(GObject.Object):
         item.connect("activate", self.on_open_location_clicked)
         menu.add(item)
 
+        item = Gtk.MenuItem(label=_("Connect manually"))
+        item.connect("activate", self.manual_connect)
+        menu.add(item)
+
         item = Gtk.MenuItem(label=_("Preferences"))
         item.connect("activate", self.open_preferences)
         menu.add(item)
@@ -754,10 +760,13 @@ class WarpWindow(GObject.Object):
         Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
-    def update_local_user_info(self, ip="0.0.0.0", iface=""):
+    def update_local_user_info(self, ip="0.0.0.0", iface="", auth_port=0):
         self.app_local_name_label.set_text(util.get_local_name())
         self.app_iface_label.set_text(iface)
         self.app_ip_label.set_text(ip)
+        self.current_ip = ip
+        self.current_iface = iface
+        self.current_auth_port = auth_port
 
     def update_secure_mode_info(self, is_secure):
         if is_secure:
@@ -814,6 +823,13 @@ class WarpWindow(GObject.Object):
 
     def on_prefs_destroy(self, window):
         self.prefs_window = None
+
+    def manual_connect(self, target):
+         dialog = ManualConnectDialog(self.window, self.current_ip, self.current_auth_port)
+         res = dialog.run()
+         if res == Gtk.ResponseType.OK:
+             print("Connecting to " + dialog.entry.get_text())
+         dialog.destroy()
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
@@ -1135,6 +1151,46 @@ class WarpWindow(GObject.Object):
     def destroy(self):
         self.window.destroy()
 
+class ManualConnectDialog(Gtk.Dialog):
+    def __init__(self, parent, ip, port):
+        super().__init__(title=_("Manual connection"), transient_for=parent, flags=0)
+        self.add_buttons(
+            Gtk.STOCK_CLOSE, Gtk.ResponseType.CANCEL, _("Connect"), Gtk.ResponseType.OK
+        )
+
+        self.set_default_size(150, 100)
+
+        box = self.get_content_area()
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+
+        label = Gtk.Label(label=_("Your other device can initiate connection by scanning this QR code with the camera app or by using the following address:\n%s:%d") % (ip, port))
+        label.set_width_chars(50)
+        label.set_line_wrap(True)
+        vbox.add(label)
+
+        qrbytes = BytesIO()
+        qr = qrcode.make("warpinator://%s:%d" % (ip, port))
+        qr.save(qrbytes, "BMP")
+        stream = Gio.MemoryInputStream.new_from_bytes(GLib.Bytes.new(qrbytes.getvalue()))
+        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, 250, 250, True, None)
+        img = Gtk.Image.new_from_pixbuf(pixbuf)
+        vbox.add(img)
+
+        label2 = Gtk.Label(label=_("Alternatively, initiate the connection by typing the IP address and port of the other device here:"))
+        label2.set_line_wrap(True)
+        vbox.add(label2)
+
+        self.entry = Gtk.Entry()
+        vbox.add(self.entry)
+
+        box.add(vbox)
+        vbox.set_margin_bottom(10)
+        box.set_margin_bottom(10)
+        box.set_margin_top(10)
+        box.set_margin_left(10)
+        box.set_margin_right(10)
+        self.show_all()
+
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
         super(WarpApplication, self).__init__(application_id="org.x.Warpinator", register_session=True)
@@ -1297,7 +1353,7 @@ class WarpApplication(Gtk.Application):
 
         logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info.ip4_address)
 
-        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface)
+        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface, self.current_auth_port)
 
         self.window.clear_remotes()
 
