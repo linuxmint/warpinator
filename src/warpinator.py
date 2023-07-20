@@ -817,7 +817,7 @@ class WarpWindow(GObject.Object):
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
-        if path.startswith("/run"):
+        if path.startswith("/run/user"):
             path = os.path.basename(path)
         self.bad_save_folder_label.set_text(path)
         self.show_page("bad-save-folder")
@@ -1255,7 +1255,6 @@ class WarpApplication(Gtk.Application):
                 self.window.window.show()
                 self.window.window.present_with_time(Gtk.get_current_event_time())
                 self.bad_folder = True
-            print(perms_ok, space_ok)
             if not perms_ok:
                 self.window.report_bad_save_folder()
             elif not space_ok:
