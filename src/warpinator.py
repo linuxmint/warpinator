@@ -825,11 +825,16 @@ class WarpWindow(GObject.Object):
         self.prefs_window = None
 
     def manual_connect(self, target):
-         dialog = ManualConnectDialog(self.window, self.current_ip, self.current_auth_port)
-         res = dialog.run()
-         if res == Gtk.ResponseType.OK:
-             print("Connecting to " + dialog.entry.get_text())
-         dialog.destroy()
+        dialog = ManualConnectDialog(self.window, self.current_ip, self.current_auth_port)
+        res = dialog.run()
+        if res == Gtk.ResponseType.OK:
+            host = dialog.entry.get_text()
+            self.emit("manual_connect_to_host", host)
+        dialog.destroy()
+
+    @GObject.Signal(arg_types=(str,))
+    def manual_connect_to_host(self, host):
+        logging.debug("Connecting to " + host)
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
@@ -1276,6 +1281,7 @@ class WarpApplication(Gtk.Application):
 
         self.window = WarpWindow()
         self.window.connect("exit", lambda w: self.exit_warp())
+        self.window.connect("manual_connect_to_host", lambda _, host: self.server.register_with_host(host))
 
         self.add_window(self.window.window)
 

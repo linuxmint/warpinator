@@ -212,24 +212,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 machine.port = info.port
                 machine.api_version = api_version
             except KeyError:
-                display_hostname = remote_hostname
-                i = 1
-
-                while True:
-                    found = False
-
-                    for key in self.remote_machines.keys():
-                        remote_machine = self.remote_machines[key]
-
-                        if remote_machine.display_hostname == display_hostname:
-                            display_hostname = "%s[%d]" % (remote_hostname, i)
-                            found = True
-                            break
-
-                    i += 1
-
-                    if not found:
-                        break
+                display_hostname = self.ensure_unique_hostname(remote_hostname)
 
                 logging.info(">>> Discovery: new remote: %s (%s:%d)"
                                   % (display_hostname, remote_ip_info.ip4_address, info.port))
@@ -262,6 +245,79 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                # itself.
 
             machine.start_remote_thread()
+
+    def register_with_host(self, host):
+        logging.info("Registering with " + host)
+        with grpc.insecure_channel(host) as channel:
+            future = grpc.channel_ready_future(channel)        
+            try:
+                future.result(timeout=5)
+                stub = warp_pb2_grpc.WarpRegistrationStub(channel)
+                reg = stub.RegisterService(warp_pb2.ServiceRegistration(service_id=self.service_ident,
+                                            ip=self.ip_info.ip4_address, port=self.port,
+                                            hostname=util.get_hostname(), api_version=int(config.RPC_API_VERSION),
+                                            auth_port=self.auth_port),
+                                            timeout=5)
+                sep = host.rfind(":")
+                ip = host[:sep]
+                auth_port = int(host[sep+1:])
+                self.handle_manual_service_registration(reg, ip, auth_port)
+            except Exception as e:
+                future.cancel()
+                logging.critical("Could not register with %s, err %s" % (host, e))
+
+    def handle_manual_service_registration(self, reg, ip, auth_port):
+        if reg.service_id in self.remote_machines.keys():
+            # Machine already known -> update
+            machine = self.remote_machines[reg.service_id]
+            if machine.status == RemoteStatus.ONLINE:
+                logging.debug("Host %s:%d was already connected" % (ip, auth_port))
+                return
+            if not self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) or self.server_thread_keepalive.is_set():
+                logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d" % (reg.hostname, ip, reg.port, auth_port))
+                return
+            machine.hostname = reg.hostname
+            machine.ip_info.ip4_address = ip
+            machine.port = reg.port
+            machine.api_version = str(reg.api_version)
+
+            machine.shutdown()
+            machine.start_remote_thread()
+        else: # New machine
+            logging.debug("Adding new static machine (manual connection)")
+            display_hostname = self.ensure_unique_hostname(reg.hostname)
+            ip_info = util.RemoteInterfaceInfo([])
+            ip_info.ip4_address = ip
+            machine = remote.RemoteMachine(reg.service_id, reg.hostname, display_hostname, ip_info, reg.port, self.service_ident, str(reg.api_version))
+            if not self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) or self.server_thread_keepalive.is_set():
+                logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d"
+                                    % (machine.hostname, machine.ip_info.ip4_address, machine.port, auth_port))
+                return
+            self.remote_machines[machine.ident] = machine
+            machine.connect("ops-changed", self.remote_ops_changed)
+            machine.connect("remote-status-changed", self.remote_status_changed)
+            self.idle_emit("remote-machine-added", machine)
+            machine.start_remote_thread()
+
+    def ensure_unique_hostname(self, hostname):
+        display_hostname = hostname
+        i = 1
+        while True:
+            found = False
+
+            for key in self.remote_machines.keys():
+                remote_machine = self.remote_machines[key]
+
+                if remote_machine.display_hostname == display_hostname:
+                    display_hostname = "%s[%d]" % (hostname, i)
+                    found = True
+                    break
+
+            i += 1
+            if not found:
+                break
+
+        return display_hostname
 
     def run(self):
         logging.info("Using grpc version %s %s" % (grpc.__version__, "(bundled)" if config.bundle_grpc else ""))
