@@ -328,6 +328,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
 
         self.remote_registrar = remote_registration.Registrar(self.ip_info, self.port, self.auth_port)
+        self.remote_registrar.reg_server_v2.service_registration_handler = self.handle_manual_service_registration
         util.initialize_rpc_threadpool()
 
         options=(
