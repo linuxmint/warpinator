@@ -128,7 +128,7 @@ Landlock is a relatively new security module for the Linux Kernel that allows a 
 #### [Bubblewrap](https://github.com/containers/bubblewrap#readme):
 Bubblewrap (or bwrap) is a tool that can be used to construct a restrictive environment that a program operate in. For Warpinator, Using bubblewrap provides an experience similar to Landlock, in that only your incoming folder can be written to. There are a couple of minor disadvantages, however: Changing your incoming folder location will require Warpinator to be restarted, and the rest of your filesystem will be read-only (for instance, you won't be able to create new folders elsewhere on your system from Warpinator's file dialog). Warpinator will attempt to use this if Landlock is not available.
 #### Legacy (No isolation):
-If both Landlock and Bubblewrap are unavailable, Warpinator will operate without and folder isolation, though incoming transfers will still be analyzed to try and catch any potentially harmful files.
+If both Landlock and Bubblewrap are unavailable, Warpinator will operate without folder isolation, though incoming transfers will still be analyzed to try and catch any potentially harmful files.
 #### Flatpak users:
 Only landlock or legacy modes are available when using the Warpinator Flatpak, as bubblewrap is already utilized by Flatpak itself. If Landlock is not available (see additional information below for how to check this), you will want to lock your Home directory down yourself using either command-line arguments or the 'Flatseal' utility (which is itself a flatpak).
 
@@ -149,6 +149,11 @@ When you're finished, it should look something like this:
 ![Flatseal filesystem permissions](doc/flatseal.png)
 
 Make sure you restart Warpinator after making these changes.
+
+---
+**IMPORTANT**
+If you selected a new save folder in Warpinator preferences *before* allowing it in Flatseal, **you will need to re-select it in Preferences**. This is a characteristic of Flatpaks in general, where inaccessible user folders are re-created inside the sandbox, and Warpinator will not have the real folder's path.
+---
 
 ### Additional information:
 - Landlock is only available in kernel version 5.13 or higher, and must also be enabled. You can check if it's available by running `cat /sys/kernel/security/lsm | grep landlock` from a terminal.
