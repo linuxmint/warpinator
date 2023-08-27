@@ -5,6 +5,7 @@ import threading
 import gettext
 import logging
 import time
+import re
 import pkg_resources
 from concurrent import futures
 
@@ -248,7 +249,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             machine.start_remote_thread()
 
     @misc._async
-    def register_with_host(self, host):
+    def register_with_host(self, host:str):
+        p = re.compile(r'(warpinator://)?(\d{1,3}(\.\d{1,3}){3}):(\d{1,6})/?$')
+        m = p.match(host)
+        if not m:
+            logging.info("User tried to connect to invalid address %s" % host)
+            self.idle_emit("manual-connect-result", True, False, "Invalid address")
+            return
+        host = "%s:%s" % (m.group(2), m.group(4))
         logging.info("Registering with " + host)
         with grpc.insecure_channel(host) as channel:
             future = grpc.channel_ready_future(channel)        
@@ -260,9 +268,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                             hostname=util.get_hostname(), api_version=int(config.RPC_API_VERSION),
                                             auth_port=self.auth_port),
                                             timeout=5)
-                sep = host.rfind(":")
-                ip = host[:sep]
-                auth_port = int(host[sep+1:])
+                ip = m.group(2)
+                auth_port = int(m.group(4))
                 self.handle_manual_service_registration(reg, ip, auth_port, True)
             except Exception as e:
                 future.cancel()

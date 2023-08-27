@@ -1158,6 +1158,8 @@ class ManualConnectDialog(Gtk.Window):
         self.parent = parent
 
         self.set_default_size(150, 100)
+        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
 
         box = Gtk.Box()
         self.add(box)
@@ -1188,7 +1190,7 @@ class ManualConnectDialog(Gtk.Window):
         vbox.add(hbox)
         self.spinner = Gtk.Spinner()
         self.lblStatus = Gtk.Label(label="")
-        hbox.pack_start(self.lblStatus, True, True, 10)
+        hbox.pack_start(self.lblStatus, True, True, 0)
         hbox.add(self.spinner)
         self.lblStatus.set_xalign(0.0)
         
