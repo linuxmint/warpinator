@@ -46,7 +46,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         "remote-machine-ops-changed": (GObject.SignalFlags.RUN_LAST, None, (str,)),
         "local-info-changed": (GObject.SignalFlags.RUN_LAST, None, (str,)),
         "server-started": (GObject.SignalFlags.RUN_LAST, None, ()),
-        "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ())
+        "shutdown-complete": (GObject.SignalFlags.RUN_LAST, None, ()),
+        "manual-connect-result": (GObject.SignalFlags.RUN_LAST, None, (bool, bool, str)),
     }
     def __init__(self, ip_info, port, auth_port):
         threading.Thread.__init__(self, name="server-thread")
@@ -246,6 +247,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
             machine.start_remote_thread()
 
+    @misc._async
     def register_with_host(self, host):
         logging.info("Registering with " + host)
         with grpc.insecure_channel(host) as channel:
@@ -261,20 +263,23 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 sep = host.rfind(":")
                 ip = host[:sep]
                 auth_port = int(host[sep+1:])
-                self.handle_manual_service_registration(reg, ip, auth_port)
+                self.handle_manual_service_registration(reg, ip, auth_port, True)
             except Exception as e:
                 future.cancel()
                 logging.critical("Could not register with %s, err %s" % (host, e))
+                self.idle_emit("manual-connect-result", True, False, "Could not connect to remote")
 
-    def handle_manual_service_registration(self, reg, ip, auth_port):
+    def handle_manual_service_registration(self, reg, ip, auth_port, initiated_here=False):
         if reg.service_id in self.remote_machines.keys():
             # Machine already known -> update
             machine = self.remote_machines[reg.service_id]
             if machine.status == RemoteStatus.ONLINE:
                 logging.debug("Host %s:%d was already connected" % (ip, auth_port))
+                self.idle_emit("manual-connect-result", initiated_here, True, "Already connected")
                 return
             if not self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) or self.server_thread_keepalive.is_set():
                 logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d" % (reg.hostname, ip, reg.port, auth_port))
+                self.idle_emit("manual-connect-result", initiated_here, False, "Authentication failed")
                 return
             machine.hostname = reg.hostname
             machine.ip_info.ip4_address = ip
@@ -292,12 +297,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             if not self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) or self.server_thread_keepalive.is_set():
                 logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d"
                                     % (machine.hostname, machine.ip_info.ip4_address, machine.port, auth_port))
+                self.idle_emit("manual-connect-result", initiated_here, False, "Authentication failed")
                 return
             self.remote_machines[machine.ident] = machine
             machine.connect("ops-changed", self.remote_ops_changed)
             machine.connect("remote-status-changed", self.remote_status_changed)
             self.idle_emit("remote-machine-added", machine)
             machine.start_remote_thread()
+        self.idle_emit("manual-connect-result", initiated_here, True, "Connected")
 
     def ensure_unique_hostname(self, hostname):
         display_hostname = hostname
