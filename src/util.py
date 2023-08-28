@@ -86,7 +86,7 @@ class NewThreadExecutor():
                 if self.count == 0:
                     break
             logging.debug("sleep")
-            sleep(.1)
+            time.sleep(.1)
         logging.debug("NewThreadExecutor: done waiting for workers, end factory thread")
 
     def submit(self, func, *args, **kargs):
