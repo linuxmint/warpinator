@@ -1475,7 +1475,7 @@ class WarpApplication(Gtk.Application):
     def update_status_icon_from_preferences(self):
         if prefs.use_tray_icon():
             if self.status_icon is None:
-                self.status_icon = XApp.StatusIcon()
+                self.status_icon = XApp.StatusIcon(name="org.x.StatusIcon.warpinator")
                 self.status_icon.connect("activate", self.on_tray_icon_activate)
                 self.update_status_icon_online_state(self.server is not None)
                 self.hold()
