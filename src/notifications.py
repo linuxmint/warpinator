@@ -206,7 +206,7 @@ class WarpinatorSendNotification():
             if self.op.total_count > 1:
                 body = (_("Sending %d files to %s") % (self.op.total_count, self.op.receiver_name))
             else:
-                body = (_("Sending '%s' to %s") % (self.op.top_dir_basenames[0], self.op.sender_name))
+                body = (_("Sending '%s' to %s") % (self.op.top_dir_basenames[0], self.op.receiver_name))
 
             notification.set_body(body)
             notification.set_icon(Gio.ThemedIcon(name="dialog-info-symbolic"))
