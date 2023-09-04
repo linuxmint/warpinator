@@ -33,10 +33,6 @@ _ = gettext.gettext
 setproctitle.setproctitle("warpinator-send")
 
 class WarpinatorSender:
-    """
-    This is a standalone executable that provides a simple way
-    of controlling the screensaver via its dbus interface.
-    """
     def __init__(self):
         self.proxy = None
         self.ecode = 0
