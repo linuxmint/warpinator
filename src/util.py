@@ -388,8 +388,11 @@ def home_is_writable():
     return os.access(Path.home(), os.W_OK)
 
 def test_resolved_path_safety(relative_path):
-    # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths)
-    base = Path(prefs.get_save_path())
+    # Check for valid path (pathlib.Path resolves both relative and symbolically-linked paths).
+    # If the base save location is itself a symlink, resolve it before appending relative_path
+    # so it doesn't get caught by our checks.
+    base = Path(prefs.get_save_path()).resolve()
+
     unresolved = base.joinpath(relative_path)
 
     try:

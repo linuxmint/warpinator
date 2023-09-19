@@ -168,7 +168,7 @@ class FileSender(GObject.Object):
 class FileReceiver(GObject.Object):
     def __init__(self, op):
         super(FileReceiver, self).__init__()
-        self.save_path = prefs.get_save_path()
+        self.save_path = Path(prefs.get_save_path()).resolve()
         self.op = op
         self.preserve_perms = prefs.preserve_permissions() and util.save_folder_is_native_fs()
         self.preserve_timestamp = prefs.preserve_timestamp() and util.save_folder_is_native_fs()
@@ -189,23 +189,22 @@ class FileReceiver(GObject.Object):
     def clean_existing_files(self):
         logging.debug("Removing any existing files matching the pending transfer")
         for name in self.op.top_dir_basenames:
-            path = Path(os.path.join(self.save_path, name))
-            self.rm_any(path)
+            path = self.save_path / name
+            self.rm_any(str(path))
 
     def clean_current_top_dir_file(self):
         if self.current_path is not None:
             current = Path(self.current_path)
-            save = Path(self.save_path)
 
             try:
-                relative = current.relative_to(save)
+                relative = current.relative_to(self.save_path)
                 util.test_resolved_path_safety(relative.as_posix())
             except (ValueError, ReceiveError) as e:
                 logging.critical("Partial file or directory from aborted transfer is invalid: %s" % str(e))
                 return
 
-            abs_top_dir = save.joinpath(relative.parts[0])
-            logging.debug("Removing partial file or directory: %s" % abs_top_dir)
+            abs_top_dir = self.save_path.joinpath(relative.parts[0])
+            logging.debug("Removing partial file or directory: %s" % str(abs_top_dir))
 
             self.rm_any(abs_top_dir)
 
@@ -221,7 +220,7 @@ class FileReceiver(GObject.Object):
             logging.warning("Problem removing existing files: %s" % e)
 
     def receive_data(self, s):
-        path = os.path.join(self.save_path, s.relative_path)
+        path = str(self.save_path.joinpath(s.relative_path))
         if path != self.current_path:
             self.close_current_file()
             self.current_path = path
