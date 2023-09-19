@@ -194,6 +194,9 @@ def get_remote_pool_max_threads():
     if setting_value == 0:
         setting_value = max(8, os.cpu_count() + 4)
 
+    if setting_value < 4:
+        setting_value = 4
+
     return setting_value
 
 def get_server_pool_max_threads():

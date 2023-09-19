@@ -67,7 +67,7 @@
     <key name="rpc-thread-pool-size" type="i">
       <default>0</default>
       <summary>Number of threads to share between all remotes and the server to handle inter-machine communication</summary>
-      <description>If this is set to 0, a sane value will be used based equal to larger of (number_of_cpu_cores + 4) and 8.  It is recommended to set this to at least 8.</description>
+      <description>If this is set to 0, a sane value will be used based equal to larger of (number_of_cpu_cores + 4) and 8.  A minimum of 4 will always be used, though 8 are recommended.</description>
     </key>
     <key name="server-thread-pool-size" type="i">
       <default>4</default>
