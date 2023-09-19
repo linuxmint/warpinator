@@ -6,6 +6,7 @@ import gettext
 import setproctitle
 import json
 import os
+from pathlib import Path
 import sys
 import locale
 import functools
@@ -44,18 +45,18 @@ class WarpinatorSender:
                             help="Destination remote's UUID/identity, as retrieved by --list-remotes. If omitted, you will be prompted for a destination.")
         parser.add_argument("--xid", dest="parent_window", action='store',
                             help="Window ID of the calling application (optional)")
-        parser.add_argument("uris", type=str, nargs="*",
-                            help="List of file URIs to be sent (required unless '--list-remotes' is called).")
+        parser.add_argument("uris", type=str, nargs="*", metavar="URIs/paths",
+                            help="List of file URIs and/or paths to be sent (required unless '--list-remotes' is called).")
 
         args = parser.parse_args()
 
         if not args.list_remotes and len(args.uris) == 0:
             print("Must have at least 1 uri if --get-live-remotes is not set", file=sys.stderr)
             parser.print_help()
-            exit(1)
+            self.quit(1)
 
         self.ident = args.ident
-        self.files = args.uris
+        self.files = self.parse_uris(args.uris)
         self.list_remotes = args.list_remotes
 
         if args.parent_window:
@@ -76,18 +77,36 @@ class WarpinatorSender:
             self._on_proxy_ready
         )
 
+    def parse_uris(self, uris):
+        files = []
+
+        for uri in uris:
+            file = Gio.File.new_for_uri(uri)
+            if file.get_uri_scheme() is None:
+                p = Path(uri).expanduser()
+
+                if not uri.startswith("/"):
+                    p = Path.cwd() / p
+
+                file = Gio.File.new_for_path(str(p))
+
+            if not file.query_exists():
+                print("File does not exist: %s" % file.get_uri(), file=sys.stderr)
+                self.quit(1)
+            files.append(file)
+
+        return files
+
     def _on_proxy_ready(self, object, result, data=None):
         try:
             self.proxy = Gio.DBusProxy.new_for_bus_finish(result);
 
             if self.proxy.get_name_owner() is None:
                 print("Can connect to Warpinator - is it running?")
-                self.ecode = 1
-                Gtk.main_quit()
+                self.quit(1)
         except GLib.Error as e:
             print("Can't create warpinator proxy (%d): %s" % (e.code, e.message), file=sys.stderr)
-            self.ecode = 1
-            Gtk.main_quit()
+            self.quit(1)
 
         self.handle_command()
 
@@ -118,9 +137,9 @@ class WarpinatorSender:
             var = source.call_finish(res)
         except GLib.Error as e:
             print("Could not send files: %s" % str(e), file=sys.stderr)
-            self.ecode = 1
+            self.quit(1)
 
-        Gtk.main_quit()
+        self.quit()
 
     def list_remotes_command_finished(self, source, res, data=None):
         try:
@@ -131,18 +150,22 @@ class WarpinatorSender:
             print(dump, file=sys.stdout)
         except GLib.Error as e:
             print("Could not list remotes: %s" % str(e), file=sys.stderr)
-            self.ecode = 1
+            self.quit(1)
 
-        Gtk.main_quit()
+        self.quit()
 
     def list_remotes_for_send_finished(self, source, res, data=None):
         try:
             var = source.call_finish(res)
             remote_list = var[0]
+            if len(remote_list) == 0:
+                print("No remotes available to send to", file=sys.stderr)
+                self.quit(1)
+                return
+
         except GLib.Error as e:
             print("Could not list remotes to ask user: %s" % str(e), file=sys.stderr)
-            self.ecode = 1
-            Gtk.main_quit()
+            self.quit(1)
             return
 
         popup = Gtk.Window(type_hint=Gdk.WindowTypeHint.POPUP_MENU,
@@ -220,9 +243,7 @@ class WarpinatorSender:
                 window.get_window().set_transient_for(parent)
 
     def on_delete_popup(self, window, event, data=None):
-        self.ecode = 1
-        Gtk.main_quit()
-
+        self.quit(1)
         return Gdk.EVENT_PROPAGATE
 
     def remote_selected(self, button, ident):
@@ -230,7 +251,7 @@ class WarpinatorSender:
         self.send_files_to(ident)
 
     def send_files_to(self, ident):
-        files_var = GLib.Variant.new_array(None, [GLib.Variant.new_string(uri) for uri in self.files])
+        files_var = GLib.Variant.new_array(None, [GLib.Variant.new_string(file.get_uri()) for file in self.files])
         full_var = GLib.Variant("(sas)", [ident, files_var])
 
         self.proxy.call(
@@ -242,7 +263,14 @@ class WarpinatorSender:
             self.send_files_command_finished
         )
 
+    def quit(self, code=0):
+        if Gtk.main_level() == 0:
+            sys.exit(code)
+        else:
+            self.ecode = code
+            Gtk.main_quit()
+
 if __name__ == "__main__":
     sender = WarpinatorSender()
     Gtk.main()
-    exit(sender.ecode)
+    sys.exit(sender.ecode)
