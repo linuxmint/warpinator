@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-06-06 14:01+0100\n"
 "PO-Revision-Date: 2022-09-20 21:41+0000\n"
-"Last-Translator: Nikolay Trifonov <trifonov88@gmail.com>\n"
+"Last-Translator: Gameline <glineytofficialcontact@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,39 +20,39 @@ msgstr ""
 
 #: resources/group-code.ui:16 src/prefs.py:342
 msgid "Group Code"
-msgstr ""
+msgstr "Групов код"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
+msgstr "Не можете да комуникирате със компютри който не исповзват един и същи код"
 
 #: resources/group-code.ui:49 resources/main-window.ui:51
 msgid "Set code"
-msgstr ""
+msgstr "Настройте код"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Безопасен режим:"
 
 #: resources/group-code.ui:106 src/prefs.py:680
 msgid "OFF"
-msgstr ""
+msgstr "Изключен"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 msgid "More information"
-msgstr ""
+msgstr "Повече информация"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Безопасния режим е изключен"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Папката със свалянията не е безопасена"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr ""
+msgstr "Няма съответстващи резултати"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
@@ -106,19 +106,19 @@ msgstr "Възможни решения:"
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr ""
+msgstr "Warpinator е наличен на:"
 
 #: resources/main-window.ui:915
 msgid "Android"
-msgstr ""
+msgstr "Android"
 
 #: resources/main-window.ui:931
 msgid "iOS"
-msgstr ""
+msgstr "iOS"
 
 #: resources/main-window.ui:947
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 #: resources/main-window.ui:1021
 msgid "Initializing, please wait..."
@@ -137,6 +137,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Тази папка е недостъпна, или непозволена за запазване на файлове"
+"Изберете друга папка във Настройки,м и се уверете че е достъпна."
 
 #: resources/main-window.ui:1247
 msgid "Searching for other computers"
@@ -148,19 +150,19 @@ msgstr "Изключване..."
 
 #: resources/main-window.ui:1378
 msgid "Restart required"
-msgstr ""
+msgstr "Нужен е рестарт"
 
 #: resources/main-window.ui:1395
 msgid "Warpinator needs to restart before the new save directory can be used"
-msgstr ""
+msgstr "Warpinator трябва да рестатира преди да можете да испозвате новата папка за запазвания"
 
 #: resources/main-window.ui:1405
 msgid "Restart"
-msgstr ""
+msgstr "Рестартирай"
 
 #: resources/main-window.ui:1475
 msgid "Disk Full"
-msgstr ""
+msgstr "Диска е пълен"
 
 #: resources/main-window.ui:1512
 msgid ""
@@ -168,18 +170,21 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Няма достатъчно място на директорията за запазване, трябва да истриите"
+"някои фаилове, да намалите минималното нужно постранство във найстройки, или"
+"да изберете нова директория"
 
 #: resources/main-window.ui:1529
 msgid "Empty trash"
-msgstr ""
+msgstr "Изпразни кошчето"
 
 #: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
 msgid "Open save folder"
-msgstr ""
+msgstr "Отвори сиректорията със запазените файлове"
 
 #: resources/main-window.ui:1556
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Проучи употреба на диска"
 
 #: resources/main-window.ui:1609 src/util.py:759
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -217,7 +222,7 @@ msgstr "Рестартирай тази операция"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Паузирай тази операция"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
@@ -237,36 +242,36 @@ msgstr "Отвори съдържащата папка"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "Бележка на номера на порта:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
-msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Найстройки за Warpinator"
 
 #: src/notifications.py:24
 msgid "New incoming files"
-msgstr ""
+msgstr "Нови влизащи фаилове"
 
 #: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
-msgstr ""
+msgstr "" 
+"%(sender_name) иска да ти испрати %(file_count)d файл (%(file_name)s)."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name) иска да ти испрати %(file_count)d фаилове"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr ""
+msgstr "Позволи"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr ""
+msgstr "Откажи"
 
 #: src/notifications.py:56
 #, python-format
@@ -280,74 +285,74 @@ msgstr ""
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Пренасяне на данни завършено"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Пренасянето до %s завърши, но със грешки "
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "Пренасянето до %s завърши безпроблемно "
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Пренасянето от %s завърши, но със грешки"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "Пренасянето от %s завърши безпроблемно"
 
 #: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
 msgid "Transfer failed"
-msgstr ""
+msgstr "Пренасянето се провали"
 
 #: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "Нещо се обърка със преноса до %s"
 
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "Нещо се обърка със преноса от %s"
 
 #: src/notifications.py:171 src/warpinator.py:166
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "Преноса е отменен"
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "Твоят пренос до %s бе отменен"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "Идващ пренос от %s бе отменен"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Пращане на файлове"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Изпрашане на %d файлове до %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Изпращане на '%s' до %s " 
 
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:154
@@ -367,292 +372,298 @@ msgstr[1] ""
 
 #: src/prefs.py:273
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Настройки за Warpinator"
 
 #: src/prefs.py:290
 msgid "General"
-msgstr ""
+msgstr "Общи"
 
 #: src/prefs.py:292
 msgid "Desktop"
-msgstr ""
+msgstr "Работен плот"
 
 #: src/prefs.py:294
 msgid "Show an icon in the notification area"
-msgstr ""
+msgstr "Покажи икона във мястото за уведомления"
 
 #: src/prefs.py:298
 msgid "Start with main window open"
-msgstr ""
+msgstr "Стартирай със отворен главен прозорец"
 
 #: src/prefs.py:303
 msgid "Start automatically"
-msgstr ""
+msgstr "Автоматично стартирай"
 
 #: src/prefs.py:310
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Използвай компресиране където възможно"
 
 #: src/prefs.py:312
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
-msgstr ""
+msgstr""
+"Предупреждение: Това може да създаде проблеми със скоростта"
+"при някой по бързи мрежи"
 
 #: src/prefs.py:315
 msgid "Location for received files"
-msgstr ""
+msgstr "Място за получени файлове"
 
 #: src/prefs.py:320
 msgid "Reserved free space"
-msgstr ""
+msgstr "Резервирано свободно място"
 
 #: src/prefs.py:325
 msgid "Require approval before accepting files"
-msgstr ""
+msgstr "Изисквай разрешение преди да приемаш файлове"
 
 #: src/prefs.py:330
 msgid "Require approval when files would be overwritten"
-msgstr ""
+msgstr "Изисквай разрешение когато файлове ще се презапишат"
 
 #: src/prefs.py:335
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+ "Покажи уведомление когато някой ти прати (или се опита да прати) файлове"
 
 #: src/prefs.py:340
 msgid "Connection"
-msgstr ""
+msgstr "Връзка"
 
 #: src/prefs.py:350
 msgid "Network"
-msgstr ""
+msgstr "Мрежа"
 
 #: src/prefs.py:353
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматично"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:432
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "%s - не е намерен"
 
 #: src/prefs.py:434
 msgid "Network interface to use"
-msgstr ""
+msgstr "Мрежов интерфасе за уптреба"
 
 #: src/prefs.py:442
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "Входен порт за пренасяния"
 
 #: src/prefs.py:449
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Входен порт за регистрация"
 
 #: src/prefs.py:464
 msgid "Apply network changes"
-msgstr ""
+msgstr "Приложи мрежови промени"
 
 #: src/prefs.py:473
 msgid "Update firewall rules"
-msgstr ""
+msgstr "Обнови правила на мрежова стена"
 
 #: src/prefs.py:485
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Всеки порт ще работи за приложението, но използването на едни и същи портове за"
+"всички компютри ще направи добавянето на изключения във защитната стена по лесно"
 
 #: src/prefs.py:561
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Налично само във безопасен режим"
 
 #: src/prefs.py:638
 msgid "A group code is required."
-msgstr ""
+msgstr "Групов код е нужен"
 
 #: src/prefs.py:643
 msgid "The group code is too short."
-msgstr ""
+msgstr "Груповия код е твърде кратък"
 
 #: src/prefs.py:677
 msgid "ON"
-msgstr ""
+msgstr "Включено"
 
 #: src/prefs.py:678
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Всички опций са отключени"
 
 #: src/prefs.py:681
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Трябва да зададеш групов код за безопасния режим. Някой опций са неналични"
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Връзката е изгубена"
 
 #: src/server.py:591
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "Има грешка на дистанционата машина"
 
 #: src/util.py:264
 msgid "Cancel"
-msgstr ""
+msgstr "Отмени"
 
 #: src/util.py:265
 msgid "Add"
-msgstr ""
+msgstr "Довави"
 
 #: src/util.py:287
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "Избери файл(ове) за испращане"
 
 #: src/util.py:648
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "Няколко секунди остават"
 
 #: src/util.py:651
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d секунди остават"
 
 #: src/util.py:655 src/util.py:663
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d минута"
+msgstr[1] "%d минути"
 
 #: src/util.py:662
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d час"
+msgstr[1] "%d часа"
 
 #: src/util.py:667
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "приблизително %d час"
+msgstr[1] "приблизително %d часа"
 
 #: src/util.py:755 src/warpinator.py:569
 msgid "About"
-msgstr ""
+msgstr "Относно"
 
 #: src/warpinator.py:145
 msgid "Paused"
-msgstr ""
+msgstr "Паузиран"
 
 #: src/warpinator.py:148
 msgid "Waiting for approval"
-msgstr ""
+msgstr "Изчакване за разрешение"
 
 #: src/warpinator.py:150
 msgid "Waiting for your approval"
-msgstr ""
+msgstr "Ичакване за вашето разрешение"
 
 #: src/warpinator.py:153
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Няма достатъчно пространство във диака"
 
 #: src/warpinator.py:156
 msgid "Files may be overwritten"
-msgstr ""
+msgstr "Възможно е презаписване на файлове"
 
 #: src/warpinator.py:159
 msgid "Request cancelled"
-msgstr ""
+msgstr "Искането отменено"
 
 #: src/warpinator.py:161 src/warpinator.py:163
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "Искането отменено от %s"
 
 #: src/warpinator.py:168 src/warpinator.py:170
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "Пренасянето отменено от %s"
 
 #: src/warpinator.py:177
 #, python-format
 msgid "File '%s' not found"
-msgstr ""
+msgstr "Файлър '%s' не бе намерен" 
 
 #: src/warpinator.py:179
 msgid "Some files not found"
-msgstr ""
+msgstr "Някой файлове не бяха намерени"
 
 #: src/warpinator.py:181
 msgid "Completed"
-msgstr ""
+msgstr "Завършено"
 
 #: src/warpinator.py:183
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Звършено, но със грешки"
 
 #: src/warpinator.py:342 src/warpinator.py:1037
 msgid "Connecting"
-msgstr ""
+msgstr "Свързване"
 
 #: src/warpinator.py:344
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Свързване със %s"
 
 #: src/warpinator.py:354
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s не е на линия"
 
 #: src/warpinator.py:359
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "Не може да се свърже със %s"
 
 #: src/warpinator.py:364
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr ""
+msgstr "Чакане %s да свърши връзката"
 
 #: src/warpinator.py:393
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Ново входящо пренасяне"
+msgstr[1] "%d Нови входящи пренасяния"
 
 #: src/warpinator.py:534 src/warpinator.py:1557
 msgid "Favorites"
-msgstr ""
+msgstr "Любими"
 
 #: src/warpinator.py:539 src/warpinator.py:1562
 msgid "Recents"
-msgstr ""
+msgstr "Скорошни"
 
 #: src/warpinator.py:546 src/warpinator.py:1571
 msgid "Browse..."
-msgstr ""
+msgstr "Прегледай..."
 
 #: src/warpinator.py:565
 msgid "Preferences"
-msgstr ""
+msgstr "Настройки"
 
 #: src/warpinator.py:573 src/warpinator.py:1506
 msgid "Quit"
-msgstr ""
+msgstr "Излез"
 
 #: src/warpinator.py:679
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "Не си свързан към мрежа"
 
 #: src/warpinator.py:681
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
+msgstr "Стартирането бе успешно, моля, погледнете записките"
 
 #: src/warpinator.py:774
 #, python-format
@@ -660,6 +671,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator работи със ограничена функционалност, и ще се затвори във %d"
+"минута. За да включите безопасен режим, зададете групов код"
 
 #: src/warpinator.py:776
 #, python-format
@@ -667,66 +680,70 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator работи със ограничена функционалност, и ще се затвори във %d"
+"минути. За да включите безопасен режим, зададете групов код"
 
 #: src/warpinator.py:818
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
-msgstr ""
+msgstr "Няма достатъчно пространство в диска за да се приемат файловете (%s е резервирани)"
 
 #: src/warpinator.py:896
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Изчкване за завършването на %d действие"
 
 #: src/warpinator.py:897
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Изчкване за завършването на %d действия"
 
 #: src/warpinator.py:1016
 msgid "Offline"
-msgstr ""
+msgstr "Офлайн"
 
 #: src/warpinator.py:1023
 msgid "Unable to connect"
-msgstr ""
+msgstr "Свързването е неуспешно"
 
 #: src/warpinator.py:1030
 msgid "Waiting for two-way connection"
-msgstr ""
+msgstr "Изчакване за двупосочна връзка"
 
 #: src/warpinator.py:1540
 msgid "Send to all"
-msgstr ""
+msgstr "Изпрати до всички"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Испрати със Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Испрати файл до някой със Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Отвори порт във защитната стена със Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
+msgstr "З да прменяте настройка на защитната стена, трябва да оторизирате"
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
 msgid "Warpinator"
-msgstr ""
+msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:9
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
+"Warpinator ви позволява да свъччжете няколко комп ютри във локална мрежа"
+"и да споделяте фаилове бързо и сигурно"
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27
 msgid "Linux Mint"
-msgstr ""
+msgstr "Linux Mint"
