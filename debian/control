@@ -5,18 +5,19 @@ Maintainer: Linux Mint <root@linuxmint.com>
 Build-Depends:
  debhelper-compat (= 12),
  appstream,
+ cython3,
  curl,
  dh-python,
  gnome-pkg-tools (>= 0.10),
  meson (>= 0.45.0),
  policykit-1,
- python3-grpc-tools (>= 1.14.0),
- python3-protobuf (>= 3.6.1),
+ python3-dev,
+ python3-setuptools,
  gobject-introspection
 Standards-Version: 3.9.6
 
 Package: warpinator
-Architecture: all
+Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
 Depends:
  gir1.2-glib-2.0,
@@ -26,8 +27,6 @@ Depends:
  python3-gi,
  python3-setproctitle,
  python3-xapp (>= 1.6.0),
- python3-grpcio (>= 1.16.0),
- python3-protobuf (>= 3.6.1),
  python3-cryptography,
  python3-nacl,
  python3-netaddr,
@@ -36,3 +35,15 @@ Depends:
  ${misc:Depends},
  ${python3:Depends}
 Description: Allows simple local network file sharing.
+
+Package: warpinator-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends:
+ warpinator (= ${binary:Version}),
+ ${misc:Depends},
+Description: Allows simple local network file sharing.
+ .
+ This package contains the debugging symbols for the bundled
+ grpcio and protobuf modules.

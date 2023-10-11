@@ -8,6 +8,7 @@ libdir="@libdir@"
 libexecdir="@libexecdir@"
 include_firewall_mod=@include_firewall_mod@
 bundle_zeroconf=@bundle_zeroconf@
+bundle_grpc=@bundle_grpc@
 PACKAGE="@PACKAGE@"
 VERSION="@VERSION@"
 GETTEXT_PACKAGE="@gettext_package@"
