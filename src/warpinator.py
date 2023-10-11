@@ -42,7 +42,7 @@ _ = gettext.gettext
 setproctitle.setproctitle("warpinator")
 
 SERVER_RESTART_TIMEOUT = 15
-SERVER_START_TIMEOUT = 8
+SERVER_START_TIMEOUT = 10
 DISCOVERY_TIMEOUT = 3
 
 SECURE_MODE_EXIT_TIME_SECONDS = 60 * 60 # 60 minutes in seconds
