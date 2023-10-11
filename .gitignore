@@ -1,8 +1,16 @@
 obj-x86_64-linux-gnu
 debian/warpinator
+debian/warpinator-dbg
+debian/tmp
 
 debian/.debhelper/generated/warpinator/installed-by-dh_installdocs
 debian/debhelper-build-stamp
 debian/files
-debian/warpinator.substvars
+debian/*.substvars
 debian/*.debhelper
+debian/*.log
+
+python_build
+__pycache__
+a.out
+*.so
