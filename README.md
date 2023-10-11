@@ -32,7 +32,7 @@ git checkout 1.2.3
 
 # Try to build. If this fails, it's probably due to missing dependencies.
 # If you use GitHub Actions to compile, please install the following dependencies.
-sudo apt-get -y install debhelper dh-python gnome-pkg-tools meson gobject-introspection appstream python3-grpc-tools
+sudo apt-get -y install debhelper dh-python meson gobject-introspection cython3
 
 # Take note of these packages, install them using apt-get:
 dpkg-buildpackage --no-sign
@@ -71,8 +71,8 @@ flatpak install flathub org.x.Warpinator
 _____
 ##### build deps (ref: debian/control)
 - meson (>= 0.45.0)
-- python3-grpc-tools (>= 1.14.0)
-- python3-protobuf (>= 3.6.1)
+- python3-grpc-tools (>= 1.14.0) - needed *only* if updating the protobuf files (not likely)
+- cython3 (only if `bundle-grpc=true`)
 - gobject-introspection
 
 ##### required only for makepot
@@ -84,16 +84,22 @@ _____
 - gir1.2-gtk-3.0 (>= 3.20.0)
 - gir1.2-xapp-1.0 (>= 1.6.0)
 - python3
+- python3-async-timeout (only with python < 3.11 and `bundle-zeroconf=true`)
 - python3-gi
 - python3-setproctitle
 - python3-xapp (>= 1.6.0)
-- python3-zeroconf (>= 0.27.0) *** see note below
-- python3-grpcio (>= 1.16.0)
+- python3-zeroconf (>= 0.27.0) (only if `bundle-zeroconf=false`)
+- python3-grpcio (>= 1.16.0) (only if `bundle-grpc=false`)
+- python3-protobuf (only if `bundle-grpc=false`)
 - python3-cryptography
 - python3-nacl
+- python3-netaddr
+- python3-ifaddr
+- python3-netifaces
 
 ##### Note about zeroconf
-As of v1.2.0, the build attempts to download and install/package zeroconf to the warpinator install dir (or package). To disable this and have warpinator use the system's version, set the 'bundle-zeroconf' build option to false:
+We've started bundling certain dependencies due to their tendency to break and/or exhibit different behavior on different distributions.
+To disable this, you can do something like:
 ```
 meson builddir --prefix=/usr -Dbundle-zeroconf=false
 ninja -C builddir

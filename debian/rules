@@ -8,5 +8,8 @@ override_dh_python3:
 
 override_dh_auto_test:
 
+override_dh_dwz:
+	dh_dwz --no-dwz-multifile
+
 override_dh_strip:
 	dh_strip --dbg-package=warpinator-dbg
