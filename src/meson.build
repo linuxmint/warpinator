@@ -65,6 +65,7 @@ if bundle_grpc
     dependency('python3')
     current_grpc_version = '1.59.0'
     current_protobuf_version = '4.24.4'
+    current_zeroconf_version  = '0.115.2'
 
     setup = join_paths(meson_source_root, 'grpcio-' + current_grpc_version, 'build_script.py')
 
@@ -81,6 +82,16 @@ if bundle_grpc
     grpc = custom_target('proto_build',
         output: 'google',
         command: [setup, join_paths(meson_source_root, 'protobuf-' + current_protobuf_version), join_paths(meson.current_build_dir(), 'google')],
+        install: true,
+        install_dir: install_libdir,
+        build_by_default: true,
+    )
+
+    setup = join_paths(meson_source_root, 'zeroconf-' + current_zeroconf_version, 'build_script.py')
+
+    grpc = custom_target('zeroconf_build',
+        output: 'zeroconf',
+        command: [setup, join_paths(meson_source_root, 'zeroconf-' + current_zeroconf_version), join_paths(meson.current_build_dir(), 'zeroconf')],
         install: true,
         install_dir: install_libdir,
         build_by_default: true,

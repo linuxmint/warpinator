@@ -7,7 +7,7 @@ import subprocess
 srcdir = sys.argv[1]
 outdir = sys.argv[2]
 
-print("Building grpc s:%s, t:%s" % (srcdir, outdir))
+print("Building grpc s:%s, t:%s" % (srcdir, outdir), flush=True)
 
 # Modifications to grpc tarball (1.59.0) #################################################################
 
