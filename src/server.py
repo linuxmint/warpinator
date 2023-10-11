@@ -28,20 +28,8 @@ import transfers
 from ops import ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
-try:
-    import zeroconf_
-    from zeroconf_ import ServiceInfo, Zeroconf, ServiceBrowser
-except:
-    import zeroconf
-
-    zc_version = pkg_resources.parse_version(zeroconf.__version__)
-    zc_min_version = pkg_resources.parse_version("0.27.0")
-
-    if zc_version < zc_min_version:
-        print("Python3 zeroconf must be >= %s" % zc_min_version)
-        exit(1)
-
-    from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
+import zeroconf
+from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
 
 _ = gettext.gettext
 
@@ -89,10 +77,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.start()
 
     def start_zeroconf(self):
-        try:
-            logging.info("Using bundled zeroconf v%s" % zeroconf_.__version__)
-        except:
-            logging.info("Using system zeroconf v%s" % zeroconf.__version__)
+        logging.info("Using zeroconf version %s %s" % (zeroconf.__version__, "(bundled)" if config.bundle_zeroconf else ""))
 
         self.zeroconf = Zeroconf(interfaces=[self.ip_info.ip4_address])
 

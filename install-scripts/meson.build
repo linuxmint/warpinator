@@ -19,8 +19,3 @@ meson.add_install_script('meson_install_schemas.py')
 
 # Update the Gtk icon cache
 meson.add_install_script('meson_update_icon_cache.py')
-
-# Flatpak already bundles.
-if bundle_zeroconf and not get_option('flatpak-build')
-    meson.add_install_script('download_zeroconf.py')
-endif
