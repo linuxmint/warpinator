@@ -3,10 +3,10 @@
 %:
 	dh $@ --with=python3,gir
 
-override_dh_auto_configure:
-	dh_auto_configure -- \
-	    -Dbundle-grpc-with-py310=true
-
 override_dh_python3:
 	dh_python3 usr/libexec/warpinator
 
+override_dh_auto_test:
+
+override_dh_strip:
+	dh_strip --dbg-package=warpinator-dbg

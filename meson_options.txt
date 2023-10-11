@@ -20,8 +20,8 @@ option('bundle-landlock',
     description: 'Include the landlock python module (https://github.com/Edward-Knight/landlock).'
 )
 
-option('bundle-grpc-with-py310',
+option('bundle-grpc',
     type: 'boolean',
-    value: false,
-    description: 'grpc 1.30.2 is broken on Ubuntu 22.04. Setting this to true will bundle 1.46.3 IF python version is 3.10.'
+    value: true,
+    description: 'Build and bundle grpc and protobuf'
 )

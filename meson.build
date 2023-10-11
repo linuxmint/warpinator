@@ -15,13 +15,7 @@ meson_source_root = meson.current_source_dir()
 include_firewall_mod = get_option('include-firewall-mod')
 bundle_zeroconf = get_option('bundle-zeroconf')
 bundle_landlock = get_option('bundle-landlock')
-
-# grpc 1.30.2 on ubuntu 22.04 is broken
-pymod = import('python')
-python3 = pymod.find_installation('python3')
-bundle_grpc = python3.language_version().version_compare('3.10') and \
-              get_option('bundle-grpc-with-py310') and \
-              host_machine.cpu() == 'x86_64'
+bundle_grpc = get_option('bundle-grpc')
 
 subdir('data')
 subdir('src')
