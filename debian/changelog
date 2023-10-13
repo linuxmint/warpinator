@@ -1,3 +1,27 @@
+warpinator (1.7.0) unstable; urgency=medium
+
+  [ Michael Webster ]
+  * Don't allow bubblewrap mode in Flatpak builds.
+  * README markdown: Switch to using relative image paths.
+  * Add issue templates.
+  * Fix readme link in bug_report.yaml
+  * Allow /run/media/* for a save location, as some systems mount removable drives there (like Steam Deck).
+  * Update README, fix a typo, add a link to another Window's version in the no-remotes page, link to the README from the bad-folder page.
+  * Add issue link to bug report template.
+
+  [ FriedrichFroebel ]
+  * fix NameError for 'sleep' (#187)
+
+  [ Michael Webster ]
+  * warpinator.py: Set our own dbus StatusIcon name.
+  * notifications.py: Show the recipient (not the sender) in the local notification when using warpinator-send.
+  * warpinator-send.in: Remove a comment leftover from copy/paste.
+  * thread pool: Always use a minimum of 4 threads.
+  * warpinator-send: Allow uris and paths.
+  * save folder: Fully resolve the save location before performing any path safety checks.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 13 Oct 2023 18:20:20 +0100
+
 warpinator (1.6.4) victoria; urgency=medium
 
   [ Bernhard M. Wiedemann ]
