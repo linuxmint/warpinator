@@ -18,7 +18,9 @@
 
 
 
-# Needs python3-grpc-tools
+# Needs python3-grpc-tools at the same version as the current bundled grpc (or close to it)
+# You may need to get it from pip (apt install python3-pip; pip3 install -U grpcio-tools)
+
 # Run this any time warp.proto gets updated, this will generate new warp_pb2*.py files.
 from grpc_tools import protoc
 
