@@ -1303,7 +1303,7 @@ class WarpApplication(Gtk.Application):
 
     def handle_dbus_get_live_remotes(self, service):
         if self.server is None:
-            return None
+            return []
 
         all_remotes = self.server.list_remote_machines()
         online_remotes = [remote for remote in all_remotes if remote.status == RemoteStatus.ONLINE]
