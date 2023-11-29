@@ -10,6 +10,7 @@ import time
 import math
 import qrcode
 from io import BytesIO
+import re
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -1157,73 +1158,108 @@ class ManualConnectDialog(Gtk.Window):
         super().__init__(title=_("Manual connection"), transient_for=parent.window, modal=True, resizable=False)
         self.parent = parent
 
+        self.ip_validator_re = re.compile(r'(warpinator://)?(\d{1,3}(\.\d{1,3}){3}):(\d{1,6})/?$')
+        self.connecting = False
+
         self.set_default_size(150, 100)
         self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
 
-        box = Gtk.Box()
-        self.add(box)
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, margin=6)
+        self.add(vbox)
 
-        label = Gtk.Label(label=_("Your other device can initiate connection by scanning this QR code with the camera app or by using the following address:\n%s:%d")
-                          % (parent.current_ip, parent.current_auth_port))
-        label.set_max_width_chars(50)
+        label = Gtk.Label(label=_("Scan this QR code on your mobile device to connect"), halign=Gtk.Align.CENTER)
+        label.set_max_width_chars(45)
         label.set_line_wrap(True)
         vbox.add(label)
+
+        qr_frame = Gtk.Frame(halign=Gtk.Align.CENTER, margin_bottom=20)
+        vbox.add(qr_frame)
 
         qrbytes = BytesIO()
         qr = qrcode.make("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
         qr.save(qrbytes, "BMP")
         stream = Gio.MemoryInputStream.new_from_bytes(GLib.Bytes.new(qrbytes.getvalue()))
-        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, 250, 250, True, None)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, -1, -1, True, None)
         img = Gtk.Image.new_from_pixbuf(pixbuf)
-        vbox.add(img)
+        qr_frame.add(img)
 
-        label2 = Gtk.Label(label=_("Alternatively, initiate the connection by typing the IP address and port of the other device here:"))
+        label2 = Gtk.Label(label=_("You can also share your IP address and port number"), halign=Gtk.Align.CENTER)
         label2.set_max_width_chars(50)
         label2.set_line_wrap(True)
         vbox.add(label2)
 
-        self.entry = Gtk.Entry()
-        vbox.add(self.entry)
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        vbox.add(hbox)
-        self.spinner = Gtk.Spinner()
-        self.lblStatus = Gtk.Label(label="")
-        hbox.pack_start(self.lblStatus, True, True, 0)
-        hbox.add(self.spinner)
-        self.lblStatus.set_xalign(0.0)
-        
-        btnClose = Gtk.Button(_("Close"))
-        btnClose.connect("clicked", lambda _ : self.close())
-        btnConnect = Gtk.Button(_("Connect"))
-        btnConnect.connect("clicked", self.on_connecting)
-        btnBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        btnBox.pack_end(btnConnect, False, False, 0)
-        btnBox.pack_end(btnClose, False, False, 0)
-        vbox.add(btnBox)
+        label3 = Gtk.Label(label="<tt><span size='xx-large'><b>%s:%d</b></span></tt>" % (parent.current_ip, parent.current_auth_port), use_markup=True, selectable=True, margin_bottom=20)
+        vbox.add(label3)
 
-        box.add(vbox)
+        label4 = Gtk.Label(label=_("Or enter the other device's address"), halign=Gtk.Align.CENTER)
+        label4.set_max_width_chars(50)
+        label4.set_line_wrap(True)
+        vbox.add(label4)
+
+        entry_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, margin_start=20, margin_end=20)
+        entry_hbox.get_style_context().add_class("linked")
+        self.entry = Gtk.Entry(placeholder_text="192.168.0.1:42001")
+        self.entry.connect("changed", self.validate_address)
+        self.entry.get_style_context().add_class("monospace")
+        self.entry.set_progress_pulse_step(0.25)
+        entry_hbox.pack_start(self.entry, True, True, 0)
+
+        self.connect_button = Gtk.Button(_("Connect"), sensitive=False, always_show_image=True)
+        self.connect_button.connect("clicked", self.on_connecting)
+
+        entry_hbox.pack_end(self.connect_button, False, False, 0)
+        vbox.add(entry_hbox)
+
+        self.status_label = Gtk.Label(label="", use_markup=True, margin_bottom=10)
+        vbox.add(self.status_label)
+
+        bbox = Gtk.ButtonBox(layout_style=Gtk.ButtonBoxStyle.EXPAND)
+        vbox.add(bbox)
+
+        close_button = Gtk.Button(label=_("Close"))
+        close_button.connect("clicked", lambda b: self.close())
+        bbox.add(close_button)
+
         vbox.set_margin_bottom(10)
-        box.set_margin_bottom(10)
-        box.set_margin_top(10)
-        box.set_margin_left(10)
-        box.set_margin_right(10)
+        vbox.set_margin_top(10)
+        vbox.set_margin_start(10)
+        vbox.set_margin_end(10)
+
+        self.set_focus(None)
         self.show_all()
-    
+
     def on_connecting(self, _btn):
-        self.spinner.start()
-        self.lblStatus.set_label(_("Connecting..."))
+        self.connecting = True
+
+        self.connect_button.set_sensitive(False)
+        def pulse():
+            self.entry.progress_pulse()
+            if self.connecting:
+                return GLib.SOURCE_CONTINUE
+
+            self.entry.set_progress_fraction(0.0)
+            return GLib.SOURCE_REMOVE
+
+        GLib.timeout_add(100, pulse)
+
+        self.status_label.set_label(_("Connecting..."))
         host = self.entry.get_text()
         self.parent.emit("manual_connect_to_host", host)
 
     def on_connection_result(self, result, msg):
-        self.spinner.stop()
+        self.connecting = False
+        self.connect_button.set_sensitive(True)
+
         if result:
             self.close()
         else:
-            self.lblStatus.set_label("Error: %s" % msg)
+            self.status_label.set_label("<span color='red'>%s</span>" % msg)
 
+    def validate_address(self, entry):
+        address = entry.get_text()
+        m = self.ip_validator_re.match(address)
+        self.connect_button.set_sensitive(m is not None)
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
