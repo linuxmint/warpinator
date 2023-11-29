@@ -12,6 +12,7 @@ import warp_pb2
 import auth
 import util
 import prefs
+import config
 
 class RegRequest():
     def __init__(self, ident, hostname, ip_info, port, auth_port, api_version):
@@ -271,6 +272,16 @@ class RegistrationServer_v2():
         logging.debug("Registration Server RPC: RequestCertificate from %s '%s'" % (request.hostname, request.ip))
 
         return warp_pb2.RegResponse(locked_cert=auth.get_singleton().get_encoded_local_cert())
+    
+    def RegisterService(self, reg:warp_pb2.ServiceRegistration, context):
+        logging.debug("Received manual registration from " + reg.service_id)
+        self.service_registration_handler(reg, reg.ip, reg.auth_port)
+        return warp_pb2.ServiceRegistration(service_id=prefs.get_connect_id(),
+                                            ip=self.ip_info.ip4_address,
+                                            port=prefs.get_port(),
+                                            hostname=util.get_hostname(),
+                                            api_version=int(config.RPC_API_VERSION),
+                                            auth_port=self.auth_port)
 
 
 

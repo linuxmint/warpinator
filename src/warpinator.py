@@ -8,11 +8,13 @@ import functools
 import logging
 import time
 import math
+import qrcode
+from io import BytesIO
 
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('XApp', '1.0')
-from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk
+from gi.repository import Gtk, GLib, XApp, Gio, GObject, Gdk, GdkPixbuf
 
 import config
 import prefs
@@ -562,6 +564,10 @@ class WarpWindow(GObject.Object):
         item.connect("activate", self.on_open_location_clicked)
         menu.add(item)
 
+        item = Gtk.MenuItem(label=_("Connect manually"))
+        item.connect("activate", self.manual_connect)
+        menu.add(item)
+
         item = Gtk.MenuItem(label=_("Preferences"))
         item.connect("activate", self.open_preferences)
         menu.add(item)
@@ -754,10 +760,13 @@ class WarpWindow(GObject.Object):
         Gtk.drag_finish(context, True, False, _time)
         self.drop_pending = False
 
-    def update_local_user_info(self, ip="0.0.0.0", iface=""):
+    def update_local_user_info(self, ip="0.0.0.0", iface="", auth_port=0):
         self.app_local_name_label.set_text(util.get_local_name())
         self.app_iface_label.set_text(iface)
         self.app_ip_label.set_text(ip)
+        self.current_ip = ip
+        self.current_iface = iface
+        self.current_auth_port = auth_port
 
     def update_secure_mode_info(self, is_secure):
         if is_secure:
@@ -814,6 +823,14 @@ class WarpWindow(GObject.Object):
 
     def on_prefs_destroy(self, window):
         self.prefs_window = None
+
+    def manual_connect(self, _):
+        self.connect_dialog = ManualConnectDialog(self)
+        self.connect_dialog.show()
+
+    @GObject.Signal(arg_types=(str,))
+    def manual_connect_to_host(self, host):
+        logging.debug("Connecting to " + host)
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
@@ -1135,6 +1152,79 @@ class WarpWindow(GObject.Object):
     def destroy(self):
         self.window.destroy()
 
+class ManualConnectDialog(Gtk.Window):
+    def __init__(self, parent:WarpWindow):
+        super().__init__(title=_("Manual connection"), transient_for=parent.window, modal=True, resizable=False)
+        self.parent = parent
+
+        self.set_default_size(150, 100)
+        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+
+        box = Gtk.Box()
+        self.add(box)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+
+        label = Gtk.Label(label=_("Your other device can initiate connection by scanning this QR code with the camera app or by using the following address:\n%s:%d")
+                          % (parent.current_ip, parent.current_auth_port))
+        label.set_max_width_chars(50)
+        label.set_line_wrap(True)
+        vbox.add(label)
+
+        qrbytes = BytesIO()
+        qr = qrcode.make("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
+        qr.save(qrbytes, "BMP")
+        stream = Gio.MemoryInputStream.new_from_bytes(GLib.Bytes.new(qrbytes.getvalue()))
+        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, 250, 250, True, None)
+        img = Gtk.Image.new_from_pixbuf(pixbuf)
+        vbox.add(img)
+
+        label2 = Gtk.Label(label=_("Alternatively, initiate the connection by typing the IP address and port of the other device here:"))
+        label2.set_max_width_chars(50)
+        label2.set_line_wrap(True)
+        vbox.add(label2)
+
+        self.entry = Gtk.Entry()
+        vbox.add(self.entry)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        vbox.add(hbox)
+        self.spinner = Gtk.Spinner()
+        self.lblStatus = Gtk.Label(label="")
+        hbox.pack_start(self.lblStatus, True, True, 0)
+        hbox.add(self.spinner)
+        self.lblStatus.set_xalign(0.0)
+        
+        btnClose = Gtk.Button(_("Close"))
+        btnClose.connect("clicked", lambda _ : self.close())
+        btnConnect = Gtk.Button(_("Connect"))
+        btnConnect.connect("clicked", self.on_connecting)
+        btnBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        btnBox.pack_end(btnConnect, False, False, 0)
+        btnBox.pack_end(btnClose, False, False, 0)
+        vbox.add(btnBox)
+
+        box.add(vbox)
+        vbox.set_margin_bottom(10)
+        box.set_margin_bottom(10)
+        box.set_margin_top(10)
+        box.set_margin_left(10)
+        box.set_margin_right(10)
+        self.show_all()
+    
+    def on_connecting(self, _btn):
+        self.spinner.start()
+        self.lblStatus.set_label(_("Connecting..."))
+        host = self.entry.get_text()
+        self.parent.emit("manual_connect_to_host", host)
+
+    def on_connection_result(self, result, msg):
+        self.spinner.stop()
+        if result:
+            self.close()
+        else:
+            self.lblStatus.set_label("Error: %s" % msg)
+
+
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
         super(WarpApplication, self).__init__(application_id="org.x.Warpinator", register_session=True)
@@ -1220,6 +1310,7 @@ class WarpApplication(Gtk.Application):
 
         self.window = WarpWindow()
         self.window.connect("exit", lambda w: self.exit_warp())
+        self.window.connect("manual_connect_to_host", lambda _, host: self.server.register_with_host(host))
 
         self.add_window(self.window.window)
 
@@ -1297,7 +1388,7 @@ class WarpApplication(Gtk.Application):
 
         logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info.ip4_address)
 
-        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface)
+        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface, self.current_auth_port)
 
         self.window.clear_remotes()
 
@@ -1335,6 +1426,7 @@ class WarpApplication(Gtk.Application):
         self.server.connect("remote-machine-added", self._remote_added)
         self.server.connect("remote-machine-removed", self._remote_removed)
         self.server.connect("remote-machine-ops-changed", self._remote_ops_changed)
+        self.server.connect("manual-connect-result", self._manual_connect_result)
 
     def _server_started(self, local_machine):
         self.server_starting = False
@@ -1439,6 +1531,12 @@ class WarpApplication(Gtk.Application):
 
         if self.app_restarting:
             self.window.update_restart_dialog_status(active_ops)
+
+    def _manual_connect_result(self, _, initiated_here, result, msg):
+        if not initiated_here:
+            return
+        if self.window.connect_dialog:
+            self.window.connect_dialog.on_connection_result(result, msg)
 
     def add_simulated_widgets(self):
         import testing

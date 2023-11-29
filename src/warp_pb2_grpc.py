@@ -403,12 +403,23 @@ class WarpRegistrationStub(object):
                 request_serializer=warp__pb2.RegRequest.SerializeToString,
                 response_deserializer=warp__pb2.RegResponse.FromString,
                 )
+        self.RegisterService = channel.unary_unary(
+                '/WarpRegistration/RegisterService',
+                request_serializer=warp__pb2.ServiceRegistration.SerializeToString,
+                response_deserializer=warp__pb2.ServiceRegistration.FromString,
+                )
 
 
 class WarpRegistrationServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def RequestCertificate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RegisterService(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -421,6 +432,11 @@ def add_WarpRegistrationServicer_to_server(servicer, server):
                     servicer.RequestCertificate,
                     request_deserializer=warp__pb2.RegRequest.FromString,
                     response_serializer=warp__pb2.RegResponse.SerializeToString,
+            ),
+            'RegisterService': grpc.unary_unary_rpc_method_handler(
+                    servicer.RegisterService,
+                    request_deserializer=warp__pb2.ServiceRegistration.FromString,
+                    response_serializer=warp__pb2.ServiceRegistration.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -446,5 +462,22 @@ class WarpRegistration(object):
         return grpc.experimental.unary_unary(request, target, '/WarpRegistration/RequestCertificate',
             warp__pb2.RegRequest.SerializeToString,
             warp__pb2.RegResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RegisterService(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/WarpRegistration/RegisterService',
+            warp__pb2.ServiceRegistration.SerializeToString,
+            warp__pb2.ServiceRegistration.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

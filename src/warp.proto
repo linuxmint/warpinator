@@ -91,6 +91,7 @@ message FileTime {
 
 service WarpRegistration {
     rpc RequestCertificate(RegRequest) returns (RegResponse) {}
+    rpc RegisterService(ServiceRegistration) returns (ServiceRegistration) {}
 }
 
 message RegRequest {
@@ -101,3 +102,13 @@ message RegRequest {
 message RegResponse {
     string locked_cert = 1;
 }
+
+message ServiceRegistration {
+    string service_id = 1;
+    string ip = 2;
+    uint32 port = 3;
+    string hostname = 4;
+    uint32 api_version = 5;
+    uint32 auth_port = 6;
+}
+
