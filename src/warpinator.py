@@ -565,9 +565,10 @@ class WarpWindow(GObject.Object):
         item.connect("activate", self.on_open_location_clicked)
         menu.add(item)
 
-        item = Gtk.MenuItem(label=_("Connect manually"))
+        item = Gtk.MenuItem(label=_("Connect manually"), sensitive=False)
         item.connect("activate", self.manual_connect)
         menu.add(item)
+        self.manual_connect_menu_item = item
 
         item = Gtk.MenuItem(label=_("Preferences"))
         item.connect("activate", self.open_preferences)
@@ -677,6 +678,7 @@ class WarpWindow(GObject.Object):
         timeout = SERVER_RESTART_TIMEOUT if restarting else SERVER_START_TIMEOUT
 
         self.server_start_timeout_id = GLib.timeout_add_seconds(timeout, self.server_not_started_timeout)
+        self.manual_connect_menu_item.set_sensitive(False)
 
         self.update_sandbox_mode_infobar()
         self.show_page("startup")
@@ -908,6 +910,7 @@ class WarpWindow(GObject.Object):
             self.toggle_visibility()
 
     def display_shutdown(self):
+        self.manual_connect_menu_item.set_sensitive(False)
         self.show_page("shutdown")
 
     def display_restart(self):
@@ -963,6 +966,7 @@ class WarpWindow(GObject.Object):
         if self.server_restarting:
             return
 
+        self.manual_connect_menu_item.set_sensitive(True)
         self.discovery_time_out_id = GLib.timeout_add_seconds(DISCOVERY_TIMEOUT, self.discovery_timed_out)
         self.show_page("discovery")
 
@@ -1473,6 +1477,7 @@ class WarpApplication(Gtk.Application):
 
         self.update_status_icon_online_state(online=True)
         self.window.notify_server_started()
+        self.manual_connect_menu_item.set_sensitive(True)
 
         if self.test_mode:
             self.add_simulated_widgets()
