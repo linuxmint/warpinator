@@ -1169,68 +1169,31 @@ class ManualConnectDialog(Gtk.Window):
         self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, margin=6)
-        self.add(vbox)
+        self.builder = Gtk.Builder.new_from_file(os.path.join(config.pkgdatadir, "manual-connect.ui"))
+        top_box = self.builder.get_object("top_box")
+        self.add(top_box)
 
-        label = Gtk.Label(label=_("Scan this QR code on your mobile device to connect"), halign=Gtk.Align.CENTER)
-        label.set_max_width_chars(45)
-        label.set_line_wrap(True)
-        vbox.add(label)
+        self.entry = self.builder.get_object("ip_entry")
+        self.connect_button = self.builder.get_object("connect_button")
+        self.status_label = self.builder.get_object("status_label")
+        ip_label = self.builder.get_object("our_ip_label")
+        qr_holder = self.builder.get_object("qr_holder")
 
-        qr_frame = Gtk.Frame(halign=Gtk.Align.CENTER, margin_bottom=20)
-        vbox.add(qr_frame)
+        self.entry.connect("changed", self.validate_address)
+        self.connect_button.connect("clicked", self.on_connecting)
 
         qrbytes = BytesIO()
         qr = qrcode.make("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
         qr.save(qrbytes, "BMP")
         stream = Gio.MemoryInputStream.new_from_bytes(GLib.Bytes.new(qrbytes.getvalue()))
-        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, -1, -1, True, None)
-        img = Gtk.Image.new_from_pixbuf(pixbuf)
-        qr_frame.add(img)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, 370 * self.get_scale_factor(), -1, True, None)
+        surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf, self.get_scale_factor(), None)
+        img = Gtk.Image.new_from_surface(surface)
+        qr_holder.add(img)
 
-        label2 = Gtk.Label(label=_("You can also share your IP address and port number"), halign=Gtk.Align.CENTER)
-        label2.set_max_width_chars(50)
-        label2.set_line_wrap(True)
-        vbox.add(label2)
+        ip_label.set_label("%s:%d" % (parent.current_ip, parent.current_auth_port))
 
-        label3 = Gtk.Label(label="<tt><span size='xx-large'><b>%s:%d</b></span></tt>" % (parent.current_ip, parent.current_auth_port), use_markup=True, selectable=True, margin_bottom=20)
-        vbox.add(label3)
-
-        label4 = Gtk.Label(label=_("Or enter the other device's address"), halign=Gtk.Align.CENTER)
-        label4.set_max_width_chars(50)
-        label4.set_line_wrap(True)
-        vbox.add(label4)
-
-        entry_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, margin_start=20, margin_end=20)
-        entry_hbox.get_style_context().add_class("linked")
-        self.entry = Gtk.Entry(placeholder_text="192.168.0.1:42001")
-        self.entry.connect("changed", self.validate_address)
-        self.entry.get_style_context().add_class("monospace")
-        self.entry.set_progress_pulse_step(0.25)
-        entry_hbox.pack_start(self.entry, True, True, 0)
-
-        self.connect_button = Gtk.Button(_("Connect"), sensitive=False, always_show_image=True)
-        self.connect_button.connect("clicked", self.on_connecting)
-
-        entry_hbox.pack_end(self.connect_button, False, False, 0)
-        vbox.add(entry_hbox)
-
-        self.status_label = Gtk.Label(label="", use_markup=True, margin_bottom=10)
-        vbox.add(self.status_label)
-
-        bbox = Gtk.ButtonBox(layout_style=Gtk.ButtonBoxStyle.EXPAND)
-        vbox.add(bbox)
-
-        close_button = Gtk.Button(label=_("Close"))
-        close_button.connect("clicked", lambda b: self.close())
-        bbox.add(close_button)
-
-        vbox.set_margin_bottom(10)
-        vbox.set_margin_top(10)
-        vbox.set_margin_start(10)
-        vbox.set_margin_end(10)
-
-        self.set_focus(None)
+        self.set_focus(qr_holder)
         self.show_all()
 
     def on_connecting(self, _btn):
