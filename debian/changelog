@@ -1,4 +1,23 @@
-warpinator (1.7.0) unstable; urgency=medium
+warpinator (1.8.0) virginia; urgency=medium
+
+  [ Michael Webster ]
+  * Include and build grpc 1.59 and protobuf 4.24.4.
+  * Regenerate protobuf files.
+  * Increase startup server timeout.
+  * Bundle zeroconf instead of downloading at build time.
+  * Update deb build, readme, dependencies, .gitignore.
+  * Update note in generate-protobuf.
+
+  [ Pavel H ]
+  * Manual connection (#182)
+
+  [ Michael Webster ]
+  * Tweak layout of manual connect dialog, and simplify translations.
+  * warpinator.py: Fix dbus method failing when the network is down.
+  * warpinator.py: Disable manual connection when there is no server.
+  * manual connect: Use a glade file, tweak some more.
+  * manual connect: Fix qr code rendering for different ui scales.
+  * warpinator.py: Remove invalid line.
 
   [ Michael Webster ]
   * Don't allow bubblewrap mode in Flatpak builds.
@@ -20,7 +39,7 @@ warpinator (1.7.0) unstable; urgency=medium
   * warpinator-send: Allow uris and paths.
   * save folder: Fully resolve the save location before performing any path safety checks.
 
- -- Clement Lefebvre <root@linuxmint.com>  Fri, 13 Oct 2023 18:20:20 +0100
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 30 Nov 2023 16:07:07 +0000
 
 warpinator (1.6.4) victoria; urgency=medium
 
