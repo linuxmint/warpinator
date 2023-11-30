@@ -1456,7 +1456,6 @@ class WarpApplication(Gtk.Application):
 
         self.update_status_icon_online_state(online=True)
         self.window.notify_server_started()
-        self.manual_connect_menu_item.set_sensitive(True)
 
         if self.test_mode:
             self.add_simulated_widgets()
