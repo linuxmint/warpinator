@@ -1182,14 +1182,30 @@ class ManualConnectDialog(Gtk.Window):
         self.entry.connect("changed", self.validate_address)
         self.connect_button.connect("clicked", self.on_connecting)
 
+        # Target size is 360 total * ui scale
+        # version 1 is 21x21 blocks
+        # border is also in blocks.
+        # box_size is pixels-per-block
+        #
+        # qr code pixels width is (21 + (2 * border)) * box_size
+        # 24 (total block width) * 15 (box_size) = 360
+
         qrbytes = BytesIO()
-        qr = qrcode.make("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
-        qr.save(qrbytes, "BMP")
+        qr = qrcode.QRCode(
+            version=1,
+            box_size=15 * self.get_scale_factor(),
+            border=2
+        )
+
+        qr.add_data("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
+        img = qr.make_image()
+        img.save(qrbytes, "BMP")
+
         stream = Gio.MemoryInputStream.new_from_bytes(GLib.Bytes.new(qrbytes.getvalue()))
-        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, 370 * self.get_scale_factor(), -1, True, None)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_stream_at_scale(stream, 360 * self.get_scale_factor(), -1, True, None)
         surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf, self.get_scale_factor(), None)
-        img = Gtk.Image.new_from_surface(surface)
-        qr_holder.add(img)
+        qr_image = Gtk.Image.new_from_surface(surface)
+        qr_holder.add(qr_image)
 
         ip_label.set_label("%s:%d" % (parent.current_ip, parent.current_auth_port))
 
