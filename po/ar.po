@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-06-06 14:01+0100\n"
+"POT-Creation-Date: 2023-11-30 16:05+0000\n"
 "PO-Revision-Date: 2020-07-05 23:54+0000\n"
 "Last-Translator: شريف الحكيمي <Unknown>\n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2023-07-07 12:58+0000\n"
-"X-Generator: Launchpad (build 2ac9e3bf4ab511504f8fc651371e24a6a047ba12)\n"
+"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
+"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
 "Language: ar\n"
 
-#: resources/group-code.ui:16 src/prefs.py:342
+#: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
 msgstr "شفرة المجموعة"
 
@@ -36,11 +36,12 @@ msgstr "وضع شفرة"
 msgid "Secure mode:"
 msgstr ""
 
-#: resources/group-code.ui:106 src/prefs.py:680
+#: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
 msgstr ""
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
+#: resources/main-window.ui:1218
 msgid "More information"
 msgstr ""
 
@@ -68,11 +69,11 @@ msgstr "مسح العمليات الخاملة والمكتملة"
 msgid "Send files"
 msgstr "إرسال الملفات"
 
-#: resources/main-window.ui:610 src/prefs.py:308
+#: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
 msgstr "نقل الملفات"
 
-#: resources/main-window.ui:631 src/warpinator.py:1009
+#: resources/main-window.ui:631 src/warpinator.py:1040
 msgid "Online"
 msgstr "متصل"
 
@@ -116,76 +117,105 @@ msgstr ""
 msgid "iOS"
 msgstr ""
 
-#: resources/main-window.ui:947
+#: resources/main-window.ui:947 resources/main-window.ui:962
 msgid "Windows"
 msgstr ""
 
-#: resources/main-window.ui:1021
+#: resources/main-window.ui:1036
 msgid "Initializing, please wait..."
 msgstr "جاري التهيئة ، يرجى الانتظار ..."
 
-#: resources/main-window.ui:1079
+#: resources/main-window.ui:1094
 msgid "Something went wrong"
 msgstr "حدث خطأ ما"
 
-#: resources/main-window.ui:1154
+#: resources/main-window.ui:1169
 msgid "Invalid save location"
 msgstr "موقع حفظ غير صالح"
 
-#: resources/main-window.ui:1191
+#: resources/main-window.ui:1206
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
 
-#: resources/main-window.ui:1247
+#: resources/main-window.ui:1278
 msgid "Searching for other computers"
 msgstr "البحث عن أجهزة كمبيوتر أخرى"
 
-#: resources/main-window.ui:1306
+#: resources/main-window.ui:1337
 msgid "Shutting down..."
 msgstr "إيقاف تشغيل..."
 
-#: resources/main-window.ui:1378
+#: resources/main-window.ui:1409
 msgid "Restart required"
 msgstr ""
 
-#: resources/main-window.ui:1395
+#: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 
-#: resources/main-window.ui:1405
+#: resources/main-window.ui:1436
 msgid "Restart"
 msgstr ""
 
-#: resources/main-window.ui:1475
+#: resources/main-window.ui:1506
 msgid "Disk Full"
 msgstr ""
 
-#: resources/main-window.ui:1512
+#: resources/main-window.ui:1543
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
 
-#: resources/main-window.ui:1529
+#: resources/main-window.ui:1560
 msgid "Empty trash"
 msgstr ""
 
-#: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
+#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
 msgstr "فتح مجلد حفظ"
 
-#: resources/main-window.ui:1556
+#: resources/main-window.ui:1587
 msgid "Examine disk usage"
 msgstr ""
 
-#: resources/main-window.ui:1609 src/util.py:759
+#: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "إرسال واستقبال الملفات عبر الشبكة"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr ""
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr ""
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr ""
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr ""
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr ""
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -302,7 +332,7 @@ msgstr ""
 msgid "The transfer from %s has finished successfully"
 msgstr "تم الانتهاء من عملية النقل من %s بنجاح"
 
-#: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
+#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
 msgstr "فشل النقل"
 
@@ -316,7 +346,7 @@ msgstr "حدث خطأ ما في عملية النقل إلى %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "حدث خطأ ما في عملية النقل من %s"
 
-#: src/notifications.py:171 src/warpinator.py:166
+#: src/notifications.py:171 src/warpinator.py:169
 msgid "Transfer cancelled"
 msgstr "تم إلغاء عملية النقل"
 
@@ -373,126 +403,126 @@ msgstr[3] "%d ملفات"
 msgstr[4] "%d ملف"
 msgstr[5] "%d ملف"
 
-#: src/prefs.py:273
+#: src/prefs.py:276
 msgid "Warpinator Preferences"
 msgstr "تفضيلات واربيناتور"
 
-#: src/prefs.py:290
+#: src/prefs.py:293
 msgid "General"
 msgstr ""
 
-#: src/prefs.py:292
+#: src/prefs.py:295
 msgid "Desktop"
 msgstr "سطح المكتب"
 
-#: src/prefs.py:294
+#: src/prefs.py:297
 msgid "Show an icon in the notification area"
 msgstr "إظهار أيقونة في منطقة الإشعارات"
 
-#: src/prefs.py:298
+#: src/prefs.py:301
 msgid "Start with main window open"
 msgstr "ابدأ بفتح النافذة الرئيسية"
 
-#: src/prefs.py:303
+#: src/prefs.py:306
 msgid "Start automatically"
 msgstr "ابدأ تلقائيًا"
 
-#: src/prefs.py:310
+#: src/prefs.py:313
 msgid "Use compression when possible."
 msgstr ""
 
-#: src/prefs.py:312
+#: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 
-#: src/prefs.py:315
+#: src/prefs.py:318
 msgid "Location for received files"
 msgstr "موقع الملفات المستلمة"
 
-#: src/prefs.py:320
+#: src/prefs.py:323
 msgid "Reserved free space"
 msgstr ""
 
-#: src/prefs.py:325
+#: src/prefs.py:328
 msgid "Require approval before accepting files"
 msgstr "طلب الموافقة قبل قبول الملفات"
 
-#: src/prefs.py:330
+#: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
 msgstr "طلب الموافقة عند إستبدال ملف بدل عن آخر"
 
-#: src/prefs.py:335
+#: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr "عرض إشعار عندما يرسل شخص ما (أو يحاول إرسال) ملفات إليك"
 
-#: src/prefs.py:340
+#: src/prefs.py:343
 msgid "Connection"
 msgstr ""
 
-#: src/prefs.py:350
+#: src/prefs.py:353
 msgid "Network"
 msgstr "الشبكة"
 
-#: src/prefs.py:353
+#: src/prefs.py:356
 msgid "Automatic"
 msgstr ""
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:432
+#: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
 msgstr ""
 
-#: src/prefs.py:434
+#: src/prefs.py:437
 msgid "Network interface to use"
 msgstr ""
 
-#: src/prefs.py:442
+#: src/prefs.py:445
 msgid "Incoming port for transfers"
 msgstr "منفذ النقل الوارد"
 
-#: src/prefs.py:449
+#: src/prefs.py:452
 msgid "Incoming port for registration"
 msgstr ""
 
-#: src/prefs.py:464
+#: src/prefs.py:467
 msgid "Apply network changes"
 msgstr ""
 
-#: src/prefs.py:473
+#: src/prefs.py:476
 msgid "Update firewall rules"
 msgstr "تحديث قواعد جدار الحماية"
 
-#: src/prefs.py:485
+#: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
 
-#: src/prefs.py:561
+#: src/prefs.py:564
 msgid "Only available in secure mode."
 msgstr ""
 
-#: src/prefs.py:638
+#: src/prefs.py:641
 msgid "A group code is required."
 msgstr "شفرة المجموعة مطلوبة."
 
-#: src/prefs.py:643
+#: src/prefs.py:646
 msgid "The group code is too short."
 msgstr ""
 
-#: src/prefs.py:677
+#: src/prefs.py:680
 msgid "ON"
 msgstr ""
 
-#: src/prefs.py:678
+#: src/prefs.py:681
 msgid "All options are unlocked."
 msgstr ""
 
-#: src/prefs.py:681
+#: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
@@ -502,7 +532,7 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "تم فقد الاتصال"
 
-#: src/server.py:591
+#: src/server.py:650
 msgid "An error occurred on the remote machine"
 msgstr "حدث خطأ في الجهاز البعيد"
 
@@ -518,16 +548,16 @@ msgstr ""
 msgid "Select file(s) to send"
 msgstr "حدد الملف (الملفات) لإرسالها"
 
-#: src/util.py:648
+#: src/util.py:665
 msgid "A few seconds remaining"
 msgstr "تبقى بضع من الثوان"
 
-#: src/util.py:651
+#: src/util.py:668
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d ثانية متبقية"
 
-#: src/util.py:655 src/util.py:663
+#: src/util.py:672 src/util.py:680
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -538,7 +568,7 @@ msgstr[3] "%d دقائق"
 msgstr[4] "%d دقيقة"
 msgstr[5] "%d دقيقة"
 
-#: src/util.py:662
+#: src/util.py:679
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -549,7 +579,7 @@ msgstr[3] "%d ساعات"
 msgstr[4] "%d ساعة"
 msgstr[5] "%d ساعة"
 
-#: src/util.py:667
+#: src/util.py:684
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
@@ -560,86 +590,86 @@ msgstr[3] "تقريبا %d ساعات"
 msgstr[4] "تقريبا %d ساعة"
 msgstr[5] "تقريبا %d ساعة"
 
-#: src/util.py:755 src/warpinator.py:569
+#: src/util.py:772 src/warpinator.py:577
 msgid "About"
 msgstr "حول"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Paused"
 msgstr "تم الإيقاف مؤقتًا"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Waiting for approval"
 msgstr "في انتظار الموافقة"
 
-#: src/warpinator.py:150
+#: src/warpinator.py:153
 msgid "Waiting for your approval"
 msgstr "في انتظار موافقتك"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "لا توجد مساحة كافية على القرص"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:159
 msgid "Files may be overwritten"
 msgstr "يمكن الكتابة فوق الملفات"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "تم إلغاء الطلب"
 
-#: src/warpinator.py:161 src/warpinator.py:163
+#: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "تم إلغاء الطلب بواسطة %s"
 
-#: src/warpinator.py:168 src/warpinator.py:170
+#: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "تم إلغاء النقل بواسطة %s"
 
-#: src/warpinator.py:177
+#: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
 msgstr "لم يتم العثور على الملف '%s'"
 
-#: src/warpinator.py:179
+#: src/warpinator.py:182
 msgid "Some files not found"
 msgstr "لم يتم العثور على بعض الملفات"
 
-#: src/warpinator.py:181
+#: src/warpinator.py:184
 msgid "Completed"
 msgstr "مكتمل"
 
-#: src/warpinator.py:183
+#: src/warpinator.py:186
 msgid "Completed, but with errors"
 msgstr ""
 
-#: src/warpinator.py:342 src/warpinator.py:1037
+#: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
 msgstr "جاري الاتصال"
 
-#: src/warpinator.py:344
+#: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
 msgstr "جاري الاتصال ب %s"
 
-#: src/warpinator.py:354
+#: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
 msgstr "%s غير متصل"
 
-#: src/warpinator.py:359
+#: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "لا يمكن الاتصال ب%s"
 
-#: src/warpinator.py:364
+#: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "في انتظار %s  لإكمال الاتصال."
 
-#: src/warpinator.py:393
+#: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
@@ -650,76 +680,88 @@ msgstr[3] "%d نقل وارد جديد"
 msgstr[4] "%d نقل وارد جديد"
 msgstr[5] "%d نقل وارد جديد"
 
-#: src/warpinator.py:534 src/warpinator.py:1557
+#: src/warpinator.py:537 src/warpinator.py:1682
 msgid "Favorites"
 msgstr ""
 
-#: src/warpinator.py:539 src/warpinator.py:1562
+#: src/warpinator.py:542 src/warpinator.py:1687
 msgid "Recents"
 msgstr ""
 
-#: src/warpinator.py:546 src/warpinator.py:1571
+#: src/warpinator.py:549 src/warpinator.py:1696
 msgid "Browse..."
 msgstr "تصفح..."
 
-#: src/warpinator.py:565
+#: src/warpinator.py:568
+msgid "Connect manually"
+msgstr ""
+
+#: src/warpinator.py:573
 msgid "Preferences"
 msgstr "التفضيلات"
 
-#: src/warpinator.py:573 src/warpinator.py:1506
+#: src/warpinator.py:581 src/warpinator.py:1631
 msgid "Quit"
 msgstr "انهاء"
 
-#: src/warpinator.py:679
+#: src/warpinator.py:690
 msgid "You don't appear to be connected to a network."
 msgstr "لا يبدو أنك متصل بشبكة."
 
-#: src/warpinator.py:681
+#: src/warpinator.py:692
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "لم ينجح بدء التشغيل ، يرجى التحقق من السجلات الخاصة بك."
 
-#: src/warpinator.py:774
+#: src/warpinator.py:792
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
 
-#: src/warpinator.py:776
+#: src/warpinator.py:794
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
 
-#: src/warpinator.py:818
+#: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 
-#: src/warpinator.py:896
+#: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr ""
 
-#: src/warpinator.py:897
+#: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr ""
 
-#: src/warpinator.py:1016
+#: src/warpinator.py:1047
 msgid "Offline"
 msgstr "غير متصل"
 
-#: src/warpinator.py:1023
+#: src/warpinator.py:1054
 msgid "Unable to connect"
 msgstr "غير قادر على الاتصال"
 
-#: src/warpinator.py:1030
+#: src/warpinator.py:1061
 msgid "Waiting for two-way connection"
 msgstr "في انتظار اتصال من الطرفين"
 
-#: src/warpinator.py:1540
+#: src/warpinator.py:1162
+msgid "Manual connection"
+msgstr ""
+
+#: src/warpinator.py:1229
+msgid "Connecting..."
+msgstr ""
+
+#: src/warpinator.py:1665
 msgid "Send to all"
 msgstr ""
 

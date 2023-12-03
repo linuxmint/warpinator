@@ -1,16 +1,16 @@
-# Nepali translation for linuxmint
-# Copyright (c) 2021 Rosetta Contributors and Canonical Ltd 2021
+# Kurdish translation for linuxmint
+# Copyright (c) 2023 Rosetta Contributors and Canonical Ltd 2023
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2021-12-09 07:20+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Nepali <ne@li.org>\n"
+"PO-Revision-Date: 2023-08-17 22:58+0000\n"
+"Last-Translator: Sahin Elci <Unknown>\n"
+"Language-Team: Kurdish <ku@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,74 +20,77 @@ msgstr ""
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr ""
+msgstr "Koda Koma"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
+"Hûn nikarin bi komputerên ku heman kodê bikar neynin re têkilî daynin."
 
 #: resources/group-code.ui:49 resources/main-window.ui:51
 msgid "Set code"
-msgstr ""
+msgstr "Kodê saz bikin"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Moda Ewle:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "JI"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1218
 msgid "More information"
-msgstr ""
+msgstr "Zêdetir agahdarî"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Moda Ewle neçalak bû"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Peldanka dakêşanê ne ewle ye"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr ""
+msgstr "Encamên lihevhatî tune"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "Vê makîneya dûr di dîmena sereke de bijare bikin"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
-msgstr ""
+msgstr "Operasyonên neçalak û qedandî paqij bikin"
 
 #: resources/main-window.ui:584
 msgid "Send files"
-msgstr ""
+msgstr "Pelan bişînin"
 
 #: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
-msgstr ""
+msgstr "Veguheztinên Pelê"
 
 #: resources/main-window.ui:631 src/warpinator.py:1040
 msgid "Online"
-msgstr ""
+msgstr "Girêdayî"
 
 #: resources/main-window.ui:751
 msgid "No other computers found..."
-msgstr ""
+msgstr "Komputerên din nehatin dîtin..."
 
 #: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "Piştrast bike ku pêwendiya torê ya we çalak e."
 
 #: resources/main-window.ui:831
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Qaîdeyên dîwarê xwe kontrol bikin. Hejmarên portê dikarin bêne guhertin. Ji "
+"bo bêtir agahdarî li vebijarkan binêre."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:847
@@ -95,69 +98,75 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"Ma Warpinator li ser komputerên din ên li ser vê torê dixebite? Ger wusa be, "
+"pê ewle bine ku ew hemî di vebijarkan de heman koda komê bikar tînin."
 
 #: resources/main-window.ui:865
 msgid "Possible solutions:"
-msgstr ""
+msgstr "Çareseriyên gengaz:"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr ""
+msgstr "Warpinator jî li ser heye:"
 
 #: resources/main-window.ui:915
 msgid "Android"
-msgstr ""
+msgstr "Android"
 
 #: resources/main-window.ui:931
 msgid "iOS"
-msgstr ""
+msgstr "iOS"
 
 #: resources/main-window.ui:947 resources/main-window.ui:962
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 #: resources/main-window.ui:1036
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "Destpêkirin, ji kerema xwe li bendê bin..."
 
 #: resources/main-window.ui:1094
 msgid "Something went wrong"
-msgstr ""
+msgstr "Tiştek xelet derket"
 
 #: resources/main-window.ui:1169
 msgid "Invalid save location"
-msgstr ""
+msgstr "Cihê hilanînê nederbasdar"
 
 #: resources/main-window.ui:1206
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Ev peldank an nayê gihîştin an jî qedexe ye ku pelan tê de hilîne. Ji kerema "
+"xwe cîhek nû di Preferences de hilbijêrin û piştrast bikin ku ew gihîştî ye."
 
 #: resources/main-window.ui:1278
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Li komputerên din digerin"
 
 #: resources/main-window.ui:1337
 msgid "Shutting down..."
-msgstr ""
+msgstr "Girtin..."
 
 #: resources/main-window.ui:1409
 msgid "Restart required"
-msgstr ""
+msgstr "Destpêkirina nû pêwîst e"
 
 #: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Berî ku pelrêça hilanînê ya nû were bikar anîn pêdivî ye ku Warpinator ji nû "
+"ve dest pê bike"
 
 #: resources/main-window.ui:1436
 msgid "Restart"
-msgstr ""
+msgstr "Jinûve Bide Destpêkirin"
 
 #: resources/main-window.ui:1506
 msgid "Disk Full"
-msgstr ""
+msgstr "Dîsk tijî ye"
 
 #: resources/main-window.ui:1543
 msgid ""
@@ -165,24 +174,26 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Di cîhê hilanînê de cîhê têrê nake. Pêdivî ye ku hûn hin pelan jêbikin, cîhê "
+"belaş di vebijarkan de kêm bikin an cîhek nû hilbijêrin."
 
 #: resources/main-window.ui:1560
 msgid "Empty trash"
-msgstr ""
+msgstr "Çop vala bikin"
 
 #: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
-msgstr ""
+msgstr "Peldanka hilanînê veke"
 
 #: resources/main-window.ui:1587
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Bikaranîna dîskê binirxînin"
 
 #: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr ""
+msgstr "Pelan li seranserê Torê bişînin û bistînin"
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
@@ -215,446 +226,456 @@ msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "Li benda pejirandinê ye"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "Cihê dîskê têrê nake!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr ""
+msgstr "Hesabkirin"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr ""
+msgstr "Vê daxwazê ​​​​qebûl bikin"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr ""
+msgstr "Vê daxwazê ​​​​bikin"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr ""
+msgstr "Vê daxwaza betal bike"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr ""
+msgstr "Vê operasyonê ji nû ve bidin destpêkirin"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Vê operasyonê rawestînin"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr ""
+msgstr "Vê operasyonê ji nû ve bidin destpêkirin"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr ""
+msgstr "Vê operasyonê betal bike"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Vê operasyonê ji navnîşê derxînin"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Peldanka tê de veke"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "Nîşe li ser hejmarên portê:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator Preferences"
 
 #: src/notifications.py:24
 msgid "New incoming files"
-msgstr ""
+msgstr "Pelên hatina nû"
 
 #: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"%(sender_name)s dixwaze %(file_count)d pelê (%(file_name)s) ji te re bişîne."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s dixwaze %(file_count)d pelan ji we re bişîne"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr ""
+msgstr "Baweranîn"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr ""
+msgstr "Berketin"
 
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
+msgstr "%(sender_name)s %(file_count)d file (%(file_name)s) ji we re dişîne."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s %(file_count)d pel ji we re dişîne"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Veguheztin temam bû"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Veguhastina %s qediya, lê bi xeletî"
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "Veguhastina %s bi serketî qediya"
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Veguhastina ji %s qediya, lê bi xeletî"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "Veguhastina ji %s bi serketî bû"
 
 #: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
-msgstr ""
+msgstr "Veguhastin bi ser neket"
 
 #: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "Di veguhestina %s de tiştek xelet derket"
 
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "Di veguhestina %s de tiştek xelet derket"
 
 #: src/notifications.py:171 src/warpinator.py:169
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "Veguhastin betal kirin"
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "Veguhastina te ji %s re hat betalkirin"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "Veguheztinek hatî ji %s hate betal kirin"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Pelên şandin"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "%d pel ji %s re dişîne"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "'%s' ji %s re dişîne"
 
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:154
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d pel-ne-wergerandin"
+msgstr[1] "%d pel"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d pel"
+msgstr[1] "%d pel"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator Preferences"
 
 #: src/prefs.py:293
 msgid "General"
-msgstr ""
+msgstr "Giştî"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr ""
+msgstr "Desktop"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"
-msgstr ""
+msgstr "Li qada ragihandinê îkonek nîşan bide"
 
 #: src/prefs.py:301
 msgid "Start with main window open"
-msgstr ""
+msgstr "Bi pencereya sereke vekirî dest pê bikin"
 
 #: src/prefs.py:306
 msgid "Start automatically"
-msgstr ""
+msgstr "Xweber dest pê bike"
 
 #: src/prefs.py:313
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Dema ku gengaz be, kompresyon bikar bînin."
 
 #: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
+"Hişyarî: Dibe ku ev bandorek neyînî li ser performansa li ser hin torên "
+"bileztir bike."
 
 #: src/prefs.py:318
 msgid "Location for received files"
-msgstr ""
+msgstr "Cihê ji bo pelên wergirtî"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Cihê belaş veqetandin"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
-msgstr ""
+msgstr "Berî hewceya pejirandina pelan erêkirinê bike"
 
 #: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
-msgstr ""
+msgstr "Dema ku pel dê werin nivîsandin erêkirinê hewce bike"
 
 #: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+"Dema ku kesek pelan ji we re dişîne (an hewl dide ku bişîne) ji we re "
+"agahiyek nîşan bide"
 
 #: src/prefs.py:343
 msgid "Connection"
-msgstr ""
+msgstr "Têkêlî"
 
 #: src/prefs.py:353
 msgid "Network"
-msgstr ""
+msgstr "Tor"
 
 #: src/prefs.py:356
 msgid "Automatic"
-msgstr ""
+msgstr "Bixweber"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "%s - nehat dîtin"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
-msgstr ""
+msgstr "Têkiliya torê ya ku bikar bînin"
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "Porta hatina ji bo veguheztinan"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Porta hatina ji bo qeydkirinê"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
-msgstr ""
+msgstr "Guhertinên torê bicîh bikin"
 
 #: src/prefs.py:476
 msgid "Update firewall rules"
-msgstr ""
+msgstr "Qaîdeyên firewallê nûve bikin"
 
 #: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Dê her hejmarên portê ji bo serîlêdanê bixebitin, lê karanîna heman portan "
+"ji bo hemî komputeran dikare heke hewce bike zêdekirina îstîsnayên dîwarê "
+"agir hêsantir bike."
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Tenê di moda ewle de peyda dibe."
 
 #: src/prefs.py:641
 msgid "A group code is required."
-msgstr ""
+msgstr "Koda komê hewce ye."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "Koda komê pir kurt e."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "LI"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Hemî vebijark vekirî ne."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Pêdivî ye ku hûn kodek koma xwerû destnîşan bikin ku di moda ewledar de "
+"bixebite. Hin vebijark niha neçalak in."
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Têkilî winda bûye"
 
 #: src/server.py:650
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "Di makîneya dûr de xeletiyek derket"
 
 #: src/util.py:264
 msgid "Cancel"
-msgstr ""
+msgstr "Bişûndekirin"
 
 #: src/util.py:265
 msgid "Add"
-msgstr ""
+msgstr "Lêzêdekirin"
 
 #: src/util.py:287
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "Ji bo şandina pel(ên) hilbijêrin"
 
 #: src/util.py:665
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "Çend saniye mane"
 
 #: src/util.py:668
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d çirk mane"
 
 #: src/util.py:672 src/util.py:680
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d deqîqe"
+msgstr[1] "%d deqîqe"
 
 #: src/util.py:679
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d saet"
+msgstr[1] "%d saet"
 
 #: src/util.py:684
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nêzîkî %d saet"
+msgstr[1] "bi qasî %d saet"
 
 #: src/util.py:772 src/warpinator.py:577
 msgid "About"
-msgstr ""
+msgstr "Ji dor"
 
 #: src/warpinator.py:148
 msgid "Paused"
-msgstr ""
+msgstr "Rawestiyan"
 
 #: src/warpinator.py:151
 msgid "Waiting for approval"
-msgstr ""
+msgstr "Li benda pejirandinê ne"
 
 #: src/warpinator.py:153
 msgid "Waiting for your approval"
-msgstr ""
+msgstr "Li benda erêkirina we me"
 
 #: src/warpinator.py:156
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Cihê dîskê têrê nake"
 
 #: src/warpinator.py:159
 msgid "Files may be overwritten"
-msgstr ""
+msgstr "Dibe ku pelan li ser bêne nivîsandin"
 
 #: src/warpinator.py:162
 msgid "Request cancelled"
-msgstr ""
+msgstr "Daxwaz hat betal kirin"
 
 #: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "Daxwaz ji hêla %s ve hat betal kirin"
 
 #: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "Veguhastina %s hat betalkirin"
 
 #: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
-msgstr ""
+msgstr "Pela '%s' nehat dîtin"
 
 #: src/warpinator.py:182
 msgid "Some files not found"
-msgstr ""
+msgstr "Hin pel nehatin dîtin"
 
 #: src/warpinator.py:184
 msgid "Completed"
-msgstr ""
+msgstr "Temam kirin"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Temam, lê bi xeletî"
 
 #: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
-msgstr ""
+msgstr "Girêdan"
 
 #: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Girêdana %s"
 
 #: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s ne serhêl e"
 
 #: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "Nikare bi %s ve girêdayî bûn"
 
 #: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr ""
+msgstr "Li benda %s ye ku pêwendiyê temam bike."
 
 #: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d veguhastina hatina nû"
+msgstr[1] "%d veguheztina nû"
 
 #: src/warpinator.py:537 src/warpinator.py:1682
 msgid "Favorites"
-msgstr ""
+msgstr "Hemî Favorî"
 
 #: src/warpinator.py:542 src/warpinator.py:1687
 msgid "Recents"
@@ -662,7 +683,7 @@ msgstr ""
 
 #: src/warpinator.py:549 src/warpinator.py:1696
 msgid "Browse..."
-msgstr ""
+msgstr "Bigerin..."
 
 #: src/warpinator.py:568
 msgid "Connect manually"
@@ -670,19 +691,19 @@ msgstr ""
 
 #: src/warpinator.py:573
 msgid "Preferences"
-msgstr ""
+msgstr "Vebijêrk"
 
 #: src/warpinator.py:581 src/warpinator.py:1631
 msgid "Quit"
-msgstr ""
+msgstr "Derketin"
 
 #: src/warpinator.py:690
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "Xuya nabe ku hûn bi torê ve girêdayî ne."
 
 #: src/warpinator.py:692
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
+msgstr "Destpêk bi ser neket, ji kerema xwe têketinên xwe kontrol bikin."
 
 #: src/warpinator.py:792
 #, python-format
@@ -690,6 +711,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator bi fonksiyonek tixûbdar dimeşe, û dê di %d hûrdeman de derkeve. "
+"Ji bo çalakkirina Moda Ewle, kodek komê ya bêhempa saz bikin."
 
 #: src/warpinator.py:794
 #, python-format
@@ -697,33 +720,35 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator bi fonksiyonek tixûbdar dimeşe, û dê di %d deqîqeyan de derkeve. "
+"Ji bo çalakkirina Moda Ewle, kodek komê ya bêhempa saz bikin."
 
 #: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
-msgstr ""
+msgstr "Cihê dîskê têra wergirtina pelan nake (%s veqetandî ye)."
 
 #: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Li benda qedandina %d operasyonê ne"
 
 #: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Li benda qedandina %d operasyonan e"
 
 #: src/warpinator.py:1047
 msgid "Offline"
-msgstr ""
+msgstr "Negirêdayî"
 
 #: src/warpinator.py:1054
 msgid "Unable to connect"
-msgstr ""
+msgstr "Nabe ku were girêdan"
 
 #: src/warpinator.py:1061
 msgid "Waiting for two-way connection"
-msgstr ""
+msgstr "Li benda girêdana du-alî ye"
 
 #: src/warpinator.py:1162
 msgid "Manual connection"
@@ -735,36 +760,38 @@ msgstr ""
 
 #: src/warpinator.py:1665
 msgid "Send to all"
-msgstr ""
+msgstr "Ji hemûyan re bişînin"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Bi Warpinator re bişînin"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Pelê ji kesê ku Warpinator bikar tîne re bişîne"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Ji bo Warpinator portek dîwarê vekin"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
+msgstr "Ji bo guheztina mîhengên firewallê, hûn hewce ne ku rast bikin."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6
 msgid "Warpinator"
-msgstr ""
+msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:9
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and share files quickly and securely."
 msgstr ""
+"Warpinator dihêle hûn bi hêsanî gelek komputeran li ser torgilokek herêmî "
+"girêdin û pelan zû û bi ewle parve bikin."
 
 #. DO NOT TRANSLATE Linux Mint
 #: data/org.x.Warpinator.appdata.xml.in.in:27
 msgid "Linux Mint"
-msgstr ""
+msgstr "Linux Mint"

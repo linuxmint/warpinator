@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-06-06 14:01+0100\n"
+"POT-Creation-Date: 2023-11-30 16:05+0000\n"
 "PO-Revision-Date: 2023-06-08 18:44+0000\n"
 "Last-Translator: Butterfly <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -15,10 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2023-07-07 12:58+0000\n"
-"X-Generator: Launchpad (build 2ac9e3bf4ab511504f8fc651371e24a6a047ba12)\n"
+"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
+"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
 
-#: resources/group-code.ui:16 src/prefs.py:342
+#: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
 msgstr "Grup Kodu"
 
@@ -34,11 +34,12 @@ msgstr "Kodu ayarla"
 msgid "Secure mode:"
 msgstr "Güvenli kip:"
 
-#: resources/group-code.ui:106 src/prefs.py:680
+#: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
 msgstr "KAPALI"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
+#: resources/main-window.ui:1218
 msgid "More information"
 msgstr "Daha fazla bilgi"
 
@@ -66,11 +67,11 @@ msgstr "Etkin olmayan ve tamamlanmış işlemleri temizleme"
 msgid "Send files"
 msgstr "Dosyaları gönder"
 
-#: resources/main-window.ui:610 src/prefs.py:308
+#: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
 msgstr "Dosya Aktarımları"
 
-#: resources/main-window.ui:631 src/warpinator.py:1009
+#: resources/main-window.ui:631 src/warpinator.py:1040
 msgid "Online"
 msgstr "Çevrimiçi"
 
@@ -116,23 +117,23 @@ msgstr "Android"
 msgid "iOS"
 msgstr "iOS"
 
-#: resources/main-window.ui:947
+#: resources/main-window.ui:947 resources/main-window.ui:962
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1021
+#: resources/main-window.ui:1036
 msgid "Initializing, please wait..."
 msgstr "Başlatılıyor, lütfen bekleyin..."
 
-#: resources/main-window.ui:1079
+#: resources/main-window.ui:1094
 msgid "Something went wrong"
 msgstr "Bir şeyler yanlış gitti"
 
-#: resources/main-window.ui:1154
+#: resources/main-window.ui:1169
 msgid "Invalid save location"
 msgstr "Geçersiz kayıt yeri"
 
-#: resources/main-window.ui:1191
+#: resources/main-window.ui:1206
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -140,32 +141,32 @@ msgstr ""
 "Bu dizine erişilemiyor veya dosyaların kaydedilmesi engelli. Lütfen "
 "tercihlerden yeni bir konum seçin ve erişilebilir olduğundan emin olun."
 
-#: resources/main-window.ui:1247
+#: resources/main-window.ui:1278
 msgid "Searching for other computers"
 msgstr "Diğer bilgisayarlar aranıyor"
 
-#: resources/main-window.ui:1306
+#: resources/main-window.ui:1337
 msgid "Shutting down..."
 msgstr "Kapatılıyor..."
 
-#: resources/main-window.ui:1378
+#: resources/main-window.ui:1409
 msgid "Restart required"
 msgstr "Yeniden başlatma gerekiyor"
 
-#: resources/main-window.ui:1395
+#: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Yeni kayıt dizininin kullanılabilmesi için Warpinator yeniden başlatılmalı"
 
-#: resources/main-window.ui:1405
+#: resources/main-window.ui:1436
 msgid "Restart"
 msgstr "Yeniden başlat"
 
-#: resources/main-window.ui:1475
+#: resources/main-window.ui:1506
 msgid "Disk Full"
 msgstr "Disk Dolu"
 
-#: resources/main-window.ui:1512
+#: resources/main-window.ui:1543
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -174,23 +175,52 @@ msgstr ""
 "Kaydetme konumunda yeterli alan yok. Bazı dosyaları silmeniz, tercihlerdeki "
 "minimum boş alanı azaltmanız ya da yeni bir konum seçmeniz gerekiyor."
 
-#: resources/main-window.ui:1529
+#: resources/main-window.ui:1560
 msgid "Empty trash"
 msgstr "Çöpü boşalt"
 
-#: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
+#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
 msgstr "Kayıt dizinini aç"
 
-#: resources/main-window.ui:1556
+#: resources/main-window.ui:1587
 msgid "Examine disk usage"
 msgstr "Disk kullanımını incele"
 
-#: resources/main-window.ui:1609 src/util.py:759
+#: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Ağ Üzerinden Dosya Gönderin ve Alın"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr ""
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr ""
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr ""
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr ""
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr ""
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -311,7 +341,7 @@ msgstr "%s hedefinden aktarım tamamlandı, ancak hatalar var"
 msgid "The transfer from %s has finished successfully"
 msgstr "%s hedefinden aktarım başarıyla tamamlandı"
 
-#: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
+#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
 msgstr "Aktarım başarısız"
 
@@ -325,7 +355,7 @@ msgstr "%s birimine aktarımda bir sorun oluştu"
 msgid "Something went wrong with the transfer from %s"
 msgstr "%s biriminden aktarımda bir sorun oluştu"
 
-#: src/notifications.py:171 src/warpinator.py:166
+#: src/notifications.py:171 src/warpinator.py:169
 msgid "Transfer cancelled"
 msgstr "Aktarım iptal edildi"
 
@@ -374,35 +404,35 @@ msgid_plural "%d files"
 msgstr[0] "%d file"
 msgstr[1] "%d dosya"
 
-#: src/prefs.py:273
+#: src/prefs.py:276
 msgid "Warpinator Preferences"
 msgstr "Warpinator Tercihleri"
 
-#: src/prefs.py:290
+#: src/prefs.py:293
 msgid "General"
 msgstr "Genel"
 
-#: src/prefs.py:292
+#: src/prefs.py:295
 msgid "Desktop"
 msgstr "Masaüstü"
 
-#: src/prefs.py:294
+#: src/prefs.py:297
 msgid "Show an icon in the notification area"
 msgstr "Bildirim alanında bir simge göster"
 
-#: src/prefs.py:298
+#: src/prefs.py:301
 msgid "Start with main window open"
 msgstr "Ana pencere açıldığında başlat"
 
-#: src/prefs.py:303
+#: src/prefs.py:306
 msgid "Start automatically"
 msgstr "Otomatik başlat"
 
-#: src/prefs.py:310
+#: src/prefs.py:313
 msgid "Use compression when possible."
 msgstr "Mümkünse sıkıştırma kullan."
 
-#: src/prefs.py:312
+#: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
@@ -410,68 +440,68 @@ msgstr ""
 "Uyarı: Bu bazı daha hızlı ağlarda performans üzerinde olumsuz bir etki "
 "yapabilir."
 
-#: src/prefs.py:315
+#: src/prefs.py:318
 msgid "Location for received files"
 msgstr "Alınan dosyaların konumu"
 
-#: src/prefs.py:320
+#: src/prefs.py:323
 msgid "Reserved free space"
 msgstr "Ayrılmış boş alan"
 
-#: src/prefs.py:325
+#: src/prefs.py:328
 msgid "Require approval before accepting files"
 msgstr "Dosyaları kabul etmeden önce onay gerekiyor"
 
-#: src/prefs.py:330
+#: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
 msgstr "Dosyaların üstüne yazılması gerektiğinde onay iste"
 
-#: src/prefs.py:335
+#: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Birisi size dosya gönderdiğinde (veya göndermeye çalıştığında) bir bildirim "
 "göster"
 
-#: src/prefs.py:340
+#: src/prefs.py:343
 msgid "Connection"
 msgstr "Bağlantı"
 
-#: src/prefs.py:350
+#: src/prefs.py:353
 msgid "Network"
 msgstr "Ağ"
 
-#: src/prefs.py:353
+#: src/prefs.py:356
 msgid "Automatic"
 msgstr "Otomatik"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:432
+#: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
 msgstr "%s - bulunamadı"
 
-#: src/prefs.py:434
+#: src/prefs.py:437
 msgid "Network interface to use"
 msgstr "Kullanılacak ağ arayüzü"
 
-#: src/prefs.py:442
+#: src/prefs.py:445
 msgid "Incoming port for transfers"
 msgstr "Aktarımlar için gelen bağlantı noktası"
 
-#: src/prefs.py:449
+#: src/prefs.py:452
 msgid "Incoming port for registration"
 msgstr "Kayıt için gelen bağlantı noktası"
 
-#: src/prefs.py:464
+#: src/prefs.py:467
 msgid "Apply network changes"
 msgstr "Ağ değişikliklerini uygula"
 
-#: src/prefs.py:473
+#: src/prefs.py:476
 msgid "Update firewall rules"
 msgstr "Güvenlik duvarı kurallarını güncelle"
 
-#: src/prefs.py:485
+#: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -480,27 +510,27 @@ msgstr ""
 "bilgisayarlar için aynı bağlantı noktalarını kullanmak, gerektiğinde "
 "güvenlik duvarı istisnaları eklemeyi kolaylaştırır."
 
-#: src/prefs.py:561
+#: src/prefs.py:564
 msgid "Only available in secure mode."
 msgstr "Yalnızca güvenli kipte kullanılabilir."
 
-#: src/prefs.py:638
+#: src/prefs.py:641
 msgid "A group code is required."
 msgstr "Bir grup kodu gerekiyor."
 
-#: src/prefs.py:643
+#: src/prefs.py:646
 msgid "The group code is too short."
 msgstr "Grup kodu çok kısa."
 
-#: src/prefs.py:677
+#: src/prefs.py:680
 msgid "ON"
 msgstr "AÇIK"
 
-#: src/prefs.py:678
+#: src/prefs.py:681
 msgid "All options are unlocked."
 msgstr "Tüm seçeneklerin kilidi kaldırıldı."
 
-#: src/prefs.py:681
+#: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
@@ -512,7 +542,7 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "Bağlantı kesildi"
 
-#: src/server.py:591
+#: src/server.py:650
 msgid "An error occurred on the remote machine"
 msgstr "Uzak makinede bir hata oluştu"
 
@@ -528,151 +558,155 @@ msgstr "Ekle"
 msgid "Select file(s) to send"
 msgstr "Gönderim için dosya(ları) seçin"
 
-#: src/util.py:648
+#: src/util.py:665
 msgid "A few seconds remaining"
 msgstr "Birkaç saniye kaldı"
 
-#: src/util.py:651
+#: src/util.py:668
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d saniye kaldı"
 
-#: src/util.py:655 src/util.py:663
+#: src/util.py:672 src/util.py:680
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d dakika"
 msgstr[1] "%d dakika"
 
-#: src/util.py:662
+#: src/util.py:679
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d saat"
 msgstr[1] "%d saat"
 
-#: src/util.py:667
+#: src/util.py:684
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "yaklaşık %d saat"
 msgstr[1] "yaklaşık %d saat"
 
-#: src/util.py:755 src/warpinator.py:569
+#: src/util.py:772 src/warpinator.py:577
 msgid "About"
 msgstr "Hakkında"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Paused"
 msgstr "Duraklatıldı"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Waiting for approval"
 msgstr "Onay bekleniyor"
 
-#: src/warpinator.py:150
+#: src/warpinator.py:153
 msgid "Waiting for your approval"
 msgstr "Onayınız bekleniyor"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "Yeterli disk alanı yok"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:159
 msgid "Files may be overwritten"
 msgstr "Dosyaların üzerine yazılabilir"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "İstek iptal edildi"
 
-#: src/warpinator.py:161 src/warpinator.py:163
+#: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "İstek %s tarafından iptal edildi"
 
-#: src/warpinator.py:168 src/warpinator.py:170
+#: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Aktarım %s tarafından iptal edildi"
 
-#: src/warpinator.py:177
+#: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
 msgstr "'%s' dosyası bulunamadı"
 
-#: src/warpinator.py:179
+#: src/warpinator.py:182
 msgid "Some files not found"
 msgstr "Bazı dosyalar bulunamadı"
 
-#: src/warpinator.py:181
+#: src/warpinator.py:184
 msgid "Completed"
 msgstr "Tamamlandı"
 
-#: src/warpinator.py:183
+#: src/warpinator.py:186
 msgid "Completed, but with errors"
 msgstr "Tamamlandı, ancak hatalar var"
 
-#: src/warpinator.py:342 src/warpinator.py:1037
+#: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
 msgstr "Bağlanıyor"
 
-#: src/warpinator.py:344
+#: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s birimine bağlanılıyor"
 
-#: src/warpinator.py:354
+#: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
 msgstr "%s birimi çevrimiçi değil"
 
-#: src/warpinator.py:359
+#: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "%s birimine bağlanılamıyor"
 
-#: src/warpinator.py:364
+#: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Bağlantıyı tamamlamak için %s bekleniyor"
 
-#: src/warpinator.py:393
+#: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d yeni gelen aktarım"
 msgstr[1] "%d yeni gelen aktarım"
 
-#: src/warpinator.py:534 src/warpinator.py:1557
+#: src/warpinator.py:537 src/warpinator.py:1682
 msgid "Favorites"
 msgstr "Sık kullanılanlar"
 
-#: src/warpinator.py:539 src/warpinator.py:1562
+#: src/warpinator.py:542 src/warpinator.py:1687
 msgid "Recents"
 msgstr "Son dosyalar"
 
-#: src/warpinator.py:546 src/warpinator.py:1571
+#: src/warpinator.py:549 src/warpinator.py:1696
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: src/warpinator.py:565
+#: src/warpinator.py:568
+msgid "Connect manually"
+msgstr ""
+
+#: src/warpinator.py:573
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: src/warpinator.py:573 src/warpinator.py:1506
+#: src/warpinator.py:581 src/warpinator.py:1631
 msgid "Quit"
 msgstr "Çıkış"
 
-#: src/warpinator.py:679
+#: src/warpinator.py:690
 msgid "You don't appear to be connected to a network."
 msgstr "Bir ağa bağlı görünmüyorsunuz."
 
-#: src/warpinator.py:681
+#: src/warpinator.py:692
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Başlatma başarısız oldu, lütfen günlüklerinizi kontrol ediniz."
 
-#: src/warpinator.py:774
+#: src/warpinator.py:792
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -681,7 +715,7 @@ msgstr ""
 "Warpinator sınırlı işlevsellikle çalışıyor ve %d dakika içinde kapanacak. "
 "Güvenli Kipi etkinleştirmek için benzersiz bir grup kodu ayarlayın."
 
-#: src/warpinator.py:776
+#: src/warpinator.py:794
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -690,34 +724,42 @@ msgstr ""
 "Warpinator sınırlı işlevsellikle çalışıyor ve %d dakika içinde kapanacak. "
 "Güvenli Kipi etkinleştirmek için benzersiz bir grup kodu ayarlayın."
 
-#: src/warpinator.py:818
+#: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr "Dosyaları almak için yeterli disk alanı kalmadı (%s ayrılmış)."
 
-#: src/warpinator.py:896
+#: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "%d işlemin tamamlanması bekleniyor"
 
-#: src/warpinator.py:897
+#: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "%d işlemin tamamlanması bekleniyor"
 
-#: src/warpinator.py:1016
+#: src/warpinator.py:1047
 msgid "Offline"
 msgstr "Çevrimdışı"
 
-#: src/warpinator.py:1023
+#: src/warpinator.py:1054
 msgid "Unable to connect"
 msgstr "Bağlanılamıyor"
 
-#: src/warpinator.py:1030
+#: src/warpinator.py:1061
 msgid "Waiting for two-way connection"
 msgstr "İki yönlü bağlantı bekleniyor"
 
-#: src/warpinator.py:1540
+#: src/warpinator.py:1162
+msgid "Manual connection"
+msgstr ""
+
+#: src/warpinator.py:1229
+msgid "Connecting..."
+msgstr ""
+
+#: src/warpinator.py:1665
 msgid "Send to all"
 msgstr "Tümüne gönder"
 

@@ -1,63 +1,65 @@
-# Nepali translation for linuxmint
-# Copyright (c) 2021 Rosetta Contributors and Canonical Ltd 2021
+# Tagalog translation for linuxmint
+# Copyright (c) 2023 Rosetta Contributors and Canonical Ltd 2023
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2021-12-09 07:20+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Nepali <ne@li.org>\n"
+"PO-Revision-Date: 2023-11-20 08:43+0000\n"
+"Last-Translator: Jinggo Mantos Improso <Unknown>\n"
+"Language-Team: Tagalog <tl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
 "X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr ""
+msgstr "Talahudyatan ng Grupo"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
+"Hindi ka maaring makipag-usap sa mga kompyuter na hindi gumagamit ng "
+"parehong hudyat."
 
 #: resources/group-code.ui:49 resources/main-window.ui:51
 msgid "Set code"
-msgstr ""
+msgstr "Ilagay ang hudyat"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Ligtas na Paraan"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "Patayin"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1218
 msgid "More information"
-msgstr ""
+msgstr "Karagdagang impormasyon"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Pinawalang bisa ang Ligtas na Kalagayan"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Hindi Ligtas ang Paglalagyan na folder"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr ""
+msgstr "Walang katumbas na mga resulta"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "Gawing paborito  ang malayong makinang ito sa unang tanawin"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
@@ -65,23 +67,23 @@ msgstr ""
 
 #: resources/main-window.ui:584
 msgid "Send files"
-msgstr ""
+msgstr "ipadala ang mga files"
 
 #: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
-msgstr ""
+msgstr "Nililipat ang mga files"
 
 #: resources/main-window.ui:631 src/warpinator.py:1040
 msgid "Online"
-msgstr ""
+msgstr "Aktibo"
 
 #: resources/main-window.ui:751
 msgid "No other computers found..."
-msgstr ""
+msgstr "Walang ibang kompyuter na natagpuan"
 
 #: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "Siguraduhing ang iyong koneksyon sa network ay aktibo"
 
 #: resources/main-window.ui:831
 msgid ""
@@ -95,19 +97,22 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"Ang Warpinator ba ay gumagana sa iba pang kompyuter sa network na ito? Kung "
+"OO, siguraduhing lahat sila ay gumagamit ng parehong hudyat ng grupo sa mga "
+"pagpipilian."
 
 #: resources/main-window.ui:865
 msgid "Possible solutions:"
-msgstr ""
+msgstr "Mga posibleng solusyon"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr ""
+msgstr "Ang Warpinator ay matatagpuan din sa:"
 
 #: resources/main-window.ui:915
 msgid "Android"
-msgstr ""
+msgstr "Android"
 
 #: resources/main-window.ui:931
 msgid "iOS"
@@ -115,49 +120,54 @@ msgstr ""
 
 #: resources/main-window.ui:947 resources/main-window.ui:962
 msgid "Windows"
-msgstr ""
+msgstr "Mga Window"
 
 #: resources/main-window.ui:1036
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "Sinisimulan na, maghintay ka hinayupak ..."
 
 #: resources/main-window.ui:1094
 msgid "Something went wrong"
-msgstr ""
+msgstr "May pagkakamali"
 
 #: resources/main-window.ui:1169
 msgid "Invalid save location"
-msgstr ""
+msgstr "Hindi pinapayagan ang lokasyon ng paglalagyan"
 
 #: resources/main-window.ui:1206
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Ang folder na ito ay hindi maaring mabuksan o hindi pinapayagang mabuksan "
+"para paglagyan. Parang awa mo na, pumili ka ng bagong lokasyon sa mga "
+"Pagpipilian at siguraduhing maari itong buksan."
 
 #: resources/main-window.ui:1278
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Naghahanap ng iba pang mga kompyuter"
 
 #: resources/main-window.ui:1337
 msgid "Shutting down..."
-msgstr ""
+msgstr "Isinasara ..."
 
 #: resources/main-window.ui:1409
 msgid "Restart required"
-msgstr ""
+msgstr "Nangangailangan ng pag-restart"
 
 #: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Ang Warpinator ay nangangailangan ng pag-uumpisa upang magamit ang bagong "
+"paglalagyan na direktori"
 
 #: resources/main-window.ui:1436
 msgid "Restart"
-msgstr ""
+msgstr "Muling pag-umpisa"
 
 #: resources/main-window.ui:1506
 msgid "Disk Full"
-msgstr ""
+msgstr "Puno na ang Lagayan"
 
 #: resources/main-window.ui:1543
 msgid ""
@@ -165,6 +175,9 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Walang sapat na bakanteng espasyo sa napiling paglalagyan. Kailangan mong "
+"magbura ng ibang files, o bawasan ang minimum na libreng espasyo sa mga "
+"Pagpipilian o pumili ng ibang paglalagyan."
 
 #: resources/main-window.ui:1560
 msgid "Empty trash"
@@ -172,17 +185,17 @@ msgstr ""
 
 #: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
-msgstr ""
+msgstr "Buksan ang Pinaglalagyang folder"
 
 #: resources/main-window.ui:1587
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Siyasatin ang paggamit ng Paglalagyan"
 
 #: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
-msgstr ""
+msgstr "Magpadala at Tumanggap ng mga Files sa buong network"
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
@@ -215,51 +228,51 @@ msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "Naghihintay ng pag-aproba"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "Walang sapat na espasyo sa paglalagyan!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr ""
+msgstr "Tinatantiya ..."
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr ""
+msgstr "Tanggapin ang kahilingan"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr ""
+msgstr "Tanggihan ang kahilingan"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr ""
+msgstr "Alisin ang hiling na ito"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr ""
+msgstr "Muling umpisahan ang operasyon"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Pansamantalang itigil ang operasyon"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr ""
+msgstr "Muling simulan ang operasyon"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr ""
+msgstr "Alisin ang operasyon"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Tanggalin ang operasyong ito mula sa listahan"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Buksan ang pinaglalagyang folder"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -280,57 +293,62 @@ msgstr ""
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"si %(sender_name)s ay gustong magpadala ng %(file_count)d file "
+"(%(file_name)s)."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "si %(sender_name)s ay gustong magpadala ng %(file_count)d files"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr ""
+msgstr "Tanggapin"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr ""
+msgstr "Tanggihan"
 
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"si %(sender_name)s ay nagpapadala ng %(file_count)d file (%(file_name)s)."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "si %(sender_name)s ay nagpapadala ng %(file_count)d files"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Tapos na ang paglilipat"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
 msgstr ""
+"Ang paglilipat sa %s ay natapos na, ngunit may mga kasamang pagkakamali."
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "Ang paglilipat sa %s ay matagumpay na natapos."
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
 msgstr ""
+"Ang paglilipat mula sa %s ay natapos, ngunit may kasamang pagkakamali"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "Ang paglilipat mula sa %s ay matagumpay na natapos"
 
 #: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
-msgstr ""
+msgstr "Palpak ang paglilipat"
 
 #: src/notifications.py:140
 #, python-format
@@ -340,35 +358,35 @@ msgstr ""
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "May naging pagkakamali sa paglilipat mula sa %s"
 
 #: src/notifications.py:171 src/warpinator.py:169
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "Pinigilan ang paglilipat"
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "Ang iyong paglilipat sa %s ay pinigilan"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "Ang paparating na paglilipat mula sa %s ay pinigilan"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Ipinapadala na ang mga files"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Ipinapadala ang %d na mga files sa %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Ipinapadala na ang '%s' sa %s"
 
 #: src/ops.py:53
 #, python-format
@@ -397,11 +415,11 @@ msgstr ""
 
 #: src/prefs.py:293
 msgid "General"
-msgstr ""
+msgstr "Pangkalahatan"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr ""
+msgstr "Pook ng Paglikha"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"

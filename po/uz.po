@@ -7,19 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-06-06 14:01+0100\n"
-"PO-Revision-Date: 2022-11-29 19:20+0000\n"
+"POT-Creation-Date: 2023-11-30 16:05+0000\n"
+"PO-Revision-Date: 2023-11-04 06:04+0000\n"
 "Last-Translator: Umidjon Almasov <Unknown>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2023-07-07 12:58+0000\n"
-"X-Generator: Launchpad (build 2ac9e3bf4ab511504f8fc651371e24a6a047ba12)\n"
+"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
+"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
 "Language: uz\n"
 
-#: resources/group-code.ui:16 src/prefs.py:342
+#: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
 msgstr "Guruh kodi"
 
@@ -36,11 +36,12 @@ msgstr "Kodni sozlash"
 msgid "Secure mode:"
 msgstr "Xavfsiz rejim:"
 
-#: resources/group-code.ui:106 src/prefs.py:680
+#: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
 msgstr "O‘CHIRISH"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
+#: resources/main-window.ui:1218
 msgid "More information"
 msgstr "Qo‘shimcha ma'lumot"
 
@@ -50,7 +51,7 @@ msgstr "Xavfsiz rejim o‘chirilgan"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Yuklab olish jildi xavfsiz emas"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
@@ -68,11 +69,11 @@ msgstr "Faol bo‘lmagan va tugallangan amallarni o‘chirish"
 msgid "Send files"
 msgstr "Fayllarni yuborish"
 
-#: resources/main-window.ui:610 src/prefs.py:308
+#: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
 msgstr "Fayllarni uzatish"
 
-#: resources/main-window.ui:631 src/warpinator.py:1009
+#: resources/main-window.ui:631 src/warpinator.py:1040
 msgid "Online"
 msgstr "Onlayn"
 
@@ -119,76 +120,113 @@ msgstr "Android"
 msgid "iOS"
 msgstr "iOS"
 
-#: resources/main-window.ui:947
+#: resources/main-window.ui:947 resources/main-window.ui:962
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1021
+#: resources/main-window.ui:1036
 msgid "Initializing, please wait..."
 msgstr "Boshlanmoqda, kuting..."
 
-#: resources/main-window.ui:1079
+#: resources/main-window.ui:1094
 msgid "Something went wrong"
 msgstr "Nimadir noto‘g‘ri bajarildi"
 
-#: resources/main-window.ui:1154
+#: resources/main-window.ui:1169
 msgid "Invalid save location"
 msgstr "Saqlash joyi noto‘g‘ri"
 
-#: resources/main-window.ui:1191
+#: resources/main-window.ui:1206
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Ushbu jildga kirish imkonsiz yoki fayllarni saqlash taqiqlangan. Iltimos, "
+"Sozlamalar orqali yangi joyni tanlang va unga kirish mumkinligiga ishonch "
+"hosil qiling."
 
-#: resources/main-window.ui:1247
+#: resources/main-window.ui:1278
 msgid "Searching for other computers"
 msgstr "Boshqa kompyuterlar qidirilmoqda"
 
-#: resources/main-window.ui:1306
+#: resources/main-window.ui:1337
 msgid "Shutting down..."
 msgstr "Oʻchirilmoqda..."
 
-#: resources/main-window.ui:1378
+#: resources/main-window.ui:1409
 msgid "Restart required"
-msgstr ""
+msgstr "Qayta ishga tushirish talab qilinadi"
 
-#: resources/main-window.ui:1395
+#: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Yangi saqlash katalogidan foydalanishdan oldin Warpinator qayta ishga "
+"tushishi kerak"
 
-#: resources/main-window.ui:1405
+#: resources/main-window.ui:1436
 msgid "Restart"
-msgstr ""
+msgstr "Qayta ishga tushirish"
 
-#: resources/main-window.ui:1475
+#: resources/main-window.ui:1506
 msgid "Disk Full"
-msgstr ""
+msgstr "Disk to‘la"
 
-#: resources/main-window.ui:1512
+#: resources/main-window.ui:1543
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Saqlash joyida joy yetarli emas. Siz ba'zi fayllarni o‘chirishingiz, "
+"imtiyozlardagi minimal bo‘sh joyni kamaytirishingiz yoki yangi joyni "
+"tanlashingiz kerak."
 
-#: resources/main-window.ui:1529
+#: resources/main-window.ui:1560
 msgid "Empty trash"
-msgstr ""
+msgstr "Chiqindini bo‘shatish"
 
-#: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
+#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
 msgstr "Saqlash jildini ochish"
 
-#: resources/main-window.ui:1556
+#: resources/main-window.ui:1587
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Diskdan foydalanishni tekshirish"
 
-#: resources/main-window.ui:1609 src/util.py:759
+#: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Tarmoq bo‘ylab fayllarni yuborish va qabul qilish"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr ""
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr ""
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr ""
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr ""
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr ""
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -307,7 +345,7 @@ msgstr "%s dan uzatish tugallandi, lekin xatolar bilan"
 msgid "The transfer from %s has finished successfully"
 msgstr "%s dan uzatish muvaffaqiyatli yakunlandi"
 
-#: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
+#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
 msgstr "Uzatish amalga oshmadi"
 
@@ -321,7 +359,7 @@ msgstr "%s ga uzatishda nimadir noto‘g‘ri ketdi"
 msgid "Something went wrong with the transfer from %s"
 msgstr "%s dan uzatishda nimadir noto‘g‘ri ketdi"
 
-#: src/notifications.py:171 src/warpinator.py:166
+#: src/notifications.py:171 src/warpinator.py:169
 msgid "Transfer cancelled"
 msgstr "Uzatish bekor qilindi"
 
@@ -337,17 +375,17 @@ msgstr "%s dan kiruvchi uzatish bekor qilindi"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Fayllar yuborilmoqda"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "%d fayl %s ga  yuborilmoqda"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "“%s” %s ga yuborilmoqda"
 
 #: src/ops.py:53
 #, python-format
@@ -368,35 +406,35 @@ msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fayl"
 
-#: src/prefs.py:273
+#: src/prefs.py:276
 msgid "Warpinator Preferences"
 msgstr "Warpinator sozlamalari"
 
-#: src/prefs.py:290
+#: src/prefs.py:293
 msgid "General"
 msgstr "Umumiy"
 
-#: src/prefs.py:292
+#: src/prefs.py:295
 msgid "Desktop"
 msgstr "Ish stoli"
 
-#: src/prefs.py:294
+#: src/prefs.py:297
 msgid "Show an icon in the notification area"
 msgstr "Bildirishnoma sohasida belgini ko‘rsatish"
 
-#: src/prefs.py:298
+#: src/prefs.py:301
 msgid "Start with main window open"
 msgstr "Asosiy oynani ochish bilan boshlash"
 
-#: src/prefs.py:303
+#: src/prefs.py:306
 msgid "Start automatically"
 msgstr "Avtomatik ishga tushirish"
 
-#: src/prefs.py:310
+#: src/prefs.py:313
 msgid "Use compression when possible."
 msgstr "Iloji bo‘lsa, siqishni qo‘llash."
 
-#: src/prefs.py:312
+#: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
@@ -404,68 +442,68 @@ msgstr ""
 "Ogohlantirish: Bu ba'zi tezroq tarmoqlarda ishlashga salbiy ta'sir "
 "ko‘rsatishi mumkin."
 
-#: src/prefs.py:315
+#: src/prefs.py:318
 msgid "Location for received files"
 msgstr "Qabul qilingan fayllar uchun joy"
 
-#: src/prefs.py:320
+#: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Ajratilgan bo‘sh joy"
 
-#: src/prefs.py:325
+#: src/prefs.py:328
 msgid "Require approval before accepting files"
 msgstr "Fayllarni qabul qilishdan oldin tasdiqlashni talab qilish"
 
-#: src/prefs.py:330
+#: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
 msgstr "Fayllar qayta yozilishi uchun tasdiqlashni talab qilish"
 
-#: src/prefs.py:335
+#: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Kimdir sizga fayllar yuborganda (yoki yuborishga harakat qilganda) "
 "bildirishnomani ko‘rsatish"
 
-#: src/prefs.py:340
+#: src/prefs.py:343
 msgid "Connection"
 msgstr "Ulanish"
 
-#: src/prefs.py:350
+#: src/prefs.py:353
 msgid "Network"
 msgstr "Tarmoq"
 
-#: src/prefs.py:353
+#: src/prefs.py:356
 msgid "Automatic"
 msgstr "Avtomatik"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:432
+#: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
 msgstr "%s - topilmadi"
 
-#: src/prefs.py:434
+#: src/prefs.py:437
 msgid "Network interface to use"
 msgstr "Foydalanish uchun tarmoq interfeysi"
 
-#: src/prefs.py:442
+#: src/prefs.py:445
 msgid "Incoming port for transfers"
 msgstr "Uzatishlar uchun kirish porti"
 
-#: src/prefs.py:449
+#: src/prefs.py:452
 msgid "Incoming port for registration"
 msgstr "Ro‘yxatdan o‘tish uchun kirish porti"
 
-#: src/prefs.py:464
+#: src/prefs.py:467
 msgid "Apply network changes"
 msgstr "Tarmoq o‘zgarishlarini qo‘llash"
 
-#: src/prefs.py:473
+#: src/prefs.py:476
 msgid "Update firewall rules"
 msgstr "Xavfsizlik devori qoidalarini yangilash"
 
-#: src/prefs.py:485
+#: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -474,27 +512,27 @@ msgstr ""
 "uchun bir xil portlardan foydalanish, agar kerak bo‘lsa, xavfsizlik devori "
 "istisnolarini qo‘shishni osonlashtiradi."
 
-#: src/prefs.py:561
+#: src/prefs.py:564
 msgid "Only available in secure mode."
 msgstr "Faqat xavfsiz rejimda mavjud."
 
-#: src/prefs.py:638
+#: src/prefs.py:641
 msgid "A group code is required."
 msgstr "Guruh kodi talab qilinadi."
 
-#: src/prefs.py:643
+#: src/prefs.py:646
 msgid "The group code is too short."
 msgstr "Guruh kodi juda qisqa."
 
-#: src/prefs.py:677
+#: src/prefs.py:680
 msgid "ON"
 msgstr "YOQISH"
 
-#: src/prefs.py:678
+#: src/prefs.py:681
 msgid "All options are unlocked."
 msgstr "Barcha opsiyalar qulfdan chiqarilgan."
 
-#: src/prefs.py:681
+#: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
@@ -506,7 +544,7 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "Ulanish uzildi"
 
-#: src/server.py:591
+#: src/server.py:650
 msgid "An error occurred on the remote machine"
 msgstr "Masofaviy qurilmada xatolik yuz berdi"
 
@@ -522,147 +560,151 @@ msgstr "Qo‘shish"
 msgid "Select file(s) to send"
 msgstr "Yuborish uchun fayl(lar)ni tanlang"
 
-#: src/util.py:648
+#: src/util.py:665
 msgid "A few seconds remaining"
 msgstr "Bir necha soniya qoldi"
 
-#: src/util.py:651
+#: src/util.py:668
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d soniya qoldi"
 
-#: src/util.py:655 src/util.py:663
+#: src/util.py:672 src/util.py:680
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d daqiqa"
 
-#: src/util.py:662
+#: src/util.py:679
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d soat"
 
-#: src/util.py:667
+#: src/util.py:684
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "taxminan %d soat"
 
-#: src/util.py:755 src/warpinator.py:569
+#: src/util.py:772 src/warpinator.py:577
 msgid "About"
 msgstr "Haqida"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Paused"
 msgstr "Vaqtincha to‘xtatilgan"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Waiting for approval"
 msgstr "Tasdiqlash kutilmoqda"
 
-#: src/warpinator.py:150
+#: src/warpinator.py:153
 msgid "Waiting for your approval"
 msgstr "Tasdiqlanishingiz kutilmoqda"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "Diskda joy yetarli emas"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:159
 msgid "Files may be overwritten"
 msgstr "Fayllar ustiga yozilishi mumkin"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "So‘rov bekor qilindi"
 
-#: src/warpinator.py:161 src/warpinator.py:163
+#: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "So‘rov %s tomonidan bekor qilindi"
 
-#: src/warpinator.py:168 src/warpinator.py:170
+#: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Uzatish %s tomonidan bekor qilindi"
 
-#: src/warpinator.py:177
+#: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
 msgstr "'%s' fayli topilmadi"
 
-#: src/warpinator.py:179
+#: src/warpinator.py:182
 msgid "Some files not found"
 msgstr "Ba'zi fayllar topilmadi"
 
-#: src/warpinator.py:181
+#: src/warpinator.py:184
 msgid "Completed"
 msgstr "Bajarildi"
 
-#: src/warpinator.py:183
+#: src/warpinator.py:186
 msgid "Completed, but with errors"
 msgstr "Tugallangan, lekin xatolar bilan"
 
-#: src/warpinator.py:342 src/warpinator.py:1037
+#: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
 msgstr "Ulanmoqda"
 
-#: src/warpinator.py:344
+#: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s ga ulanmoqda"
 
-#: src/warpinator.py:354
+#: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
 msgstr "%s tarmoqda emas"
 
-#: src/warpinator.py:359
+#: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "%s ga ulanib bo‘lmadi"
 
-#: src/warpinator.py:364
+#: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Ulanish tugallanishi uchun %s kutilmoqda."
 
-#: src/warpinator.py:393
+#: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d ta yangi kiruvchi uzatish"
 
-#: src/warpinator.py:534 src/warpinator.py:1557
+#: src/warpinator.py:537 src/warpinator.py:1682
 msgid "Favorites"
 msgstr "Sevimlilar"
 
-#: src/warpinator.py:539 src/warpinator.py:1562
+#: src/warpinator.py:542 src/warpinator.py:1687
 msgid "Recents"
 msgstr "Oxirgilar"
 
-#: src/warpinator.py:546 src/warpinator.py:1571
+#: src/warpinator.py:549 src/warpinator.py:1696
 msgid "Browse..."
 msgstr "Ko‘rib chiqish..."
 
-#: src/warpinator.py:565
+#: src/warpinator.py:568
+msgid "Connect manually"
+msgstr ""
+
+#: src/warpinator.py:573
 msgid "Preferences"
 msgstr "Parametrlar"
 
-#: src/warpinator.py:573 src/warpinator.py:1506
+#: src/warpinator.py:581 src/warpinator.py:1631
 msgid "Quit"
 msgstr "Chiqish"
 
-#: src/warpinator.py:679
+#: src/warpinator.py:690
 msgid "You don't appear to be connected to a network."
 msgstr "Siz tarmoqqa ulanmaganga o‘xshaysiz."
 
-#: src/warpinator.py:681
+#: src/warpinator.py:692
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Ishga tushirish muvaffaqiyatsiz tugadi, jurnallarni tekshiring."
 
-#: src/warpinator.py:774
+#: src/warpinator.py:792
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -671,7 +713,7 @@ msgstr ""
 "Warpinator cheklangan funksiyalar bilan ishlamoqda va %d daqiqadan so‘ng "
 "o‘chadi. Xavfsiz rejimni yoqish uchun noyob guruh kodini o‘rnating."
 
-#: src/warpinator.py:776
+#: src/warpinator.py:794
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -680,44 +722,53 @@ msgstr ""
 "Warpinator cheklangan funksiyalar bilan ishlamoqda va %d daqiqadan so‘ng "
 "o‘chadi. Xavfsiz rejimni yoqish uchun noyob guruh kodini o‘rnating."
 
-#: src/warpinator.py:818
+#: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
+"Fayllarni qabul qilish uchun disk hajmi yetarli emas (%s zahiralangan)."
 
-#: src/warpinator.py:896
+#: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "%d operatsiya tugashi kutilmoqda"
 
-#: src/warpinator.py:897
+#: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "%d operatsiya tugashi kutilmoqda"
 
-#: src/warpinator.py:1016
+#: src/warpinator.py:1047
 msgid "Offline"
 msgstr "Oflayn"
 
-#: src/warpinator.py:1023
+#: src/warpinator.py:1054
 msgid "Unable to connect"
 msgstr "Ulanib bo‘lmadi"
 
-#: src/warpinator.py:1030
+#: src/warpinator.py:1061
 msgid "Waiting for two-way connection"
 msgstr "Ikki tomonlama ulanish kutilmoqda"
 
-#: src/warpinator.py:1540
+#: src/warpinator.py:1162
+msgid "Manual connection"
+msgstr ""
+
+#: src/warpinator.py:1229
+msgid "Connecting..."
+msgstr ""
+
+#: src/warpinator.py:1665
 msgid "Send to all"
 msgstr "Hammaga yuborish"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Warpinator orqali yuboring"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Warpinator yordamida faylni kimgadir yuborish"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

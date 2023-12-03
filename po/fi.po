@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-06-06 14:01+0100\n"
-"PO-Revision-Date: 2023-06-21 21:26+0000\n"
+"POT-Creation-Date: 2023-11-30 16:05+0000\n"
+"PO-Revision-Date: 2023-11-30 21:44+0000\n"
 "Last-Translator: Kimmo Kujansuu <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2023-07-07 12:58+0000\n"
-"X-Generator: Launchpad (build 2ac9e3bf4ab511504f8fc651371e24a6a047ba12)\n"
+"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
+"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
 
-#: resources/group-code.ui:16 src/prefs.py:342
+#: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
 msgstr "Ryhmäkoodi"
 
@@ -35,11 +35,12 @@ msgstr "Aseta koodi"
 msgid "Secure mode:"
 msgstr "Suojattu tila:"
 
-#: resources/group-code.ui:106 src/prefs.py:680
+#: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
 msgstr "OFF"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
+#: resources/main-window.ui:1218
 msgid "More information"
 msgstr "Lisätietoja"
 
@@ -67,11 +68,11 @@ msgstr "Tyhjennä passiiviset ja valmiit toiminnot"
 msgid "Send files"
 msgstr "Lähetä tiedostoja"
 
-#: resources/main-window.ui:610 src/prefs.py:308
+#: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
 msgstr "Tiedonsiirto"
 
-#: resources/main-window.ui:631 src/warpinator.py:1009
+#: resources/main-window.ui:631 src/warpinator.py:1040
 msgid "Online"
 msgstr "Verkossa"
 
@@ -117,23 +118,23 @@ msgstr "Android"
 msgid "iOS"
 msgstr "iOS"
 
-#: resources/main-window.ui:947
+#: resources/main-window.ui:947 resources/main-window.ui:962
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1021
+#: resources/main-window.ui:1036
 msgid "Initializing, please wait..."
 msgstr "Valmistellaan, odota..."
 
-#: resources/main-window.ui:1079
+#: resources/main-window.ui:1094
 msgid "Something went wrong"
 msgstr "Jotain meni pieleen"
 
-#: resources/main-window.ui:1154
+#: resources/main-window.ui:1169
 msgid "Invalid save location"
 msgstr "Virheellinen tallennuspaikka"
 
-#: resources/main-window.ui:1191
+#: resources/main-window.ui:1206
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -141,33 +142,33 @@ msgstr ""
 "Tämä kansio ei ole käytettävissä tai siihen ei ole oikeuksia tallentaa. "
 "Valitse uusi sijainti asetuksista ja varmista, että se on käytettävissä."
 
-#: resources/main-window.ui:1247
+#: resources/main-window.ui:1278
 msgid "Searching for other computers"
 msgstr "Etsitään muita tietokoneita"
 
-#: resources/main-window.ui:1306
+#: resources/main-window.ui:1337
 msgid "Shutting down..."
 msgstr "Sammutetaan..."
 
-#: resources/main-window.ui:1378
+#: resources/main-window.ui:1409
 msgid "Restart required"
 msgstr "Tarvitaan käynnistys"
 
-#: resources/main-window.ui:1395
+#: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Warpinator on käynnistettävä uudelleen ennen kuin uutta hakemistoa voidaan "
 "käyttää"
 
-#: resources/main-window.ui:1405
+#: resources/main-window.ui:1436
 msgid "Restart"
 msgstr "Käynnistys"
 
-#: resources/main-window.ui:1475
+#: resources/main-window.ui:1506
 msgid "Disk Full"
 msgstr "Levy on täynnä"
 
-#: resources/main-window.ui:1512
+#: resources/main-window.ui:1543
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -176,23 +177,52 @@ msgstr ""
 "Ei ole riittävästi tilaa. Sinun on poistettava joitain tiedostoja, "
 "vähennettävä vapaan tilan minimiä asetuksissa tai valittava uusi sijainti."
 
-#: resources/main-window.ui:1529
+#: resources/main-window.ui:1560
 msgid "Empty trash"
 msgstr "Tyhjennä roskakori"
 
-#: resources/main-window.ui:1543 src/warpinator.py:561 src/warpinator.py:1503
+#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
 msgstr "Avaa tallennuskansio"
 
-#: resources/main-window.ui:1556
+#: resources/main-window.ui:1587
 msgid "Examine disk usage"
 msgstr "Tarkista levyn käyttö"
 
-#: resources/main-window.ui:1609 src/util.py:759
+#: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
 #: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Lähetä ja vastaanota tiedostoja verkossa"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr "Tällä tietokoneella:"
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr "Anna sen koneen osoite, johon haluat muodostaa yhteyden"
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr "Yhdistä"
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr "Vaihtoehtoisesti toinen kone:"
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr "Skannaa tämä QR-koodi"
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr "Tai yhdistä alla olevaan osoitteeseen"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -312,7 +342,7 @@ msgstr "Siirto kohteesta %s on valmis, mutta siinä on virheitä"
 msgid "The transfer from %s has finished successfully"
 msgstr "Siirto kohteesta %s onnistui"
 
-#: src/notifications.py:137 src/warpinator.py:172 src/warpinator.py:175
+#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
 msgid "Transfer failed"
 msgstr "Siirto epäonnistui"
 
@@ -326,7 +356,7 @@ msgstr "Jokin meni vikaan siirrossa kohteeseen %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "Jokin meni vikaan siirrossa kohteesta %s"
 
-#: src/notifications.py:171 src/warpinator.py:166
+#: src/notifications.py:171 src/warpinator.py:169
 msgid "Transfer cancelled"
 msgstr "Siirto peruttu"
 
@@ -375,102 +405,102 @@ msgid_plural "%d files"
 msgstr[0] "%d tiedosto"
 msgstr[1] "%d tiedostoa"
 
-#: src/prefs.py:273
+#: src/prefs.py:276
 msgid "Warpinator Preferences"
 msgstr "Warpinator asetukset"
 
-#: src/prefs.py:290
+#: src/prefs.py:293
 msgid "General"
 msgstr "Yleiset"
 
-#: src/prefs.py:292
+#: src/prefs.py:295
 msgid "Desktop"
 msgstr "Työpöytä"
 
-#: src/prefs.py:294
+#: src/prefs.py:297
 msgid "Show an icon in the notification area"
 msgstr "Näytä kuvake ilmoitusalueella"
 
-#: src/prefs.py:298
+#: src/prefs.py:301
 msgid "Start with main window open"
 msgstr "Käynnistä pääikkunan avautuessa"
 
-#: src/prefs.py:303
+#: src/prefs.py:306
 msgid "Start automatically"
 msgstr "Käynnistä automaattisesti"
 
-#: src/prefs.py:310
+#: src/prefs.py:313
 msgid "Use compression when possible."
 msgstr "Käytä pakkausta aina kun mahdollista."
 
-#: src/prefs.py:312
+#: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
 "Varoitus: Tämä voi heikentää joidenkin nopeampien verkkojen suorituskykyä."
 
-#: src/prefs.py:315
+#: src/prefs.py:318
 msgid "Location for received files"
 msgstr "Vastaanotettujen tiedostojen sijainti"
 
-#: src/prefs.py:320
+#: src/prefs.py:323
 msgid "Reserved free space"
 msgstr "Varattu vapaa tila"
 
-#: src/prefs.py:325
+#: src/prefs.py:328
 msgid "Require approval before accepting files"
 msgstr "Vaadi lupa ennen tiedostojen hyväksymistä"
 
-#: src/prefs.py:330
+#: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
 msgstr "Vaadi lupa ennen kuin tiedostoja korvataan"
 
-#: src/prefs.py:335
+#: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
 "Ilmoitus, kun joku lähettää (tai yrittää lähettää) sinulle tiedostoja"
 
-#: src/prefs.py:340
+#: src/prefs.py:343
 msgid "Connection"
 msgstr "Yhteys"
 
-#: src/prefs.py:350
+#: src/prefs.py:353
 msgid "Network"
 msgstr "Lähiverkko"
 
-#: src/prefs.py:353
+#: src/prefs.py:356
 msgid "Automatic"
 msgstr "Automaattinen"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
-#: src/prefs.py:432
+#: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
 msgstr "%s - ei löydetty"
 
-#: src/prefs.py:434
+#: src/prefs.py:437
 msgid "Network interface to use"
 msgstr "Käytettävä verkkokortti"
 
-#: src/prefs.py:442
+#: src/prefs.py:445
 msgid "Incoming port for transfers"
 msgstr "Siirtojen saapuva portti"
 
-#: src/prefs.py:449
+#: src/prefs.py:452
 msgid "Incoming port for registration"
 msgstr "Saapuva portti rekisteröintiä varten"
 
-#: src/prefs.py:464
+#: src/prefs.py:467
 msgid "Apply network changes"
 msgstr "Hyväksy verkon muutokset"
 
-#: src/prefs.py:473
+#: src/prefs.py:476
 msgid "Update firewall rules"
 msgstr "Päivitä palomuurin säännöt"
 
-#: src/prefs.py:485
+#: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
@@ -479,27 +509,27 @@ msgstr ""
 "käyttäminen kaikissa tietokoneissa voi helpottaa palomuurin poikkeuksien "
 "lisäämistä."
 
-#: src/prefs.py:561
+#: src/prefs.py:564
 msgid "Only available in secure mode."
 msgstr "Saatavilla vain suojatussa tilassa."
 
-#: src/prefs.py:638
+#: src/prefs.py:641
 msgid "A group code is required."
 msgstr "Vaaditaan ryhmäkoodi."
 
-#: src/prefs.py:643
+#: src/prefs.py:646
 msgid "The group code is too short."
 msgstr "Ryhmäkoodi on liian lyhyt."
 
-#: src/prefs.py:677
+#: src/prefs.py:680
 msgid "ON"
 msgstr "ON"
 
-#: src/prefs.py:678
+#: src/prefs.py:681
 msgid "All options are unlocked."
 msgstr "Kaikki vaihtoehdot on avattu."
 
-#: src/prefs.py:681
+#: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
@@ -511,7 +541,7 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "Yhteys katkesi"
 
-#: src/server.py:591
+#: src/server.py:650
 msgid "An error occurred on the remote machine"
 msgstr "Etäkoneessa tapahtui virhe"
 
@@ -527,151 +557,155 @@ msgstr "Lisää"
 msgid "Select file(s) to send"
 msgstr "Valitse lähetettävät tiedostot"
 
-#: src/util.py:648
+#: src/util.py:665
 msgid "A few seconds remaining"
 msgstr "Muutama sekunti jäljellä"
 
-#: src/util.py:651
+#: src/util.py:668
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d sekuntia jäljellä"
 
-#: src/util.py:655 src/util.py:663
+#: src/util.py:672 src/util.py:680
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuutti"
 msgstr[1] "%d minuuttia"
 
-#: src/util.py:662
+#: src/util.py:679
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d tunti"
 msgstr[1] "%d tuntia"
 
-#: src/util.py:667
+#: src/util.py:684
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "arvio %d tunti"
 msgstr[1] "arvio %d tuntia"
 
-#: src/util.py:755 src/warpinator.py:569
+#: src/util.py:772 src/warpinator.py:577
 msgid "About"
 msgstr "Tietoja"
 
-#: src/warpinator.py:145
+#: src/warpinator.py:148
 msgid "Paused"
 msgstr "Pysäytetty"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:151
 msgid "Waiting for approval"
 msgstr "Odottaa hyväksyntää"
 
-#: src/warpinator.py:150
+#: src/warpinator.py:153
 msgid "Waiting for your approval"
 msgstr "Odottaa hyväksyntääsi"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:156
 msgid "Not enough disk space"
 msgstr "Levytila ei riitä"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:159
 msgid "Files may be overwritten"
 msgstr "Tiedostot voidaan korvata"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:162
 msgid "Request cancelled"
 msgstr "Pyyntö peruttu"
 
-#: src/warpinator.py:161 src/warpinator.py:163
+#: src/warpinator.py:164 src/warpinator.py:166
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "%s peruutti pyynnön"
 
-#: src/warpinator.py:168 src/warpinator.py:170
+#: src/warpinator.py:171 src/warpinator.py:173
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "%s peruutti siirron"
 
-#: src/warpinator.py:177
+#: src/warpinator.py:180
 #, python-format
 msgid "File '%s' not found"
 msgstr "Tiedostoa ”%s” ei löydy"
 
-#: src/warpinator.py:179
+#: src/warpinator.py:182
 msgid "Some files not found"
 msgstr "Joitakin tiedostoja ei löydy"
 
-#: src/warpinator.py:181
+#: src/warpinator.py:184
 msgid "Completed"
 msgstr "Valmis"
 
-#: src/warpinator.py:183
+#: src/warpinator.py:186
 msgid "Completed, but with errors"
 msgstr "Valmis, mutta virheitä"
 
-#: src/warpinator.py:342 src/warpinator.py:1037
+#: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
 msgstr "Yhdistetään"
 
-#: src/warpinator.py:344
+#: src/warpinator.py:347
 #, python-format
 msgid "Connecting to %s"
 msgstr "Yhdistetään kohteeseen %s"
 
-#: src/warpinator.py:354
+#: src/warpinator.py:357
 #, python-format
 msgid "%s is not online"
 msgstr "%s ei ole verkossa"
 
-#: src/warpinator.py:359
+#: src/warpinator.py:362
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Yhteyttä %s ei voi muodostaa"
 
-#: src/warpinator.py:364
+#: src/warpinator.py:367
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Odotetaan, että %s suorittaa yhteyden loppuun."
 
-#: src/warpinator.py:393
+#: src/warpinator.py:396
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d uusi saapuva siirto"
 msgstr[1] "%d uusia saapuvia siirtoja"
 
-#: src/warpinator.py:534 src/warpinator.py:1557
+#: src/warpinator.py:537 src/warpinator.py:1682
 msgid "Favorites"
 msgstr "Suosikit"
 
-#: src/warpinator.py:539 src/warpinator.py:1562
+#: src/warpinator.py:542 src/warpinator.py:1687
 msgid "Recents"
 msgstr "Viimeisimmät"
 
-#: src/warpinator.py:546 src/warpinator.py:1571
+#: src/warpinator.py:549 src/warpinator.py:1696
 msgid "Browse..."
 msgstr "Selaa..."
 
-#: src/warpinator.py:565
+#: src/warpinator.py:568
+msgid "Connect manually"
+msgstr "Yhdistä manuaalisesti"
+
+#: src/warpinator.py:573
 msgid "Preferences"
 msgstr "Lisäasetukset"
 
-#: src/warpinator.py:573 src/warpinator.py:1506
+#: src/warpinator.py:581 src/warpinator.py:1631
 msgid "Quit"
 msgstr "Sulje"
 
-#: src/warpinator.py:679
+#: src/warpinator.py:690
 msgid "You don't appear to be connected to a network."
 msgstr "Verkkoyhteyttä ei vaikuta olevan."
 
-#: src/warpinator.py:681
+#: src/warpinator.py:692
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Käynnistys epäonnistui, tarkista loki."
 
-#: src/warpinator.py:774
+#: src/warpinator.py:792
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -680,7 +714,7 @@ msgstr ""
 "Warpinator toimii rajoitetusti ja poistuu %d minuutissa. Ota suojattu tila "
 "käyttöön asettamalla ryhmäkoodi."
 
-#: src/warpinator.py:776
+#: src/warpinator.py:794
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -689,34 +723,42 @@ msgstr ""
 "Warpinator toimii rajoitetusti ja poistuu %d minuutissa. Ota suojattu tila "
 "käyttöön asettamalla ryhmäkoodi."
 
-#: src/warpinator.py:818
+#: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr "Levytila ei riitä tiedostojen vastaanottamiseen (%s on varattu)."
 
-#: src/warpinator.py:896
+#: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "Odotetaan %d toiminnon valmistumista"
 
-#: src/warpinator.py:897
+#: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "Odotetaan %d toimintojen valmistumista"
 
-#: src/warpinator.py:1016
+#: src/warpinator.py:1047
 msgid "Offline"
 msgstr "Poissa"
 
-#: src/warpinator.py:1023
+#: src/warpinator.py:1054
 msgid "Unable to connect"
 msgstr "Ei yhteyttä"
 
-#: src/warpinator.py:1030
+#: src/warpinator.py:1061
 msgid "Waiting for two-way connection"
 msgstr "Odotetaan kaksisuuntaista yhteyttä"
 
-#: src/warpinator.py:1540
+#: src/warpinator.py:1162
+msgid "Manual connection"
+msgstr "Manuaalinen yhteys"
+
+#: src/warpinator.py:1229
+msgid "Connecting..."
+msgstr "Yhdistetään…"
+
+#: src/warpinator.py:1665
 msgid "Send to all"
 msgstr "Lähetä kaikille"
 
