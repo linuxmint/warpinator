@@ -1,3 +1,9 @@
+warpinator (1.8.1) virginia; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 03 Dec 2023 15:16:22 +0000
+
 warpinator (1.8.0) virginia; urgency=medium
 
   [ Michael Webster ]
