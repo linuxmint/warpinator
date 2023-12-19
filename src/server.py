@@ -530,8 +530,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def ProcessTransferOpRequest(self, request, context):
         logging.debug("Server RPC: ProcessTransferOpRequest from '%s'" % request.info.readable_name)
 
-        remote_machine = self.remote_machines[request.info.ident]
-
         try:
             remote_machine = self.remote_machines[request.info.ident]
         except KeyError as e:
