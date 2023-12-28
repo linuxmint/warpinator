@@ -1,3 +1,10 @@
+warpinator (1.8.2) virginia; urgency=medium
+
+  [ Sviatoslav ]
+  * Remove duplicate line in ProcessTransferOpRequest handler
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 28 Dec 2023 11:46:30 +0000
+
 warpinator (1.8.1) virginia; urgency=medium
 
   * l10n: Update translations
