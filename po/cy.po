@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-04-25 12:54+0000\n"
-"Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
+"PO-Revision-Date: 2023-12-13 16:36+0000\n"
+"Last-Translator: Rhoslyn Prys <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
-"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
+"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
+"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
 "Language: cy\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -131,7 +131,7 @@ msgstr "Yn cychwyn, arhoswch ..."
 
 #: resources/main-window.ui:1094
 msgid "Something went wrong"
-msgstr "Aeth rhywbeth o'i le."
+msgstr "Aeth rhywbeth o'i le"
 
 #: resources/main-window.ui:1169
 msgid "Invalid save location"
@@ -161,7 +161,7 @@ msgstr "Mae angen ailgychwyn"
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Mae angen ailgychwyn Warpinator cyn mae modd defnyddio'r cyfeiriadur cadw "
-"newydd."
+"newydd"
 
 #: resources/main-window.ui:1436
 msgid "Restart"
@@ -201,31 +201,31 @@ msgstr "Anfon a Derbyn Ffeiliau ar draws y Rhwydwaith"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "Ar y cyfrifiadur hwn:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Rhowch gyfeiriad y ddyfais rydych chi am gysylltu ag ef"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Cysylltu"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Fel arall, ar y ddyfais arall:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Sganiwch y cod QR hwn"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Neu cysylltwch â'r cyfeiriad isod"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -277,7 +277,7 @@ msgstr "Agor y ffolder cynnwys"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Nodyn ar rifau porth"
+msgstr "Nodyn ar rifau porth:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
@@ -299,7 +299,7 @@ msgstr ""
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "Hoffai %(sender_name)s anfon %(file_count)d ffeil atoch."
+msgstr "Hoffai %(sender_name)s anfon %(file_count)d ffeil atoch"
 
 #: src/notifications.py:41
 msgid "Accept"
@@ -318,7 +318,7 @@ msgstr ""
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "Mae %(sender_name)s yn anfon %(file_count)d ffeil atoch."
+msgstr "Mae %(sender_name)s yn anfon %(file_count)d ffeil atoch"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
@@ -518,7 +518,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr "Dim ond ar gael yn y modd diogel"
+msgstr "Dim ond ar gael yn y modd diogel."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -526,7 +526,7 @@ msgstr "Mae angen cod grŵp."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr "Mae'r cod grŵp yn rhy fyr"
+msgstr "Mae'r cod grŵp yn rhy fyr."
 
 #: src/prefs.py:680
 msgid "ON"
@@ -702,7 +702,7 @@ msgstr "Pori..."
 
 #: src/warpinator.py:568
 msgid "Connect manually"
-msgstr ""
+msgstr "Cysylltwch â llaw"
 
 #: src/warpinator.py:573
 msgid "Preferences"
@@ -768,11 +768,11 @@ msgstr "Yn aros am gysylltiad dwy ffordd"
 
 #: src/warpinator.py:1162
 msgid "Manual connection"
-msgstr ""
+msgstr "Cysylltiad â llaw"
 
 #: src/warpinator.py:1229
 msgid "Connecting..."
-msgstr ""
+msgstr "Wrthi'n cysylltu..."
 
 #: src/warpinator.py:1665
 msgid "Send to all"
@@ -792,7 +792,7 @@ msgstr "Agor porth mur cadarn ar gyfer Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "I newid gosodiadau mur cadarn, rhaid dilysu"
+msgstr "I newid gosodiadau mur cadarn, rhaid dilysu."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6

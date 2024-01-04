@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2022-09-07 17:17+0000\n"
-"Last-Translator: karm <melo@carmu.com>\n"
+"PO-Revision-Date: 2023-12-31 07:17+0000\n"
+"Last-Translator: famese <Unknown>\n"
 "Language-Team: Interlingua <ia@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
-"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
+"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
+"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -32,24 +32,24 @@ msgstr "Configurar codice"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Modo secur:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "Inactive"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1218
 msgid "More information"
-msgstr ""
+msgstr "Plus information"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Modo secur disabiliate"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Le dossier de discarga non es secur"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
@@ -57,7 +57,7 @@ msgstr "Nulle resultatos concordante"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Rende iste machina remote un favorite in le vista principal"
+msgstr "Face iste machina remote un favorito in le vista principal"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
@@ -88,8 +88,8 @@ msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Controla le regulas de tu firewall. Le numero de porta ah cambiate. Vide "
-"preferentia pro plu de detalios."
+"Controla le regulas de tu firewall. Le numeros de porto ha cambiate. Vide "
+"preferentia pro plus detalios."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:847
@@ -138,6 +138,9 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Iste dossier es inaccessibile o prohibite pro salvar le files. Per favor "
+"selige un nove position in le Preferentias e assecura te que illo es "
+"accessibile."
 
 #: resources/main-window.ui:1278
 msgid "Searching for other computers"
@@ -149,19 +152,21 @@ msgstr "Claudente..."
 
 #: resources/main-window.ui:1409
 msgid "Restart required"
-msgstr ""
+msgstr "Reinitio necessari"
 
 #: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Warpinator necessita reinitiar ante que le nove directorio de salvamento "
+"pote esser usate"
 
 #: resources/main-window.ui:1436
 msgid "Restart"
-msgstr ""
+msgstr "Reinitiar"
 
 #: resources/main-window.ui:1506
 msgid "Disk Full"
-msgstr ""
+msgstr "Disco plen"
 
 #: resources/main-window.ui:1543
 msgid ""
@@ -169,18 +174,21 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Il ha spatio insufficiente disponibile in le location pro salvar. Tu debe "
+"deler alcun files, reducer le spatio minime libere in le preferentias o "
+"eliger un nove location."
 
 #: resources/main-window.ui:1560
 msgid "Empty trash"
-msgstr ""
+msgstr "Vacuar le immunditia"
 
 #: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
-msgstr "Aperir plica de salvamento"
+msgstr "Aperir dossier de salvamento"
 
 #: resources/main-window.ui:1587
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Examina le uso del disco"
 
 #: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -191,31 +199,31 @@ msgstr "Invia e recipe files inter le rete"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "In iste computator:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Insere le adresse del apparato al qual tu vole connecter."
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Connecter"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Alternativemente, sur le altere apparato:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Scanna iste codice QR"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "O connecte al adresse infra"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -263,7 +271,7 @@ msgstr "Remover iste operation del lista"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Aperi le plica continitor"
+msgstr "Aperi le dossier continitor"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -316,7 +324,7 @@ msgstr "Transferimento complete"
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Le transferentia a %s ha terminate, ma con errores"
 
 #: src/notifications.py:98
 #, python-format
@@ -326,7 +334,7 @@ msgstr "Le transferimento a %s ha finite con successo"
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Le transferentia ab %s ha terminate, ma con errores"
 
 #: src/notifications.py:103
 #, python-format
@@ -363,17 +371,17 @@ msgstr "Un transferimento in ingresso de %s ha essite cancellate"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Inviante files"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Inviante %d files a %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Inviante '%s' a %s"
 
 #: src/ops.py:53
 #, python-format
@@ -438,7 +446,7 @@ msgstr "Loco pro files recipite"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Spacio libere reservate"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
@@ -502,7 +510,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Solo disponibile in modo secur."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -510,21 +518,23 @@ msgstr "Un gruppo codice es necesse."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "Le codice de gruppo es troppo breve."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "Active"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Totes le optiones es disblocate."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Tu debe establir un codice de gruppo personalizate pro executar in modo "
+"secur. Alicunes optiones es actualmente disactivate."
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
@@ -544,7 +554,7 @@ msgstr "Adder"
 
 #: src/util.py:287
 msgid "Select file(s) to send"
-msgstr "Eliger file(s) a inviar"
+msgstr "Seliger file(s) a inviar"
 
 #: src/util.py:665
 msgid "A few seconds remaining"
@@ -629,7 +639,7 @@ msgstr "Completate"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Completate, ma con errores"
 
 #: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
@@ -676,7 +686,7 @@ msgstr "Navigar ..."
 
 #: src/warpinator.py:568
 msgid "Connect manually"
-msgstr ""
+msgstr "Connecter manualmente"
 
 #: src/warpinator.py:573
 msgid "Preferences"
@@ -700,6 +710,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator se executa con functionalitate limitate e va exir in %d minuta. "
+"Pro activar le Modo Secur, defini un codice de gruppo unic."
 
 #: src/warpinator.py:794
 #, python-format
@@ -707,21 +719,24 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator se executa con functionalitate limitate e va exir in %d minutas. "
+"Pro activar le Modo Secur, defini un codice de gruppo unic."
 
 #: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
+"Il non ha spatio de disco sufficente pro recipir files (%s es reservate)."
 
 #: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Attendente que le operation %d se complete"
 
 #: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Attendente que le operationes %d se complete"
 
 #: src/warpinator.py:1047
 msgid "Offline"
@@ -737,11 +752,11 @@ msgstr "Attendente connexion a two-ways"
 
 #: src/warpinator.py:1162
 msgid "Manual connection"
-msgstr ""
+msgstr "Connexion manual"
 
 #: src/warpinator.py:1229
 msgid "Connecting..."
-msgstr ""
+msgstr "Connectente..."
 
 #: src/warpinator.py:1665
 msgid "Send to all"
@@ -749,11 +764,11 @@ msgstr "Inviar a totes"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Inviar con Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Inviar un file a alicuno usante Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
@@ -761,7 +776,8 @@ msgstr "Aperir un porta de firewall pro Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "Pro modificar le parametros de firewall, tu debe authenticar te."
+msgstr ""
+"Pro modificar le configurationes de firewall, tu debe authenticar te."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:6

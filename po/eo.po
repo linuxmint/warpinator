@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2022-07-28 13:27+0000\n"
+"PO-Revision-Date: 2023-12-12 16:00+0000\n"
 "Last-Translator: Piet Coppens <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
-"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
+"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
+"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -32,24 +32,24 @@ msgstr "Agordi kodon"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Sekura reĝimo:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "FOR"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1218
 msgid "More information"
-msgstr ""
+msgstr "Pliaj informoj"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Sekura Reĝimo malebligita"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Elŝuta dosierujo ne sekura"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
@@ -138,6 +138,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Ĉi tiu dosierujo estas aŭ nealirebla aŭ malpermesita por konservi dosierojn. "
+" Bonvolu elekti novan lokon en Agordoj kaj certigi, ke ĝi estas alirebla."
 
 #: resources/main-window.ui:1278
 msgid "Searching for other computers"
@@ -149,19 +151,21 @@ msgstr "Malŝaltado..."
 
 #: resources/main-window.ui:1409
 msgid "Restart required"
-msgstr ""
+msgstr "Restarto postulata"
 
 #: resources/main-window.ui:1426
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Warpinator bezonas restarti antaŭ ol la nova konserva dosierujo povas esti "
+"uzita"
 
 #: resources/main-window.ui:1436
 msgid "Restart"
-msgstr ""
+msgstr "Restartigi"
 
 #: resources/main-window.ui:1506
 msgid "Disk Full"
-msgstr ""
+msgstr "Disko estas plena"
 
 #: resources/main-window.ui:1543
 msgid ""
@@ -169,10 +173,12 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Nesufiĉe da spaco disponeblas en la konserva loko. Forigu kelkajn dosierojn, "
+"malkreskigu la minimuman liberan spacon en agordoj aŭ elektu novan lokon."
 
 #: resources/main-window.ui:1560
 msgid "Empty trash"
-msgstr ""
+msgstr "Malplenigi rubujon"
 
 #: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
 msgid "Open save folder"
@@ -180,7 +186,7 @@ msgstr "Malfermi konservan dosierujon"
 
 #: resources/main-window.ui:1587
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Kontroli diskuzadon"
 
 #: resources/main-window.ui:1640 src/util.py:776
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -191,31 +197,31 @@ msgstr "Sendi kaj ricevi dosierojn tra la reto"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "Sur ĉi tiu komputilo:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Enigu la adreson de la aparato, al kiu vi volas konekti"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Konekti"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Alternative, sur la alia aparato:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Skanu ĉi tiun rapidrespondan kodon"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Aŭ konektu al la suba adreso"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -317,7 +323,7 @@ msgstr "Transigo plenumita"
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "La transmeto al %s finiĝis, sed kun eraroj"
 
 #: src/notifications.py:98
 #, python-format
@@ -327,7 +333,7 @@ msgstr "La transigo al %s finiĝis sukcese"
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "La transmeto el %s finiĝis, sed kun eraroj"
 
 #: src/notifications.py:103
 #, python-format
@@ -364,17 +370,17 @@ msgstr "Envena transmeto de %s estis nuligita"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Sendado de dosieroj"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Sendado de %d dosieroj al %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Sendado de '%s' al %s"
 
 #: src/ops.py:53
 #, python-format
@@ -438,7 +444,7 @@ msgstr "Loko por ricevitaj dosieroj"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Rezervita libera spaco"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
@@ -502,7 +508,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Nur disponebla laŭ sekura reĝimo."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -510,21 +516,23 @@ msgstr "Grupkodo postulatas."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "La grupkodo estas tro mallonga."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "EK"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Ĉiuj opcioj estas malŝlositaj."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Vi agordu propran grupkodon por ruli laŭ sekura reĝimo. Kelkaj opcioj estas "
+"nun malebligitaj."
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
@@ -629,7 +637,7 @@ msgstr "Plenumite"
 
 #: src/warpinator.py:186
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Plenumite, sed kun eraroj"
 
 #: src/warpinator.py:345 src/warpinator.py:1068
 msgid "Connecting"
@@ -676,7 +684,7 @@ msgstr "Foliumi..."
 
 #: src/warpinator.py:568
 msgid "Connect manually"
-msgstr ""
+msgstr "Konekti permane"
 
 #: src/warpinator.py:573
 msgid "Preferences"
@@ -700,6 +708,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator ruliĝas kun limigita funkciaro, kaj eliros en %d minuto. Por "
+"ebligi Sekuran Reĝimon, agordu unikan grupkodon."
 
 #: src/warpinator.py:794
 #, python-format
@@ -707,21 +717,24 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator ruliĝas kun limigita funkciaro, kaj eliros en %d minutoj. Por "
+"ebligi Sekuran Reĝimon, agordu unikan grupkodon."
 
 #: src/warpinator.py:847
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
+"Ne sufiĉe da diskospaco restas por ricevi dosierojn (%s estas rezervitaj)."
 
 #: src/warpinator.py:926
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Atendado kompletigon de %d operacio"
 
 #: src/warpinator.py:927
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Atendado kompletigon de %d operacioj"
 
 #: src/warpinator.py:1047
 msgid "Offline"
@@ -737,11 +750,11 @@ msgstr "Atendado ambaŭdirektan konekton"
 
 #: src/warpinator.py:1162
 msgid "Manual connection"
-msgstr ""
+msgstr "Permana konekto"
 
 #: src/warpinator.py:1229
 msgid "Connecting..."
-msgstr ""
+msgstr "Konektado..."
 
 #: src/warpinator.py:1665
 msgid "Send to all"
@@ -749,11 +762,11 @@ msgstr "Sendi al ĉiuj"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Sendi per Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Sendi dosieron al iu uzanta Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"

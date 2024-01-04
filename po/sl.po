@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-07-16 08:38+0000\n"
+"PO-Revision-Date: 2024-01-02 08:12+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
-"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
+"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
+"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -199,31 +199,31 @@ msgstr "Pošiljajte in prejemajte datoteke prek omrežja"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "Na tem računalniku:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Vnesite naslov naprave, s katero se želite povezati"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Vzpostavi povezavo"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Namesto tega lahko na drugi napravi:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Skenirajte to kodo QR"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Ali pa se povežite s spodnjim naslovom"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -698,7 +698,7 @@ msgstr "Prebrskaj ..."
 
 #: src/warpinator.py:568
 msgid "Connect manually"
-msgstr ""
+msgstr "Poveži se ročno"
 
 #: src/warpinator.py:573
 msgid "Preferences"
@@ -763,11 +763,11 @@ msgstr "Čakanje na dvosmerno povezavo"
 
 #: src/warpinator.py:1162
 msgid "Manual connection"
-msgstr ""
+msgstr "Ročna povezava"
 
 #: src/warpinator.py:1229
 msgid "Connecting..."
-msgstr ""
+msgstr "Povezovanje ..."
 
 #: src/warpinator.py:1665
 msgid "Send to all"

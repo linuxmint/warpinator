@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-11-22 09:05+0000\n"
+"PO-Revision-Date: 2023-12-15 10:19+0000\n"
 "Last-Translator: Quentin PAGÈS <Unknown>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2023-12-03 13:34+0000\n"
-"X-Generator: Launchpad (build 886068b1e1d10de444fbd53b0c7d3f6d4fb3e658)\n"
+"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
+"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
 "Language: oc\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -201,31 +201,31 @@ msgstr "Enviar e recebre de fichièrs via lo ret"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "Sus aqueste ordenador :"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Picatz l’adreça de l’aparelh que volètz contactar"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Se connectar"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Autrament, sus l’autre aparelh :"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Numerizatz aqueste còdi QR"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "O connectatz-vos a l’adreça çai-jos"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -691,7 +691,7 @@ msgstr "Percórrer..."
 
 #: src/warpinator.py:568
 msgid "Connect manually"
-msgstr ""
+msgstr "Se connectar manualament"
 
 #: src/warpinator.py:573
 msgid "Preferences"
@@ -757,11 +757,11 @@ msgstr "En espèra de connexion bidireccional"
 
 #: src/warpinator.py:1162
 msgid "Manual connection"
-msgstr ""
+msgstr "Connexion manuala"
 
 #: src/warpinator.py:1229
 msgid "Connecting..."
-msgstr ""
+msgstr "Connexion…"
 
 #: src/warpinator.py:1665
 msgid "Send to all"
