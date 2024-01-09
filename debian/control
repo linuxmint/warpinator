@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Linux Mint <root@linuxmint.com>
 Build-Depends:
  debhelper-compat (= 12),
- cython3,
+ cython3-legacy | cython3,
  curl,
  dh-python,
  meson (>= 0.45.0),
