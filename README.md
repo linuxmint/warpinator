@@ -4,7 +4,6 @@
 ##### Other platforms (unofficial):
 
 - Android: https://github.com/slowscript/warpinator-android
-- iOS: https://github.com/williamMillington/warpinator-iOS (beta)
 - Windows: https://winpinator.swisz.cz
 - Windows: https://github.com/slowscript/warpinator-windows
 
