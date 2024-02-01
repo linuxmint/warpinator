@@ -447,6 +447,7 @@ class OverviewButton(GObject.Object):
 class WarpWindow(GObject.Object):
     __gsignals__ = {
         'exit': (GObject.SignalFlags.RUN_LAST, None, ()),
+        'restart': (GObject.SignalFlags.RUN_LAST, None, ())
     }
 
     def __init__(self):
@@ -565,10 +566,19 @@ class WarpWindow(GObject.Object):
         item.connect("activate", self.on_open_location_clicked)
         menu.add(item)
 
+        menu.add(Gtk.SeparatorMenuItem(visible=True))
+
         item = Gtk.MenuItem(label=_("Connect manually"), sensitive=False)
         item.connect("activate", self.manual_connect)
         menu.add(item)
         self.manual_connect_menu_item = item
+
+        item = Gtk.MenuItem(label=_("Restart service"), sensitive=False)
+        item.connect("activate", self.restart_service_clicked)
+        menu.add(item)
+        self.restart_service_menu_item = item
+
+        menu.add(Gtk.SeparatorMenuItem(visible=True))
 
         item = Gtk.MenuItem(label=_("Preferences"))
         item.connect("activate", self.open_preferences)
@@ -831,6 +841,10 @@ class WarpWindow(GObject.Object):
         self.connect_dialog = ManualConnectDialog(self)
         self.connect_dialog.show()
 
+    def restart_service_clicked(self, menuitem):
+        self.emit("restart")
+        self.restart_service_menu_item.set_sensitive(False)
+
     @GObject.Signal(arg_types=(str,))
     def manual_connect_to_host(self, host):
         logging.debug("Connecting to " + host)
@@ -918,6 +932,8 @@ class WarpWindow(GObject.Object):
             self.prefs_window.destroy()
             self.prefs_window = None
 
+        self.manual_connect_menu_item.set_sensitive(False)
+
         self.show_page("restart")
 
     def update_restart_dialog_status(self, active_ops):
@@ -950,6 +966,8 @@ class WarpWindow(GObject.Object):
         if self.server_start_timeout_id > 0:
             GLib.source_remove(self.server_start_timeout_id)
             self.server_start_timeout_id = 0
+
+        self.restart_service_menu_item.set_sensitive(True)
 
         self.start_discovery_timer()
 
@@ -1329,6 +1347,7 @@ class WarpApplication(Gtk.Application):
 
         self.window = WarpWindow()
         self.window.connect("exit", lambda w: self.exit_warp())
+        self.window.connect("restart", lambda w: self.new_server())
         self.window.connect("manual_connect_to_host", lambda _, host: self.server.register_with_host(host))
 
         self.add_window(self.window.window)
