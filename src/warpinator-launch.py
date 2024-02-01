@@ -135,7 +135,7 @@ else:
 
     launch_args = []
 
-    launch_args += ["/bin/bwrap"]
+    launch_args += ["/usr/bin/bwrap"]
     launch_args += ["--ro-bind",         "/",                                               "/"]
     launch_args += ["--dev",             "/dev"]
     launch_args += ["--bind",            rundir + "/dconf",                                 rundir + "/dconf"]
@@ -156,7 +156,7 @@ else:
     launch_args += ["--die-with-parent"]
 
     # launch_args += ["/bin/sh"]
-    launch_args += ["/bin/python3",      warpinator_path]
+    launch_args += ["/usr/bin/python3",      warpinator_path]
 
     ret = 0
 
