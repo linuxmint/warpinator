@@ -2,6 +2,7 @@
 
 import sys
 import os
+import re
 import argparse
 import subprocess
 from pathlib import Path
@@ -133,6 +134,38 @@ else:
     except KeyError:
         rundir = "/run/user/%d" % os.getuid()
 
+    def path_from_bus_addr(addr):
+        return re.search(r"unix:(?:path|abstract)=(\/.+?)(?:,|$)", addr).group(1)
+
+    try:
+        session_socket_addr = Gio.dbus_address_get_for_bus_sync(Gio.BusType.SESSION, None)
+        if session_socket_addr is None:
+            session_socket_addr = os.environ.get("DBUS_SESSION_BUS_ADDRESS")
+
+        session_path = path_from_bus_addr(session_socket_addr)
+    except Exception as e:
+        print("Could not retrieve the session dbus address: %s" % e)
+        sys.exit(1)
+
+    try:
+        conn = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+        res = conn.call_sync("org.a11y.Bus",
+                             "/org/a11y/bus",
+                             "org.a11y.Bus",
+                             "GetAddress",
+                             None, None,
+                             Gio.DBusCallFlags.NONE,
+                             -1, None)
+
+        if res is not None:
+            a11y_socket_addr = res[0]
+        else:
+            a11y_socket_addr = os.environ.get("AT_SPI_BUS_ADDRESS")
+
+        a11y_path = path_from_bus_addr(a11y_socket_addr)
+    except Exception as e:
+        print("Could not retrieve the AT_SPI bus address, accessibility features may not work: %s" % e)
+
     launch_args = []
 
     launch_args += ["/usr/bin/bwrap"]
@@ -141,6 +174,8 @@ else:
     launch_args += ["--bind",            rundir + "/dconf",                                 rundir + "/dconf"]
     launch_args += ["--bind-try",        rundir + "/gvfsd",                                 rundir + "/gvfsd"]
     launch_args += ["--tmpfs",           "/tmp"]
+    launch_args += ["--ro-bind",         session_path,                                      session_path]
+    launch_args += ["--ro-bind-try",     a11y_path,                                         a11y_path]
     # The following two items aren't necessary if org.freedesktop.FileManager1 works properly - in that case,
     # the file manager is launched outside of the sandbox. If that fails, and the file manager isn't already running,
     # it will spawn inside the sandbox and be restricted the same as Warpinator.
