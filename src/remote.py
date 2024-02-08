@@ -310,7 +310,7 @@ class RemoteMachine(GObject.Object):
             self.status = status
             self.cancel_ops_if_offline()
 
-            logging.debug("Remote: %s is now %s ****" % (self.hostname, self.status))
+            logging.debug("Remote: %s is now %s ****" % (self.hostname, RemoteStatus(self.status).name))
             self.emit("remote-status-changed")
 
         return GLib.SOURCE_REMOVE
