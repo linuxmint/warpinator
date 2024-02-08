@@ -54,9 +54,7 @@ ICON_ONLINE = ""
 ICON_OFFLINE = "network-offline-symbolic"
 ICON_UNREACHABLE = "network-error-symbolic"
 
-INHIBIT_STATES = (OpStatus.CALCULATING,
-                  OpStatus.WAITING_PERMISSION,
-                  OpStatus.TRANSFERRING,
+INHIBIT_STATES = (OpStatus.TRANSFERRING,
                   OpStatus.PAUSED)
 
 ALL_BUTTONS = ("transfer_accept", \
