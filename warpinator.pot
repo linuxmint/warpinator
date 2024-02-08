@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: warpinator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-30 10:58-0500\n"
+"POT-Creation-Date: 2024-02-08 14:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 msgid "File Transfers"
 msgstr ""
 
-#: resources/main-window.ui:631 src/warpinator.py:1040
+#: resources/main-window.ui:631 src/warpinator.py:1058
 msgid "Online"
 msgstr ""
 
@@ -170,7 +170,7 @@ msgstr ""
 msgid "Empty trash"
 msgstr ""
 
-#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
+#: resources/main-window.ui:1574 src/warpinator.py:565 src/warpinator.py:1647
 msgid "Open save folder"
 msgstr ""
 
@@ -519,7 +519,7 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr ""
 
-#: src/server.py:650
+#: src/server.py:648
 msgid "An error occurred on the remote machine"
 msgstr ""
 
@@ -565,7 +565,7 @@ msgid_plural "approximately %d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/util.py:772 src/warpinator.py:577
+#: src/util.py:772 src/warpinator.py:587
 msgid "About"
 msgstr ""
 
@@ -620,7 +620,7 @@ msgstr ""
 msgid "Completed, but with errors"
 msgstr ""
 
-#: src/warpinator.py:345 src/warpinator.py:1068
+#: src/warpinator.py:345 src/warpinator.py:1086
 msgid "Connecting"
 msgstr ""
 
@@ -651,88 +651,92 @@ msgid_plural "%d new incoming transfers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/warpinator.py:537 src/warpinator.py:1682
+#: src/warpinator.py:538 src/warpinator.py:1701
 msgid "Favorites"
 msgstr ""
 
-#: src/warpinator.py:542 src/warpinator.py:1687
+#: src/warpinator.py:543 src/warpinator.py:1706
 msgid "Recents"
 msgstr ""
 
-#: src/warpinator.py:549 src/warpinator.py:1696
+#: src/warpinator.py:550 src/warpinator.py:1715
 msgid "Browse..."
 msgstr ""
 
-#: src/warpinator.py:568
+#: src/warpinator.py:571
 msgid "Connect manually"
 msgstr ""
 
-#: src/warpinator.py:573
+#: src/warpinator.py:576
+msgid "Restart service"
+msgstr ""
+
+#: src/warpinator.py:583
 msgid "Preferences"
 msgstr ""
 
-#: src/warpinator.py:581 src/warpinator.py:1631
+#: src/warpinator.py:591 src/warpinator.py:1650
 msgid "Quit"
 msgstr ""
 
-#: src/warpinator.py:690
+#: src/warpinator.py:700
 msgid "You don't appear to be connected to a network."
 msgstr ""
 
-#: src/warpinator.py:692
+#: src/warpinator.py:702
 msgid "Startup was unsuccessful, please check your logs."
 msgstr ""
 
-#: src/warpinator.py:792
+#: src/warpinator.py:802
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
 
-#: src/warpinator.py:794
+#: src/warpinator.py:804
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
 
-#: src/warpinator.py:847
+#: src/warpinator.py:861
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 
-#: src/warpinator.py:926
+#: src/warpinator.py:942
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr ""
 
-#: src/warpinator.py:927
+#: src/warpinator.py:943
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr ""
 
-#: src/warpinator.py:1047
+#: src/warpinator.py:1065
 msgid "Offline"
 msgstr ""
 
-#: src/warpinator.py:1054
+#: src/warpinator.py:1072
 msgid "Unable to connect"
 msgstr ""
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1079
 msgid "Waiting for two-way connection"
 msgstr ""
 
-#: src/warpinator.py:1162
+#: src/warpinator.py:1180
 msgid "Manual connection"
 msgstr ""
 
-#: src/warpinator.py:1229
+#: src/warpinator.py:1247
 msgid "Connecting..."
 msgstr ""
 
-#: src/warpinator.py:1665
+#: src/warpinator.py:1684
 msgid "Send to all"
 msgstr ""
 
