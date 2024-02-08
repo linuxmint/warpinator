@@ -851,8 +851,6 @@ class WarpWindow(GObject.Object):
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
-        if path.startswith("/run/user"):
-            path = os.path.basename(path)
         self.bad_save_folder_label.set_text(path)
         self.show_page("bad-save-folder")
 

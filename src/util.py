@@ -371,13 +371,6 @@ def verify_save_folder():
         except ValueError:
             pass
 
-    # If you choose a read-only path to save to, it will create a hardlink to the real one in /run/user/...
-    # Consider this invalid to force the user to adjust their flatpak permissions to permit the normal path.
-    # One exception: Steamdeck mounts its media to /run/media (maybe others?)
-    path = str(save_path)
-    if path.startswith("/run") and not path.startswith("/run/media"):
-        return False
-
     return os.access(save_path, os.R_OK | os.W_OK)
 
 def home_is_writable():
