@@ -3,6 +3,8 @@ import os
 import sys
 import subprocess
 
+from gi.repository import Gio
+
 if os.path.basename(os.getcwd()) != "testing":
     print("Run this in the 'testing' folder.")
     exit(1)
@@ -12,5 +14,14 @@ os.environ["GSETTINGS_BACKEND"] = "memory"
 
 sys.path.insert(0, "/usr/libexec/warpinator")
 
+# we're using memory-backed gsettings (so we can mess with favorites without polluting our own user settings with garbage),
+# so we need to enable the gtk inspector for the process.
+gtk_settings = Gio.Settings(schema_id="org.gtk.Settings.Debug")
+gtk_settings.set_boolean("enable-inspector-keybinding", True)
+gtk_settings.set_boolean("inspector-warning", False)
+warpinator_prefs = Gio.Settings(schema_id="org.x.warpinator.preferences")
+warpinator_prefs.set_string("group-code", "MyHomeGroup")
+
+
 import warpinator
-warpinator.main(test=True)
+warpinator.main(testing=True)

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import random
 
 from gi.repository import GLib, Gio
@@ -8,49 +10,65 @@ import misc
 import transfers
 from util import RemoteStatus, OpStatus, FileType
 
-# we're using memory-backed gsettings (so we can mess with favorites without polluting our own user settings with garbage),
-# so we need to enable the gtk inspector for the process.
-gtk_settings = Gio.Settings(schema_id="org.gtk.Settings.Debug")
-gtk_settings.set_boolean("enable-inspector-keybinding", True)
-gtk_settings.set_boolean("inspector-warning", False)
-
 TEST_REMOTES = [
-# display_name,dscvry_name,user_name,  hostname,       ip address,   port,    status,  num_ops
-["Han Solo", "test1", "nerfherder69", "falcon-mint", "100.100.100.1", "42000", RemoteStatus.ONLINE, 0],
-["Luke Skywalker", "test2", "womprat", "mintbox", "100.100.100.3", "42000", RemoteStatus.ONLINE, 0],
-["Darth Vader", "test3", "darkside", "darths-pc", "100.100.100.5", "42000", RemoteStatus.OFFLINE, 0],
-["", "test4", "", "sciencepc", "100.100.100.7", "42000", RemoteStatus.UNREACHABLE, 0],
-["Buzz Lightyear", "test11", "zergsux", "starpatrol-1", "100.100.100.7", "42000", RemoteStatus.UNREACHABLE, 0],
-["Jim Kirk", "test5", "khansucks", "enterprise", "100.100.100.9", "42000", RemoteStatus.INIT_CONNECTING, 0],
-["Montgomery Scott", "test6", "my.bairns", "engineering-station", "100.100.100.11", "42000", RemoteStatus.OFFLINE, 0],
-["Hikaru Sulu", "test7", "tiny", "helm-console", "100.100.100.13", "42000", RemoteStatus.ONLINE, 0],
-["Jean Luc Picard", "test9", "locutus", "borg-cube", "100.100.100.17", "42000", RemoteStatus.ONLINE, 0],
+    # display_name,dscvry_name,user_name,  hostname,       ip address,   port,    status,  num_ops
+    ["Han Solo", "test1", "nerfherder69", "falcon-mint", "100.100.100.1", "42000", RemoteStatus.ONLINE, 0],
+    ["Luke Skywalker", "test2", "womprat", "mintbox", "100.100.100.3", "42000", RemoteStatus.ONLINE, 0],
+    ["Darth Vader", "test3", "darkside", "darths-pc", "100.100.100.5", "42000", RemoteStatus.OFFLINE, 0],
+    ["", "test4", "", "sciencepc", "100.100.100.7", "42000", RemoteStatus.UNREACHABLE, 0],
+    ["Buzz Lightyear", "test11", "zergsux", "starpatrol-1", "100.100.100.7", "42000", RemoteStatus.UNREACHABLE, 0],
+    ["Jim Kirk", "test5", "khansucks", "enterprise", "100.100.100.9", "42000", RemoteStatus.INIT_CONNECTING, 0],
+    ["Montgomery Scott", "test6", "my.bairns", "engineering-station", "100.100.100.11", "42000", RemoteStatus.OFFLINE, 0],
+    ["Hikaru Sulu", "test7", "tiny", "helm-console", "100.100.100.13", "42000", RemoteStatus.ONLINE, 0],
+    ["Jean Luc Picard", "test9", "locutus", "borg-cube", "100.100.100.17", "42000", RemoteStatus.ONLINE, 0],
 ]
 
 TEST_OPS = [
-#type, "sender","status", timestamp, size, count,sender_disp_name, receiver_disp_name, name_if_single, special_condition
-["send", "test2", "test1", OpStatus.CALCULATING, 108, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
-["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102, 5000000, 1, "Darth Vader", "Luke Skywalker", "home-movies.mpg", None],
-["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102444, 5000000, 1, "Montgomery Scott", "Luke Skywalker", "engine-care.mpg", "nospace"],
-["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 1024494, 5000000, 1, "Jim Kirk", "Luke Skywalker", "pickup_lines.txt", "overwrite"],
-["send", "test2", "test11", OpStatus.WAITING_PERMISSION, 1002, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", "", None],
-["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 103, 2000000, 5, "Han Solo", "Luke Skywalker", "", None],
-["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 1030, 2000000, 5, "Han Solo", "Luke Skywalker", "", None],
-["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 100, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
-["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 1001, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
-["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 1005, 50000000, 5, "Luke Skywalker", "Hikaru Sulu", "", None],
-["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 100544, 10000, 1, "Luke Skywalker", "Hikaru Sulu", "saber-tips.pdf", None],
-["receive", "test9", "test2", OpStatus.TRANSFERRING, 1040, 100000000, 20, "Jean Luc Picard", "Luke Skywalker", "", None],
-["send", "test9", "test2", OpStatus.TRANSFERRING, 10403, 100000000, 20, "Luke Skywalker", "Dark Vader", "", None],
-["receive", "test11", "test2", OpStatus.STOPPED_BY_RECEIVER, 1050, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "flying-tips.pdf", None],
-["send", "test2", "test1", OpStatus.STOPPED_BY_SENDER, 1003, 50000000, 5, "Luke Skywalker", "Han Solo", "", None],
-["send", "test2", "test1", OpStatus.STOPPED_BY_RECEIVER, 10113, 50000000, 5, "Luke Skywalker", "Han Solo", "", None],
-["receive", "test11", "test2", OpStatus.STOPPED_BY_SENDER, 105, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "baby-yoda.jpg", None],
-["receive", "test7", "test2", OpStatus.FAILED, 106, 1000, 2, "Hikaru Sulu", "Luke Skywalker", "", None],
-["send", "test2", "test11", OpStatus.FAILED, 1004, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", "", None],
-["receive", "test1", "test2", OpStatus.FINISHED, 107, 200000, 5, "Han Solo", "Luke Skywalker", "", None],
-["send", "test2", "test3", OpStatus.FINISHED, 1006, 50000000, 1, "Luke Skywalker", "Darth Vader", "kittens.mpg", None],
+    # type, "sender","status", timestamp, size, count,sender_disp_name, receiver_disp_name, name_if_single, special_condition
+    ["send", "test2", "test1", OpStatus.CALCULATING, 108, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
+    ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102, 5000000, 1, "Darth Vader", "Luke Skywalker", "home-movies.mpg", None],
+    ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102444, 5000000, 1, "Montgomery Scott", "Luke Skywalker", "engine-care.mpg", "nospace"],
+    ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 1024494, 5000000, 1, "Jim Kirk", "Luke Skywalker", "pickup_lines.txt", "overwrite"],
+    ["send", "test2", "test11", OpStatus.WAITING_PERMISSION, 1002, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", "", None],
+    ["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 103, 2000000, 5, "Han Solo", "Luke Skywalker", "", None],
+    ["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 1030, 2000000, 5, "Han Solo", "Luke Skywalker", "", None],
+    ["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 100, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
+    ["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 1001, 2000000, 5, "Luke Skywalker", "Han Solo", "", None],
+    ["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 1005, 50000000, 5, "Luke Skywalker", "Hikaru Sulu", "", None],
+    ["send", "test2", "test7", OpStatus.FILE_NOT_FOUND, 100544, 10000, 1, "Luke Skywalker", "Hikaru Sulu", "saber-tips.pdf", None],
+    ["receive", "test9", "test2", OpStatus.TRANSFERRING, 1040, 100000000, 20, "Jean Luc Picard", "Luke Skywalker", "", None],
+    ["send", "test9", "test2", OpStatus.TRANSFERRING, 10403, 100000000, 20, "Luke Skywalker", "Dark Vader", "", None],
+    ["receive", "test11", "test2", OpStatus.STOPPED_BY_RECEIVER, 1050, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "flying-tips.pdf", None],
+    ["send", "test2", "test1", OpStatus.STOPPED_BY_SENDER, 1003, 50000000, 5, "Luke Skywalker", "Han Solo", "", None],
+    ["send", "test2", "test1", OpStatus.STOPPED_BY_RECEIVER, 10113, 50000000, 5, "Luke Skywalker", "Han Solo", "", None],
+    ["receive", "test11", "test2", OpStatus.STOPPED_BY_SENDER, 105, 200000000, 1, "Buzz Lightyear", "Luke Skywalker", "baby-yoda.jpg", None],
+    ["receive", "test7", "test2", OpStatus.FAILED, 106, 1000, 2, "Hikaru Sulu", "Luke Skywalker", "", None],
+    ["send", "test2", "test11", OpStatus.FAILED, 1004, 50000000, 5, "Luke Skywalker", "Buzz Lightyear", "", None],
+    ["receive", "test1", "test2", OpStatus.FINISHED, 107, 200000, 5, "Han Solo", "Luke Skywalker", "", None],
+    ["send", "test2", "test3", OpStatus.FINISHED, 1006, 50000000, 1, "Luke Skywalker", "Darth Vader", "kittens.mpg", None],
 ]
+
+SCREENSHOT_TEST_REMOTES = [
+    ["Bob Taylor", "test1", "nerfherder", "dell-ws", "10.0.0.110", "42000", RemoteStatus.ONLINE, 0],
+    ["Frank Roper", "test2", "workgroup", "mintbox", "10.0.0.118", "42000", RemoteStatus.ONLINE, 0],
+    ["Trent Fudgeman", "test3", "homenet", "laptop", "10.0.0.122", "42000", RemoteStatus.OFFLINE, 0]
+]
+
+SCREENSHOT_TEST_OPS = [
+    # type, "sender","status", timestamp, size, count,sender_disp_name, receiver_disp_name, name_if_single, special_condition
+    ["send", "test2", "test1", OpStatus.CALCULATING, 108, 2000000, 5, "Frank Roper", "Bob Taylor", "", None],
+    ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102, 5000000, 1, "Trent Fudgeman", "Frank Roper", "home-movies.mpg", None],
+    ["receive", "test3", "test2", OpStatus.WAITING_PERMISSION, 102444, 5000000, 1, "Montgomery Scott", "Frank Roper", "engine-care.mpg", ""],
+    ["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 103, 2000000, 5, "Bob Taylor", "Frank Roper", "5 files", None],
+    ["receive", "test1", "test2", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 1030, 2000000, 5, "Bob Taylor", "Frank Roper", "15 files", None],
+    ["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_SENDER, 100, 2000000, 5, "Frank Roper", "Bob Taylor", "2 files", None],
+    ["send", "test2", "test1", OpStatus.CANCELLED_PERMISSION_BY_RECEIVER, 1001, 2000000, 5, "Frank Roper", "Bob Taylor", "22 files", None],
+    ["send", "test2", "test1", OpStatus.STOPPED_BY_SENDER, 1003, 50000000, 5, "Frank Roper", "Bob Taylor", "14 files", None],
+    ["send", "test2", "test1", OpStatus.STOPPED_BY_RECEIVER, 10113, 50000000, 5, "Frank Roper", "Bob Taylor", "3 files", None],
+    ["receive", "test1", "test2", OpStatus.FINISHED, 107, 200000, 5, "Bob Taylor", "Frank Roper", "", None],
+    ["send", "test2", "test3", OpStatus.FINISHED, 1006, 50000000, 1, "Frank Roper", "Trent Fudgeman", "kittens.mpg", None],
+]
+
 
 class Dummy():
     def set(self):
@@ -61,9 +79,10 @@ class Dummy():
 
 def add_simulated_widgets(app):
     local_machine = app.server
-    for entry in TEST_REMOTES:
+    for entry in SCREENSHOT_TEST_REMOTES:
+    # for entry in TEST_REMOTES:
         display_name, name, user_name, hostname, ip, port, status, num_ops = entry
-        machine = remote.RemoteMachine(name, hostname, hostname, ip, port, local_machine.service_ident)
+        machine = remote.RemoteMachine(name, hostname, hostname, util.RemoteInterfaceInfo(ip, True), port, local_machine.service_ident, "2")
 
         local_machine.remote_machines[name] = machine
         machine.connect("ops-changed", local_machine.remote_ops_changed)
@@ -102,8 +121,10 @@ def add_simulated_widgets(app):
                 # GLib.timeout_add_seconds(2, emit_new_op, (machine, op))
 
 def add_ops(machine):
-    TEST_OPS.reverse()
-    for entry in TEST_OPS:
+    SCREENSHOT_TEST_OPS.reverse()
+    # TEST_OPS.reverse()
+    for entry in SCREENSHOT_TEST_OPS:
+    # for entry in TEST_OPS:
         op_type, sender, receiver, status, time, size, count, sender_disp_name, receiver_disp_name, name_if_single, special_condition = entry
 
         if op_type == "send":

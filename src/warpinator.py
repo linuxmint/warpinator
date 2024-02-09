@@ -1752,7 +1752,7 @@ class WarpApplication(Gtk.Application):
         self.window.toggle_visibility(time)
 
 
-def main():
+def main(testing=False):
     import signal
 
     try:
@@ -1761,7 +1761,7 @@ def main():
         pass
 
     try:
-        w = WarpApplication(testing=False)
+        w = WarpApplication(testing)
         signal.signal(signal.SIGINT, lambda s, f: w.exit_warp())
         signal.signal(signal.SIGTERM, lambda s, f: w.exit_warp())
 

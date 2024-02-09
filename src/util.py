@@ -229,7 +229,12 @@ class InterfaceInfo():
         return blist
 
 class RemoteInterfaceInfo():
-    def __init__(self, blist):
+    def __init__(self, blist, testing=False):
+        if testing:
+            self.ip4_address = blist
+            self.ip6_address = None
+            return
+
         ip4 = None
         ip6 = None
 
