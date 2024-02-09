@@ -928,22 +928,6 @@
                             </child>
                             <child>
                               <object class="GtkLinkButton">
-                                <property name="label" translatable="yes">iOS</property>
-                                <property name="visible">True</property>
-                                <property name="can-focus">True</property>
-                                <property name="receives-default">True</property>
-                                <property name="relief">none</property>
-                                <property name="yalign">0</property>
-                                <property name="uri">https://testflight.apple.com/join/7ndmZa31</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLinkButton">
                                 <property name="label" translatable="yes">Windows</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
