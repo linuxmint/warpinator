@@ -2,13 +2,24 @@
 <component type="desktop-application">
   <id>@appid@</id>
   <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <developer_name>Linux Mint</developer_name>
+  <update_contact>root@linuxmint.com</update_contact>
   <!-- DO NOT TRANSLATE Warpinator -->
   <name>Warpinator</name>
-  <summary>Send and Receive Files across the Network</summary>
+  <summary>Share files on your network</summary>
   <description>
-    <p>
-      Warpinator allows you to easily connect multiple computers on a local area network and share files quickly and securely.
-    </p>
+    <p>Warpinator allows you to easily connect multiple computers on a local area network and exchange files quickly and securely.</p>
+    <p>Features:</p>
+    <ul>
+        <li>An easy-to-use graphical interface.</li>
+        <li>Automatic discovery of devices on your network.</li>
+        <li>Fully secure and encrypted connections between devices.</li>
+        <li>Multiple simultaneous transfers.</li>
+        <li>Optional data compression.</li>
+        <li>Grouping of devices using a shared key, with multiple groups possible on the same network.</li>
+        <li>Manual connections for restricte network environments.</li>
+    </ul>
   </description>
   <categories>
     <category>Network</category>
@@ -18,26 +29,38 @@
   <url type="donation">https://www.linuxmint.com/donors.php</url>
   <url type="homepage">https://github.com/linuxmint/warpinator</url>
   <url type="translate">https://translations.launchpad.net/linuxmint/latest/+pots/warpinator</url>
+  <url type="vcs-browser">https://github.com/linuxmint/warpinator</url>
   <launchable type="desktop-id">@appid@.desktop</launchable>
   <releases>
     <release version="@app_version@" date="@current_date@" />
   </releases>
-  <project_license>GPL-3.0+</project_license>
   <!-- DO NOT TRANSLATE Linux Mint -->
-  <developer_name>Linux Mint</developer_name>
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/linuxmint/warpinator/raw/a0d19c656068e84860c1e9b31a0ed20d6aeb266e/data/appdata/screenshot-1.png</image>
+      <caption>The main view showing connected devices and their status</caption>
+      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-1.png</image>
+      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-1.png</image>
     </screenshot>
     <screenshot>
-      <image>https://github.com/linuxmint/warpinator/raw/a0d19c656068e84860c1e9b31a0ed20d6aeb266e/data/appdata/screenshot-2.png</image>
+      <caption>Individual connection page showing individual incoming or outgoing transfers</caption>
+      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-2.png</image>
+      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-2.png</image>
     </screenshot>
     <screenshot>
-      <image>https://github.com/linuxmint/warpinator/raw/a0d19c656068e84860c1e9b31a0ed20d6aeb266e/data/appdata/screenshot-3.png</image>
+      <caption>Manual connection dialog</caption>
+      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-3.png</image>
+      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-3.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Preferences</caption>
+      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-4.png</image>
+      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-4.png</image>
     </screenshot>
   </screenshots>
-  <update_contact>root@linuxmint.com</update_contact>
+  <branding>
+    <color type="primary">#6c65b1</color>
+  </branding>
   <translation type="gettext">warpinator</translation>
-  <content_rating type="oars-1.0" />
+  <content_rating type="oars-1.1" />
 </component>
 
