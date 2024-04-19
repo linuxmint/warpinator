@@ -10,6 +10,9 @@ debian/*.substvars
 debian/*.debhelper
 debian/*.log
 
+src/*/build
+src/*/python_build
+
 python_build
 __pycache__
 a.out
