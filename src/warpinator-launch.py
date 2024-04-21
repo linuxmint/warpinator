@@ -95,6 +95,8 @@ except ModuleNotFoundError as e:
 except landlock.SyscallError as e:
     if args.debug:
         print("Landlock support unavailable: %s" % str(e))
+except ValueError:
+    pass
 
 if args.mode:
     if args.mode in supported_modes:
