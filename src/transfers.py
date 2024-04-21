@@ -388,7 +388,7 @@ def gather_file_info(op):
                 file = Gio.File.new_for_uri(uri)
                 top_dir_basenames.append(file.get_basename())
 
-                info = file.query_info(infos, Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None)
+                info = file.query_info(infos, Gio.FileQueryInfoFlags.NONE, None)
                 basename = file.get_basename()
                 if len(uri_list) == 1:
                     op.mime_if_single = info.get_attribute_string(Gio.FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE)
