@@ -64,6 +64,17 @@ args = parser.parse_args()
 if args.debug:
     os.environ["WARPINATOR_DEBUG"] = "1"
 
+import config
+
+# Remove xapp from GTK3_MODULES if this is a flatpak.
+if config.FLATPAK_BUILD:
+    mods_str = os.environ.get("GTK3_MODULES")
+    if mods_str is not None:
+        mods = mods_str.split(":")
+        if "xapp-gtk3-module" in mods:
+            mods.remove("xapp-gtk3-module")
+            os.environ["GTK3_MODULES"] = ":".join(mods)
+
 # Secure mode enforcement
 import prefs
 enforcer = prefs.SecureModePrefsBlocker()
@@ -75,7 +86,6 @@ del sys.argv[1:]
 
 ###########################
 # See what mode we'll run in
-import config
 
 supported_modes = ["legacy"]
 
