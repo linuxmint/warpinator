@@ -43,23 +43,19 @@
   <screenshots>
     <screenshot type="default">
       <caption>The main view showing connected devices and their status</caption>
-      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-1.png</image>
-      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-1.png</image>
+      <image type="source">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1.png</image>
     </screenshot>
     <screenshot>
       <caption>Individual connection page showing individual incoming or outgoing transfers</caption>
-      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-2.png</image>
-      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-2.png</image>
+      <image type="source">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2.png</image>
     </screenshot>
     <screenshot>
       <caption>Manual connection dialog</caption>
-      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-3.png</image>
-      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-3.png</image>
+      <image type="source">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-3.png</image>
     </screenshot>
     <screenshot>
       <caption>Preferences</caption>
-      <image type="source" scale="1">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-1x-4.png</image>
-      <image type="source" scale="2">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-2x-4.png</image>
+      <image type="source">https://raw.githubusercontent.com/linuxmint/warpinator/master/data/appdata/warpinator-demo-screenshot-4.png</image>
     </screenshot>
   </screenshots>
   <branding>
