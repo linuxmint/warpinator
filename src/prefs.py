@@ -365,9 +365,9 @@ class Preferences():
                                                stderr=subprocess.DEVNULL
                                               ).decode("utf-8")
 
-            lshw_out = re.sub("\A\s*{", "[{", lshw_out)
-            lshw_out = re.sub("}\s*{", "}, {", lshw_out)
-            lshw_out = re.sub("}\s*\\n\Z", "}]\n", lshw_out)
+            lshw_out = re.sub(r"\A\s*{", "[{", lshw_out)
+            lshw_out = re.sub(r"}\s*{", "}, {", lshw_out)
+            lshw_out = re.sub(r"}\s*\\n\Z", "}]\n", lshw_out)
             j = json.loads(lshw_out)
         except:
             pass
