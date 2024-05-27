@@ -3,8 +3,9 @@
   <id>@appid@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
-  <developer_name>Linux Mint</developer_name>
-  <update_contact>root@linuxmint.com</update_contact>
+  <developer id="com.linuxmint">
+    <name>Linux Mint</name>
+  </developer>
   <!-- DO NOT TRANSLATE Warpinator -->
   <name>Warpinator</name>
   <summary>Share files on your network</summary>
@@ -31,6 +32,10 @@
   <url type="translate">https://translations.launchpad.net/linuxmint/latest/+pots/warpinator</url>
   <url type="vcs-browser">https://github.com/linuxmint/warpinator</url>
   <launchable type="desktop-id">@appid@.desktop</launchable>
+  <provides>
+    <binary>warpinator</binary>
+    <dbus type="session">@appid@</dbus>
+  </provides>
   <releases>
     <release version="@app_version@" date="@current_date@" />
   </releases>
