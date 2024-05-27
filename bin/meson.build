@@ -13,14 +13,17 @@ install_data(
     install_mode: 'rwxr-xr-x'
 )
 
-send_bin_file = configure_file(
-  input : 'warpinator-send.in',
-  output: 'warpinator-send',
-  configuration: prefix_info,
-)
+# This is only useful if installed in the system's bindir
+if not get_option('flatpak-build')
+    send_bin_file = configure_file(
+      input : 'warpinator-send.in',
+      output: 'warpinator-send',
+      configuration: prefix_info,
+    )
 
-install_data(
-    send_bin_file,
-    install_dir: get_option('bindir'),
-    install_mode: 'rwxr-xr-x'
-)
+    install_data(
+        send_bin_file,
+        install_dir: get_option('bindir'),
+        install_mode: 'rwxr-xr-x'
+    )
+endif
