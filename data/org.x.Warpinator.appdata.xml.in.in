@@ -19,7 +19,7 @@
         <li>Multiple simultaneous transfers.</li>
         <li>Optional data compression.</li>
         <li>Grouping of devices using a shared key, with multiple groups possible on the same network.</li>
-        <li>Manual connections for restricte network environments.</li>
+        <li>Manual connections for restricted network environments.</li>
     </ul>
   </description>
   <categories>
