@@ -1,3 +1,42 @@
+warpinator (1.8.4) wilma; urgency=medium
+
+  [ Butterfly ]
+  * Adapt to upstream packaging changes (#201)
+
+  [ Michael Webster ]
+  * Add a 'restart' item to the menu.
+  * warpinator-launch.py: Fix hardcoded paths.
+  * warpinator-launch.py: (bwrap) Deal with systems that use /tmp for their dbus session bus address.
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+  [ Michael Webster ]
+  * Remove restrictions on having a save directory in /run/*
+  * warpinator.py: Don't inhibit the session until the transfer starts.
+  * remote.py: Fix a debugging line.
+  * Update appdata screenshots.
+  * Fix test/demo mode.
+  * appdata: Update to follow the latest Flathub guidelines.
+  * Update .gitignore
+  * warpinator-launch.py: Catch a potential error in landlock check.
+  * src/transfers.py: Follow toplevel symbolic links when gathering files to send.
+
+  [ carlosmintfan ]
+  * Remove iOS links (#204)
+
+  [ Michael Webster ]
+  * warpinator-launch: Unset GTK3_MODULES for Flatpak installs.
+  * build: Don't install warpinator-send as part of a flatpak build.
+  * Some more appstream spec updates.
+  * prefs: Fix escape code SyntaxWarning during bytecompile.
+  * appstream: Only provide screenshots at 1x scale.
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 12 Jun 2024 13:59:50 +0100
+
 warpinator (1.8.3) virginia; urgency=medium
 
   * l10n: Update translations
