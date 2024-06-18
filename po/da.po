@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-12-07 10:35+0000\n"
+"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"PO-Revision-Date: 2024-06-12 14:29+0000\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
-"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
+"X-Launchpad-Export-Date: 2024-06-18 17:57+0000\n"
+"X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -40,7 +40,7 @@ msgid "OFF"
 msgstr "FRA"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1218
+#: resources/main-window.ui:1202
 msgid "More information"
 msgstr "Flere oplysninger"
 
@@ -72,7 +72,7 @@ msgstr "Send filer"
 msgid "File Transfers"
 msgstr "Filoverførsler"
 
-#: resources/main-window.ui:631 src/warpinator.py:1040
+#: resources/main-window.ui:631 src/warpinator.py:1054
 msgid "Online"
 msgstr "Online"
 
@@ -114,27 +114,23 @@ msgstr "Warpinator fås også til:"
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:931
-msgid "iOS"
-msgstr "iOS"
-
-#: resources/main-window.ui:947 resources/main-window.ui:962
+#: resources/main-window.ui:931 resources/main-window.ui:946
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1036
+#: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
 msgstr "Forbereder, vent venligst …"
 
-#: resources/main-window.ui:1094
+#: resources/main-window.ui:1078
 msgid "Something went wrong"
 msgstr "Noget gik galt"
 
-#: resources/main-window.ui:1169
+#: resources/main-window.ui:1153
 msgid "Invalid save location"
 msgstr "Ugyldig placering til at gemme på"
 
-#: resources/main-window.ui:1206
+#: resources/main-window.ui:1190
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -143,32 +139,32 @@ msgstr ""
 "den. Vælg en ny placering under Indstillinger og sikr dig, at den er "
 "tilgængelig."
 
-#: resources/main-window.ui:1278
+#: resources/main-window.ui:1262
 msgid "Searching for other computers"
 msgstr "Søger efter andre computere"
 
-#: resources/main-window.ui:1337
+#: resources/main-window.ui:1321
 msgid "Shutting down..."
 msgstr "Lukker ned …"
 
-#: resources/main-window.ui:1409
+#: resources/main-window.ui:1393
 msgid "Restart required"
 msgstr "Genstart kræves"
 
-#: resources/main-window.ui:1426
+#: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Warpinator skal genstartes, før den nye mappe til at gemme i kan bruges"
 
-#: resources/main-window.ui:1436
+#: resources/main-window.ui:1420
 msgid "Restart"
 msgstr "Genstart"
 
-#: resources/main-window.ui:1506
+#: resources/main-window.ui:1490
 msgid "Disk Full"
 msgstr "Disken er fuld"
 
-#: resources/main-window.ui:1543
+#: resources/main-window.ui:1527
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -178,21 +174,20 @@ msgstr ""
 "filer, formindske den mindste ledige plads under Indstillinger aller vælge "
 "en ny placering."
 
-#: resources/main-window.ui:1560
+#: resources/main-window.ui:1544
 msgid "Empty trash"
 msgstr "Tøm papirkurven"
 
-#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
+#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
 msgstr "Åbn mappen med gemte filer"
 
-#: resources/main-window.ui:1587
+#: resources/main-window.ui:1571
 msgid "Examine disk usage"
 msgstr "Undersøg diskforbrug"
 
-#: resources/main-window.ui:1640 src/util.py:776
+#: resources/main-window.ui:1624 src/util.py:774
 #: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Send og modtag filer over netværket"
 
@@ -341,7 +336,7 @@ msgstr "Overførslen fra %s er færdig, men med fejl"
 msgid "The transfer from %s has finished successfully"
 msgstr "Overførslen fra %s er gennemført"
 
-#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
+#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
 msgstr "Overførsel mislykkedes"
 
@@ -355,7 +350,7 @@ msgstr "Noget gik galt med overførslen til %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "Noget gik galt med overførslen fra %s"
 
-#: src/notifications.py:171 src/warpinator.py:169
+#: src/notifications.py:171 src/warpinator.py:167
 msgid "Transfer cancelled"
 msgstr "Overførsel annulleret"
 
@@ -540,171 +535,175 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "Forbindelsen blev afbrudt"
 
-#: src/server.py:650
+#: src/server.py:648
 msgid "An error occurred on the remote machine"
 msgstr "Der opstod en fejl på fjernmaskinen"
 
-#: src/util.py:264
+#: src/util.py:269
 msgid "Cancel"
 msgstr "Annullér"
 
-#: src/util.py:265
+#: src/util.py:270
 msgid "Add"
 msgstr "Tilføj"
 
-#: src/util.py:287
+#: src/util.py:292
 msgid "Select file(s) to send"
 msgstr "Vælg fil(er), der skal sendes"
 
-#: src/util.py:665
+#: src/util.py:663
 msgid "A few seconds remaining"
 msgstr "Et par sekunder tilbage"
 
-#: src/util.py:668
+#: src/util.py:666
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d sekunder tilbage"
 
-#: src/util.py:672 src/util.py:680
+#: src/util.py:670 src/util.py:678
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minut"
 msgstr[1] "%d minutter"
 
-#: src/util.py:679
+#: src/util.py:677
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d time"
 msgstr[1] "%d timer"
 
-#: src/util.py:684
+#: src/util.py:682
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "ca. %d time"
 msgstr[1] "ca. %d timer"
 
-#: src/util.py:772 src/warpinator.py:577
+#: src/util.py:770 src/warpinator.py:585
 msgid "About"
 msgstr "Om"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:146
 msgid "Paused"
 msgstr "På pause"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:149
 msgid "Waiting for approval"
 msgstr "Venter på godkendelse"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:151
 msgid "Waiting for your approval"
 msgstr "Venter på din godkendelse"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:154
 msgid "Not enough disk space"
 msgstr "Ikke tilstrækkelig ledig diskplads"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:157
 msgid "Files may be overwritten"
 msgstr "Filer kan blive overskrevet"
 
-#: src/warpinator.py:162
+#: src/warpinator.py:160
 msgid "Request cancelled"
 msgstr "Anmodning annulleret"
 
-#: src/warpinator.py:164 src/warpinator.py:166
+#: src/warpinator.py:162 src/warpinator.py:164
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "Anmodning annulleret af %s"
 
-#: src/warpinator.py:171 src/warpinator.py:173
+#: src/warpinator.py:169 src/warpinator.py:171
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Overførsel annulleret af %s"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:178
 #, python-format
 msgid "File '%s' not found"
 msgstr "Filen “%s” blev ikke fundet"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:180
 msgid "Some files not found"
 msgstr "Nogle filer blev ikke fundet"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:182
 msgid "Completed"
 msgstr "Gennemført"
 
-#: src/warpinator.py:186
+#: src/warpinator.py:184
 msgid "Completed, but with errors"
 msgstr "Gennemført men med fejl"
 
-#: src/warpinator.py:345 src/warpinator.py:1068
+#: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
 msgstr "Opretter forbindelse"
 
-#: src/warpinator.py:347
+#: src/warpinator.py:345
 #, python-format
 msgid "Connecting to %s"
 msgstr "Opretter forbindelse til %s"
 
-#: src/warpinator.py:357
+#: src/warpinator.py:355
 #, python-format
 msgid "%s is not online"
 msgstr "%s er ikke online"
 
-#: src/warpinator.py:362
+#: src/warpinator.py:360
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Kan ikke oprette forbindelse til %s"
 
-#: src/warpinator.py:367
+#: src/warpinator.py:365
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Venter på at %s gennemfører forbindelsen."
 
-#: src/warpinator.py:396
+#: src/warpinator.py:394
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d ny indgående overførsel"
 msgstr[1] "%d nye indgående overførsler"
 
-#: src/warpinator.py:537 src/warpinator.py:1682
+#: src/warpinator.py:536 src/warpinator.py:1697
 msgid "Favorites"
 msgstr "Favoritter"
 
-#: src/warpinator.py:542 src/warpinator.py:1687
+#: src/warpinator.py:541 src/warpinator.py:1702
 msgid "Recents"
 msgstr "Seneste"
 
-#: src/warpinator.py:549 src/warpinator.py:1696
+#: src/warpinator.py:548 src/warpinator.py:1711
 msgid "Browse..."
 msgstr "Gennemse …"
 
-#: src/warpinator.py:568
+#: src/warpinator.py:569
 msgid "Connect manually"
 msgstr "Opret forbindelse manuelt"
 
-#: src/warpinator.py:573
+#: src/warpinator.py:574
+msgid "Restart service"
+msgstr "Genstart tjeneste"
+
+#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "Indstillinger"
 
-#: src/warpinator.py:581 src/warpinator.py:1631
+#: src/warpinator.py:589 src/warpinator.py:1646
 msgid "Quit"
 msgstr "Afslut"
 
-#: src/warpinator.py:690
+#: src/warpinator.py:698
 msgid "You don't appear to be connected to a network."
 msgstr "Det lader ikke til, du er forbundet til et netværk."
 
-#: src/warpinator.py:692
+#: src/warpinator.py:700
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Opstart mislykkedes, tjek dine logger."
 
-#: src/warpinator.py:792
+#: src/warpinator.py:800
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -713,7 +712,7 @@ msgstr ""
 "Warpinator kører med begrænset funktionalitet og vil afslutte om %d minut. "
 "Aktivér sikker tilstand ved at angive en unik gruppekode."
 
-#: src/warpinator.py:794
+#: src/warpinator.py:802
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -722,43 +721,43 @@ msgstr ""
 "Warpinator kører med begrænset funktionalitet og vil afslutte om %d "
 "minutter. Aktivér sikker tilstand ved at angive en unik gruppekode."
 
-#: src/warpinator.py:847
+#: src/warpinator.py:857
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 "Der er ikke plads nok på disken til at modtage filer (%s er reserveret)."
 
-#: src/warpinator.py:926
+#: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "Venter på, at %d handling skal blive færdig"
 
-#: src/warpinator.py:927
+#: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "Venter på, at %d handlinger skal blive færdige"
 
-#: src/warpinator.py:1047
+#: src/warpinator.py:1061
 msgid "Offline"
 msgstr "Offline"
 
-#: src/warpinator.py:1054
+#: src/warpinator.py:1068
 msgid "Unable to connect"
 msgstr "Kunne ikke oprette forbindelse"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1075
 msgid "Waiting for two-way connection"
 msgstr "Venter på tovejsforbindelse"
 
-#: src/warpinator.py:1162
+#: src/warpinator.py:1176
 msgid "Manual connection"
 msgstr "Manuel forbindelse"
 
-#: src/warpinator.py:1229
+#: src/warpinator.py:1243
 msgid "Connecting..."
 msgstr "Opretter forbindelse …"
 
-#: src/warpinator.py:1665
+#: src/warpinator.py:1680
 msgid "Send to all"
 msgstr "Send til alle"
 
@@ -779,19 +778,69 @@ msgid "To modify firewall settings, you need to authenticate."
 msgstr "For at ændre firewallindstillinger skal du bekræfte."
 
 #. DO NOT TRANSLATE Warpinator
-#: data/org.x.Warpinator.appdata.xml.in.in:6
+#: data/org.x.Warpinator.appdata.xml.in.in:10
 msgid "Warpinator"
 msgstr "Warpinator"
 
-#: data/org.x.Warpinator.appdata.xml.in.in:9
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "Del filer på dit netværk"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
-"network and share files quickly and securely."
+"network and exchange files quickly and securely."
 msgstr ""
 "Med Warpinator kan du nemt forbinde flere computere på et lokalt netværk og "
-"dele filer hurtigt og sikkert."
+"udveksle filer hurtigt og sikkert."
 
-#. DO NOT TRANSLATE Linux Mint
-#: data/org.x.Warpinator.appdata.xml.in.in:27
-msgid "Linux Mint"
-msgstr "Linux Mint"
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "Funktioner:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "En grafisk brugergrænseflade der er nem at bruge"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr "Automatisk registrering af enheder på dit netværk."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr "Helt sikre og krypterede forbindelser mellem enheder."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr "Flere samtidige overførsler."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr "Valgfri datakomprimering."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr ""
+"Gruppering af enheder ved hjælp af en fælles nøgle med mulighed for flere "
+"grupper på samme netværk."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr "Manuelle forbindelser til begrænsede netværksmiljøer."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr "Hovedoversigten viser tilsluttede enheder og deres status"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr ""
+"Individuel forbindelsesside viser individuelle indgående eller udgående "
+"overførsler"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr "Manuel forbindelsesdialog"

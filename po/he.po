@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-07-23 06:16+0000\n"
+"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"PO-Revision-Date: 2024-06-12 14:05+0000\n"
 "Last-Translator: Avi Markovitz <avi.markovitz@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
-"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
+"X-Launchpad-Export-Date: 2024-06-18 17:57+0000\n"
+"X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
 "Language: he\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -40,7 +40,7 @@ msgid "OFF"
 msgstr "כבוי"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1218
+#: resources/main-window.ui:1202
 msgid "More information"
 msgstr "מידע נוסף"
 
@@ -50,7 +50,7 @@ msgstr "מצב בטוח הושבת"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr "תיקיית הורדה לא מאובטחת"
+msgstr "תיקיית הורדה לא בטוחה"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
@@ -58,7 +58,7 @@ msgstr "אין תוצאות תואמות"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr "הפיכת מחשב מרוחק זה  למועדף בתצוגה הראשית"
+msgstr "הפיכת מחשב מרוחק זה למועדף בתצוגה הראשית"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
@@ -72,7 +72,7 @@ msgstr "שליחת קבצים"
 msgid "File Transfers"
 msgstr "תעבורת קבצים"
 
-#: resources/main-window.ui:631 src/warpinator.py:1040
+#: resources/main-window.ui:631 src/warpinator.py:1054
 msgid "Online"
 msgstr "מחובר"
 
@@ -113,27 +113,23 @@ msgstr "Warpinator זמין גם עבור:"
 msgid "Android"
 msgstr "אנדרואיד"
 
-#: resources/main-window.ui:931
-msgid "iOS"
-msgstr "iOS"
-
-#: resources/main-window.ui:947 resources/main-window.ui:962
+#: resources/main-window.ui:931 resources/main-window.ui:946
 msgid "Windows"
 msgstr "ווינדוס"
 
-#: resources/main-window.ui:1036
+#: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
 msgstr "מתבצע אתחול, נא להמתין..."
 
-#: resources/main-window.ui:1094
+#: resources/main-window.ui:1078
 msgid "Something went wrong"
 msgstr "משהו השתבש"
 
-#: resources/main-window.ui:1169
+#: resources/main-window.ui:1153
 msgid "Invalid save location"
 msgstr "מיקום שמירה לא תקין"
 
-#: resources/main-window.ui:1206
+#: resources/main-window.ui:1190
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -141,32 +137,32 @@ msgstr ""
 "תיקייה זו לא נגישה או לא מאפשרת שמירת קבצים. נא לבחור מתפריט 'העדפות' מיקום "
 "חדש ולודא שהוא נגיש."
 
-#: resources/main-window.ui:1278
+#: resources/main-window.ui:1262
 msgid "Searching for other computers"
 msgstr "מתבצע חיפוש אחר מחשבים אחרים"
 
-#: resources/main-window.ui:1337
+#: resources/main-window.ui:1321
 msgid "Shutting down..."
 msgstr "מתבצע כיבוי..."
 
-#: resources/main-window.ui:1409
+#: resources/main-window.ui:1393
 msgid "Restart required"
 msgstr "נדרש אתחול"
 
-#: resources/main-window.ui:1426
+#: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "נדרש לאתחל את Warpinator על מנת שיהיה ניתן להשתמש במחיצה החדשה שנשמרה"
 
-#: resources/main-window.ui:1436
+#: resources/main-window.ui:1420
 msgid "Restart"
 msgstr "אתחול"
 
-#: resources/main-window.ui:1506
+#: resources/main-window.ui:1490
 msgid "Disk Full"
 msgstr "כונן מלא"
 
-#: resources/main-window.ui:1543
+#: resources/main-window.ui:1527
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -175,52 +171,51 @@ msgstr ""
 "אין די מקום פנוי במיקום השמירה. נדרש למחוק קבצים, להקטין את דרישות מזעריות "
 "למקום פנוי בהעדפות, או לבחור מיקום חדש."
 
-#: resources/main-window.ui:1560
+#: resources/main-window.ui:1544
 msgid "Empty trash"
 msgstr "ריקון סל מיחזור"
 
-#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
+#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
 msgstr "פתיחת תיקיית השמירה"
 
-#: resources/main-window.ui:1587
+#: resources/main-window.ui:1571
 msgid "Examine disk usage"
 msgstr "בחינת שימוש בכונן"
 
-#: resources/main-window.ui:1640 src/util.py:776
+#: resources/main-window.ui:1624 src/util.py:774
 #: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "שליחה וקבלה של קבצים ברחבי הרשת"
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "במחשב זה:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "נא להזין את כתובת ההתקן אליו יש להתחבר"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "התחברות"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "לחילופין, בהתקן האחר:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "נא לסרוק קוד  QR זה"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "כתובת IP ופתחת משתמש מוצגים כאן"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -338,7 +333,7 @@ msgstr "ההעברה מ־%s הסתיימה, אך עם שגיאות"
 msgid "The transfer from %s has finished successfully"
 msgstr "ההעברה מ־%s הסתיימה בהצלחה"
 
-#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
+#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
 msgstr "ההעברה נכשלה"
 
@@ -352,7 +347,7 @@ msgstr "משהו השתבש בהעברה אל %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "משהו השתבש בהעברה מ־%s"
 
-#: src/notifications.py:171 src/warpinator.py:169
+#: src/notifications.py:171 src/warpinator.py:167
 msgid "Transfer cancelled"
 msgstr "ההעברה בוטלה"
 
@@ -534,171 +529,175 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "החיבור אבד"
 
-#: src/server.py:650
+#: src/server.py:648
 msgid "An error occurred on the remote machine"
 msgstr "אירעה שגיאה במכונה המרוחקת"
 
-#: src/util.py:264
+#: src/util.py:269
 msgid "Cancel"
 msgstr "ביטול"
 
-#: src/util.py:265
+#: src/util.py:270
 msgid "Add"
 msgstr "הוספה"
 
-#: src/util.py:287
+#: src/util.py:292
 msgid "Select file(s) to send"
 msgstr "בחירת קבצים לשליחה"
 
-#: src/util.py:665
+#: src/util.py:663
 msgid "A few seconds remaining"
 msgstr "נותרו מספר שניות"
 
-#: src/util.py:668
+#: src/util.py:666
 #, python-format
 msgid "%d seconds remaining"
 msgstr "נותרו %d שניות"
 
-#: src/util.py:672 src/util.py:680
+#: src/util.py:670 src/util.py:678
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "דקה %d"
 msgstr[1] "%d דקות"
 
-#: src/util.py:679
+#: src/util.py:677
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "שעה %d"
 msgstr[1] "%d שעות"
 
-#: src/util.py:684
+#: src/util.py:682
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "בסביבות שעה %d"
 msgstr[1] "בסביבות %d שעות"
 
-#: src/util.py:772 src/warpinator.py:577
+#: src/util.py:770 src/warpinator.py:585
 msgid "About"
 msgstr "על אודות"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:146
 msgid "Paused"
 msgstr "מושהה"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:149
 msgid "Waiting for approval"
 msgstr "בהמתנה לאישור"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:151
 msgid "Waiting for your approval"
 msgstr "בהמתנה לאישורך"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:154
 msgid "Not enough disk space"
 msgstr "אין מספיק שטח בכונן"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:157
 msgid "Files may be overwritten"
 msgstr "חלק מהקבצים עלולים להיות מוחלפים"
 
-#: src/warpinator.py:162
+#: src/warpinator.py:160
 msgid "Request cancelled"
 msgstr "הבקשה בוטלה"
 
-#: src/warpinator.py:164 src/warpinator.py:166
+#: src/warpinator.py:162 src/warpinator.py:164
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "הבקשה בוטלה על ידי %s"
 
-#: src/warpinator.py:171 src/warpinator.py:173
+#: src/warpinator.py:169 src/warpinator.py:171
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "ההעברה בוטלה על ידי %s"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:178
 #, python-format
 msgid "File '%s' not found"
 msgstr "הקובץ \"%s\" לא נמצא"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:180
 msgid "Some files not found"
 msgstr "חלק מהקבצים לא נמצאו"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:182
 msgid "Completed"
 msgstr "הושלם"
 
-#: src/warpinator.py:186
+#: src/warpinator.py:184
 msgid "Completed, but with errors"
 msgstr "ההעברה הסתיימה, אך קיימות שגיאות"
 
-#: src/warpinator.py:345 src/warpinator.py:1068
+#: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
 msgstr "מתבצעת התחברות"
 
-#: src/warpinator.py:347
+#: src/warpinator.py:345
 #, python-format
 msgid "Connecting to %s"
 msgstr "מתבצעת התחברות אל %s"
 
-#: src/warpinator.py:357
+#: src/warpinator.py:355
 #, python-format
 msgid "%s is not online"
 msgstr "%s לא מחובר"
 
-#: src/warpinator.py:362
+#: src/warpinator.py:360
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "לא ניתן להתחבר אל %s"
 
-#: src/warpinator.py:367
+#: src/warpinator.py:365
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "בהמתנה להשלמת ההתחברות על ידי %s."
 
-#: src/warpinator.py:396
+#: src/warpinator.py:394
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "נכנסת העברה %d חדשה"
 msgstr[1] "נכנסות %d העברות חדשות"
 
-#: src/warpinator.py:537 src/warpinator.py:1682
+#: src/warpinator.py:536 src/warpinator.py:1697
 msgid "Favorites"
 msgstr "מועדפים"
 
-#: src/warpinator.py:542 src/warpinator.py:1687
+#: src/warpinator.py:541 src/warpinator.py:1702
 msgid "Recents"
 msgstr "אחרונים"
 
-#: src/warpinator.py:549 src/warpinator.py:1696
+#: src/warpinator.py:548 src/warpinator.py:1711
 msgid "Browse..."
 msgstr "עיון..."
 
-#: src/warpinator.py:568
+#: src/warpinator.py:569
 msgid "Connect manually"
-msgstr ""
+msgstr "התחברות ידנית"
 
-#: src/warpinator.py:573
+#: src/warpinator.py:574
+msgid "Restart service"
+msgstr "נא לאתחל את השרות"
+
+#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "העדפות"
 
-#: src/warpinator.py:581 src/warpinator.py:1631
+#: src/warpinator.py:589 src/warpinator.py:1646
 msgid "Quit"
 msgstr "יציאה"
 
-#: src/warpinator.py:690
+#: src/warpinator.py:698
 msgid "You don't appear to be connected to a network."
 msgstr "נראה שמחשבך אינו מחובר לרשת."
 
-#: src/warpinator.py:692
+#: src/warpinator.py:700
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "היו בעיות בהפעלה, נא לבדוק את קובצי היומן."
 
-#: src/warpinator.py:792
+#: src/warpinator.py:800
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -707,7 +706,7 @@ msgstr ""
 "Warpinator פועל עם יכולות מוגבלות וייסגר בתוך דקה %d. לאפשור 'מצב בטוח', נא "
 "להגדיר קוד קבוצה ייחודי."
 
-#: src/warpinator.py:794
+#: src/warpinator.py:802
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -716,42 +715,42 @@ msgstr ""
 "Warpinator פועל עם יכולות מוגבלות וייסגר בתוך %d דקות. לאפשור 'מצב בטוח', נא "
 "להגדיר קוד קבוצה ייחודי."
 
-#: src/warpinator.py:847
+#: src/warpinator.py:857
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr "אין מספיק מקום פנוי בכונן לקבלת קבצים (%s שמור)"
 
-#: src/warpinator.py:926
+#: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "בהמתנה לסיום %d תהליכים"
 
-#: src/warpinator.py:927
+#: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "בהמתנה לסיום %d תהליכים"
 
-#: src/warpinator.py:1047
+#: src/warpinator.py:1061
 msgid "Offline"
 msgstr "לא מחובר"
 
-#: src/warpinator.py:1054
+#: src/warpinator.py:1068
 msgid "Unable to connect"
 msgstr "לא ניתן להתחבר"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1075
 msgid "Waiting for two-way connection"
 msgstr "בהמתנה לחיבור דו־כיווני"
 
-#: src/warpinator.py:1162
+#: src/warpinator.py:1176
 msgid "Manual connection"
-msgstr ""
+msgstr "חיבור ידני"
 
-#: src/warpinator.py:1229
+#: src/warpinator.py:1243
 msgid "Connecting..."
-msgstr ""
+msgstr "מתבצעת התחברות..."
 
-#: src/warpinator.py:1665
+#: src/warpinator.py:1680
 msgid "Send to all"
 msgstr "שליחה לכולם"
 
@@ -772,19 +771,65 @@ msgid "To modify firewall settings, you need to authenticate."
 msgstr "נדרש אימות לשינוי הגדרות חומת האש"
 
 #. DO NOT TRANSLATE Warpinator
-#: data/org.x.Warpinator.appdata.xml.in.in:6
+#: data/org.x.Warpinator.appdata.xml.in.in:10
 msgid "Warpinator"
 msgstr "Warpinator"
 
-#: data/org.x.Warpinator.appdata.xml.in.in:9
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "שיטף קבצים ברשת מקומית"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
-"network and share files quickly and securely."
+"network and exchange files quickly and securely."
 msgstr ""
-"Warpinator מאפשר  לחבר בקלות מספר מחשבים ברשת מקומית ולשתף קבצים במהירות "
+"Warpinator מאפשר לחבר בקלות מספר מחשבים ברשת מקומית ולהחליף קבצים במהירות "
 "ובאופן מאובטח."
 
-#. DO NOT TRANSLATE Linux Mint
-#: data/org.x.Warpinator.appdata.xml.in.in:27
-msgid "Linux Mint"
-msgstr "Linux Mint"
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "תכונות:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "מנשק משתמש חזותי נוח לשימוש."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr "גילוי התקנים אוטומטי ברשת מקומית."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr "חיבורים מאובטחים ומוצפנים לחלוטין בין מכשירים."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr "מספר העברות בו זמנית."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr "דחיסת נתונים חלופית."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr "אפשרות קיבוץ התקנים באמצעות מפתח משותף, בין מספר קבוצות באותה רשת."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr "חיבורים ידניים לסביבות רשת מוגבלות."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr "המצג הראשי מציג התקנים מחוברים ואת מצבם"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr "דף חיבור ייחודי שמציג העברות נכנסות או יוצאות פרטניות"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr "דו שיח התחברות ידנית"

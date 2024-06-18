@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-12-02 18:22+0000\n"
-"Last-Translator: Dmitriy Kulikov <Unknown>\n"
+"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"PO-Revision-Date: 2024-06-17 08:30+0000\n"
+"Last-Translator: Aleksey Kabanov <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
-"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
+"X-Launchpad-Export-Date: 2024-06-18 17:57+0000\n"
+"X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
 "Language: ru\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -43,7 +43,7 @@ msgid "OFF"
 msgstr "ВЫКЛ"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1218
+#: resources/main-window.ui:1202
 msgid "More information"
 msgstr "Подробнее"
 
@@ -75,7 +75,7 @@ msgstr "Отправить файлы"
 msgid "File Transfers"
 msgstr "Передача файлов"
 
-#: resources/main-window.ui:631 src/warpinator.py:1040
+#: resources/main-window.ui:631 src/warpinator.py:1054
 msgid "Online"
 msgstr "В сети"
 
@@ -118,27 +118,23 @@ msgstr "Warpinator ещё доступен для:"
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:931
-msgid "iOS"
-msgstr "iOS"
-
-#: resources/main-window.ui:947 resources/main-window.ui:962
+#: resources/main-window.ui:931 resources/main-window.ui:946
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1036
+#: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
 msgstr "Инициализация, пожалуйста подождите..."
 
-#: resources/main-window.ui:1094
+#: resources/main-window.ui:1078
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
 
-#: resources/main-window.ui:1169
+#: resources/main-window.ui:1153
 msgid "Invalid save location"
 msgstr "Недопустимое место сохранения"
 
-#: resources/main-window.ui:1206
+#: resources/main-window.ui:1190
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -146,33 +142,33 @@ msgstr ""
 "Эта папка либо недоступна, либо в неё запрещено сохранение файлов. Выберите "
 "в настройках другое место и убедитесь, что оно доступно."
 
-#: resources/main-window.ui:1278
+#: resources/main-window.ui:1262
 msgid "Searching for other computers"
 msgstr "Поиск других компьютеров"
 
-#: resources/main-window.ui:1337
+#: resources/main-window.ui:1321
 msgid "Shutting down..."
 msgstr "Завершение работы..."
 
-#: resources/main-window.ui:1409
+#: resources/main-window.ui:1393
 msgid "Restart required"
 msgstr "Требуется перезапуск"
 
-#: resources/main-window.ui:1426
+#: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Необходимо перезапустить Warpinator, чтобы можно было использовать новый "
 "каталог для сохранения"
 
-#: resources/main-window.ui:1436
+#: resources/main-window.ui:1420
 msgid "Restart"
 msgstr "Перезапустить"
 
-#: resources/main-window.ui:1506
+#: resources/main-window.ui:1490
 msgid "Disk Full"
 msgstr "Накопитель полон"
 
-#: resources/main-window.ui:1543
+#: resources/main-window.ui:1527
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -182,21 +178,20 @@ msgstr ""
 "уменьшить минимальное свободное пространство в настройках или выбрать новое "
 "место."
 
-#: resources/main-window.ui:1560
+#: resources/main-window.ui:1544
 msgid "Empty trash"
 msgstr "Очистить корзину"
 
-#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
+#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
 msgstr "Открыть папку сохранения"
 
-#: resources/main-window.ui:1587
+#: resources/main-window.ui:1571
 msgid "Examine disk usage"
 msgstr "Проверить использование накопителя"
 
-#: resources/main-window.ui:1640 src/util.py:776
+#: resources/main-window.ui:1624 src/util.py:774
 #: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Отправка и получение файлов по сети"
 
@@ -345,7 +340,7 @@ msgstr "Передача с %s завершена, но с ошибками"
 msgid "The transfer from %s has finished successfully"
 msgstr "Передача от %s успешно завершена"
 
-#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
+#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
 msgstr "Передача не удалась"
 
@@ -359,7 +354,7 @@ msgstr "Что-то пошло не так с передачей на %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "Что-то пошло не так с передачей от %s"
 
-#: src/notifications.py:171 src/warpinator.py:169
+#: src/notifications.py:171 src/warpinator.py:167
 msgid "Transfer cancelled"
 msgstr "Передача отменена"
 
@@ -548,32 +543,32 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "Соединение потеряно"
 
-#: src/server.py:650
+#: src/server.py:648
 msgid "An error occurred on the remote machine"
 msgstr "Ошибка на удалённом компьютере"
 
-#: src/util.py:264
+#: src/util.py:269
 msgid "Cancel"
 msgstr "Отменить"
 
-#: src/util.py:265
+#: src/util.py:270
 msgid "Add"
 msgstr "Добавить"
 
-#: src/util.py:287
+#: src/util.py:292
 msgid "Select file(s) to send"
 msgstr "Выберите файл(ы) для отправки"
 
-#: src/util.py:665
+#: src/util.py:663
 msgid "A few seconds remaining"
 msgstr "Осталось несколько секунд"
 
-#: src/util.py:668
+#: src/util.py:666
 #, python-format
 msgid "%d seconds remaining"
 msgstr "Осталось %d секунд"
 
-#: src/util.py:672 src/util.py:680
+#: src/util.py:670 src/util.py:678
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -581,7 +576,7 @@ msgstr[0] "%d минута"
 msgstr[1] "%d минуты"
 msgstr[2] "%d минут"
 
-#: src/util.py:679
+#: src/util.py:677
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -589,7 +584,7 @@ msgstr[0] "%d час"
 msgstr[1] "%d часа"
 msgstr[2] "%d часов"
 
-#: src/util.py:684
+#: src/util.py:682
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
@@ -597,86 +592,86 @@ msgstr[0] "примерно %d час"
 msgstr[1] "примерно %d часа"
 msgstr[2] "примерно %d часов"
 
-#: src/util.py:772 src/warpinator.py:577
+#: src/util.py:770 src/warpinator.py:585
 msgid "About"
 msgstr "О программе"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:146
 msgid "Paused"
 msgstr "Приостановлено"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:149
 msgid "Waiting for approval"
 msgstr "Ожидание подтверждения"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:151
 msgid "Waiting for your approval"
 msgstr "Ожидание вашего подтверждения"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:154
 msgid "Not enough disk space"
 msgstr "Недостаточно места на диске"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:157
 msgid "Files may be overwritten"
 msgstr "Файлы могут быть перезаписаны"
 
-#: src/warpinator.py:162
+#: src/warpinator.py:160
 msgid "Request cancelled"
 msgstr "Запрос отклонён"
 
-#: src/warpinator.py:164 src/warpinator.py:166
+#: src/warpinator.py:162 src/warpinator.py:164
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "Запрос отклонён %s"
 
-#: src/warpinator.py:171 src/warpinator.py:173
+#: src/warpinator.py:169 src/warpinator.py:171
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Передача отменена %s"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:178
 #, python-format
 msgid "File '%s' not found"
 msgstr "Файл «%s» не найден"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:180
 msgid "Some files not found"
 msgstr "Некоторые файлы не найдены"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:182
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/warpinator.py:186
+#: src/warpinator.py:184
 msgid "Completed, but with errors"
 msgstr "Завершено, но с ошибками"
 
-#: src/warpinator.py:345 src/warpinator.py:1068
+#: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
 msgstr "Соединение"
 
-#: src/warpinator.py:347
+#: src/warpinator.py:345
 #, python-format
 msgid "Connecting to %s"
 msgstr "Соединение с %s"
 
-#: src/warpinator.py:357
+#: src/warpinator.py:355
 #, python-format
 msgid "%s is not online"
 msgstr "%s не в сети"
 
-#: src/warpinator.py:362
+#: src/warpinator.py:360
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Не удалось соединиться с %s"
 
-#: src/warpinator.py:367
+#: src/warpinator.py:365
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Ожидание %s до соединения."
 
-#: src/warpinator.py:396
+#: src/warpinator.py:394
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
@@ -684,39 +679,43 @@ msgstr[0] "%d новая передача"
 msgstr[1] "%d новые передачи"
 msgstr[2] "%d новых передач"
 
-#: src/warpinator.py:537 src/warpinator.py:1682
+#: src/warpinator.py:536 src/warpinator.py:1697
 msgid "Favorites"
 msgstr "Избранные"
 
-#: src/warpinator.py:542 src/warpinator.py:1687
+#: src/warpinator.py:541 src/warpinator.py:1702
 msgid "Recents"
 msgstr "Недавние"
 
-#: src/warpinator.py:549 src/warpinator.py:1696
+#: src/warpinator.py:548 src/warpinator.py:1711
 msgid "Browse..."
 msgstr "Обзор..."
 
-#: src/warpinator.py:568
+#: src/warpinator.py:569
 msgid "Connect manually"
 msgstr "Подключиться вручную"
 
-#: src/warpinator.py:573
+#: src/warpinator.py:574
+msgid "Restart service"
+msgstr "Перезапуск службы"
+
+#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "Настройки"
 
-#: src/warpinator.py:581 src/warpinator.py:1631
+#: src/warpinator.py:589 src/warpinator.py:1646
 msgid "Quit"
 msgstr "Выйти"
 
-#: src/warpinator.py:690
+#: src/warpinator.py:698
 msgid "You don't appear to be connected to a network."
 msgstr "Похоже, что вы не подключены к сети."
 
-#: src/warpinator.py:692
+#: src/warpinator.py:700
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Запуск был неудачным, пожалуйста, проверьте свои логи."
 
-#: src/warpinator.py:792
+#: src/warpinator.py:800
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -726,7 +725,7 @@ msgstr ""
 "минуту(ы). Чтобы включить безопасный режим, выберите исключительный код "
 "группы."
 
-#: src/warpinator.py:794
+#: src/warpinator.py:802
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -735,44 +734,44 @@ msgstr ""
 "Варпинатор запущен с ограниченными возможностями и будет закрыт через %d "
 "минут. Чтобы включить безопасный режим, выберите исключительный код группы."
 
-#: src/warpinator.py:847
+#: src/warpinator.py:857
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 "Осталось недостаточно свободного места для получения файлов (%s "
 "зарезервировано)."
 
-#: src/warpinator.py:926
+#: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "Ожидание завершения %d операции"
 
-#: src/warpinator.py:927
+#: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "Ожидание завершения %d операций"
 
-#: src/warpinator.py:1047
+#: src/warpinator.py:1061
 msgid "Offline"
 msgstr "Не в сети"
 
-#: src/warpinator.py:1054
+#: src/warpinator.py:1068
 msgid "Unable to connect"
 msgstr "Не удаётся установить соединение"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1075
 msgid "Waiting for two-way connection"
 msgstr "Ожидание двусторонней связи"
 
-#: src/warpinator.py:1162
+#: src/warpinator.py:1176
 msgid "Manual connection"
 msgstr "Подключение вручную"
 
-#: src/warpinator.py:1229
+#: src/warpinator.py:1243
 msgid "Connecting..."
 msgstr "Подключение..."
 
-#: src/warpinator.py:1665
+#: src/warpinator.py:1680
 msgid "Send to all"
 msgstr "Отправить всем"
 
@@ -793,19 +792,65 @@ msgid "To modify firewall settings, you need to authenticate."
 msgstr "Для изменения настроек межсетевого экрана необходима аутентификация"
 
 #. DO NOT TRANSLATE Warpinator
-#: data/org.x.Warpinator.appdata.xml.in.in:6
+#: data/org.x.Warpinator.appdata.xml.in.in:10
 msgid "Warpinator"
 msgstr "Warpinator"
 
-#: data/org.x.Warpinator.appdata.xml.in.in:9
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "Обменивайтесь файлами по сети"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
-"network and share files quickly and securely."
+"network and exchange files quickly and securely."
 msgstr ""
-"Warpinator позволяет легко соединять несколько компьютеров в локальной сети "
+"Warpinator позволяет легко соединить несколько компьютеров в локальной сети "
 "и быстро и безопасно обмениваться файлами."
 
-#. DO NOT TRANSLATE Linux Mint
-#: data/org.x.Warpinator.appdata.xml.in.in:27
-msgid "Linux Mint"
-msgstr "Linux Mint"
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "Возможности:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "Простой графический интерфейс."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr "Автоматическое обнаружение устройств в сети."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr "Безопасное зашифрованное соединение между устройствами."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr "Несколько одновременных передач."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr "Возможность сжатия данных при необходимости."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr ""

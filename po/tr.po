@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2023-11-30 16:05+0000\n"
-"PO-Revision-Date: 2023-12-13 17:04+0000\n"
+"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"PO-Revision-Date: 2024-06-13 19:14+0000\n"
 "Last-Translator: Butterfly <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-01-04 14:59+0000\n"
-"X-Generator: Launchpad (build e1eeab5b20e19239bd7d5f36676f7a52988db88b)\n"
+"X-Launchpad-Export-Date: 2024-06-18 17:57+0000\n"
+"X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -39,7 +39,7 @@ msgid "OFF"
 msgstr "KAPALI"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1218
+#: resources/main-window.ui:1202
 msgid "More information"
 msgstr "Daha fazla bilgi"
 
@@ -71,7 +71,7 @@ msgstr "Dosyaları gönder"
 msgid "File Transfers"
 msgstr "Dosya Aktarımları"
 
-#: resources/main-window.ui:631 src/warpinator.py:1040
+#: resources/main-window.ui:631 src/warpinator.py:1054
 msgid "Online"
 msgstr "Çevrimiçi"
 
@@ -113,27 +113,23 @@ msgstr "Warpinator ayrıca şunlarda da kullanılabilir:"
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:931
-msgid "iOS"
-msgstr "iOS"
-
-#: resources/main-window.ui:947 resources/main-window.ui:962
+#: resources/main-window.ui:931 resources/main-window.ui:946
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1036
+#: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
 msgstr "Başlatılıyor, lütfen bekleyin..."
 
-#: resources/main-window.ui:1094
+#: resources/main-window.ui:1078
 msgid "Something went wrong"
 msgstr "Bir şeyler yanlış gitti"
 
-#: resources/main-window.ui:1169
+#: resources/main-window.ui:1153
 msgid "Invalid save location"
 msgstr "Geçersiz kayıt yeri"
 
-#: resources/main-window.ui:1206
+#: resources/main-window.ui:1190
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -141,32 +137,32 @@ msgstr ""
 "Bu dizine erişilemiyor veya dosyaların kaydedilmesi engelli. Lütfen "
 "tercihlerden yeni bir konum seçin ve erişilebilir olduğundan emin olun."
 
-#: resources/main-window.ui:1278
+#: resources/main-window.ui:1262
 msgid "Searching for other computers"
 msgstr "Diğer bilgisayarlar aranıyor"
 
-#: resources/main-window.ui:1337
+#: resources/main-window.ui:1321
 msgid "Shutting down..."
 msgstr "Kapatılıyor..."
 
-#: resources/main-window.ui:1409
+#: resources/main-window.ui:1393
 msgid "Restart required"
 msgstr "Yeniden başlatma gerekiyor"
 
-#: resources/main-window.ui:1426
+#: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Yeni kayıt dizininin kullanılabilmesi için Warpinator yeniden başlatılmalı"
 
-#: resources/main-window.ui:1436
+#: resources/main-window.ui:1420
 msgid "Restart"
 msgstr "Yeniden başlat"
 
-#: resources/main-window.ui:1506
+#: resources/main-window.ui:1490
 msgid "Disk Full"
 msgstr "Disk Dolu"
 
-#: resources/main-window.ui:1543
+#: resources/main-window.ui:1527
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -175,21 +171,20 @@ msgstr ""
 "Kaydetme konumunda yeterli alan yok. Bazı dosyaları silmeniz, tercihlerdeki "
 "minimum boş alanı azaltmanız ya da yeni bir konum seçmeniz gerekiyor."
 
-#: resources/main-window.ui:1560
+#: resources/main-window.ui:1544
 msgid "Empty trash"
 msgstr "Çöpü boşalt"
 
-#: resources/main-window.ui:1574 src/warpinator.py:564 src/warpinator.py:1628
+#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
 msgstr "Kayıt dizinini aç"
 
-#: resources/main-window.ui:1587
+#: resources/main-window.ui:1571
 msgid "Examine disk usage"
 msgstr "Disk kullanımını incele"
 
-#: resources/main-window.ui:1640 src/util.py:776
+#: resources/main-window.ui:1624 src/util.py:774
 #: data/org.x.Warpinator.desktop.in.in:5
-#: data/org.x.Warpinator.appdata.xml.in.in:7
 msgid "Send and Receive Files across the Network"
 msgstr "Ağ Üzerinden Dosya Gönderin ve Alın"
 
@@ -341,7 +336,7 @@ msgstr "%s hedefinden aktarım tamamlandı, ancak hatalar var"
 msgid "The transfer from %s has finished successfully"
 msgstr "%s hedefinden aktarım başarıyla tamamlandı"
 
-#: src/notifications.py:137 src/warpinator.py:175 src/warpinator.py:178
+#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
 msgstr "Aktarım başarısız"
 
@@ -355,7 +350,7 @@ msgstr "%s birimine aktarımda bir sorun oluştu"
 msgid "Something went wrong with the transfer from %s"
 msgstr "%s biriminden aktarımda bir sorun oluştu"
 
-#: src/notifications.py:171 src/warpinator.py:169
+#: src/notifications.py:171 src/warpinator.py:167
 msgid "Transfer cancelled"
 msgstr "Aktarım iptal edildi"
 
@@ -542,171 +537,175 @@ msgstr ""
 msgid "Connection has been lost"
 msgstr "Bağlantı kesildi"
 
-#: src/server.py:650
+#: src/server.py:648
 msgid "An error occurred on the remote machine"
 msgstr "Uzak makinede bir hata oluştu"
 
-#: src/util.py:264
+#: src/util.py:269
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/util.py:265
+#: src/util.py:270
 msgid "Add"
 msgstr "Ekle"
 
-#: src/util.py:287
+#: src/util.py:292
 msgid "Select file(s) to send"
 msgstr "Gönderim için dosya(ları) seçin"
 
-#: src/util.py:665
+#: src/util.py:663
 msgid "A few seconds remaining"
 msgstr "Birkaç saniye kaldı"
 
-#: src/util.py:668
+#: src/util.py:666
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d saniye kaldı"
 
-#: src/util.py:672 src/util.py:680
+#: src/util.py:670 src/util.py:678
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d dakika"
 msgstr[1] "%d dakika"
 
-#: src/util.py:679
+#: src/util.py:677
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d saat"
 msgstr[1] "%d saat"
 
-#: src/util.py:684
+#: src/util.py:682
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "yaklaşık %d saat"
 msgstr[1] "yaklaşık %d saat"
 
-#: src/util.py:772 src/warpinator.py:577
+#: src/util.py:770 src/warpinator.py:585
 msgid "About"
 msgstr "Hakkında"
 
-#: src/warpinator.py:148
+#: src/warpinator.py:146
 msgid "Paused"
 msgstr "Duraklatıldı"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:149
 msgid "Waiting for approval"
 msgstr "Onay bekleniyor"
 
-#: src/warpinator.py:153
+#: src/warpinator.py:151
 msgid "Waiting for your approval"
 msgstr "Onayınız bekleniyor"
 
-#: src/warpinator.py:156
+#: src/warpinator.py:154
 msgid "Not enough disk space"
 msgstr "Yeterli disk alanı yok"
 
-#: src/warpinator.py:159
+#: src/warpinator.py:157
 msgid "Files may be overwritten"
 msgstr "Dosyaların üzerine yazılabilir"
 
-#: src/warpinator.py:162
+#: src/warpinator.py:160
 msgid "Request cancelled"
 msgstr "İstek iptal edildi"
 
-#: src/warpinator.py:164 src/warpinator.py:166
+#: src/warpinator.py:162 src/warpinator.py:164
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "İstek %s tarafından iptal edildi"
 
-#: src/warpinator.py:171 src/warpinator.py:173
+#: src/warpinator.py:169 src/warpinator.py:171
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Aktarım %s tarafından iptal edildi"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:178
 #, python-format
 msgid "File '%s' not found"
 msgstr "'%s' dosyası bulunamadı"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:180
 msgid "Some files not found"
 msgstr "Bazı dosyalar bulunamadı"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:182
 msgid "Completed"
 msgstr "Tamamlandı"
 
-#: src/warpinator.py:186
+#: src/warpinator.py:184
 msgid "Completed, but with errors"
 msgstr "Tamamlandı, ancak hatalar var"
 
-#: src/warpinator.py:345 src/warpinator.py:1068
+#: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
 msgstr "Bağlanıyor"
 
-#: src/warpinator.py:347
+#: src/warpinator.py:345
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s birimine bağlanılıyor"
 
-#: src/warpinator.py:357
+#: src/warpinator.py:355
 #, python-format
 msgid "%s is not online"
 msgstr "%s birimi çevrimiçi değil"
 
-#: src/warpinator.py:362
+#: src/warpinator.py:360
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "%s birimine bağlanılamıyor"
 
-#: src/warpinator.py:367
+#: src/warpinator.py:365
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Bağlantıyı tamamlamak için %s bekleniyor"
 
-#: src/warpinator.py:396
+#: src/warpinator.py:394
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d yeni gelen aktarım"
 msgstr[1] "%d yeni gelen aktarım"
 
-#: src/warpinator.py:537 src/warpinator.py:1682
+#: src/warpinator.py:536 src/warpinator.py:1697
 msgid "Favorites"
 msgstr "Sık kullanılanlar"
 
-#: src/warpinator.py:542 src/warpinator.py:1687
+#: src/warpinator.py:541 src/warpinator.py:1702
 msgid "Recents"
 msgstr "Son dosyalar"
 
-#: src/warpinator.py:549 src/warpinator.py:1696
+#: src/warpinator.py:548 src/warpinator.py:1711
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: src/warpinator.py:568
+#: src/warpinator.py:569
 msgid "Connect manually"
 msgstr "Elle bağlanın"
 
-#: src/warpinator.py:573
+#: src/warpinator.py:574
+msgid "Restart service"
+msgstr "Servisi yeniden başlat"
+
+#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: src/warpinator.py:581 src/warpinator.py:1631
+#: src/warpinator.py:589 src/warpinator.py:1646
 msgid "Quit"
 msgstr "Çıkış"
 
-#: src/warpinator.py:690
+#: src/warpinator.py:698
 msgid "You don't appear to be connected to a network."
 msgstr "Bir ağa bağlı görünmüyorsunuz."
 
-#: src/warpinator.py:692
+#: src/warpinator.py:700
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Başlatma başarısız oldu, lütfen günlüklerinizi kontrol ediniz."
 
-#: src/warpinator.py:792
+#: src/warpinator.py:800
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -715,7 +714,7 @@ msgstr ""
 "Warpinator sınırlı işlevsellikle çalışıyor ve %d dakika içinde kapanacak. "
 "Güvenli Kipi etkinleştirmek için benzersiz bir grup kodu ayarlayın."
 
-#: src/warpinator.py:794
+#: src/warpinator.py:802
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -724,42 +723,42 @@ msgstr ""
 "Warpinator sınırlı işlevsellikle çalışıyor ve %d dakika içinde kapanacak. "
 "Güvenli Kipi etkinleştirmek için benzersiz bir grup kodu ayarlayın."
 
-#: src/warpinator.py:847
+#: src/warpinator.py:857
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr "Dosyaları almak için yeterli disk alanı kalmadı (%s ayrılmış)."
 
-#: src/warpinator.py:926
+#: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "%d işlemin tamamlanması bekleniyor"
 
-#: src/warpinator.py:927
+#: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "%d işlemin tamamlanması bekleniyor"
 
-#: src/warpinator.py:1047
+#: src/warpinator.py:1061
 msgid "Offline"
 msgstr "Çevrimdışı"
 
-#: src/warpinator.py:1054
+#: src/warpinator.py:1068
 msgid "Unable to connect"
 msgstr "Bağlanılamıyor"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1075
 msgid "Waiting for two-way connection"
 msgstr "İki yönlü bağlantı bekleniyor"
 
-#: src/warpinator.py:1162
+#: src/warpinator.py:1176
 msgid "Manual connection"
 msgstr "Elle bağlantı"
 
-#: src/warpinator.py:1229
+#: src/warpinator.py:1243
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
-#: src/warpinator.py:1665
+#: src/warpinator.py:1680
 msgid "Send to all"
 msgstr "Tümüne gönder"
 
@@ -781,19 +780,63 @@ msgstr ""
 "Güvenlik duvarı ayarlarını değiştirmek için, kimlik doğrulaması gerekiyor."
 
 #. DO NOT TRANSLATE Warpinator
-#: data/org.x.Warpinator.appdata.xml.in.in:6
+#: data/org.x.Warpinator.appdata.xml.in.in:10
 msgid "Warpinator"
 msgstr "Warpinator"
 
-#: data/org.x.Warpinator.appdata.xml.in.in:9
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "Ağınızda dosyalar paylaşın"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
-"network and share files quickly and securely."
+"network and exchange files quickly and securely."
 msgstr ""
-"Warpinator, yerel bir ağdaki birden çok bilgisayara kolayca bağlanarak, "
-"dosyaları hızlı ve güvenli bir şekilde paylaşmanızı sağlar."
 
-#. DO NOT TRANSLATE Linux Mint
-#: data/org.x.Warpinator.appdata.xml.in.in:27
-msgid "Linux Mint"
-msgstr "Linux Mint"
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "Özellikler:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "Kolay kullanımlı  bir grafik arayüz"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr ""
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr "Elle bağlantı penceresi"
