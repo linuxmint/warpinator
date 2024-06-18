@@ -1,3 +1,9 @@
+warpinator (1.8.5) wilma; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 18 Jun 2024 20:56:58 +0100
+
 warpinator (1.8.4) wilma; urgency=medium
 
   [ Butterfly ]
