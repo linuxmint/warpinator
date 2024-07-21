@@ -1,3 +1,9 @@
+warpinator (1.8.6) wilma; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 21 Jul 2024 10:42:34 +0100
+
 warpinator (1.8.5) wilma; urgency=medium
 
   * l10n: Update translations
