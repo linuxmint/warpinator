@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-06-17 12:01+0000\n"
-"Last-Translator: Kimmo Kujansuu <Unknown>\n"
+"PO-Revision-Date: 2024-07-09 07:32+0000\n"
+"Last-Translator: Hiiri522 <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-06-18 17:57+0000\n"
+"X-Launchpad-Export-Date: 2024-07-21 09:03+0000\n"
 "X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -37,7 +37,7 @@ msgstr "Suojattu tila:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr "OFF"
+msgstr "Pois"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1202
@@ -50,11 +50,11 @@ msgstr "Suojattu tila pois käytöstä"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr "Latauskansio ei ole suojattu"
+msgstr "Latauskansiota ei ole suojattu"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr "Ei vastaavia tuloksia"
+msgstr "Ei täsmääviä tuloksia"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-06-12 16:24+0000\n"
-"Last-Translator: Dragone2 <Unknown>\n"
+"PO-Revision-Date: 2024-07-13 19:02+0000\n"
+"Last-Translator: lang-it <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-06-18 17:57+0000\n"
+"X-Launchpad-Export-Date: 2024-07-21 09:03+0000\n"
 "X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -108,7 +108,7 @@ msgstr "Possibili soluzioni:"
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr "Warpinator è anche disponibile su:"
+msgstr "Warpinator è disponibile anche per:"
 
 #: resources/main-window.ui:915
 msgid "Android"
@@ -135,8 +135,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"Questa cartella è inaccessibile o è vietato salvarci file. Seleziona una "
-"nuova posizione in Preferenze e assicurati che sia accessibile."
+"Questa cartella è inaccessibile o non ci sono i permessi per salvarci file. "
+"Seleziona una nuova posizione in Preferenze e assicurati che sia accessibile."
 
 #: resources/main-window.ui:1262
 msgid "Searching for other computers"
@@ -153,8 +153,8 @@ msgstr "Riavvio richiesto"
 #: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
-"Warpinator deve essere riavviato prima che la nuova directory di salvataggio "
-"possa essere utilizzata"
+"Warpinator deve essere riavviato affinché la nuova cartella di salvataggio "
+"possa essere usata"
 
 #: resources/main-window.ui:1420
 msgid "Restart"
