@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-06-21 10:56+0000\n"
-"Last-Translator: Anthony Guechoum <a.guechoum@gmail.com>\n"
+"PO-Revision-Date: 2024-07-23 09:28+0000\n"
+"Last-Translator: Anthony Guechoum <a.guechoum@proton.me>\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2024-07-21 09:03+0000\n"
-"X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
+"X-Launchpad-Export-Date: 2024-12-05 10:19+0000\n"
+"X-Generator: Launchpad (build 1519c6efe8e9bd78e6c5ebf2eb5bcb040b95ad32)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr ""
+msgstr "Kod ar strollad"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
@@ -28,15 +28,15 @@ msgstr ""
 
 #: resources/group-code.ui:49 resources/main-window.ui:51
 msgid "Set code"
-msgstr ""
+msgstr "Kefluniañ ar c'hod"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Mode diarvar:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "Diweredekaet"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1202
@@ -45,7 +45,7 @@ msgstr "Muioc'h a ditouroù"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Mod diarvar diweredekaet"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr ""
+msgstr "Disoc'h ebet"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
@@ -77,7 +77,7 @@ msgstr "Enlinenn"
 
 #: resources/main-window.ui:751
 msgid "No other computers found..."
-msgstr ""
+msgstr "Urzhiataer all ebet bet kavet..."
 
 #: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
@@ -115,15 +115,15 @@ msgstr "Windows"
 
 #: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "O teraouekaat, gortozit mar plij…"
 
 #: resources/main-window.ui:1078
 msgid "Something went wrong"
-msgstr ""
+msgstr "Ur gudenn a zo bet"
 
 #: resources/main-window.ui:1153
 msgid "Invalid save location"
-msgstr ""
+msgstr "Lec'hiadur enrollañ didalvoudek"
 
 #: resources/main-window.ui:1190
 msgid ""
@@ -133,7 +133,7 @@ msgstr ""
 
 #: resources/main-window.ui:1262
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Klask urzhiataerioù all"
 
 #: resources/main-window.ui:1321
 msgid "Shutting down..."
@@ -141,7 +141,7 @@ msgstr "O lazhañ..."
 
 #: resources/main-window.ui:1393
 msgid "Restart required"
-msgstr ""
+msgstr "Ret eo adloc'hañ"
 
 #: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
@@ -149,7 +149,7 @@ msgstr ""
 
 #: resources/main-window.ui:1420
 msgid "Restart"
-msgstr ""
+msgstr "Adloc'hañ"
 
 #: resources/main-window.ui:1490
 msgid "Disk Full"
@@ -168,7 +168,7 @@ msgstr "Goullonderiñ al lastez"
 
 #: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
-msgstr ""
+msgstr "Digeriñ an teuliad enrolliñ"
 
 #: resources/main-window.ui:1571
 msgid "Examine disk usage"
@@ -201,16 +201,16 @@ msgstr ""
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "C'hwilervit ar c'hod QR-mañ"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Pe kennaskit d'ar chomlec'h amañ da heul:"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr ""
+msgstr "O c'hortoz an asant"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
@@ -218,43 +218,43 @@ msgstr ""
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr ""
+msgstr "O jediñ"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr ""
+msgstr "Asantiñ an azgoulenn-mañ"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr ""
+msgstr "Nac'hañ an azgoulenn-mañ"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr ""
+msgstr "Nullañ an azgoulenn-mañ"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr ""
+msgstr "Adlañsañ ar gwezhiadur-mañ"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr ""
+msgstr "Ehanañ ar gwezhiadur-mañ"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr ""
+msgstr "Kenderc'hel gant ar gwezhiadur-mañ"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr ""
+msgstr "Nullañ ar gwezhiadur-mañ"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Dilemel ar gwezhiadur-mañ diouzh al listenn"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Digeriñ an teuliad a endalc'h ar restr"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -264,7 +264,7 @@ msgstr ""
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Gwellvezioù Warpinator"
 
 #: src/notifications.py:24
 msgid "New incoming files"
@@ -302,12 +302,12 @@ msgstr "Emañ %(sender_name)s o kas %(file_count)d restr deoc'h"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Treuzkas echu"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Echu eo an treuzkas da %s, met fazioù a zo bet"
 
 #: src/notifications.py:98
 #, python-format
@@ -317,7 +317,7 @@ msgstr ""
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Echu eo an treuzkas diouzh %s, met fazioù a zo bet"
 
 #: src/notifications.py:103
 #, python-format
@@ -326,7 +326,7 @@ msgstr ""
 
 #: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
-msgstr ""
+msgstr "C'hwitadenn en ur treuzkas"
 
 #: src/notifications.py:140
 #, python-format
@@ -345,7 +345,7 @@ msgstr "Nullet eo be an treuzkas"
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "Nullet eo bet ho treuzkas da %s"
 
 #: src/notifications.py:176
 #, python-format
@@ -369,7 +369,7 @@ msgstr "O kas '%s' da %s"
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/eil)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:154
@@ -389,7 +389,7 @@ msgstr[1] "%d restr"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Gwellvezioù Warpinator"
 
 #: src/prefs.py:293
 msgid "General"
@@ -444,7 +444,7 @@ msgstr ""
 
 #: src/prefs.py:343
 msgid "Connection"
-msgstr ""
+msgstr "Kennask"
 
 #: src/prefs.py:353
 msgid "Network"
@@ -458,7 +458,7 @@ msgstr "Emgefreek"
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "%s - n'eo ket bet kavet"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
@@ -496,11 +496,11 @@ msgstr ""
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "Re verr eo ar c'hod strollad."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "Gweredekaet"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
@@ -514,7 +514,7 @@ msgstr ""
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Kollet eo bet ar c'hennask"
 
 #: src/server.py:648
 msgid "An error occurred on the remote machine"
@@ -539,7 +539,7 @@ msgstr ""
 #: src/util.py:666
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d eilenn a chom"
 
 #: src/util.py:670 src/util.py:678
 #, python-format
@@ -588,17 +588,17 @@ msgstr ""
 
 #: src/warpinator.py:160
 msgid "Request cancelled"
-msgstr ""
+msgstr "Azgoulenn nullet"
 
 #: src/warpinator.py:162 src/warpinator.py:164
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "Azgoulenn nullet gant %s"
 
 #: src/warpinator.py:169 src/warpinator.py:171
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "Treuzkas nullet gant %s"
 
 #: src/warpinator.py:178
 #, python-format
@@ -607,11 +607,11 @@ msgstr "N'eo ket bet kavet ar restr '%s'"
 
 #: src/warpinator.py:180
 msgid "Some files not found"
-msgstr ""
+msgstr "Restroù zo n'int ket bet kavet"
 
 #: src/warpinator.py:182
 msgid "Completed"
-msgstr ""
+msgstr "Echu"
 
 #: src/warpinator.py:184
 msgid "Completed, but with errors"
@@ -650,7 +650,7 @@ msgstr[1] ""
 
 #: src/warpinator.py:536 src/warpinator.py:1697
 msgid "Favorites"
-msgstr ""
+msgstr "Ma re well ganin"
 
 #: src/warpinator.py:541 src/warpinator.py:1702
 msgid "Recents"
@@ -658,7 +658,7 @@ msgstr ""
 
 #: src/warpinator.py:548 src/warpinator.py:1711
 msgid "Browse..."
-msgstr ""
+msgstr "Furchal..."
 
 #: src/warpinator.py:569
 msgid "Connect manually"
@@ -666,11 +666,11 @@ msgstr ""
 
 #: src/warpinator.py:574
 msgid "Restart service"
-msgstr ""
+msgstr "Adloc'hañ ar servij"
 
 #: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
-msgstr ""
+msgstr "Gwellvezioù"
 
 #: src/warpinator.py:589 src/warpinator.py:1646
 msgid "Quit"

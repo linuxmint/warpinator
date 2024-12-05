@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-07-09 07:32+0000\n"
-"Last-Translator: Hiiri522 <Unknown>\n"
+"PO-Revision-Date: 2024-12-04 14:17+0000\n"
+"Last-Translator: Kimmo Kujansuu <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-07-21 09:03+0000\n"
-"X-Generator: Launchpad (build bbfa2351d9d6a9ddfe262109428f7bf5516e65d1)\n"
+"X-Launchpad-Export-Date: 2024-12-05 10:19+0000\n"
+"X-Generator: Launchpad (build 1519c6efe8e9bd78e6c5ebf2eb5bcb040b95ad32)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -58,7 +58,7 @@ msgstr "Ei täsmääviä tuloksia"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Tee tästä etäkoneesta päänäkymään suosikki"
+msgstr "Tee tästä etäkoneesta suosikki päänäkymään"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
@@ -82,7 +82,7 @@ msgstr "Muita tietokoneita ei löytynyt..."
 
 #: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
-msgstr "Varmista, että verkkoyhteys on aktiivinen."
+msgstr "Varmista, että verkkoyhteytesi on päällä ja toimii."
 
 #: resources/main-window.ui:831
 msgid ""
@@ -108,7 +108,7 @@ msgstr "Mahdollisia ratkaisuja:"
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr "Waspinator on saatavilla myös:"
+msgstr "Warpinatorin voi asentaa myös:"
 
 #: resources/main-window.ui:915
 msgid "Android"
@@ -116,7 +116,7 @@ msgstr "Android"
 
 #: resources/main-window.ui:931 resources/main-window.ui:946
 msgid "Windows"
-msgstr "Windows"
+msgstr "MS Windows"
 
 #: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
@@ -124,7 +124,7 @@ msgstr "Valmistellaan, odota..."
 
 #: resources/main-window.ui:1078
 msgid "Something went wrong"
-msgstr "Jotain meni pieleen"
+msgstr "Jokin meni pieleen"
 
 #: resources/main-window.ui:1153
 msgid "Invalid save location"
@@ -148,7 +148,7 @@ msgstr "Sammutetaan..."
 
 #: resources/main-window.ui:1393
 msgid "Restart required"
-msgstr "Tarvitaan käynnistys"
+msgstr "Uudelleenkäynnistys tarvitaan"
 
 #: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
@@ -158,7 +158,7 @@ msgstr ""
 
 #: resources/main-window.ui:1420
 msgid "Restart"
-msgstr "Käynnistys"
+msgstr "Käynnistä uudelleen"
 
 #: resources/main-window.ui:1490
 msgid "Disk Full"
@@ -207,7 +207,7 @@ msgstr "Yhdistä"
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr "Vaihtoehtoisesti toinen kone:"
+msgstr "Vaihtoehtoisesti, toisella tietokoneella:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
@@ -225,7 +225,7 @@ msgstr "Odotetaan hyväksyntää"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Levytila ei riitä!"
+msgstr "Vapaata levytilaa ei ole riittävästi!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
@@ -275,7 +275,7 @@ msgstr "Huomio portin numeroista:"
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Warpinator asetukset"
+msgstr "Warpinatorin asetukset"
 
 #: src/notifications.py:24
 msgid "New incoming files"
@@ -300,7 +300,7 @@ msgstr "Hyväksy"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr "Kieltäydy"
+msgstr "Hylkää"
 
 #: src/notifications.py:56
 #, python-format
@@ -315,12 +315,12 @@ msgstr "%(sender_name)s lähettää sinulle %(file_count)d tiedostoa"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Siirto valmis"
+msgstr "Tiedostonsiirto valmis"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr "Siirto %s on valmis, mutta siinä on virheitä"
+msgstr "Tiedostonsiirto %s on valmis, mutta tapahtui virheitä"
 
 #: src/notifications.py:98
 #, python-format
@@ -339,7 +339,7 @@ msgstr "Siirto kohteesta %s onnistui"
 
 #: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
-msgstr "Siirto epäonnistui"
+msgstr "Tiedostonsiirto epäonnistui"
 
 #: src/notifications.py:140
 #, python-format
@@ -402,15 +402,15 @@ msgstr[1] "%d tiedostoa"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
-msgstr "Warpinator asetukset"
+msgstr "Warpinatorin asetukset"
 
 #: src/prefs.py:293
 msgid "General"
-msgstr "Yleiset"
+msgstr "Yleiset asetukset"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr "Työpöytä"
+msgstr "Pöytä"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"
@@ -426,7 +426,7 @@ msgstr "Käynnistä automaattisesti"
 
 #: src/prefs.py:313
 msgid "Use compression when possible."
-msgstr "Käytä pakkausta aina kun mahdollista."
+msgstr "Käytä tiedostojen pakkausta aina, kun se on mahdollista."
 
 #: src/prefs.py:315
 msgid ""
@@ -449,13 +449,13 @@ msgstr "Vaadi lupa ennen tiedostojen hyväksymistä"
 
 #: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
-msgstr "Vaadi lupa ennen kuin tiedostoja korvataan"
+msgstr "Vaadi lupa tiedostojen ylikirjoittamiseen"
 
 #: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Ilmoitus, kun joku lähettää (tai yrittää lähettää) sinulle tiedostoja"
+"Ilmoita minulle, kun joku lähettää tai yrittää lähettää minulle tiedostoja"
 
 #: src/prefs.py:343
 msgid "Connection"
@@ -518,7 +518,7 @@ msgstr "Ryhmäkoodi on liian lyhyt."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr "ON"
+msgstr "PÄÄLLÄ"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
@@ -542,7 +542,7 @@ msgstr "Etäkoneessa tapahtui virhe"
 
 #: src/util.py:269
 msgid "Cancel"
-msgstr "Peru"
+msgstr "Peruuta"
 
 #: src/util.py:270
 msgid "Add"
@@ -550,7 +550,7 @@ msgstr "Lisää"
 
 #: src/util.py:292
 msgid "Select file(s) to send"
-msgstr "Valitse lähetettävät tiedostot"
+msgstr "Valitse lähetettävä(t) tiedosto(t)"
 
 #: src/util.py:663
 msgid "A few seconds remaining"
@@ -592,15 +592,15 @@ msgstr "Pysäytetty"
 
 #: src/warpinator.py:149
 msgid "Waiting for approval"
-msgstr "Odottaa hyväksyntää"
+msgstr "Odotetaan hyväksyntää"
 
 #: src/warpinator.py:151
 msgid "Waiting for your approval"
-msgstr "Odottaa hyväksyntääsi"
+msgstr "Odotetaan sinun hyväksyntääsi"
 
 #: src/warpinator.py:154
 msgid "Not enough disk space"
-msgstr "Levytila ei riitä"
+msgstr "Levytilaa ei ole riittävästi"
 
 #: src/warpinator.py:157
 msgid "Files may be overwritten"
@@ -635,7 +635,7 @@ msgstr "Valmis"
 
 #: src/warpinator.py:184
 msgid "Completed, but with errors"
-msgstr "Valmis, mutta virheitä"
+msgstr "Valmis, mutta virheitä tapahtui"
 
 #: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
@@ -730,12 +730,12 @@ msgstr "Levytila ei riitä tiedostojen vastaanottamiseen (%s on varattu)."
 #: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr "Odotetaan %d toiminnon valmistumista"
+msgstr "Odotetaan toiminnon %d valmistumista"
 
 #: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr "Odotetaan %d toimintojen valmistumista"
+msgstr "Odotetaan toimintojen %d valmistumista"
 
 #: src/warpinator.py:1061
 msgid "Offline"
@@ -743,7 +743,7 @@ msgstr "Poissa"
 
 #: src/warpinator.py:1068
 msgid "Unable to connect"
-msgstr "Ei yhteyttä"
+msgstr "Ei verkkoyhteyttä"
 
 #: src/warpinator.py:1075
 msgid "Waiting for two-way connection"
@@ -771,7 +771,7 @@ msgstr "Lähetä tiedosto Warpinatorilla"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Avaa Warpinatorille palomuurista portti"
+msgstr "Avaa palomuuriportti Warpinatorille"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
@@ -800,7 +800,7 @@ msgstr "Ominaisuudet:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr "Helppo käyttöliittymä."
+msgstr "Helppokäyttöinen graafinen käyttöliittymä."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
@@ -832,7 +832,7 @@ msgstr "Manuaaliset yhteydet rajoitettuihin verkkoihin."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
-msgstr "Päänäkymä, jossa näkyv yhdistetyt tietokoneet ja niiden tila"
+msgstr "Päänäkymä, jossa näkyvät yhdistetyt tietokoneet ja niiden tilat."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
