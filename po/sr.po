@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2022-08-08 03:49+0000\n"
+"PO-Revision-Date: 2024-12-21 14:34+0000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2024-12-05 10:19+0000\n"
-"X-Generator: Launchpad (build 1519c6efe8e9bd78e6c5ebf2eb5bcb040b95ad32)\n"
+"X-Launchpad-Export-Date: 2025-01-06 12:01+0000\n"
+"X-Generator: Launchpad (build 6394e03793719e8d73f5a60b5439440e693c92f1)\n"
 "Language: sr\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -34,24 +34,24 @@ msgstr "Постави шифру"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Безбедни режим:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "ИСКЉ"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1202
 msgid "More information"
-msgstr ""
+msgstr "Још података"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Безбедни режим је искључен"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Фасцикла пеузимања није безбедна"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
@@ -136,6 +136,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Овој фасцикли се не може приступити или је забрањено чување датотека у њој. "
+"Изаберите ново место у поставкама и уверите се да јој се може приступити."
 
 #: resources/main-window.ui:1262
 msgid "Searching for other computers"
@@ -147,19 +149,21 @@ msgstr "Гасим..."
 
 #: resources/main-window.ui:1393
 msgid "Restart required"
-msgstr ""
+msgstr "Потребно је поновно покретање"
 
 #: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Варпинатор треба поново да се покрене пре него што нов директоријум чувања "
+"може да се користи"
 
 #: resources/main-window.ui:1420
 msgid "Restart"
-msgstr ""
+msgstr "Поново покрени"
 
 #: resources/main-window.ui:1490
 msgid "Disk Full"
-msgstr ""
+msgstr "Диск је пун"
 
 #: resources/main-window.ui:1527
 msgid ""
@@ -167,10 +171,13 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Нема довољно слободног доступног простора у месту за чување. Треба да "
+"обришете неке датотеке, смањите најмањи слободни простор у поставкама или да "
+"изаберете ново место."
 
 #: resources/main-window.ui:1544
 msgid "Empty trash"
-msgstr ""
+msgstr "Испразни смеће"
 
 #: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
@@ -178,7 +185,7 @@ msgstr "Отвори фасциклу чувања"
 
 #: resources/main-window.ui:1571
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Испитај искоришћеност диска"
 
 #: resources/main-window.ui:1624 src/util.py:774
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -188,31 +195,31 @@ msgstr "Шаљите и примајте датотеке путем мреже"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "На овом рачунару:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Унесите адресу уређаја на који желите да се повежете"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Повежи се"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Или, на други уређај:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Скенирај овај QR код"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Или се повежите на адресу испод"
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
@@ -313,7 +320,7 @@ msgstr "Пренос је завршен"
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Пренос на „%s“ је завршен, али са грешкама"
 
 #: src/notifications.py:98
 #, python-format
@@ -323,7 +330,7 @@ msgstr "Пренос до „%s“ је успешно завршен"
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Пренос са „%s“ је завршен, али са грешкама"
 
 #: src/notifications.py:103
 #, python-format
@@ -360,17 +367,17 @@ msgstr "Долазни пренос од „%s“ је отказан"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Шаљем датотеке"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Шаљем %d датотеке на „%s“"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Шаљем „%s“ на „%s“"
 
 #: src/ops.py:53
 #, python-format
@@ -437,7 +444,7 @@ msgstr "Место за примљене датотеке"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Резервисан слободан простор"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
@@ -501,7 +508,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Доступно само у безбедном режиму."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -509,21 +516,23 @@ msgstr "Шифра групе се захтева."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "Код групе је прекратак."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "УКЉ"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Све опције су откључане."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Треба да поставите произвољан код групе за рад у безбедном режиму. Неке "
+"опције су тренутно искључене."
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
@@ -631,7 +640,7 @@ msgstr "Завршено"
 
 #: src/warpinator.py:184
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Завршено, али са грешкама"
 
 #: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
@@ -679,11 +688,11 @@ msgstr "Разгледај..."
 
 #: src/warpinator.py:569
 msgid "Connect manually"
-msgstr ""
+msgstr "Повежи ручно"
 
 #: src/warpinator.py:574
 msgid "Restart service"
-msgstr ""
+msgstr "Поново покрени услугу"
 
 #: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
@@ -707,6 +716,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Варпинатор ради са ограниченим могућностима, и изаћи ће за %d минут. Да "
+"укључите безбедни режим, поставите јединствени код групе."
 
 #: src/warpinator.py:802
 #, python-format
@@ -714,21 +725,25 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Варпинатор ради са ограниченим могућностима, и изаћи ће за %d минута. Да "
+"укључите безбедни режим, поставите јединствени код групе."
 
 #: src/warpinator.py:857
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
+"Није преостало довољно простора на диску за примање датотека („%s“ је "
+"резервисано)."
 
 #: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Чекам да се заврши %d радња"
 
 #: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Чекам да се заврше %d радње"
 
 #: src/warpinator.py:1061
 msgid "Offline"
@@ -744,11 +759,11 @@ msgstr "Чекам на везу два начина"
 
 #: src/warpinator.py:1176
 msgid "Manual connection"
-msgstr ""
+msgstr "Ручно повезивањее"
 
 #: src/warpinator.py:1243
 msgid "Connecting..."
-msgstr ""
+msgstr "Повезујем се..."
 
 #: src/warpinator.py:1680
 msgid "Send to all"
@@ -756,11 +771,11 @@ msgstr "Пошаљи свима"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Пошаљи Варпинатором"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Пошаљите датотеку некоме помоћу Варпинатора"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
@@ -777,57 +792,62 @@ msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr ""
+msgstr "Делите датотеке на вашој мрежи"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and exchange files quickly and securely."
 msgstr ""
+"Варпинатор вам омогућава да лако повежете више рачунара у локалној мрежи и "
+"да размењујете датотеке брзо и безбедно."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr ""
+msgstr "Могућности:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr ""
+msgstr "Графичко сучеље лако за коришћење."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
-msgstr ""
+msgstr "Самостално откривање уређаја на вашој мрежи."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr ""
+msgstr "Потпуно безбедне и шифроване везе између уређаја."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
-msgstr ""
+msgstr "Више истовремених преноса."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:20
 msgid "Optional data compression."
-msgstr ""
+msgstr "По избору сажимање података."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:21
 msgid ""
 "Grouping of devices using a shared key, with multiple groups possible on the "
 "same network."
 msgstr ""
+"Груписање уређаја коришћењем дељеног кључа, са више група могућих на истој "
+"мрежи."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:22
 msgid "Manual connections for restricted network environments."
-msgstr ""
+msgstr "Ручна повезивања за ограничена мрежна окружења."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
-msgstr ""
+msgstr "Главни преглед који показује повезане уређаје њихова стања"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
 msgstr ""
+"Неисправна страница везе показује појединачне долазне или одлазне преносе"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr ""
+msgstr "Прозорче ручног повезивања"

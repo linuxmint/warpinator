@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-12-04 14:17+0000\n"
-"Last-Translator: Kimmo Kujansuu <Unknown>\n"
+"PO-Revision-Date: 2025-01-06 07:02+0000\n"
+"Last-Translator: Hiiri522 <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2024-12-05 10:19+0000\n"
-"X-Generator: Launchpad (build 1519c6efe8e9bd78e6c5ebf2eb5bcb040b95ad32)\n"
+"X-Launchpad-Export-Date: 2025-01-06 12:01+0000\n"
+"X-Generator: Launchpad (build 6394e03793719e8d73f5a60b5439440e693c92f1)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -42,7 +42,7 @@ msgstr "Pois"
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1202
 msgid "More information"
-msgstr "Lisätietoja"
+msgstr "Lisätietoa"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
@@ -58,7 +58,7 @@ msgstr "Ei täsmääviä tuloksia"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Tee tästä etäkoneesta suosikki päänäkymään"
+msgstr "Lisää tämä etäkone suosikiksi päänäkymään"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
