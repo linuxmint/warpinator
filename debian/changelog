@@ -1,3 +1,9 @@
+warpinator (1.8.8) xia; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 06 Jan 2025 14:16:03 +0000
+
 warpinator (1.8.7) xia; urgency=medium
 
   * l10n: Update translations
