@@ -522,6 +522,8 @@ class WarpWindow(GObject.Object):
         self.user_ip_label = self.builder.get_object("user_ip")
         self.user_op_list = self.builder.get_object("user_op_list")
         self.user_send_button = self.builder.get_object("user_send_button")
+        self.user_send_msg_button = self.builder.get_object("user_send_msg_button")
+        self.user_send_msg_button.connect("clicked", self.send_msg_button_clicked)
         self.user_online_box = self.builder.get_object("user_online_box")
         self.user_online_image = self.builder.get_object("user_online_image")
         self.user_online_label = self.builder.get_object("user_online_label")
@@ -752,6 +754,9 @@ class WarpWindow(GObject.Object):
     def favorite_selected(self, favorites, uri):
         self.current_selected_remote_machine.send_files([uri])
 
+    def send_msg_button_clicked(self, button):
+        SendMessageDialog(self).show()
+
     def open_file_picker(self, button, data=None):
         dialog = util.create_file_and_folder_picker(self.window)
 
@@ -864,6 +869,9 @@ class WarpWindow(GObject.Object):
     @GObject.Signal(arg_types=(str,))
     def manual_connect_to_host(self, host):
         logging.debug("Connecting to " + host)
+
+    def send_text_message(self, message):
+        self.current_selected_remote_machine.send_text_message(message)
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
@@ -1069,6 +1077,7 @@ class WarpWindow(GObject.Object):
                                             (entry,),
                                             Gdk.DragAction.COPY)
             self.user_send_button.set_sensitive(True)
+            self.user_send_msg_button.set_sensitive(True)
             self.user_online_label.set_text(_("Online"))
             self.user_online_image.set_from_icon_name(ICON_ONLINE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1076,6 +1085,7 @@ class WarpWindow(GObject.Object):
         elif remote_machine.status == RemoteStatus.OFFLINE:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Offline"))
             self.user_online_image.set_from_icon_name(ICON_OFFLINE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1083,6 +1093,7 @@ class WarpWindow(GObject.Object):
         elif remote_machine.status == RemoteStatus.UNREACHABLE:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Unable to connect"))
             self.user_online_image.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1090,6 +1101,7 @@ class WarpWindow(GObject.Object):
         elif remote_machine.status == RemoteStatus.AWAITING_DUPLEX:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Waiting for two-way connection"))
             self.user_online_image.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1097,6 +1109,7 @@ class WarpWindow(GObject.Object):
         else:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Connecting"))
             self.user_online_image.hide()
             self.user_online_spinner.show()
@@ -1309,6 +1322,49 @@ class ManualConnectDialog(Gtk.Window):
             self.connect_button.set_sensitive(True)
         except:
             self.connect_button.set_sensitive(False)
+
+class SendMessageDialog(Gtk.Window):
+    def __init__(self, parent:WarpWindow):
+        super().__init__(title=_("Send message"), transient_for=parent.window, modal=True, resizable=False)
+        self.parent = parent
+
+        self.set_default_size(300, 100)
+        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        self.add(vbox)
+
+        scrollView = Gtk.ScrolledWindow()
+        scrollView.set_size_request(300, 50)
+        scrollView.set_shadow_type(Gtk.ShadowType.OUT)
+        vbox.add(scrollView)
+        
+        self.textView = Gtk.TextView()
+        self.textView.set_editable(True)
+        self.textView.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+        scrollView.add(self.textView)
+
+        btnClose = Gtk.Button(_("Cancel"))
+        btnClose.connect("clicked", lambda _ : self.close())
+        btnSend = Gtk.Button(_("Send"))
+        btnSend.connect("clicked", self.send_clicked)
+        btnBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        btnBox.pack_end(btnSend, False, False, 0)
+        btnBox.pack_end(btnClose, False, False, 0)
+        vbox.add(btnBox)
+
+        vbox.set_margin_bottom(10)
+        vbox.set_margin_top(10)
+        vbox.set_margin_left(10)
+        vbox.set_margin_right(10)
+        self.show_all()
+    
+    def send_clicked(self, btn):
+        buf = self.textView.get_buffer()
+        buf_s, buf_e = buf.get_bounds()
+        self.parent.send_text_message(buf.get_text(buf_s, buf_e, False))
+        self.close()
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):

@@ -300,3 +300,6 @@ class TextMessageOp(CommonOp):
 
     def remove_transfer(self):
         self.emit("op-command", OpCommand.REMOVE_TRANSFER)
+    
+    def retry_transfer(self):
+        self.emit("op-command", OpCommand.RETRY_TRANSFER)
