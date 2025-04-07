@@ -29,7 +29,7 @@ import prefs
 import util
 import misc
 import transfers
-from ops import ReceiveOp
+from ops import ReceiveOp, TextMessageOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
 import zeroconf
@@ -710,5 +710,22 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 op.set_status(OpStatus.STOPPED_BY_SENDER)
             else:
                 op.set_status(OpStatus.FAILED)
+
+        return void
+
+    def SendTextMessage(self, request, context):
+        logging.debug("Server RPC: SendTextMessage from '%s'" % request.ident)
+        try:
+            remote_machine:remote.RemoteMachine = self.remote_machines[request.ident]
+        except KeyError as e:
+            logging.warning("Received text message from unknown remote: %s" % e)
+            return
+        
+        op = TextMessageOp(TransferDirection.FROM_REMOTE_MACHINE, request.ident)
+        op.sender_name = remote_machine.display_name
+        op.message = request.message
+        op.status = OpStatus.FINISHED
+        remote_machine.add_op(op)
+        op.send_notification()
 
         return void

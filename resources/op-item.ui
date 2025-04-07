@@ -51,6 +51,12 @@
     <property name="halign">center</property>
     <property name="icon_name">xsi-list-remove-symbolic</property>
   </object>
+  <object class="GtkImage" id="image11">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">center</property>
+    <property name="icon_name">edit-copy-symbolic</property>
+  </object>
   <object class="GtkBox" id="op_item">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -139,8 +145,10 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Awaiting approval</property>
                     <property name="wrap">True</property>
+                    <property name="ellipsize">end</property>
                     <property name="width_chars">30</property>
                     <property name="max_width_chars">30</property>
+                    <property name="lines">4</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -384,6 +392,21 @@
             <property name="expand">False</property>
             <property name="fill">False</property>
             <property name="position">8</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="transfer_copy_message">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Copy message</property>
+            <property name="valign">center</property>
+            <property name="image">image11</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">9</property>
           </packing>
         </child>
         <style>

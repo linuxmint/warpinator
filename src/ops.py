@@ -4,7 +4,7 @@ import gettext
 import logging
 from pathlib import Path
 
-from gi.repository import GObject, GLib, Gio
+from gi.repository import GObject, GLib, Gio, Gtk, Gdk
 
 import grpc
 
@@ -283,3 +283,20 @@ class ReceiveOp(CommonOp):
     def remove_transfer(self):
         self.emit("op-command", OpCommand.REMOVE_TRANSFER)
 
+class TextMessageOp(CommonOp):
+    message = None
+
+    def __init__(self, direction, sender):
+        super(TextMessageOp, self).__init__(direction, sender)
+        self.gicon = Gio.ThemedIcon.new("mail-message-new-symbolic")
+        self.description = _("Text message")
+
+    def copy_message(self):
+        cb = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        cb.set_text(self.message, -1)
+
+    def send_notification(self):
+        notifications.TextMessageNotification(self)
+
+    def remove_transfer(self):
+        self.emit("op-command", OpCommand.REMOVE_TRANSFER)

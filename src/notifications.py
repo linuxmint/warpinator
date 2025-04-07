@@ -224,3 +224,34 @@ class WarpinatorSendNotification():
 
         app = Gio.Application.get_default()
         app.lookup_action("notification-response").disconnect_by_func(self._notification_response)
+
+class TextMessageNotification():
+    def __init__(self, op):
+        self.op = op
+        self.send_notification()
+
+    @misc._idle
+    def send_notification(self):
+        if prefs.get_show_notifications():
+            notification = Gio.Notification.new(_("New message from %s") % self.op.sender_name)
+            notification.set_body(self.op.message)
+            notification.set_icon(Gio.ThemedIcon(name="org.x.Warpinator-symbolic"))
+            notification.set_priority(Gio.NotificationPriority.URGENT)
+
+            notification.add_button(_("Copy"), "app.notification-response::copy")
+            notification.set_default_action("app.notification-response::focus")
+
+            app = Gio.Application.get_default()
+            app.lookup_action("notification-response").connect("activate", self._notification_response, self.op)
+            app.send_notification(self.op.sender, notification)
+
+    def _notification_response(self, action, variant, op):
+        response = variant.unpack()
+
+        if response == "copy":
+            op.copy_message()
+        else:
+            op.focus()
+
+        app = Gio.Application.get_default()
+        app.lookup_action("notification-response").disconnect_by_func(self._notification_response)

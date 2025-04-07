@@ -27,7 +27,7 @@ import server
 import auth
 import misc
 import networkmonitor
-from ops import SendOp, ReceiveOp
+from ops import SendOp, ReceiveOp, TextMessageOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
 # XApp 2.0 required for favorites.
@@ -67,7 +67,8 @@ ALL_BUTTONS = ("transfer_accept", \
                "transfer_resume", \
                "transfer_stop", \
                "transfer_remove", \
-               "transfer_open_folder")
+               "transfer_open_folder", \
+               "transfer_copy_message")
 
 INIT_BUTTONS = ()
 PERM_TO_SEND_BUTTONS = ("transfer_cancel_request",)
@@ -86,6 +87,7 @@ TRANSFER_CANCELLED_BUTTONS = ("transfer_remove",)
 TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_FILE_NOT_FOUND_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
+TRANSFER_TEXT_MESSAGE_BUTTONS = ("transfer_remove", "transfer_copy_message")
 
 class OpItem(object):
     def __init__(self, op):
@@ -111,6 +113,7 @@ class OpItem(object):
         self.stop_button =  self.builder.get_object("transfer_stop")
         self.remove_button =  self.builder.get_object("transfer_remove")
         self.folder_button =  self.builder.get_object("transfer_open_folder")
+        self.copy_button = self.builder.get_object("transfer_copy_message")
 
         self.accept_button.connect("clicked", self.accept_button_clicked)
         self.decline_button.connect("clicked", self.decline_button_clicked)
@@ -120,6 +123,7 @@ class OpItem(object):
         self.stop_button.connect("clicked", self.stop_button_clicked)
         self.remove_button.connect("clicked", self.remove_button_clicked)
         self.folder_button.connect("clicked", self.folder_button_clicked)
+        self.copy_button.connect("clicked", self.copy_button_clicked)
 
         self.op.connect("progress-changed", self.update_progress)
 
@@ -181,7 +185,14 @@ class OpItem(object):
             else:
                 self.op_transfer_problem_label.set_text(_("Some files not found"))
         elif self.op.status == OpStatus.FINISHED:
-            self.op_transfer_status_message.set_text(_("Completed"))
+            if isinstance(self.op, TextMessageOp):
+                msg = "\n".join(self.op.message.split("\n")[:4]) # Max 4 lines
+                if len(msg) > 120: # Max 120 chars (4*30 per line) -- FIXME: This might still exceed 4 lines
+                    msg = msg[:117] + "..."
+                self.op_transfer_status_message.set_text(msg)
+                self.op_transfer_status_message.set_selectable(True)
+            else:
+                self.op_transfer_status_message.set_text(_("Completed"))
         elif self.op.status == OpStatus.FINISHED_WARNING:
             self.op_transfer_status_message.set_text(_("Completed, but with errors"))
 
@@ -237,6 +248,8 @@ class OpItem(object):
             self.op_status_stack.set_visible_child_name("message")
             if isinstance(self.op, SendOp):
                 self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
+            elif isinstance(self.op, TextMessageOp):
+                self.set_visible_buttons(TRANSFER_TEXT_MESSAGE_BUTTONS)
             else:
                 self.set_visible_buttons(TRANSFER_COMPLETED_RECEIVER_BUTTONS)
         elif self.op.status in (OpStatus.CANCELLED_PERMISSION_BY_SENDER,
@@ -275,6 +288,9 @@ class OpItem(object):
             util.open_save_folder(self.op.top_dir_basenames[0])
         else:
             util.open_save_folder()
+    
+    def copy_button_clicked(self, button):
+        self.op.copy_message()
 
     def destroy(self):
         self.builder = None
