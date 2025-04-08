@@ -51,6 +51,11 @@ class WarpStub(object):
                 request_serializer=warp__pb2.OpInfo.SerializeToString,
                 response_deserializer=warp__pb2.VoidType.FromString,
                 )
+        self.SendTextMessage = channel.unary_unary(
+                '/Warp/SendTextMessage',
+                request_serializer=warp__pb2.TextMessage.SerializeToString,
+                response_deserializer=warp__pb2.VoidType.FromString,
+                )
         self.StartTransfer = channel.unary_stream(
                 '/Warp/StartTransfer',
                 request_serializer=warp__pb2.OpInfo.SerializeToString,
@@ -122,6 +127,12 @@ class WarpServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SendTextMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def StartTransfer(self, request, context):
         """Receiver methods
         """
@@ -179,6 +190,11 @@ def add_WarpServicer_to_server(servicer, server):
             'PauseTransferOp': grpc.unary_unary_rpc_method_handler(
                     servicer.PauseTransferOp,
                     request_deserializer=warp__pb2.OpInfo.FromString,
+                    response_serializer=warp__pb2.VoidType.SerializeToString,
+            ),
+            'SendTextMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendTextMessage,
+                    request_deserializer=warp__pb2.TextMessage.FromString,
                     response_serializer=warp__pb2.VoidType.SerializeToString,
             ),
             'StartTransfer': grpc.unary_stream_rpc_method_handler(
@@ -316,6 +332,23 @@ class Warp(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Warp/PauseTransferOp',
             warp__pb2.OpInfo.SerializeToString,
+            warp__pb2.VoidType.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SendTextMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Warp/SendTextMessage',
+            warp__pb2.TextMessage.SerializeToString,
             warp__pb2.VoidType.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

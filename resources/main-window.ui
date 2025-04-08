@@ -592,6 +592,26 @@
                                 <property name="position">1</property>
                               </packing>
                             </child>
+                            <child>
+                              <object class="GtkButton" id="user_send_msg_button">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">False</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Send message</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="pack-type">end</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
                             <style>
                               <class name="linked"/>
                             </style>
