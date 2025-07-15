@@ -4,13 +4,12 @@ Priority: optional
 Maintainer: Linux Mint <root@linuxmint.com>
 Build-Depends:
  debhelper-compat (= 12),
- cython3-legacy | cython3,
+ cython3,
  curl,
  dh-python,
  libpolkit-gobject-1-dev,
  meson (>= 0.45.0),
  pkg-config,
- policykit-1,
  python3-dev,
  python3-setuptools,
  gobject-introspection
