@@ -1,6 +1,0 @@
-%YAML 1.2
---- |
-  <%namespace file="Doxyfile.php.include" import="gen_doxyfile"/>\
-  ${gen_doxyfile(False)}
-  # Do not include values of 'GRPC\XXXX' constants
-  MAX_INITIALIZER_LINES = 0

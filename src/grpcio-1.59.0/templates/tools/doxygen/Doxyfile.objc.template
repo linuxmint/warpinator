@@ -1,4 +1,0 @@
-%YAML 1.2
---- |
-  <%namespace file="Doxyfile.objc.include" import="gen_doxyfile"/>\
-  ${gen_doxyfile(False)}

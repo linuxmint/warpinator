@@ -1,2 +1,0 @@
-# Security tests will contain fake secrets
-test/core/security/**

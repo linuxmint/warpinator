@@ -1,4 +1,5 @@
 """Landlock constants and syscalls."""
+
 import ctypes
 import enum
 import errno
@@ -38,6 +39,11 @@ class FSAccess(enum.IntFlag):
     """Open a file with write access."""
     READ_FILE = 1 << 2
     """Open a file with read access."""
+    TRUNCATE = 1 << 14
+    """Truncate a file through a variety of means.
+
+    Only available if the ABI version >= 3.
+    """
 
     # A directory can receive access rights related to files or directories.
     # The following access right is applied to the directory itself,
@@ -73,13 +79,27 @@ class FSAccess(enum.IntFlag):
     Only available if the ABI version >= 2.
     """
 
+    # Finally, the following access rights apply to both files and directories:
+    IOCTL_DEV = 1 << 15
+    """Invoke ioctl commands on a character or block device.
+
+    Only available if the ABI version >= 5.
+    """
+
     @classmethod
     def all(cls):
         return cls.all_file() | cls.all_dir()
 
     @classmethod
     def all_file(cls):
-        return cls.EXECUTE | cls.WRITE_FILE | cls.READ_FILE
+        flags = cls.EXECUTE | cls.WRITE_FILE | cls.READ_FILE
+        # TRUNCATE only available in version 3
+        if landlock_abi_version() >= 3:
+            flags |= cls.TRUNCATE
+        # IOCTL_DEV only available in version 5
+        if landlock_abi_version() >= 5:
+            flags |= cls.IOCTL_DEV
+        return flags
 
     @classmethod
     def all_dir(cls):
@@ -98,6 +118,9 @@ class FSAccess(enum.IntFlag):
         # REFER only available in version 2
         if landlock_abi_version() >= 2:
             flags |= cls.REFER
+        # IOCTL_DEV only available in version 5
+        if landlock_abi_version() >= 5:
+            flags |= cls.IOCTL_DEV
         return flags
 
 

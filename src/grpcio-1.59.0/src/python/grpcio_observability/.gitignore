@@ -1,6 +1,0 @@
-build/
-include/
-*.c
-*.cpp
-*.egg-info
-*.so

@@ -1,2 +1,0 @@
-CMD ["/github/grpc/src/php/bin/run_tests.sh", "--skip-persistent-channel-tests", ${'\\'}
-     "--ignore-valgrind-undef-errors"]

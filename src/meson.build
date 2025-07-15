@@ -63,8 +63,8 @@ meson_source_root = meson.current_source_dir()
 
 if bundle_grpc
     dependency('python3')
-    current_grpc_version = '1.59.0'
-    current_protobuf_version = '4.24.4'
+    current_grpc_version = '1.73.1'
+    current_protobuf_version = '6.31.1'
     current_zeroconf_version  = '0.115.2'
 
     setup = join_paths(meson_source_root, 'grpcio-' + current_grpc_version, 'build_script.py')

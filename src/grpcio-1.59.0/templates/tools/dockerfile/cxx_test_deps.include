@@ -1,2 +1,0 @@
-# Some cxx tests depend on the twisted package
-RUN python3 -m pip install twisted
