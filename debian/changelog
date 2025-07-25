@@ -1,3 +1,15 @@
+warpinator (1.8.9) zara; urgency=medium
+
+  [ Michael Webster ]
+  * build: Update bundled libraries.
+  * debian/control: Remove cython3-legacy option, policykit-1 dep.
+  * debian/control: Add polkitd dependency for build in debian 12/lmde6.
+
+  [ Cobinja ]
+  * Upgrade bundled zeroconf and fix bundle-build (#230)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 25 Jul 2025 14:38:05 +0200
+
 warpinator (1.8.8) xia; urgency=medium
 
   * l10n: Update translations
