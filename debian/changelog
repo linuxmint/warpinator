@@ -1,3 +1,9 @@
+warpinator (1.8.10) zara; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 31 Jul 2025 12:33:56 +0200
+
 warpinator (1.8.9) zara; urgency=medium
 
   [ Michael Webster ]
