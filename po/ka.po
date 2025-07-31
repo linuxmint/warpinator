@@ -1,96 +1,96 @@
-# Basque translation for linuxmint
-# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# Georgian translation for linuxmint
+# Copyright (c) 2025 Rosetta Contributors and Canonical Ltd 2025
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-06-13 19:16+0000\n"
-"Last-Translator: Asier Iturralde Sarasola <Unknown>\n"
-"Language-Team: Basque <eu@li.org>\n"
+"PO-Revision-Date: 2025-06-15 07:07+0000\n"
+"Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <ka@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
 "X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
+"Language: ka\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr "Talde-kodea"
+msgstr "ჯგუფის კოდი"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
-"Ezin duzu komunikatu talde-kode bera erabiltzen ez duten ordenagailuekin."
+"თქვენ არ შეგიძლიათ კომუნიკაცია კომპიუტერებთან, რომლებიც იგივე კოდს არ "
+"იყენებენ."
 
 #: resources/group-code.ui:49 resources/main-window.ui:51
 msgid "Set code"
-msgstr "Ezarri kodea"
+msgstr "კოდის დაყენება"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr "Segurtasun modua"
+msgstr "დაცული რეჟიმი:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr "ITZALITA"
+msgstr "გამორთული"
 
 #: resources/group-code.ui:148 resources/main-window.ui:129
 #: resources/main-window.ui:1202
 msgid "More information"
-msgstr "Informazio gehiago"
+msgstr "მეტი ინფორმაცია"
 
 #: resources/main-window.ui:80
 msgid "Secure Mode disabled"
-msgstr "Segurtasun modua desgaituta"
+msgstr "უსაფრთხო რეჟიმი გამორთულია"
 
 #: resources/main-window.ui:170
 msgid "Download folder not secure"
-msgstr "Deskargen karpeta ez da segurua"
+msgstr "არადაცული გადმოწერის საქაღალდე"
 
 #: resources/main-window.ui:335
 msgid "No matching results"
-msgstr "Ez dago bat datorren emaitzik"
+msgstr "პასუხები არაა"
 
 #: resources/main-window.ui:491
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Egin urruneko makina hau gogoko ikuspegi nagusian"
+msgstr "ამ დაშორებული მანქანის რჩეულად მონიშვნა მთავარ ხედში"
 
 #: resources/main-window.ui:565
 msgid "Clear inactive and completed operations"
-msgstr "Garbitu osatutako eta aktibitaterik ez duten eragiketak"
+msgstr "არააქტიური და დასრულებული ოპერაციების გასუფთავება"
 
 #: resources/main-window.ui:584
 msgid "Send files"
-msgstr "Bidali fitxategiak"
+msgstr "ფაილების გაგზავნა"
 
 #: resources/main-window.ui:610 src/prefs.py:311
 msgid "File Transfers"
-msgstr "Fitxategi-transferentziak"
+msgstr "ფაილის გადაწერები"
 
 #: resources/main-window.ui:631 src/warpinator.py:1054
 msgid "Online"
-msgstr "Konektatuta"
+msgstr "ონლაინ"
 
 #: resources/main-window.ui:751
 msgid "No other computers found..."
-msgstr "Ez da beste ordenagailurik aurkitu..."
+msgstr "სხვა კომპიუტერები აღმოჩენილი არაა..."
 
 #: resources/main-window.ui:816
 msgid "Make sure your network connection is active."
-msgstr "Ziurtatu sareko konexioa aktibo dagoela."
+msgstr "დარწმუნდით, რომ ინტერნეტთან მიერთება აქტიურია."
 
 #: resources/main-window.ui:831
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Egiaztatu suebakiaren arauak. Ataka zenbakiak aldatuta egon daitezke. Ikusi "
-"hobespenak xehetasun gehiagorako."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:847
@@ -98,17 +98,15 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Warpinator sare honetako beste ordenagailuren batean exekutatzen ari da? "
-"Hala bada, ziurtatu guztiek talde-kode bera erabiltzen dutela hobespenetan."
 
 #: resources/main-window.ui:865
 msgid "Possible solutions:"
-msgstr "Konponbide posibleak:"
+msgstr "შესაძლო გადაწყვეტები:"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:900
 msgid "Warpinator is also available on:"
-msgstr "Warpinator erabilgarri dago hemen ere:"
+msgstr ""
 
 #: resources/main-window.ui:915
 msgid "Android"
@@ -116,54 +114,49 @@ msgstr "Android"
 
 #: resources/main-window.ui:931 resources/main-window.ui:946
 msgid "Windows"
-msgstr "Windows"
+msgstr "ფანჯრები"
 
 #: resources/main-window.ui:1020
 msgid "Initializing, please wait..."
-msgstr "Hasieratzen, itxaron mesedez..."
+msgstr "ინიციალიზაცია, გთხოვთ დაელოდოთ..."
 
 #: resources/main-window.ui:1078
 msgid "Something went wrong"
-msgstr "Arazoren bat izan da"
+msgstr "რაღაც ცუდადაა"
 
 #: resources/main-window.ui:1153
 msgid "Invalid save location"
-msgstr "Gordetzeko kokaleku baliogabea"
+msgstr "არასწორი შენახვის ადგილი"
 
 #: resources/main-window.ui:1190
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"Karpeta hau ez dago erabilgarri edo debekatua dago bertan fitxategiak "
-"gordetzea. Hautatu kokapen berri bat Hobespenetan eta ziurtatu erabilgarri "
-"dagoela."
 
 #: resources/main-window.ui:1262
 msgid "Searching for other computers"
-msgstr "Beste ordenagailuen bila"
+msgstr "სხვა კომპიუტერების ძებნა"
 
 #: resources/main-window.ui:1321
 msgid "Shutting down..."
-msgstr "Itzaltzen..."
+msgstr "გამორთვა…"
 
 #: resources/main-window.ui:1393
 msgid "Restart required"
-msgstr "Berrabiaraztea beharrezkoa da"
+msgstr "საჭიროა გადატვირთვა"
 
 #: resources/main-window.ui:1410
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
-"Warpinator berrabiarazi beharra dago fitxategiak gordetzeko karpeta berria "
-"erabili ahal izateko."
 
 #: resources/main-window.ui:1420
 msgid "Restart"
-msgstr "Berrabiarazi"
+msgstr "თავიდან გაშვება"
 
 #: resources/main-window.ui:1490
 msgid "Disk Full"
-msgstr "Diskoa beteta"
+msgstr "დისკი გადავსებულია"
 
 #: resources/main-window.ui:1527
 msgid ""
@@ -171,545 +164,523 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
-"Ez dago behar adina leku fitxategiak gordetzeko karpetan. Hiru aukera "
-"dituzu: fitxategi batzuk ezabatu, hobespenetan gutxieneko leku librea "
-"txikiagotu edo kokapen berri bat hautatu."
 
 #: resources/main-window.ui:1544
 msgid "Empty trash"
-msgstr "Hustu zakarrontzia"
+msgstr "სანაგვე ყუთის დაცარიელება"
 
 #: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
 msgid "Open save folder"
-msgstr "Ireki gordetzeko karpeta"
+msgstr "შესანახი საქაღალდის გახსნა"
 
 #: resources/main-window.ui:1571
 msgid "Examine disk usage"
-msgstr "Aztertu disko erabilera"
+msgstr "დისკის გამოყენების ანალიზი"
 
 #: resources/main-window.ui:1624 src/util.py:774
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
-msgstr "Bidali eta jaso fitxategiak sarean zehar"
+msgstr ""
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr "Ordenagailu honetan:"
+msgstr "ამ კომპიუტერზე:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr "Sartu konektatu nahi duzun gailuaren helbidea"
+msgstr ""
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr "Konektatu"
+msgstr "მიერთება"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr "Bestela, beste gailuan:"
+msgstr ""
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr "Eskaneatu QR kode hau"
+msgstr ""
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr "Edo konektatu beheko helbidera"
+msgstr ""
 
 #: resources/op-item.ui:140
 msgid "Awaiting approval"
-msgstr "Onarpenaren zain"
+msgstr "დადასტურების მოლოდინი"
 
 #: resources/op-item.ui:156
 msgid "Not enough disk space!"
-msgstr "Ez dago behar adina leku diskoan!"
+msgstr "დისკზე ადგილი საკმარისი არაა!"
 
 #: resources/op-item.ui:219
 msgid "Calculating"
-msgstr "Kalkulatzen"
+msgstr "გამოთვლა"
 
 #: resources/op-item.ui:259
 msgid "Accept this request"
-msgstr "Onartu eskaera hau"
+msgstr "ამ მოთხოვნის მიღება"
 
 #: resources/op-item.ui:274
 msgid "Refuse this request"
-msgstr "Ukatu eskaera hau"
+msgstr "ამ მოთხოვნის უარყოფა"
 
 #: resources/op-item.ui:289
 msgid "Cancel this request"
-msgstr "Utzi eskaera hau"
+msgstr "ამ მოთხოვნის გაუქმება"
 
 #: resources/op-item.ui:304
 msgid "Restart this operation"
-msgstr "Berrabiarazi eragiketa hau"
+msgstr "ამ ოპერაციის თავიდან გაშვება"
 
 #: resources/op-item.ui:319
 msgid "Pause this operation"
-msgstr "Pausatu eragiketa hau"
+msgstr "ამ ოპერაციის შეჩერება"
 
 #: resources/op-item.ui:334
 msgid "Resume this operation"
-msgstr "Berrekin eragiketa hau"
+msgstr "ამ ოპერაციის გაგრძელება"
 
 #: resources/op-item.ui:349
 msgid "Cancel this operation"
-msgstr "Utzi eragiketa hau"
+msgstr "მიმდინარე ოპერაციის გაუქმება"
 
 #: resources/op-item.ui:364
 msgid "Remove this operation from the list"
-msgstr "Kendu eragiketa hau zerrendatik"
+msgstr "ამ ოპერაციის წაშლა სიიდან"
 
 #: resources/op-item.ui:379
 msgid "Open the containing folder"
-msgstr "Ireki barneko karpeta"
+msgstr "შემცველი საქაღალდის გახსნა"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Ataka zenbakiei buruzko oharra:"
+msgstr "შენიშვნა პორტის ნომრებზე:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Warpinator hobespenak"
+msgstr "Warpinator-ის მორგება"
 
 #: src/notifications.py:24
 msgid "New incoming files"
-msgstr "Sarrerako fitxategi berriak"
+msgstr "ახალი შემომავალი ფაილები"
 
 #: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s erabiltzaileak %(file_count)d fitxategi bidali nahi dizkizu "
-"(%(file_name)s)."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
 msgstr ""
-"%(sender_name)s erabiltzaileak %(file_count)d fitxategi bidali nahi dizkizu"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr "Onartu"
+msgstr "დასტური"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr "Ukatu"
+msgstr "უარყოფა"
 
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s erabiltzailea %(file_count)d fitxategi bidaltzen ari zaizu "
-"(%(file_name)s)."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
 msgstr ""
-"%(sender_name)s erabiltzailea %(file_count)d fitxategi bidaltzen ari zaizu"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Transferentzia osatuta"
+msgstr "გადაცემა დასრულდა"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr "%s(r)ako transferentzia amaitu da, baina erroreekin"
+msgstr ""
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "%s erabiltzaileari egindako transferentzia behar bezala amaitu da"
+msgstr ""
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr "%s(e)tik egindako transferentzia amaitu da, baina erroreekin"
+msgstr ""
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "%s erabiltzaileak egindako transferentzia behar bezala amaitu da"
+msgstr ""
 
 #: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
 msgid "Transfer failed"
-msgstr "Transferentziak huts egin du"
+msgstr "გადაცემის შეცდომა"
 
 #: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Arazoren bat izan da %s erabiltzaileari egindako transferentzian"
+msgstr ""
 
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Arazoren bat izan da %s erabiltzaileak egindako transferentzian"
+msgstr ""
 
 #: src/notifications.py:171 src/warpinator.py:167
 msgid "Transfer cancelled"
-msgstr "Transferentzia bertan behera utzi da"
+msgstr ""
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "%s(e)ra egiten ari zinen bertan behera utzi da"
+msgstr ""
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "%s(e)tik zetorren transferentzia bertan behera utzi da"
+msgstr ""
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr "Fitxategiak bidaltzen"
+msgstr "იგზავნება ფაილები"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr "%d fitxategi bidaltzen %s(e)ra"
+msgstr ""
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr "'%s' bidaltzen %s(e)ra"
+msgstr ""
 
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr ""
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:154
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] "Fitxategi %d"
-msgstr[1] "%d fitxategi"
+msgstr[0] ""
+msgstr[1] ""
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "Fitxategi %d"
-msgstr[1] "%d fitxategi"
+msgstr[0] "%d ფაილი"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
-msgstr "Warpinator hobespenak"
+msgstr ""
 
 #: src/prefs.py:293
 msgid "General"
-msgstr "Orokorra"
+msgstr "ზოგადი"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr "Mahaigaina"
+msgstr "სამუშაო მაგიდა"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"
-msgstr "Erakutsi ikono bat jakinarazpen-arean"
+msgstr ""
 
 #: src/prefs.py:301
 msgid "Start with main window open"
-msgstr "Hasi leiho nagusia irekita"
+msgstr ""
 
 #: src/prefs.py:306
 msgid "Start automatically"
-msgstr "Hasi automatikoki"
+msgstr "ავტომატური დაწყება"
 
 #: src/prefs.py:313
 msgid "Use compression when possible."
-msgstr "Erabili konpresioa ahal denean."
+msgstr ""
 
 #: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Abisua: Honek eragin negatiboa izan dezake sare azkarrenetako batzuen "
-"errendimenduan."
 
 #: src/prefs.py:318
 msgid "Location for received files"
-msgstr "Jasotako fitxategien kokalekua"
+msgstr ""
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr "Erreserbatutako leku librea"
+msgstr ""
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
-msgstr "Eskatu onarpena fitxategiak onartu aurretik"
+msgstr ""
 
 #: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
-msgstr "Eskatu onarpena fitxategiak gainidatziko badira"
+msgstr ""
 
 #: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Bistaratu jakinarazpen bat norbaitek fitxategiak bidaltzen dizkizunean (edo "
-"saiatzen denean)"
 
 #: src/prefs.py:343
 msgid "Connection"
-msgstr "Konexioa"
+msgstr "კავშირი"
 
 #: src/prefs.py:353
 msgid "Network"
-msgstr "Sarea"
+msgstr "ქსელი"
 
 #: src/prefs.py:356
 msgid "Automatic"
-msgstr "Automatikoa"
+msgstr "ავტომატური"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr "%s - ez da aurkitu"
+msgstr ""
 
 #: src/prefs.py:437
 msgid "Network interface to use"
-msgstr "Erabili beharreko sare interfazea"
+msgstr ""
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
-msgstr "Transferentzien sarrerako atakak"
+msgstr ""
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr "Erregistrorako sarrerako ataka"
+msgstr ""
 
 #: src/prefs.py:467
 msgid "Apply network changes"
-msgstr "Aplikatu sare aldaketak"
+msgstr ""
 
 #: src/prefs.py:476
 msgid "Update firewall rules"
-msgstr "Eguneratu suebakiaren arauak"
+msgstr ""
 
 #: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Edozein ataka zenbakik balio du aplikazioarentzat, baina ordenagailu "
-"guztietan ataka berdinak erabiltzeak erraztu egiten du, behar izanez gero, "
-"suebakiaren salbuespenak gehitzea."
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr "Segurtasun moduan soilik erabilgarri"
+msgstr ""
 
 #: src/prefs.py:641
 msgid "A group code is required."
-msgstr "Talde-kodea beharrezkoa da."
+msgstr ""
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr "Talde-kodea laburregia da."
+msgstr ""
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr "PIZTUTA"
+msgstr ""
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr "Aukera guztiak desblokeatuta daude."
+msgstr ""
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
-"Segurtasun moduan exekutatzeko talde-kode pertsonalizatu bat ezarri behar "
-"duzu. Aukera batzuk desgaituta daude une honetan."
 
 #: src/remote.py:643 src/remote.py:647
 msgid "Connection has been lost"
-msgstr "Konexioa galdu egin da"
+msgstr ""
 
 #: src/server.py:648
 msgid "An error occurred on the remote machine"
-msgstr "Errore bat gertatu da urruneko makinan"
+msgstr ""
 
 #: src/util.py:269
 msgid "Cancel"
-msgstr "Utzi"
+msgstr "გაუქმება"
 
 #: src/util.py:270
 msgid "Add"
-msgstr "Gehitu"
+msgstr "დამატება"
 
 #: src/util.py:292
 msgid "Select file(s) to send"
-msgstr "Hautatu fitxategia(k) bidaltzeko"
+msgstr ""
 
 #: src/util.py:663
 msgid "A few seconds remaining"
-msgstr "Segundo batzuk geratzen dira"
+msgstr "რამდენიმე წამი"
 
 #: src/util.py:666
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d segundo geratzen dira"
+msgstr "დარჩენილია %d წამი"
 
 #: src/util.py:670 src/util.py:678
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "Minutu %d"
-msgstr[1] "%d minutu"
+msgstr[0] "%d წუთი"
 
 #: src/util.py:677
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "Ordu %d"
-msgstr[1] "%d ordu"
+msgstr[0] "%d საათი"
 
 #: src/util.py:682
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "gutxi gorabehera ordu %d"
-msgstr[1] "gutxi gorabehera %d ordu"
+msgstr[0] "დაახლოებით %d საათი"
 
 #: src/util.py:770 src/warpinator.py:585
 msgid "About"
-msgstr "Honi buruz"
+msgstr "შესახებ"
 
 #: src/warpinator.py:146
 msgid "Paused"
-msgstr "Pausatuta"
+msgstr "შეჩერება"
 
 #: src/warpinator.py:149
 msgid "Waiting for approval"
-msgstr "Onarpenaren zain"
+msgstr "დადასტურების მოლოდინი"
 
 #: src/warpinator.py:151
 msgid "Waiting for your approval"
-msgstr "Zure onarpenaren zain"
+msgstr ""
 
 #: src/warpinator.py:154
 msgid "Not enough disk space"
-msgstr "Ez dago nahikoa leku diskoan"
+msgstr ""
 
 #: src/warpinator.py:157
 msgid "Files may be overwritten"
-msgstr "Fitxategiak gainidatzi daitezke"
+msgstr ""
 
 #: src/warpinator.py:160
 msgid "Request cancelled"
-msgstr "Eskaera bertan behera utzi da"
+msgstr ""
 
 #: src/warpinator.py:162 src/warpinator.py:164
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "%s erabiltzaileak eskaera bertan behera utzi du"
+msgstr ""
 
 #: src/warpinator.py:169 src/warpinator.py:171
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "%s erabiltzaileak eskaera bertan behera utzi du"
+msgstr ""
 
 #: src/warpinator.py:178
 #, python-format
 msgid "File '%s' not found"
-msgstr "Ez da '%s' fitxategia aurkitu"
+msgstr ""
 
 #: src/warpinator.py:180
 msgid "Some files not found"
-msgstr "Fitxategi batzuk ez dira aurkitu"
+msgstr ""
 
 #: src/warpinator.py:182
 msgid "Completed"
-msgstr "Osatuta"
+msgstr "დასრულებულია"
 
 #: src/warpinator.py:184
 msgid "Completed, but with errors"
-msgstr "Osatuta, baina erroreekin"
+msgstr ""
 
 #: src/warpinator.py:343 src/warpinator.py:1082
 msgid "Connecting"
-msgstr "Konektatzen"
+msgstr "დაკავშირება"
 
 #: src/warpinator.py:345
 #, python-format
 msgid "Connecting to %s"
-msgstr "%s(r)ekin konektatzen"
+msgstr "%s-სთან მიერთება"
 
 #: src/warpinator.py:355
 #, python-format
 msgid "%s is not online"
-msgstr "%s ez dago linean"
+msgstr ""
 
 #: src/warpinator.py:360
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Ezin da konektatu %s(e)ra"
+msgstr "%s-სთან მიერთების სეცდომა"
 
 #: src/warpinator.py:365
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "%s(e)k konexioa osatzeko zain."
+msgstr ""
 
 #: src/warpinator.py:394
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "Sarrerako fitxategi berri %d"
-msgstr[1] "Sarrerako %d fitxategi berri"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/warpinator.py:536 src/warpinator.py:1697
 msgid "Favorites"
-msgstr "Gogokoak"
+msgstr "სანიშნეები"
 
 #: src/warpinator.py:541 src/warpinator.py:1702
 msgid "Recents"
-msgstr "Azkenak"
+msgstr "უახლესები"
 
 #: src/warpinator.py:548 src/warpinator.py:1711
 msgid "Browse..."
-msgstr "Arakatu..."
+msgstr "პოვნა..."
 
 #: src/warpinator.py:569
 msgid "Connect manually"
-msgstr "Konektatu eskuz"
+msgstr ""
 
 #: src/warpinator.py:574
 msgid "Restart service"
-msgstr "Berrabiarazi zerbitzua"
+msgstr ""
 
 #: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
-msgstr "Hobespenak"
+msgstr "მორგება"
 
 #: src/warpinator.py:589 src/warpinator.py:1646
 msgid "Quit"
-msgstr "Irten"
+msgstr "გასვლა"
 
 #: src/warpinator.py:698
 msgid "You don't appear to be connected to a network."
-msgstr "Sare batera konektatu gabe zaudela dirudi."
+msgstr ""
 
 #: src/warpinator.py:700
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Abioak huts egin du, begiratu egunkariak."
+msgstr ""
 
 #: src/warpinator.py:800
 #, python-format
@@ -717,8 +688,6 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Warpinator funtzionalitate mugatuarekin exekutatzen ari da, eta minutu %d "
-"barru itxiko da. Segurtasun modua gaitzeko, ezarri talde-kode esklusibo bat."
 
 #: src/warpinator.py:802
 #, python-format
@@ -726,130 +695,120 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Warpinator funtzionalitate mugatuarekin exekutatzen ari da, eta %d minutu "
-"barru itxiko da. Segurtasun modua gaitzeko, ezarri talde-kode esklusibo bat."
 
 #: src/warpinator.py:857
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
-"Ez da nahikoa lekurik geratzen fitxategiak jasotzeko (%s erreserbatuta dago)."
 
 #: src/warpinator.py:938
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr "Eragiketa %d bukatzeko zain"
+msgstr ""
 
 #: src/warpinator.py:939
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr "%d eragiketa bukatzeko zain"
+msgstr ""
 
 #: src/warpinator.py:1061
 msgid "Offline"
-msgstr "Lineaz kanpo"
+msgstr "ინტერნეტგარეშე"
 
 #: src/warpinator.py:1068
 msgid "Unable to connect"
-msgstr "Ezin da konektatu"
+msgstr "კავშირის შეცდომა"
 
 #: src/warpinator.py:1075
 msgid "Waiting for two-way connection"
-msgstr "Bi noranzkoko konexioaren zain"
+msgstr ""
 
 #: src/warpinator.py:1176
 msgid "Manual connection"
-msgstr "Eskuzko konexioa"
+msgstr "ხელით მითითებული კავშირი"
 
 #: src/warpinator.py:1243
 msgid "Connecting..."
-msgstr "Konektatzen…"
+msgstr "დაკავშირება..."
 
 #: src/warpinator.py:1680
 msgid "Send to all"
-msgstr "Bidali guztiei"
+msgstr ""
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr "Bidali Warpinator-ekin"
+msgstr ""
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr "Bidali fitxategi bat norbaiti Warpinator-ekin"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Ireki suebakiko ataka bat Warpinatorrentzat"
+msgstr ""
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "Suebakiaren ezarpenak aldatzeko autentifikatu beharra dago."
+msgstr ""
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:10
 msgid "Warpinator"
-msgstr "Warpinator"
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr "Partekatu fitxategiak zure sarean"
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and exchange files quickly and securely."
 msgstr ""
-"Warpinator-ek aukera ematen dizu sare lokalean hainbat ordenagailu modu "
-"errazean konektatzeko, eta fitxategiak azkar eta modu seguruan trukatzeko."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr "Ezaugarriak:"
+msgstr "თვისებები:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr "Interfaze grafiko erabilerraza."
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
-msgstr "Zure sareko gailuak automatikoki aurkitzea."
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr "Gailuen arteko enkriptatutako konexio guztiz seguruak."
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
-msgstr "Aldibereko hainbat transferentzia."
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:20
 msgid "Optional data compression."
-msgstr "Hautazko datuen konpresioa."
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:21
 msgid ""
 "Grouping of devices using a shared key, with multiple groups possible on the "
 "same network."
 msgstr ""
-"Gailuak taldekatzea partekatutako gako bat erabiliz, hainbat talde egon "
-"daitezke sare berean."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:22
 msgid "Manual connections for restricted network environments."
-msgstr "Eskuzko konexioak mugatutako sare inguruneetarako."
+msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
 msgstr ""
-"Konektatutako gailuak eta haien egoera erakusten duen ikuspegi nagusia"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
 msgstr ""
-"Konexio bakoitzaren orria, sarrerako eta irteerako transferentzia bakoitza "
-"ikusgai dela"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr "Eskuzko konexioaren elkarrizketa-koadroa"
+msgstr ""

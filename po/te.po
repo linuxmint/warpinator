@@ -1,0 +1,852 @@
+# Telugu translation for linuxmint
+# Copyright (c) 2025 Rosetta Contributors and Canonical Ltd 2025
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"PO-Revision-Date: 2025-07-03 04:55+0000\n"
+"Last-Translator: Aryan Karamtoth <Unknown>\n"
+"Language-Team: Telugu <te@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
+"X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
+
+#: resources/group-code.ui:16 src/prefs.py:345
+msgid "Group Code"
+msgstr "గ్రూప్ కోడ్"
+
+#: resources/group-code.ui:39
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr "ఒకే కోడ్‌ను ఉపయోగించని కంప్యూటర్‌లతో మీరు కమ్యూనికేట్ చేయలేరు."
+
+#: resources/group-code.ui:49 resources/main-window.ui:51
+msgid "Set code"
+msgstr "కోడ్ సెట్ చేయండి"
+
+#: resources/group-code.ui:93
+msgid "Secure mode:"
+msgstr "సురక్షిత మోడ్:"
+
+#: resources/group-code.ui:106 src/prefs.py:683
+msgid "OFF"
+msgstr "ఆఫ్‌చేయి"
+
+#: resources/group-code.ui:148 resources/main-window.ui:129
+#: resources/main-window.ui:1202
+msgid "More information"
+msgstr "ఎక్కువ సమాచారము"
+
+#: resources/main-window.ui:80
+msgid "Secure Mode disabled"
+msgstr "సురక్షిత మోడ్ నిలిపివేయబడింది"
+
+#: resources/main-window.ui:170
+msgid "Download folder not secure"
+msgstr "డౌన్‌లోడ్ ఫోల్డర్ సురక్షితం కాదు"
+
+#: resources/main-window.ui:335
+msgid "No matching results"
+msgstr "సరిపోలిన ఫలితాలేవీ కనపడలేదు"
+
+#: resources/main-window.ui:491
+msgid "Make this remote machine a favorite in the main view"
+msgstr "ఈ రిమోట్ మెషీన్‌ను ప్రధాన వీక్షణలో ఇష్టమైనదిగా చేయండి"
+
+#: resources/main-window.ui:565
+msgid "Clear inactive and completed operations"
+msgstr "నిష్క్రియాత్మక మరియు పూర్తయిన ఆపరేషన్లను క్లియర్ చేయండి"
+
+#: resources/main-window.ui:584
+msgid "Send files"
+msgstr "ఫైళ్లను పంపండి"
+
+#: resources/main-window.ui:610 src/prefs.py:311
+msgid "File Transfers"
+msgstr "ఫైల్ బదిలీలు"
+
+#: resources/main-window.ui:631 src/warpinator.py:1054
+msgid "Online"
+msgstr "ఆన్‌లైన్"
+
+#: resources/main-window.ui:751
+msgid "No other computers found..."
+msgstr "ఇతర కంప్యూటర్లు ఏవీ కనుగొనబడలేదు..."
+
+#: resources/main-window.ui:816
+msgid "Make sure your network connection is active."
+msgstr "మీ నెట్‌వర్క్ కనెక్షన్ యాక్టివ్‌గా ఉందని నిర్ధారించుకోండి."
+
+#: resources/main-window.ui:831
+msgid ""
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
+msgstr ""
+"మీ ఫైర్‌వాల్ నియమాలను తనిఖీ చేయండి. పోర్ట్ సంఖ్యలను మార్చవచ్చు. మరిన్ని "
+"వివరాల కోసం ప్రాధాన్యతలను చూడండి."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:847
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"ఈ నెట్‌వర్క్‌లోని ఏవైనా ఇతర కంప్యూటర్‌లలో Warpinator నడుస్తుందా? అలా అయితే, "
+"అవన్నీ ప్రాధాన్యతలలో ఒకే గ్రూప్ కోడ్‌ను ఉపయోగిస్తున్నాయని నిర్ధారించుకోండి."
+
+#: resources/main-window.ui:865
+msgid "Possible solutions:"
+msgstr "సాధ్యమైన పరిష్కారాలు:"
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:900
+msgid "Warpinator is also available on:"
+msgstr "Warpinator కూడా ఇక్కడ అందుబాటులో ఉంది:"
+
+#: resources/main-window.ui:915
+msgid "Android"
+msgstr "ఆండ్రాయిడ్"
+
+#: resources/main-window.ui:931 resources/main-window.ui:946
+msgid "Windows"
+msgstr "విండోస్"
+
+#: resources/main-window.ui:1020
+msgid "Initializing, please wait..."
+msgstr "ప్రారంభిస్తోంది, దయచేసి వేచి ఉండండి..."
+
+#: resources/main-window.ui:1078
+msgid "Something went wrong"
+msgstr "ఏదో తప్పు జరిగింది"
+
+#: resources/main-window.ui:1153
+msgid "Invalid save location"
+msgstr "చెల్లని సేవ్ స్థానం"
+
+#: resources/main-window.ui:1190
+msgid ""
+"This folder is either inaccessible or forbidden to save files to.  Please "
+"select a new location in Preferences and ensure that it is accessible."
+msgstr ""
+"ఈ ఫోల్డర్ యాక్సెస్ చేయలేనిది లేదా ఫైళ్ళను సేవ్ చేయడం నిషేధించబడింది. దయచేసి "
+"ప్రాధాన్యతలలో కొత్త స్థానాన్ని ఎంచుకుని, అది యాక్సెస్ చేయగలదని "
+"నిర్ధారించుకోండి."
+
+#: resources/main-window.ui:1262
+msgid "Searching for other computers"
+msgstr "ఇతర కంప్యూటర్ల కోసం వెతుకుతోంది"
+
+#: resources/main-window.ui:1321
+msgid "Shutting down..."
+msgstr "షట్ డౌన్ అవుతోంది..."
+
+#: resources/main-window.ui:1393
+msgid "Restart required"
+msgstr "పునఃప్రారంభం అవసరం"
+
+#: resources/main-window.ui:1410
+msgid "Warpinator needs to restart before the new save directory can be used"
+msgstr ""
+"కొత్త సేవ్ డైరెక్టరీని ఉపయోగించే ముందు వార్‌పినేటర్ పునఃప్రారంభించాలి."
+
+#: resources/main-window.ui:1420
+msgid "Restart"
+msgstr "పునఃప్రారంభించండి"
+
+#: resources/main-window.ui:1490
+msgid "Disk Full"
+msgstr "డిస్క్ నిండింది"
+
+#: resources/main-window.ui:1527
+msgid ""
+"There is insufficient space available in the save location. You need to "
+"delete some files, decrease the minimum free space in preferences or choose "
+"a new location."
+msgstr ""
+"సేవ్ చేసే స్థానంలో తగినంత స్థలం అందుబాటులో లేదు. మీరు కొన్ని ఫైళ్ళను "
+"తొలగించాలి, ప్రాధాన్యతలలో కనీస ఖాళీ స్థలాన్ని తగ్గించాలి లేదా కొత్త "
+"స్థానాన్ని ఎంచుకోవాలి."
+
+#: resources/main-window.ui:1544
+msgid "Empty trash"
+msgstr "చెత్తబుట్టను ఖాళీచేయి"
+
+#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
+msgid "Open save folder"
+msgstr "సేవ్ ఫోల్డర్‌ని తెరవండి"
+
+#: resources/main-window.ui:1571
+msgid "Examine disk usage"
+msgstr "డిస్క్ వినియోగాన్ని పరిశీలించండి"
+
+#: resources/main-window.ui:1624 src/util.py:774
+#: data/org.x.Warpinator.desktop.in.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "నెట్‌వర్క్ అంతటా ఫైల్‌లను పంపండి మరియు స్వీకరించండి"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr "ఈ కంప్యూటర్‌లో:"
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr "మీరు కనెక్ట్ చేయాలనుకుంటున్న పరికరం యొక్క చిరునామాను నమోదు చేయండి"
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr "కనెక్ట్ చేయండి"
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr "ప్రత్యామ్నాయంగా, మరొక పరికరంలో:"
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr "ఈ QR కోడ్‌ని స్కాన్ చేయండి"
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr "లేదా క్రింది చిరునామాకు కనెక్ట్ అవ్వండి"
+
+#: resources/op-item.ui:140
+msgid "Awaiting approval"
+msgstr "ఆమోదం కోసం వేచి ఉంది"
+
+#: resources/op-item.ui:156
+msgid "Not enough disk space!"
+msgstr "తగినంత డిస్క్ స్థలం లేదు!"
+
+#: resources/op-item.ui:219
+msgid "Calculating"
+msgstr "లెక్కిస్తున్నది"
+
+#: resources/op-item.ui:259
+msgid "Accept this request"
+msgstr "ఈ అభ్యర్థనను ఆమోదించండి"
+
+#: resources/op-item.ui:274
+msgid "Refuse this request"
+msgstr "ఈ అభ్యర్థనను తిరస్కరించండి"
+
+#: resources/op-item.ui:289
+msgid "Cancel this request"
+msgstr "ఈ అభ్యర్థనను రద్దు చేయండి"
+
+#: resources/op-item.ui:304
+msgid "Restart this operation"
+msgstr "ఈ చర్యను పునఃప్రారంభించండి"
+
+#: resources/op-item.ui:319
+msgid "Pause this operation"
+msgstr "ఈ ఆపరేషన్‌ను పాజ్ చేయండి"
+
+#: resources/op-item.ui:334
+msgid "Resume this operation"
+msgstr "ఈ ఆపరేషన్‌ను మళ్లీ ప్రారంభించండి"
+
+#: resources/op-item.ui:349
+msgid "Cancel this operation"
+msgstr "ఈ ఆపరేషన్‌ని రద్దు చేయండి"
+
+#: resources/op-item.ui:364
+msgid "Remove this operation from the list"
+msgstr "ఈ ఆపరేషన్‌ను జాబితా నుండి తొలగించండి"
+
+#: resources/op-item.ui:379
+msgid "Open the containing folder"
+msgstr "కలిగి ఉన్న ఫోల్డర్‌ను తెరవండి"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "పోర్ట్ సంఖ్యలపై గమనిక:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Warpinator ప్రాధాన్యతలు"
+
+#: src/notifications.py:24
+msgid "New incoming files"
+msgstr "కొత్త ఇన్‌కమింగ్ ఫైల్‌లు"
+
+#: src/notifications.py:30
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s మీకు %(file_count)d ఫైల్ (%(file_name)s) పంపాలనుకుంటున్నారు."
+
+#: src/notifications.py:31
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s మీకు %(file_count)d ఫైళ్ళను పంపాలనుకుంటున్నారు."
+
+#: src/notifications.py:41
+msgid "Accept"
+msgstr "అంగీకరించు"
+
+#: src/notifications.py:42
+msgid "Decline"
+msgstr "నిరాకరించు"
+
+#: src/notifications.py:56
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s మీకు %(file_count)d ఫైల్ (%(file_name)s) పంపుతున్నారు."
+
+#: src/notifications.py:57
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s మీకు %(file_count)d ఫైళ్ళను పంపుతున్నారు."
+
+#: src/notifications.py:93
+msgid "Transfer complete"
+msgstr "బదిలీ పూర్తయింది"
+
+#: src/notifications.py:96
+#, python-format
+msgid "The transfer to %s has finished, but with errors"
+msgstr "%s కి బదిలీ పూర్తయింది, కానీ లోపాలు ఉన్నాయి"
+
+#: src/notifications.py:98
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "%s కి బదిలీ విజయవంతంగా పూర్తయింది."
+
+#: src/notifications.py:101
+#, python-format
+msgid "The transfer from %s has finished, but with errors"
+msgstr "%s నుండి బదిలీ పూర్తయింది, కానీ లోపాలతో ఉంది"
+
+#: src/notifications.py:103
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "%s నుండి బదిలీ విజయవంతంగా పూర్తయింది."
+
+#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
+msgid "Transfer failed"
+msgstr "బదిలీకరణ విఫలమైంది"
+
+#: src/notifications.py:140
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "%s కి బదిలీ చేయడంలో ఏదో తప్పు జరిగింది."
+
+#: src/notifications.py:142
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "%s నుండి బదిలీలో ఏదో తప్పు జరిగింది."
+
+#: src/notifications.py:171 src/warpinator.py:167
+msgid "Transfer cancelled"
+msgstr "బదిలీ రద్దు చేయబడింది"
+
+#: src/notifications.py:174
+#, python-format
+msgid "Your transfer to %s was cancelled"
+msgstr "%s కి మీ బదిలీ రద్దు చేయబడింది."
+
+#: src/notifications.py:176
+#, python-format
+msgid "An incoming transfer from %s was cancelled"
+msgstr "%s నుండి వచ్చిన ఇన్‌కమింగ్ బదిలీ రద్దు చేయబడింది."
+
+#: src/notifications.py:204
+msgid "Sending files"
+msgstr "ఫైళ్లను పంపుతోంది"
+
+#: src/notifications.py:207
+#, python-format
+msgid "Sending %d files to %s"
+msgstr "%d ఫైళ్ళను %s కి పంపుతోంది"
+
+#: src/notifications.py:209
+#, python-format
+msgid "Sending '%s' to %s"
+msgstr "'%s' ను %s కి పంపుతోంది"
+
+#: src/ops.py:53
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:154
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d file"
+msgstr[1] "%d ఫైల్‌లు"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:261
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d file"
+msgstr[1] "%d ఫైల్‌లు"
+
+#: src/prefs.py:276
+msgid "Warpinator Preferences"
+msgstr "Warpinator ప్రాధాన్యతలు"
+
+#: src/prefs.py:293
+msgid "General"
+msgstr "సాధారణ"
+
+#: src/prefs.py:295
+msgid "Desktop"
+msgstr "డెస్కుటాప్"
+
+#: src/prefs.py:297
+msgid "Show an icon in the notification area"
+msgstr "నోటిఫికేషన్ ప్రాంతంలో ఒక చిహ్నాన్ని చూపించు"
+
+#: src/prefs.py:301
+msgid "Start with main window open"
+msgstr "ప్రధాన విండో తెరిచి ప్రారంభించండి"
+
+#: src/prefs.py:306
+msgid "Start automatically"
+msgstr "స్వయంచాలకంగా ప్రారంభించు"
+
+#: src/prefs.py:313
+msgid "Use compression when possible."
+msgstr "సాధ్యమైనప్పుడు కుదింపును ఉపయోగించండి."
+
+#: src/prefs.py:315
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr ""
+"హెచ్చరిక: ఇది కొన్ని వేగవంతమైన నెట్‌వర్క్‌లలో పనితీరుపై ప్రతికూల ప్రభావాన్ని "
+"చూపవచ్చు."
+
+#: src/prefs.py:318
+msgid "Location for received files"
+msgstr "స్వీకరించిన ఫైల్‌ల కోసం స్థానం"
+
+#: src/prefs.py:323
+msgid "Reserved free space"
+msgstr "రిజర్వు చేయబడిన ఖాళీ స్థలం"
+
+#: src/prefs.py:328
+msgid "Require approval before accepting files"
+msgstr "ఫైళ్లను ఆమోదించే ముందు ఆమోదం అవసరం"
+
+#: src/prefs.py:333
+msgid "Require approval when files would be overwritten"
+msgstr "ఫైల్స్ ఓవర్‌రైట్ చేయబడినప్పుడు ఆమోదం అవసరం."
+
+#: src/prefs.py:338
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr ""
+"ఎవరైనా మీకు ఫైళ్లను పంపినప్పుడు (లేదా పంపడానికి ప్రయత్నించినప్పుడు) "
+"నోటిఫికేషన్‌ను ప్రదర్శించండి"
+
+#: src/prefs.py:343
+msgid "Connection"
+msgstr "అనుసంధానము"
+
+#: src/prefs.py:353
+msgid "Network"
+msgstr "నెట్‌వర్క్"
+
+#: src/prefs.py:356
+msgid "Automatic"
+msgstr "స్వయంచాలకంగా"
+
+#. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
+#: src/prefs.py:435
+#, python-format
+msgid "%s - not found"
+msgstr "%s - కనుగొనబడలేదు"
+
+#: src/prefs.py:437
+msgid "Network interface to use"
+msgstr "ఉపయోగించడానికి నెట్‌వర్క్ ఇంటర్‌ఫేస్"
+
+#: src/prefs.py:445
+msgid "Incoming port for transfers"
+msgstr "బదిలీల కోసం ఇన్‌కమింగ్ పోర్ట్"
+
+#: src/prefs.py:452
+msgid "Incoming port for registration"
+msgstr "రిజిస్ట్రేషన్ కోసం ఇన్‌కమింగ్ పోర్ట్"
+
+#: src/prefs.py:467
+msgid "Apply network changes"
+msgstr "నెట్‌వర్క్ మార్పులను వర్తింపజేయండి"
+
+#: src/prefs.py:476
+msgid "Update firewall rules"
+msgstr "ఫైర్‌వాల్ నియమాలను నవీకరించండి"
+
+#: src/prefs.py:488
+msgid ""
+"Any port numbers will work for the application, but using the same ports for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"అప్లికేషన్ కోసం ఏవైనా పోర్ట్ నంబర్లు పని చేస్తాయి, కానీ అన్ని కంప్యూటర్లకు "
+"ఒకే పోర్ట్‌లను ఉపయోగించడం వల్ల అవసరమైతే ఫైర్‌వాల్ మినహాయింపులను జోడించడం "
+"సులభం అవుతుంది."
+
+#: src/prefs.py:564
+msgid "Only available in secure mode."
+msgstr "సురక్షిత మోడ్‌లో మాత్రమే అందుబాటులో ఉంటుంది."
+
+#: src/prefs.py:641
+msgid "A group code is required."
+msgstr "గ్రూప్ కోడ్ అవసరం."
+
+#: src/prefs.py:646
+msgid "The group code is too short."
+msgstr "గ్రూప్ కోడ్ చాలా చిన్నది."
+
+#: src/prefs.py:680
+msgid "ON"
+msgstr "ఆన్‌చేయి"
+
+#: src/prefs.py:681
+msgid "All options are unlocked."
+msgstr "అన్ని ఎంపికలు అన్‌లాక్ చేయబడ్డాయి."
+
+#: src/prefs.py:684
+msgid ""
+"You must set a custom group code to run in secure mode. Some options are "
+"currently disabled."
+msgstr ""
+"సురక్షిత మోడ్‌లో అమలు చేయడానికి మీరు కస్టమ్ గ్రూప్ కోడ్‌ను సెట్ చేయాలి. "
+"కొన్ని ఎంపికలు ప్రస్తుతం నిలిపివేయబడ్డాయి."
+
+#: src/remote.py:643 src/remote.py:647
+msgid "Connection has been lost"
+msgstr "అనుసంధానమును కోల్పోయింది"
+
+#: src/server.py:648
+msgid "An error occurred on the remote machine"
+msgstr "రిమోట్ మెషీన్‌లో లోపం సంభవించింది."
+
+#: src/util.py:269
+msgid "Cancel"
+msgstr "రద్దు చేయి"
+
+#: src/util.py:270
+msgid "Add"
+msgstr "జోడించు"
+
+#: src/util.py:292
+msgid "Select file(s) to send"
+msgstr "పంపడానికి ఫైల్(లు) ఎంచుకోండి"
+
+#: src/util.py:663
+msgid "A few seconds remaining"
+msgstr "కొన్ని సెకన్లు మిగిలి ఉన్నాయి"
+
+#: src/util.py:666
+#, python-format
+msgid "%d seconds remaining"
+msgstr "%d సెకన్లు మిగిలివున్నాయి"
+
+#: src/util.py:670 src/util.py:678
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d నిమిషం"
+msgstr[1] "%d నిమిషాలు"
+
+#: src/util.py:677
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d గంట"
+msgstr[1] "%d గంటలు"
+
+#: src/util.py:682
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "దాదాపు %d గంట"
+msgstr[1] "దాదాపు %d గంటలు"
+
+#: src/util.py:770 src/warpinator.py:585
+msgid "About"
+msgstr "గురించి"
+
+#: src/warpinator.py:146
+msgid "Paused"
+msgstr "నిలుపబడింది"
+
+#: src/warpinator.py:149
+msgid "Waiting for approval"
+msgstr "ఆమోదం కోసం వేచి ఉంది"
+
+#: src/warpinator.py:151
+msgid "Waiting for your approval"
+msgstr "మీ ఆమోదం కోసం వేచి ఉంది"
+
+#: src/warpinator.py:154
+msgid "Not enough disk space"
+msgstr "చాలినంత డిస్కు జాగా లేదు"
+
+#: src/warpinator.py:157
+msgid "Files may be overwritten"
+msgstr "ఫైళ్ళు ఓవర్‌రైట్ చేయబడవచ్చు"
+
+#: src/warpinator.py:160
+msgid "Request cancelled"
+msgstr "అభ్యర్థన రద్దు చేయబడింది"
+
+#: src/warpinator.py:162 src/warpinator.py:164
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "%s ద్వారా అభ్యర్థన రద్దు చేయబడింది"
+
+#: src/warpinator.py:169 src/warpinator.py:171
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "%s ద్వారా బదిలీ రద్దు చేయబడింది"
+
+#: src/warpinator.py:178
+#, python-format
+msgid "File '%s' not found"
+msgstr "'%s' ఫైల్ దొరకలేదు."
+
+#: src/warpinator.py:180
+msgid "Some files not found"
+msgstr "కొన్ని ఫైల్‌లు కనుగొనబడలేదు"
+
+#: src/warpinator.py:182
+msgid "Completed"
+msgstr "పూర్తయింది"
+
+#: src/warpinator.py:184
+msgid "Completed, but with errors"
+msgstr "పూర్తయింది, కానీ లోపాలతో"
+
+#: src/warpinator.py:343 src/warpinator.py:1082
+msgid "Connecting"
+msgstr "అనుసంధానమౌచున్నది"
+
+#: src/warpinator.py:345
+#, python-format
+msgid "Connecting to %s"
+msgstr "%s కు అనుసంధానిస్తోంది"
+
+#: src/warpinator.py:355
+#, python-format
+msgid "%s is not online"
+msgstr "%s ఆన్‌లైన్‌లో లేరు."
+
+#: src/warpinator.py:360
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "%s కి కనెక్ట్ కాలేదు"
+
+#: src/warpinator.py:365
+#, python-format
+msgid "Waiting for %s to complete the connection."
+msgstr "కనెక్షన్ పూర్తి కావడానికి %s కోసం వేచి ఉంది."
+
+#: src/warpinator.py:394
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d కొత్త ఇన్‌కమింగ్ బదిలీ"
+msgstr[1] "%d కొత్త ఇన్‌కమింగ్ బదిలీలు"
+
+#: src/warpinator.py:536 src/warpinator.py:1697
+msgid "Favorites"
+msgstr "ప్రియమైనవి"
+
+#: src/warpinator.py:541 src/warpinator.py:1702
+msgid "Recents"
+msgstr "ఇటీవలివి"
+
+#: src/warpinator.py:548 src/warpinator.py:1711
+msgid "Browse..."
+msgstr "విహరించు..."
+
+#: src/warpinator.py:569
+msgid "Connect manually"
+msgstr "మాన్యువల్‌గా కనెక్ట్ చేయండి"
+
+#: src/warpinator.py:574
+msgid "Restart service"
+msgstr "సేవను పునఃప్రారంభించండి"
+
+#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
+msgid "Preferences"
+msgstr "ప్రాధాన్యతలు"
+
+#: src/warpinator.py:589 src/warpinator.py:1646
+msgid "Quit"
+msgstr "నిష్క్రమించు"
+
+#: src/warpinator.py:698
+msgid "You don't appear to be connected to a network."
+msgstr "మీరు నెట్‌వర్క్‌కి కనెక్ట్ అయినట్లు కనిపించడం లేదు."
+
+#: src/warpinator.py:700
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "స్టార్టప్ విఫలమైంది, దయచేసి మీ లాగ్‌లను తనిఖీ చేయండి."
+
+#: src/warpinator.py:800
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minute. To enable Secure Mode, set a unique group code."
+msgstr ""
+"వార్పినేటర్ పరిమిత కార్యాచరణతో నడుస్తోంది మరియు %d నిమిషంలో "
+"నిష్క్రమిస్తుంది. సురక్షిత మోడ్‌ను ప్రారంభించడానికి, ఒక ప్రత్యేకమైన గ్రూప్ "
+"కోడ్‌ను సెట్ చేయండి."
+
+#: src/warpinator.py:802
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minutes. To enable Secure Mode, set a unique group code."
+msgstr ""
+"వార్పినేటర్ పరిమిత కార్యాచరణతో నడుస్తోంది మరియు %d నిమిషాల్లో "
+"నిష్క్రమిస్తుంది. సురక్షిత మోడ్‌ను ప్రారంభించడానికి, ఒక ప్రత్యేక సమూహ "
+"కోడ్‌ను సెట్ చేయండి."
+
+#: src/warpinator.py:857
+#, python-format
+msgid "Not enough disk space remaining to receive files (%s is reserved)."
+msgstr ""
+"ఫైళ్ళను స్వీకరించడానికి తగినంత డిస్క్ స్థలం మిగిలి లేదు (%s రిజర్వు "
+"చేయబడింది)."
+
+#: src/warpinator.py:938
+#, python-format
+msgid "Waiting for %d operation to complete"
+msgstr "%d ఆపరేషన్ పూర్తయ్యే వరకు వేచి ఉంది"
+
+#: src/warpinator.py:939
+#, python-format
+msgid "Waiting for %d operations to complete"
+msgstr "%d ఆపరేషన్లు పూర్తయ్యే వరకు వేచి ఉంది"
+
+#: src/warpinator.py:1061
+msgid "Offline"
+msgstr "ఆఫ్‌లైన్"
+
+#: src/warpinator.py:1068
+msgid "Unable to connect"
+msgstr "అనుసంధానం కాలేదు"
+
+#: src/warpinator.py:1075
+msgid "Waiting for two-way connection"
+msgstr "రెండు-మార్గాల కనెక్షన్ కోసం వేచి ఉంది"
+
+#: src/warpinator.py:1176
+msgid "Manual connection"
+msgstr "మాన్యువల్ కనెక్షన్"
+
+#: src/warpinator.py:1243
+msgid "Connecting..."
+msgstr "కనెక్ట్ అవుతోంది..."
+
+#: src/warpinator.py:1680
+msgid "Send to all"
+msgstr "అందరికీ పంపండి"
+
+#: data/warpinator-send.nemo_action.in:4
+msgid "Send with Warpinator"
+msgstr "వార్పినేటర్‌తో పంపండి"
+
+#: data/warpinator-send.nemo_action.in:5
+msgid "Send a file to someone using Warpinator"
+msgstr "వార్పినేటర్ ఉపయోగించి ఎవరికైనా ఫైల్ పంపండి"
+
+#: data/org.x.warpinator.policy.in.in:12
+msgid "Open a firewall port for Warpinator"
+msgstr "వార్పినేటర్ కోసం ఫైర్‌వాల్ పోర్ట్‌ను తెరవండి"
+
+#: data/org.x.warpinator.policy.in.in:13
+msgid "To modify firewall settings, you need to authenticate."
+msgstr "ఫైర్‌వాల్ సెట్టింగ్‌లను సవరించడానికి, మీరు ప్రామాణీకరించాలి."
+
+#. DO NOT TRANSLATE Warpinator
+#: data/org.x.Warpinator.appdata.xml.in.in:10
+msgid "Warpinator"
+msgstr "Warpinator"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "మీ నెట్‌వర్క్‌లో ఫైల్‌లను షేర్ చేయండి"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
+msgid ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and exchange files quickly and securely."
+msgstr ""
+"వార్పినేటర్ మీరు లోకల్ ఏరియా నెట్‌వర్క్‌లోని బహుళ కంప్యూటర్‌లను సులభంగా "
+"కనెక్ట్ చేయడానికి మరియు ఫైల్‌లను త్వరగా మరియు సురక్షితంగా మార్పిడి "
+"చేసుకోవడానికి అనుమతిస్తుంది."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "ఫీచర్లు:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "ఉపయోగించడానికి సులభమైన గ్రాఫికల్ ఇంటర్‌ఫేస్."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr "మీ నెట్‌వర్క్‌లోని పరికరాల స్వయంచాలక ఆవిష్కరణ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr "పరికరాల మధ్య పూర్తిగా సురక్షితమైన మరియు గుప్తీకరించిన కనెక్షన్లు."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr "బహుళ ఏకకాల బదిలీలు."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr "ఐచ్ఛిక డేటా కుదింపు."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr ""
+"ఒకే నెట్‌వర్క్‌లో బహుళ సమూహాలు సాధ్యమయ్యేలా, భాగస్వామ్య కీని ఉపయోగించి "
+"పరికరాలను సమూహపరచడం."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr "పరిమితం చేయబడిన నెట్‌వర్క్ వాతావరణాల కోసం మాన్యువల్ కనెక్షన్లు."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr "కనెక్ట్ చేయబడిన పరికరాలు మరియు వాటి స్థితిని చూపించే ప్రధాన వీక్షణ"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr ""
+"వ్యక్తిగత ఇన్‌కమింగ్ లేదా అవుట్‌గోయింగ్ బదిలీలను చూపించే వ్యక్తిగత కనెక్షన్ "
+"పేజీ"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr "మాన్యువల్ కనెక్షన్ డైలాగ్"

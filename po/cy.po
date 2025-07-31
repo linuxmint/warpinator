@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2025-01-06 12:01+0000\n"
-"X-Generator: Launchpad (build 6394e03793719e8d73f5a60b5439440e693c92f1)\n"
+"X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
+"X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
 "Language: cy\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
