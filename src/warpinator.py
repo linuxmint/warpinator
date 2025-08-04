@@ -338,7 +338,7 @@ class OverviewButton(GObject.Object):
         if remote_machine.status == RemoteStatus.INIT_CONNECTING:
             self.overview_user_connecting_spinner.show()
             self.overview_user_status_icon.hide()
-            self.ip_label.set_text(str(self.remote_machine.ip_info.ip4_address))
+            self.ip_label.set_text(self.remote_machine.ip_info.get_text(" | "))
             if have_info:
                 self.button.set_tooltip_text(_("Connecting"))
             else:
@@ -375,7 +375,7 @@ class OverviewButton(GObject.Object):
         else:
             self.overview_user_hostname.set_text(self.remote_machine.display_hostname)
 
-        self.ip_label.set_text(str(self.remote_machine.ip_info.ip4_address))
+        self.ip_label.set_text(self.remote_machine.ip_info.get_text(" | "))
 
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)
@@ -665,7 +665,7 @@ class WarpWindow(GObject.Object):
         for button in self.user_list_box.get_children():
             joined = " ".join([button.remote_machine.display_name,
                                ("%s@%s" % (button.remote_machine.user_name, button.remote_machine.hostname)),
-                               button.remote_machine.ip_info.ip4_address])
+                               button.remote_machine.ip_info.get_text(" | ")])
             normalized_contents = GLib.utf8_normalize(joined, len(joined), GLib.NormalizeMode.DEFAULT).lower()
 
             if normalized_query in normalized_contents:
@@ -1034,7 +1034,7 @@ class WarpWindow(GObject.Object):
         else:
             self.user_hostname_label.set_text(remote.display_hostname)
 
-        self.user_ip_label.set_text(str(remote.ip_info.ip4_address))
+        self.user_ip_label.set_text(str(remote.ip_info.get_text(" | ")))
 
         if remote.avatar_surface is not None:
             self.user_avatar_image.set_from_surface(remote.avatar_surface)
@@ -1420,9 +1420,9 @@ class WarpApplication(Gtk.Application):
         self.current_auth_port = prefs.get_auth_port()
         self.current_ip_info = self.netmon.get_current_ip_info()
 
-        logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info.ip4_address)
+        logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info)
 
-        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface, self.current_auth_port)
+        self.window.update_local_user_info(self.current_ip_info.get_text(" | "), self.current_ip_info.iface, self.current_auth_port)
 
         self.window.clear_remotes()
 

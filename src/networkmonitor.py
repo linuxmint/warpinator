@@ -102,43 +102,62 @@ class NetworkMonitor(GObject.Object):
 
             try:
                 ip4 = iface[netifaces.AF_INET][0]
+            except KeyError:
+                ip4 = None
+            try:
+                ip6 = iface[netifaces.AF_INET6][0]
+            except KeyError:
+                ip6 = None
 
-                try:
-                    ip6 = iface[netifaces.AF_INET6][0]
-                except KeyError:
-                    ip6 = None
-
+            if ip4 is not None or ip6 is not None:
                 info = util.InterfaceInfo(ip4, ip6, iname)
                 valid.append(info)
-            except KeyError:
-                continue
 
         return valid
 
     def get_default_interface_info(self):
-        ip = self.get_default_ip()
+        ip4 = self.get_default_ip4()
+        ip6 = self.get_default_ip6()
         fallback_info = None
 
         for info in self.get_valid_interface_infos():
             if fallback_info is None:
                 fallback_info = info
             try:
-                if ip == info.ip4["addr"]:
+                if ip4 == info.ip4["addr"]:
+                    return info
+            except:
+                pass
+            try:
+                if ip6 == info.ip6["addr"]:
                     return info
             except:
                 pass
 
         return fallback_info
 
-    def get_default_ip(self):
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-            try:
-                s.connect(("8.8.8.8", 80))
-            except OSError as e:
-                # print("Unable to retrieve IP address: %s" % str(e))
-                return "0.0.0.0"
+    def get_default_ip(self, ip_version):
+        with socket.socket(ip_version, socket.SOCK_DGRAM) as s:
+            if ip_version == socket.AF_INET:
+                try:
+                    s.connect(("8.8.8.8", 80))
+                except OSError as e:
+                    # print("Unable to retrieve IP address: %s" % str(e))
+                    return "0.0.0.0"
+            else:
+                try:
+                    s.connect(("2001:4860:4860::8888", 80))
+                except OSError as e:
+                    # print("Unable to retrieve IP address: %s" % str(e))
+                    return "[::]"
             ans = s.getsockname()[0]
             return ans
+
+    def get_default_ip4(self):
+        return self.get_default_ip(socket.AF_INET)
+
+    def get_default_ip6(self):
+        return self.get_default_ip(socket.AF_INET6)
 
     def emit_state_changed(self):
         logging.debug("Network state changed: online = %s" % str(self.online))
@@ -146,21 +165,26 @@ class NetworkMonitor(GObject.Object):
 
     # TODO: Do this with libnm
     def same_subnet(self, other_ip_info):
-        iface = ipaddress.IPv4Interface("%s/%s" % (self.current_ip_info.ip4_address,
-                                                   self.current_ip_info.ip4["netmask"]))
+        if self.current_ip_info.ip4_address is not None and other_ip_info.ip4_address is not None:
+            iface = ipaddress.IPv4Interface("%s/%s" % (self.current_ip_info.ip4_address,
+                                                    self.current_ip_info.ip4["netmask"]))
 
-        my_net = iface.network
+            my_net = iface.network
 
-        if my_net is None:
-            # We're more likely to have failed here than to have found something on a different subnet.
-            return True
-
-        if my_net.netmask.exploded == "255.255.255.255":
-            logging.warning("Discovery: netmask is 255.255.255.255 - are you on a vpn?")
-            return False
-
-        for addr in list(my_net.hosts()):
-            if other_ip_info.ip4_address == addr.exploded:
+            if my_net is None:
+                # We're more likely to have failed here than to have found something on a different subnet.
                 return True
 
+            if my_net.netmask.exploded == "255.255.255.255":
+                logging.warning("Discovery: netmask is 255.255.255.255 - are you on a vpn?")
+                return False
+
+            for addr in list(my_net.hosts()):
+                if other_ip_info.ip4_address == addr.exploded:
+                    return True
+
+            return False
+        if self.current_ip_info.ip6_address is not None and other_ip_info.ip6_address is not None:
+            return True # TODO: Verify that this is actually true
+        logging.debug("No IP address found: %s" % (self))
         return False

@@ -8,6 +8,7 @@ import time
 import re
 import pkg_resources
 from concurrent import futures
+import time
 
 from gi.repository import GObject, GLib
 
@@ -30,7 +31,7 @@ from ops import ReceiveOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
 import zeroconf
-from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser
+from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser, IPVersion
 
 _ = gettext.gettext
 
@@ -71,9 +72,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         self.netmon = networkmonitor.get_network_monitor()
 
         self.server = None
-        self.browser = None
+        self.browser4 = None
+        self.browser6 = None
         self.zeroconf = None
         self.info = None
+        self.browser_mutex = threading.Lock()
 
         self.display_name = GLib.get_real_name()
         self.start()
@@ -81,7 +84,12 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def start_zeroconf(self):
         logging.info("Using zeroconf version %s %s" % (zeroconf.__version__, "(bundled)" if config.bundle_zeroconf else ""))
 
-        self.zeroconf = Zeroconf(interfaces=[self.ip_info.ip4_address])
+        ip_addresses = []
+        if self.ip_info.ip4_address is not None:
+            ip_addresses.append(self.ip_info.ip4_address)
+        if self.ip_info.ip6_address is not None:
+            ip_addresses.append(self.ip_info.ip6_address)
+        self.zeroconf = Zeroconf(interfaces=ip_addresses)
 
         self.service_ident = prefs.get_connect_id()
         self.service_name = "%s.%s" % (self.service_ident, SERVICE_TYPE)
@@ -115,7 +123,11 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                              'type': 'real' })
 
         self.zeroconf.register_service(self.info)
-        self.browser = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=self.ip_info.ip4_address)
+        # ServiceBrowser can only do one IP version per instance
+        if self.ip_info.ip4_address is not None:
+            self.browser4 = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=self.ip_info.ip4_address)
+        if self.ip_info.ip6_address is not None:
+            self.browser6 = ServiceBrowser(self.zeroconf, SERVICE_TYPE, self, addr=self.ip_info.ip6_address)
 
         return False
 
@@ -137,116 +149,126 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             return
 
         logging.debug(">>> Discovery: service %s (%s:%d) has disappeared."
-                          % (remote.display_hostname, remote.ip_info.ip4_address, remote.port))
+                          % (remote.display_hostname, remote.ip_info, remote.port))
 
         remote.has_zc_presence = False
 
     # Zeroconf worker thread
     def add_service(self, zeroconf, _type, name):
-        info = zeroconf.get_service_info(_type, name)
+        with self.browser_mutex:
+            info = zeroconf.get_service_info(_type, name)
 
-        if info:
-            ident = name.partition(".%s" % SERVICE_TYPE)[0]
+            if info:
+                ident = name.partition(".%s" % SERVICE_TYPE)[0]
 
-            try:
-                remote_hostname = info.properties[b"hostname"].decode()
-            except KeyError:
-                logging.critical(">>> Discovery: no hostname in service info properties.  Is this an old version?")
-                return
-
-            remote_ip_info = util.RemoteInterfaceInfo(info.addresses)
-
-            if remote_ip_info == self.ip_info:
-                return
-
-            try:
-                # Check if this is a flush registration to reset the remote server's presence.
-                if info.properties[b"type"].decode() == "flush":
-                    logging.debug(">>> Discovery: received flush service info (ignoring): %s (%s:%d)"
-                                      % (remote_hostname, remote_ip_info.ip4_address, info.port))
+                try:
+                    remote_hostname = info.properties[b"hostname"].decode()
+                except KeyError:
+                    logging.critical(">>> Discovery: no hostname in service info properties.  Is this an old version?")
                     return
-            except KeyError:
-                logging.warning("No type in service info properties, assuming this is a real connect attempt")
 
-            if ident == self.service_ident:
-                return
+                remote_ip_info = util.RemoteInterfaceInfo(info.addresses_by_version(IPVersion.All))
 
-            try:
-                api_version = info.properties[b"api-version"].decode()
-                auth_port = int(info.properties[b"auth-port"].decode())
-            except KeyError:
-                api_version = "1"
-                auth_port = 0
+                if remote_ip_info == self.ip_info:
+                    return
 
-            # FIXME: I'm not sure why we still get discovered by other networks in some cases -
-            # The Zeroconf object has a specific ip it is set to, what more do I need to do?
-            if not self.netmon.same_subnet(remote_ip_info):
-                logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ip_info.ip4_address))
-                return
+                try:
+                    # Check if this is a flush registration to reset the remote server's presence.
+                    if info.properties[b"type"].decode() == "flush":
+                        logging.debug(">>> Discovery: received flush service info (ignoring): %s (%s:%d)"
+                                        % (remote_hostname, remote_ip_info, info.port))
+                        return
+                except KeyError:
+                    logging.warning("No type in service info properties, assuming this is a real connect attempt")
 
-            try:
-                machine = self.remote_machines[ident]
+                if ident == self.service_ident:
+                    return
+
+                try:
+                    api_version = info.properties[b"api-version"].decode()
+                    auth_port = int(info.properties[b"auth-port"].decode())
+                except KeyError:
+                    api_version = "1"
+                    auth_port = 0
+
+                # FIXME: I'm not sure why we still get discovered by other networks in some cases -
+                # The Zeroconf object has a specific ip it is set to, what more do I need to do?
+                if not self.netmon.same_subnet(remote_ip_info):
+                    logging.debug(">>> Discovery: service is not on this subnet, ignoring: %s (%s)" % (remote_hostname, remote_ip_info))
+                    return
+
+                cert_result = util.CertProcessingResult.FAILURE
+                try:
+                    machine = self.remote_machines[ident]
+                    # Known remote machine
+                    machine.has_zc_presence = True
+                    logging.info(">>> Discovery: existing remote: %s (%s:%d)"
+                                    % (machine.display_hostname, remote_ip_info, info.port))
+
+                    # If the remote truly is the same one (our service info just dropped out
+                    # momentarily), this will end up just retrieving the current cert again.
+                    # If this was a real disconnect we didn't notice, we'll have the new cert
+                    # which we'll need when our supposedly existing connection tries to continue
+                    # pinging. It will fail out and restart the connection loop, and will need
+                    # this updated one.
+
+                    # This blocks the zeroconf thread.
+                    if not machine.status in (RemoteStatus.INIT_CONNECTING, RemoteStatus.AWAITING_DUPLEX):
+                        now = time.time()
+                        if now - machine.last_register > 15: # wait at least 15 seconds after initial discovery
+                            cert_result = self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version)
+                            if cert_result == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
+                                logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
+                                                % (remote_hostname, remote_ip_info, info.port, auth_port))
+                                return
+
+                            if machine.status == RemoteStatus.ONLINE:
+                                logging.debug(">>> Discovery: rejoining existing connect with %s (%s:%d)"
+                                            % (machine.display_hostname, remote_ip_info, info.port))
+                                return
+
+                            # Update our connect info if it changed.
+                            machine.hostname = remote_hostname
+                            machine.ip_info = remote_ip_info
+                            machine.port = info.port
+                            machine.api_version = api_version
+                except KeyError:
+                    # New remote machine
+                    display_hostname = self.ensure_unique_hostname(remote_hostname)
+
+                    logging.info(">>> Discovery: new remote: %s (%s:%d)"
+                                    % (display_hostname, remote_ip_info, info.port))
+
+                    machine = remote.RemoteMachine(ident,
+                                                remote_hostname,
+                                                display_hostname,
+                                                remote_ip_info,
+                                                info.port,
+                                                self.service_ident,
+                                                api_version)
+                    machine.last_register = time.time()
+                    # This blocks the zeroconf thread. Registration will timeout
+                    cert_result = self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version)
+                    if cert_result == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
+                        logging.debug("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
+                                        % (remote_hostname, remote_ip_info, info.port, auth_port))
+                        return
+
+                    self.remote_machines[ident] = machine
+                    machine.connect("ops-changed", self.remote_ops_changed)
+                    machine.connect("remote-status-changed", self.remote_status_changed)
+                    self.idle_emit("remote-machine-added", machine)
+
                 machine.has_zc_presence = True
-                logging.info(">>> Discovery: existing remote: %s (%s:%d)"
-                                  % (machine.display_hostname, remote_ip_info.ip4_address, info.port))
 
-                # If the remote truly is the same one (our service info just dropped out
-                # momentarily), this will end up just retrieving the current cert again.
-                # If this was a real disconnect we didn't notice, we'll have the new cert
-                # which we'll need when our supposedly existing connection tries to continue
-                # pinging. It will fail out and restart the connection loop, and will need
-                # this updated one.
+                if cert_result in (util.CertProcessingResult.CERT_INSERTED, util.CertProcessingResult.CERT_UPDATED):
+                    machine.shutdown() # This does nothing if run more than once.  It's here to make sure
+                                    # the previous start thread is complete before starting a new one.
+                                    # This is needed in the corner case where the remote has gone offline,
+                                    # and returns before our Ping loop times out and closes the thread
+                                    # itself.
 
-                # This blocks the zeroconf thread.
-                if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
-                    logging.warning("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
-                                     % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
-                    return
-
-                if machine.status == RemoteStatus.ONLINE:
-                    logging.debug(">>> Discovery: rejoining existing connect with %s (%s:%d)"
-                                  % (machine.display_hostname, remote_ip_info.ip4_address, info.port))
-                    return
-
-                # Update our connect info if it changed.
-                machine.hostname = remote_hostname
-                machine.ip_info = remote_ip_info
-                machine.port = info.port
-                machine.api_version = api_version
-            except KeyError:
-                display_hostname = self.ensure_unique_hostname(remote_hostname)
-
-                logging.info(">>> Discovery: new remote: %s (%s:%d)"
-                                  % (display_hostname, remote_ip_info.ip4_address, info.port))
-
-                machine = remote.RemoteMachine(ident,
-                                               remote_hostname,
-                                               display_hostname,
-                                               remote_ip_info,
-                                               info.port,
-                                               self.service_ident,
-                                               api_version)
-
-                # This blocks the zeroconf thread. Registration will timeout
-                if not self.remote_registrar.register(ident, remote_hostname, remote_ip_info, info.port, auth_port, api_version) or self.server_thread_keepalive.is_set():
-                    logging.debug("Register failed, or the server was shutting down during registration, ignoring remote %s (%s:%d) auth port: %d"
-                                     % (remote_hostname, remote_ip_info.ip4_address, info.port, auth_port))
-                    return
-
-                self.remote_machines[ident] = machine
-                machine.connect("ops-changed", self.remote_ops_changed)
-                machine.connect("remote-status-changed", self.remote_status_changed)
-                self.idle_emit("remote-machine-added", machine)
-
-            machine.has_zc_presence = True
-
-            machine.shutdown() # This does nothing if run more than once.  It's here to make sure
-                               # the previous start thread is complete before starting a new one.
-                               # This is needed in the corner case where the remote has gone offline,
-                               # and returns before our Ping loop times out and closes the thread
-                               # itself.
-
-            machine.start_remote_thread()
+                    machine.start_remote_thread()
 
     @misc._async
     def register_with_host(self, host:str):
@@ -267,7 +289,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                                             ip=self.ip_info.ip4_address, port=self.port,
                                             hostname=util.get_hostname(), api_version=int(config.RPC_API_VERSION),
                                             auth_port=self.auth_port),
-                                            timeout=5)
+                                            timeout=5, ipv6=self.ip_info.ip6_address)
                 ip = m.group(2)
                 auth_port = int(m.group(4))
                 self.handle_manual_service_registration(reg, ip, auth_port, True)
@@ -284,7 +306,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 logging.debug("Host %s:%d was already connected" % (ip, auth_port))
                 self.idle_emit("manual-connect-result", initiated_here, True, "Already connected")
                 return
-            if not self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) or self.server_thread_keepalive.is_set():
+            if self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
                 logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d" % (reg.hostname, ip, reg.port, auth_port))
                 self.idle_emit("manual-connect-result", initiated_here, False, "Authentication failed")
                 return
@@ -301,7 +323,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             ip_info = util.RemoteInterfaceInfo([])
             ip_info.ip4_address = ip
             machine = remote.RemoteMachine(reg.service_id, reg.hostname, display_hostname, ip_info, reg.port, self.service_ident, str(reg.api_version))
-            if not self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) or self.server_thread_keepalive.is_set():
+            if self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
                 logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d"
                                     % (machine.hostname, machine.ip_info.ip4_address, machine.port, auth_port))
                 self.idle_emit("manual-connect-result", initiated_here, False, "Authentication failed")
@@ -336,7 +358,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
     def run(self):
         logging.info("Using grpc version %s %s" % (grpc.__version__, "(bundled)" if config.bundle_grpc else ""))
         logging.info("Using protobuf version %s %s" % (protobuf.__version__, "(bundled)" if config.bundle_grpc else ""))
-        logging.debug("Server: starting server on %s (%s)" % (self.ip_info.ip4_address, self.ip_info.iface))
+        logging.debug("Server: starting server on %s (%s)" % (self.ip_info, self.ip_info.iface))
         logging.info("Using api version %s" % config.RPC_API_VERSION)
         logging.info("Our uuid: %s" % prefs.get_connect_id())
 
@@ -365,9 +387,9 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         if self.ip_info.ip4_address:
             self.server.add_secure_port('%s:%d' % (self.ip_info.ip4_address, self.port),
                                         server_credentials)
-        # if self.ip_info.ip6_address:
-        #     self.server.add_secure_port('%s:%d' % (self.ip_info.ip6_address, self.port),
-        #                                 server_credentials)
+        if self.ip_info.ip6_address:
+            self.server.add_secure_port('[%s]:%d' % (self.ip_info.ip6_address, self.port),
+                                        server_credentials)
         self.server.start()
 
         self.server_thread_keepalive.clear()
