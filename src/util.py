@@ -223,7 +223,7 @@ class InterfaceInfo():
 
         if self.ip4_address is not None:
             return self.ip4_address == other.ip4_address
-        if self.ip6_address == other.ip6_address:
+        if self.ip6_address is not None:
             return self.ip6_address == other.ip6_address
         return False
 

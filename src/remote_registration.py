@@ -301,7 +301,7 @@ class RegistrationServer_v2():
     
     def RegisterService(self, reg:warp_pb2.ServiceRegistration, context):
         logging.debug("Received manual registration from " + reg.service_id)
-        self.service_registration_handler(reg, reg.ip, reg.auth_port)
+        self.service_registration_handler(reg)
         return warp_pb2.ServiceRegistration(service_id=prefs.get_connect_id(),
                                             ip=self.ip_info.ip4_address,
                                             port=prefs.get_port(),

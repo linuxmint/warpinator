@@ -11,6 +11,8 @@ import math
 import qrcode
 from io import BytesIO
 import re
+import ipaddress
+import urllib
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -1255,8 +1257,14 @@ class ManualConnectDialog(Gtk.Window):
 
     def validate_address(self, entry):
         address = entry.get_text()
-        m = self.ip_validator_re.match(address)
-        self.connect_button.set_sensitive(m is not None)
+        try:
+            if not address.startswith("warpinator://"):
+                address = "warpinator://%s" % address
+            url = urllib.parse.urlparse(address)
+            ipaddress.ip_address(url.hostname) # validate IPv4/IPv6 address
+            self.connect_button.set_sensitive(True)
+        except:
+            self.connect_button.set_sensitive(False)
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):

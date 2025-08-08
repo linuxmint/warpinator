@@ -9,6 +9,8 @@ import re
 import pkg_resources
 from concurrent import futures
 import time
+import ipaddress
+import urllib
 
 from gi.repository import GObject, GLib
 
@@ -272,13 +274,18 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
     @misc._async
     def register_with_host(self, host:str):
-        p = re.compile(r'(warpinator://)?(\d{1,3}(\.\d{1,3}){3}):(\d{1,6})/?$')
-        m = p.match(host)
-        if not m:
+
+        try:
+            if not host.startswith("warpinator://"):
+                host = "warpinator://%s" % host
+            url = urllib.parse.urlparse(host)
+            ipaddress.ip_address(url.hostname) # validate IPv4/IPv6 address
+        except ValueError as e:
             logging.info("User tried to connect to invalid address %s" % host)
             self.idle_emit("manual-connect-result", True, False, "Invalid address")
             return
-        host = "%s:%s" % (m.group(2), m.group(4))
+
+        host = url.netloc
         logging.info("Registering with " + host)
         with grpc.insecure_channel(host) as channel:
             future = grpc.channel_ready_future(channel)        
@@ -288,30 +295,41 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 reg = stub.RegisterService(warp_pb2.ServiceRegistration(service_id=self.service_ident,
                                             ip=self.ip_info.ip4_address, port=self.port,
                                             hostname=util.get_hostname(), api_version=int(config.RPC_API_VERSION),
-                                            auth_port=self.auth_port),
-                                            timeout=5, ipv6=self.ip_info.ip6_address)
-                ip = m.group(2)
-                auth_port = int(m.group(4))
-                self.handle_manual_service_registration(reg, ip, auth_port, True)
+                                            auth_port=self.auth_port, ipv6=self.ip_info.ip6_address),
+                                            timeout=5)
+                self.handle_manual_service_registration(reg, True)
             except Exception as e:
                 future.cancel()
                 logging.critical("Could not register with %s, err %s" % (host, e))
                 self.idle_emit("manual-connect-result", True, False, "Could not connect to remote")
 
-    def handle_manual_service_registration(self, reg, ip, auth_port, initiated_here=False):
+    def handle_manual_service_registration(self, reg, initiated_here=False):
+        ip4_addr = None
+        ip6_addr = None
+        try:
+            ip4_addr = ipaddress.ip_address(reg.ip)
+        except ValueError:
+            pass
+        try:
+            ip6_addr = ipaddress.ip_address(reg.ipv6)
+        except ValueError:
+            pass
         if reg.service_id in self.remote_machines.keys():
             # Machine already known -> update
             machine = self.remote_machines[reg.service_id]
             if machine.status == RemoteStatus.ONLINE:
-                logging.debug("Host %s:%d was already connected" % (ip, auth_port))
+                logging.debug("Host %s:%d was already connected" % (machine.ip_info, reg.auth_port))
                 self.idle_emit("manual-connect-result", initiated_here, True, "Already connected")
                 return
-            if self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
-                logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d" % (reg.hostname, ip, reg.port, auth_port))
+            if self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, reg.auth_port, machine.api_version) == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
+                logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d" % (reg.hostname, machine.ip_info, reg.port, reg.auth_port))
                 self.idle_emit("manual-connect-result", initiated_here, False, "Authentication failed")
                 return
             machine.hostname = reg.hostname
-            machine.ip_info.ip4_address = ip
+            if isinstance(ip4_addr, ipaddress.IPv4Address):
+                machine.ip_info.ip4_address = str(ip4_addr)
+            if isinstance(ip6_addr, ipaddress.IPv6Address):
+                machine.ip_info.ip6_address = str(ip6_addr)
             machine.port = reg.port
             machine.api_version = str(reg.api_version)
 
@@ -321,11 +339,14 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             logging.debug("Adding new static machine (manual connection)")
             display_hostname = self.ensure_unique_hostname(reg.hostname)
             ip_info = util.RemoteInterfaceInfo([])
-            ip_info.ip4_address = ip
+            if isinstance(ip4_addr, ipaddress.IPv4Address):
+                ip_info.ip4_address = str(ip4_addr)
+            if isinstance(ip6_addr, ipaddress.IPv6Address):
+                ip_info.ip6_address = str(ip6_addr)
             machine = remote.RemoteMachine(reg.service_id, reg.hostname, display_hostname, ip_info, reg.port, self.service_ident, str(reg.api_version))
-            if self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, auth_port, machine.api_version) == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
+            if self.remote_registrar.register(machine.ident, machine.hostname, machine.ip_info, machine.port, reg.auth_port, machine.api_version) == util.CertProcessingResult.FAILURE or self.server_thread_keepalive.is_set():
                 logging.debug("Registration of static machine failed, ignoring remote %s (%s:%d) auth %d"
-                                    % (machine.hostname, machine.ip_info.ip4_address, machine.port, auth_port))
+                                    % (machine.hostname, machine.ip_info.ip4_address, machine.port, reg.auth_port))
                 self.idle_emit("manual-connect-result", initiated_here, False, "Authentication failed")
                 return
             self.remote_machines[machine.ident] = machine
