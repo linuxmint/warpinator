@@ -69,13 +69,13 @@ class AuthManager(GObject.Object):
 
     def get_cached_cert(self, hostname, ip_info):
         try:
-            return self.remote_certs["%s.%s" % (hostname, ip_info.ip4_address)]
+            return self.remote_certs["%s.%s" % (hostname, ip_info)]
         except KeyError:
             return None
 
     def process_remote_cert(self, hostname, ip_info, server_data):
         if server_data is None:
-            return False
+            return util.CertProcessingResult.FAILURE
         decoded = base64.decodebytes(server_data)
 
         hasher = hashlib.sha256()
@@ -89,11 +89,20 @@ class AuthManager(GObject.Object):
             logging.debug("Decryption failed for remote '%s': %s" % (hostname, str(e)))
             cert = None
 
+        res = util.CertProcessingResult.FAILURE
         if cert:
-            self.remote_certs["%s.%s" % (hostname, ip_info.ip4_address)] = cert
-            return True
-        else:
-            return False
+            key = "%s.%s" % (hostname, ip_info)
+            val = self.remote_certs.get(key)
+
+            if val is None:
+                res = util.CertProcessingResult.CERT_INSERTED
+            elif val == cert:
+                res = util.CertProcessingResult.CERT_UP_TO_DATE
+                return res
+            else:
+                res = util.CertProcessingResult.CERT_UPDATED
+            self.remote_certs[key] = cert
+        return res
 
     def get_encoded_local_cert(self):
         hasher = hashlib.sha256()
@@ -133,6 +142,8 @@ class AuthManager(GObject.Object):
 
         if self.ip_info.ip4_address is not None:
             alt_names.append(x509.IPAddress(ipaddress.IPv4Address(self.ip_info.ip4_address)))
+        if self.ip_info.ip6_address is not None:
+            alt_names.append(x509.IPAddress(ipaddress.IPv6Address(self.ip_info.ip6_address)))
 
         builder = builder.add_extension(x509.SubjectAlternativeName(alt_names), critical=True)
 

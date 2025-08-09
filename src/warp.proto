@@ -97,6 +97,7 @@ service WarpRegistration {
 message RegRequest {
     string ip = 1;
     string hostname = 2;
+    string ipv6 = 3;
 }
 
 message RegResponse {
@@ -110,5 +111,6 @@ message ServiceRegistration {
     string hostname = 4;
     uint32 api_version = 5;
     uint32 auth_port = 6;
+    string ipv6 = 7;
 }
 
