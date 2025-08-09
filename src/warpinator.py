@@ -1213,7 +1213,14 @@ class ManualConnectDialog(Gtk.Window):
             border=2
         )
 
-        qr.add_data("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
+        ip_info = networkmonitor.get_network_monitor().current_ip_info
+        host_ip = ip_info.ip4_address if ip_info.ip4_address is not None else "[%s]" % ip_info.ip6_address
+        url_data = "%s:%d" % (host_ip, parent.current_auth_port)
+        if ip_info.ip4_address is not None and ip_info.ip6_address is not None:
+            url_data = "%s?%s" %(url_data, urllib.parse.urlencode({"ipv6": ip_info.ip6_address}))
+        url = "warpinator://" + url_data
+        logging.debug("QR code data: %s" % url)
+        qr.add_data(url)
         img = qr.make_image()
         img.save(qrbytes, "BMP")
 
@@ -1223,7 +1230,7 @@ class ManualConnectDialog(Gtk.Window):
         qr_image = Gtk.Image.new_from_surface(surface)
         qr_holder.add(qr_image)
 
-        ip_label.set_label("%s:%d" % (parent.current_ip, parent.current_auth_port))
+        ip_label.set_label(url_data)
 
         self.set_focus(qr_holder)
         self.show_all()
