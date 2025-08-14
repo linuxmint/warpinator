@@ -1192,8 +1192,10 @@ class ManualConnectDialog(Gtk.Window):
         self.entry = self.builder.get_object("ip_entry")
         self.connect_button = self.builder.get_object("connect_button")
         self.status_label = self.builder.get_object("status_label")
-        ip_label = self.builder.get_object("our_ip_label")
+        ip4_label = self.builder.get_object("local_ip4_label")
+        ip6_label = self.builder.get_object("local_ip6_label")
         qr_holder = self.builder.get_object("qr_holder")
+        url_description_label = self.builder.get_object("url_description_label")
 
         self.entry.connect("changed", self.validate_address)
         self.connect_button.connect("clicked", self.on_connecting)
@@ -1229,11 +1231,30 @@ class ManualConnectDialog(Gtk.Window):
         surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf, self.get_scale_factor(), None)
         qr_image = Gtk.Image.new_from_surface(surface)
         qr_holder.add(qr_image)
+        qr_image.set_visible(True)
 
-        ip_label.set_label(url_data)
+        # multiple_adresses = True
+        if ip_info.ip4_address is not None:
+            ip4_label.set_label("%s:%d" % (ip_info.ip4_address, parent.current_auth_port))
+            ip4_label.set_visible(True)
+            multiple_adresses = True
+        else:
+            ip4_label.set_visible(False)
+            multiple_adresses = False
+        if ip_info.ip6_address is not None:
+            ip6_label.set_label("[%s]:%d" % (ip_info.ip6_address, parent.current_auth_port))
+            ip6_label.set_visible(True)
+            multiple_adresses = multiple_adresses and True
+        else:
+            ip6_label.set_visible(False)
+            multiple_adresses = False
+
+        if multiple_adresses:
+            url_description_label.set_label(_("Or connect to one of the addresses below:"))
+        else:
+            url_description_label.set_label(_("Or connect to the address below:"))
 
         self.set_focus(qr_holder)
-        self.show_all()
 
     def on_connecting(self, _btn):
         self.connecting = True

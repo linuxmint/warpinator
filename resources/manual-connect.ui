@@ -192,7 +192,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="url_description_label">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes" comments="The user's ip address and port are displayed here">Or connect to the address below</property>
@@ -204,7 +204,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="our_ip_label">
+          <object class="GtkLabel" id="local_ip4_label">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label">192.168.0.50:42001</property>
@@ -220,6 +220,25 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="local_ip6_label">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label">[2a02::1]:42001</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="scale" value="1.8"/>
+            </attributes>
+            <style>
+              <class name="monospace"/>
+            </style>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">5</property>
           </packing>
         </child>
       </object>
