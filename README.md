@@ -1,7 +1,18 @@
 # Warpinator - send and receive files across a local network
 ![build](https://github.com/linuxmint/warpinator/actions/workflows/build.yml/badge.svg)
+________
 
-##### Other platforms (unofficial):
+### ⚠️ Warning: Fake/malicious website:
+
+``http://warpinator.com`` is a fake website, potentially malicious!
+
+Do **NOT** download or run any software from it!
+
+We do not know who maintains it. We tried to take it down multiple times, the hosting company does not care.
+
+________
+
+### Other platforms (unofficial):
 
 - Android: https://github.com/slowscript/warpinator-android
 - Windows: https://winpinator.swisz.cz
