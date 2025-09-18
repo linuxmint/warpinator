@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from gi.repository import GLib, Gtk, Gdk, GObject, GdkPixbuf, Gio
 
 import prefs
+from networkmonitor import get_network_monitor
 import config
 
 try:
@@ -186,6 +187,11 @@ OpCommand = IntEnum('OpCommand', 'START_TRANSFER \
                                   STOP_TRANSFER_BY_RECEIVER \
                                   REMOVE_TRANSFER')
 
+CertProcessingResult = IntEnum('CertProcessingResult', 'CERT_INSERTED \
+                                                        CERT_UPDATED \
+                                                        CERT_UP_TO_DATE \
+                                                        FAILURE')
+
 class ReceiveError(Exception):
     def __init__(self, message, fatal=True):
         self.fatal = fatal
@@ -196,8 +202,13 @@ class InterfaceInfo():
     def __init__(self, ip4, ip6, iface=None):
         self.iface = iface
         # netifaces AF_INET and AF_INET6 dicts
-        self.ip4 = ip4
-        self.ip4_address = self.ip4["addr"]
+
+        try:
+            self.ip4 = ip4
+            self.ip4_address = self.ip4["addr"]
+        except:
+            self.ip6 = None
+            self.ip4_address = None
 
         try:
             self.ip6 = ip6
@@ -210,7 +221,14 @@ class InterfaceInfo():
         if other is None:
             return False
 
-        return self.ip4_address == other.ip4_address
+        if self.ip4_address is not None:
+            return self.ip4_address == other.ip4_address
+        if self.ip6_address is not None:
+            return self.ip6_address == other.ip6_address
+        return False
+
+    def __str__(self):
+        return self.get_text()
 
     def as_binary_list(self):
         blist = []
@@ -228,6 +246,17 @@ class InterfaceInfo():
 
         return blist
 
+    def get_text(self, delimiter = ", "):
+        ips = []
+        if self.ip4_address is not None:
+            ips.append(self.ip4_address)
+        if self.ip6_address is not None:
+            ips.append(self.ip6_address)
+
+        if delimiter is None:
+            delimiter = ", "
+        return delimiter.join(ips)
+
 class RemoteInterfaceInfo():
     def __init__(self, blist, testing=False):
         if testing:
@@ -238,11 +267,18 @@ class RemoteInterfaceInfo():
         ip4 = None
         ip6 = None
 
+        self.ip4_address = None
+        self.ip6_address = None
+
         for item in blist:
             try:
                 ip4 = socket.inet_ntop(socket.AF_INET, item)
             except ValueError:
+                pass
+            try:
                 ip6 = socket.inet_ntop(socket.AF_INET6, item)
+            except ValueError:
+                pass
 
         if ip4:
             self.ip4_address = ip4
@@ -253,7 +289,26 @@ class RemoteInterfaceInfo():
         if other is None:
             return False
 
-        return self.ip4_address == other.ip4_address
+        if self.ip4_address is not None:
+            return self.ip4_address == other.ip4_address
+        if self.ip6_address == other.ip6_address:
+            return self.ip6_address == other.ip6_address
+        return False
+
+    def __str__(self):
+        return self.get_text()
+
+    def get_text(self, delimiter = ", "):
+        remote_ip, _, _ = self.get_usable_ip()
+        return remote_ip
+
+    def get_usable_ip(self):
+        local_ip_info = get_network_monitor().current_ip_info
+        if self.ip4_address is not None and local_ip_info.ip4_address is not None:
+            return (self.ip4_address, local_ip_info.ip4_address, socket.AF_INET)
+        if self.ip6_address is not None and local_ip_info.ip6_address is not None:
+            return (self.ip6_address, local_ip_info.ip6_address, socket.AF_INET6)
+        return None
 
 last_location = Gio.File.new_for_path(GLib.get_home_dir())
 # A normal GtkFileChooserDialog only lets you pick folders OR files, not

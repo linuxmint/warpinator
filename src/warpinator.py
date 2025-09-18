@@ -11,6 +11,8 @@ import math
 import qrcode
 from io import BytesIO
 import re
+import ipaddress
+import urllib
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -338,7 +340,7 @@ class OverviewButton(GObject.Object):
         if remote_machine.status == RemoteStatus.INIT_CONNECTING:
             self.overview_user_connecting_spinner.show()
             self.overview_user_status_icon.hide()
-            self.ip_label.set_text(str(self.remote_machine.ip_info.ip4_address))
+            self.ip_label.set_text(self.remote_machine.ip_info.get_text(" | "))
             if have_info:
                 self.button.set_tooltip_text(_("Connecting"))
             else:
@@ -375,7 +377,7 @@ class OverviewButton(GObject.Object):
         else:
             self.overview_user_hostname.set_text(self.remote_machine.display_hostname)
 
-        self.ip_label.set_text(str(self.remote_machine.ip_info.ip4_address))
+        self.ip_label.set_text(self.remote_machine.ip_info.get_text(" | "))
 
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)
@@ -665,7 +667,7 @@ class WarpWindow(GObject.Object):
         for button in self.user_list_box.get_children():
             joined = " ".join([button.remote_machine.display_name,
                                ("%s@%s" % (button.remote_machine.user_name, button.remote_machine.hostname)),
-                               button.remote_machine.ip_info.ip4_address])
+                               button.remote_machine.ip_info.get_text(" | ")])
             normalized_contents = GLib.utf8_normalize(joined, len(joined), GLib.NormalizeMode.DEFAULT).lower()
 
             if normalized_query in normalized_contents:
@@ -1034,7 +1036,7 @@ class WarpWindow(GObject.Object):
         else:
             self.user_hostname_label.set_text(remote.display_hostname)
 
-        self.user_ip_label.set_text(str(remote.ip_info.ip4_address))
+        self.user_ip_label.set_text(str(remote.ip_info.get_text(" | ")))
 
         if remote.avatar_surface is not None:
             self.user_avatar_image.set_from_surface(remote.avatar_surface)
@@ -1190,8 +1192,10 @@ class ManualConnectDialog(Gtk.Window):
         self.entry = self.builder.get_object("ip_entry")
         self.connect_button = self.builder.get_object("connect_button")
         self.status_label = self.builder.get_object("status_label")
-        ip_label = self.builder.get_object("our_ip_label")
+        ip4_label = self.builder.get_object("local_ip4_label")
+        ip6_label = self.builder.get_object("local_ip6_label")
         qr_holder = self.builder.get_object("qr_holder")
+        url_description_label = self.builder.get_object("url_description_label")
 
         self.entry.connect("changed", self.validate_address)
         self.connect_button.connect("clicked", self.on_connecting)
@@ -1211,7 +1215,14 @@ class ManualConnectDialog(Gtk.Window):
             border=2
         )
 
-        qr.add_data("warpinator://%s:%d" % (parent.current_ip, parent.current_auth_port))
+        ip_info = networkmonitor.get_network_monitor().current_ip_info
+        host_ip = ip_info.ip4_address if ip_info.ip4_address is not None else "[%s]" % ip_info.ip6_address
+        url_data = "%s:%d" % (host_ip, parent.current_auth_port)
+        if ip_info.ip4_address is not None and ip_info.ip6_address is not None:
+            url_data = "%s?%s" %(url_data, urllib.parse.urlencode({"ipv6": ip_info.ip6_address}))
+        url = "warpinator://" + url_data
+        logging.debug("QR code data: %s" % url)
+        qr.add_data(url)
         img = qr.make_image()
         img.save(qrbytes, "BMP")
 
@@ -1220,11 +1231,30 @@ class ManualConnectDialog(Gtk.Window):
         surface = Gdk.cairo_surface_create_from_pixbuf(pixbuf, self.get_scale_factor(), None)
         qr_image = Gtk.Image.new_from_surface(surface)
         qr_holder.add(qr_image)
+        qr_image.set_visible(True)
 
-        ip_label.set_label("%s:%d" % (parent.current_ip, parent.current_auth_port))
+        # multiple_adresses = True
+        if ip_info.ip4_address is not None:
+            ip4_label.set_label("%s:%d" % (ip_info.ip4_address, parent.current_auth_port))
+            ip4_label.set_visible(True)
+            multiple_adresses = True
+        else:
+            ip4_label.set_visible(False)
+            multiple_adresses = False
+        if ip_info.ip6_address is not None:
+            ip6_label.set_label("[%s]:%d" % (ip_info.ip6_address, parent.current_auth_port))
+            ip6_label.set_visible(True)
+            multiple_adresses = multiple_adresses and True
+        else:
+            ip6_label.set_visible(False)
+            multiple_adresses = False
+
+        if multiple_adresses:
+            url_description_label.set_label(_("Or connect to one of the addresses below:"))
+        else:
+            url_description_label.set_label(_("Or connect to the address below:"))
 
         self.set_focus(qr_holder)
-        self.show_all()
 
     def on_connecting(self, _btn):
         self.connecting = True
@@ -1255,8 +1285,14 @@ class ManualConnectDialog(Gtk.Window):
 
     def validate_address(self, entry):
         address = entry.get_text()
-        m = self.ip_validator_re.match(address)
-        self.connect_button.set_sensitive(m is not None)
+        try:
+            if not address.startswith("warpinator://"):
+                address = "warpinator://%s" % address
+            url = urllib.parse.urlparse(address)
+            ipaddress.ip_address(url.hostname) # validate IPv4/IPv6 address
+            self.connect_button.set_sensitive(True)
+        except:
+            self.connect_button.set_sensitive(False)
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):
@@ -1420,9 +1456,9 @@ class WarpApplication(Gtk.Application):
         self.current_auth_port = prefs.get_auth_port()
         self.current_ip_info = self.netmon.get_current_ip_info()
 
-        logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info.ip4_address)
+        logging.debug("New server requested for '%s' (%s)", self.current_ip_info.iface, self.current_ip_info)
 
-        self.window.update_local_user_info(self.current_ip_info.ip4_address, self.current_ip_info.iface, self.current_auth_port)
+        self.window.update_local_user_info(self.current_ip_info.get_text(" | "), self.current_ip_info.iface, self.current_auth_port)
 
         self.window.clear_remotes()
 
