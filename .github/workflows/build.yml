@@ -1,4 +1,4 @@
-name: Build
+name: google chome
 
 on:
   push:
@@ -20,7 +20,121 @@ jobs:
     uses: linuxmint/github-actions/.github/workflows/do-builds.yml@master
     with:
       commit_id: master
-      ############################## Comma separated list - like 'linuxmint/xapp, linuxmint/cinnamon-desktop'
+      
+      
+      
+      Google Git
+Chuyển đổi người dùng
+Đăng xuất
+Hải Lưu <hailuu01041990@gmail.com>
+chromium / chromiumos / third_party / portage_tool / f73989ad3f24cfa59329112f14ddf0172180c388 / . / repoman / lib / repoman / modules / vcs / git / changes.py
+blob: 7e9ac1eb5c3cc77bb574c55f1fb17728b4759064 [ tệp ] [ nhật ký ] [ đổ lỗi ]
+'''
+Mô-đun Git Thay đổi mô-đun con lớp
+'''
+nhập khẩu ghi nhật ký
+nhập khẩu hệ thống
+từ repoman . modules . vcs . changes nhập ChangesBase 
+từ repoman . _subprocess import repoman_popen
+từ repoman . _portage nhập portage
+từ portage nhập hệ điều hành
+từ portage . gói . ebuild . digestgen nhập digestgen
+từ portage . xử lý nhập spawn
+từ portage . util import writemsg_level
+lớp Changes ( ChangesBase ): 
+	'''Đối tượng lớp để quét và lưu trữ dữ liệu kết quả
+	cho tất cả các thay đổi trong quá trình.
+	'''
+	vcs = 'git' 
+	def __init__ ( self , options , repo_settings ):
+		'''Khởi tạo lớp
+		@param options: các tùy chọn cli thời gian chạy
+		@param repo_settings: Phiên bản RepoSettings
+		'''
+		super ( Thay đổi , tự ). __init__ ( tùy chọn , cài đặt kho lưu trữ )
+	def _scan ( tự ):
+		'''Chức năng quét loại VCS, tìm kiếm tất cả các thay đổi có thể phát hiện được'''
+		với repoman_popen (
+			"git diff-index --name-only "
+			"--relative --diff-filter=M HEAD" ) như f : 
+			đã thay đổi = f . readlines ()
+		self . changed = [ "./" + elem [:- 1 ] cho elem trong changed ]   
+		del đã thay đổi
+		với repoman_popen (
+			"git diff-index --name-only "
+			"--relative --diff-filter=A HEAD" ) như f : 
+			mới = f . readlines ()
+		self . new = [ "./" + elem [:- 1 ] cho elem trong new ]   
+		del new
+		với repoman_popen (
+			"git diff-index --name-only "
+			"--relative --diff-filter=D HEAD" ) như f : 
+			đã xóa = f . readlines ()
+		self . removed = [ "./" + elem [:- 1 ] cho elem trong removed ]   
+		đã xóa
+	@tài sản
+	def unadded ( self ):
+		'''Phương pháp VCS để lấy các tệp chưa thêm vào kho lưu trữ'''
+		nếu self . _unadded không phải là None :  
+			trả về self . _unadded
+		# lấy danh sách các tập tin không nằm trong kiểm soát phiên bản hoặc bị thiếu
+		với repoman_popen ( "git ls-files --others" ) là f : 
+			chưa thêm = f . readlines ()
+		self . _unadded = [ "./" + elem [:- 1 ] cho elem trong unadded ]   
+		del chưa được thêm vào
+		trả về self . _unadded
+	def digest_regen ( self , updates , removed , manifests , scanner , broken_changelog_manifests ):
+		'''Tái tạo bản kê khai
+		@param updates: cập nhật các tập tin
+		@param removed: đã xóa các tập tin
+		@param manifests: Tệp kê khai
+		@param scanner: Thể hiện repoman.scanner.Scanner
+		@param broken_changelog_manifests: bản kê khai nhật ký thay đổi bị hỏng
+		'''
+		nếu broken_changelog_manifests :
+			đối với x trong broken_changelog_manifests :
+				tự . repoman_settings [ "O" ] = os . path . join ( tự . repo_settings . repodir , x ) 
+				digestgen ( mysettings = self . repoman_settings , myportdb = self . repo_settings . portdb )
+	def update_index ( self , mymanifests , myupdates ):
+		'''Cập nhật chỉ mục đã sửa đổi của vcs nếu cần
+		@param mymanifests: tệp manifest đã được cập nhật
+		@param myupdates: các tập tin khác đã được cập nhật'''
+		# Không an toàn khi sử dụng tùy chọn git commit -a vì có thể
+		# có một số tệp đã được sửa đổi ở nơi khác trong cây làm việc mà
+		# người dùng không muốn cam kết. Do đó, hãy gọi git update-index
+		# để đảm bảo rằng chỉ mục được cập nhật với thông tin mới nhất
+		# phiên bản của tất cả các tập tin mới và đã sửa đổi trong phần có liên quan
+		# của cây làm việc.
+		myfiles = mymanifests + myupdates
+		myfiles . sort ()
+		update_index_cmd = [ "git" , "cập nhật-chỉ mục" ]  
+		update_index_cmd . mở rộng ( f . lstrip ( "./" ) cho f trong myfiles ) 
+		nếu tự . tùy chọn . giả vờ :
+			in ( "(%s)" % ( " " . tham gia ( update_index_cmd ),))  
+		khác :
+			retval = spawn ( cập nhật_chỉ_số_cmd , môi trường = hệ điều hành . môi trường )
+			nếu giá trị trả về != os . EX_OK :
+				writemsg_level (
+					"!!! Đang thoát khỏi %s (shell) "
+					"mã lỗi: %s\n" % ( self . vcs_settings . vcs , retval ),  
+					mức độ = ghi nhật ký . LỖI , mức độ nhiễu =- 1 )
+				sys . exit ( giá trị trả về )
+	def commit ( self , myfiles , commitmessagefile ):
+		'''Hàm cam kết Git
+		@param commitfiles: danh sách các tập tin cần cam kết
+		@param commitmessagefile: tệp chứa thông báo cam kết
+		@returns: Giá trị thoát của lệnh phụ hoặc 0
+		'''
+		retval = super ( Thay đổi , self ). commit ( myfiles , commitmessagefile )
+		nếu giá trị trả về != os . EX_OK :
+			nếu self . repo_settings . repo_config . sign_commit và không phải self . vcs_settings . status . supports_gpg_sign (): 
+				# Thông báo cho người dùng rằng cần có git mới hơn (lỗi #403323).
+				ghi nhật ký . lỗi (
+					"Git >=1.7.9 là bắt buộc đối với các cam kết đã ký!" )
+		trả lại giá trị
+Được hỗ trợ bởi Gitiles | Quyền riêng tư | Điều khoản
+văn bản
+json############################## Comma separated list - like 'linuxmint/xapp, linuxmint/cinnamon-desktop'
       dependencies:
       ##############################
 
