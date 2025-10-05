@@ -200,6 +200,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     return
 
                 cert_result = util.CertProcessingResult.FAILURE
+                newly_discovered = False
                 try:
                     machine = self.remote_machines[ident]
                     # Known remote machine
@@ -236,6 +237,7 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                             machine.api_version = api_version
                 except KeyError:
                     # New remote machine
+                    newly_discovered = True
                     display_hostname = self.ensure_unique_hostname(remote_hostname)
 
                     logging.info(">>> Discovery: new remote: %s (%s:%d)"
@@ -263,7 +265,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
 
                 machine.has_zc_presence = True
 
-                if cert_result in (util.CertProcessingResult.CERT_INSERTED, util.CertProcessingResult.CERT_UPDATED):
+                if cert_result in (util.CertProcessingResult.CERT_INSERTED, util.CertProcessingResult.CERT_UPDATED) or \
+                        (cert_result == util.CertProcessingResult.CERT_UP_TO_DATE and (newly_discovered or machine.status == RemoteStatus.OFFLINE)):
                     machine.shutdown() # This does nothing if run more than once.  It's here to make sure
                                     # the previous start thread is complete before starting a new one.
                                     # This is needed in the corner case where the remote has gone offline,
