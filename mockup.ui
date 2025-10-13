@@ -23,7 +23,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">open-menu-symbolic</property>
+                    <property name="icon_name">xapp-open-menu-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -65,7 +65,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">face-uncertain-symbolic</property>
+                        <property name="icon_name">xapp-face-uncertain-symbolic</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -188,7 +188,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">open-menu-symbolic</property>
+                    <property name="icon_name">xapp-open-menu-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -216,7 +216,7 @@
               <object class="GtkSearchEntry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="primary_icon_name">edit-find-symbolic</property>
+                <property name="primary_icon_name">xapp-edit-find-symbolic</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="primary_icon_sensitive">False</property>
                 <property name="placeholder_text" translatable="yes">Search...</property>
@@ -260,7 +260,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">avatar-default-symbolic</property>
+                                <property name="icon_name">xapp-avatar-default-symbolic</property>
                                 <property name="icon_size">5</property>
                               </object>
                               <packing>
@@ -330,7 +330,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">starred-symbolic</property>
+                                <property name="icon_name">xapp-starred-symbolic</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -363,7 +363,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
                                 <property name="valign">start</property>
-                                <property name="icon_name">avatar-default-symbolic</property>
+                                <property name="icon_name">xapp-avatar-default-symbolic</property>
                                 <property name="icon_size">5</property>
                               </object>
                               <packing>
@@ -433,7 +433,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">document-open-recent-symbolic</property>
+                                <property name="icon_name">xapp-document-open-recent-symbolic</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -464,7 +464,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">avatar-default-symbolic</property>
+                                <property name="icon_name">xapp-avatar-default-symbolic</property>
                                 <property name="icon_size">5</property>
                               </object>
                               <packing>
@@ -636,7 +636,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">open-menu-symbolic</property>
+                    <property name="icon_name">xapp-open-menu-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -671,7 +671,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">go-previous-symbolic</property>
+                    <property name="icon_name">xapp-go-previous-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -685,7 +685,7 @@
               <object class="GtkImage">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="icon_name">avatar-default-symbolic</property>
+                <property name="icon_name">xapp-avatar-default-symbolic</property>
                 <property name="icon_size">6</property>
               </object>
               <packing>
@@ -761,7 +761,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">starred-symbolic</property>
+                    <property name="icon_name">xapp-starred-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -963,7 +963,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">media-playback-pause-symbolic</property>
+                                <property name="icon_name">xapp-media-playback-pause-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -982,7 +982,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">process-stop-symbolic</property>
+                                <property name="icon_name">xapp-process-stop-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -1015,7 +1015,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">window-close-symbolic</property>
+                                <property name="icon_name">xapp-window-close-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -1034,7 +1034,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">emblem-ok-symbolic</property>
+                                <property name="icon_name">xapp-emblem-ok-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -1116,7 +1116,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">folder-symbolic</property>
+                                <property name="icon_name">xapp-folder-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -1198,7 +1198,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">list-remove-symbolic</property>
+                                <property name="icon_name">xapp-list-remove-symbolic</property>
                               </object>
                             </child>
                           </object>
@@ -1218,7 +1218,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">go-down-symbolic</property>
+                        <property name="icon_name">xapp-go-down-symbolic</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1229,7 +1229,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">go-down-symbolic</property>
+                        <property name="icon_name">xapp-go-down-symbolic</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1240,7 +1240,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">go-down-symbolic</property>
+                        <property name="icon_name">xapp-go-down-symbolic</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -1251,7 +1251,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">go-up-symbolic</property>
+                        <property name="icon_name">xapp-go-up-symbolic</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>

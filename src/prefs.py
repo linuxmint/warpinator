@@ -637,12 +637,12 @@ class GroupCodeEntry(SettingsWidget):
         text = widget.get_text()
 
         if text == "":
-            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "xapp-dialog-error-symbolic")
             widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("A group code is required."))
             self.set_code_button.set_sensitive(False)
             return
         elif len(text) < 4:
-            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "dialog-error-symbolic")
+            widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, "xapp-dialog-error-symbolic")
             widget.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, _("The group code is too short."))
             self.set_code_button.set_sensitive(False)
             return

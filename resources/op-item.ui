@@ -5,51 +5,51 @@
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">emblem-ok-symbolic</property>
+    <property name="icon_name">xapp-emblem-ok-symbolic</property>
   </object>
   <object class="GtkImage" id="image10">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">media-playback-start-symbolic</property>
+    <property name="icon_name">xapp-media-playback-start-symbolic</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
-    <property name="icon_name">window-close-symbolic</property>
+    <property name="icon_name">xapp-window-close-symbolic</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">media-playback-pause-symbolic</property>
+    <property name="icon_name">xapp-media-playback-pause-symbolic</property>
   </object>
   <object class="GtkImage" id="image5">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">media-playback-stop-symbolic</property>
+    <property name="icon_name">xapp-media-playback-stop-symbolic</property>
   </object>
   <object class="GtkImage" id="image6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">folder-open-symbolic</property>
+    <property name="icon_name">xapp-folder-open-symbolic</property>
   </object>
   <object class="GtkImage" id="image7">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
-    <property name="icon_name">window-close-symbolic</property>
+    <property name="icon_name">xapp-window-close-symbolic</property>
   </object>
   <object class="GtkImage" id="image8">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
-    <property name="icon_name">view-refresh-symbolic</property>
+    <property name="icon_name">xapp-view-refresh-symbolic</property>
   </object>
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
-    <property name="icon_name">list-remove-symbolic</property>
+    <property name="icon_name">xapp-list-remove-symbolic</property>
   </object>
   <object class="GtkBox" id="op_item">
     <property name="visible">True</property>
@@ -60,7 +60,7 @@
       <object class="GtkImage" id="transfer_direction_image">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="icon_name">go-up-symbolic</property>
+        <property name="icon_name">xapp-go-up-symbolic</property>
       </object>
       <packing>
         <property name="expand">False</property>

@@ -6,22 +6,22 @@
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">list-remove-symbolic</property>
+    <property name="icon-name">xapp-list-remove-symbolic</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">go-previous-symbolic</property>
+    <property name="icon-name">xapp-go-previous-symbolic</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">window-close-symbolic</property>
+    <property name="icon-name">xapp-window-close-symbolic</property>
   </object>
   <object class="GtkImage" id="user_favorite_image">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="icon-name">non-starred-symbolic</property>
+    <property name="icon-name">xapp-non-starred-symbolic</property>
     <property name="icon_size">3</property>
   </object>
   <object class="XAppGtkWindow" id="main_window">
@@ -299,7 +299,7 @@
                           <object class="GtkSearchEntry" id="search_entry">
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
-                            <property name="primary-icon-name">edit-find-symbolic</property>
+                            <property name="primary-icon-name">xapp-edit-find-symbolic</property>
                             <property name="primary-icon-activatable">False</property>
                             <property name="primary-icon-sensitive">False</property>
                           </object>
@@ -653,7 +653,7 @@
                               <object class="GtkImage" id="user_online_image">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="icon-name">network-error-symbolic</property>
+                                <property name="icon-name">xapp-network-error-symbolic</property>
                                 <property name="icon_size">3</property>
                               </object>
                               <packing>
@@ -735,7 +735,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="icon-name">face-uncertain-symbolic</property>
+                        <property name="icon-name">xapp-face-uncertain-symbolic</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -1062,7 +1062,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="icon-name">face-sad-symbolic</property>
+                        <property name="icon-name">xapp-face-sad-symbolic</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -1136,7 +1136,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="icon-name">folder-symbolic</property>
+                        <property name="icon-name">xapp-folder-symbolic</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -1363,7 +1363,7 @@
                       <object class="GtkImage" id="app_restart_icon">
                         <property name="can-focus">False</property>
                         <property name="no-show-all">True</property>
-                        <property name="icon-name">dialog-warning-symbolic</property>
+                        <property name="icon-name">xapp-dialog-warning-symbolic</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -1473,7 +1473,7 @@
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="icon-name">folder-symbolic</property>
+                        <property name="icon-name">xapp-folder-symbolic</property>
                         <property name="icon_size">6</property>
                       </object>
                       <packing>
@@ -1639,7 +1639,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="icon-name">open-menu-symbolic</property>
+                    <property name="icon-name">xapp-open-menu-symbolic</property>
                     <property name="use-fallback">True</property>
                     <property name="icon_size">2</property>
                   </object>

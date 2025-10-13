@@ -153,7 +153,7 @@ class SendOp(CommonOp):
                 # Translators: Don't need to translate singular, we show the filename if there's only one
                 self.description = gettext.ngettext("%d file-do-not-translate",
                                                     "%d files", self.total_count) % (self.total_count,)
-                self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
+                self.gicon = Gio.ThemedIcon.new("xapp-edit-copy-symbolic")
             else:
                 self.description = self.resolved_files[0].basename
                 self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
@@ -168,7 +168,7 @@ class SendOp(CommonOp):
                     self.first_missing_file = self.top_dir_basenames[0]
                 except IndexError:
                     self.first_missing_file = None
-                self.gicon = Gio.ThemedIcon.new("dialog-error-symbolic")
+                self.gicon = Gio.ThemedIcon.new("xapp-dialog-error-symbolic")
                 self.set_status(OpStatus.FILE_NOT_FOUND)
             else:
                 # self.status = OpStatus.FAILED_UNRECOVERABLE
@@ -260,7 +260,7 @@ class ReceiveOp(CommonOp):
             # Translators: Don't need to translate singular, we show the filename if there's only one
             self.description = gettext.ngettext("%d file",
                                                 "%d files", self.total_count) % (self.total_count,)
-            self.gicon = Gio.ThemedIcon.new("edit-copy-symbolic")
+            self.gicon = Gio.ThemedIcon.new("xapp-edit-copy-symbolic")
         else:
             self.description = self.name_if_single
             self.gicon = Gio.content_type_get_symbolic_icon(self.mime_if_single)
