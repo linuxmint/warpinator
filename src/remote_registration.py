@@ -235,7 +235,7 @@ def register_v2(details):
     elif success == util.CertProcessingResult.CERT_UPDATED:
         logging.debug("Successfully updated registration with %s (%s:%d) - api version 2"
                              % (details.hostname, details.ip_info, details.auth_port))
-    elif success == util.CertProcessingResult.CERT_UPDATED:
+    elif success == util.CertProcessingResult.CERT_UP_TO_DATE:
         logging.debug("Certificate already up to date, nothing to do for %s (%s:%d) - api version 2"
                              % (details.hostname, details.ip_info, details.auth_port))
     return success
