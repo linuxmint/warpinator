@@ -53,8 +53,8 @@ DISCOVERY_TIMEOUT = 3
 SECURE_MODE_EXIT_TIME_SECONDS = 60 * 60 # 60 minutes in seconds
 
 ICON_ONLINE = ""
-ICON_OFFLINE = "xapp-network-offline-symbolic"
-ICON_UNREACHABLE = "xapp-network-error-symbolic"
+ICON_OFFLINE = "xsi-network-offline-symbolic"
+ICON_UNREACHABLE = "xsi-network-error-symbolic"
 
 INHIBIT_STATES = (OpStatus.TRANSFERRING,
                   OpStatus.PAUSED)
@@ -187,9 +187,9 @@ class OpItem(object):
 
     def refresh_buttons_and_icons(self):
         if self.op.direction == TransferDirection.TO_REMOTE_MACHINE:
-            self.direction_image.set_from_icon_name("xapp-go-up-symbolic", Gtk.IconSize.BUTTON)
+            self.direction_image.set_from_icon_name("xsi-go-up-symbolic", Gtk.IconSize.BUTTON)
         else:
-            self.direction_image.set_from_icon_name("xapp-go-down-symbolic", Gtk.IconSize.BUTTON)
+            self.direction_image.set_from_icon_name("xsi-go-down-symbolic", Gtk.IconSize.BUTTON)
 
         if self.op.status == OpStatus.CALCULATING:
             self.mime_image.clear()
@@ -382,7 +382,7 @@ class OverviewButton(GObject.Object):
         if self.remote_machine.avatar_surface:
             self.avatar_image.set_from_surface(self.remote_machine.avatar_surface)
         else:
-            self.avatar_image.set_from_icon_name("xapp-avatar-default-symbolic", Gtk.IconSize.DND)
+            self.avatar_image.set_from_icon_name("xsi-avatar-default-symbolic", Gtk.IconSize.DND)
 
         self.remote_machine_status_changed(remote_machine)
         self.refresh_favorite_icon()
@@ -421,9 +421,9 @@ class OverviewButton(GObject.Object):
         self.favorite_image.show()
 
         if self.remote_machine.favorite:
-            self.favorite_image.set_from_icon_name("xapp-starred-symbolic", Gtk.IconSize.BUTTON)
+            self.favorite_image.set_from_icon_name("xsi-starred-symbolic", Gtk.IconSize.BUTTON)
         elif self.remote_machine.recent_time != 0:
-            self.favorite_image.set_from_icon_name("xapp-document-open-recent-symbolic", Gtk.IconSize.BUTTON)
+            self.favorite_image.set_from_icon_name("xsi-document-open-recent-symbolic", Gtk.IconSize.BUTTON)
         else:
             self.favorite_image.clear()
 
@@ -1041,7 +1041,7 @@ class WarpWindow(GObject.Object):
         if remote.avatar_surface is not None:
             self.user_avatar_image.set_from_surface(remote.avatar_surface)
         else:
-            self.user_avatar_image.set_from_icon_name("xapp-avatar-default-symbolic", Gtk.IconSize.DND)
+            self.user_avatar_image.set_from_icon_name("xsi-avatar-default-symbolic", Gtk.IconSize.DND)
 
         self.add_op_items()
         self.sync_favorite()
@@ -1144,9 +1144,9 @@ class WarpWindow(GObject.Object):
 
     def sync_favorite(self):
         if self.current_selected_remote_machine.favorite:
-            self.user_favorite_image.set_from_icon_name("xapp-starred-symbolic", Gtk.IconSize.BUTTON)
+            self.user_favorite_image.set_from_icon_name("xsi-starred-symbolic", Gtk.IconSize.BUTTON)
         else:
-            self.user_favorite_image.set_from_icon_name("xapp-non-starred-symbolic", Gtk.IconSize.BUTTON)
+            self.user_favorite_image.set_from_icon_name("xsi-non-starred-symbolic", Gtk.IconSize.BUTTON)
 
     def get_sorted_button_list(self):
         def cmp_buttons(a, b):

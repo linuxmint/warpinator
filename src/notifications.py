@@ -105,9 +105,9 @@ class TransferCompleteNotification():
             notification.set_body(body)
 
             if self.warn:
-                icon_name = "xapp-dialog-warning-symbolic"
+                icon_name = "xsi-dialog-warning-symbolic"
             else:
-                icon_name = "xapp-emblem-ok-symbolic"
+                icon_name = "xsi-emblem-ok-symbolic"
             notification.set_icon(Gio.ThemedIcon(name=icon_name))
             notification.set_default_action("app.notification-response::focus")
 
@@ -142,7 +142,7 @@ class TransferFailedNotification():
                 body = (_("Something went wrong with the transfer from %s") % self.op.sender_name)
 
             notification.set_body(body)
-            notification.set_icon(Gio.ThemedIcon(name="xapp-dialog-error-symbolic"))
+            notification.set_icon(Gio.ThemedIcon(name="xsi-dialog-error-symbolic"))
             notification.set_default_action("app.notification-response::focus")
 
             notification.set_priority(Gio.NotificationPriority.NORMAL)
