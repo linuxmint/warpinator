@@ -141,7 +141,7 @@ class NewThreadExecutor():
         self._factory_thread.join()
         logging.debug("NewThreadExecutor: Shutdown complete")
 
-from enum import IntEnum
+from enum import IntEnum, IntFlag
 TransferDirection = IntEnum('TransferDirection', 'TO_REMOTE_MACHINE \
                                                   FROM_REMOTE_MACHINE')
 
@@ -191,6 +191,9 @@ CertProcessingResult = IntEnum('CertProcessingResult', 'CERT_INSERTED \
                                                         CERT_UPDATED \
                                                         CERT_UP_TO_DATE \
                                                         FAILURE')
+
+class RemoteFeatures(IntFlag):
+    TEXT_MESSAGES = 1 << 0
 
 class ReceiveError(Exception):
     def __init__(self, message, fatal=True):

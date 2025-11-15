@@ -33,6 +33,7 @@ service Warp {
 message RemoteMachineInfo {
     string display_name = 1;
     string user_name = 2;
+    uint32 feature_flags = 3;
 }
 
 message RemoteMachineAvatar {

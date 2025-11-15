@@ -30,7 +30,7 @@ import util
 import misc
 import transfers
 from ops import ReceiveOp, TextMessageOp
-from util import TransferDirection, OpStatus, RemoteStatus
+from util import TransferDirection, OpStatus, RemoteStatus, RemoteFeatures
 
 import zeroconf
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser, IPVersion
@@ -40,6 +40,8 @@ _ = gettext.gettext
 void = warp_pb2.VoidType()
 
 SERVICE_TYPE = "_warpinator._tcp.local."
+
+SERVER_FEATURES = RemoteFeatures.TEXT_MESSAGES
 
 # server (this is on a separate thread from the ui, grpc isn't compatible with
 # gmainloop)
@@ -559,7 +561,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         logging.debug("Server RPC: GetRemoteMachineInfo from '%s'" % request.readable_name)
 
         return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name(),
-                                          user_name=GLib.get_user_name())
+                                          user_name=GLib.get_user_name(),
+                                          feature_flags=SERVER_FEATURES)
 
     def GetRemoteMachineAvatar(self, request, context):
         logging.debug("Server RPC: GetRemoteMachineAvatar from '%s'" % request.readable_name)

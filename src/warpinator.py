@@ -526,6 +526,7 @@ class WarpWindow(GObject.Object):
         self.user_send_msg_button.connect("clicked", self.send_msg_button_clicked)
         self.user_msg_entry = self.builder.get_object("user_msg_entry")
         self.user_msg_entry.connect("key-press-event", self.msg_entry_key_press)
+        self.user_msg_box = self.builder.get_object("user_msg_box")
         self.user_online_box = self.builder.get_object("user_online_box")
         self.user_online_image = self.builder.get_object("user_online_image")
         self.user_online_label = self.builder.get_object("user_online_label")
@@ -1078,6 +1079,8 @@ class WarpWindow(GObject.Object):
             self.user_avatar_image.set_from_surface(remote.avatar_surface)
         else:
             self.user_avatar_image.set_from_icon_name("xsi-avatar-default-symbolic", Gtk.IconSize.DND)
+
+        self.user_msg_box.set_visible(remote.supports_messages)
 
         self.add_op_items()
         self.sync_favorite()

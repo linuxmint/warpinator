@@ -19,7 +19,7 @@ import misc
 import transfers
 import auth
 from ops import SendOp, ReceiveOp, TextMessageOp
-from util import TransferDirection, OpStatus, OpCommand, RemoteStatus, ReceiveError
+from util import TransferDirection, OpStatus, OpCommand, RemoteStatus, ReceiveError, RemoteFeatures
 
 _ = gettext.gettext
 
@@ -56,6 +56,7 @@ class RemoteMachine(GObject.Object):
         self.display_name = ""
         self.favorite = prefs.get_is_favorite(self.ident)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
+        self.supports_messages = False
 
         self.avatar_surface = None
         self.transfer_ops = []
@@ -366,6 +367,8 @@ class RemoteMachine(GObject.Object):
             info = future.result()
             self.display_name = info.display_name
             self.user_name = info.user_name
+            feature_flags = RemoteFeatures(info.feature_flags)
+            self.supports_messages = RemoteFeatures.TEXT_MESSAGES in feature_flags
             self.favorite = prefs.get_is_favorite(self.ident)
 
             valid = GLib.utf8_make_valid(self.display_name, -1)

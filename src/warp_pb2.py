@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nwarp.proto\"<\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"Z\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\x12\x17\n\x0fuse_compression\x18\x04 \x01(\x08\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"\x88\x01\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r\x12\x17\n\x04time\x18\x06 \x01(\x0b\x32\t.FileTime\"-\n\x08\x46ileTime\x12\r\n\x05mtime\x18\x01 \x01(\x04\x12\x12\n\nmtime_usec\x18\x02 \x01(\r\"8\n\nRegRequest\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x10\n\x08hostname\x18\x02 \x01(\t\x12\x0c\n\x04ipv6\x18\x03 \x01(\t\"\"\n\x0bRegResponse\x12\x13\n\x0blocked_cert\x18\x01 \x01(\t\"\x8b\x01\n\x13ServiceRegistration\x12\x12\n\nservice_id\x18\x01 \x01(\t\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x10\n\x08hostname\x18\x04 \x01(\t\x12\x13\n\x0b\x61pi_version\x18\x05 \x01(\r\x12\x11\n\tauth_port\x18\x06 \x01(\r\x12\x0c\n\x04ipv6\x18\x07 \x01(\t\"@\n\x0bTextMessage\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x0f\n\x07message\x18\x03 \x01(\t2\xa0\x04\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12.\n\x10WaitingForDuplex\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12,\n\x0fSendTextMessage\x12\x0c.TextMessage\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x32\x86\x01\n\x10WarpRegistration\x12\x31\n\x12RequestCertificate\x12\x0b.RegRequest\x1a\x0c.RegResponse\"\x00\x12?\n\x0fRegisterService\x12\x14.ServiceRegistration\x1a\x14.ServiceRegistration\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nwarp.proto\"S\n\x11RemoteMachineInfo\x12\x14\n\x0c\x64isplay_name\x18\x01 \x01(\t\x12\x11\n\tuser_name\x18\x02 \x01(\t\x12\x15\n\rfeature_flags\x18\x03 \x01(\r\"+\n\x13RemoteMachineAvatar\x12\x14\n\x0c\x61vatar_chunk\x18\x01 \x01(\x0c\"/\n\nLookupName\x12\n\n\x02id\x18\x01 \x01(\t\x12\x15\n\rreadable_name\x18\x02 \x01(\t\"\x1e\n\nHaveDuplex\x12\x10\n\x08response\x18\x02 \x01(\x08\"\x19\n\x08VoidType\x12\r\n\x05\x64ummy\x18\x01 \x01(\x05\"Z\n\x06OpInfo\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x15\n\rreadable_name\x18\x03 \x01(\t\x12\x17\n\x0fuse_compression\x18\x04 \x01(\x08\"0\n\x08StopInfo\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\r\n\x05\x65rror\x18\x02 \x01(\x08\"\xd0\x01\n\x11TransferOpRequest\x12\x15\n\x04info\x18\x01 \x01(\x0b\x32\x07.OpInfo\x12\x13\n\x0bsender_name\x18\x02 \x01(\t\x12\x15\n\rreceiver_name\x18\x03 \x01(\t\x12\x10\n\x08receiver\x18\x04 \x01(\t\x12\x0c\n\x04size\x18\x05 \x01(\x04\x12\r\n\x05\x63ount\x18\x06 \x01(\x04\x12\x16\n\x0ename_if_single\x18\x07 \x01(\t\x12\x16\n\x0emime_if_single\x18\x08 \x01(\t\x12\x19\n\x11top_dir_basenames\x18\t \x03(\t\"\x88\x01\n\tFileChunk\x12\x15\n\rrelative_path\x18\x01 \x01(\t\x12\x11\n\tfile_type\x18\x02 \x01(\x05\x12\x16\n\x0esymlink_target\x18\x03 \x01(\t\x12\r\n\x05\x63hunk\x18\x04 \x01(\x0c\x12\x11\n\tfile_mode\x18\x05 \x01(\r\x12\x17\n\x04time\x18\x06 \x01(\x0b\x32\t.FileTime\"-\n\x08\x46ileTime\x12\r\n\x05mtime\x18\x01 \x01(\x04\x12\x12\n\nmtime_usec\x18\x02 \x01(\r\"8\n\nRegRequest\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x10\n\x08hostname\x18\x02 \x01(\t\x12\x0c\n\x04ipv6\x18\x03 \x01(\t\"\"\n\x0bRegResponse\x12\x13\n\x0blocked_cert\x18\x01 \x01(\t\"\x8b\x01\n\x13ServiceRegistration\x12\x12\n\nservice_id\x18\x01 \x01(\t\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x10\n\x08hostname\x18\x04 \x01(\t\x12\x13\n\x0b\x61pi_version\x18\x05 \x01(\r\x12\x11\n\tauth_port\x18\x06 \x01(\r\x12\x0c\n\x04ipv6\x18\x07 \x01(\t\"@\n\x0bTextMessage\x12\r\n\x05ident\x18\x01 \x01(\t\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x0f\n\x07message\x18\x03 \x01(\t2\xa0\x04\n\x04Warp\x12\x33\n\x15\x43heckDuplexConnection\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12.\n\x10WaitingForDuplex\x12\x0b.LookupName\x1a\x0b.HaveDuplex\"\x00\x12\x39\n\x14GetRemoteMachineInfo\x12\x0b.LookupName\x1a\x12.RemoteMachineInfo\"\x00\x12?\n\x16GetRemoteMachineAvatar\x12\x0b.LookupName\x1a\x14.RemoteMachineAvatar\"\x00\x30\x01\x12;\n\x18ProcessTransferOpRequest\x12\x12.TransferOpRequest\x1a\t.VoidType\"\x00\x12\'\n\x0fPauseTransferOp\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12,\n\x0fSendTextMessage\x12\x0c.TextMessage\x1a\t.VoidType\"\x00\x12(\n\rStartTransfer\x12\x07.OpInfo\x1a\n.FileChunk\"\x00\x30\x01\x12/\n\x17\x43\x61ncelTransferOpRequest\x12\x07.OpInfo\x1a\t.VoidType\"\x00\x12&\n\x0cStopTransfer\x12\t.StopInfo\x1a\t.VoidType\"\x00\x12 \n\x04Ping\x12\x0b.LookupName\x1a\t.VoidType\"\x00\x32\x86\x01\n\x10WarpRegistration\x12\x31\n\x12RequestCertificate\x12\x0b.RegRequest\x1a\x0c.RegResponse\"\x00\x12?\n\x0fRegisterService\x12\x14.ServiceRegistration\x1a\x14.ServiceRegistration\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,35 +32,35 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'warp_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_REMOTEMACHINEINFO']._serialized_start=14
-  _globals['_REMOTEMACHINEINFO']._serialized_end=74
-  _globals['_REMOTEMACHINEAVATAR']._serialized_start=76
-  _globals['_REMOTEMACHINEAVATAR']._serialized_end=119
-  _globals['_LOOKUPNAME']._serialized_start=121
-  _globals['_LOOKUPNAME']._serialized_end=168
-  _globals['_HAVEDUPLEX']._serialized_start=170
-  _globals['_HAVEDUPLEX']._serialized_end=200
-  _globals['_VOIDTYPE']._serialized_start=202
-  _globals['_VOIDTYPE']._serialized_end=227
-  _globals['_OPINFO']._serialized_start=229
-  _globals['_OPINFO']._serialized_end=319
-  _globals['_STOPINFO']._serialized_start=321
-  _globals['_STOPINFO']._serialized_end=369
-  _globals['_TRANSFEROPREQUEST']._serialized_start=372
-  _globals['_TRANSFEROPREQUEST']._serialized_end=580
-  _globals['_FILECHUNK']._serialized_start=583
-  _globals['_FILECHUNK']._serialized_end=719
-  _globals['_FILETIME']._serialized_start=721
-  _globals['_FILETIME']._serialized_end=766
-  _globals['_REGREQUEST']._serialized_start=768
-  _globals['_REGREQUEST']._serialized_end=824
-  _globals['_REGRESPONSE']._serialized_start=826
-  _globals['_REGRESPONSE']._serialized_end=860
-  _globals['_SERVICEREGISTRATION']._serialized_start=863
-  _globals['_SERVICEREGISTRATION']._serialized_end=1002
-  _globals['_TEXTMESSAGE']._serialized_start=1004
-  _globals['_TEXTMESSAGE']._serialized_end=1068
-  _globals['_WARP']._serialized_start=1071
-  _globals['_WARP']._serialized_end=1615
-  _globals['_WARPREGISTRATION']._serialized_start=1618
-  _globals['_WARPREGISTRATION']._serialized_end=1752
+  _globals['_REMOTEMACHINEINFO']._serialized_end=97
+  _globals['_REMOTEMACHINEAVATAR']._serialized_start=99
+  _globals['_REMOTEMACHINEAVATAR']._serialized_end=142
+  _globals['_LOOKUPNAME']._serialized_start=144
+  _globals['_LOOKUPNAME']._serialized_end=191
+  _globals['_HAVEDUPLEX']._serialized_start=193
+  _globals['_HAVEDUPLEX']._serialized_end=223
+  _globals['_VOIDTYPE']._serialized_start=225
+  _globals['_VOIDTYPE']._serialized_end=250
+  _globals['_OPINFO']._serialized_start=252
+  _globals['_OPINFO']._serialized_end=342
+  _globals['_STOPINFO']._serialized_start=344
+  _globals['_STOPINFO']._serialized_end=392
+  _globals['_TRANSFEROPREQUEST']._serialized_start=395
+  _globals['_TRANSFEROPREQUEST']._serialized_end=603
+  _globals['_FILECHUNK']._serialized_start=606
+  _globals['_FILECHUNK']._serialized_end=742
+  _globals['_FILETIME']._serialized_start=744
+  _globals['_FILETIME']._serialized_end=789
+  _globals['_REGREQUEST']._serialized_start=791
+  _globals['_REGREQUEST']._serialized_end=847
+  _globals['_REGRESPONSE']._serialized_start=849
+  _globals['_REGRESPONSE']._serialized_end=883
+  _globals['_SERVICEREGISTRATION']._serialized_start=886
+  _globals['_SERVICEREGISTRATION']._serialized_end=1025
+  _globals['_TEXTMESSAGE']._serialized_start=1027
+  _globals['_TEXTMESSAGE']._serialized_end=1091
+  _globals['_WARP']._serialized_start=1094
+  _globals['_WARP']._serialized_end=1638
+  _globals['_WARPREGISTRATION']._serialized_start=1641
+  _globals['_WARPREGISTRATION']._serialized_end=1775
 # @@protoc_insertion_point(module_scope)
