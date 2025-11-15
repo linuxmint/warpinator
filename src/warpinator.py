@@ -524,6 +524,8 @@ class WarpWindow(GObject.Object):
         self.user_send_button = self.builder.get_object("user_send_button")
         self.user_send_msg_button = self.builder.get_object("user_send_msg_button")
         self.user_send_msg_button.connect("clicked", self.send_msg_button_clicked)
+        self.user_msg_entry = self.builder.get_object("user_msg_entry")
+        self.user_msg_entry.connect("key-press-event", self.msg_entry_key_press)
         self.user_online_box = self.builder.get_object("user_online_box")
         self.user_online_image = self.builder.get_object("user_online_image")
         self.user_online_label = self.builder.get_object("user_online_label")
@@ -651,7 +653,7 @@ class WarpWindow(GObject.Object):
     def window_key_press(self, widget, event, data=None):
         if not self.search_entry.has_focus() and self.view_stack.get_visible_child_name() == "overview":
             self.search_entry.grab_focus()
-        elif event.keyval == Gdk.KEY_BackSpace and self.view_stack.get_visible_child_name() == "user":
+        elif event.keyval == Gdk.KEY_BackSpace and self.view_stack.get_visible_child_name() == "user" and not self.user_msg_entry.has_focus():
             self.back_to_overview()
             return Gdk.EVENT_STOP
 
@@ -755,7 +757,14 @@ class WarpWindow(GObject.Object):
         self.current_selected_remote_machine.send_files([uri])
 
     def send_msg_button_clicked(self, button):
-        SendMessageDialog(self).show()
+        self.send_text_message()
+    
+    def msg_entry_key_press(self, entry, event, data=None):
+        if event.keyval == Gdk.KEY_Return and event.state & Gdk.ModifierType.CONTROL_MASK:
+            self.send_text_message()
+            return Gdk.EVENT_STOP
+
+        return Gdk.EVENT_PROPAGATE
 
     def open_file_picker(self, button, data=None):
         dialog = util.create_file_and_folder_picker(self.window)
@@ -870,8 +879,11 @@ class WarpWindow(GObject.Object):
     def manual_connect_to_host(self, host):
         logging.debug("Connecting to " + host)
 
-    def send_text_message(self, message):
-        self.current_selected_remote_machine.send_text_message(message)
+    def send_text_message(self):
+        buf = self.user_msg_entry.get_buffer()
+        buf_s, buf_e = buf.get_bounds()
+        self.current_selected_remote_machine.send_text_message(buf.get_text(buf_s, buf_e, False))
+        buf.delete(buf_s, buf_e)
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
@@ -1322,49 +1334,6 @@ class ManualConnectDialog(Gtk.Window):
             self.connect_button.set_sensitive(True)
         except:
             self.connect_button.set_sensitive(False)
-
-class SendMessageDialog(Gtk.Window):
-    def __init__(self, parent:WarpWindow):
-        super().__init__(title=_("Send message"), transient_for=parent.window, modal=True, resizable=False)
-        self.parent = parent
-
-        self.set_default_size(300, 100)
-        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        self.add(vbox)
-
-        scrollView = Gtk.ScrolledWindow()
-        scrollView.set_size_request(300, 50)
-        scrollView.set_shadow_type(Gtk.ShadowType.OUT)
-        vbox.add(scrollView)
-        
-        self.textView = Gtk.TextView()
-        self.textView.set_editable(True)
-        self.textView.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
-        scrollView.add(self.textView)
-
-        btnClose = Gtk.Button(_("Cancel"))
-        btnClose.connect("clicked", lambda _ : self.close())
-        btnSend = Gtk.Button(_("Send"))
-        btnSend.connect("clicked", self.send_clicked)
-        btnBox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-        btnBox.pack_end(btnSend, False, False, 0)
-        btnBox.pack_end(btnClose, False, False, 0)
-        vbox.add(btnBox)
-
-        vbox.set_margin_bottom(10)
-        vbox.set_margin_top(10)
-        vbox.set_margin_left(10)
-        vbox.set_margin_right(10)
-        self.show_all()
-    
-    def send_clicked(self, btn):
-        buf = self.textView.get_buffer()
-        buf_s, buf_e = buf.get_bounds()
-        self.parent.send_text_message(buf.get_text(buf_s, buf_e, False))
-        self.close()
 
 class WarpApplication(Gtk.Application):
     def __init__(self, testing=False):

@@ -55,7 +55,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
-    <property name="icon_name">edit-copy-symbolic</property>
+    <property name="icon_name">xsi-edit-copy-symbolic</property>
   </object>
   <object class="GtkBox" id="op_item">
     <property name="visible">True</property>
@@ -145,10 +145,8 @@
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Awaiting approval</property>
                     <property name="wrap">True</property>
-                    <property name="ellipsize">end</property>
                     <property name="width_chars">30</property>
                     <property name="max_width_chars">30</property>
-                    <property name="lines">4</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>

@@ -288,7 +288,7 @@ class TextMessageOp(CommonOp):
 
     def __init__(self, direction, sender):
         super(TextMessageOp, self).__init__(direction, sender)
-        self.gicon = Gio.ThemedIcon.new("mail-message-new-symbolic")
+        self.gicon = Gio.ThemedIcon.new("xsi-mail-message-new-symbolic")
         self.description = _("Text message")
 
     def copy_message(self):
