@@ -104,6 +104,7 @@ class OpItem(object):
         self.op_status_stack = self.builder.get_object("op_status_stack")
         self.op_transfer_status_message = self.builder.get_object("op_transfer_status_message")
         self.op_transfer_problem_label = self.builder.get_object("op_transfer_problem_label")
+        self.op_transfer_text_message = self.builder.get_object("op_transfer_text_message")
         self.op_progress_bar = self.builder.get_object("op_transfer_progress_bar")
         self.accept_button =  self.builder.get_object("transfer_accept")
         self.decline_button =  self.builder.get_object("transfer_decline")
@@ -186,11 +187,29 @@ class OpItem(object):
                 self.op_transfer_problem_label.set_text(_("Some files not found"))
         elif self.op.status == OpStatus.FINISHED:
             if isinstance(self.op, TextMessageOp):
-                msg = "\n".join(self.op.message.split("\n")[:4]) # Max 4 lines
-                if len(msg) > 120: # Max 120 chars (4*30 per line) -- FIXME: This might still exceed 4 lines
-                    msg = msg[:117] + "..."
-                self.op_transfer_status_message.set_text(msg)
-                self.op_transfer_status_message.set_selectable(True)
+                label_length = 80
+                lines_left = 4
+                lines = self.op.message.split("\n")
+                msg = ""
+                for l in lines:
+                    wrapped_lines = math.ceil(len(l) / label_length)
+                    if wrapped_lines > lines_left:
+                        msg += "\n" + l[:label_length*lines_left-3] + "..."
+                        break
+                    else:
+                        msg += "\n" + l
+                        lines_left -= wrapped_lines
+                        if lines_left < 1:
+                            last_line_len = len(l) % label_length
+                            if last_line_len == 0 and len(l) > 0:
+                                last_line_len = label_length
+                            if len(lines) > 4:
+                                if last_line_len > label_length-3:
+                                    msg = msg[:-last_line_len+label_length-3]
+                                msg += "..."
+                            break
+                msg = msg[1:] # skip first \n
+                self.op_transfer_text_message.set_text(msg)
             else:
                 self.op_transfer_status_message.set_text(_("Completed"))
         elif self.op.status == OpStatus.FINISHED_WARNING:
@@ -245,13 +264,15 @@ class OpItem(object):
             self.set_visible_buttons(TRANSFER_FILE_NOT_FOUND_BUTTONS)
         elif self.op.status in (OpStatus.FINISHED,
                                 OpStatus.FINISHED_WARNING):
-            self.op_status_stack.set_visible_child_name("message")
-            if isinstance(self.op, SendOp):
-                self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
-            elif isinstance(self.op, TextMessageOp):
+            if isinstance(self.op, TextMessageOp):
+                self.op_status_stack.set_visible_child_name("text-message")
                 self.set_visible_buttons(TRANSFER_TEXT_MESSAGE_BUTTONS)
             else:
-                self.set_visible_buttons(TRANSFER_COMPLETED_RECEIVER_BUTTONS)
+                self.op_status_stack.set_visible_child_name("message")
+                if isinstance(self.op, SendOp):
+                    self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
+                else:
+                    self.set_visible_buttons(TRANSFER_COMPLETED_RECEIVER_BUTTONS)
         elif self.op.status in (OpStatus.CANCELLED_PERMISSION_BY_SENDER,
                                 OpStatus.CANCELLED_PERMISSION_BY_RECEIVER):
             self.set_visible_buttons(TRANSFER_CANCELLED_BUTTONS)
