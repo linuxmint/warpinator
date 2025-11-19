@@ -618,7 +618,7 @@ class RemoteMachine(GObject.Object):
             if isinstance(op, SendOp):
                 op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
                 self.emit("new-outgoing-op", op)
-            if isinstance(op, ReceiveOp):
+            if isinstance(op, (ReceiveOp, TextMessageOp)):
                 self.emit("new-incoming-op", op)
 
         def set_busy():

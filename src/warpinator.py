@@ -227,7 +227,9 @@ class OpItem(object):
             self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.BUTTON)
 
         self.transfer_size_label.set_text(self.op.size_string)
+        self.transfer_size_label.set_visible(not isinstance(self.op, TextMessageOp))
         self.transfer_description_label.set_text(self.op.description)
+        self.transfer_description_label.set_visible(not isinstance(self.op, TextMessageOp))
 
         if self.op.status in (OpStatus.INIT, OpStatus.CALCULATING):
             self.op_status_stack.set_visible_child_name("calculating")
