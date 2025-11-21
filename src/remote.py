@@ -18,8 +18,8 @@ import util
 import misc
 import transfers
 import auth
-from ops import SendOp, ReceiveOp
-from util import TransferDirection, OpStatus, OpCommand, RemoteStatus, ReceiveError
+from ops import SendOp, ReceiveOp, TextMessageOp
+from util import TransferDirection, OpStatus, OpCommand, RemoteStatus, ReceiveError, RemoteFeatures
 
 _ = gettext.gettext
 
@@ -56,6 +56,7 @@ class RemoteMachine(GObject.Object):
         self.display_name = ""
         self.favorite = prefs.get_is_favorite(self.ident)
         self.recent_time = 0 # Keep monotonic time when visited on the user page
+        self.supports_messages = False
 
         self.avatar_surface = None
         self.transfer_ops = []
@@ -366,6 +367,8 @@ class RemoteMachine(GObject.Object):
             info = future.result()
             self.display_name = info.display_name
             self.user_name = info.user_name
+            feature_flags = RemoteFeatures(info.feature_flags)
+            self.supports_messages = RemoteFeatures.TEXT_MESSAGES in feature_flags
             self.favorite = prefs.get_is_favorite(self.ident)
 
             valid = GLib.utf8_make_valid(self.display_name, -1)
@@ -590,6 +593,21 @@ class RemoteMachine(GObject.Object):
         util.add_to_recents_if_single_selection(uri_list)
         self.rpc_call(_send_files, uri_list)
 
+    def send_text_message(self, message):
+        op = TextMessageOp(TransferDirection.TO_REMOTE_MACHINE, self.local_ident)
+        op.message = message
+        op.status = OpStatus.FINISHED
+        self.add_op(op)
+        self.rpc_call(self.do_send_text_message, op)
+
+    def do_send_text_message(self, op):
+        try:
+            self.stub.SendTextMessage(warp_pb2.TextMessage(ident=self.local_ident, timestamp=op.start_time, message=op.message))
+        except Exception as e:
+            logging.error("Sending message failed: %s" % e)
+            op.status = OpStatus.FAILED
+            op.emit_status_changed()
+
     @misc._idle
     def add_op(self, op):
         if op not in self.transfer_ops:
@@ -600,7 +618,7 @@ class RemoteMachine(GObject.Object):
             if isinstance(op, SendOp):
                 op.connect("initial-setup-complete", self.notify_remote_machine_of_new_op)
                 self.emit("new-outgoing-op", op)
-            if isinstance(op, ReceiveOp):
+            if isinstance(op, (ReceiveOp, TextMessageOp)):
                 self.emit("new-incoming-op", op)
 
         def set_busy():
@@ -662,8 +680,13 @@ class RemoteMachine(GObject.Object):
         elif command == OpCommand.STOP_TRANSFER_BY_SENDER:
             self.rpc_call(self.stop_transfer_op, op, by_sender=True)
         elif command == OpCommand.RETRY_TRANSFER:
-            op.set_status(OpStatus.WAITING_PERMISSION)
-            self.rpc_call(self.send_transfer_op_request, op)
+            if isinstance(op, TextMessageOp):
+                op.status = OpStatus.FINISHED
+                op.emit_status_changed()
+                self.rpc_call(self.do_send_text_message, op)
+            else:
+                op.set_status(OpStatus.WAITING_PERMISSION)
+                self.rpc_call(self.send_transfer_op_request, op)
         elif command == OpCommand.REMOVE_TRANSFER:
             self.remove_op(op)
         # receive

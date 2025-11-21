@@ -29,8 +29,8 @@ import prefs
 import util
 import misc
 import transfers
-from ops import ReceiveOp
-from util import TransferDirection, OpStatus, RemoteStatus
+from ops import ReceiveOp, TextMessageOp
+from util import TransferDirection, OpStatus, RemoteStatus, RemoteFeatures
 
 import zeroconf
 from zeroconf import ServiceInfo, Zeroconf, ServiceBrowser, IPVersion
@@ -40,6 +40,8 @@ _ = gettext.gettext
 void = warp_pb2.VoidType()
 
 SERVICE_TYPE = "_warpinator._tcp.local."
+
+SERVER_FEATURES = RemoteFeatures.TEXT_MESSAGES
 
 # server (this is on a separate thread from the ui, grpc isn't compatible with
 # gmainloop)
@@ -562,7 +564,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
         logging.debug("Server RPC: GetRemoteMachineInfo from '%s'" % request.readable_name)
 
         return warp_pb2.RemoteMachineInfo(display_name=GLib.get_real_name(),
-                                          user_name=GLib.get_user_name())
+                                          user_name=GLib.get_user_name(),
+                                          feature_flags=SERVER_FEATURES)
 
     def GetRemoteMachineAvatar(self, request, context):
         logging.debug("Server RPC: GetRemoteMachineAvatar from '%s'" % request.readable_name)
@@ -713,5 +716,22 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                 op.set_status(OpStatus.STOPPED_BY_SENDER)
             else:
                 op.set_status(OpStatus.FAILED)
+
+        return void
+
+    def SendTextMessage(self, request, context):
+        logging.debug("Server RPC: SendTextMessage from '%s'" % request.ident)
+        try:
+            remote_machine:remote.RemoteMachine = self.remote_machines[request.ident]
+        except KeyError as e:
+            logging.warning("Received text message from unknown remote: %s" % e)
+            return
+        
+        op = TextMessageOp(TransferDirection.FROM_REMOTE_MACHINE, request.ident)
+        op.sender_name = remote_machine.display_name
+        op.message = request.message
+        op.status = OpStatus.FINISHED
+        remote_machine.add_op(op)
+        op.send_notification()
 
         return void

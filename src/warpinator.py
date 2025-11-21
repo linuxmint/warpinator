@@ -27,7 +27,7 @@ import server
 import auth
 import misc
 import networkmonitor
-from ops import SendOp, ReceiveOp
+from ops import SendOp, ReceiveOp, TextMessageOp
 from util import TransferDirection, OpStatus, RemoteStatus
 
 # XApp 2.0 required for favorites.
@@ -67,7 +67,8 @@ ALL_BUTTONS = ("transfer_accept", \
                "transfer_resume", \
                "transfer_stop", \
                "transfer_remove", \
-               "transfer_open_folder")
+               "transfer_open_folder", \
+               "transfer_copy_message")
 
 INIT_BUTTONS = ()
 PERM_TO_SEND_BUTTONS = ("transfer_cancel_request",)
@@ -86,6 +87,7 @@ TRANSFER_CANCELLED_BUTTONS = ("transfer_remove",)
 TRANSFER_COMPLETED_SENDER_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_FILE_NOT_FOUND_BUTTONS = TRANSFER_CANCELLED_BUTTONS
 TRANSFER_COMPLETED_RECEIVER_BUTTONS = ("transfer_remove", "transfer_open_folder")
+TRANSFER_TEXT_MESSAGE_BUTTONS = ("transfer_remove", "transfer_copy_message")
 
 class OpItem(object):
     def __init__(self, op):
@@ -102,6 +104,7 @@ class OpItem(object):
         self.op_status_stack = self.builder.get_object("op_status_stack")
         self.op_transfer_status_message = self.builder.get_object("op_transfer_status_message")
         self.op_transfer_problem_label = self.builder.get_object("op_transfer_problem_label")
+        self.op_transfer_text_message = self.builder.get_object("op_transfer_text_message")
         self.op_progress_bar = self.builder.get_object("op_transfer_progress_bar")
         self.accept_button =  self.builder.get_object("transfer_accept")
         self.decline_button =  self.builder.get_object("transfer_decline")
@@ -111,6 +114,7 @@ class OpItem(object):
         self.stop_button =  self.builder.get_object("transfer_stop")
         self.remove_button =  self.builder.get_object("transfer_remove")
         self.folder_button =  self.builder.get_object("transfer_open_folder")
+        self.copy_button = self.builder.get_object("transfer_copy_message")
 
         self.accept_button.connect("clicked", self.accept_button_clicked)
         self.decline_button.connect("clicked", self.decline_button_clicked)
@@ -120,6 +124,7 @@ class OpItem(object):
         self.stop_button.connect("clicked", self.stop_button_clicked)
         self.remove_button.connect("clicked", self.remove_button_clicked)
         self.folder_button.connect("clicked", self.folder_button_clicked)
+        self.copy_button.connect("clicked", self.copy_button_clicked)
 
         self.op.connect("progress-changed", self.update_progress)
 
@@ -181,7 +186,32 @@ class OpItem(object):
             else:
                 self.op_transfer_problem_label.set_text(_("Some files not found"))
         elif self.op.status == OpStatus.FINISHED:
-            self.op_transfer_status_message.set_text(_("Completed"))
+            if isinstance(self.op, TextMessageOp):
+                label_length = 80
+                lines_left = 4
+                lines = self.op.message.split("\n")
+                msg = ""
+                for l in lines:
+                    wrapped_lines = math.ceil(len(l) / label_length)
+                    if wrapped_lines > lines_left:
+                        msg += "\n" + l[:label_length*lines_left-3] + "..."
+                        break
+                    else:
+                        msg += "\n" + l
+                        lines_left -= wrapped_lines
+                        if lines_left < 1:
+                            last_line_len = len(l) % label_length
+                            if last_line_len == 0 and len(l) > 0:
+                                last_line_len = label_length
+                            if len(lines) > 4:
+                                if last_line_len > label_length-3:
+                                    msg = msg[:-last_line_len+label_length-3]
+                                msg += "..."
+                            break
+                msg = msg[1:] # skip first \n
+                self.op_transfer_text_message.set_text(msg)
+            else:
+                self.op_transfer_status_message.set_text(_("Completed"))
         elif self.op.status == OpStatus.FINISHED_WARNING:
             self.op_transfer_status_message.set_text(_("Completed, but with errors"))
 
@@ -197,7 +227,9 @@ class OpItem(object):
             self.mime_image.set_from_gicon(self.op.gicon, Gtk.IconSize.BUTTON)
 
         self.transfer_size_label.set_text(self.op.size_string)
+        self.transfer_size_label.set_visible(not isinstance(self.op, TextMessageOp))
         self.transfer_description_label.set_text(self.op.description)
+        self.transfer_description_label.set_visible(not isinstance(self.op, TextMessageOp))
 
         if self.op.status in (OpStatus.INIT, OpStatus.CALCULATING):
             self.op_status_stack.set_visible_child_name("calculating")
@@ -234,11 +266,15 @@ class OpItem(object):
             self.set_visible_buttons(TRANSFER_FILE_NOT_FOUND_BUTTONS)
         elif self.op.status in (OpStatus.FINISHED,
                                 OpStatus.FINISHED_WARNING):
-            self.op_status_stack.set_visible_child_name("message")
-            if isinstance(self.op, SendOp):
-                self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
+            if isinstance(self.op, TextMessageOp):
+                self.op_status_stack.set_visible_child_name("text-message")
+                self.set_visible_buttons(TRANSFER_TEXT_MESSAGE_BUTTONS)
             else:
-                self.set_visible_buttons(TRANSFER_COMPLETED_RECEIVER_BUTTONS)
+                self.op_status_stack.set_visible_child_name("message")
+                if isinstance(self.op, SendOp):
+                    self.set_visible_buttons(TRANSFER_COMPLETED_SENDER_BUTTONS)
+                else:
+                    self.set_visible_buttons(TRANSFER_COMPLETED_RECEIVER_BUTTONS)
         elif self.op.status in (OpStatus.CANCELLED_PERMISSION_BY_SENDER,
                                 OpStatus.CANCELLED_PERMISSION_BY_RECEIVER):
             self.set_visible_buttons(TRANSFER_CANCELLED_BUTTONS)
@@ -275,6 +311,9 @@ class OpItem(object):
             util.open_save_folder(self.op.top_dir_basenames[0])
         else:
             util.open_save_folder()
+    
+    def copy_button_clicked(self, button):
+        self.op.copy_message()
 
     def destroy(self):
         self.builder = None
@@ -506,6 +545,11 @@ class WarpWindow(GObject.Object):
         self.user_ip_label = self.builder.get_object("user_ip")
         self.user_op_list = self.builder.get_object("user_op_list")
         self.user_send_button = self.builder.get_object("user_send_button")
+        self.user_send_msg_button = self.builder.get_object("user_send_msg_button")
+        self.user_send_msg_button.connect("clicked", self.send_msg_button_clicked)
+        self.user_msg_entry = self.builder.get_object("user_msg_entry")
+        self.user_msg_entry.connect("key-press-event", self.msg_entry_key_press)
+        self.user_msg_box = self.builder.get_object("user_msg_box")
         self.user_online_box = self.builder.get_object("user_online_box")
         self.user_online_image = self.builder.get_object("user_online_image")
         self.user_online_label = self.builder.get_object("user_online_label")
@@ -633,7 +677,7 @@ class WarpWindow(GObject.Object):
     def window_key_press(self, widget, event, data=None):
         if not self.search_entry.has_focus() and self.view_stack.get_visible_child_name() == "overview":
             self.search_entry.grab_focus()
-        elif event.keyval == Gdk.KEY_BackSpace and self.view_stack.get_visible_child_name() == "user":
+        elif event.keyval == Gdk.KEY_BackSpace and self.view_stack.get_visible_child_name() == "user" and not self.user_msg_entry.has_focus():
             self.back_to_overview()
             return Gdk.EVENT_STOP
 
@@ -735,6 +779,16 @@ class WarpWindow(GObject.Object):
 
     def favorite_selected(self, favorites, uri):
         self.current_selected_remote_machine.send_files([uri])
+
+    def send_msg_button_clicked(self, button):
+        self.send_text_message()
+    
+    def msg_entry_key_press(self, entry, event, data=None):
+        if event.keyval == Gdk.KEY_Return and event.state & Gdk.ModifierType.CONTROL_MASK:
+            self.send_text_message()
+            return Gdk.EVENT_STOP
+
+        return Gdk.EVENT_PROPAGATE
 
     def open_file_picker(self, button, data=None):
         dialog = util.create_file_and_folder_picker(self.window)
@@ -848,6 +902,12 @@ class WarpWindow(GObject.Object):
     @GObject.Signal(arg_types=(str,))
     def manual_connect_to_host(self, host):
         logging.debug("Connecting to " + host)
+
+    def send_text_message(self):
+        buf = self.user_msg_entry.get_buffer()
+        buf_s, buf_e = buf.get_bounds()
+        self.current_selected_remote_machine.send_text_message(buf.get_text(buf_s, buf_e, False))
+        buf.delete(buf_s, buf_e)
 
     def report_bad_save_folder(self):
         path = prefs.get_save_path()
@@ -1043,6 +1103,8 @@ class WarpWindow(GObject.Object):
         else:
             self.user_avatar_image.set_from_icon_name("xsi-avatar-default-symbolic", Gtk.IconSize.DND)
 
+        self.user_msg_box.set_visible(remote.supports_messages)
+
         self.add_op_items()
         self.sync_favorite()
 
@@ -1053,6 +1115,7 @@ class WarpWindow(GObject.Object):
                                             (entry,),
                                             Gdk.DragAction.COPY)
             self.user_send_button.set_sensitive(True)
+            self.user_send_msg_button.set_sensitive(True)
             self.user_online_label.set_text(_("Online"))
             self.user_online_image.set_from_icon_name(ICON_ONLINE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1060,6 +1123,7 @@ class WarpWindow(GObject.Object):
         elif remote_machine.status == RemoteStatus.OFFLINE:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Offline"))
             self.user_online_image.set_from_icon_name(ICON_OFFLINE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1067,6 +1131,7 @@ class WarpWindow(GObject.Object):
         elif remote_machine.status == RemoteStatus.UNREACHABLE:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Unable to connect"))
             self.user_online_image.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1074,6 +1139,7 @@ class WarpWindow(GObject.Object):
         elif remote_machine.status == RemoteStatus.AWAITING_DUPLEX:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Waiting for two-way connection"))
             self.user_online_image.set_from_icon_name(ICON_UNREACHABLE, Gtk.IconSize.LARGE_TOOLBAR)
             self.user_online_spinner.hide()
@@ -1081,6 +1147,7 @@ class WarpWindow(GObject.Object):
         else:
             self.user_op_list.drag_dest_unset()
             self.user_send_button.set_sensitive(False)
+            self.user_send_msg_button.set_sensitive(False)
             self.user_online_label.set_text(_("Connecting"))
             self.user_online_image.hide()
             self.user_online_spinner.show()
