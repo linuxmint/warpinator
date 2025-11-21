@@ -191,7 +191,6 @@ class OpItem(object):
                 label = ""
                 lines = self.op.message.split("\n")
                 for i in range(len(lines)):
-                    print(i, len(lines))
                     label += f"{lines[i]}"
                     if i == 3 and len(lines) > 4:
                         label += "..."
