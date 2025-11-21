@@ -5,6 +5,7 @@ import setproctitle
 import locale
 import gettext
 import functools
+import html
 import logging
 import time
 import math
@@ -187,29 +188,30 @@ class OpItem(object):
                 self.op_transfer_problem_label.set_text(_("Some files not found"))
         elif self.op.status == OpStatus.FINISHED:
             if isinstance(self.op, TextMessageOp):
-                label_length = 80
-                lines_left = 4
+                label = ""
                 lines = self.op.message.split("\n")
-                msg = ""
-                for l in lines:
-                    wrapped_lines = math.ceil(len(l) / label_length)
-                    if wrapped_lines > lines_left:
-                        msg += "\n" + l[:label_length*lines_left-3] + "..."
+                for i in range(len(lines)):
+                    print(i, len(lines))
+                    label += f"{lines[i]}"
+                    if i == 3 and len(lines) > 4:
+                        label += "..."
                         break
                     else:
-                        msg += "\n" + l
-                        lines_left -= wrapped_lines
-                        if lines_left < 1:
-                            last_line_len = len(l) % label_length
-                            if last_line_len == 0 and len(l) > 0:
-                                last_line_len = label_length
-                            if len(lines) > 4:
-                                if last_line_len > label_length-3:
-                                    msg = msg[:-last_line_len+label_length-3]
-                                msg += "..."
-                            break
-                msg = msg[1:] # skip first \n
-                self.op_transfer_text_message.set_text(msg)
+                        if i + 1 < len(lines):
+                            label += "\n"
+
+                label = html.escape(label)
+                url_pattern = r'(https?://[^\s<>"{}|\\^`\[\]]+|www\.[^\s<>"{}|\\^`\[\]]+)'
+                def replace_url(match):
+                    url = match.group(0)
+                    # If URL doesn't start with http, add https://
+                    href = url if url.startswith('http') else f'https://{url}'
+                    return f'<a href="{href}">{url}</a>'
+                
+                # Replace URLs with Pango markup
+                markup = re.sub(url_pattern, replace_url, label)
+
+                self.op_transfer_text_message.set_markup(markup)
             else:
                 self.op_transfer_status_message.set_text(_("Completed"))
         elif self.op.status == OpStatus.FINISHED_WARNING:
