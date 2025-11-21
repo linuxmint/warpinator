@@ -1,3 +1,28 @@
+warpinator (2.0.0) zena; urgency=medium
+
+  [ Clement Lefebvre ]
+  * Update README.md
+
+  [ Cobinja ]
+  * Ipv6 support (#231)
+
+  [ Clement Lefebvre ]
+  * Switch to XApp symbolic icons
+  * Switch to xapp-symbolic-icons (XSI)
+
+  [ Pavel H ]
+  * Fix reconnecting when certificate is unchanged (#238)
+  * Ability to send text messages (#225)
+
+  [ Michael Webster ]
+  * messages: Simplify ellipsizing, remove max-width-chars restriction, detect urls and make them clickable in the label.
+  * warpinator.py: Remove leftover print.
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 21 Nov 2025 13:15:43 +0000
+
 warpinator (1.8.10) zara; urgency=medium
 
   * l10n: Update translations
