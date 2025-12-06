@@ -6,7 +6,6 @@ import gettext
 import logging
 import time
 import re
-import pkg_resources
 from concurrent import futures
 import time
 import ipaddress
