@@ -1,3 +1,10 @@
+warpinator (2.0.1) zena; urgency=medium
+
+  [ Fatih Altun ]
+  * Remove unnecessary pkg_resources import (#239)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 10 Dec 2025 14:50:03 +0000
+
 warpinator (2.0.0) zena; urgency=medium
 
   [ Clement Lefebvre ]
