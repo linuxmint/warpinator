@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2025-01-15 21:16+0000\n"
-"Last-Translator: Clement Lefebvre <root@linuxmint.com>\n"
+"POT-Creation-Date: 2025-11-21 13:15+0000\n"
+"PO-Revision-Date: 2025-11-21 18:57+0000\n"
+"Last-Translator: AO <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
-"X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
+"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
+"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
 "Language: fr\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -29,7 +29,7 @@ msgstr ""
 "Vous ne pouvez communiquer qu’avec des ordinateurs qui utilisent le même "
 "code."
 
-#: resources/group-code.ui:49 resources/main-window.ui:51
+#: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
 msgstr "Définir le code"
 
@@ -41,52 +41,52 @@ msgstr "Mode sécurisé :"
 msgid "OFF"
 msgstr "Désactivé"
 
-#: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1202
+#: resources/group-code.ui:148 resources/main-window.ui:134
+#: resources/main-window.ui:1249
 msgid "More information"
 msgstr "Plus de précisions"
 
-#: resources/main-window.ui:80
+#: resources/main-window.ui:85
 msgid "Secure Mode disabled"
 msgstr "Le mode sécurisé est désactivé"
 
-#: resources/main-window.ui:170
+#: resources/main-window.ui:175
 msgid "Download folder not secure"
 msgstr "Le dossier de téléchargement n’est pas sécurisé"
 
-#: resources/main-window.ui:335
+#: resources/main-window.ui:340
 msgid "No matching results"
 msgstr "Aucun résultat ne correspond"
 
-#: resources/main-window.ui:491
+#: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Rendez cette machine distante favorite dans la vue principale"
 
-#: resources/main-window.ui:565
+#: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
 msgstr "Effacer les opérations inactives et terminées"
 
-#: resources/main-window.ui:584
+#: resources/main-window.ui:589
 msgid "Send files"
 msgstr "Envoyer des fichiers"
 
-#: resources/main-window.ui:610 src/prefs.py:311
+#: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
 msgstr "Transferts de fichiers"
 
-#: resources/main-window.ui:631 src/warpinator.py:1054
+#: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
 msgstr "En ligne"
 
-#: resources/main-window.ui:751
+#: resources/main-window.ui:798
 msgid "No other computers found..."
 msgstr "Aucun autre ordinateur n’a été trouvé…"
 
-#: resources/main-window.ui:816
+#: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
 msgstr "Assurez-vous que votre connexion réseau est active."
 
-#: resources/main-window.ui:831
+#: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -95,7 +95,7 @@ msgstr ""
 "changés. Pour plus de précisions, consultez les préférences."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:847
+#: resources/main-window.ui:894
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -104,36 +104,36 @@ msgstr ""
 "le cas, assurez-vous qu’ils utilisent tous le même code de groupe dans les "
 "préférences."
 
-#: resources/main-window.ui:865
+#: resources/main-window.ui:912
 msgid "Possible solutions:"
 msgstr "Solutions possibles :"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:900
+#: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
 msgstr "Warpinator est aussi proposé pour :"
 
-#: resources/main-window.ui:915
+#: resources/main-window.ui:962
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:931 resources/main-window.ui:946
+#: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
 msgstr "Initialisation, patientez…"
 
-#: resources/main-window.ui:1078
+#: resources/main-window.ui:1125
 msgid "Something went wrong"
 msgstr "Un problème est survenu"
 
-#: resources/main-window.ui:1153
+#: resources/main-window.ui:1200
 msgid "Invalid save location"
 msgstr "L’emplacement d’enregistrement est invalide"
 
-#: resources/main-window.ui:1190
+#: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -142,33 +142,33 @@ msgstr ""
 "enregistrer des fichiers. Choisissez un autre emplacement dans les "
 "préférences et assurez-vous qu’il est accessible."
 
-#: resources/main-window.ui:1262
+#: resources/main-window.ui:1309
 msgid "Searching for other computers"
 msgstr "Recherche d’autres ordinateurs"
 
-#: resources/main-window.ui:1321
+#: resources/main-window.ui:1368
 msgid "Shutting down..."
 msgstr "Arrêt…"
 
-#: resources/main-window.ui:1393
+#: resources/main-window.ui:1440
 msgid "Restart required"
 msgstr "Un redémarrage est nécessaire"
 
-#: resources/main-window.ui:1410
+#: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Warpinator doit être redémarré avant que le nouveau dossier d’enregistrement "
 "puisse être utilisé."
 
-#: resources/main-window.ui:1420
+#: resources/main-window.ui:1467
 msgid "Restart"
 msgstr "Redémarrer"
 
-#: resources/main-window.ui:1490
+#: resources/main-window.ui:1537
 msgid "Disk Full"
 msgstr "Le disque est saturé"
 
-#: resources/main-window.ui:1527
+#: resources/main-window.ui:1574
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -178,19 +178,19 @@ msgstr ""
 "fichiers, réduisez la valeur d’espace minimal dans les préférences ou "
 "choisissez un nouvel emplacement."
 
-#: resources/main-window.ui:1544
+#: resources/main-window.ui:1591
 msgid "Empty trash"
 msgstr "Vider la corbeille"
 
-#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
+#: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
 msgstr "Ouvrir le dossier d’enregistrement"
 
-#: resources/main-window.ui:1571
+#: resources/main-window.ui:1618
 msgid "Examine disk usage"
 msgstr "Examiner l’utilisation du disque"
 
-#: resources/main-window.ui:1624 src/util.py:774
+#: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
 msgstr "Envoyer et recevoir des fichiers sur le réseau"
@@ -224,53 +224,57 @@ msgstr "Lisez ce code QR"
 msgid "Or connect to the address below"
 msgstr "Ou connectez-vous à l’adresse ci-dessous :"
 
-#: resources/op-item.ui:140
+#: resources/op-item.ui:146
 msgid "Awaiting approval"
 msgstr "En attente d’approbation"
 
-#: resources/op-item.ui:156
+#: resources/op-item.ui:162
 msgid "Not enough disk space!"
 msgstr "L’espace disque est insuffisant !"
 
-#: resources/op-item.ui:219
+#: resources/op-item.ui:225
 msgid "Calculating"
 msgstr "Calcul en cours"
 
-#: resources/op-item.ui:259
+#: resources/op-item.ui:290
 msgid "Accept this request"
 msgstr "Accepter cette demande"
 
-#: resources/op-item.ui:274
+#: resources/op-item.ui:305
 msgid "Refuse this request"
 msgstr "Refuser cette demande"
 
-#: resources/op-item.ui:289
+#: resources/op-item.ui:320
 msgid "Cancel this request"
 msgstr "Annuler cette demande"
 
-#: resources/op-item.ui:304
+#: resources/op-item.ui:335
 msgid "Restart this operation"
 msgstr "Redémarrer cette opération"
 
-#: resources/op-item.ui:319
+#: resources/op-item.ui:350
 msgid "Pause this operation"
 msgstr "Suspendre cette opération"
 
-#: resources/op-item.ui:334
+#: resources/op-item.ui:365
 msgid "Resume this operation"
 msgstr "Reprendre cette opération"
 
-#: resources/op-item.ui:349
+#: resources/op-item.ui:380
 msgid "Cancel this operation"
 msgstr "Annuler cette opération"
 
-#: resources/op-item.ui:364
+#: resources/op-item.ui:395
 msgid "Remove this operation from the list"
 msgstr "Supprimer cette opération de la liste"
 
-#: resources/op-item.ui:379
+#: resources/op-item.ui:410
 msgid "Open the containing folder"
 msgstr "Ouvrir le dossier contenant"
+
+#: resources/op-item.ui:425
+msgid "Copy message"
+msgstr "Copier le message"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -340,7 +344,7 @@ msgstr "Le transfert de %s est terminé, mais avec des erreurs"
 msgid "The transfer from %s has finished successfully"
 msgstr "Le transfert de %s est terminé"
 
-#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
+#: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
 msgstr "Échec de transfert"
 
@@ -354,7 +358,7 @@ msgstr "Une erreur est survenue lors du transfert vers %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "Une erreur est survenue lors du transfert de %s"
 
-#: src/notifications.py:171 src/warpinator.py:167
+#: src/notifications.py:171 src/warpinator.py:175
 msgid "Transfer cancelled"
 msgstr "Le transfert a été annulé"
 
@@ -382,6 +386,15 @@ msgstr "Envoi de %d fichiers vers %s"
 msgid "Sending '%s' to %s"
 msgstr "Envoi de « %s » vers %s"
 
+#: src/notifications.py:236
+#, python-format
+msgid "New message from %s"
+msgstr "Nouveau message de %s"
+
+#: src/notifications.py:241
+msgid "Copy"
+msgstr "Copier"
+
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
@@ -402,6 +415,10 @@ msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d fichier"
 msgstr[1] "%d fichiers"
+
+#: src/ops.py:292
+msgid "Text message"
+msgstr "Message texte"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -536,179 +553,179 @@ msgstr ""
 "Vous devez définir un code de groupe pour activer le mode sécurisé. "
 "Certaines options sont désactivées actuellement."
 
-#: src/remote.py:643 src/remote.py:647
+#: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
 msgstr "La connexion a été perdue"
 
-#: src/server.py:648
+#: src/server.py:697
 msgid "An error occurred on the remote machine"
 msgstr "Une erreur est survenue sur la machine distante"
 
-#: src/util.py:269
+#: src/util.py:327
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/util.py:270
+#: src/util.py:328
 msgid "Add"
 msgstr "Ajouter"
 
-#: src/util.py:292
+#: src/util.py:350
 msgid "Select file(s) to send"
 msgstr "Sélectionner le ou les fichiers à envoyer"
 
-#: src/util.py:663
+#: src/util.py:721
 msgid "A few seconds remaining"
 msgstr "Il ne reste que quelques secondes"
 
-#: src/util.py:666
+#: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
 msgstr "Il reste %d secondes"
 
-#: src/util.py:670 src/util.py:678
+#: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minute"
 msgstr[1] "%d minutes"
 
-#: src/util.py:677
+#: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d heure"
 msgstr[1] "%d heures"
 
-#: src/util.py:682
+#: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "approximativement %d heure"
 msgstr[1] "approximativement %d heures"
 
-#: src/util.py:770 src/warpinator.py:585
+#: src/util.py:828 src/warpinator.py:632
 msgid "About"
 msgstr "À propos"
 
-#: src/warpinator.py:146
+#: src/warpinator.py:154
 msgid "Paused"
 msgstr "En pause"
 
-#: src/warpinator.py:149
+#: src/warpinator.py:157
 msgid "Waiting for approval"
 msgstr "En attente d’approbation"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Waiting for your approval"
 msgstr "En attente de votre approbation"
 
-#: src/warpinator.py:154
+#: src/warpinator.py:162
 msgid "Not enough disk space"
 msgstr "L’espace disque est insuffisant"
 
-#: src/warpinator.py:157
+#: src/warpinator.py:165
 msgid "Files may be overwritten"
 msgstr "Des fichiers pourraient être écrasés"
 
-#: src/warpinator.py:160
+#: src/warpinator.py:168
 msgid "Request cancelled"
 msgstr "La demande a été annulée"
 
-#: src/warpinator.py:162 src/warpinator.py:164
+#: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "La demande a été annulée par %s"
 
-#: src/warpinator.py:169 src/warpinator.py:171
+#: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Le transfert a été annulé par %s"
 
-#: src/warpinator.py:178
+#: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
 msgstr "Fichier « %s » non trouvé"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:188
 msgid "Some files not found"
 msgstr "Certains fichiers sont introuvables"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:215
 msgid "Completed"
 msgstr "Terminé"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:217
 msgid "Completed, but with errors"
 msgstr "Terminé, mais avec des erreurs"
 
-#: src/warpinator.py:343 src/warpinator.py:1082
+#: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
 msgstr "Connexion"
 
-#: src/warpinator.py:345
+#: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
 msgstr "Connexion à %s"
 
-#: src/warpinator.py:355
+#: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
 msgstr "%s n’est pas en ligne"
 
-#: src/warpinator.py:360
+#: src/warpinator.py:402
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Impossible de se connecter à %s"
 
-#: src/warpinator.py:365
+#: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "En attente de %s pour terminer la connexion."
 
-#: src/warpinator.py:394
+#: src/warpinator.py:436
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d nouveau transfert entrant"
 msgstr[1] "%d nouveaux transferts entrants"
 
-#: src/warpinator.py:536 src/warpinator.py:1697
+#: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
 msgstr "Favoris"
 
-#: src/warpinator.py:541 src/warpinator.py:1702
+#: src/warpinator.py:588 src/warpinator.py:1806
 msgid "Recents"
 msgstr "Récents"
 
-#: src/warpinator.py:548 src/warpinator.py:1711
+#: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
 msgstr "Parcourir…"
 
-#: src/warpinator.py:569
+#: src/warpinator.py:616
 msgid "Connect manually"
 msgstr "Connexion manuelle"
 
-#: src/warpinator.py:574
+#: src/warpinator.py:621
 msgid "Restart service"
 msgstr "Redémarrer le service"
 
-#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
+#: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "Préférences"
 
-#: src/warpinator.py:589 src/warpinator.py:1646
+#: src/warpinator.py:636 src/warpinator.py:1750
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/warpinator.py:698
+#: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
 msgstr "Votre ordinateur ne semble pas être connecté à un réseau."
 
-#: src/warpinator.py:700
+#: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Le démarrage a échoué, conssultez vos journaux."
+msgstr "Le démarrage a échoué, consultez vos journaux."
 
-#: src/warpinator.py:800
+#: src/warpinator.py:857
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -717,7 +734,7 @@ msgstr ""
 "Warpinator fonctionne en mode limité et se fermera dans %d minute. Pour "
 "activer le mode sécurisé, définissez un code de groupe unique."
 
-#: src/warpinator.py:802
+#: src/warpinator.py:859
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -726,43 +743,51 @@ msgstr ""
 "Warpinator fonctionne en mode limité et se fermera dans %d minutes. Pour "
 "activer le mode sécurisé, définissez un code de groupe unique."
 
-#: src/warpinator.py:857
+#: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 "Il manque d’espace disque pour recevoir les fichiers (%s sont réservés)."
 
-#: src/warpinator.py:938
+#: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "Attente de la fin d’%d opération"
 
-#: src/warpinator.py:939
+#: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "Attente de la fin de %d opérations"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1128
 msgid "Offline"
 msgstr "Hors ligne"
 
-#: src/warpinator.py:1068
+#: src/warpinator.py:1136
 msgid "Unable to connect"
 msgstr "Impossible de se connecter"
 
-#: src/warpinator.py:1075
+#: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
 msgstr "En attente d’une connexion bidirectionnelle"
 
-#: src/warpinator.py:1176
+#: src/warpinator.py:1246
 msgid "Manual connection"
 msgstr "Connexion manuelle"
 
-#: src/warpinator.py:1243
+#: src/warpinator.py:1321
+msgid "Or connect to one of the addresses below:"
+msgstr "Ou connectez-vous à l’une des adresses ci-dessous :"
+
+#: src/warpinator.py:1323
+msgid "Or connect to the address below:"
+msgstr "Ou connectez-vous à l’adresse ci-dessous :"
+
+#: src/warpinator.py:1341
 msgid "Connecting..."
 msgstr "Connexion…"
 
-#: src/warpinator.py:1680
+#: src/warpinator.py:1784
 msgid "Send to all"
 msgstr "Envoyer à tous les appareils"
 

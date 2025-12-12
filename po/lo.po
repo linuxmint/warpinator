@@ -1,0 +1,856 @@
+# Lao translation for linuxmint
+# Copyright (c) 2025 Rosetta Contributors and Canonical Ltd 2025
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-11-21 13:15+0000\n"
+"PO-Revision-Date: 2025-11-22 02:02+0000\n"
+"Last-Translator: boneni <Unknown>\n"
+"Language-Team: Lao <lo@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
+"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
+
+#: resources/group-code.ui:16 src/prefs.py:345
+msgid "Group Code"
+msgstr "ລະຫັດກຸ່ມ"
+
+#: resources/group-code.ui:39
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr "ທ່ານບໍ່ສາມາດສື່ສານກັບຄອມພິວເຕີທີ່ບໍ່ໃຊ້ລະຫັດດຽວກັນ."
+
+#: resources/group-code.ui:49 resources/main-window.ui:56
+msgid "Set code"
+msgstr "ຕັ້ງລະຫັດ"
+
+#: resources/group-code.ui:93
+msgid "Secure mode:"
+msgstr "ໂໝດປອດໄພ:"
+
+#: resources/group-code.ui:106 src/prefs.py:683
+msgid "OFF"
+msgstr "ປິດ"
+
+#: resources/group-code.ui:148 resources/main-window.ui:134
+#: resources/main-window.ui:1249
+msgid "More information"
+msgstr "ຂໍ້ມູນເພີ່ມເຕີມ"
+
+#: resources/main-window.ui:85
+msgid "Secure Mode disabled"
+msgstr "ໂໝດປອດໄພຖືກປິດໃຊ້ງານ"
+
+#: resources/main-window.ui:175
+msgid "Download folder not secure"
+msgstr "ໂຟເດີດາວໂຫຼດບໍ່ປອດໄພ"
+
+#: resources/main-window.ui:340
+msgid "No matching results"
+msgstr "ບໍ່ມີຜົນການຄົ້ນຫາທີ່ກົງກັນ"
+
+#: resources/main-window.ui:496
+msgid "Make this remote machine a favorite in the main view"
+msgstr "ເຮັດໃຫ້ຄອມພິວເຕີໜ່ວຍນີ້ເປັນລາຍການທີ່ມັກໃນໜ້າຫຼັກ"
+
+#: resources/main-window.ui:570
+msgid "Clear inactive and completed operations"
+msgstr "ລຶບລ້າງການດຳເນີນການທີ່ບໍ່ເຄື່ອນໄຫວ ແລະ ສຳເລັດແລ້ວ"
+
+#: resources/main-window.ui:589
+msgid "Send files"
+msgstr "ສົ່ງໄຟລ໌"
+
+#: resources/main-window.ui:615 src/prefs.py:311
+msgid "File Transfers"
+msgstr "ການໂອນໄຟລ໌"
+
+#: resources/main-window.ui:636 src/warpinator.py:1120
+msgid "Online"
+msgstr "ອອນລາຍ"
+
+#: resources/main-window.ui:798
+msgid "No other computers found..."
+msgstr "ບໍ່ພົບຄອມພິວເຕີໜ່ວຍອື່ນ..."
+
+#: resources/main-window.ui:863
+msgid "Make sure your network connection is active."
+msgstr "ກວດສອບໃຫ້ແນ່ໃຈວ່າການເຊື່ອມຕໍ່ເຄືອຂ່າຍຂອງທ່ານເປີດໃຊ້ງານຢູ່."
+
+#: resources/main-window.ui:878
+msgid ""
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
+msgstr ""
+"ກວດສອບກົດໄຟວໍຂອງທ່ານ. ໝາຍເລກພອດສາມາດປ່ຽນແປງໄດ້. "
+"ເບິ່ງການຕັ້ງຄ່າສຳລັບລາຍລະອຽດເພີ່ມເຕີມ."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:894
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"ມີ Warpinator ເຮັດວຽກຢູ່ຄອມພິວເຕີໜ່ວຍອື່ນໃນເຄືອຂ່າຍນີ້ບໍ່? ຖ້າແມ່ນ, "
+"ໃຫ້ແນ່ໃຈວ່າທຸກໜ່ວຍໃຊ້ລະຫັດກຸ່ມດຽວກັນໃນການຕັ້ງຄ່າ."
+
+#: resources/main-window.ui:912
+msgid "Possible solutions:"
+msgstr "ວິທີແກ້ໄຂທີ່ເປັນໄປໄດ້:"
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:947
+msgid "Warpinator is also available on:"
+msgstr "Warpinator ຍັງມີໃຫ້ໃຊ້ໃນ:"
+
+#: resources/main-window.ui:962
+msgid "Android"
+msgstr "ແອນດຣອຍ"
+
+#: resources/main-window.ui:978 resources/main-window.ui:993
+msgid "Windows"
+msgstr "ວິນໂດ"
+
+#: resources/main-window.ui:1067
+msgid "Initializing, please wait..."
+msgstr "ກຳລັງເລີ່ມຕົ້ນ, ກະລຸນາລໍຖ້າ..."
+
+#: resources/main-window.ui:1125
+msgid "Something went wrong"
+msgstr "ມີບາງຢ່າງຜິດພາດ"
+
+#: resources/main-window.ui:1200
+msgid "Invalid save location"
+msgstr "ທີ່ຕັ້ງການບັນທຶກບໍ່ຖືກຕ້ອງ"
+
+#: resources/main-window.ui:1237
+msgid ""
+"This folder is either inaccessible or forbidden to save files to.  Please "
+"select a new location in Preferences and ensure that it is accessible."
+msgstr ""
+"ໂຟເດີນີ້ບໍ່ສາມາດເຂົ້າເຖິງ ຫຼື ຖືກຫ້າມບໍ່ໃຫ້ບັນທຶກໄຟລ໌. "
+"ກະລຸນາເລືອກທີ່ຕັ້ງໃໝ່ໃນການຕັ້ງຄ່າ ແລະ ກວດສອບໃຫ້ແນ່ໃຈວ່າມັນສາມາດເຂົ້າເຖິງໄດ້."
+
+#: resources/main-window.ui:1309
+msgid "Searching for other computers"
+msgstr "ກຳລັງຄົ້ນຫາຄອມພິວເຕີໜ່ວຍອື່ນ"
+
+#: resources/main-window.ui:1368
+msgid "Shutting down..."
+msgstr "ກຳລັງປິດລະບົບ..."
+
+#: resources/main-window.ui:1440
+msgid "Restart required"
+msgstr "ຕ້ອງການຣີສະຕາດ"
+
+#: resources/main-window.ui:1457
+msgid "Warpinator needs to restart before the new save directory can be used"
+msgstr "Warpinator ຕ້ອງການຣີສະຕາດກ່ອນທີ່ໄດເຣັກທໍຣີບັນທຶກໃໝ່ຈະສາມາດໃຊ້ງານໄດ້"
+
+#: resources/main-window.ui:1467
+msgid "Restart"
+msgstr "ຣີສະຕາດ"
+
+#: resources/main-window.ui:1537
+msgid "Disk Full"
+msgstr "ພື້ນທີ່ດິສກ໌ເຕັມ"
+
+#: resources/main-window.ui:1574
+msgid ""
+"There is insufficient space available in the save location. You need to "
+"delete some files, decrease the minimum free space in preferences or choose "
+"a new location."
+msgstr ""
+"ມີພື້ນທີ່ບໍ່ພຽງພໍໃນທີ່ຕັ້ງການບັນທຶກ. ທ່ານຕ້ອງລຶບໄຟລ໌ບາງສ່ວນ, "
+"ຫຼຸດພື້ນທີ່ວ່າງຂັ້ນຕ່ຳໃນການຕັ້ງຄ່າ ຫຼື ເລືອກທີ່ຕັ້ງໃໝ່."
+
+#: resources/main-window.ui:1591
+msgid "Empty trash"
+msgstr "ລ້າງຖັງຂີ້ເຫຍື້ອ"
+
+#: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
+msgid "Open save folder"
+msgstr "ເປີດໂຟເດີບັນທຶກ"
+
+#: resources/main-window.ui:1618
+msgid "Examine disk usage"
+msgstr "ກວດສອບການໃຊ້ງານດິສກ໌"
+
+#: resources/main-window.ui:1671 src/util.py:832
+#: data/org.x.Warpinator.desktop.in.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "ສົ່ງ ແລະ ຮັບໄຟລ໌ຜ່ານເຄືອຂ່າຍ"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr "ໃນຄອມພິວເຕີໜ່ວຍນີ້:"
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr "ປ້ອນທີ່ຢູ່ຂອງອຸປະກອນທີ່ທ່ານຕ້ອງການເຊື່ອມຕໍ່"
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr "ເຊື່ອມຕໍ່"
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr "ອີກທາງເລືອກໜຶ່ງ, ໃນອຸປະກອນອື່ນ:"
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr "ສະແກນລະຫັດ QR ນີ້"
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr "ຫຼື ເຊື່ອມຕໍ່ຫາທີ່ຢູ່ດ້ານລຸ່ມນີ້"
+
+#: resources/op-item.ui:146
+msgid "Awaiting approval"
+msgstr "ກຳລັງລໍຖ້າການອະນຸມັດ"
+
+#: resources/op-item.ui:162
+msgid "Not enough disk space!"
+msgstr "ພື້ນທີ່ດິສກ໌ບໍ່ພຽງພໍ!"
+
+#: resources/op-item.ui:225
+msgid "Calculating"
+msgstr "ກຳລັງຄຳນວນ"
+
+#: resources/op-item.ui:290
+msgid "Accept this request"
+msgstr "ຍອມຮັບຄຳຮ້ອງຂໍນີ້"
+
+#: resources/op-item.ui:305
+msgid "Refuse this request"
+msgstr "ປະຕິເສດຄຳຮ້ອງຂໍນີ້"
+
+#: resources/op-item.ui:320
+msgid "Cancel this request"
+msgstr "ຍົກເລີກຄຳຮ້ອງຂໍນີ້"
+
+#: resources/op-item.ui:335
+msgid "Restart this operation"
+msgstr "ເລີ່ມການດຳເນີນການນີ້ຄືນໃໝ່"
+
+#: resources/op-item.ui:350
+msgid "Pause this operation"
+msgstr "ຢຸດການດຳເນີນການນີ້ຊົ່ວຄາວ"
+
+#: resources/op-item.ui:365
+msgid "Resume this operation"
+msgstr "ສືບຕໍ່ການດຳເນີນການນີ້"
+
+#: resources/op-item.ui:380
+msgid "Cancel this operation"
+msgstr "ຍົກເລີກການດຳເນີນການນີ້"
+
+#: resources/op-item.ui:395
+msgid "Remove this operation from the list"
+msgstr "ລຶບການດຳເນີນການນີ້ອອກຈາກລາຍການ"
+
+#: resources/op-item.ui:410
+msgid "Open the containing folder"
+msgstr "ເປີດໂຟເດີທີ່ບັນຈຸ"
+
+#: resources/op-item.ui:425
+msgid "Copy message"
+msgstr "ສຳເນົາຂໍ້ຄວາມ"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "ໝາຍເຫດກ່ຽວກັບໝາຍເລກພອດ:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "ການຕັ້ງຄ່າ Warpinator"
+
+#: src/notifications.py:24
+msgid "New incoming files"
+msgstr "ມີໄຟລ໌ໃໝ່ເຂົ້າມາ"
+
+#: src/notifications.py:30
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s ຕ້ອງການສົ່ງ %(file_count)d ໄຟລ໌ (%(file_name)s) ໃຫ້ທ່ານ."
+
+#: src/notifications.py:31
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s ຕ້ອງການສົ່ງ %(file_count)d ໄຟລ໌ໃຫ້ທ່ານ"
+
+#: src/notifications.py:41
+msgid "Accept"
+msgstr "ຍອມຮັບ"
+
+#: src/notifications.py:42
+msgid "Decline"
+msgstr "ປະຕິເສດ"
+
+#: src/notifications.py:56
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"%(sender_name)s ກຳລັງສົ່ງ %(file_count)d ໄຟລ໌ (%(file_name)s) ໃຫ້ທ່ານ."
+
+#: src/notifications.py:57
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "%(sender_name)s ກຳລັງສົ່ງ %(file_count)d ໄຟລ໌ໃຫ້ທ່ານ"
+
+#: src/notifications.py:93
+msgid "Transfer complete"
+msgstr "ການໂອນສຳເລັດ"
+
+#: src/notifications.py:96
+#, python-format
+msgid "The transfer to %s has finished, but with errors"
+msgstr "ການໂອນໄປຍັງ %s ສຳເລັດແລ້ວ, ແຕ່ມີຂໍ້ຜິດພາດ"
+
+#: src/notifications.py:98
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "ການໂອນໄປຍັງ %s ສຳເລັດສົມບູນ"
+
+#: src/notifications.py:101
+#, python-format
+msgid "The transfer from %s has finished, but with errors"
+msgstr "ການໂອນຈາກ %s ສຳເລັດແລ້ວ, ແຕ່ມີຂໍ້ຜິດພາດ"
+
+#: src/notifications.py:103
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "ການໂອນຈາກ %s ສຳເລັດສົມບູນ"
+
+#: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
+msgid "Transfer failed"
+msgstr "ການໂອນລົ້ມເຫຼວ"
+
+#: src/notifications.py:140
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "ມີບາງຢ່າງຜິດພາດກັບການໂອນໄປຍັງ %s"
+
+#: src/notifications.py:142
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "ມີບາງຢ່າງຜິດພາດກັບການໂອນຈາກ %s"
+
+#: src/notifications.py:171 src/warpinator.py:175
+msgid "Transfer cancelled"
+msgstr "ການໂອນຖືກຍົກເລີກ"
+
+#: src/notifications.py:174
+#, python-format
+msgid "Your transfer to %s was cancelled"
+msgstr "ການໂອນຂອງທ່ານໄປຍັງ %s ຖືກຍົກເລີກ"
+
+#: src/notifications.py:176
+#, python-format
+msgid "An incoming transfer from %s was cancelled"
+msgstr "ການໂອນທີ່ເຂົ້າມາຈາກ %s ຖືກຍົກເລີກ"
+
+#: src/notifications.py:204
+msgid "Sending files"
+msgstr "ກຳລັງສົ່ງໄຟລ໌"
+
+#: src/notifications.py:207
+#, python-format
+msgid "Sending %d files to %s"
+msgstr "ກຳລັງສົ່ງ %d ໄຟລ໌ໄປຍັງ %s"
+
+#: src/notifications.py:209
+#, python-format
+msgid "Sending '%s' to %s"
+msgstr "ກຳລັງສົ່ງ '%s' ໄປຍັງ %s"
+
+#: src/notifications.py:236
+#, python-format
+msgid "New message from %s"
+msgstr "ຂໍ້ຄວາມໃໝ່ຈາກ %s"
+
+#: src/notifications.py:241
+msgid "Copy"
+msgstr "ສຳເນົາ"
+
+#: src/ops.py:53
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:154
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d ໄຟລ໌"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:261
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d ໄຟລ໌"
+
+#: src/ops.py:292
+msgid "Text message"
+msgstr "ຂໍ້ຄວາມຕົວໜັງສື"
+
+#: src/prefs.py:276
+msgid "Warpinator Preferences"
+msgstr "ການຕັ້ງຄ່າ Warpinator"
+
+#: src/prefs.py:293
+msgid "General"
+msgstr "ທົ່ວໄປ"
+
+#: src/prefs.py:295
+msgid "Desktop"
+msgstr "ເດັສທັອບ"
+
+#: src/prefs.py:297
+msgid "Show an icon in the notification area"
+msgstr "ສະແດງໄອຄອນໃນພື້ນທີ່ແຈ້ງເຕືອນ"
+
+#: src/prefs.py:301
+msgid "Start with main window open"
+msgstr "ເລີ່ມຕົ້ນດ້ວຍການເປີດໜ້າຕ່າງຫຼັກ"
+
+#: src/prefs.py:306
+msgid "Start automatically"
+msgstr "ເລີ່ມຕົ້ນອັດຕະໂນມັດ"
+
+#: src/prefs.py:313
+msgid "Use compression when possible."
+msgstr "ໃຊ້ການບີບອັດເມື່ອເປັນໄປໄດ້."
+
+#: src/prefs.py:315
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr "ຄຳເຕືອນ: ສິ່ງນີ້ອາດສົ່ງຜົນກະທົບຕໍ່ປະສິດທິພາບໃນບາງເຄືອຂ່າຍທີ່ໄວກວ່າ."
+
+#: src/prefs.py:318
+msgid "Location for received files"
+msgstr "ທີ່ຕັ້ງສຳລັບໄຟລ໌ທີ່ໄດ້ຮັບ"
+
+#: src/prefs.py:323
+msgid "Reserved free space"
+msgstr "ພື້ນທີ່ວ່າງທີ່ສະຫງວນໄວ້"
+
+#: src/prefs.py:328
+msgid "Require approval before accepting files"
+msgstr "ຕ້ອງການການອະນຸມັດກ່ອນຮັບໄຟລ໌"
+
+#: src/prefs.py:333
+msgid "Require approval when files would be overwritten"
+msgstr "ຕ້ອງການການອະນຸມັດເມື່ອໄຟລ໌ຈະຖືກຂຽນທັບ"
+
+#: src/prefs.py:338
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr "ສະແດງການແຈ້ງເຕືອນເມື່ອມີຄົນສົ່ງ (ຫຼື ພະຍາຍາມສົ່ງ) ໄຟລ໌ໃຫ້ທ່ານ"
+
+#: src/prefs.py:343
+msgid "Connection"
+msgstr "ການເຊື່ອມຕໍ່"
+
+#: src/prefs.py:353
+msgid "Network"
+msgstr "ເຄືອຂ່າຍ"
+
+#: src/prefs.py:356
+msgid "Automatic"
+msgstr "ອັດຕະໂນມັດ"
+
+#. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
+#: src/prefs.py:435
+#, python-format
+msgid "%s - not found"
+msgstr "%s - ບໍ່ພົບ"
+
+#: src/prefs.py:437
+msgid "Network interface to use"
+msgstr "ອິນເຕີເຟດເຄືອຂ່າຍທີ່ຈະໃຊ້"
+
+#: src/prefs.py:445
+msgid "Incoming port for transfers"
+msgstr "ພອດຂາເຂົ້າສຳລັບການໂອນ"
+
+#: src/prefs.py:452
+msgid "Incoming port for registration"
+msgstr "ພອດຂາເຂົ້າສຳລັບການລົງທະບຽນ"
+
+#: src/prefs.py:467
+msgid "Apply network changes"
+msgstr "ນຳໃຊ້ການປ່ຽນແປງເຄືອຂ່າຍ"
+
+#: src/prefs.py:476
+msgid "Update firewall rules"
+msgstr "ອັບເດດກົດໄຟວໍ"
+
+#: src/prefs.py:488
+msgid ""
+"Any port numbers will work for the application, but using the same ports for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"ໝາຍເລກພອດໃດກໍໄດ້ຈະໃຊ້ໄດ້ກັບແອັບພລິເຄຊັນ, "
+"ແຕ່ການໃຊ້ພອດດຽວກັນສຳລັບຄອມພິວເຕີທຸກໜ່ວຍສາມາດເຮັດໃຫ້ການເພີ່ມຂໍ້ຍົກເວັ້ນຂອງໄຟວໍ"
+"ງ່າຍຂຶ້ນຖ້າຈຳເປັນ."
+
+#: src/prefs.py:564
+msgid "Only available in secure mode."
+msgstr "ມີໃຫ້ໃຊ້ສະເພາະໃນໂໝດປອດໄພເທົ່ານັ້ນ."
+
+#: src/prefs.py:641
+msgid "A group code is required."
+msgstr "ຕ້ອງການລະຫັດກຸ່ມ."
+
+#: src/prefs.py:646
+msgid "The group code is too short."
+msgstr "ລະຫັດກຸ່ມສັ້ນເກີນໄປ."
+
+#: src/prefs.py:680
+msgid "ON"
+msgstr "ເປີດ"
+
+#: src/prefs.py:681
+msgid "All options are unlocked."
+msgstr "ຕົວເລືອກທັງໝົດຖືກປົດລັອກແລ້ວ."
+
+#: src/prefs.py:684
+msgid ""
+"You must set a custom group code to run in secure mode. Some options are "
+"currently disabled."
+msgstr ""
+"ທ່ານຕ້ອງຕັ້ງລະຫັດກຸ່ມທີ່ກຳນົດເອງເພື່ອເຮັດວຽກໃນໂໝດປອດໄພ. "
+"ບາງຕົວເລືອກຖືກປິດໃຊ້ງານຢູ່ໃນຂະນະນີ້."
+
+#: src/remote.py:666 src/remote.py:670
+msgid "Connection has been lost"
+msgstr "ການເຊື່ອມຕໍ່ໄດ້ຂາດຫາຍໄປ"
+
+#: src/server.py:697
+msgid "An error occurred on the remote machine"
+msgstr "ມີຂໍ້ຜິດພາດເກີດຂຶ້ນໃນຄອມພິວເຕີໄລຍະໄກ"
+
+#: src/util.py:327
+msgid "Cancel"
+msgstr "ຍົກເລີກ"
+
+#: src/util.py:328
+msgid "Add"
+msgstr "ເພີ່ມ"
+
+#: src/util.py:350
+msgid "Select file(s) to send"
+msgstr "ເລືອກໄຟລ໌ທີ່ຈະສົ່ງ"
+
+#: src/util.py:721
+msgid "A few seconds remaining"
+msgstr "ເຫຼືອອີກສອງສາມວິນາທີ"
+
+#: src/util.py:724
+#, python-format
+msgid "%d seconds remaining"
+msgstr "ເຫຼືອອີກ %d ວິນາທີ"
+
+#: src/util.py:728 src/util.py:736
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d ນາທີ"
+
+#: src/util.py:735
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d ຊົ່ວໂມງ"
+
+#: src/util.py:740
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "ປະມານ %d ຊົ່ວໂມງ"
+
+#: src/util.py:828 src/warpinator.py:632
+msgid "About"
+msgstr "ກ່ຽວກັບ"
+
+#: src/warpinator.py:154
+msgid "Paused"
+msgstr "ຢຸດຊົ່ວຄາວ"
+
+#: src/warpinator.py:157
+msgid "Waiting for approval"
+msgstr "ກຳລັງລໍຖ້າການອະນຸມັດ"
+
+#: src/warpinator.py:159
+msgid "Waiting for your approval"
+msgstr "ກຳລັງລໍຖ້າການອະນຸມັດຂອງທ່ານ"
+
+#: src/warpinator.py:162
+msgid "Not enough disk space"
+msgstr "ພື້ນທີ່ດິສກ໌ບໍ່ພຽງພໍ"
+
+#: src/warpinator.py:165
+msgid "Files may be overwritten"
+msgstr "ໄຟລ໌ອາດຈະຖືກຂຽນທັບ"
+
+#: src/warpinator.py:168
+msgid "Request cancelled"
+msgstr "ຄຳຮ້ອງຂໍຖືກຍົກເລີກ"
+
+#: src/warpinator.py:170 src/warpinator.py:172
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "ຄຳຮ້ອງຂໍຖືກຍົກເລີກໂດຍ %s"
+
+#: src/warpinator.py:177 src/warpinator.py:179
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "ການໂອນຖືກຍົກເລີກໂດຍ %s"
+
+#: src/warpinator.py:186
+#, python-format
+msgid "File '%s' not found"
+msgstr "ບໍ່ພົບໄຟລ໌ '%s'"
+
+#: src/warpinator.py:188
+msgid "Some files not found"
+msgstr "ບໍ່ພົບໄຟລ໌ບາງສ່ວນ"
+
+#: src/warpinator.py:215
+msgid "Completed"
+msgstr "ສຳເລັດແລ້ວ"
+
+#: src/warpinator.py:217
+msgid "Completed, but with errors"
+msgstr "ສຳເລັດແລ້ວ, ແຕ່ມີຂໍ້ຜິດພາດ"
+
+#: src/warpinator.py:385 src/warpinator.py:1152
+msgid "Connecting"
+msgstr "ກຳລັງເຊື່ອມຕໍ່"
+
+#: src/warpinator.py:387
+#, python-format
+msgid "Connecting to %s"
+msgstr "ກຳລັງເຊື່ອມຕໍ່ຫາ %s"
+
+#: src/warpinator.py:397
+#, python-format
+msgid "%s is not online"
+msgstr "%s ບໍ່ໄດ້ອອນລາຍ"
+
+#: src/warpinator.py:402
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "ບໍ່ສາມາດເຊື່ອມຕໍ່ຫາ %s"
+
+#: src/warpinator.py:407
+#, python-format
+msgid "Waiting for %s to complete the connection."
+msgstr "ກຳລັງລໍຖ້າ %s ເຊື່ອມຕໍ່ສຳເລັດ."
+
+#: src/warpinator.py:436
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "ມີການໂອນໃໝ່ເຂົ້າມາ %d ລາຍການ"
+
+#: src/warpinator.py:583 src/warpinator.py:1801
+msgid "Favorites"
+msgstr "ລາຍການທີ່ມັກ"
+
+#: src/warpinator.py:588 src/warpinator.py:1806
+msgid "Recents"
+msgstr "ລາຍການລ່າສຸດ"
+
+#: src/warpinator.py:595 src/warpinator.py:1815
+msgid "Browse..."
+msgstr "ເບິ່ງ..."
+
+#: src/warpinator.py:616
+msgid "Connect manually"
+msgstr "ເຊື່ອມຕໍ່ດ້ວຍຕົນເອງ"
+
+#: src/warpinator.py:621
+msgid "Restart service"
+msgstr "ຣີສະຕາດບໍລິການ"
+
+#: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
+msgid "Preferences"
+msgstr "ການຕັ້ງຄ່າ"
+
+#: src/warpinator.py:636 src/warpinator.py:1750
+msgid "Quit"
+msgstr "ອອກ"
+
+#: src/warpinator.py:745
+msgid "You don't appear to be connected to a network."
+msgstr "ເບິ່ງຄືວ່າທ່ານບໍ່ໄດ້ເຊື່ອມຕໍ່ກັບເຄືອຂ່າຍ."
+
+#: src/warpinator.py:747
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "ການເລີ່ມຕົ້ນບໍ່ສຳເລັດ, ກະລຸນາກວດສອບໄຟລ໌ບັນທຶກຂອງທ່ານ."
+
+#: src/warpinator.py:857
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minute. To enable Secure Mode, set a unique group code."
+msgstr ""
+"Warpinator ກຳລັງເຮັດວຽກດ້ວຍຟັງຊັນທີ່ຈຳກັດ, ແລະ ຈະອອກໃນອີກ %d ນາທີ. "
+"ເພື່ອເປີດໃຊ້ໂໝດປອດໄພ, ໃຫ້ຕັ້ງລະຫັດກຸ່ມທີ່ບໍ່ຊ້ຳໃຜ."
+
+#: src/warpinator.py:859
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minutes. To enable Secure Mode, set a unique group code."
+msgstr ""
+"Warpinator ກຳລັງເຮັດວຽກດ້ວຍຟັງຊັນທີ່ຈຳກັດ, ແລະ ຈະອອກໃນອີກ %d ນາທີ. "
+"ເພື່ອເປີດໃຊ້ໂໝດປອດໄພ, ໃຫ້ຕັ້ງລະຫັດກຸ່ມທີ່ບໍ່ຊ້ຳໃຜ."
+
+#: src/warpinator.py:920
+#, python-format
+msgid "Not enough disk space remaining to receive files (%s is reserved)."
+msgstr "ພື້ນທີ່ດິສກ໌ທີ່ເຫຼືອບໍ່ພຽງພໍທີ່ຈະຮັບໄຟລ໌ (ສະຫງວນໄວ້ %s)."
+
+#: src/warpinator.py:1001
+#, python-format
+msgid "Waiting for %d operation to complete"
+msgstr "ກຳລັງລໍຖ້າ %d ການດຳເນີນການໃຫ້ສຳເລັດ"
+
+#: src/warpinator.py:1002
+#, python-format
+msgid "Waiting for %d operations to complete"
+msgstr "ກຳລັງລໍຖ້າ %d ການດຳເນີນການໃຫ້ສຳເລັດ"
+
+#: src/warpinator.py:1128
+msgid "Offline"
+msgstr "ອອບລາຍ"
+
+#: src/warpinator.py:1136
+msgid "Unable to connect"
+msgstr "ບໍ່ສາມາດເຊື່ອມຕໍ່"
+
+#: src/warpinator.py:1144
+msgid "Waiting for two-way connection"
+msgstr "ກຳລັງລໍຖ້າການເຊື່ອມຕໍ່ສອງທາງ"
+
+#: src/warpinator.py:1246
+msgid "Manual connection"
+msgstr "ການເຊື່ອມຕໍ່ດ້ວຍຕົນເອງ"
+
+#: src/warpinator.py:1321
+msgid "Or connect to one of the addresses below:"
+msgstr "ຫຼື ເຊື່ອມຕໍ່ຫາໜຶ່ງໃນທີ່ຢູ່ລຸ່ມນີ້:"
+
+#: src/warpinator.py:1323
+msgid "Or connect to the address below:"
+msgstr "ຫຼື ເຊື່ອມຕໍ່ຫາທີ່ຢູ່ລຸ່ມນີ້:"
+
+#: src/warpinator.py:1341
+msgid "Connecting..."
+msgstr "ກຳລັງເຊື່ອມຕໍ່..."
+
+#: src/warpinator.py:1784
+msgid "Send to all"
+msgstr "ສົ່ງຫາທັງໝົດ"
+
+#: data/warpinator-send.nemo_action.in:4
+msgid "Send with Warpinator"
+msgstr "ສົ່ງດ້ວຍ Warpinator"
+
+#: data/warpinator-send.nemo_action.in:5
+msgid "Send a file to someone using Warpinator"
+msgstr "ສົ່ງໄຟລ໌ໃຫ້ຜູ້ໃດຜູ້ໜຶ່ງໂດຍໃຊ້ Warpinator"
+
+#: data/org.x.warpinator.policy.in.in:12
+msgid "Open a firewall port for Warpinator"
+msgstr "ເປີດພອດໄຟວໍສຳລັບ Warpinator"
+
+#: data/org.x.warpinator.policy.in.in:13
+msgid "To modify firewall settings, you need to authenticate."
+msgstr "ເພື່ອແກ້ໄຂການຕັ້ງຄ່າໄຟວໍ, ທ່ານຕ້ອງຢືນຢັນຕົວຕົນ."
+
+#. DO NOT TRANSLATE Warpinator
+#: data/org.x.Warpinator.appdata.xml.in.in:10
+msgid "Warpinator"
+msgstr "Warpinator"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "ແບ່ງປັນໄຟລ໌ໃນເຄືອຂ່າຍຂອງທ່ານ"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
+msgid ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and exchange files quickly and securely."
+msgstr ""
+"Warpinator ຊ່ວຍໃຫ້ທ່ານສາມາດເຊື່ອມຕໍ່ຄອມພິວເຕີຫຼາຍໜ່ວຍໃນເຄືອຂ່າຍທ້ອງຖິ່ນ ແລະ "
+"ແລກປ່ຽນໄຟລ໌ໄດ້ຢ່າງວ່ອງໄວ ແລະ ປອດໄພ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "ຄຸນສົມບັດ:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "ອິນເຕີເຟດກຣາຟິກທີ່ໃຊ້ງ່າຍ"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr "ການຄົ້ນພົບອຸປະກອນໃນເຄືອຂ່າຍຂອງທ່ານໂດຍອັດຕະໂນມັດ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr "ການເຊື່ອມຕໍ່ທີ່ປອດໄພ ແລະ ເຂົ້າລະຫັດຢ່າງສົມບູນລະຫວ່າງອຸປະກອນ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr "ການໂອນພ້ອມກັນຫຼາຍລາຍການ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr "ການບີບອັດຂໍ້ມູນທີ່ເປັນຕົວເລືອກ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr ""
+"ການຈັດກຸ່ມອຸປະກອນໂດຍໃຊ້ລະຫັດຮ່ວມກັນ, ສາມາດມີຫຼາຍກຸ່ມໃນເຄືອຂ່າຍດຽວກັນ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr "ການເຊື່ອມຕໍ່ດ້ວຍຕົນເອງສຳລັບສະພາບແວດລ້ອມເຄືອຂ່າຍທີ່ຈຳກັດ."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr "ໜ້າຫຼັກສະແດງອຸປະກອນທີ່ເຊື່ອມຕໍ່ ແລະ ສະຖານະຂອງມັນ"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr "ໜ້າການເຊື່ອມຕໍ່ສ່ວນບຸກຄົນສະແດງການໂອນເຂົ້າ ຫຼື ອອກແຕ່ລະລາຍການ"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr "ກ່ອງໂຕ້ຕອບການເຊື່ອມຕໍ່ດ້ວຍຕົນເອງ"

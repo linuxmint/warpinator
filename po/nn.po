@@ -1,98 +1,97 @@
-# Welsh translation for linuxmint
-# Copyright (c) 2020 Rosetta Contributors and Canonical Ltd 2020
+# Norwegian Nynorsk translation for linuxmint
+# Copyright (c) 2025 Rosetta Contributors and Canonical Ltd 2025
 # This file is distributed under the same license as the linuxmint package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2024-06-23 18:59+0000\n"
-"Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
-"Language-Team: Welsh <cy@li.org>\n"
+"PO-Revision-Date: 2025-12-11 22:51+0000\n"
+"Last-Translator: Simen Ryland Førde <Unknown>\n"
+"Language-Team: Norwegian Nynorsk <nn@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
-"2 : 3;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
 "X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
-"Language: cy\n"
+"Language: nn\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr "Cod Grŵp"
+msgstr "Gruppekode"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
-"Nid oes modd cyfathrebu â chyfrifiaduron nad ydynt yn defnyddio'r un cod."
+"Du kan ikkje kommunisere med datamaskiner som ikkje brukar same kode."
 
 #: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
-msgstr "Gosod y cod"
+msgstr "Sett kode"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr "Y modd diogel:"
+msgstr "Sikker modus:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr "DIFFODD"
+msgstr "AV"
 
 #: resources/group-code.ui:148 resources/main-window.ui:134
 #: resources/main-window.ui:1249
 msgid "More information"
-msgstr "Rhagor o wybodaeth"
+msgstr "Meir informasjon"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr "Mae'r modd diogel wedi'i analluogi"
+msgstr "Sikker modus deaktivert"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
-msgstr "Nid yw'r ffolder llwytho i lawr iddo'n ddiogel"
+msgstr "Nedlastingsmappe ikkje sikker"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
-msgstr "Dim canlyniadau sy'n cydweddu"
+msgstr "Ingen samsvarande resultat"
 
 #: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Gwneud y peiriant pell hwn yn ffefryn yn y brif olwg"
+msgstr "Gjer denne eksterne maskina til favoritt i hovudvisinga"
 
 #: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
-msgstr "Clirio gweithrediadau anweithredol a'r rhai a chwblhawyd"
+msgstr "Tøm inaktive og fullførte operasjonar"
 
 #: resources/main-window.ui:589
 msgid "Send files"
-msgstr "Anfon ffeiliau"
+msgstr "Send filer"
 
 #: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
-msgstr "Trosglwyddiadau Ffeiliau"
+msgstr "Filoverføringar"
 
 #: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
-msgstr "Ar-lein"
+msgstr "Tilkopla"
 
 #: resources/main-window.ui:798
 msgid "No other computers found..."
-msgstr "Heb ganfod unrhyw gyfrifiaduron eraill..."
+msgstr "Ingen andre datamaskiner funne..."
 
 #: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
-msgstr "Gwnewch yn siŵr fod eich cysylltiad rhwydwaith yn fyw."
+msgstr "Sjå til at nettverkstilkoplinga di er aktiv."
 
 #: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Gwiriwch eich rheolau mur cadarn.  Mae modd newid rhifau'r pyrth.  Gweler y "
-"dewisiadau am fwy o fanylion."
+"Kontroller brannmurreglane dine.  Portnummera kan endrast.  Sjå "
+"innstillingar for fleire detaljar."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:894
@@ -100,18 +99,17 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"A yw Warpinator yn rhedeg ar unrhyw gyfrifiaduron eraill ar y rhwydwaith "
-"hwn?  Os felly, gwnewch yn siŵr eu bod i gyd yn defnyddio'r un cod grŵp yn "
-"eich dewisiadau."
+"Køyrer Warpinator på andre datamaskiner på dette nettverket?  I så fall, sjå "
+"til at dei alle brukar same gruppekode i innstillingane."
 
 #: resources/main-window.ui:912
 msgid "Possible solutions:"
-msgstr "Atebion posib:"
+msgstr "Moglege løysingar:"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
-msgstr "Mae Warpinator ar gael ar:"
+msgstr "Warpinator er og tilgjengeleg på:"
 
 #: resources/main-window.ui:962
 msgid "Android"
@@ -123,49 +121,47 @@ msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr "Yn cychwyn, arhoswch ..."
+msgstr "Initialiserer, vent litt..."
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
-msgstr "Aeth rhywbeth o'i le"
+msgstr "Noko gjekk gale"
 
 #: resources/main-window.ui:1200
 msgid "Invalid save location"
-msgstr "Lleoliad cadw annilys"
+msgstr "Ugyldig lagringsstad"
 
 #: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"NId yw'r ffolder yn hygyrch neu mae'n waharddedig cadw ffeiliau ynddo. "
-"Dewiswch leoliad newydd yn y Dewisiadau a sicrhau ei fod yn hygyrch."
+"Denne mappa er anten utilgjengeleg eller forbode å lagre filer i.  Vel ei ny "
+"plassering i innstillingane og sjå til at ho er tilgjengeleg."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
-msgstr "Chwilio am gyfrifiaduron eraill"
+msgstr "Søkjer etter andre datamaskiner"
 
 #: resources/main-window.ui:1368
 msgid "Shutting down..."
-msgstr "Yn cau..."
+msgstr "Slår av..."
 
 #: resources/main-window.ui:1440
 msgid "Restart required"
-msgstr "Mae angen ailgychwyn"
+msgstr "Omstart nødvendig"
 
 #: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
-msgstr ""
-"Mae angen ailgychwyn Warpinator cyn mae modd defnyddio'r cyfeiriadur cadw "
-"newydd"
+msgstr "Warpinator må startast på nytt før den nye lagringsmappa kan brukast"
 
 #: resources/main-window.ui:1467
 msgid "Restart"
-msgstr "Ailgychwyn"
+msgstr "Start på nytt"
 
 #: resources/main-window.ui:1537
 msgid "Disk Full"
-msgstr "Disg Llawn"
+msgstr "Disk Full"
 
 #: resources/main-window.ui:1574
 msgid ""
@@ -173,226 +169,225 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
-"Nid oes digon o le yn y lleoliad cadw. Mae angen dileu rhai ffeiliau, "
-"lleihau maint y lle rhydd yn y Dewisiadau neu ddewis leoliad newydd."
+"Det er ikkje nok ledig plass på lagringsstaden. Du må slette nokre filer, "
+"redusere minste frie plass i innstillingane eller velje ein ny plassering."
 
 #: resources/main-window.ui:1591
 msgid "Empty trash"
-msgstr "Gwagio'r sbwriel"
+msgstr "Tøm papirkorga"
 
 #: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
-msgstr "Agor ffolder cadw"
+msgstr "Opne lagringsmappa"
 
 #: resources/main-window.ui:1618
 msgid "Examine disk usage"
-msgstr "Archwilio defnydd disg"
+msgstr "Undersøk diskbruk"
 
 #: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
-msgstr "Anfon a Derbyn Ffeiliau ar draws y Rhwydwaith"
+msgstr "Send og motta filer over nettverket"
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr "Ar y cyfrifiadur hwn:"
+msgstr "På denne datamaskina:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr "Rhowch gyfeiriad y ddyfais rydych chi am gysylltu ag ef"
+msgstr "Skriv inn adressa til eininga du vil kople til"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr "Cysylltu"
+msgstr "Kople til"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr "Fel arall, ar y ddyfais arall:"
+msgstr "Alternativt, på den andre eininga:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr "Sganiwch y cod QR hwn"
+msgstr "Skann denne QR-koden"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr "Neu cysylltwch â'r cyfeiriad isod"
+msgstr "Eller kople til adressa nedanfor"
 
 #: resources/op-item.ui:146
 msgid "Awaiting approval"
-msgstr "Yn disgwyl cymeradwyaeth"
+msgstr "Ventar på godkjenning"
 
 #: resources/op-item.ui:162
 msgid "Not enough disk space!"
-msgstr "Dim digon o ofod  ar y ddisg!"
+msgstr "Ikkje nok diskplass!"
 
 #: resources/op-item.ui:225
 msgid "Calculating"
-msgstr "Wrthi'n cyfrifo"
+msgstr "Reknar ut"
 
 #: resources/op-item.ui:290
 msgid "Accept this request"
-msgstr "Derbyn y cais hwn"
+msgstr "Godta denne førespurnaden"
 
 #: resources/op-item.ui:305
 msgid "Refuse this request"
-msgstr "Gwrthod y cais hwn"
+msgstr "Avvis denne førespurnaden"
 
 #: resources/op-item.ui:320
 msgid "Cancel this request"
-msgstr "Diddymu'r cais hwn"
+msgstr "Avbryt denne førespurnaden"
 
 #: resources/op-item.ui:335
 msgid "Restart this operation"
-msgstr "Ailgychwyn y weithred hon"
+msgstr "Start denne operasjonen på nytt"
 
 #: resources/op-item.ui:350
 msgid "Pause this operation"
-msgstr "Oedi'r weithred hon"
+msgstr "Pause denne operasjonen"
 
 #: resources/op-item.ui:365
 msgid "Resume this operation"
-msgstr "Ail-gychwyn y weithred hon"
+msgstr "Hald fram denne operasjonen"
 
 #: resources/op-item.ui:380
 msgid "Cancel this operation"
-msgstr "Diddymu'r weithred hon"
+msgstr "Avbryt denne operasjonen"
 
 #: resources/op-item.ui:395
 msgid "Remove this operation from the list"
-msgstr "Tynnu'r weithred hon o'r rhestr"
+msgstr "Fjern denne operasjonen frå lista"
 
 #: resources/op-item.ui:410
 msgid "Open the containing folder"
-msgstr "Agor y ffolder cynnwys"
+msgstr "Opne mappa som inneheld fila"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Kopier melding"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr "Nodyn ar rifau porth:"
+msgstr "Merknad om portnummer:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr "Dewisiadau Warpinator"
+msgstr "Warpinator-innstillingar"
 
 #: src/notifications.py:24
 msgid "New incoming files"
-msgstr "Ffeiliau newydd sy'n cael eu derbyn"
+msgstr "New incoming files"
 
 #: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"Hoffai %(sender_name)s anfon %(file_count)d ffeil (%(file_name)s) atoch."
+"%(sender_name)s vil gjerne sende deg %(file_count)d fil (%(file_name)s)."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "Hoffai %(sender_name)s anfon %(file_count)d ffeil atoch"
+msgstr "%(sender_name)s vil gjerne sende deg %(file_count)d filer"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr "Derbyn"
+msgstr "Godta"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr "Gwrthod"
+msgstr "Avslå"
 
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
-"Mae %(sender_name)s yn anfon %(file_count)d ffeil (%(file_name)s) atoch."
+msgstr "%(sender_name)s sender deg %(file_count)d fil (%(file_name)s)."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "Mae %(sender_name)s yn anfon %(file_count)d ffeil atoch"
+msgstr "%(sender_name)s sender deg %(file_count)d filer"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Mae'r trosglwyddiad wedi'i gwblhau"
+msgstr "Overføring fullført"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr "Gorffennodd trosglwyddo i %s ond gyda gwallau"
+msgstr "Overføringa til %s er fullført, men med feil"
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "Mae'r trosglwyddiad i %s wedi gorffen yn llwyddiannus"
+msgstr "Overføringa til %s er fullført"
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr "Gorffennodd trosglwyddo o %s ond gyda gwallau"
+msgstr "Overføringa frå %s er fullført, men med feil"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "Mae'r trosglwyddiad o %s wedi gorffen yn llwyddiannus"
+msgstr "Overføringa frå %s er fullført"
 
 #: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
-msgstr "Methodd y trosglwyddiad"
+msgstr "Overføring feila"
 
 #: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr "Aeth rhywbeth o'i le gyda'r trosglwyddiad i %s"
+msgstr "Noko gjekk gale med overføringa til %s"
 
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr "Aeth rhywbeth o'i le gyda'r trosglwyddiad o %s"
+msgstr "Noko gjekk gale med overføringa frå %s"
 
 #: src/notifications.py:171 src/warpinator.py:175
 msgid "Transfer cancelled"
-msgstr "Trosglwyddiad wedi'i ddiddymu"
+msgstr "Overføring avbroten"
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Cafodd eich trosglwyddiad i %s ei ddiddymu"
+msgstr "Overføringa di til %s vart avbroten"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Cafodd trosglwyddiad i mewn o %s ei ddiddymu"
+msgstr "Ei innkommande overføring frå %s vart avbroten"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr "Yn anfon ffeiliau"
+msgstr "Sender filer"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr "Yn anfon %d ffeil i %s"
+msgstr "Sender %d filer til %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr "Yn anfon %s ffeil i %s"
+msgstr "Sender '%s' til %s"
 
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "Ny melding frå %s"
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Kopier"
 
 #: src/ops.py:53
 #, python-format
@@ -404,337 +399,324 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] "%d ffeil"
-msgstr[1] "%d ffeil"
-msgstr[2] "%d ffeil"
-msgstr[3] "%d ffeil"
+msgstr[0] "%d fil"
+msgstr[1] "%d filer"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%d ffeil"
-msgstr[1] "%d ffeil"
-msgstr[2] "%d ffeil"
-msgstr[3] "%d ffeil"
+msgstr[0] "%d fil"
+msgstr[1] "%d filer"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Tekstmelding"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
-msgstr "Dewisiadau Warpinator"
+msgstr "Warpinator-innstillingar"
 
 #: src/prefs.py:293
 msgid "General"
-msgstr "Cyffredinol"
+msgstr "Generelt"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr "Bwrdd Gwaith"
+msgstr "Skrivebord"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"
-msgstr "Dangos eicon yn yr ardal hysbysu"
+msgstr "Vis eit ikon i varslingsområdet"
 
 #: src/prefs.py:301
 msgid "Start with main window open"
-msgstr "Cychwyn gyda'r brif ffenestr ar agor"
+msgstr "Start med hovudvindauget ope"
 
 #: src/prefs.py:306
 msgid "Start automatically"
-msgstr "Cychwyn yn awtomatig"
+msgstr "Start automatisk"
 
 #: src/prefs.py:313
 msgid "Use compression when possible."
-msgstr "Defnyddio gywasgiad pan fo hynny'n bosibl."
+msgstr "Bruk komprimering når det er mogleg."
 
 #: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Rhybudd: Gall hyn gael effaith negyddol ar berfformiad ar rai rhwydweithiau "
-"cynt."
+"Åtvaring: Dette kan ha negativ innverknad på ytinga på somme raskare "
+"nettverk."
 
 #: src/prefs.py:318
 msgid "Location for received files"
-msgstr "Lleoliad ar gyfer ffeiliau sy'n cael eu derbyn"
+msgstr "Plassering for mottatte filer"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr "Lle rhydd wedi'i gadw"
+msgstr "Reservert ledig plass"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
-msgstr "Gofyn am gymeradwyaeth cyn derbyn ffeiliau"
+msgstr "Krev godkjenning før filer blir godtekne"
 
 #: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
-msgstr "Gofyn am cymeradwyaeth pan fyddai ffeiliau'n cael eu trosysgrifo"
+msgstr "Krev godkjenning når filer vil bli overskrivne"
 
 #: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
-msgstr ""
-"Dangos hysbysiad pan fydd rhywun yn anfon (neu'n ceisio anfon) ffeiliau atoch"
+msgstr "Vis eit varsel når nokon sender (eller prøver å sende) deg filer"
 
 #: src/prefs.py:343
 msgid "Connection"
-msgstr "Cysylltiad"
+msgstr "Tilkopling"
 
 #: src/prefs.py:353
 msgid "Network"
-msgstr "Rhwydwaith"
+msgstr "Nettverk"
 
 #: src/prefs.py:356
 msgid "Automatic"
-msgstr "Awtomatig"
+msgstr "Automatisk"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr "Heb ganfod - \"%s\""
+msgstr "%s - ikkje funnen"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
-msgstr "Rhyngwyneb rhwydwaith i'w ddefnyddio"
+msgstr "Nettverksgrensesnitt å bruke"
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
-msgstr "Porth derbyn ar gyfer trosglwyddiadau"
+msgstr "Innkommande port for overføringar"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr "Porth derbyn ar gyfer cofrestru"
+msgstr "Innkommande port for registrering"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
-msgstr "Gosod y newidiadau rhwydwaith"
+msgstr "Ta i bruk nettverksendringar"
 
 #: src/prefs.py:476
 msgid "Update firewall rules"
-msgstr "Diweddaru rheolau mur cadarn"
+msgstr "Oppdater brannmurreglar"
 
 #: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Bydd unrhyw rifau pyrth yn gweithio ar gyfer y rhaglen, ond gall defnyddio'r "
-"un pyrth ar gyfer pob cyfrifiadur ei gwneud hi'n symlach i ychwanegu "
-"eithriadau mur cadarn os oes angen."
+"Alle portnummer vil fungere for programmet, men å bruke dei same portane for "
+"alle datamaskiner kan gjere det enklare å leggje til brannmurunntak om "
+"nødvendig."
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr "Dim ond ar gael yn y modd diogel."
+msgstr "Berre tilgjengeleg i sikker modus."
 
 #: src/prefs.py:641
 msgid "A group code is required."
-msgstr "Mae angen cod grŵp."
+msgstr "Ein gruppekode er påkrevd."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr "Mae'r cod grŵp yn rhy fyr."
+msgstr "Gruppekoden er for kort."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr "YMLAEN"
+msgstr "PÅ"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr "Mae pob dewis ar agor."
+msgstr "Alle val er opplåst."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
-"Rhaid i chi osod cod grŵp cyfaddas i redeg yn y modd diogel. Mae rhai "
-"dewisiadau wedi'u analluogi, ar hyn o bryd."
+"Du må setje ein tilpassa gruppekode for å køyre i sikker modus. Nokre val er "
+"for tida deaktiverte."
 
 #: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
-msgstr "Collwyd y cysylltiad"
+msgstr "Tilkoplinga er broten"
 
 #: src/server.py:697
 msgid "An error occurred on the remote machine"
-msgstr "Digwyddodd gwall ar y peiriant pell"
+msgstr "Ein feil oppstod på den eksterne maskina"
 
 #: src/util.py:327
 msgid "Cancel"
-msgstr "Diddymu"
+msgstr "Avbryt"
 
 #: src/util.py:328
 msgid "Add"
-msgstr "Ychwanegu"
+msgstr "Legg til"
 
 #: src/util.py:350
 msgid "Select file(s) to send"
-msgstr "Dewiswch ffeil(iau) i'w hanfon"
+msgstr "Vel fil(er) å sendeSkriv inn adressa til eininga du vil kople til"
 
 #: src/util.py:721
 msgid "A few seconds remaining"
-msgstr "Mae ychydig eiliadau ar ôl"
+msgstr "Nokre sekund att"
 
 #: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
-msgstr "%d o eiliadau ar ôl"
+msgstr "%d sekund att"
 
 #: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d munud"
-msgstr[1] "%d funud"
-msgstr[2] "%d munud"
-msgstr[3] "%d munud"
+msgstr[0] "%d minutt"
+msgstr[1] "%d minutt"
 
 #: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d awr"
-msgstr[1] "%d awr"
-msgstr[2] "%d awr"
-msgstr[3] "%d awr"
+msgstr[0] "%d time"
+msgstr[1] "%d timar"
 
 #: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "tua %d awr"
-msgstr[1] "tua %d awr"
-msgstr[2] "tua %d awr"
-msgstr[3] "tua %d awr"
+msgstr[0] "om lag %d time"
+msgstr[1] "om lag %d timar"
 
 #: src/util.py:828 src/warpinator.py:632
 msgid "About"
-msgstr "Tua"
+msgstr "Om"
 
 #: src/warpinator.py:154
 msgid "Paused"
-msgstr "Oedwyd"
+msgstr "Pause"
 
 #: src/warpinator.py:157
 msgid "Waiting for approval"
-msgstr "Yn aros am gymeradwyaeth"
+msgstr "Ventar på godkjenning"
 
 #: src/warpinator.py:159
 msgid "Waiting for your approval"
-msgstr "Yn aros am gymeradwyaeth"
+msgstr "Ventar på godkjenninga di"
 
 #: src/warpinator.py:162
 msgid "Not enough disk space"
-msgstr "Dim digon o ofod ar y ddisg"
+msgstr "Ikkje nok diskplass"
 
 #: src/warpinator.py:165
 msgid "Files may be overwritten"
-msgstr "Gall ffeiliau gael eu trosysgrifo"
+msgstr "Filer kan bli overskrivne"
 
 #: src/warpinator.py:168
 msgid "Request cancelled"
-msgstr "Cais wedi'i ddiddymu"
+msgstr "Førespurnad avbroten"
 
 #: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "Cais wedi'i ddiddymu gan %s"
+msgstr "Førespurnad avbroten av %s"
 
 #: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Trosglwyddo wedi'i ddiddymu gan %s"
+msgstr "Overføring avbroten av %s"
 
 #: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
-msgstr "Heb ganfod ffeil '%s'"
+msgstr "Fila '%s' vart ikkje funnen"
 
 #: src/warpinator.py:188
 msgid "Some files not found"
-msgstr "Heb ganfod rhai ffeiliau."
+msgstr "Nokre filer vart ikkje funne"
 
 #: src/warpinator.py:215
 msgid "Completed"
-msgstr "Cwblhawyd"
+msgstr "Fullført"
 
 #: src/warpinator.py:217
 msgid "Completed, but with errors"
-msgstr "Cwblhawyd, ond gyda gwallau"
+msgstr "Fullført, men med feil"
 
 #: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
-msgstr "Yn cysylltu"
+msgstr "Koplar til"
 
 #: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
-msgstr "Yn cysylltu â %s"
+msgstr "Koplar til %s"
 
 #: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
-msgstr "Nid yw %s ar-lein"
+msgstr "%s er ikkje tilkopla"
 
 #: src/warpinator.py:402
 #, python-format
 msgid "Cannot connect to %s"
-msgstr "Methu cysylltu â %s"
+msgstr "Kan ikkje kople til %s"
 
 #: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Yn aros am %s i gwblhau'r cysylltiad."
+msgstr "Ventar på at %s skal fullføre tilkoplinga."
 
 #: src/warpinator.py:436
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d trosglwyddiad newydd i mewn"
-msgstr[1] "%d drosglwyddiad newydd i mewn"
-msgstr[2] "%d trosglwyddiad newydd i mewn"
-msgstr[3] "%d trosglwyddiad newydd i mewn"
+msgstr[0] "%d ny innkommande overføring"
+msgstr[1] "%d nye innkommande overføringar"
 
 #: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
-msgstr "Ffefrynnau"
+msgstr "Favorittar"
 
 #: src/warpinator.py:588 src/warpinator.py:1806
 msgid "Recents"
-msgstr "Diweddar"
+msgstr "Nylege"
 
 #: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
-msgstr "Pori..."
+msgstr "Bla gjennom..."
 
 #: src/warpinator.py:616
 msgid "Connect manually"
-msgstr "Cysylltwch â llaw"
+msgstr "Kople til manuelt"
 
 #: src/warpinator.py:621
 msgid "Restart service"
-msgstr "Ailgychwyn y gwasanaeth"
+msgstr "Start teneste på nytt"
 
 #: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
-msgstr "Dewisiadau"
+msgstr "Innstillingar"
 
 #: src/warpinator.py:636 src/warpinator.py:1750
 msgid "Quit"
-msgstr "Gadael"
+msgstr "Avslutt"
 
 #: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
-msgstr "Nid yw'n ymddangos eich bod wedi'ch cysylltu â rhwydwaith."
+msgstr "Det ser ikkje ut til at du er tilkopla eit nettverk."
 
 #: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Methodd y cychwyn, gwiriwch eich cofnodion."
+msgstr "Oppstart feila, sjekk loggane dine."
 
 #: src/warpinator.py:857
 #, python-format
@@ -742,8 +724,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Mae Warpinator yn rhedeg rhai swyddogaethau cyfyngedig a bydd yn gorffen "
-"ymhen %d munud. I alluogi'r Modd Diogel, gosodwch god grŵp unigryw."
+"Warpinator køyrer med avgrensa funksjonalitet, og vil avslutte om %d minutt. "
+"For å aktivere sikker modus, set ein unik gruppekode."
 
 #: src/warpinator.py:859
 #, python-format
@@ -751,72 +733,71 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Mae Warpinator yn rhedeg rhai swyddogaethau cyfyngedig a bydd yn gorffen "
-"ymhen %d munud. I alluogi'r Modd Diogel, gosodwch god grŵp unigryw."
+"Warpinator køyrer med avgrensa funksjonalitet, og vil avslutte om %d minutt. "
+"For å aktivere sikker modus, set ein unik gruppekode."
 
 #: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
-msgstr ""
-"Does dim digon o le ar ôl ar y ddisg i dderbyn ffeiliau. (%s wedi'i gadw)"
+msgstr "Ikkje nok diskplass att til å ta imot filer (%s er reservert)."
 
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr "Aros i weithred %d orffen"
+msgstr "Ventar på at %d operasjon skal fullførast"
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr "Aros i weithred %d orffen"
+msgstr "Ventar på at %d operasjonar skal fullførast"
 
 #: src/warpinator.py:1128
 msgid "Offline"
-msgstr "All-lein"
+msgstr "Fråkopla"
 
 #: src/warpinator.py:1136
 msgid "Unable to connect"
-msgstr "Methu cysylltu"
+msgstr "Kan ikkje kople til"
 
 #: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
-msgstr "Yn aros am gysylltiad dwy ffordd"
+msgstr "Ventar på tovegstilkopling"
 
 #: src/warpinator.py:1246
 msgid "Manual connection"
-msgstr "Cysylltiad â llaw"
+msgstr "Manuell tilkopling"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Eller kople til ei av adressene nedanfor:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Eller kople til adressa nedanfor:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."
-msgstr "Wrthi'n cysylltu..."
+msgstr "Koplar til..."
 
 #: src/warpinator.py:1784
 msgid "Send to all"
-msgstr "Anfon at bawb"
+msgstr "Send til alle"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr "Ei anfon gyda Warpinator"
+msgstr "Send med Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr "Anfon ffeil at rywun gan ddefnyddio Warpinator"
+msgstr "Send ei fil til nokon med Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Agor porth mur cadarn ar gyfer Warpinator"
+msgstr "Opne ein brannmurport for Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr "I newid gosodiadau mur cadarn, rhaid dilysu."
+msgstr "For å endre brannmurinnstillingar må du autentisere deg."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:10
@@ -825,62 +806,63 @@ msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr "Rhannwch ffeiliau ar eich rhwydwaith"
+msgstr "Del filer på nettverket ditt"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and exchange files quickly and securely."
 msgstr ""
-"Mae Warpinator yn caniatáu i chi gysylltu cyfrifiaduron niferus yn hawdd ar "
-"rwydwaith ardal lleol a chyfnewid ffeiliau'n gyflym a diogel."
+"Warpinator gjer det enkelt å kople saman fleire datamaskiner på eit "
+"lokalnett og utveksle filer raskt og sikkert."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr "Nodweddion:"
+msgstr "Funksjonar:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr "Rhyngwyneb graffigol hawdd ei ddefnyddio."
+msgstr "Eit brukartilpassa grafisk grensesnitt."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
-msgstr "Canfod dyfeisiau'n awtomatig ar eich rhwydwaith."
+msgstr "Automatisk oppdaging av einingar på nettverket ditt."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr "Cysylltiadau cwbl ddiogel ac amgryptiedig rhwng dyfeisiau."
+msgstr "Fullt sikre og krypterte tilkoplingar mellom einingar."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
-msgstr "Trosgwyddiadau lluosog ar yr un pryd."
+msgstr "Fleire samtidige overføringar."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:20
 msgid "Optional data compression."
-msgstr "Y dewis i gywasgu data."
+msgstr "Valfri datakomprimering."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:21
 msgid ""
 "Grouping of devices using a shared key, with multiple groups possible on the "
 "same network."
 msgstr ""
-"Grwpio dyfeisiau gan ddefnyddio allwedd wedi'i rannu, gyda grwpiau niferus "
-"yn bosib ar yr un rhwydwaith."
+"Gruppering av einingar ved bruk av ein delt nøkkel, med fleire grupper "
+"mogleg på same nettverk."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:22
 msgid "Manual connections for restricted network environments."
-msgstr "Cysylltiadau â llaw ar gyfer amgylchiadau rhwydwaith cyfyngedig."
+msgstr "Manuelle tilkoplingar for avgrensa nettverksmiljø."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
-msgstr "Y prif olwg yn dangos dyfeisiau wedi’u cysylltu â'u statws."
+msgstr "Hovudvisinga som viser tilkopla einingar og statusen deira"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
 msgstr ""
-"Tudalen cysylltiad unigol yn dangos trosglwyddiadau i mewn neu allan unigol"
+"Individuell tilkoplingsside som viser individuelle innkommande eller "
+"utgåande overføringar"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr "Deialog cysylltu â llaw"
+msgstr "Dialog for manuell tilkopling"

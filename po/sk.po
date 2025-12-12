@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"POT-Creation-Date: 2025-11-21 13:15+0000\n"
 "PO-Revision-Date: 2024-11-30 10:21+0000\n"
 "Last-Translator: Dusan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
-"X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
+"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
+"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
 "Language: sk\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -27,7 +27,7 @@ msgstr "Kód skupiny"
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "Nemôžete komunikovať s počítačmi, ktoré nepoužívajú rovnaký kód."
 
-#: resources/group-code.ui:49 resources/main-window.ui:51
+#: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
 msgstr "Nastaviť kód"
 
@@ -39,54 +39,54 @@ msgstr "Zabezpečený režim:"
 msgid "OFF"
 msgstr "Vypnuté"
 
-#: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1202
+#: resources/group-code.ui:148 resources/main-window.ui:134
+#: resources/main-window.ui:1249
 msgid "More information"
 msgstr "Viac informácií"
 
-#: resources/main-window.ui:80
+#: resources/main-window.ui:85
 msgid "Secure Mode disabled"
 msgstr "Zabezpečený režim je vypnutý"
 
-#: resources/main-window.ui:170
+#: resources/main-window.ui:175
 msgid "Download folder not secure"
 msgstr "Priečinok sťahovania nie je zabezpečený"
 
-#: resources/main-window.ui:335
+#: resources/main-window.ui:340
 msgid "No matching results"
 msgstr "Žiadne zhodné výsledky"
 
 # tooltip
-#: resources/main-window.ui:491
+#: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
 msgstr "Zobrazí tento počítač ako obľúbený v hlavnom zobrazení"
 
 # tooltip
-#: resources/main-window.ui:565
+#: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
 msgstr "Vymaže neaktívne a dokončené operácie"
 
-#: resources/main-window.ui:584
+#: resources/main-window.ui:589
 msgid "Send files"
 msgstr "Odoslať súbory"
 
-#: resources/main-window.ui:610 src/prefs.py:311
+#: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
 msgstr "Prenosy súborov"
 
-#: resources/main-window.ui:631 src/warpinator.py:1054
+#: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
 msgstr "Pripojené"
 
-#: resources/main-window.ui:751
+#: resources/main-window.ui:798
 msgid "No other computers found..."
 msgstr "Nenašli sa žiadne ďalšie počítače..."
 
-#: resources/main-window.ui:816
+#: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
 msgstr "Uistite sa, že je vaše sieťové pripojenie aktívne."
 
-#: resources/main-window.ui:831
+#: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -95,7 +95,7 @@ msgstr ""
 "Pre viac podrobností prezrite predvoľby."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:847
+#: resources/main-window.ui:894
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -104,36 +104,36 @@ msgstr ""
 "sieti? Ak je, uistite sa, že všetky používajú rovnaký kód skupiny v "
 "predvoľbách."
 
-#: resources/main-window.ui:865
+#: resources/main-window.ui:912
 msgid "Possible solutions:"
 msgstr "Možné riešenia:"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:900
+#: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
 msgstr "Warpinator je tiež dostupný na:"
 
-#: resources/main-window.ui:915
+#: resources/main-window.ui:962
 msgid "Android"
 msgstr "Android"
 
-#: resources/main-window.ui:931 resources/main-window.ui:946
+#: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
 msgstr "Windows"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
 msgstr "Inicializuje sa, prosím, čakajte..."
 
-#: resources/main-window.ui:1078
+#: resources/main-window.ui:1125
 msgid "Something went wrong"
 msgstr "Niekde sa stala chyba"
 
-#: resources/main-window.ui:1153
+#: resources/main-window.ui:1200
 msgid "Invalid save location"
 msgstr "Neplatné umiestnenie ukladania"
 
-#: resources/main-window.ui:1190
+#: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -141,33 +141,33 @@ msgstr ""
 "Tento priečinok je buď nedostupný, alebo je doň zakázané ukladať súbory. "
 "Vyberte nové miesto v Predvoľbách a uistite sa, že je dostupné."
 
-#: resources/main-window.ui:1262
+#: resources/main-window.ui:1309
 msgid "Searching for other computers"
 msgstr "Vyhľadávajú sa ďalšie počítače"
 
-#: resources/main-window.ui:1321
+#: resources/main-window.ui:1368
 msgid "Shutting down..."
 msgstr "Vypína sa..."
 
-#: resources/main-window.ui:1393
+#: resources/main-window.ui:1440
 msgid "Restart required"
 msgstr "Vyžaduje sa reštart"
 
-#: resources/main-window.ui:1410
+#: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "Warpinator sa musí reštartovať, aby bolo možné použiť nový adresár na "
 "uloženie"
 
-#: resources/main-window.ui:1420
+#: resources/main-window.ui:1467
 msgid "Restart"
 msgstr "Reštart"
 
-#: resources/main-window.ui:1490
+#: resources/main-window.ui:1537
 msgid "Disk Full"
 msgstr "Disk je plný"
 
-#: resources/main-window.ui:1527
+#: resources/main-window.ui:1574
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -177,19 +177,19 @@ msgstr ""
 "zmenšiť minimálny voľný priestor v preferenciách alebo zvoliť nové "
 "umiestnenie."
 
-#: resources/main-window.ui:1544
+#: resources/main-window.ui:1591
 msgid "Empty trash"
 msgstr "Vyprázdniť kôš"
 
-#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
+#: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
 msgstr "Otvoriť ukladací priečinok"
 
-#: resources/main-window.ui:1571
+#: resources/main-window.ui:1618
 msgid "Examine disk usage"
 msgstr "Skontrolujte využitie disku"
 
-#: resources/main-window.ui:1624 src/util.py:774
+#: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
 msgstr "Odosiela a prijíma súbory prostredníctvom siete"
@@ -223,62 +223,66 @@ msgstr "Oskenujte tento QR kód"
 msgid "Or connect to the address below"
 msgstr "Alebo sa pripojte k nasledovnej adrese"
 
-#: resources/op-item.ui:140
+#: resources/op-item.ui:146
 msgid "Awaiting approval"
 msgstr "Čaká sa na schválenie"
 
-#: resources/op-item.ui:156
+#: resources/op-item.ui:162
 msgid "Not enough disk space!"
 msgstr "Nedostatok miesta na disku!"
 
-#: resources/op-item.ui:219
+#: resources/op-item.ui:225
 msgid "Calculating"
 msgstr "Vypočítava sa"
 
 # tooltip
-#: resources/op-item.ui:259
+#: resources/op-item.ui:290
 msgid "Accept this request"
 msgstr "Prijme túto požiadavku"
 
 # tooltip
-#: resources/op-item.ui:274
+#: resources/op-item.ui:305
 msgid "Refuse this request"
 msgstr "Zamietne túto požiadavku"
 
 # tooltip
-#: resources/op-item.ui:289
+#: resources/op-item.ui:320
 msgid "Cancel this request"
 msgstr "Zruší tuto požiadavku"
 
 # tooltip
-#: resources/op-item.ui:304
+#: resources/op-item.ui:335
 msgid "Restart this operation"
 msgstr "Znovu spustí túto operáciu"
 
 # tooltip
-#: resources/op-item.ui:319
+#: resources/op-item.ui:350
 msgid "Pause this operation"
 msgstr "Pozastaví túto operáciu"
 
 # tooltip
-#: resources/op-item.ui:334
+#: resources/op-item.ui:365
 msgid "Resume this operation"
 msgstr "Pokračuje v tejto operácii"
 
 # tooltip
-#: resources/op-item.ui:349
+#: resources/op-item.ui:380
 msgid "Cancel this operation"
 msgstr "Zruší túto operáciu"
 
 # tooltip
-#: resources/op-item.ui:364
+#: resources/op-item.ui:395
 msgid "Remove this operation from the list"
 msgstr "Odstráni túto operáciu zo zoznamu"
 
 # tooltip
-#: resources/op-item.ui:379
+#: resources/op-item.ui:410
 msgid "Open the containing folder"
 msgstr "Otvorí priečinok s obsahom"
+
+#: resources/op-item.ui:425
+msgid "Copy message"
+msgstr ""
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -354,7 +358,7 @@ msgstr "Prenos z %s bol dokončený, ale s chybami"
 msgid "The transfer from %s has finished successfully"
 msgstr "Prenos od %s bol úspešne dokončený"
 
-#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
+#: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
 msgstr "Prenos zlyhal"
 
@@ -368,7 +372,7 @@ msgstr "Niekde nastala chyba pri prenose do %s"
 msgid "Something went wrong with the transfer from %s"
 msgstr "Niekde nastala chyba pri prenose z %s"
 
-#: src/notifications.py:171 src/warpinator.py:167
+#: src/notifications.py:171 src/warpinator.py:175
 msgid "Transfer cancelled"
 msgstr "Prenos bol zrušený"
 
@@ -396,6 +400,15 @@ msgstr "Odosiela sa %d súborov do %s"
 msgid "Sending '%s' to %s"
 msgstr "Odosiela sa '%s' do %s"
 
+#: src/notifications.py:236
+#, python-format
+msgid "New message from %s"
+msgstr ""
+
+#: src/notifications.py:241
+msgid "Copy"
+msgstr ""
+
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
@@ -418,6 +431,10 @@ msgid_plural "%d files"
 msgstr[0] "%d súborov"
 msgstr[1] "%d súbor"
 msgstr[2] "%d súbory"
+
+#: src/ops.py:292
+msgid "Text message"
+msgstr ""
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -550,37 +567,37 @@ msgstr ""
 "Na spustenie v zabezpečenom režime musíte nastaviť vlastný kód skupiny. "
 "Niektoré možnosti sú momentálne vypnuté."
 
-#: src/remote.py:643 src/remote.py:647
+#: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
 msgstr "Pripojenie bolo stratené"
 
-#: src/server.py:648
+#: src/server.py:697
 msgid "An error occurred on the remote machine"
 msgstr "Na vzdialenom počítači sa vyskytla chyba"
 
-#: src/util.py:269
+#: src/util.py:327
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: src/util.py:270
+#: src/util.py:328
 msgid "Add"
 msgstr "Pridať"
 
 # dialog title
-#: src/util.py:292
+#: src/util.py:350
 msgid "Select file(s) to send"
 msgstr "Výber súborov na odoslanie"
 
-#: src/util.py:663
+#: src/util.py:721
 msgid "A few seconds remaining"
 msgstr "Zostáva niekoľko sekúnd"
 
-#: src/util.py:666
+#: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
 msgstr "Zostáva %d sekúnd"
 
-#: src/util.py:670 src/util.py:678
+#: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -588,7 +605,7 @@ msgstr[0] "%d minút"
 msgstr[1] "%d minúta"
 msgstr[2] "%d minúty"
 
-#: src/util.py:677
+#: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -596,7 +613,7 @@ msgstr[0] "%d hodín"
 msgstr[1] "%d hodina"
 msgstr[2] "%d hodiny"
 
-#: src/util.py:682
+#: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
@@ -604,86 +621,86 @@ msgstr[0] "približne %d hodín"
 msgstr[1] "približne %d hodina"
 msgstr[2] "približne %d hodiny"
 
-#: src/util.py:770 src/warpinator.py:585
+#: src/util.py:828 src/warpinator.py:632
 msgid "About"
 msgstr "O aplikácii"
 
-#: src/warpinator.py:146
+#: src/warpinator.py:154
 msgid "Paused"
 msgstr "Pozastavené"
 
-#: src/warpinator.py:149
+#: src/warpinator.py:157
 msgid "Waiting for approval"
 msgstr "Čaká sa na schválenie"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Waiting for your approval"
 msgstr "Čaká sa na vaše schválenie"
 
-#: src/warpinator.py:154
+#: src/warpinator.py:162
 msgid "Not enough disk space"
 msgstr "Nedostatok miesta na disku"
 
-#: src/warpinator.py:157
+#: src/warpinator.py:165
 msgid "Files may be overwritten"
 msgstr "Súbory môžu byť prepísané"
 
-#: src/warpinator.py:160
+#: src/warpinator.py:168
 msgid "Request cancelled"
 msgstr "Požiadavka zrušená"
 
-#: src/warpinator.py:162 src/warpinator.py:164
+#: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "Požiadavku zrušil %s"
 
-#: src/warpinator.py:169 src/warpinator.py:171
+#: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "Prenos zrušil %s"
 
-#: src/warpinator.py:178
+#: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
 msgstr "Súbor „%s“ sa nenašiel"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:188
 msgid "Some files not found"
 msgstr "Niektoré súbory sa nenašli"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:215
 msgid "Completed"
 msgstr "Dokončené"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:217
 msgid "Completed, but with errors"
 msgstr "Dokončené, ale s chybami"
 
-#: src/warpinator.py:343 src/warpinator.py:1082
+#: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
 msgstr "Pripája sa"
 
-#: src/warpinator.py:345
+#: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
 msgstr "Pripája sa k %s"
 
-#: src/warpinator.py:355
+#: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
 msgstr "%s nie je pripojený"
 
-#: src/warpinator.py:360
+#: src/warpinator.py:402
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "Nedá sa pripojiť k %s"
 
-#: src/warpinator.py:365
+#: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "Čaká sa, kým %s nedokončí pripojenie."
 
-#: src/warpinator.py:394
+#: src/warpinator.py:436
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
@@ -691,43 +708,43 @@ msgstr[0] "%d nových prichádzajúcich prenosov"
 msgstr[1] "%d nový prichádzajúci prenos"
 msgstr[2] "%d nové prichádzajúce prenosy"
 
-#: src/warpinator.py:536 src/warpinator.py:1697
+#: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
 msgstr "Obľubené"
 
-#: src/warpinator.py:541 src/warpinator.py:1702
+#: src/warpinator.py:588 src/warpinator.py:1806
 msgid "Recents"
 msgstr "Nedávne"
 
-#: src/warpinator.py:548 src/warpinator.py:1711
+#: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
 msgstr "Prehliadať..."
 
-#: src/warpinator.py:569
+#: src/warpinator.py:616
 msgid "Connect manually"
 msgstr "Pripojiť ručne"
 
-#: src/warpinator.py:574
+#: src/warpinator.py:621
 msgid "Restart service"
 msgstr "Reštartovať službu"
 
-#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
+#: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "Predvoľby"
 
-#: src/warpinator.py:589 src/warpinator.py:1646
+#: src/warpinator.py:636 src/warpinator.py:1750
 msgid "Quit"
 msgstr "Ukončiť"
 
-#: src/warpinator.py:698
+#: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
 msgstr "Zdá sa, že nie ste pripojený k sieti."
 
-#: src/warpinator.py:700
+#: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "Spustenie nebolo úspešné. Prosím, skontrolujte vaše záznamy."
 
-#: src/warpinator.py:800
+#: src/warpinator.py:857
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -736,7 +753,7 @@ msgstr ""
 "Warpinator beží s obmedzenou funkčnosťou a ukončí sa o %d minútu. Ak chcete "
 "povoliť bezpečný režim, nastavte jedinečný kód skupiny."
 
-#: src/warpinator.py:802
+#: src/warpinator.py:859
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -745,43 +762,51 @@ msgstr ""
 "Warpinator beží s obmedzenou funkčnosťou a ukončí sa o %d minút. Ak chcete "
 "povoliť bezpečný režim, nastavte jedinečný kód skupiny."
 
-#: src/warpinator.py:857
+#: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 "Nezostáva dostatok miesta na disku na príjem súborov (%s je rezervované)."
 
-#: src/warpinator.py:938
+#: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "Čaká sa na dokončenie %d operácie"
 
-#: src/warpinator.py:939
+#: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "Čaká sa na dokončenie %d operácií"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1128
 msgid "Offline"
 msgstr "Odpojené"
 
-#: src/warpinator.py:1068
+#: src/warpinator.py:1136
 msgid "Unable to connect"
 msgstr "Nie je možné pripojiť sa"
 
-#: src/warpinator.py:1075
+#: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
 msgstr "Čaká sa na obojstranné pripojenie"
 
-#: src/warpinator.py:1176
+#: src/warpinator.py:1246
 msgid "Manual connection"
 msgstr "Ručné pripojenie"
 
-#: src/warpinator.py:1243
+#: src/warpinator.py:1321
+msgid "Or connect to one of the addresses below:"
+msgstr ""
+
+#: src/warpinator.py:1323
+msgid "Or connect to the address below:"
+msgstr ""
+
+#: src/warpinator.py:1341
 msgid "Connecting..."
 msgstr "Pripája sa..."
 
-#: src/warpinator.py:1680
+#: src/warpinator.py:1784
 msgid "Send to all"
 msgstr "Odoslať všetkým"
 

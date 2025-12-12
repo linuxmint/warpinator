@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2024-06-12 13:59+0100\n"
-"PO-Revision-Date: 2024-07-19 07:25+0000\n"
+"POT-Creation-Date: 2025-11-21 13:15+0000\n"
+"PO-Revision-Date: 2025-12-09 14:17+0000\n"
 "Last-Translator: 张鹏 <scbeta@qq.com>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
-"X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
+"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
+"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -26,7 +26,7 @@ msgstr "群组码"
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "不能与未使用同一群组码的电脑进行连接。"
 
-#: resources/group-code.ui:49 resources/main-window.ui:51
+#: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
 msgstr "设定群组码"
 
@@ -38,143 +38,143 @@ msgstr "安全模式"
 msgid "OFF"
 msgstr "关"
 
-#: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1202
+#: resources/group-code.ui:148 resources/main-window.ui:134
+#: resources/main-window.ui:1249
 msgid "More information"
 msgstr "更多信息"
 
-#: resources/main-window.ui:80
+#: resources/main-window.ui:85
 msgid "Secure Mode disabled"
 msgstr "安全模式已关闭"
 
-#: resources/main-window.ui:170
+#: resources/main-window.ui:175
 msgid "Download folder not secure"
 msgstr "下载文件夹不安全"
 
-#: resources/main-window.ui:335
+#: resources/main-window.ui:340
 msgid "No matching results"
 msgstr "无匹配结果"
 
-#: resources/main-window.ui:491
+#: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
 msgstr "将此远程主机收藏至主界面"
 
-#: resources/main-window.ui:565
+#: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
 msgstr "清除不活跃或已完成的操作"
 
-#: resources/main-window.ui:584
+#: resources/main-window.ui:589
 msgid "Send files"
 msgstr "发送文件"
 
-#: resources/main-window.ui:610 src/prefs.py:311
+#: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
 msgstr "文件传输"
 
-#: resources/main-window.ui:631 src/warpinator.py:1054
+#: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
 msgstr "在线"
 
-#: resources/main-window.ui:751
+#: resources/main-window.ui:798
 msgid "No other computers found..."
 msgstr "未发现其他主机。"
 
-#: resources/main-window.ui:816
+#: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
 msgstr "请确认您的网络已连接。"
 
-#: resources/main-window.ui:831
+#: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr "请检查防火墙设定。端口号是可以更改的。请打开设置查询更多细节。"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:847
+#: resources/main-window.ui:894
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr "Warpinator是否已在本网络的其他电脑运行？如果是，请确保它们设置了相同的的群组代码。"
 
-#: resources/main-window.ui:865
+#: resources/main-window.ui:912
 msgid "Possible solutions:"
 msgstr "可能的解决办法:"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:900
+#: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
 msgstr "Warpinator 还在这些平台可用："
 
-#: resources/main-window.ui:915
+#: resources/main-window.ui:962
 msgid "Android"
 msgstr "安卓"
 
-#: resources/main-window.ui:931 resources/main-window.ui:946
+#: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
 msgstr "窗口"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
 msgstr "初始化，请稍等..."
 
-#: resources/main-window.ui:1078
+#: resources/main-window.ui:1125
 msgid "Something went wrong"
 msgstr "出错"
 
-#: resources/main-window.ui:1153
+#: resources/main-window.ui:1200
 msgid "Invalid save location"
 msgstr "无效的保存路径"
 
-#: resources/main-window.ui:1190
+#: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr "此文件夹无法访问或禁止将文件保存到其中。请在“首选项”中选择一个新位置，并确保该位置可访问。"
 
-#: resources/main-window.ui:1262
+#: resources/main-window.ui:1309
 msgid "Searching for other computers"
 msgstr "正在搜索其他电脑"
 
-#: resources/main-window.ui:1321
+#: resources/main-window.ui:1368
 msgid "Shutting down..."
 msgstr "退出程序中 ..."
 
-#: resources/main-window.ui:1393
+#: resources/main-window.ui:1440
 msgid "Restart required"
 msgstr "需要重新启动"
 
-#: resources/main-window.ui:1410
+#: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr "Warpinator 需要重新启动才能使用新的保存目录"
 
-#: resources/main-window.ui:1420
+#: resources/main-window.ui:1467
 msgid "Restart"
 msgstr "重新启动"
 
-#: resources/main-window.ui:1490
+#: resources/main-window.ui:1537
 msgid "Disk Full"
 msgstr "磁盘已满"
 
-#: resources/main-window.ui:1527
+#: resources/main-window.ui:1574
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr "保存位置的可用空间不足。您需要删除一些文件，减少首选项中的最小可用空间或选择新位置。"
 
-#: resources/main-window.ui:1544
+#: resources/main-window.ui:1591
 msgid "Empty trash"
 msgstr "清空回收站"
 
-#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
+#: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
 msgstr "打开保存文件夹"
 
-#: resources/main-window.ui:1571
+#: resources/main-window.ui:1618
 msgid "Examine disk usage"
 msgstr "检查磁盘使用情况"
 
-#: resources/main-window.ui:1624 src/util.py:774
+#: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
 msgstr "通过网络分享文件"
@@ -208,53 +208,57 @@ msgstr "扫描此二维码"
 msgid "Or connect to the address below"
 msgstr "或连接到以下地址"
 
-#: resources/op-item.ui:140
+#: resources/op-item.ui:146
 msgid "Awaiting approval"
 msgstr "正在等待批准"
 
-#: resources/op-item.ui:156
+#: resources/op-item.ui:162
 msgid "Not enough disk space!"
 msgstr "磁盘空间不足！"
 
-#: resources/op-item.ui:219
+#: resources/op-item.ui:225
 msgid "Calculating"
 msgstr "正在计算"
 
-#: resources/op-item.ui:259
+#: resources/op-item.ui:290
 msgid "Accept this request"
 msgstr "同意该请求"
 
-#: resources/op-item.ui:274
+#: resources/op-item.ui:305
 msgid "Refuse this request"
 msgstr "拒绝该请求"
 
-#: resources/op-item.ui:289
+#: resources/op-item.ui:320
 msgid "Cancel this request"
 msgstr "取消该请求"
 
-#: resources/op-item.ui:304
+#: resources/op-item.ui:335
 msgid "Restart this operation"
 msgstr "重启该操作"
 
-#: resources/op-item.ui:319
+#: resources/op-item.ui:350
 msgid "Pause this operation"
 msgstr "暂停该操作"
 
-#: resources/op-item.ui:334
+#: resources/op-item.ui:365
 msgid "Resume this operation"
 msgstr "恢复该操作"
 
-#: resources/op-item.ui:349
+#: resources/op-item.ui:380
 msgid "Cancel this operation"
 msgstr "取消该操作"
 
-#: resources/op-item.ui:364
+#: resources/op-item.ui:395
 msgid "Remove this operation from the list"
 msgstr "从列表中删除该操作"
 
-#: resources/op-item.ui:379
+#: resources/op-item.ui:410
 msgid "Open the containing folder"
 msgstr "打开所在文件夹"
+
+#: resources/op-item.ui:425
+msgid "Copy message"
+msgstr "复制消息"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -323,7 +327,7 @@ msgstr "从 %s 的传输已完成，但出现错误"
 msgid "The transfer from %s has finished successfully"
 msgstr "来自 %s 的传送已经成功完成"
 
-#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
+#: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
 msgstr "传送失败"
 
@@ -337,7 +341,7 @@ msgstr "发给 %s 的传送出现错误"
 msgid "Something went wrong with the transfer from %s"
 msgstr "来自 %s 的传送出现错误"
 
-#: src/notifications.py:171 src/warpinator.py:167
+#: src/notifications.py:171 src/warpinator.py:175
 msgid "Transfer cancelled"
 msgstr "传送已被取消"
 
@@ -365,6 +369,15 @@ msgstr "将 %d 个文件发送到 %s"
 msgid "Sending '%s' to %s"
 msgstr "将 '%s' 发送到 %s"
 
+#: src/notifications.py:236
+#, python-format
+msgid "New message from %s"
+msgstr "来自 %s 的新消息"
+
+#: src/notifications.py:241
+msgid "Copy"
+msgstr "复制"
+
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
@@ -383,6 +396,10 @@ msgstr[0] "%d 个文件"
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d 个文件"
+
+#: src/ops.py:292
+msgid "Text message"
+msgstr "文字消息"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -509,224 +526,232 @@ msgid ""
 "currently disabled."
 msgstr "您必须将自定义群组码设置为在安全模式下运行。某些选项当前处于禁用状态。"
 
-#: src/remote.py:643 src/remote.py:647
+#: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
 msgstr "连接已丢失"
 
-#: src/server.py:648
+#: src/server.py:697
 msgid "An error occurred on the remote machine"
 msgstr "远程主机出现错误"
 
-#: src/util.py:269
+#: src/util.py:327
 msgid "Cancel"
 msgstr "取消"
 
-#: src/util.py:270
+#: src/util.py:328
 msgid "Add"
 msgstr "加入"
 
-#: src/util.py:292
+#: src/util.py:350
 msgid "Select file(s) to send"
 msgstr "选择文件进行发送"
 
-#: src/util.py:663
+#: src/util.py:721
 msgid "A few seconds remaining"
 msgstr "还需要一会儿"
 
-#: src/util.py:666
+#: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
 msgstr "剩余 %d 秒"
 
-#: src/util.py:670 src/util.py:678
+#: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分钟"
 
-#: src/util.py:677
+#: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 小时"
 
-#: src/util.py:682
+#: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "大约需 %d 个小时"
 
-#: src/util.py:770 src/warpinator.py:585
+#: src/util.py:828 src/warpinator.py:632
 msgid "About"
 msgstr "关于"
 
-#: src/warpinator.py:146
+#: src/warpinator.py:154
 msgid "Paused"
 msgstr "已暂停"
 
-#: src/warpinator.py:149
+#: src/warpinator.py:157
 msgid "Waiting for approval"
 msgstr "等待许可"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Waiting for your approval"
 msgstr "等待您的许可"
 
-#: src/warpinator.py:154
+#: src/warpinator.py:162
 msgid "Not enough disk space"
 msgstr "磁盘空间不足"
 
-#: src/warpinator.py:157
+#: src/warpinator.py:165
 msgid "Files may be overwritten"
 msgstr "文件可能被覆盖"
 
-#: src/warpinator.py:160
+#: src/warpinator.py:168
 msgid "Request cancelled"
 msgstr "请求被取消"
 
-#: src/warpinator.py:162 src/warpinator.py:164
+#: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "请求被 %s 取消"
 
-#: src/warpinator.py:169 src/warpinator.py:171
+#: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "传送被 %s 取消"
 
-#: src/warpinator.py:178
+#: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
 msgstr "文件 '%s' 未找到"
 
-#: src/warpinator.py:180
+#: src/warpinator.py:188
 msgid "Some files not found"
 msgstr "一些文件未找到"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:215
 msgid "Completed"
 msgstr "已完成"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:217
 msgid "Completed, but with errors"
 msgstr "已完成，但有错误"
 
-#: src/warpinator.py:343 src/warpinator.py:1082
+#: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
 msgstr "连接中"
 
-#: src/warpinator.py:345
+#: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
 msgstr "正在连接 %s"
 
-#: src/warpinator.py:355
+#: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
 msgstr "%s 离线"
 
-#: src/warpinator.py:360
+#: src/warpinator.py:402
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "无法连接到 %s"
 
-#: src/warpinator.py:365
+#: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "等待 %s 完成连接"
 
-#: src/warpinator.py:394
+#: src/warpinator.py:436
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d 个新的传送"
 
-#: src/warpinator.py:536 src/warpinator.py:1697
+#: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
 msgstr "收藏夹"
 
-#: src/warpinator.py:541 src/warpinator.py:1702
+#: src/warpinator.py:588 src/warpinator.py:1806
 msgid "Recents"
 msgstr "最近"
 
-#: src/warpinator.py:548 src/warpinator.py:1711
+#: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
 msgstr "浏览..."
 
-#: src/warpinator.py:569
+#: src/warpinator.py:616
 msgid "Connect manually"
 msgstr "手动连接"
 
-#: src/warpinator.py:574
+#: src/warpinator.py:621
 msgid "Restart service"
 msgstr "重启服务"
 
-#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
+#: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "首选项"
 
-#: src/warpinator.py:589 src/warpinator.py:1646
+#: src/warpinator.py:636 src/warpinator.py:1750
 msgid "Quit"
 msgstr "退出"
 
-#: src/warpinator.py:698
+#: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
 msgstr "您尚未连接网络"
 
-#: src/warpinator.py:700
+#: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "未能成功启动，请检查您的程序日志。"
 
-#: src/warpinator.py:800
+#: src/warpinator.py:857
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr "Warpinator 正在功能受限模式下运行，将在 %d 分钟后退出。若要启用安全模式，请设置唯一的群组码。"
 
-#: src/warpinator.py:802
+#: src/warpinator.py:859
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr "Warpinator 正在功能受限模式下运行，将在 %d 分钟后退出。若要启用安全模式，请设置唯一的群组码。"
 
-#: src/warpinator.py:857
+#: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr "没有足够的磁盘空间来接收文件（保留 %s）。"
 
-#: src/warpinator.py:938
+#: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "等待 %d 操作完成"
 
-#: src/warpinator.py:939
+#: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "等待 %d 操作完成"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1128
 msgid "Offline"
 msgstr "离线"
 
-#: src/warpinator.py:1068
+#: src/warpinator.py:1136
 msgid "Unable to connect"
 msgstr "无法连接"
 
-#: src/warpinator.py:1075
+#: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
 msgstr "等待双向连接"
 
-#: src/warpinator.py:1176
+#: src/warpinator.py:1246
 msgid "Manual connection"
 msgstr "手动连接"
 
-#: src/warpinator.py:1243
+#: src/warpinator.py:1321
+msgid "Or connect to one of the addresses below:"
+msgstr "或者连接到以下地址之一："
+
+#: src/warpinator.py:1323
+msgid "Or connect to the address below:"
+msgstr "或者连接到以下地址："
+
+#: src/warpinator.py:1341
 msgid "Connecting..."
 msgstr "正在连接…"
 
-#: src/warpinator.py:1680
+#: src/warpinator.py:1784
 msgid "Send to all"
 msgstr "发送给全部"
 

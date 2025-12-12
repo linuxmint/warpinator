@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2024-06-12 13:59+0100\n"
+"POT-Creation-Date: 2025-11-21 13:15+0000\n"
 "PO-Revision-Date: 2025-07-03 04:55+0000\n"
 "Last-Translator: Aryan Karamtoth <Unknown>\n"
 "Language-Team: Telugu <te@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2025-07-31 09:24+0000\n"
-"X-Generator: Launchpad (build 647c49fc7f614412c17a151d8ba4fadd90c06a00)\n"
+"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
+"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -26,7 +26,7 @@ msgstr "గ్రూప్ కోడ్"
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr "ఒకే కోడ్‌ను ఉపయోగించని కంప్యూటర్‌లతో మీరు కమ్యూనికేట్ చేయలేరు."
 
-#: resources/group-code.ui:49 resources/main-window.ui:51
+#: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
 msgstr "కోడ్ సెట్ చేయండి"
 
@@ -38,52 +38,52 @@ msgstr "సురక్షిత మోడ్:"
 msgid "OFF"
 msgstr "ఆఫ్‌చేయి"
 
-#: resources/group-code.ui:148 resources/main-window.ui:129
-#: resources/main-window.ui:1202
+#: resources/group-code.ui:148 resources/main-window.ui:134
+#: resources/main-window.ui:1249
 msgid "More information"
 msgstr "ఎక్కువ సమాచారము"
 
-#: resources/main-window.ui:80
+#: resources/main-window.ui:85
 msgid "Secure Mode disabled"
 msgstr "సురక్షిత మోడ్ నిలిపివేయబడింది"
 
-#: resources/main-window.ui:170
+#: resources/main-window.ui:175
 msgid "Download folder not secure"
 msgstr "డౌన్‌లోడ్ ఫోల్డర్ సురక్షితం కాదు"
 
-#: resources/main-window.ui:335
+#: resources/main-window.ui:340
 msgid "No matching results"
 msgstr "సరిపోలిన ఫలితాలేవీ కనపడలేదు"
 
-#: resources/main-window.ui:491
+#: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
 msgstr "ఈ రిమోట్ మెషీన్‌ను ప్రధాన వీక్షణలో ఇష్టమైనదిగా చేయండి"
 
-#: resources/main-window.ui:565
+#: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
 msgstr "నిష్క్రియాత్మక మరియు పూర్తయిన ఆపరేషన్లను క్లియర్ చేయండి"
 
-#: resources/main-window.ui:584
+#: resources/main-window.ui:589
 msgid "Send files"
 msgstr "ఫైళ్లను పంపండి"
 
-#: resources/main-window.ui:610 src/prefs.py:311
+#: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
 msgstr "ఫైల్ బదిలీలు"
 
-#: resources/main-window.ui:631 src/warpinator.py:1054
+#: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
 msgstr "ఆన్‌లైన్"
 
-#: resources/main-window.ui:751
+#: resources/main-window.ui:798
 msgid "No other computers found..."
 msgstr "ఇతర కంప్యూటర్లు ఏవీ కనుగొనబడలేదు..."
 
-#: resources/main-window.ui:816
+#: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
 msgstr "మీ నెట్‌వర్క్ కనెక్షన్ యాక్టివ్‌గా ఉందని నిర్ధారించుకోండి."
 
-#: resources/main-window.ui:831
+#: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
@@ -92,7 +92,7 @@ msgstr ""
 "వివరాల కోసం ప్రాధాన్యతలను చూడండి."
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:847
+#: resources/main-window.ui:894
 msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
@@ -100,36 +100,36 @@ msgstr ""
 "ఈ నెట్‌వర్క్‌లోని ఏవైనా ఇతర కంప్యూటర్‌లలో Warpinator నడుస్తుందా? అలా అయితే, "
 "అవన్నీ ప్రాధాన్యతలలో ఒకే గ్రూప్ కోడ్‌ను ఉపయోగిస్తున్నాయని నిర్ధారించుకోండి."
 
-#: resources/main-window.ui:865
+#: resources/main-window.ui:912
 msgid "Possible solutions:"
 msgstr "సాధ్యమైన పరిష్కారాలు:"
 
 #. Do not translate 'Warpinator'
-#: resources/main-window.ui:900
+#: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
 msgstr "Warpinator కూడా ఇక్కడ అందుబాటులో ఉంది:"
 
-#: resources/main-window.ui:915
+#: resources/main-window.ui:962
 msgid "Android"
 msgstr "ఆండ్రాయిడ్"
 
-#: resources/main-window.ui:931 resources/main-window.ui:946
+#: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
 msgstr "విండోస్"
 
-#: resources/main-window.ui:1020
+#: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
 msgstr "ప్రారంభిస్తోంది, దయచేసి వేచి ఉండండి..."
 
-#: resources/main-window.ui:1078
+#: resources/main-window.ui:1125
 msgid "Something went wrong"
 msgstr "ఏదో తప్పు జరిగింది"
 
-#: resources/main-window.ui:1153
+#: resources/main-window.ui:1200
 msgid "Invalid save location"
 msgstr "చెల్లని సేవ్ స్థానం"
 
-#: resources/main-window.ui:1190
+#: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
@@ -138,32 +138,32 @@ msgstr ""
 "ప్రాధాన్యతలలో కొత్త స్థానాన్ని ఎంచుకుని, అది యాక్సెస్ చేయగలదని "
 "నిర్ధారించుకోండి."
 
-#: resources/main-window.ui:1262
+#: resources/main-window.ui:1309
 msgid "Searching for other computers"
 msgstr "ఇతర కంప్యూటర్ల కోసం వెతుకుతోంది"
 
-#: resources/main-window.ui:1321
+#: resources/main-window.ui:1368
 msgid "Shutting down..."
 msgstr "షట్ డౌన్ అవుతోంది..."
 
-#: resources/main-window.ui:1393
+#: resources/main-window.ui:1440
 msgid "Restart required"
 msgstr "పునఃప్రారంభం అవసరం"
 
-#: resources/main-window.ui:1410
+#: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
 "కొత్త సేవ్ డైరెక్టరీని ఉపయోగించే ముందు వార్‌పినేటర్ పునఃప్రారంభించాలి."
 
-#: resources/main-window.ui:1420
+#: resources/main-window.ui:1467
 msgid "Restart"
 msgstr "పునఃప్రారంభించండి"
 
-#: resources/main-window.ui:1490
+#: resources/main-window.ui:1537
 msgid "Disk Full"
 msgstr "డిస్క్ నిండింది"
 
-#: resources/main-window.ui:1527
+#: resources/main-window.ui:1574
 msgid ""
 "There is insufficient space available in the save location. You need to "
 "delete some files, decrease the minimum free space in preferences or choose "
@@ -173,19 +173,19 @@ msgstr ""
 "తొలగించాలి, ప్రాధాన్యతలలో కనీస ఖాళీ స్థలాన్ని తగ్గించాలి లేదా కొత్త "
 "స్థానాన్ని ఎంచుకోవాలి."
 
-#: resources/main-window.ui:1544
+#: resources/main-window.ui:1591
 msgid "Empty trash"
 msgstr "చెత్తబుట్టను ఖాళీచేయి"
 
-#: resources/main-window.ui:1558 src/warpinator.py:563 src/warpinator.py:1643
+#: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
 msgstr "సేవ్ ఫోల్డర్‌ని తెరవండి"
 
-#: resources/main-window.ui:1571
+#: resources/main-window.ui:1618
 msgid "Examine disk usage"
 msgstr "డిస్క్ వినియోగాన్ని పరిశీలించండి"
 
-#: resources/main-window.ui:1624 src/util.py:774
+#: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
 msgstr "నెట్‌వర్క్ అంతటా ఫైల్‌లను పంపండి మరియు స్వీకరించండి"
@@ -219,53 +219,57 @@ msgstr "ఈ QR కోడ్‌ని స్కాన్ చేయండి"
 msgid "Or connect to the address below"
 msgstr "లేదా క్రింది చిరునామాకు కనెక్ట్ అవ్వండి"
 
-#: resources/op-item.ui:140
+#: resources/op-item.ui:146
 msgid "Awaiting approval"
 msgstr "ఆమోదం కోసం వేచి ఉంది"
 
-#: resources/op-item.ui:156
+#: resources/op-item.ui:162
 msgid "Not enough disk space!"
 msgstr "తగినంత డిస్క్ స్థలం లేదు!"
 
-#: resources/op-item.ui:219
+#: resources/op-item.ui:225
 msgid "Calculating"
 msgstr "లెక్కిస్తున్నది"
 
-#: resources/op-item.ui:259
+#: resources/op-item.ui:290
 msgid "Accept this request"
 msgstr "ఈ అభ్యర్థనను ఆమోదించండి"
 
-#: resources/op-item.ui:274
+#: resources/op-item.ui:305
 msgid "Refuse this request"
 msgstr "ఈ అభ్యర్థనను తిరస్కరించండి"
 
-#: resources/op-item.ui:289
+#: resources/op-item.ui:320
 msgid "Cancel this request"
 msgstr "ఈ అభ్యర్థనను రద్దు చేయండి"
 
-#: resources/op-item.ui:304
+#: resources/op-item.ui:335
 msgid "Restart this operation"
 msgstr "ఈ చర్యను పునఃప్రారంభించండి"
 
-#: resources/op-item.ui:319
+#: resources/op-item.ui:350
 msgid "Pause this operation"
 msgstr "ఈ ఆపరేషన్‌ను పాజ్ చేయండి"
 
-#: resources/op-item.ui:334
+#: resources/op-item.ui:365
 msgid "Resume this operation"
 msgstr "ఈ ఆపరేషన్‌ను మళ్లీ ప్రారంభించండి"
 
-#: resources/op-item.ui:349
+#: resources/op-item.ui:380
 msgid "Cancel this operation"
 msgstr "ఈ ఆపరేషన్‌ని రద్దు చేయండి"
 
-#: resources/op-item.ui:364
+#: resources/op-item.ui:395
 msgid "Remove this operation from the list"
 msgstr "ఈ ఆపరేషన్‌ను జాబితా నుండి తొలగించండి"
 
-#: resources/op-item.ui:379
+#: resources/op-item.ui:410
 msgid "Open the containing folder"
 msgstr "కలిగి ఉన్న ఫోల్డర్‌ను తెరవండి"
+
+#: resources/op-item.ui:425
+msgid "Copy message"
+msgstr ""
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -336,7 +340,7 @@ msgstr "%s నుండి బదిలీ పూర్తయింది, క�
 msgid "The transfer from %s has finished successfully"
 msgstr "%s నుండి బదిలీ విజయవంతంగా పూర్తయింది."
 
-#: src/notifications.py:137 src/warpinator.py:173 src/warpinator.py:176
+#: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
 msgstr "బదిలీకరణ విఫలమైంది"
 
@@ -350,7 +354,7 @@ msgstr "%s కి బదిలీ చేయడంలో ఏదో తప్ప�
 msgid "Something went wrong with the transfer from %s"
 msgstr "%s నుండి బదిలీలో ఏదో తప్పు జరిగింది."
 
-#: src/notifications.py:171 src/warpinator.py:167
+#: src/notifications.py:171 src/warpinator.py:175
 msgid "Transfer cancelled"
 msgstr "బదిలీ రద్దు చేయబడింది"
 
@@ -378,6 +382,15 @@ msgstr "%d ఫైళ్ళను %s కి పంపుతోంది"
 msgid "Sending '%s' to %s"
 msgstr "'%s' ను %s కి పంపుతోంది"
 
+#: src/notifications.py:236
+#, python-format
+msgid "New message from %s"
+msgstr ""
+
+#: src/notifications.py:241
+msgid "Copy"
+msgstr ""
+
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
@@ -398,6 +411,10 @@ msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d file"
 msgstr[1] "%d ఫైల్‌లు"
+
+#: src/ops.py:292
+msgid "Text message"
+msgstr ""
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -533,179 +550,179 @@ msgstr ""
 "సురక్షిత మోడ్‌లో అమలు చేయడానికి మీరు కస్టమ్ గ్రూప్ కోడ్‌ను సెట్ చేయాలి. "
 "కొన్ని ఎంపికలు ప్రస్తుతం నిలిపివేయబడ్డాయి."
 
-#: src/remote.py:643 src/remote.py:647
+#: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
 msgstr "అనుసంధానమును కోల్పోయింది"
 
-#: src/server.py:648
+#: src/server.py:697
 msgid "An error occurred on the remote machine"
 msgstr "రిమోట్ మెషీన్‌లో లోపం సంభవించింది."
 
-#: src/util.py:269
+#: src/util.py:327
 msgid "Cancel"
 msgstr "రద్దు చేయి"
 
-#: src/util.py:270
+#: src/util.py:328
 msgid "Add"
 msgstr "జోడించు"
 
-#: src/util.py:292
+#: src/util.py:350
 msgid "Select file(s) to send"
 msgstr "పంపడానికి ఫైల్(లు) ఎంచుకోండి"
 
-#: src/util.py:663
+#: src/util.py:721
 msgid "A few seconds remaining"
 msgstr "కొన్ని సెకన్లు మిగిలి ఉన్నాయి"
 
-#: src/util.py:666
+#: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
 msgstr "%d సెకన్లు మిగిలివున్నాయి"
 
-#: src/util.py:670 src/util.py:678
+#: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d నిమిషం"
 msgstr[1] "%d నిమిషాలు"
 
-#: src/util.py:677
+#: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d గంట"
 msgstr[1] "%d గంటలు"
 
-#: src/util.py:682
+#: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
 msgstr[0] "దాదాపు %d గంట"
 msgstr[1] "దాదాపు %d గంటలు"
 
-#: src/util.py:770 src/warpinator.py:585
+#: src/util.py:828 src/warpinator.py:632
 msgid "About"
 msgstr "గురించి"
 
-#: src/warpinator.py:146
+#: src/warpinator.py:154
 msgid "Paused"
 msgstr "నిలుపబడింది"
 
-#: src/warpinator.py:149
+#: src/warpinator.py:157
 msgid "Waiting for approval"
 msgstr "ఆమోదం కోసం వేచి ఉంది"
 
-#: src/warpinator.py:151
+#: src/warpinator.py:159
 msgid "Waiting for your approval"
 msgstr "మీ ఆమోదం కోసం వేచి ఉంది"
 
-#: src/warpinator.py:154
+#: src/warpinator.py:162
 msgid "Not enough disk space"
 msgstr "చాలినంత డిస్కు జాగా లేదు"
 
-#: src/warpinator.py:157
+#: src/warpinator.py:165
 msgid "Files may be overwritten"
 msgstr "ఫైళ్ళు ఓవర్‌రైట్ చేయబడవచ్చు"
 
-#: src/warpinator.py:160
+#: src/warpinator.py:168
 msgid "Request cancelled"
 msgstr "అభ్యర్థన రద్దు చేయబడింది"
 
-#: src/warpinator.py:162 src/warpinator.py:164
+#: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
 msgstr "%s ద్వారా అభ్యర్థన రద్దు చేయబడింది"
 
-#: src/warpinator.py:169 src/warpinator.py:171
+#: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
 msgstr "%s ద్వారా బదిలీ రద్దు చేయబడింది"
 
-#: src/warpinator.py:178
+#: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
 msgstr "'%s' ఫైల్ దొరకలేదు."
 
-#: src/warpinator.py:180
+#: src/warpinator.py:188
 msgid "Some files not found"
 msgstr "కొన్ని ఫైల్‌లు కనుగొనబడలేదు"
 
-#: src/warpinator.py:182
+#: src/warpinator.py:215
 msgid "Completed"
 msgstr "పూర్తయింది"
 
-#: src/warpinator.py:184
+#: src/warpinator.py:217
 msgid "Completed, but with errors"
 msgstr "పూర్తయింది, కానీ లోపాలతో"
 
-#: src/warpinator.py:343 src/warpinator.py:1082
+#: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
 msgstr "అనుసంధానమౌచున్నది"
 
-#: src/warpinator.py:345
+#: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s కు అనుసంధానిస్తోంది"
 
-#: src/warpinator.py:355
+#: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
 msgstr "%s ఆన్‌లైన్‌లో లేరు."
 
-#: src/warpinator.py:360
+#: src/warpinator.py:402
 #, python-format
 msgid "Cannot connect to %s"
 msgstr "%s కి కనెక్ట్ కాలేదు"
 
-#: src/warpinator.py:365
+#: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
 msgstr "కనెక్షన్ పూర్తి కావడానికి %s కోసం వేచి ఉంది."
 
-#: src/warpinator.py:394
+#: src/warpinator.py:436
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
 msgstr[0] "%d కొత్త ఇన్‌కమింగ్ బదిలీ"
 msgstr[1] "%d కొత్త ఇన్‌కమింగ్ బదిలీలు"
 
-#: src/warpinator.py:536 src/warpinator.py:1697
+#: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
 msgstr "ప్రియమైనవి"
 
-#: src/warpinator.py:541 src/warpinator.py:1702
+#: src/warpinator.py:588 src/warpinator.py:1806
 msgid "Recents"
 msgstr "ఇటీవలివి"
 
-#: src/warpinator.py:548 src/warpinator.py:1711
+#: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
 msgstr "విహరించు..."
 
-#: src/warpinator.py:569
+#: src/warpinator.py:616
 msgid "Connect manually"
 msgstr "మాన్యువల్‌గా కనెక్ట్ చేయండి"
 
-#: src/warpinator.py:574
+#: src/warpinator.py:621
 msgid "Restart service"
 msgstr "సేవను పునఃప్రారంభించండి"
 
-#: src/warpinator.py:581 data/org.x.Warpinator.appdata.xml.in.in:57
+#: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
 msgstr "ప్రాధాన్యతలు"
 
-#: src/warpinator.py:589 src/warpinator.py:1646
+#: src/warpinator.py:636 src/warpinator.py:1750
 msgid "Quit"
 msgstr "నిష్క్రమించు"
 
-#: src/warpinator.py:698
+#: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
 msgstr "మీరు నెట్‌వర్క్‌కి కనెక్ట్ అయినట్లు కనిపించడం లేదు."
 
-#: src/warpinator.py:700
+#: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
 msgstr "స్టార్టప్ విఫలమైంది, దయచేసి మీ లాగ్‌లను తనిఖీ చేయండి."
 
-#: src/warpinator.py:800
+#: src/warpinator.py:857
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -715,7 +732,7 @@ msgstr ""
 "నిష్క్రమిస్తుంది. సురక్షిత మోడ్‌ను ప్రారంభించడానికి, ఒక ప్రత్యేకమైన గ్రూప్ "
 "కోడ్‌ను సెట్ చేయండి."
 
-#: src/warpinator.py:802
+#: src/warpinator.py:859
 #, python-format
 msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
@@ -725,44 +742,52 @@ msgstr ""
 "నిష్క్రమిస్తుంది. సురక్షిత మోడ్‌ను ప్రారంభించడానికి, ఒక ప్రత్యేక సమూహ "
 "కోడ్‌ను సెట్ చేయండి."
 
-#: src/warpinator.py:857
+#: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
 "ఫైళ్ళను స్వీకరించడానికి తగినంత డిస్క్ స్థలం మిగిలి లేదు (%s రిజర్వు "
 "చేయబడింది)."
 
-#: src/warpinator.py:938
+#: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
 msgstr "%d ఆపరేషన్ పూర్తయ్యే వరకు వేచి ఉంది"
 
-#: src/warpinator.py:939
+#: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
 msgstr "%d ఆపరేషన్లు పూర్తయ్యే వరకు వేచి ఉంది"
 
-#: src/warpinator.py:1061
+#: src/warpinator.py:1128
 msgid "Offline"
 msgstr "ఆఫ్‌లైన్"
 
-#: src/warpinator.py:1068
+#: src/warpinator.py:1136
 msgid "Unable to connect"
 msgstr "అనుసంధానం కాలేదు"
 
-#: src/warpinator.py:1075
+#: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
 msgstr "రెండు-మార్గాల కనెక్షన్ కోసం వేచి ఉంది"
 
-#: src/warpinator.py:1176
+#: src/warpinator.py:1246
 msgid "Manual connection"
 msgstr "మాన్యువల్ కనెక్షన్"
 
-#: src/warpinator.py:1243
+#: src/warpinator.py:1321
+msgid "Or connect to one of the addresses below:"
+msgstr ""
+
+#: src/warpinator.py:1323
+msgid "Or connect to the address below:"
+msgstr ""
+
+#: src/warpinator.py:1341
 msgid "Connecting..."
 msgstr "కనెక్ట్ అవుతోంది..."
 
-#: src/warpinator.py:1680
+#: src/warpinator.py:1784
 msgid "Send to all"
 msgstr "అందరికీ పంపండి"
 
