@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2022-08-12 00:25+0000\n"
-"Last-Translator: John Doe <Unknown>\n"
+"PO-Revision-Date: 2025-12-19 18:38+0000\n"
+"Last-Translator: R Reyx <Unknown>\n"
 "Language-Team: English (Canada) <en_CA@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
-"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
+"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
+"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -32,24 +32,24 @@ msgstr "Set code"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Secure mode:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "OFF"
 
 #: resources/group-code.ui:148 resources/main-window.ui:134
 #: resources/main-window.ui:1249
 msgid "More information"
-msgstr ""
+msgstr "More information"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Secure Mode disabled"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Download folder not secure"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
@@ -134,6 +134,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"This folder is either inaccessible or forbidden to save files to.  Please "
+"select a new location in Preferences and ensure that it is accessible."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
@@ -145,19 +147,20 @@ msgstr "Shutting down..."
 
 #: resources/main-window.ui:1440
 msgid "Restart required"
-msgstr ""
+msgstr "Restart required"
 
 #: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
+"Warpinator needs to restart before the new save directory can be used"
 
 #: resources/main-window.ui:1467
 msgid "Restart"
-msgstr ""
+msgstr "Restart"
 
 #: resources/main-window.ui:1537
 msgid "Disk Full"
-msgstr ""
+msgstr "Disk Full"
 
 #: resources/main-window.ui:1574
 msgid ""
@@ -165,10 +168,13 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"There is insufficient space available in the save location. You need to "
+"delete some files, decrease the minimum free space in preferences or choose "
+"a new location."
 
 #: resources/main-window.ui:1591
 msgid "Empty trash"
-msgstr ""
+msgstr "Empty trash"
 
 #: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
@@ -176,7 +182,7 @@ msgstr "Open save folder"
 
 #: resources/main-window.ui:1618
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Examine disk usage"
 
 #: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -186,31 +192,31 @@ msgstr "Send and Receive Files across the Network"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "On this computer:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Enter the address of the device you want to connect to"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Connect"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Alternatively, on the other device:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Scan this QR code"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Or connect to the address below"
 
 #: resources/op-item.ui:146
 msgid "Awaiting approval"
@@ -262,7 +268,7 @@ msgstr "Open the containing folder"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Copy message"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -315,7 +321,7 @@ msgstr "Transfer complete"
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "The transfer to %s has finished, but with errors"
 
 #: src/notifications.py:98
 #, python-format
@@ -325,7 +331,7 @@ msgstr "The transfer to %s has finished successfully"
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "The transfer from %s has finished, but with errors"
 
 #: src/notifications.py:103
 #, python-format
@@ -362,26 +368,26 @@ msgstr "An incoming transfer from %s was cancelled"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Sending files"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Sending %d files to %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Sending '%s' to %s"
 
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "New message from %s"
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Copy"
 
 #: src/ops.py:53
 #, python-format
@@ -406,7 +412,7 @@ msgstr[1] "%d files"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Text message"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -450,7 +456,7 @@ msgstr "Location for received files"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Reserved free space"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
@@ -514,7 +520,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Only available in secure mode."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -522,21 +528,23 @@ msgstr "A group code is required."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "The group code is too short."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "ON"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "All options are unlocked."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"You must set a custom group code to run in secure mode. Some options are "
+"currently disabled."
 
 #: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
@@ -641,7 +649,7 @@ msgstr "Completed"
 
 #: src/warpinator.py:217
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Completed, but with errors"
 
 #: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
@@ -688,11 +696,11 @@ msgstr "Browse..."
 
 #: src/warpinator.py:616
 msgid "Connect manually"
-msgstr ""
+msgstr "Connect manually"
 
 #: src/warpinator.py:621
 msgid "Restart service"
-msgstr ""
+msgstr "Restart service"
 
 #: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
@@ -716,6 +724,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minute. To enable Secure Mode, set a unique group code."
 
 #: src/warpinator.py:859
 #, python-format
@@ -723,21 +733,23 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minutes. To enable Secure Mode, set a unique group code."
 
 #: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
-msgstr ""
+msgstr "Not enough disk space remaining to receive files (%s is reserved)."
 
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Waiting for %d operation to complete"
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Waiting for %d operations to complete"
 
 #: src/warpinator.py:1128
 msgid "Offline"
@@ -753,19 +765,19 @@ msgstr "Waiting for two-way connection"
 
 #: src/warpinator.py:1246
 msgid "Manual connection"
-msgstr ""
+msgstr "Manual connection"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Or connect to one of the addresses below:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Or connect to the address below:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."
-msgstr ""
+msgstr "Connecting..."
 
 #: src/warpinator.py:1784
 msgid "Send to all"
@@ -773,11 +785,11 @@ msgstr "Send to all"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Send with Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Send a file to someone using Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
@@ -794,57 +806,62 @@ msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr ""
+msgstr "Share files on your network"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and exchange files quickly and securely."
 msgstr ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and exchange files quickly and securely."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr ""
+msgstr "Features:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr ""
+msgstr "An easy-to-use graphical interface."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
-msgstr ""
+msgstr "Automatic discovery of devices on your network."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr ""
+msgstr "Fully secure and encrypted connections between devices."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
-msgstr ""
+msgstr "Multiple simultaneous transfers."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:20
 msgid "Optional data compression."
-msgstr ""
+msgstr "Optional data compression."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:21
 msgid ""
 "Grouping of devices using a shared key, with multiple groups possible on the "
 "same network."
 msgstr ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:22
 msgid "Manual connections for restricted network environments."
-msgstr ""
+msgstr "Manual connections for restricted network environments."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
-msgstr ""
+msgstr "The main view showing connected devices and their status"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
 msgstr ""
+"Individual connection page showing individual incoming or outgoing transfers"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr ""
+msgstr "Manual connection dialog"

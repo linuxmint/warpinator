@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2024-11-30 10:21+0000\n"
-"Last-Translator: Dusan Kazik <prescott66@gmail.com>\n"
+"PO-Revision-Date: 2025-12-19 12:02+0000\n"
+"Last-Translator: menom <Unknown>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
-"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
+"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
+"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
 "Language: sk\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -282,7 +282,7 @@ msgstr "Otvorí priečinok s obsahom"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Skopírujte správu"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -403,11 +403,11 @@ msgstr "Odosiela sa '%s' do %s"
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "Nová správa od %s"
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovať"
 
 #: src/ops.py:53
 #, python-format
@@ -434,7 +434,7 @@ msgstr[2] "%d súbory"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Textová správa"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -796,11 +796,11 @@ msgstr "Ručné pripojenie"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Alebo sa pripojte na jednu z nižšie uvedených adries:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Alebo sa pripojte na nižšie uvedenú adresu:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."

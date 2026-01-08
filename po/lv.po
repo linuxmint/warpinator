@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2025-11-21 17:08+0000\n"
+"PO-Revision-Date: 2025-12-27 12:39+0000\n"
 "Last-Translator: Klavs Petersons <Unknown>\n"
 "Language-Team: Latvian <lv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2025-12-12 13:32+0000\n"
-"X-Generator: Launchpad (build 379e22b8475e3402088a4cdb4a6e7936a4d28414)\n"
+"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
+"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"Language: lv\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -24,7 +25,7 @@ msgstr "Grupas kods"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr "Jūs nevarat sazināties ar datoriem, kas neizmanto to pašu kodu."
+msgstr "Tu nevari sazināties ar datoriem, kas neizmanto to pašu kodu."
 
 #: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
@@ -57,7 +58,7 @@ msgstr "Nav atbilstošu rezultātu"
 
 #: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Padariet šo attālo datoru par iecienītāko galvenajā skatā"
+msgstr "Padari šo attālo datoru par iecienītāko galvenajā skatā"
 
 #: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
@@ -81,15 +82,15 @@ msgstr "Citi datori nav atrasti..."
 
 #: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
-msgstr "Pārliecinieties, ka jūsu tīkla savienojums ir aktīvs."
+msgstr "Pārliecinies, ka tavs tīkla savienojums ir aktīvs."
 
 #: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Pārbaudiet ugunsmūra noteikumus. Portu numurus var mainīt. Sīkāku "
-"informāciju skatiet iestatījumos."
+"Pārbaudi ugunsmūra noteikumus.  Portu numurus var mainīt. Sīkāku informāciju "
+"skati iestatījumos."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:894
@@ -97,8 +98,8 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Vai Warpinator darbojas kādā citā datorā šajā tīklā? Ja jā, pārliecinieties, "
-"ka visos datoros ir iestatīts viens un tas pats grupas kods."
+"Vai Warpinator darbojas kādā citā datorā šajā tīklā? Ja jā, pārliecinies, ka "
+"visos datoros ir iestatīts viens un tas pats grupas kods."
 
 #: resources/main-window.ui:912
 msgid "Possible solutions:"
@@ -119,7 +120,7 @@ msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr "Notiek inicializēšana. Lūdzu, uzgaidiet..."
+msgstr "Notiek inicializēšana. Lūdzu, uzgaidi..."
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
@@ -134,8 +135,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"Šī mape ir nepieejama vai tajā ir aizliegts saglabāt failus. Lūdzu, "
-"izvēlieties jaunu atrašanās vietu iestatījumos un pārliecinieties, ka tā ir "
+"Šī mape ir nepieejama vai tajā ir aizliegts saglabāt failus.  Lūdzu, "
+"izvēlies jaunu atrašanās vietu iestatījumos un pārliecinies, ka tā ir "
 "pieejama."
 
 #: resources/main-window.ui:1309
@@ -170,7 +171,7 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
-"Saglabāšanas vietā nav pietiekami daudz vietas. Jums ir jādzēš daži faili, "
+"Saglabāšanas vietā nav pietiekami daudz vietas. Tev ir jādzēš daži faili, "
 "jāsamazina minimālā brīvā vieta iestatījumos vai jāizvēlas jauna vieta."
 
 #: resources/main-window.ui:1591
@@ -198,7 +199,7 @@ msgstr "Šajā datorā:"
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr "Ievadiet tās ierīces adresi, ar kuru vēlaties izveidot savienojumu"
+msgstr "Ievadi tās ierīces adresi, ar kuru vēlies izveidot savienojumu"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
@@ -212,12 +213,12 @@ msgstr "Alternatīvi, citā ierīcē:"
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr "Noskenējiet šo QR kodu"
+msgstr "Noskenē šo QR kodu"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr "Vai arī izveidojiet savienojumu ar tālāk norādīto adresi"
+msgstr "Vai arī izveido savienojumu ar tālāk norādīto adresi"
 
 #: resources/op-item.ui:146
 msgid "Awaiting approval"
@@ -308,12 +309,12 @@ msgstr "Noraidīt"
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s sūta jums %(file_count)d failu (%(file_name)s)."
+msgstr "%(sender_name)s sūta tev %(file_count)d failu (%(file_name)s)."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s sūta jums %(file_count)d failus"
+msgstr "%(sender_name)s sūta tev %(file_count)d failus"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
@@ -402,7 +403,7 @@ msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] "%d file-do-not-translate"
 msgstr[1] "%d faili"
-msgstr[2] "%d faili"
+msgstr[2] "%d failu"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
@@ -472,7 +473,7 @@ msgstr "Pieprasīt apstiprinājumu, ja tiek pārrakstīti faili"
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Paziņojuma parādīšana, kad kāds jums nosūta (vai mēģina nosūtīt) failus"
+"Paziņojuma parādīšana, kad kāds tev nosūta (vai mēģina nosūtīt) failus"
 
 #: src/prefs.py:343
 msgid "Connection"
@@ -490,7 +491,7 @@ msgstr "Automātiski"
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr "%s - nav atrasts"
+msgstr "%s - netika atrasts"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
@@ -616,7 +617,7 @@ msgstr "Gaida apstiprinājumu"
 
 #: src/warpinator.py:159
 msgid "Waiting for your approval"
-msgstr "Gaida jūsu apstiprinājumu"
+msgstr "Gaida tavu apstiprinājumu"
 
 #: src/warpinator.py:162
 msgid "Not enough disk space"
@@ -719,11 +720,11 @@ msgstr "Iziet"
 
 #: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
-msgstr "Šķiet, ka neesat pieslēgts tīklam."
+msgstr "Šķiet, ka neesi pieslēgts tīklam."
 
 #: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Palaišana bija neveiksmīga, lūdzu, pārbaudiet žurnālus."
+msgstr "Palaišana bija neveiksmīga, lūdzu, pārbaudi žurnālus."
 
 #: src/warpinator.py:857
 #, python-format
@@ -732,7 +733,7 @@ msgid ""
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
 "Warpinator darbojas ar ierobežotu funkcionalitāti un beigs darbību pēc %d "
-"minūtes. Lai iespējotu drošo režīmu, iestatiet unikālo grupas kodu."
+"minūtes. Lai iespējotu drošo režīmu, iestati unikālo grupas kodu."
 
 #: src/warpinator.py:859
 #, python-format
@@ -741,7 +742,7 @@ msgid ""
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
 "Warpinator darbojas ar ierobežotu funkcionalitāti un beigs darbību pēc %d "
-"minūtēm. Lai iespējotu drošo režīmu, iestatiet unikālo grupas kodu."
+"minūtēm. Lai iespējotu drošo režīmu, iestati unikālo grupas kodu."
 
 #: src/warpinator.py:920
 #, python-format
@@ -797,11 +798,11 @@ msgstr "Sūtīt ar Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr "Nosūtiet kādam failu, izmantojot Warpinator"
+msgstr "Nosūti kādam failu, izmantojot Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr "Atveriet ugunsmūra portu priekš Warpinator"
+msgstr "Atver ugunsmūra portu priekš Warpinator"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
@@ -814,7 +815,7 @@ msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr "Kopīgot failus jūsu tīklā"
+msgstr "Kopīgot failus tavā tīklā"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
@@ -834,7 +835,7 @@ msgstr "Viegli lietojama grafiskā saskarne."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
-msgstr "Automātiska ierīču atklāšana jūsu tīklā."
+msgstr "Automātiska ierīču atklāšana tavā tīklā."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
