@@ -14,6 +14,15 @@ import util
 import prefs
 import config
 
+def get_ipv6_addr_tuple(addr, port):
+    if '%' in addr:
+        ip_part, scope_name = addr.split('%', 1)
+        scope_id = socket.if_nametoindex(scope_name)
+    else:
+        ip_part = addr
+        scope_id = 0
+    return (ip_part, port, 0, scope_id)
+
 class RegRequest():
     def __init__(self, ident, hostname, ip_info, port, auth_port, api_version):
         self.api_version = api_version
@@ -182,7 +191,10 @@ class RegistrationServer_v1():
             try:
                 server_sock = socket.socket(ip_version, socket.SOCK_DGRAM)
                 server_sock.settimeout(1.0)
-                server_sock.bind((local_ip, self.port))
+                if ip_version == socket.AF_INET6:
+                    server_sock.bind(get_ipv6_addr_tuple(local_ip, self.port))
+                else:
+                    server_sock.bind((local_ip, self.port))
             except socket.error as e:
                 logging.critical("Could not create udp socket for cert requests: %s" % str(e))
                 return
