@@ -65,6 +65,7 @@ For any desktop environment (DE)
 ```
 sudo pacman -S warpinator
 ```
+* The Aur version of warpinator is already outdated , please use the pacman version of warpinator
 
 #### Otherwise (and this is valid anywhere if you want to avoid packaging):
 ```bash
