@@ -1424,6 +1424,8 @@ class WarpApplication(Gtk.Application):
         Gtk.Application.do_startup(self)
         logging.info("Initializing Warpinator")
 
+        GLib.set_prgname("org.x.Warpinator")
+
         prefs.prefs_settings.connect("changed::" + prefs.TRAY_ICON_KEY, self.on_prefs_changed)
 
         vt = GLib.VariantType.new("s")
