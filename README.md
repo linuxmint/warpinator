@@ -4,7 +4,7 @@ ________
 
 ### ⚠️ Warning: Fake/malicious website:
 
-`warpinator.com` is a fake website, potentially malicious!
+`warpinator[.]com` is a fake website, potentially malicious!
 
 Do **NOT** download or run any software from it!
 
