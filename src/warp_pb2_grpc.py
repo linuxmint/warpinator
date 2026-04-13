@@ -41,11 +41,6 @@ class WarpStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CheckDuplexConnection = channel.unary_unary(
-                '/Warp/CheckDuplexConnection',
-                request_serializer=warp__pb2.LookupName.SerializeToString,
-                response_deserializer=warp__pb2.HaveDuplex.FromString,
-                _registered_method=True)
         self.WaitingForDuplex = channel.unary_unary(
                 '/Warp/WaitingForDuplex',
                 request_serializer=warp__pb2.LookupName.SerializeToString,
@@ -108,16 +103,9 @@ class WarpServicer(object):
 
     """
 
-    def CheckDuplexConnection(self, request, context):
-        """Sender methods
-        api v1 duplex method (ping style)
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def WaitingForDuplex(self, request, context):
-        """api v2 duplex method (block/future)
+        """Sender methods
+        api v2 duplex method (block/future)
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -182,11 +170,6 @@ class WarpServicer(object):
 
 def add_WarpServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CheckDuplexConnection': grpc.unary_unary_rpc_method_handler(
-                    servicer.CheckDuplexConnection,
-                    request_deserializer=warp__pb2.LookupName.FromString,
-                    response_serializer=warp__pb2.HaveDuplex.SerializeToString,
-            ),
             'WaitingForDuplex': grpc.unary_unary_rpc_method_handler(
                     servicer.WaitingForDuplex,
                     request_deserializer=warp__pb2.LookupName.FromString,
@@ -254,33 +237,6 @@ class Warp(object):
     Never change the existing members and member values of messages, only add new ones.
 
     """
-
-    @staticmethod
-    def CheckDuplexConnection(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/Warp/CheckDuplexConnection',
-            warp__pb2.LookupName.SerializeToString,
-            warp__pb2.HaveDuplex.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def WaitingForDuplex(request,
