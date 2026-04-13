@@ -13,7 +13,7 @@ try:
     os.chdir(srcdir)
     os.environ["SKIP_CYTHON"] = "1"
     subprocess.run(["python3", "setup.py", "build"])
-    subprocess.run("cp -r build/lib/zeroconf %s" % outdir, shell=True)
+    subprocess.run("rm -rf %s && cp -r build/lib/zeroconf %s" % (outdir, outdir), shell=True)
 except Exception as e:
     print(e)
     sys.exit(1)
