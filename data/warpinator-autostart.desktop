@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Warpinator
-Comment=Transfer files from one computer to another on the local network
+Comment=Send and Receive Files across the Network
 Icon=org.x.Warpinator
 # the autostart argument tells /usr/bin/warpinator to check our autostart gsettings key and either keeps
 # going or exits immediately.
@@ -9,3 +9,5 @@ Exec=warpinator --autostart
 
 Categories=GNOME;GTK;Utility;
 NoDisplay=true
+X-GNOME-Autostart-Delay=10
+X-MATE-Autostart-Delay=10
