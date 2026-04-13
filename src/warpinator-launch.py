@@ -66,6 +66,13 @@ if args.debug:
 
 import config
 
+# A system-installed google_auth (or similar) can pre-seed sys.modules['google']
+# via a .pth file, pointing its __path__ only at the system location and
+# preventing our bundled google/__init__.py from running. Drop the pre-seeded
+# entry so the normal import machinery picks up our bundled copy via sys.path.
+if config.bundle_grpc:
+    sys.modules.pop("google", None)
+
 # Remove xapp from GTK3_MODULES if this is a flatpak.
 if config.FLATPAK_BUILD:
     mods_str = os.environ.get("GTK3_MODULES")
