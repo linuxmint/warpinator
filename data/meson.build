@@ -44,17 +44,8 @@ if include_firewall_mod
     )
 endif
 
-current_date = run_command('sh', '-c', '''
-      SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-`date +%s`}";
-      FORMAT="+%Y-%m-%d";
-      date -u -d @"$SOURCE_DATE_EPOCH" "$FORMAT" 2>/dev/null ||
-      date -u -r  "$SOURCE_DATE_EPOCH" "$FORMAT" 2>/dev/null ||
-      date -u "$FORMAT"''', check: false).stdout().strip()
-
 appdata_conf = configuration_data()
 appdata_conf.set('appid', desktop_id)
-appdata_conf.set('app_version', meson.project_version())
-appdata_conf.set('current_date', current_date)
 
 appdata = i18n.merge_file(
     input: configure_file(

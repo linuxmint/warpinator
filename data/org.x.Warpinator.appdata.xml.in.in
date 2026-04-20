@@ -37,7 +37,27 @@
     <dbus type="session">@appid@</dbus>
   </provides>
   <releases>
-    <release version="@app_version@" date="@current_date@" />
+    <release version="2.0.3" date="2026-01-08">
+      <description>
+        <p>Translation updates.</p>
+      </description>
+    </release>
+    <release version="2.0.0" date="2025-11-21">
+      <description>
+        <ul>
+          <li>IPv6 support.</li>
+          <li>Switched to XApp symbolic icons.</li>
+          <li>Ability to send text messages between devices.</li>
+          <li>Detect URLs in messages and make them clickable.</li>
+          <li>Fix reconnecting when the certificate is unchanged.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.0.0" date="2020-04-17">
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
   </releases>
   <!-- DO NOT TRANSLATE Linux Mint -->
   <screenshots>
