@@ -52,7 +52,7 @@ def xml_escape(s):
 
 def build_release_block(version, date, bullets):
     lines = [f'    <release version="{version}" date="{date}">',
-             '      <description>']
+             '      <description translatable="no" translate="no">']
     if len(bullets) <= 1:
         text = bullets[0] if bullets else 'Maintenance release.'
         lines.append(f'        <p>{xml_escape(text)}</p>')

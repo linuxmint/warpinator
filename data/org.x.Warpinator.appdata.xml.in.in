@@ -38,12 +38,12 @@
   </provides>
   <releases>
     <release version="2.0.3" date="2026-01-08">
-      <description>
+      <description translatable="no" translate="no">
         <p>Translation updates.</p>
       </description>
     </release>
     <release version="2.0.0" date="2025-11-21">
-      <description>
+      <description translatable="no" translate="no">
         <ul>
           <li>IPv6 support.</li>
           <li>Switched to XApp symbolic icons.</li>
@@ -54,7 +54,7 @@
       </description>
     </release>
     <release version="1.0.0" date="2020-04-17">
-      <description>
+      <description translatable="no" translate="no">
         <p>Initial release.</p>
       </description>
     </release>
