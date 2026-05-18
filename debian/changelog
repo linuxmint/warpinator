@@ -1,3 +1,22 @@
+warpinator (2.0.4) zena; urgency=medium
+
+  [ Michael Webster ]
+  * .github/workflows: Add generate-test-packages trigger.
+  * Update generated protobuf files to match our bundled versions.
+  * Update README
+  * warpinator-launch.py: Get rid of pre-populated google namespace from sys.modules.
+  * build: Fix nesting output dirs when re-installing an already-built tree.
+  * appdata: Populate with initial and recent releases.
+  * appdata: Mark release notes non-translatable.
+
+  [ Jaen ]
+  * Do not actually link to fake website (#247)
+
+  [ Balló György ]
+  * Set prgname to application ID (#249)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 18 May 2026 11:31:08 +0100
+
 warpinator (2.0.3) zena; urgency=medium
 
   * l10n: Update translations
