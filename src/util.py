@@ -243,7 +243,9 @@ class InterfaceInfo():
                 pass
         if self.ip6:
             try:
-                blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET6, self.ip6_address))
+                # Strip scope ID suffix if present (e.g., %eth0)
+                ip6_clean = self.ip6_address.split('%')[0] if '%' in self.ip6_address else self.ip6_address
+                blist.append(socket.inet_pton(GLib.SYSDEF_AF_INET6, ip6_clean))
             except:
                 pass
 
