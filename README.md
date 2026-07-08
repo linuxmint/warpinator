@@ -2,13 +2,17 @@
 ![build](https://github.com/linuxmint/warpinator/actions/workflows/build.yml/badge.svg)
 ________
 
-### ⚠️ Warning: Fake/malicious website:
+### ⚠️ Warning: Fake/malicious websites:
 
-`warpinator[.]com` is a fake website, potentially malicious!
+These fake sites potentially push malware:
 
-Do **NOT** download or run any software from it!
+- `warpinator[.]com`
+- `warpinator[.]net`
+- `warpinator.technab[.]com`
 
-We do not know who maintains it. We tried to take it down multiple times, the hosting company does not care.
+Do **NOT** download or run any software from them!
+
+We do not know who maintain them. We tried to take some of them down multiple times, but their hosting companies did not care.
 
 ________
 
