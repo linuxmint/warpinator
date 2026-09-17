@@ -84,7 +84,7 @@ class NetworkMonitor(GObject.Object):
                 new_online = True
 
         if new_ip_info is None:
-            new_ip_info = util.InterfaceInfo({ "addr": "0.0.0.0" }, { "addr": "[::]" }, new_iface_setting)
+            new_ip_info = util.InterfaceInfo({ "addr": "0.0.0.0" }, { "addr": "::" }, new_iface_setting)
 
         if new_online != self.online or self.current_ip_info != new_ip_info or self.current_iface_setting != new_iface_setting:
             self.current_ip_info = new_ip_info
@@ -149,7 +149,7 @@ class NetworkMonitor(GObject.Object):
                     s.connect(("2001:4860:4860::8888", 80))
                 except OSError as e:
                     # print("Unable to retrieve IP address: %s" % str(e))
-                    return "[::]"
+                    return "::"
             ans = s.getsockname()[0]
             return ans
 
