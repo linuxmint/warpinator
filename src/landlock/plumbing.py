@@ -146,7 +146,7 @@ def find_generic_reason_from_platform() -> Optional[str]:
 
     # check kernel version
     kernel_version = platform.release()
-    kernel_version_tuple = tuple(map(int, kernel_version.split("-")[0].split(".")))
+    kernel_version_tuple = tuple(map(int, kernel_version.split(".")[:2]))
     if kernel_version_tuple < (5, 13):
         return (
             f"Landlock is only available in kernel 5.13 or newer,"
