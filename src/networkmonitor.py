@@ -166,8 +166,13 @@ class NetworkMonitor(GObject.Object):
     # TODO: Do this with libnm
     def same_subnet(self, other_ip_info):
         if self.current_ip_info.ip4_address is not None and other_ip_info.ip4_address is not None:
+            netmask = self.current_ip_info.ip4.get("netmask")
+            if netmask is None:
+                logging.warning("Discovery: no IPv4 netmask available, assuming same subnet")
+                return True
+
             iface = ipaddress.IPv4Interface("%s/%s" % (self.current_ip_info.ip4_address,
-                                                    self.current_ip_info.ip4["netmask"]))
+                                                    netmask))
 
             my_net = iface.network
 
