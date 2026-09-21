@@ -1,3 +1,13 @@
+warpinator (2.0.5) adrien; urgency=medium
+
+  [ Breeze ]
+  * landlock: Ignore kernel patch suffixes (#261)
+
+  [ Lanchon ]
+  * Add fake/malicious websites (#257)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 21 Sep 2026 18:37:46 +0100
+
 warpinator (2.0.4) zena; urgency=medium
 
   [ Michael Webster ]
