@@ -155,7 +155,7 @@ class Request():
             logging.debug("Auth: Cert request failed from remote (%s:%d) - (Is their udp port blocked?"
                               % (self.ip_info, self.port))
         except socket.error as e:
-            logging.critical("Something wrong with cert request (%s:%s): " % (remote_ip, self.port, e))
+            logging.critical("Something wrong with cert request (%s:%s): %s" % (remote_ip, self.port, e))
 
         return None
 
