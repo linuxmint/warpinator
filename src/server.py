@@ -191,8 +191,8 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
                     api_version = info.properties[b"api-version"].decode()
                     auth_port = int(info.properties[b"auth-port"].decode())
                 except KeyError:
-                    api_version = "1"
-                    auth_port = 0
+                    logging.debug(">>> Discovery: registration API v1 is not supported anymore, ignoring:  %s (%s)" % (remote_hostname, remote_ip_info))
+                    return
 
                 # FIXME: I'm not sure why we still get discovered by other networks in some cases -
                 # The Zeroconf object has a specific ip it is set to, what more do I need to do?
@@ -518,18 +518,6 @@ class Server(threading.Thread, warp_pb2_grpc.WarpServicer, GObject.Object):
             logging.debug("Server Ping: ping is from unknown remote (or not fully online yet)")
 
         return void
-
-    def CheckDuplexConnection(self, request, context):
-        logging.debug("Server RPC: CheckDuplexConnection from '%s'" % request.readable_name)
-        response = False
-
-        try:
-            remote = self.remote_machines[request.id]
-            response = (remote.status in (RemoteStatus.AWAITING_DUPLEX, RemoteStatus.ONLINE))
-        except KeyError:
-            pass
-
-        return warp_pb2.HaveDuplex(response=response)
 
     def WaitingForDuplex(self, request, context):
         logging.debug("Server RPC: WaitingForDuplex from '%s' (api v2)" % request.readable_name)

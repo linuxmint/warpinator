@@ -22,9 +22,6 @@ class RegRequest():
         self.ip_info = ip_info
         self.port = port
 
-        #v1 only
-        self.request = None
-
         #v2 only
         self.auth_port = auth_port
         self.locked_cert = None
@@ -36,7 +33,6 @@ class RegRequest():
 
 class Registrar():
     def __init__(self, ip_info, port, auth_port):
-        self.reg_server_v1 = None
         self.reg_server_v2 = None
         self.active_registrations = {}
         self.reg_lock = threading.Lock()
@@ -48,15 +44,10 @@ class Registrar():
         self.start_registration_servers()
 
     def start_registration_servers(self):
-        if self.reg_server_v1 is not None:
-            self.reg_server_v1.stop()
-
         if self.reg_server_v2 is not None:
             self.reg_server_v2.stop(grace=2).wait()
             self.reg_server_v2 = None
 
-        logging.debug("Starting v1 registration server (%s) with port %d" % (self.ip_info, self.port))
-        self.reg_server_v1 = RegistrationServer_v1(self.ip_info, self.port)
         logging.debug("Starting v2 registration server (%s) with auth port %d" % (self.ip_info, self.auth_port))
         self.reg_server_v2 = RegistrationServer_v2(self.ip_info, self.auth_port)
 
@@ -65,11 +56,6 @@ class Registrar():
             for key in self.active_registrations.keys():
                 self.active_registrations[key].cancel()
             self.active_registrations = {}
-
-        if self.reg_server_v1 is not None:
-            logging.debug("Stopping v1 registration server.")
-            self.reg_server_v1.stop()
-            self.reg_server_v1 = None
 
         if self.reg_server_v2:
             logging.debug("Stopping v2 registration server.")
@@ -81,12 +67,8 @@ class Registrar():
         with self.reg_lock:
             self.active_registrations[ident] = details
 
-        ret = None
-
-        if api_version == "1":
-            ret = register_v1(details)
-        elif api_version == "2":
-            ret = register_v2(details)
+        # api v2
+        ret = register_v2(details)
 
         with self.reg_lock:
             # shutdown_registration_servers may have been called on a different thread.
@@ -96,113 +78,6 @@ class Registrar():
                 pass
 
         return ret
-
-####################### api v1
-
-def register_v1(details):
-    # This will block if the remote's warp udp port is closed, until either the port is unblocked
-    # or we tell the auth object to shutdown, in which case the request timer will cancel and return
-    # here immediately (with None)
-
-    logging.debug("Registering with %s (%s:%d) - api version 1" % (details.hostname, details.ip_info, details.port))
-
-    success = retrieve_remote_cert(details)
-
-    if success == util.CertProcessingResult.FAILURE:
-        logging.debug("Unable to register with %s (%s:%d) - api version 1"
-                             % (details.hostname, details.ip_info, details.port))
-        return False
-
-    return True
-
-def retrieve_remote_cert(details):
-    logging.debug("Auth: Starting a new RequestLoop for '%s' (%s:%d)" % (details.hostname, details.ip_info, details.port))
-
-    details.request = Request(details.ip_info, details.port)
-    data = details.request.request()
-
-    if data is None or details.cancelled:
-        return util.CertProcessingResult.FAILURE
-
-    return auth.get_singleton().process_remote_cert(details.hostname,
-                                                    details.ip_info,
-                                                    data)
-
-REQUEST = b"REQUEST"
-
-#v1 client
-class Request():
-    def __init__(self, ip_info, port):
-        self.ip_info = ip_info
-        self.port = port
-
-    def request(self):
-        logging.debug("Auth: Requesting cert from remote (%s:%d)" % (self.ip_info, self.port))
-
-        remote_ip, _, ip_version = self.ip_info.get_usable_ip()
-
-        try:
-            ip = remote_ip if ip_version == socket.AF_INET else "[%s]" % (remote_ip,)
-            server_sock = socket.socket(ip_version, socket.SOCK_DGRAM)
-            server_sock.settimeout(5.0)
-            server_sock.sendto(REQUEST, (ip, self.port))
-
-            reply, addr = server_sock.recvfrom(2000)
-
-            if addr == (remote_ip, self.port):
-                return reply
-        except socket.timeout:
-            logging.debug("Auth: Cert request failed from remote (%s:%d) - (Is their udp port blocked?"
-                              % (self.ip_info, self.port))
-        except socket.error as e:
-            logging.critical("Something wrong with cert request (%s:%s): " % (remote_ip, self.port, e))
-
-        return None
-
-# v1 server
-class RegistrationServer_v1():
-    def __init__(self, ip_info, port):
-        self.exit = False
-        self.ip_info = ip_info
-        self.port = port
-
-        self.thread4 = threading.Thread(target=self.serve_cert_thread, args=(socket.AF_INET,))
-        self.thread6 = threading.Thread(target=self.serve_cert_thread, args=(socket.AF_INET6,))
-        self.thread4.start()
-        self.thread6.start()
-
-    def serve_cert_thread(self, ip_version):
-        local_ip = None
-        if ip_version == socket.AF_INET:
-            local_ip = self.ip_info.ip4_address
-        elif ip_version == socket.AF_INET6:
-            local_ip = self.ip_info.ip6_address
-
-        if local_ip is not None:
-            try:
-                server_sock = socket.socket(ip_version, socket.SOCK_DGRAM)
-                server_sock.settimeout(1.0)
-                server_sock.bind((local_ip, self.port))
-            except socket.error as e:
-                logging.critical("Could not create udp socket for cert requests: %s" % str(e))
-                return
-
-            while True:
-                try:
-                    data, address = server_sock.recvfrom(2000)
-
-                    if data == REQUEST:
-                        cert_data = auth.get_singleton().get_encoded_local_cert()
-                        server_sock.sendto(cert_data, address)
-                except socket.timeout as e:
-                    if self.exit:
-                        server_sock.close()
-                        break
-
-    def stop(self):
-        self.exit = True
-        self.thread4.join()
-        self.thread6.join()
 
 
 ####################### api v2
