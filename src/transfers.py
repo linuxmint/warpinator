@@ -3,7 +3,6 @@
 import os
 import logging
 import stat
-import shutil
 import gettext
 from pathlib import Path
 
@@ -180,6 +179,7 @@ class FileReceiver(GObject.Object):
         self.current_mode = 0
         self.current_mtime = 0
         self.current_mtime_usec = 0
+        self.current_is_new = False
 
         # We write files top-down.  If we're preserving permissions and we receive
         # a folder in some hierarchy that is not writable, we won't be able to create
@@ -190,9 +190,16 @@ class FileReceiver(GObject.Object):
         logging.debug("Removing any existing files matching the pending transfer")
         for name in self.op.top_dir_basenames:
             path = self.save_path / name
-            self.rm_any(str(path))
+            self.rm_any(path)
 
     def clean_current_top_dir_file(self):
+        if self.current_stream is not None:
+            try:
+                self.current_stream.close()
+            except Exception:
+                pass
+            self.current_stream = None
+
         if self.current_path is not None:
             current = Path(self.current_path)
 
@@ -203,17 +210,20 @@ class FileReceiver(GObject.Object):
                 logging.critical("Partial file or directory from aborted transfer is invalid: %s" % str(e))
                 return
 
-            abs_top_dir = self.save_path.joinpath(relative.parts[0])
-            logging.debug("Removing partial file or directory: %s" % str(abs_top_dir))
+            if self.current_is_new:
+                logging.debug("Removing partial file: %s" % str(current))
+                self.rm_any(current)
 
-            self.rm_any(abs_top_dir)
+            self.current_path = None
+            self.current_gfile = None
+            self.current_is_new = False
 
     def rm_any(self, path):
         try:
-            try:
-                os.remove(path)
-            except IsADirectoryError:
-                shutil.rmtree(path)
+            p = Path(path)
+            if p.is_dir() and not p.is_symlink():
+                return
+            p.unlink(missing_ok=True)
         except FileNotFoundError:
             pass
         except Exception as e:
@@ -228,6 +238,7 @@ class FileReceiver(GObject.Object):
             self.current_type = s.file_type
             self.current_mtime = s.time.mtime
             self.current_mtime_usec = s.time.mtime_usec
+            self.current_is_new = False
             if not s.relative_path.startswith(tuple(self.op.top_dir_basenames)):
                 raise ReceiveError("File path is not descended from a valid toplevel directory: %s" % s.relative_path)
         if self.op.remaining_count == 0:
@@ -243,7 +254,16 @@ class FileReceiver(GObject.Object):
             make_symbolic_link(self.op, path, s.symlink_target)
         else:
             if self.current_stream is None:
-                self.current_stream = self.current_gfile.create(Gio.FileCreateFlags.NONE, None)
+                self.current_is_new = not os.path.lexists(path)
+                try:
+                    self.current_stream = self.current_gfile.replace(None, False, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
+                except GLib.Error:
+                    if os.path.lexists(path) and (not os.path.isdir(path) or os.path.islink(path)):
+                        try:
+                            os.remove(path)
+                        except Exception:
+                            pass
+                    self.current_stream = self.current_gfile.replace(None, False, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
 
             if not s.chunk:
                 return
@@ -292,6 +312,7 @@ class FileReceiver(GObject.Object):
         self.current_mode = 0
         self.current_path = None
         self.current_gfile = None
+        self.current_is_new = False
         self.op.remaining_count -= 1
 
     def apply_folder_permissions(self):
