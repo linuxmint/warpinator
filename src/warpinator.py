@@ -740,6 +740,7 @@ class WarpWindow(GObject.Object):
 
     def server_not_started_timeout(self):
         self.show_page("server-problem")
+        self.restart_service_menu_item.set_sensitive(True)
 
         if not self.netmon.online:
             self.something_wrong_label.set_text(_("You don't appear to be connected to a network."))
@@ -1518,6 +1519,13 @@ class WarpApplication(Gtk.Application):
             self.start_save_folder_check()
 
     def new_server_continue(self):
+        try:
+            self._new_server_continue()
+        except Exception:
+            self.server_starting = False
+            raise
+
+    def _new_server_continue(self):
         self.server_state_dirty = False
 
         self.window.start_startup_timer(restarting=False)
