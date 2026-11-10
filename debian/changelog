@@ -1,3 +1,17 @@
+warpinator (2.0.6) adrien; urgency=medium
+
+  [ Pedro Barbosa ]
+  * remote_registration.py: Fix TypeError when logging a failed cert request (#262)
+
+  [ Breeze ]
+  * Fix invalid IPv6 fallback address (#258)
+  * Handle missing IPv4 netmask during discovery (#260)
+
+  [ Michael Webster ]
+  * warpinator.py: Clear starting flag on a failed start, reset menu item
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 10 Nov 2026 14:53:37 +0000
+
 warpinator (2.0.5) adrien; urgency=medium
 
   [ Breeze ]
