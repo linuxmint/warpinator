@@ -465,7 +465,7 @@ def test_resolved_path_safety(relative_path):
             # resolved doesn't exist, so it can't be the same
             pass
     except RuntimeError as e:
-        raise ReceiveError("Could not resolve path '%s': %s" % str(e))
+        raise ReceiveError("Could not resolve path '%s': %s" % (unresolved, str(e)))
     except ValueError:
         raise ReceiveError("Resolved path is not valid child of the save folder: %s -> %s" % (unresolved, str(resolved)), fatal=True)
 
