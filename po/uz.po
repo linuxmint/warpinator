@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2024-07-25 04:14+0000\n"
+"PO-Revision-Date: 2026-03-19 05:18+0000\n"
 "Last-Translator: Umidjon Almasov <umutelmas.uz@gmail.com>\n"
 "Language-Team: Uzbek <uz@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
 "Language: uz\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -273,7 +273,7 @@ msgstr "O‘z ichiga olgan jildni ochish"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Xabarni nusxalash"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -389,11 +389,11 @@ msgstr "“%s” %s ga yuborilmoqda"
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "%s dan yangi xabar"
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Nusxalash"
 
 #: src/ops.py:53
 #, python-format
@@ -416,7 +416,7 @@ msgstr[0] "%d fayl"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Matnli xabar"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -772,11 +772,11 @@ msgstr "Qo‘lda ulanish"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Yoki quyidagi manzillardan biriga ulaning:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Yoki quyidagi manzilga ulaning:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."

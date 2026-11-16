@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2024-06-24 18:34+0000\n"
-"Last-Translator: Anton Hryb <Unknown>\n"
+"PO-Revision-Date: 2026-05-23 14:22+0000\n"
+"Last-Translator: Alexandr Primak <primak.aa@gmail.com>\n"
 "Language-Team: Belarusian <be@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -268,7 +268,7 @@ msgstr "Адкрыць папку, якая змяшчае"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Скапіяваць паведамленне."
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -383,11 +383,11 @@ msgstr "Адпраўка '%s' на %s"
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "Новае паведамленне ад %s."
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Скапіяваць"
 
 #: src/ops.py:53
 #, python-format
@@ -414,7 +414,7 @@ msgstr[2] "%d файлаў"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Тэкставае паведамленне"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -777,11 +777,11 @@ msgstr "Ручное злучэнне"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Або падключыцеся да аднаго з адрасоў ніжэй:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Або падключыцеся да адраса ніжэй:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."

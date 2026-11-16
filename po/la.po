@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2023-02-14 11:15+0000\n"
-"Last-Translator: Davide Novemila <Unknown>\n"
+"PO-Revision-Date: 2026-04-15 14:46+0000\n"
+"Last-Translator: Milo Battaglia <Unknown>\n"
 "Language-Team: Latin <la@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
 "Language: la\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -33,11 +33,11 @@ msgstr "Codicem scribe"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Modus securus:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "OFF"
 
 #: resources/group-code.ui:148 resources/main-window.ui:134
 #: resources/main-window.ui:1249
@@ -46,11 +46,11 @@ msgstr "Informationes additiciae"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Modus Securus debilitatus"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Plica Deductionum intuta"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
@@ -109,11 +109,11 @@ msgstr "Solutiones temptandae:"
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
-msgstr ""
+msgstr "Warpinator quoque obtineatur in:"
 
 #: resources/main-window.ui:962
 msgid "Android"
-msgstr ""
+msgstr "Android"
 
 #: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
@@ -136,6 +136,8 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Haec plica aut inaccessibilis aut eae servare plicas praehibentur. Quaeso, "
+"novum locum elige, in Praepositionibus et fac certus esse accessibilem."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
@@ -147,19 +149,19 @@ msgstr "Extinguitur ..."
 
 #: resources/main-window.ui:1440
 msgid "Restart required"
-msgstr ""
+msgstr "Oportet iterum incipi"
 
 #: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
-msgstr ""
+msgstr "Warpinator incipiendus est ante directorio servandi novo uti potes"
 
 #: resources/main-window.ui:1467
 msgid "Restart"
-msgstr ""
+msgstr "Incipe iterum"
 
 #: resources/main-window.ui:1537
 msgid "Disk Full"
-msgstr ""
+msgstr "Discus Plenus"
 
 #: resources/main-window.ui:1574
 msgid ""
@@ -167,10 +169,12 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Non satis vacuum est spatium in loco servandi. Debes delere aliquas plicas, "
+"minimum spatii vacui minuere in praepositionibus, aut novum locum eligere."
 
 #: resources/main-window.ui:1591
 msgid "Empty trash"
-msgstr ""
+msgstr "Abice quisquilliam"
 
 #: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
@@ -178,7 +182,7 @@ msgstr "Directorium ad servanda aperi"
 
 #: resources/main-window.ui:1618
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Inspice usum disci"
 
 #: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
@@ -188,31 +192,31 @@ msgstr "Plicas per Rete Mitte atque Recipe"
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "In hoc computatro:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Induce locum machinae quae iungi vis"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Jungere"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Invicem, in altera machina:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Percurre hoc QR symbolum"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Aut iungere locuo subtus"
 
 #: resources/op-item.ui:146
 msgid "Awaiting approval"
@@ -264,7 +268,7 @@ msgstr "Directorium aperi"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Simula nuntium"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
@@ -318,7 +322,7 @@ msgstr "Translatio perfecta"
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "Translatio ad %s perfecta est, sed cum erroribus"
 
 #: src/notifications.py:98
 #, python-format
@@ -328,7 +332,7 @@ msgstr "Translatio ad %s bene perfecta est"
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "Translatio ab %s perfecta est, sed cum erroribus"
 
 #: src/notifications.py:103
 #, python-format
@@ -365,26 +369,26 @@ msgstr "Translatio iniens ex %s interrupta est"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Mittens plicas"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "Mittens plicas %d ad %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "Mittens '%s' ad %s"
 
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "Nuntium novum ab %s"
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Simula"
 
 #: src/ops.py:53
 #, python-format
@@ -409,7 +413,7 @@ msgstr[1] "%d plicae"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Nuntium Scriptum"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
@@ -451,7 +455,7 @@ msgstr "Locus ad plicas recipiendas"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Spatium vacuum assignatum"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
@@ -516,7 +520,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Tantum in modo securo obtineatur."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -524,21 +528,23 @@ msgstr "Codex collectionis opus est."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "Tessera gregalis est nimis brevis."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "ON"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Omnes optiones apertae sunt."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Debes assignare propriam tesseram gregalem ut in modo securo opereris. "
+"Aliquae optiones in praesenti debilitatae sunt."
 
 #: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
@@ -643,7 +649,7 @@ msgstr "Perfectum"
 
 #: src/warpinator.py:217
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Perfectum est, sed cum erroribus"
 
 #: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
@@ -690,11 +696,11 @@ msgstr "Naviga ..."
 
 #: src/warpinator.py:616
 msgid "Connect manually"
-msgstr ""
+msgstr "Jungare manu"
 
 #: src/warpinator.py:621
 msgid "Restart service"
-msgstr ""
+msgstr "Incipe iterum officium"
 
 #: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
@@ -718,6 +724,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator potestate operatur finite, et exibit %d minutis. Ut modum securum "
+"hibilites, tesseram propriam gregalem assigna."
 
 #: src/warpinator.py:859
 #, python-format
@@ -725,21 +733,24 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator in praesenti potestate operatur finite, et exibit %d minutis. Ut "
+"modum securum habilites, tesseram propriam gregalem assigna."
 
 #: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
+"Non satis est spatium discii remanens ut plicas accipias (%s assignatum est)."
 
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "Manens %d operationem perficientem"
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "Manens %d operationes perficientes"
 
 #: src/warpinator.py:1128
 msgid "Offline"
@@ -755,19 +766,19 @@ msgstr "Conexus duabus-viabus expectatur"
 
 #: src/warpinator.py:1246
 msgid "Manual connection"
-msgstr ""
+msgstr "Nexus manualis"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Aut iungere uno locorum subtus:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Aut iungere loco subtus:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."
-msgstr ""
+msgstr "Iungitur..."
 
 #: src/warpinator.py:1784
 msgid "Send to all"
@@ -775,11 +786,11 @@ msgstr "Omnibus mitte"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Mitte Warpinatore"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Mitte plicam Warpinatore utens alicui"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
@@ -796,21 +807,23 @@ msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr ""
+msgstr "Mitte communiter plicas reti tuo"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and exchange files quickly and securely."
 msgstr ""
+"Warpinator tibi lict facile multa computatra coniungare in reti locali et "
+"transferre plicas celer atque secure."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr ""
+msgstr "Attributa"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr ""
+msgstr "Faciles usu visuales interfacies"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
@@ -818,15 +831,15 @@ msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr ""
+msgstr "Omnino translationes securae atque incryptae inter machinas."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
-msgstr ""
+msgstr "Multae translationes simultaneae"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:20
 msgid "Optional data compression."
-msgstr ""
+msgstr "compressio datorum voluntaria"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:21
 msgid ""
@@ -846,7 +859,8 @@ msgstr ""
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
 msgstr ""
+"Pagina nexorum singillatim ostendens aut translationes inientes aut exientes"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr ""
+msgstr "Sermo nexi manualis"

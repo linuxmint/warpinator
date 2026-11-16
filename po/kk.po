@@ -8,68 +8,69 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2020-05-26 23:06+0000\n"
-"Last-Translator: Murat Käribay <Unknown>\n"
+"PO-Revision-Date: 2026-01-24 14:57+0000\n"
+"Last-Translator: Baurzhan Muftakhidinov <Unknown>\n"
 "Language-Team: Kazakh <kk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:44+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
+"Language: kk\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr ""
+msgstr "Топ коды"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
-msgstr ""
+msgstr "Бірдей кодты қолданбайтын компьютерлермен байланыса алмайсыз."
 
 #: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
-msgstr ""
+msgstr "Кодты орнату"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr ""
+msgstr "Қауіпсіз режим:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr ""
+msgstr "Сөндірулі"
 
 #: resources/group-code.ui:148 resources/main-window.ui:134
 #: resources/main-window.ui:1249
 msgid "More information"
-msgstr ""
+msgstr "Толығырақ ақпарат"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr ""
+msgstr "Қауіпсіз режим сөндірілген"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
-msgstr ""
+msgstr "Жүктеп алу бумасы қауіпсіз емес"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
-msgstr "Сәйкес нәтижелер жоқ"
+msgstr "Сәйкес келетін нәтижелер жоқ"
 
 #: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
-msgstr ""
+msgstr "Бұл қашықтағы машинаны негізгі көріністе таңдаулы қылу"
 
 #: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
-msgstr ""
+msgstr "Белсенді емес және аяқталған операцияларды тазалау"
 
 #: resources/main-window.ui:589
 msgid "Send files"
-msgstr "Файлдар жіберу"
+msgstr "Файлдарды жіберу"
 
 #: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
-msgstr ""
+msgstr "Файлдарды беру"
 
 #: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
@@ -77,17 +78,19 @@ msgstr "Желіде"
 
 #: resources/main-window.ui:798
 msgid "No other computers found..."
-msgstr ""
+msgstr "Басқа компьютерлер табылмады..."
 
 #: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
-msgstr ""
+msgstr "Желілік байланысыңыз белсенді екеніне көз жеткізіңіз."
 
 #: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
+"Файервол ережелерін тексеріңіз. Порт нөмірлерін өзгертуге болады. Толығырақ "
+"ақпаратты қалаулардан қараңыз."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:894
@@ -95,65 +98,70 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
+"Осы желідегі басқа компьютерлерде Warpinator қосулы ма? Егер солай болса, "
+"олардың барлығы қалауларда бірдей топ кодын қолданатынына көз жеткізіңіз."
 
 #: resources/main-window.ui:912
 msgid "Possible solutions:"
-msgstr ""
+msgstr "Ықтимал шешімдер:"
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:947
 msgid "Warpinator is also available on:"
-msgstr ""
+msgstr "Warpinator сондай-ақ келесілерде қолжетімді:"
 
 #: resources/main-window.ui:962
 msgid "Android"
-msgstr ""
+msgstr "Android"
 
 #: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr ""
+msgstr "Инициализациялануда, күте тұрыңыз..."
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
-msgstr ""
+msgstr "Бірдеңе дұрыс болмады"
 
 #: resources/main-window.ui:1200
 msgid "Invalid save location"
-msgstr ""
+msgstr "Сақтау орны қате"
 
 #: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
+"Бұл бумаға қол жеткізу мүмкін емес немесе оған файлдарды сақтауға тыйым "
+"салынған. Қалаулар ішінен жаңа орынды таңдап, оған қол жеткізу мүмкін "
+"екеніне көз жеткізіңіз."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
-msgstr ""
+msgstr "Басқа компьютерлерді іздеу"
 
 #: resources/main-window.ui:1368
 msgid "Shutting down..."
-msgstr ""
+msgstr "Жұмысты аяқтау..."
 
 #: resources/main-window.ui:1440
 msgid "Restart required"
-msgstr ""
+msgstr "Қайта іске қосу қажет"
 
 #: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
-msgstr ""
+msgstr "Жаңа сақтау бумасын қолдану үшін Warpinator-ды қайта іске қосу керек"
 
 #: resources/main-window.ui:1467
 msgid "Restart"
-msgstr ""
+msgstr "Қайта іске қосу"
 
 #: resources/main-window.ui:1537
 msgid "Disk Full"
-msgstr ""
+msgstr "Диск толы"
 
 #: resources/main-window.ui:1574
 msgid ""
@@ -161,544 +169,556 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
+"Сақтау орнында бос орын жеткіліксіз. Кейбір файлдарды өшіруіңіз, "
+"қалаулардағы ең аз бос орын көлемін азайтуыңыз немесе жаңа орын таңдауыңыз "
+"қажет."
 
 #: resources/main-window.ui:1591
 msgid "Empty trash"
-msgstr ""
+msgstr "Себетті босату"
 
 #: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
-msgstr ""
+msgstr "Сақтау бумасын ашу"
 
 #: resources/main-window.ui:1618
 msgid "Examine disk usage"
-msgstr ""
+msgstr "Диск қолданылуын тексеру"
 
 #: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
-msgstr ""
+msgstr "Желі арқылы файлдарды жіберу және алу"
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
 msgid "On this computer:"
-msgstr ""
+msgstr "Бұл компьютерде:"
 
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr ""
+msgstr "Қосылғыңыз келетін құрылғының адресін енгізіңіз"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
-msgstr ""
+msgstr "Қосылу"
 
 #. manual-connect dialog: second main section header (bold, big)
 #: resources/manual-connect.ui:134
 msgid "Alternatively, on the other device:"
-msgstr ""
+msgstr "Немесе басқа құрылғыда:"
 
 #. A qr code is displayed below this
 #: resources/manual-connect.ui:150
 msgid "Scan this QR code"
-msgstr ""
+msgstr "Мына QR кодын сканерлеңіз"
 
 #. The user's ip address and port are displayed here
 #: resources/manual-connect.ui:198
 msgid "Or connect to the address below"
-msgstr ""
+msgstr "Немесе төмендегі адреске қосылыңыз"
 
 #: resources/op-item.ui:146
 msgid "Awaiting approval"
-msgstr ""
+msgstr "Мақұлдауды күтуде"
 
 #: resources/op-item.ui:162
 msgid "Not enough disk space!"
-msgstr ""
+msgstr "Диск орны жеткіліксіз!"
 
 #: resources/op-item.ui:225
 msgid "Calculating"
-msgstr ""
+msgstr "Есептеу"
 
 #: resources/op-item.ui:290
 msgid "Accept this request"
-msgstr ""
+msgstr "Бұл сұранысты қабылдау"
 
 #: resources/op-item.ui:305
 msgid "Refuse this request"
-msgstr ""
+msgstr "Бұл сұранысты қабылдамау"
 
 #: resources/op-item.ui:320
 msgid "Cancel this request"
-msgstr ""
+msgstr "Бұл сұраныстан бас тарту"
 
 #: resources/op-item.ui:335
 msgid "Restart this operation"
-msgstr ""
+msgstr "Бұл операцияны қайта іске қосу"
 
 #: resources/op-item.ui:350
 msgid "Pause this operation"
-msgstr ""
+msgstr "Осы операцияны кідірту"
 
 #: resources/op-item.ui:365
 msgid "Resume this operation"
-msgstr ""
+msgstr "Осы операцияны жалғастыру"
 
 #: resources/op-item.ui:380
 msgid "Cancel this operation"
-msgstr ""
+msgstr "Осы операциядан бас тарту"
 
 #: resources/op-item.ui:395
 msgid "Remove this operation from the list"
-msgstr ""
+msgstr "Осы операцияны тізімнен өшіру"
 
 #: resources/op-item.ui:410
 msgid "Open the containing folder"
-msgstr ""
+msgstr "Құрамындағы буманы ашу"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
-msgstr ""
+msgstr "Хабарламаны көшіру"
 
 #: resources/prefs-window.ui:9
 msgid "Note on port numbers:"
-msgstr ""
+msgstr "Порт нөмірлері бойынша ескертпе:"
 
 #. Do not translate 'Warpinator'
 #: resources/prefs-window.ui:24
 msgctxt "preferences window title"
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator қалаулары"
 
 #: src/notifications.py:24
 msgid "New incoming files"
-msgstr ""
+msgstr "Жаңа кіріс файлдары"
 
 #: src/notifications.py:30
 #, python-format
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
+"%(sender_name)s сізге %(file_count)d файл (%(file_name)s) жібергісі келеді."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s сізге %(file_count)d файл жібергісі келеді"
 
 #: src/notifications.py:41
 msgid "Accept"
-msgstr ""
+msgstr "Қабылдау"
 
 #: src/notifications.py:42
 msgid "Decline"
-msgstr ""
+msgstr "Бас тарту"
 
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr ""
+msgstr "%(sender_name)s сізге %(file_count)d файл (%(file_name)s) жіберуде."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr ""
+msgstr "%(sender_name)s сізге %(file_count)d файл жіберуде"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr ""
+msgstr "Жіберу аяқталды"
 
 #: src/notifications.py:96
 #, python-format
 msgid "The transfer to %s has finished, but with errors"
-msgstr ""
+msgstr "%s үшін жіберу аяқталды, бірақ қателермен"
 
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr ""
+msgstr "%s үшін жіберу сәтті аяқталды"
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr ""
+msgstr "%s ішінен жіберу аяқталды, бірақ қателермен"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr ""
+msgstr "%s ішінен жіберу сәтті аяқталды"
 
 #: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
-msgstr ""
+msgstr "Жіберу сәтсіз аяқталды"
 
 #: src/notifications.py:140
 #, python-format
 msgid "Something went wrong with the transfer to %s"
-msgstr ""
+msgstr "%s үшін жіберу кезінде қате орын алды"
 
 #: src/notifications.py:142
 #, python-format
 msgid "Something went wrong with the transfer from %s"
-msgstr ""
+msgstr "%s ішінен жіберу кезінде қате орын алды"
 
 #: src/notifications.py:171 src/warpinator.py:175
 msgid "Transfer cancelled"
-msgstr ""
+msgstr "Жіберуден бас тартылды"
 
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr ""
+msgstr "%s үшін жіберуден бас тартылды"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr ""
+msgstr "%s ішінен келетін жіберуден бас тартылды"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr ""
+msgstr "Файлдарды жіберу"
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr ""
+msgstr "%d файлды %s үшін жіберу"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr ""
+msgstr "'%s' файлын %s үшін жіберу"
 
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr ""
+msgstr "%s ішінен жаңа хабарлама"
 
 #: src/notifications.py:241
 msgid "Copy"
-msgstr ""
+msgstr "Көшіру"
 
 #: src/ops.py:53
 #, python-format
 msgid "%(time_left)s (%(bytes_per_sec)s/s)"
-msgstr ""
+msgstr "%(time_left)s (%(bytes_per_sec)s/с)"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:154
 #, python-format
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d файл"
+msgstr[1] "%d файл"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d файл"
+msgstr[1] "%d файл"
 
 #: src/ops.py:292
 msgid "Text message"
-msgstr ""
+msgstr "Мәтіндік хабарлама"
 
 #: src/prefs.py:276
 msgid "Warpinator Preferences"
-msgstr ""
+msgstr "Warpinator қалаулары"
 
 #: src/prefs.py:293
 msgid "General"
-msgstr ""
+msgstr "Жалпы"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr ""
+msgstr "Жұмыс үстелі"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"
-msgstr ""
+msgstr "Хабарландыру аймағында таңбашаны көрсету"
 
 #: src/prefs.py:301
 msgid "Start with main window open"
-msgstr ""
+msgstr "Негізгі терезе ашық күйде іске қосылу"
 
 #: src/prefs.py:306
 msgid "Start automatically"
-msgstr ""
+msgstr "Автоматты түрде іске қосылу"
 
 #: src/prefs.py:313
 msgid "Use compression when possible."
-msgstr ""
+msgstr "Мүмкін болса, сығуды қолдану."
 
 #: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
+"Ескерту: бұл кейбір жылдам желілерде өнімділікке теріс әсер етуі мүмкін."
 
 #: src/prefs.py:318
 msgid "Location for received files"
-msgstr ""
+msgstr "Қабылданған файлдардың орналасуы"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
-msgstr ""
+msgstr "Резервтелген бос орын"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
-msgstr ""
+msgstr "Файлдарды қабылдамас бұрын растауды талап ету"
 
 #: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
-msgstr ""
+msgstr "Файлдардың үстінен жазылатын кезде растауды талап ету"
 
 #: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
+"Біреу сізге файлдарды жіберген (немесе жіберуге тырысқан) кезде "
+"хабарландыруды көрсету"
 
 #: src/prefs.py:343
 msgid "Connection"
-msgstr ""
+msgstr "Байланыс"
 
 #: src/prefs.py:353
 msgid "Network"
-msgstr ""
+msgstr "Желі"
 
 #: src/prefs.py:356
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматты"
 
 #. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr ""
+msgstr "%s - табылмады"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
-msgstr ""
+msgstr "Қолданылатын желілік интерфейс"
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
-msgstr ""
+msgstr "Тасымалдауға арналған кіріс порты"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr ""
+msgstr "Тіркелуге арналған кіріс порты"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
-msgstr ""
+msgstr "Желілік өзгерістерді іске асыру"
 
 #: src/prefs.py:476
 msgid "Update firewall rules"
-msgstr ""
+msgstr "Брандмауэр ережелерін жаңарту"
 
 #: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
+"Бағдарлама үшін кез келген порт нөмірлері жарамды, бірақ барлық компьютерлер "
+"үшін бірдей порттарды пайдалану қажет болған жағдайда брандмауэр "
+"ерекшеліктерін қосуды жеңілдетеді."
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr ""
+msgstr "Тек қауіпсіз режимде қолжетімді."
 
 #: src/prefs.py:641
 msgid "A group code is required."
-msgstr ""
+msgstr "Топ коды қажет."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
-msgstr ""
+msgstr "Топ коды тым қысқа."
 
 #: src/prefs.py:680
 msgid "ON"
-msgstr ""
+msgstr "Қосулы"
 
 #: src/prefs.py:681
 msgid "All options are unlocked."
-msgstr ""
+msgstr "Барлық опциялардың құлпы ашылды."
 
 #: src/prefs.py:684
 msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
+"Қауіпсіз режимде жұмыс істеу үшін арнайы топ кодын орнату керек. Кейбір "
+"опциялар қазір сөндірулі."
 
 #: src/remote.py:666 src/remote.py:670
 msgid "Connection has been lost"
-msgstr ""
+msgstr "Байланыс үзілді"
 
 #: src/server.py:697
 msgid "An error occurred on the remote machine"
-msgstr ""
+msgstr "Қашықтағы машинада қате орын алды"
 
 #: src/util.py:327
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: src/util.py:328
 msgid "Add"
-msgstr ""
+msgstr "Қосу"
 
 #: src/util.py:350
 msgid "Select file(s) to send"
-msgstr ""
+msgstr "Жіберілетін файл(дар)ды таңдаңыз"
 
 #: src/util.py:721
 msgid "A few seconds remaining"
-msgstr ""
+msgstr "Бірнеше секунд қалды"
 
 #: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
-msgstr ""
+msgstr "%d секунд қалды"
 
 #: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d минут"
+msgstr[1] "%d минут"
 
 #: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d сағат"
+msgstr[1] "%d сағат"
 
 #: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "шамамен %d сағат"
+msgstr[1] "шамамен %d сағат"
 
 #: src/util.py:828 src/warpinator.py:632
 msgid "About"
-msgstr ""
+msgstr "Туралы"
 
 #: src/warpinator.py:154
 msgid "Paused"
-msgstr ""
+msgstr "Кідіртілді"
 
 #: src/warpinator.py:157
 msgid "Waiting for approval"
-msgstr ""
+msgstr "Мақұлдауды күтуде"
 
 #: src/warpinator.py:159
 msgid "Waiting for your approval"
-msgstr ""
+msgstr "Сіздің мақұлдауыңызды күтуде"
 
 #: src/warpinator.py:162
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Дискіде орын жеткіліксіз"
 
 #: src/warpinator.py:165
 msgid "Files may be overwritten"
-msgstr ""
+msgstr "Файлдар қайта жазылуы мүмкін"
 
 #: src/warpinator.py:168
 msgid "Request cancelled"
-msgstr ""
+msgstr "Сұраныстан бас тартылды"
 
 #: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
-msgstr ""
+msgstr "%s сұраныстан бас тартты"
 
 #: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr ""
+msgstr "%s тасымалдаудан бас тартты"
 
 #: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
-msgstr ""
+msgstr "'%s' файлы табылмады"
 
 #: src/warpinator.py:188
 msgid "Some files not found"
-msgstr ""
+msgstr "Кейбір файлдар табылмады"
 
 #: src/warpinator.py:215
 msgid "Completed"
-msgstr ""
+msgstr "Аяқталды"
 
 #: src/warpinator.py:217
 msgid "Completed, but with errors"
-msgstr ""
+msgstr "Аяқталды, бірақ қателер бар"
 
 #: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
-msgstr ""
+msgstr "Қосылуда"
 
 #: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "%s нысанына қосылуда"
 
 #: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
-msgstr ""
+msgstr "%s желіде емес"
 
 #: src/warpinator.py:402
 #, python-format
 msgid "Cannot connect to %s"
-msgstr ""
+msgstr "%s нысанына қосылу мүмкін емес"
 
 #: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr ""
+msgstr "%s қосылымды аяқтауын күтуде."
 
 #: src/warpinator.py:436
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "жаңа %d кіріс тасымалдауы"
+msgstr[1] "жаңа %d кіріс тасымалдауы"
 
 #: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
-msgstr ""
+msgstr "Таңдаулылар"
 
 #: src/warpinator.py:588 src/warpinator.py:1806
 msgid "Recents"
-msgstr ""
+msgstr "Соңғылар"
 
 #: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
-msgstr ""
+msgstr "Шолу..."
 
 #: src/warpinator.py:616
 msgid "Connect manually"
-msgstr ""
+msgstr "Қолмен қосылу"
 
 #: src/warpinator.py:621
 msgid "Restart service"
-msgstr ""
+msgstr "Қызметті қайта іске қосу"
 
 #: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
-msgstr ""
+msgstr "Қалаулар"
 
 #: src/warpinator.py:636 src/warpinator.py:1750
 msgid "Quit"
-msgstr ""
+msgstr "Шығу"
 
 #: src/warpinator.py:745
 msgid "You don't appear to be connected to a network."
-msgstr ""
+msgstr "Желіге қосылмаған сияқтысыз."
 
 #: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
-msgstr ""
+msgstr "Іске қосу сәтсіз аяқталды, журналдарды тексеріңіз."
 
 #: src/warpinator.py:857
 #, python-format
@@ -706,6 +726,9 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator шектеулі функциялармен жұмыс істеп тұр және %d минуттан кейін "
+"жұмысын тоқтатады. Қауіпсіз режимді іске қосу үшін бірегей топтық кодты "
+"орнатыңыз."
 
 #: src/warpinator.py:859
 #, python-format
@@ -713,128 +736,135 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
+"Warpinator шектеулі функциялармен жұмыс істеп тұр және %d минуттан кейін "
+"жұмысын тоқтатады. Қауіпсіз режимді іске қосу үшін бірегей топтық кодты "
+"орнатыңыз."
 
 #: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
-msgstr ""
+msgstr "Файлдарды қабылдау үшін дискіде орын жеткіліксіз (%s резервтелген)."
 
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr ""
+msgstr "%d операцияның аяқталуын күту"
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr ""
+msgstr "%d операцияның аяқталуын күту"
 
 #: src/warpinator.py:1128
 msgid "Offline"
-msgstr ""
+msgstr "Желіде емес"
 
 #: src/warpinator.py:1136
 msgid "Unable to connect"
-msgstr ""
+msgstr "Қосылу мүмкін емес"
 
 #: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
-msgstr ""
+msgstr "Екі жақты қосылымды күту"
 
 #: src/warpinator.py:1246
 msgid "Manual connection"
-msgstr ""
+msgstr "Қолмен қосылу"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
-msgstr ""
+msgstr "Немесе төмендегі адрестердің біріне қосылыңыз:"
 
 #: src/warpinator.py:1323
 msgid "Or connect to the address below:"
-msgstr ""
+msgstr "Немесе төмендегі адреске қосылыңыз:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."
-msgstr ""
+msgstr "Қосылуда..."
 
 #: src/warpinator.py:1784
 msgid "Send to all"
-msgstr ""
+msgstr "Барлығына жіберу"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr ""
+msgstr "Warpinator арқылы жіберу"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
-msgstr ""
+msgstr "Warpinator арқылы біреуге файл жіберу"
 
 #: data/org.x.warpinator.policy.in.in:12
 msgid "Open a firewall port for Warpinator"
-msgstr ""
+msgstr "Warpinator үшін брандмауэр портын ашу"
 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
-msgstr ""
+msgstr "Брандмауэр баптауларын өзгерту үшін аутентификациядан өтуіңіз керек."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:10
 msgid "Warpinator"
-msgstr ""
+msgstr "Warpinator"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:11
 msgid "Share files on your network"
-msgstr ""
+msgstr "Желіде файлдармен бөлісу"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:13
 msgid ""
 "Warpinator allows you to easily connect multiple computers on a local area "
 "network and exchange files quickly and securely."
 msgstr ""
+"Warpinator жергілікті желідегі бірнеше компьютерді оңай қосуға және "
+"файлдарды тез әрі қауіпсіз алмасуға мүмкіндік береді."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr ""
+msgstr "Мүмкіндіктері:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr ""
+msgstr "Пайдалануға оңай графикалық интерфейс."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
-msgstr ""
+msgstr "Желідегі құрылғыларды автоматты түрде анықтау."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr ""
+msgstr "Құрылғылар арасындағы толық қауіпсіз және шифрланған қосылымдар."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
-msgstr ""
+msgstr "Бірнеше бір мезгілдегі тасымалдаулар."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:20
 msgid "Optional data compression."
-msgstr ""
+msgstr "Міндетті емес деректерді сығу."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:21
 msgid ""
 "Grouping of devices using a shared key, with multiple groups possible on the "
 "same network."
 msgstr ""
+"Ортақ кілтті пайдаланып құрылғыларды топтастыру, бір желіде бірнеше топ "
+"болуы мүмкін."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:22
 msgid "Manual connections for restricted network environments."
-msgstr ""
+msgstr "Шектеулі желілік орталар үшін қолмен қосылу."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
-msgstr ""
+msgstr "Қосылған құрылғыларды және олардың күйін көрсететін негізгі көрініс"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
-msgstr ""
+msgstr "Жеке кіріс немесе шығыс тасымалдауларын көрсететін жеке қосылым беті"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr ""
+msgstr "Қолмен қосылу сұхбат терезесі"

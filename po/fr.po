@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2025-11-21 18:57+0000\n"
+"PO-Revision-Date: 2026-11-15 00:42+0000\n"
 "Last-Translator: AO <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:43+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
 "Language: fr\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
@@ -60,7 +60,7 @@ msgstr "Aucun résultat ne correspond"
 
 #: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Rendez cette machine distante favorite dans la vue principale"
+msgstr "Ajouter cet ordinateur distant aux favoris de la vue principale"
 
 #: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
@@ -295,12 +295,12 @@ msgstr "Nouveaux fichiers entrants"
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"%(sender_name)s voudrait vous envoyer %(file_count)d fichier (%(file_name)s)."
+"%(sender_name)s voudrait vous envoyer %(file_count)d fichier (%(file_name)s)."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "%(sender_name)s voudrait vous envoyer %(file_count)d fichiers"
+msgstr "%(sender_name)s voudrait vous envoyer %(file_count)d fichiers"
 
 #: src/notifications.py:41
 msgid "Accept"
@@ -313,12 +313,12 @@ msgstr "Refuser"
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "%(sender_name)s vous envoie %(file_count)d fichier (%(file_name)s)."
+msgstr "%(sender_name)s vous envoie %(file_count)d fichier (%(file_name)s)."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "%(sender_name)s vous envoie %(file_count)d fichiers"
+msgstr "%(sender_name)s vous envoie %(file_count)d fichiers"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
@@ -346,7 +346,7 @@ msgstr "Le transfert de %s est terminé"
 
 #: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
-msgstr "Échec de transfert"
+msgstr "Échec du transfert"
 
 #: src/notifications.py:140
 #, python-format
@@ -379,7 +379,7 @@ msgstr "Envoi des fichiers"
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr "Envoi de %d fichiers vers %s"
+msgstr "Envoi de %d fichiers vers %s"
 
 #: src/notifications.py:209
 #, python-format
@@ -406,15 +406,15 @@ msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
 msgid "%d file-do-not-translate"
 msgid_plural "%d files"
 msgstr[0] "%d file-do-not-translate"
-msgstr[1] "%d fichiers"
+msgstr[1] "%d fichiers"
 
 #. Translators: Don't need to translate singular, we show the filename if there's only one
 #: src/ops.py:261
 #, python-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%d fichier"
-msgstr[1] "%d fichiers"
+msgstr[0] "%d fichier"
+msgstr[1] "%d fichiers"
 
 #: src/ops.py:292
 msgid "Text message"
@@ -495,7 +495,7 @@ msgstr "Automatique"
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr "%s – est introuvable"
+msgstr "%s est introuvable"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
@@ -507,7 +507,7 @@ msgstr "Port entrant pour les transferts"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr "Port entrant pour l’identification"
+msgstr "Port entrant pour l’enregistrement"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
@@ -522,8 +522,9 @@ msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"N’importe quel numéro de port fonctionne, mais utiliser le même numéro pour "
-"tous les ordinateurs facilite l’ajout d’exceptions au pare-feu si nécessaire."
+"Tous les numéros de port conviennent à l’application, mais utiliser les "
+"mêmes ports sur tous les ordinateurs peut faciliter l’ajout d’exceptions au "
+"pare-feu si nécessaire."
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
@@ -571,7 +572,7 @@ msgstr "Ajouter"
 
 #: src/util.py:350
 msgid "Select file(s) to send"
-msgstr "Sélectionner le ou les fichiers à envoyer"
+msgstr "Choisir le ou les fichiers à envoyer"
 
 #: src/util.py:721
 msgid "A few seconds remaining"
@@ -580,28 +581,28 @@ msgstr "Il ne reste que quelques secondes"
 #: src/util.py:724
 #, python-format
 msgid "%d seconds remaining"
-msgstr "Il reste %d secondes"
+msgstr "Il reste %d secondes"
 
 #: src/util.py:728 src/util.py:736
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minute"
-msgstr[1] "%d minutes"
+msgstr[0] "%d minute"
+msgstr[1] "%d minutes"
 
 #: src/util.py:735
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d heure"
-msgstr[1] "%d heures"
+msgstr[0] "%d heure"
+msgstr[1] "%d heures"
 
 #: src/util.py:740
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "approximativement %d heure"
-msgstr[1] "approximativement %d heures"
+msgstr[0] "approximativement %d heure"
+msgstr[1] "approximativement %d heures"
 
 #: src/util.py:828 src/warpinator.py:632
 msgid "About"
@@ -686,8 +687,8 @@ msgstr "En attente de %s pour terminer la connexion."
 #, python-format
 msgid "%d new incoming transfer"
 msgid_plural "%d new incoming transfers"
-msgstr[0] "%d nouveau transfert entrant"
-msgstr[1] "%d nouveaux transferts entrants"
+msgstr[0] "%d nouveau transfert entrant"
+msgstr[1] "%d nouveaux transferts entrants"
 
 #: src/warpinator.py:583 src/warpinator.py:1801
 msgid "Favorites"
@@ -731,7 +732,7 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Warpinator fonctionne en mode limité et se fermera dans %d minute. Pour "
+"Warpinator fonctionne en mode limité et se fermera dans %d minute. Pour "
 "activer le mode sécurisé, définissez un code de groupe unique."
 
 #: src/warpinator.py:859
@@ -740,7 +741,7 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Warpinator fonctionne en mode limité et se fermera dans %d minutes. Pour "
+"Warpinator fonctionne en mode limité et se fermera dans %d minutes. Pour "
 "activer le mode sécurisé, définissez un code de groupe unique."
 
 #: src/warpinator.py:920
@@ -752,12 +753,12 @@ msgstr ""
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr "Attente de la fin d’%d opération"
+msgstr "Attente de la fin d’%d opération"
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr "Attente de la fin de %d opérations"
+msgstr "Attente de la fin de %d opérations"
 
 #: src/warpinator.py:1128
 msgid "Offline"

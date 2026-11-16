@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2025-12-20 19:43+0000\n"
-"Last-Translator: lang-it <Unknown>\n"
+"PO-Revision-Date: 2026-01-17 13:02+0000\n"
+"Last-Translator: Fs00 <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:43+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
-msgstr "Codice di Gruppo"
+msgstr "Codice di gruppo"
 
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
@@ -45,7 +45,7 @@ msgstr "Maggiori informazioni"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr "Modalità Sicura disattivata"
+msgstr "Modalità sicura disattivata"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
@@ -135,8 +135,9 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"Questa cartella è inaccessibile o non ci sono i permessi per salvarci file. "
-"Seleziona una nuova posizione in Preferenze e assicurati che sia accessibile."
+"Questa cartella è inaccessibile o non disponi dei permessi per salvarci dei "
+"file. Seleziona una nuova posizione in Preferenze e assicurati che sia "
+"accessibile."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
@@ -449,12 +450,12 @@ msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Attenzione: questo potrebbe avere un impatto negativo sulle prestazioni su "
-"alcune reti più veloci."
+"Attenzione: potrebbe avere un impatto negativo sulle prestazioni su alcune "
+"reti più veloci."
 
 #: src/prefs.py:318
 msgid "Location for received files"
-msgstr "Posizione per i file ricevuti"
+msgstr "Posizione dei file ricevuti"
 
 #: src/prefs.py:323
 msgid "Reserved free space"
@@ -728,8 +729,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Warpinator è in esecuzione con funzionalità limitate e uscirà in %d minuto. "
-"Per abilitare la Modalità Sicura, imposta un codice gruppo univoco."
+"Warpinator è in esecuzione con funzionalità limitate e si chiuderà fra %d "
+"minuto. Per abilitare la modalità sicura, imposta un codice gruppo univoco."
 
 #: src/warpinator.py:859
 #, python-format
@@ -737,8 +738,8 @@ msgid ""
 "Warpinator is running with limited functionality, and will exit in %d "
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
-"Warpinator è in esecuzione con funzionalità limitate e uscirà in %d minuti. "
-"Per abilitare la Modalità Sicura, imposta un codice gruppo univoco."
+"Warpinator è in esecuzione con funzionalità limitate e si chiuderà fra %d "
+"minuti. Per abilitare la modalità sicura, imposta un codice gruppo univoco."
 
 #: src/warpinator.py:920
 #, python-format

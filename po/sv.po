@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2025-11-22 14:11+0000\n"
+"PO-Revision-Date: 2026-09-16 21:57+0000\n"
 "Last-Translator: Jan-Olof Svensson <jan-olof.svensson@abc.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:43+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
+"Language: sv\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -49,7 +50,7 @@ msgstr "Säkert läge inaktiverat"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
-msgstr "Hämtningsmappen kan inte användas"
+msgstr "Hämtningsmappen är inte säker"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
@@ -77,7 +78,7 @@ msgstr "Uppkopplad"
 
 #: resources/main-window.ui:798
 msgid "No other computers found..."
-msgstr "Hittade inga andra datorer..."
+msgstr "Hittade inga andra datorer…"
 
 #: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
@@ -97,8 +98,8 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Körs Warpinator av någon annat dator i det här nätverket? Kontrollera då i "
-"inställningar att alla använder samma gruppkod."
+"Körs Warpinator på någon annan dator i det här nätverket? Kontrollera då i "
+"inställningarna att alla använder samma gruppkod."
 
 #: resources/main-window.ui:912
 msgid "Possible solutions:"
@@ -119,23 +120,24 @@ msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr "Initierar, var god vänta..."
+msgstr "Initierar, vänta…"
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
-msgstr "Något blev fel"
+msgstr "Något gick fel"
 
 #: resources/main-window.ui:1200
 msgid "Invalid save location"
-msgstr "Kan inte spara på denna plats"
+msgstr "Ogiltig sparplats"
 
 #: resources/main-window.ui:1237
 msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"Den här mappen är antingen otillgänglig eller förbjuden att spara filer i. "
-"Välj en ny plats i Inställningar och se till så att den är tillgänglig."
+"Den här mappen är antingen otillgänglig eller saknar behörighet för att "
+"spara filer. Välj en ny plats i inställningarna och se till att den är "
+"tillgänglig."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
@@ -263,7 +265,7 @@ msgstr "Ta bort denna åtgärd från listan"
 
 #: resources/op-item.ui:410
 msgid "Open the containing folder"
-msgstr "Öppna källmappen"
+msgstr "Öppna den innehållande mappen"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
@@ -490,7 +492,7 @@ msgstr "%s hittades inte"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
-msgstr "Aktuellt gränssnitt för nätverket"
+msgstr "Nätverksgränssnitt att använda"
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
@@ -498,7 +500,7 @@ msgstr "Ingångsport för överföringar"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr "Inport för registrering"
+msgstr "Inkommande port för registrering"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
@@ -672,7 +674,7 @@ msgstr "Det går inte att ansluta till %s"
 #: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Väntar på att %s skall bli klar med anslutningen."
+msgstr "Väntar på att %s ska slutföra anslutningen."
 
 #: src/warpinator.py:436
 #, python-format
@@ -691,7 +693,7 @@ msgstr "Senaste"
 
 #: src/warpinator.py:595 src/warpinator.py:1815
 msgid "Browse..."
-msgstr "Bläddra..."
+msgstr "Bläddra…"
 
 #: src/warpinator.py:616
 msgid "Connect manually"
@@ -778,7 +780,7 @@ msgstr "Du kan också ansluta till följande adress:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."
-msgstr "Ansluter..."
+msgstr "Ansluter…"
 
 #: src/warpinator.py:1784
 msgid "Send to all"

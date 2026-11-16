@@ -1,0 +1,880 @@
+# Maori translation for linuxmint
+# Copyright (c) 2026 Rosetta Contributors and Canonical Ltd 2026
+# This file is distributed under the same license as the linuxmint package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: linuxmint\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-11-21 13:15+0000\n"
+"PO-Revision-Date: 2026-05-06 05:18+0000\n"
+"Last-Translator: shylohana <shylohana@gmail.com>\n"
+"Language-Team: Maori <mi@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
+
+#: resources/group-code.ui:16 src/prefs.py:345
+msgid "Group Code"
+msgstr "Waehere Rōpū"
+
+#: resources/group-code.ui:39
+msgid "You cannot communicate with computers that do not use the same code."
+msgstr ""
+"Kāore e taea e koe te whakawhiti kōrero ki ngā rorohiko kāore e whakamahi "
+"ana i taua waehere anō."
+
+#: resources/group-code.ui:49 resources/main-window.ui:56
+msgid "Set code"
+msgstr "Whakaū"
+
+#: resources/group-code.ui:93
+msgid "Secure mode:"
+msgstr "Aratau Haumaru:"
+
+#: resources/group-code.ui:106 src/prefs.py:683
+msgid "OFF"
+msgstr "WETO"
+
+#: resources/group-code.ui:148 resources/main-window.ui:134
+#: resources/main-window.ui:1249
+msgid "More information"
+msgstr "Ētahi atu pārongo"
+
+#: resources/main-window.ui:85
+msgid "Secure Mode disabled"
+msgstr "Kua monokia te Aratau Haumaru"
+
+#: resources/main-window.ui:175
+msgid "Download folder not secure"
+msgstr "Kāore te kōpaki tikiake i te haumaru"
+
+#: resources/main-window.ui:340
+msgid "No matching results"
+msgstr "Kāore he hua ōrite"
+
+#: resources/main-window.ui:496
+msgid "Make this remote machine a favorite in the main view"
+msgstr "Whakaritea tēnei mīhini mamao hei makau i te tirohanga matua"
+
+#: resources/main-window.ui:570
+msgid "Clear inactive and completed operations"
+msgstr "Ūkuia ngā tukanga kāore e hohe ana, kua oti hoki"
+
+#: resources/main-window.ui:589
+msgid "Send files"
+msgstr "Tuku kōnae"
+
+#: resources/main-window.ui:615 src/prefs.py:311
+msgid "File Transfers"
+msgstr "Tuku kōnae"
+
+#: resources/main-window.ui:636 src/warpinator.py:1120
+msgid "Online"
+msgstr "Tuihono"
+
+#: resources/main-window.ui:798
+msgid "No other computers found..."
+msgstr "Kāore i kitea ētahi atu rorohiko..."
+
+#: resources/main-window.ui:863
+msgid "Make sure your network connection is active."
+msgstr "Me mātua whakarite kia hohe tō hononga whatunga."
+
+#: resources/main-window.ui:878
+msgid ""
+"Check your firewall rules.  The port numbers can be changed.  See "
+"preferences for more details."
+msgstr ""
+"Arowhaitia ō ture pātūahi. Ka taea te whakarerekē ngā tau tauranga. Tirohia "
+"ngā manakohanga mō ētahi atu taipitopito."
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:894
+msgid ""
+"Is Warpinator running on any other computers on this network?  If so, make "
+"sure they are all using the same group code in preferences."
+msgstr ""
+"Kei te rere a Warpinator ki ētahi atu rorohiko i tēnei whatunga? Ki te pērā, "
+"me mātua whakarite kei te whakamahi rātou katoa i taua waehere rōpū anō i "
+"ngā manakohanga."
+
+#: resources/main-window.ui:912
+msgid "Possible solutions:"
+msgstr "Ngā otinga pea:"
+
+#. Do not translate 'Warpinator'
+#: resources/main-window.ui:947
+msgid "Warpinator is also available on:"
+msgstr "E wātea ana hoki a Warpinator mō ēnei tūāpapa:"
+
+#: resources/main-window.ui:962
+msgid "Android"
+msgstr "Android"
+
+#: resources/main-window.ui:978 resources/main-window.ui:993
+msgid "Windows"
+msgstr "Windows"
+
+#: resources/main-window.ui:1067
+msgid "Initializing, please wait..."
+msgstr "E tīmata ana, tēnā tatari..."
+
+#: resources/main-window.ui:1125
+msgid "Something went wrong"
+msgstr "I hapa tētahi mea"
+
+#: resources/main-window.ui:1200
+msgid "Invalid save location"
+msgstr "Wāhi tiaki muhu"
+
+#: resources/main-window.ui:1237
+msgid ""
+"This folder is either inaccessible or forbidden to save files to.  Please "
+"select a new location in Preferences and ensure that it is accessible."
+msgstr ""
+"Kāore e taea te toro atu ki tēnei kōpaki, kua rāhuitia rānei te tiaki kōnae "
+"ki reira. Tēnā tīpakohia he wāhi hou i ngā Manakohanga, ā, me mātua "
+"whakarite ka taea te toro atu."
+
+#: resources/main-window.ui:1309
+msgid "Searching for other computers"
+msgstr "E rapu ana mō ētahi atu rorohiko"
+
+#: resources/main-window.ui:1368
+msgid "Shutting down..."
+msgstr "E whakaweto ana..."
+
+#: resources/main-window.ui:1440
+msgid "Restart required"
+msgstr "Me tīmata anō"
+
+#: resources/main-window.ui:1457
+msgid "Warpinator needs to restart before the new save directory can be used"
+msgstr ""
+"Me tīmata anō a Warpinator i mua i te whakamahi i te kōpaki tiaki hou."
+
+#: resources/main-window.ui:1467
+msgid "Restart"
+msgstr "Tīmata Anō"
+
+#: resources/main-window.ui:1537
+msgid "Disk Full"
+msgstr "Kī te kōpae"
+
+#: resources/main-window.ui:1574
+msgid ""
+"There is insufficient space available in the save location. You need to "
+"delete some files, decrease the minimum free space in preferences or choose "
+"a new location."
+msgstr ""
+"Kāore i te nui te wāhi wātea i te wāhi tiaki. Me muku ētahi kōnae, me "
+"whakaiti rānei i te wāhi wātea iti rawa i ngā Manakohanga, me tīpako rānei i "
+"tētahi wāhi hou."
+
+#: resources/main-window.ui:1591
+msgid "Empty trash"
+msgstr "Whakawātea Para"
+
+#: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
+msgid "Open save folder"
+msgstr "Whakatūwhera kōpaki tiaki"
+
+#: resources/main-window.ui:1618
+msgid "Examine disk usage"
+msgstr "Arotake whakamahinga kōpae"
+
+#: resources/main-window.ui:1671 src/util.py:832
+#: data/org.x.Warpinator.desktop.in.in:5
+msgid "Send and Receive Files across the Network"
+msgstr "Tuku me te whiwhi kōnae mā te whatunga"
+
+#. manual-connect dialog: first main section header (bold, big)
+#: resources/manual-connect.ui:22
+msgid "On this computer:"
+msgstr "I tēnei rorohiko:"
+
+#. The user enters an IP address and port in an entry below this
+#: resources/manual-connect.ui:38
+msgid "Enter the address of the device you want to connect to"
+msgstr "Tāuruhia te wāhitau IP o te pūrere e hiahia ana koe ki te hono atu"
+
+#: resources/manual-connect.ui:70
+msgid "Connect"
+msgstr "Hono"
+
+#. manual-connect dialog: second main section header (bold, big)
+#: resources/manual-connect.ui:134
+msgid "Alternatively, on the other device:"
+msgstr "Alternatively, on the other device:"
+
+#. A qr code is displayed below this
+#: resources/manual-connect.ui:150
+msgid "Scan this QR code"
+msgstr "Matawai tēnei waehere QR"
+
+#. The user's ip address and port are displayed here
+#: resources/manual-connect.ui:198
+msgid "Or connect to the address below"
+msgstr "Rānei, hono atu ki te wāhitau kei raro iho nei"
+
+#: resources/op-item.ui:146
+msgid "Awaiting approval"
+msgstr "E tatari ana ki te whakaaetanga"
+
+#: resources/op-item.ui:162
+msgid "Not enough disk space!"
+msgstr "Kāore i te nui te wāhi kōpae!"
+
+#: resources/op-item.ui:225
+msgid "Calculating"
+msgstr "E tātai ana"
+
+#: resources/op-item.ui:290
+msgid "Accept this request"
+msgstr "Whakaae ki tēnei tono"
+
+#: resources/op-item.ui:305
+msgid "Refuse this request"
+msgstr "Whakakāhoretia tēnei tono"
+
+#: resources/op-item.ui:320
+msgid "Cancel this request"
+msgstr "Whakakore i tēnei tono"
+
+#: resources/op-item.ui:335
+msgid "Restart this operation"
+msgstr "Tīmata anō i tēnei mahi"
+
+#: resources/op-item.ui:350
+msgid "Pause this operation"
+msgstr "Whakatā i tēnei mahi"
+
+#: resources/op-item.ui:365
+msgid "Resume this operation"
+msgstr "Whakahaere anō i tēnei mahi"
+
+#: resources/op-item.ui:380
+msgid "Cancel this operation"
+msgstr "Whakakore i tēnei mahi"
+
+#: resources/op-item.ui:395
+msgid "Remove this operation from the list"
+msgstr "Tango i tēnei mahi i te rārangi"
+
+#: resources/op-item.ui:410
+msgid "Open the containing folder"
+msgstr "Whakatūwhera te kōpaki kei roto te kōnae"
+
+#: resources/op-item.ui:425
+msgid "Copy message"
+msgstr "Tārua karere"
+
+#: resources/prefs-window.ui:9
+msgid "Note on port numbers:"
+msgstr "Pānui mō ngā tau tauranga:"
+
+#. Do not translate 'Warpinator'
+#: resources/prefs-window.ui:24
+msgctxt "preferences window title"
+msgid "Warpinator Preferences"
+msgstr "Ngā manakohanga Warpinator"
+
+#: src/notifications.py:24
+msgid "New incoming files"
+msgstr "Ngā kōnae hou e tae mai ana"
+
+#: src/notifications.py:30
+#, python-format
+msgid ""
+"%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"E hiahia ana a %(sender_name)s ki te tuku ki a koe i %(file_count)d kōnae "
+"(%(file_name)s)."
+
+#: src/notifications.py:31
+#, python-format
+msgid "%(sender_name)s would like to send you %(file_count)d files"
+msgstr "%(sender_name)s would like to send you %(file_count)d files"
+
+#: src/notifications.py:41
+msgid "Accept"
+msgstr "Whakaae"
+
+#: src/notifications.py:42
+msgid "Decline"
+msgstr "Whakakāhore"
+
+#: src/notifications.py:56
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
+msgstr ""
+"Kei te tuku a %(sender_name)s ki a koe i %(file_count)d kōnae "
+"(%(file_name)s)."
+
+#: src/notifications.py:57
+#, python-format
+msgid "%(sender_name)s is sending you %(file_count)d files"
+msgstr "Kei te tuku a %(sender_name)s ki a koe i %(file_count)d kōnae"
+
+#: src/notifications.py:93
+msgid "Transfer complete"
+msgstr "Kua oti te tuku"
+
+#: src/notifications.py:96
+#, python-format
+msgid "The transfer to %s has finished, but with errors"
+msgstr "Kua oti te whakawhiti ki %s, engari he hapa"
+
+#: src/notifications.py:98
+#, python-format
+msgid "The transfer to %s has finished successfully"
+msgstr "Kua oti pai te whakawhiti ki %s"
+
+#: src/notifications.py:101
+#, python-format
+msgid "The transfer from %s has finished, but with errors"
+msgstr "Kua oti te whakawhiti mai i %s, engari he hapa"
+
+#: src/notifications.py:103
+#, python-format
+msgid "The transfer from %s has finished successfully"
+msgstr "Kua oti pai te whakawhiti mai i %s"
+
+#: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
+msgid "Transfer failed"
+msgstr "I rahua te tuku"
+
+#: src/notifications.py:140
+#, python-format
+msgid "Something went wrong with the transfer to %s"
+msgstr "I raru te whakawhiti ki %s"
+
+#: src/notifications.py:142
+#, python-format
+msgid "Something went wrong with the transfer from %s"
+msgstr "I raru te whakawhiti mai i %s"
+
+#: src/notifications.py:171 src/warpinator.py:175
+msgid "Transfer cancelled"
+msgstr "Kua whakakorea te whakawhiti"
+
+#: src/notifications.py:174
+#, python-format
+msgid "Your transfer to %s was cancelled"
+msgstr "Kua whakakorea tō whakawhiti ki %s"
+
+#: src/notifications.py:176
+#, python-format
+msgid "An incoming transfer from %s was cancelled"
+msgstr "Kua whakakorea tētahi whakawhiti e tae mai ana mai i %s"
+
+#: src/notifications.py:204
+msgid "Sending files"
+msgstr "E tuku ana kōnae"
+
+#: src/notifications.py:207
+#, python-format
+msgid "Sending %d files to %s"
+msgstr "E tuku ana kōnae %d ki %s"
+
+#: src/notifications.py:209
+#, python-format
+msgid "Sending '%s' to %s"
+msgstr "Kei te tuku '%s' ki %s"
+
+#: src/notifications.py:236
+#, python-format
+msgid "New message from %s"
+msgstr "Karere hōu mai i a %s"
+
+#: src/notifications.py:241
+msgid "Copy"
+msgstr "Tārua"
+
+#: src/ops.py:53
+#, python-format
+msgid "%(time_left)s (%(bytes_per_sec)s/s)"
+msgstr "%(time_left)s (%(bytes_per_sec)s/s)"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:154
+#, python-format
+msgid "%d file-do-not-translate"
+msgid_plural "%d files"
+msgstr[0] "%d"
+msgstr[1] "%d files"
+
+#. Translators: Don't need to translate singular, we show the filename if there's only one
+#: src/ops.py:261
+#, python-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d"
+msgstr[1] "%d kōnae"
+
+#: src/ops.py:292
+msgid "Text message"
+msgstr "Karere kuputuhi"
+
+#: src/prefs.py:276
+msgid "Warpinator Preferences"
+msgstr "Ngā manakohanga Warpinator"
+
+#: src/prefs.py:293
+msgid "General"
+msgstr "Whānui"
+
+#: src/prefs.py:295
+msgid "Desktop"
+msgstr "Papamahi"
+
+#: src/prefs.py:297
+msgid "Show an icon in the notification area"
+msgstr "Whakaatu he ata i te wāhi whakamōhiotanga"
+
+#: src/prefs.py:301
+msgid "Start with main window open"
+msgstr "Tīmata me te matapihi matua kua tuwhera"
+
+#: src/prefs.py:306
+msgid "Start automatically"
+msgstr "Tīmata aunoa"
+
+#: src/prefs.py:313
+msgid "Use compression when possible."
+msgstr "Whakamahia te kōpeketanga mēnā ka taea."
+
+#: src/prefs.py:315
+msgid ""
+"Warning: This may have a negative impact on performance on some faster "
+"networks."
+msgstr ""
+"Whakatūpato: Tērā pea ka kino te pānga ki te mahi i ētahi whatunga tere ake."
+
+#: src/prefs.py:318
+msgid "Location for received files"
+msgstr "Tauwāhi mō ngā kōnae kua whiwhi"
+
+#: src/prefs.py:323
+msgid "Reserved free space"
+msgstr "Wāhi wātea kua rahuitia"
+
+#: src/prefs.py:328
+msgid "Require approval before accepting files"
+msgstr "Me whai whakaaetanga i mua i te whakaae kōnae"
+
+#: src/prefs.py:333
+msgid "Require approval when files would be overwritten"
+msgstr "Me whai whakaaetanga ina tuhiruatia ngā kōnae"
+
+#: src/prefs.py:338
+msgid ""
+"Display a notification when someone sends (or tries to send) you files"
+msgstr ""
+"Whakaatu he whakamōhiotanga ina tuku mai tētahi (e ngana ana rānei ki te "
+"tuku mai) kōnae ki a koe"
+
+#: src/prefs.py:343
+msgid "Connection"
+msgstr "Hononga"
+
+#: src/prefs.py:353
+msgid "Network"
+msgstr "Whatunga"
+
+#: src/prefs.py:356
+msgid "Automatic"
+msgstr "Aunoa"
+
+#. translation: combobox item shown when a previosuly set interface can no longer be found - 'wlan0 - not found'
+#: src/prefs.py:435
+#, python-format
+msgid "%s - not found"
+msgstr "%s – kāore i kitea"
+
+#: src/prefs.py:437
+msgid "Network interface to use"
+msgstr "Atanga whatunga hei whakamahi"
+
+#: src/prefs.py:445
+msgid "Incoming port for transfers"
+msgstr "Tauranga taumai mō ngā whakawhitinga"
+
+#: src/prefs.py:452
+msgid "Incoming port for registration"
+msgstr "Tauranga taumai mō te rēhitatanga"
+
+#: src/prefs.py:467
+msgid "Apply network changes"
+msgstr "Hoatu ngā panonitanga whatunga"
+
+#: src/prefs.py:476
+msgid "Update firewall rules"
+msgstr "Whakahōu i ngā ture pātūahi"
+
+#: src/prefs.py:488
+msgid ""
+"Any port numbers will work for the application, but using the same ports for "
+"all computers can make it simpler to add firewall exceptions if necessary."
+msgstr ""
+"Ka pai ngā tau tauranga katoa mō te taupānga, engari mā te whakamahi i ngā "
+"tauranga ōrite mō ngā rorohiko katoa ka māmā ake te tāpiri okotahi pātūahi "
+"mēnā e hiahiatia ana."
+
+#: src/prefs.py:564
+msgid "Only available in secure mode."
+msgstr "E wātea ana anake i te aratau haumaru."
+
+#: src/prefs.py:641
+msgid "A group code is required."
+msgstr "Me whai waehere rōpū."
+
+#: src/prefs.py:646
+msgid "The group code is too short."
+msgstr "He poto rawa te waehere rōpū."
+
+#: src/prefs.py:680
+msgid "ON"
+msgstr "Kā"
+
+#: src/prefs.py:681
+msgid "All options are unlocked."
+msgstr "Kua wetekina ngā kōwhiringa katoa."
+
+#: src/prefs.py:684
+msgid ""
+"You must set a custom group code to run in secure mode. Some options are "
+"currently disabled."
+msgstr ""
+"Me tautuhi koe i tētahi waehere rōpū ritenga kia whakahaere i te aratau "
+"haumaru. Kua monokia ētahi kōwhiringa i tēnei wā."
+
+#: src/remote.py:666 src/remote.py:670
+msgid "Connection has been lost"
+msgstr "Kua ngaro te hononga"
+
+#: src/server.py:697
+msgid "An error occurred on the remote machine"
+msgstr "I puta he hapa i te mīhini mamao"
+
+#: src/util.py:327
+msgid "Cancel"
+msgstr "Whakakore"
+
+#: src/util.py:328
+msgid "Add"
+msgstr "Tāpiri"
+
+#: src/util.py:350
+msgid "Select file(s) to send"
+msgstr "Kōwhiria ngā kōnae hei tuku"
+
+#: src/util.py:721
+msgid "A few seconds remaining"
+msgstr "He hēkona ruarua e toe ana"
+
+#: src/util.py:724
+#, python-format
+msgid "%d seconds remaining"
+msgstr "%d hēkona e toe ana"
+
+#: src/util.py:728 src/util.py:736
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d meneti"
+msgstr[1] "%d meneti"
+
+#: src/util.py:735
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "haora %d"
+msgstr[1] "haora %d"
+
+#: src/util.py:740
+#, python-format
+msgid "approximately %d hour"
+msgid_plural "approximately %d hours"
+msgstr[0] "tata ki te %d hāora"
+msgstr[1] "tata ki te %d hāora"
+
+#: src/util.py:828 src/warpinator.py:632
+msgid "About"
+msgstr "Mō"
+
+#: src/warpinator.py:154
+msgid "Paused"
+msgstr "Kua whakatā"
+
+#: src/warpinator.py:157
+msgid "Waiting for approval"
+msgstr "E tatari ana mō te whakaaetanga"
+
+#: src/warpinator.py:159
+msgid "Waiting for your approval"
+msgstr "E tatari ana mō tō whakaaetanga"
+
+#: src/warpinator.py:162
+msgid "Not enough disk space"
+msgstr "Kāore i te nui te wāhi kōpae"
+
+#: src/warpinator.py:165
+msgid "Files may be overwritten"
+msgstr "Tērā pea ka tuhiruatia ngā kōnae"
+
+#: src/warpinator.py:168
+msgid "Request cancelled"
+msgstr "Kua whakakorea te tono"
+
+#: src/warpinator.py:170 src/warpinator.py:172
+#, python-format
+msgid "Request cancelled by %s"
+msgstr "Kua whakakorea te tono e %s"
+
+#: src/warpinator.py:177 src/warpinator.py:179
+#, python-format
+msgid "Transfer cancelled by %s"
+msgstr "Kua whakakorea te whakawhiti e %s"
+
+#: src/warpinator.py:186
+#, python-format
+msgid "File '%s' not found"
+msgstr "Kāore i kitea te kōnae '%s'"
+
+#: src/warpinator.py:188
+msgid "Some files not found"
+msgstr "Kāore i kitea ētahi kōnae"
+
+#: src/warpinator.py:215
+msgid "Completed"
+msgstr "Kua oti"
+
+#: src/warpinator.py:217
+msgid "Completed, but with errors"
+msgstr "Kua oti, engari he hapa"
+
+#: src/warpinator.py:385 src/warpinator.py:1152
+msgid "Connecting"
+msgstr "E hono ana"
+
+#: src/warpinator.py:387
+#, python-format
+msgid "Connecting to %s"
+msgstr "Kei te hono ki %s"
+
+#: src/warpinator.py:397
+#, python-format
+msgid "%s is not online"
+msgstr "Kāore a %s i te ipurangi"
+
+#: src/warpinator.py:402
+#, python-format
+msgid "Cannot connect to %s"
+msgstr "Kāore e taea te hono ki %s"
+
+#: src/warpinator.py:407
+#, python-format
+msgid "Waiting for %s to complete the connection."
+msgstr "E tatari ana mō %s kia whakaoti i te hononga."
+
+#: src/warpinator.py:436
+#, python-format
+msgid "%d new incoming transfer"
+msgid_plural "%d new incoming transfers"
+msgstr[0] "%d whakawhitinga taumai hou"
+msgstr[1] "%d whakawhitinga taumai hou"
+
+#: src/warpinator.py:583 src/warpinator.py:1801
+msgid "Favorites"
+msgstr "Ngā Makau"
+
+#: src/warpinator.py:588 src/warpinator.py:1806
+msgid "Recents"
+msgstr "Ngā Tata Nei"
+
+#: src/warpinator.py:595 src/warpinator.py:1815
+msgid "Browse..."
+msgstr "Tirotiro..."
+
+#: src/warpinator.py:616
+msgid "Connect manually"
+msgstr "Hono ā-ringa"
+
+#: src/warpinator.py:621
+msgid "Restart service"
+msgstr "Tīmata anō te ratonga"
+
+#: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
+msgid "Preferences"
+msgstr "Manakohanga"
+
+#: src/warpinator.py:636 src/warpinator.py:1750
+msgid "Quit"
+msgstr "Puta"
+
+#: src/warpinator.py:745
+msgid "You don't appear to be connected to a network."
+msgstr "Kāore koe e kitea ana e hono ana ki tētahi whatunga."
+
+#: src/warpinator.py:747
+msgid "Startup was unsuccessful, please check your logs."
+msgstr "Kāore i angitu te tīmatanga, tēnā tirohia ō rangitaki."
+
+#: src/warpinator.py:857
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minute. To enable Secure Mode, set a unique group code."
+msgstr ""
+"E whakahaere ana a Warpinator me ngā āheinga iti noa, ā, ka puta i roto i te "
+"%d meneti. Hei whakahohe i te Aratau Haumaru, tautuhia tētahi waehere rōpū "
+"motuhake."
+
+#: src/warpinator.py:859
+#, python-format
+msgid ""
+"Warpinator is running with limited functionality, and will exit in %d "
+"minutes. To enable Secure Mode, set a unique group code."
+msgstr ""
+"E whakahaere ana a Warpinator me ngā āheinga iti noa, ā, ka puta i roto i te "
+"%d meneti. Hei whakahohe i te Aratau Haumaru, tautuhia tētahi waehere rōpū "
+"motuhake."
+
+#: src/warpinator.py:920
+#, python-format
+msgid "Not enough disk space remaining to receive files (%s is reserved)."
+msgstr ""
+"Kāore e rawaka te wāhi kōpae e toe ana hei whiwhi kōnae (%s kua rahuitia)."
+
+#: src/warpinator.py:1001
+#, python-format
+msgid "Waiting for %d operation to complete"
+msgstr "E tatari ana mō %d mahi kia oti"
+
+#: src/warpinator.py:1002
+#, python-format
+msgid "Waiting for %d operations to complete"
+msgstr "E tatari ana mō %d mahi kia oti"
+
+#: src/warpinator.py:1128
+msgid "Offline"
+msgstr "Tuimotu"
+
+#: src/warpinator.py:1136
+msgid "Unable to connect"
+msgstr "Kāore e taea te hono"
+
+#: src/warpinator.py:1144
+msgid "Waiting for two-way connection"
+msgstr "E tatari ana mō te hononga rua-ara"
+
+#: src/warpinator.py:1246
+msgid "Manual connection"
+msgstr "Hononga ā-ringa"
+
+#: src/warpinator.py:1321
+msgid "Or connect to one of the addresses below:"
+msgstr "Rānei, hono ki tētahi o ngā wāhitau kei raro iho:"
+
+#: src/warpinator.py:1323
+msgid "Or connect to the address below:"
+msgstr "Rānei, hono ki te wāhitau kei raro iho:"
+
+#: src/warpinator.py:1341
+msgid "Connecting..."
+msgstr "E  hono ana..."
+
+#: src/warpinator.py:1784
+msgid "Send to all"
+msgstr "Tukua ki te katoa"
+
+#: data/warpinator-send.nemo_action.in:4
+msgid "Send with Warpinator"
+msgstr "Tukua mā Warpinator"
+
+#: data/warpinator-send.nemo_action.in:5
+msgid "Send a file to someone using Warpinator"
+msgstr "Tukua he kōnae ki tētahi mā Warpinator"
+
+#: data/org.x.warpinator.policy.in.in:12
+msgid "Open a firewall port for Warpinator"
+msgstr "Whakatūwhera he tauranga pātūahi mā Warpinator"
+
+#: data/org.x.warpinator.policy.in.in:13
+msgid "To modify firewall settings, you need to authenticate."
+msgstr "Hei whakarerekē i ngā tautuhinga pātūahi, me whakamotuhēhē koe."
+
+#. DO NOT TRANSLATE Warpinator
+#: data/org.x.Warpinator.appdata.xml.in.in:10
+msgid "Warpinator"
+msgstr "Warpinator"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:11
+msgid "Share files on your network"
+msgstr "Tiritiria ngā kōnae i tō whatunga"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:13
+msgid ""
+"Warpinator allows you to easily connect multiple computers on a local area "
+"network and exchange files quickly and securely."
+msgstr ""
+"Ka āhei a Warpinator ki a koe te hono ngā rorohiko maha i tētahi whatunga ā-"
+"rohe, me te whakawhiti kōnae tere, haumaru hoki."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:14
+msgid "Features:"
+msgstr "Āhuatanga:"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:16
+msgid "An easy-to-use graphical interface."
+msgstr "He atanga whakairoiro māmā te whakamahi."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:17
+msgid "Automatic discovery of devices on your network."
+msgstr "He kitenga aunoa i ngā pūrere i tō whatunga."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:18
+msgid "Fully secure and encrypted connections between devices."
+msgstr "He hononga haumaru, whakamunatia katoa i waenga i ngā pūrere."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:19
+msgid "Multiple simultaneous transfers."
+msgstr "Ngā whakawhitinga maha e mahia ana i te wā kotahi."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:20
+msgid "Optional data compression."
+msgstr "He kōpeketanga raraunga kōwhiringa."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:21
+msgid ""
+"Grouping of devices using a shared key, with multiple groups possible on the "
+"same network."
+msgstr ""
+"He whakarōpūtanga pūrere mā tētahi kī tiritahi, ā, ka taea ngā rōpū maha i "
+"te whatunga kotahi."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:22
+msgid "Manual connections for restricted network environments."
+msgstr "Ngā hononga ā-ringa mō ngā taiao whatunga kua herea."
+
+#: data/org.x.Warpinator.appdata.xml.in.in:45
+msgid "The main view showing connected devices and their status"
+msgstr ""
+"Te tirohanga matua e whakaatu ana i ngā pūrere kua hono me ō rātou tūnga"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:49
+msgid ""
+"Individual connection page showing individual incoming or outgoing transfers"
+msgstr ""
+"He whārangi hononga takitahi e whakaatu ana i ngā whakawhitinga taumai, tuku "
+"atu rānei"
+
+#: data/org.x.Warpinator.appdata.xml.in.in:53
+msgid "Manual connection dialog"
+msgstr "Kōrero hononga ā-ringa"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2025-11-22 09:10+0000\n"
-"Last-Translator: Kimmo Kujansuu <Unknown>\n"
+"PO-Revision-Date: 2026-08-21 03:08+0000\n"
+"Last-Translator: Hiiri522 <hhiiri522@gmail.com>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-01-08 15:43+0000\n"
-"X-Generator: Launchpad (build 99c00f518760bdd50fc6e353e7736d2fff8fba4a)\n"
+"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
+"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -37,7 +37,7 @@ msgstr "Suojattu tila:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
-msgstr "Pois"
+msgstr "POIS"
 
 #: resources/group-code.ui:148 resources/main-window.ui:134
 #: resources/main-window.ui:1249
@@ -82,7 +82,7 @@ msgstr "Muita tietokoneita ei löytynyt..."
 
 #: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
-msgstr "Varmista, että verkkoyhteytesi on päällä ja toimii."
+msgstr "Varmista, että verkkoyhteys on päällä ja toimii."
 
 #: resources/main-window.ui:878
 msgid ""
@@ -116,11 +116,11 @@ msgstr "Android"
 
 #: resources/main-window.ui:978 resources/main-window.ui:993
 msgid "Windows"
-msgstr "MS Windows"
+msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr "Valmistellaan, odota..."
+msgstr "Odota hetki..."
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
@@ -188,7 +188,7 @@ msgstr "Tarkista levyn käyttö"
 #: resources/main-window.ui:1671 src/util.py:832
 #: data/org.x.Warpinator.desktop.in.in:5
 msgid "Send and Receive Files across the Network"
-msgstr "Lähetä ja vastaanota tiedostoja verkossa"
+msgstr "Lähetä ja vastaanota tiedostoja verkon yli"
 
 #. manual-connect dialog: first main section header (bold, big)
 #: resources/manual-connect.ui:22
@@ -245,7 +245,7 @@ msgstr "Peru tämä pyyntö"
 
 #: resources/op-item.ui:335
 msgid "Restart this operation"
-msgstr "Käynnistä tämä toiminto uudelleen"
+msgstr "Aloita tämä toiminto alusta"
 
 #: resources/op-item.ui:350
 msgid "Pause this operation"
@@ -435,7 +435,7 @@ msgstr "Näytä kuvake ilmoitusalueella"
 
 #: src/prefs.py:301
 msgid "Start with main window open"
-msgstr "Käynnistä pääikkunan avautuessa"
+msgstr "Käynnistä pääikkuna avattuna"
 
 #: src/prefs.py:306
 msgid "Start automatically"
