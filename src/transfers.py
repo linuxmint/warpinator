@@ -304,7 +304,7 @@ class FileReceiver(GObject.Object):
                     logging.debug("Restoring folder permissions: %s --> %s" % (path, mode))
                     os.chmod(path, mode)
                 except Exception as e:
-                    logging.warning("Unable to restore original permissions to folder '%s': %s" % (self.current_path, str(e)))
+                    logging.warning("Unable to restore original permissions to folder '%s': %s" % (path, str(e)))
 
     def receive_finished(self):
         # We left the last (or only) file open
