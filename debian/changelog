@@ -1,3 +1,13 @@
+warpinator (2.0.7) adrien; urgency=medium
+
+  [ Michael Webster ]
+  * manual-connect.ui: Allow copy/paste of ip addresses
+
+  [ Clement Lefebvre ]
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 16 Nov 2026 14:11:05 +0000
+
 warpinator (2.0.6) adrien; urgency=medium
 
   [ Pedro Barbosa ]
