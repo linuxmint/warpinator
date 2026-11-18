@@ -1,29 +1,15 @@
-#!/usr/bin/python3
+#!/bin/sh
+# Nemo runs this on every right-click on a file, so it must be fast:
+# gdbus answers in milliseconds, starting Python takes about a second on a slow CPU.
 
-import sys
-import json
-import subprocess
+# Don't start Warpinator just to answer this.
+gdbus call --session --timeout 2 --dest org.freedesktop.DBus \
+    --object-path /org/freedesktop/DBus \
+    --method org.freedesktop.DBus.NameHasOwner org.x.Warpinator 2>/dev/null \
+    | grep -q true || exit 1
 
-from gi.repository import Gio, GLib
-
-try:
-    reply = Gio.DBusConnection.call_sync(
-        Gio.bus_get_sync(Gio.BusType.SESSION, None),
-        "org.x.Warpinator",
-        "/org/x/Warpinator",
-        "org.x.Warpinator",
-        "ListRemotes",
-        None,
-        GLib.VariantType("(aa{sv})"),
-        Gio.DBusCallFlags.NO_AUTO_START,
-        2000,
-        None
-    )
-
-    remote_list = reply[0]
-    exit(0 if len(remote_list) > 0 else 1)
-except GLib.Error as e:
-    if e.code != Gio.DBusError.NAME_HAS_NO_OWNER:
-        print("warpinator-send-check error %d: %s" % (e.code, e.message), file=sys.stderr)
-
-exit(1)
+# Show "Send via Warpinator" only when there is somebody to send to.
+gdbus call --session --timeout 2 --dest org.x.Warpinator \
+    --object-path /org/x/Warpinator \
+    --method org.x.Warpinator.ListRemotes 2>/dev/null \
+    | grep -q '\[{'
