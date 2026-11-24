@@ -7,6 +7,9 @@ import logging
 import prefs
 import util
 
+# Uncompressed chunks are already limited to this by grpc's default max message size.
+MAX_CHUNK_SIZE = 4 * 1024 * 1024
+
 class StreamReponseWrapper():
     def __init__(self, response):
         self.response = response
@@ -21,7 +24,10 @@ class StreamReponseWrapper():
             if not chunk.chunk:
                 return chunk
             else:
-                dcchunk = zlib.decompress(chunk.chunk)
+                decompressor = zlib.decompressobj()
+                dcchunk = decompressor.decompress(chunk.chunk, MAX_CHUNK_SIZE)
+                if not decompressor.eof:
+                    raise util.ReceiveError("Compressed chunk is incomplete or exceeds the maximum size of %d bytes" % MAX_CHUNK_SIZE)
                 chunk.chunk = dcchunk
                 return chunk
         except Exception as e:
