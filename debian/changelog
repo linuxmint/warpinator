@@ -1,3 +1,9 @@
+warpinator (2.0.8) adrien; urgency=medium
+
+  * l10n: Update translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 24 Nov 2026 16:52:52 +0000
+
 warpinator (2.0.7) adrien; urgency=medium
 
   [ Michael Webster ]
