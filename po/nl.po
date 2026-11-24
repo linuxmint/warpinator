@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2025-11-21 19:43+0000\n"
+"PO-Revision-Date: 2026-11-20 11:34+0000\n"
 "Last-Translator: Pjotr12345 <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
-"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
+"X-Launchpad-Export-Date: 2026-11-24 12:00+0000\n"
+"X-Generator: Launchpad (build 012091084314157d19ae714f55ef4c582ff0feb5)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -33,7 +33,7 @@ msgstr "Code instellen"
 
 #: resources/group-code.ui:93
 msgid "Secure mode:"
-msgstr "Veilige modus:"
+msgstr "Beveiligde modus:"
 
 #: resources/group-code.ui:106 src/prefs.py:683
 msgid "OFF"
@@ -46,11 +46,11 @@ msgstr "Meer informatie"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr "Veilige modus uitgeschakeld"
+msgstr "Beveiligde modus uitgeschakeld"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
-msgstr "Downloadmap is niet veilig"
+msgstr "Downloadmap is niet beveiligd"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
@@ -74,7 +74,7 @@ msgstr "Bestandsoverdrachten"
 
 #: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
-msgstr "Verbonden"
+msgstr "Verbinding"
 
 #: resources/main-window.ui:798
 msgid "No other computers found..."
@@ -90,7 +90,7 @@ msgid ""
 "preferences for more details."
 msgstr ""
 "Kijk uw firewallregels na. De poortnummers kunnen worden gewijzigd. Zie de "
-"voorkeuren voor meer bijzonderheden."
+"Voorkeuren voor meer bijzonderheden."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:894
@@ -120,7 +120,7 @@ msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr "Bezig met opstarten, een ogenblik a.u.b...."
+msgstr "Bezig met opstarten, een ogenblik geduld a.u.b...."
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
@@ -173,11 +173,11 @@ msgid ""
 msgstr ""
 "Er is onvoldoende ruimte beschikbaar in de opslaglocatie. U dient ofwel wat "
 "bestanden te verwijderen, ofwel de minimale hoeveelheid vrije ruimte te "
-"verlagen in de voorkeuren, ofwel een nieuwe locatie te kiezen."
+"verlagen in de Voorkeuren, ofwel een nieuwe locatie te kiezen."
 
 #: resources/main-window.ui:1591
 msgid "Empty trash"
-msgstr "Prullenbak ledigen"
+msgstr "Prullenbak legen"
 
 #: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
@@ -267,7 +267,7 @@ msgstr "Verwijder deze bewerking uit de lijst"
 
 #: resources/op-item.ui:410
 msgid "Open the containing folder"
-msgstr "Open de bevattende map"
+msgstr "Open de map waar het in zit"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
@@ -364,26 +364,26 @@ msgstr "Overdracht afgebroken"
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Uw overdracht naar %s werd geannuleerd"
+msgstr "Uw overdracht naar %s werd afgebroken"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Een binnenkomende overdracht vanaf %s werd geannuleerd"
+msgstr "Een binnenkomende overdracht vanaf %s werd afgebroken"
 
 #: src/notifications.py:204
 msgid "Sending files"
-msgstr "Bestanden verzenden"
+msgstr "Bestanden verzenden..."
 
 #: src/notifications.py:207
 #, python-format
 msgid "Sending %d files to %s"
-msgstr "%d bestanden verzenden naar %s"
+msgstr "%d bestanden aan het verzenden naar %s"
 
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr "'%s' verzenden naar %s"
+msgstr "'%s' aan het verzenden naar %s"
 
 #: src/notifications.py:236
 #, python-format
@@ -500,11 +500,11 @@ msgstr "Te gebruiken netwerkapparaat"
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
-msgstr "Binnenkomende poort voor overdrachten"
+msgstr "Binnenkomstpoort voor overdrachten"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr "Ingaande poort voor registratie"
+msgstr "Binnenkomstpoort voor registratie"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
@@ -525,7 +525,7 @@ msgstr ""
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr "Uitsluitend beschikbaar in veilige modus."
+msgstr "Uitsluitend beschikbaar in beveiligde modus."
 
 #: src/prefs.py:641
 msgid "A group code is required."
@@ -548,7 +548,7 @@ msgid ""
 "You must set a custom group code to run in secure mode. Some options are "
 "currently disabled."
 msgstr ""
-"U dient een aangepaste groepscode in te stellen om in veilige modus te "
+"U dient een aangepaste groepscode in te stellen om in beveiligde modus te "
 "draaien. Sommige opties zijn thans uitgeschakeld."
 
 #: src/remote.py:666 src/remote.py:670
@@ -611,7 +611,7 @@ msgstr "Gepauzeerd"
 
 #: src/warpinator.py:157
 msgid "Waiting for approval"
-msgstr "Wachten op goedkeuring...."
+msgstr "Wachtend op goedkeuring...."
 
 #: src/warpinator.py:159
 msgid "Waiting for your approval"
@@ -663,12 +663,12 @@ msgstr "Verbinden...."
 #: src/warpinator.py:387
 #, python-format
 msgid "Connecting to %s"
-msgstr "Aan het verbinden met %s ...."
+msgstr "Verbinden met %s ...."
 
 #: src/warpinator.py:397
 #, python-format
 msgid "%s is not online"
-msgstr "%s heeft geen internetverbinding"
+msgstr "%s heeft geen verbinding"
 
 #: src/warpinator.py:402
 #, python-format
@@ -730,8 +730,8 @@ msgid ""
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
 "Warpinator draait met beperkte functionaliteit, en zal zich afsluiten over "
-"%d minuut. Om veilige modus aan te zetten dient u een unieke groepscode in "
-"te stellen."
+"%d minuut. Om de beveiligde modus aan te zetten dient u een unieke "
+"groepscode in te stellen."
 
 #: src/warpinator.py:859
 #, python-format
@@ -740,8 +740,8 @@ msgid ""
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
 "Warpinator draait met beperkte functionaliteit, en zal zich afsluiten over "
-"%d minuten. Om veilige modus aan te zetten dient u een unieke groepscode in "
-"te stellen."
+"%d minuten. Om de beveiligde modus aan te zetten dient u een unieke "
+"groepscode in te stellen."
 
 #: src/warpinator.py:920
 #, python-format
@@ -752,12 +752,12 @@ msgstr ""
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr "Aan het wachten op de voltooiing van %d bewerking"
+msgstr "Wachten op de voltooiing van %d bewerking..."
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr "Aan het wachten op de voltooiing van %d bewerkingen"
+msgstr "Wachten op de voltooiing van %d bewerkingen..."
 
 #: src/warpinator.py:1128
 msgid "Offline"
@@ -769,7 +769,7 @@ msgstr "Kan geen verbinding maken"
 
 #: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
-msgstr "Aan het wachten op een tweewegverbinding"
+msgstr "Wachten op een tweewegverbinding..."
 
 #: src/warpinator.py:1246
 msgid "Manual connection"
@@ -785,7 +785,7 @@ msgstr "Of verbind met het onderstaande adres:"
 
 #: src/warpinator.py:1341
 msgid "Connecting..."
-msgstr "Bezig met verbinden..."
+msgstr "Verbinden..."
 
 #: src/warpinator.py:1784
 msgid "Send to all"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: linuxmint\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2025-11-21 13:15+0000\n"
-"PO-Revision-Date: 2026-01-24 21:29+0000\n"
-"Last-Translator: Vasilis Kosmidis <Unknown>\n"
+"PO-Revision-Date: 2026-11-21 14:47+0000\n"
+"Last-Translator: Dimitris Spentzos <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2026-11-16 12:00+0000\n"
-"X-Generator: Launchpad (build 72ba15af7e009b17d4aa1467977127ac8392a4de)\n"
+"X-Launchpad-Export-Date: 2026-11-24 12:00+0000\n"
+"X-Generator: Launchpad (build 012091084314157d19ae714f55ef4c582ff0feb5)\n"
 
 #: resources/group-code.ui:16 src/prefs.py:345
 msgid "Group Code"
@@ -25,8 +25,8 @@ msgstr "Κωδικός ομάδας"
 #: resources/group-code.ui:39
 msgid "You cannot communicate with computers that do not use the same code."
 msgstr ""
-"Δε μπορείτε να επικοινωνήσετε με υπολογιστές που δε χρησιμοποιούν τον ίδιο "
-"κωδικό ομάδας."
+"Δεν μπορείτε να επικοινωνήσετε με υπολογιστές που δεν χρησιμοποιούν τον ίδιο "
+"κωδικό."
 
 #: resources/group-code.ui:49 resources/main-window.ui:56
 msgid "Set code"
@@ -47,7 +47,7 @@ msgstr "Περισσότερες πληροφορίες"
 
 #: resources/main-window.ui:85
 msgid "Secure Mode disabled"
-msgstr "Ασφαλής λειτουργία απενεργοποιημένη"
+msgstr "Η ασφαλής λειτουργία είναι απενεργοποιημένη"
 
 #: resources/main-window.ui:175
 msgid "Download folder not secure"
@@ -55,11 +55,12 @@ msgstr "Ο φάκελος λήψης δεν είναι ασφαλής"
 
 #: resources/main-window.ui:340
 msgid "No matching results"
-msgstr "Δε βρέθηκαν αποτελέσματα που ταιριάζουν"
+msgstr "Δεν βρέθηκαν αντιστοιχίες"
 
 #: resources/main-window.ui:496
 msgid "Make this remote machine a favorite in the main view"
-msgstr "Κάντε αυτό τον απομακρυσμένο υπολογιστή αγαπημένο στη κύρια προβολή"
+msgstr ""
+"Ορισμός αυτού του απομακρυσμένου υπολογιστή ως αγαπημένου στην κύρια προβολή"
 
 #: resources/main-window.ui:570
 msgid "Clear inactive and completed operations"
@@ -71,27 +72,27 @@ msgstr "Αποστολή αρχείων"
 
 #: resources/main-window.ui:615 src/prefs.py:311
 msgid "File Transfers"
-msgstr "Μεταφορές Αρχείων"
+msgstr "Μεταφορές αρχείων"
 
 #: resources/main-window.ui:636 src/warpinator.py:1120
 msgid "Online"
-msgstr "Σε Σύνδεση"
+msgstr "Σε σύνδεση"
 
 #: resources/main-window.ui:798
 msgid "No other computers found..."
-msgstr "Δε βρέθηκαν άλλοι υπολογιστές"
+msgstr "Δεν βρέθηκαν άλλοι υπολογιστές..."
 
 #: resources/main-window.ui:863
 msgid "Make sure your network connection is active."
-msgstr "Σιγουρευτείτε ότι η σύνδεσή σας στο διαδίκτυο είναι ενεργή"
+msgstr "Βεβαιωθείτε ότι η σύνδεσή σας στο διαδίκτυο είναι ενεργή."
 
 #: resources/main-window.ui:878
 msgid ""
 "Check your firewall rules.  The port numbers can be changed.  See "
 "preferences for more details."
 msgstr ""
-"Ελέγξτε τους κανόνες του τείχους προστασίας σας. Ο αριθμός θύρας μπορεί να "
-"αλλαχθεί. Δείτε τις ρυθμίσεις για περισσότερες λεπτομέρειες."
+"Ελέγξτε τους κανόνες του τείχους προστασίας σας. Μπορείτε να αλλάξετε τους "
+"αριθμούς των θυρών. Ανατρέξτε στις προτιμήσεις για περισσότερες λεπτομέρειες."
 
 #. Do not translate 'Warpinator'
 #: resources/main-window.ui:894
@@ -99,8 +100,9 @@ msgid ""
 "Is Warpinator running on any other computers on this network?  If so, make "
 "sure they are all using the same group code in preferences."
 msgstr ""
-"Τρέχει το Warpinator σε κανέναν άλλο υπολογιστή σε αυτό το δίκτυο; Αν ναι, "
-"τότε σιγουρευτείτε ότι χρησιμοποιείτε τον ίδιο κωδικό ομάδας στις ρυθμίσεις"
+"Εκτελείται το Warpinator σε κάποιον άλλο υπολογιστή σε αυτό το δίκτυο; Εάν "
+"ναι, τότε βεβαιωθείτε ότι χρησιμοποιείτε τον ίδιο κωδικό ομάδας στις "
+"προτιμήσεις."
 
 #: resources/main-window.ui:912
 msgid "Possible solutions:"
@@ -121,7 +123,7 @@ msgstr "Windows"
 
 #: resources/main-window.ui:1067
 msgid "Initializing, please wait..."
-msgstr "Εκκίνηση, παρακαλούμε περιμένετε"
+msgstr "Εκκίνηση, περιμένετε..."
 
 #: resources/main-window.ui:1125
 msgid "Something went wrong"
@@ -136,9 +138,9 @@ msgid ""
 "This folder is either inaccessible or forbidden to save files to.  Please "
 "select a new location in Preferences and ensure that it is accessible."
 msgstr ""
-"Αυτός ο φάκελος είναι μη-προσβάσιμος ή έχει εσφαλμένα δικαιώματα. Παρακαλώ "
-"επιλέξτε μια νέα τοποθεσία από τις Ρυθμίσεις και ελέγξτε την προσβασιμότητα "
-"αυτής."
+"Αυτός ο φάκελος είτε δεν είναι προσβάσιμος είτε έχει εσφαλμένα δικαιώματα. "
+"Επιλέξτε μια νέα τοποθεσία από τις προτιμήσεις και βεβαιωθείτε ότι είναι "
+"προσβάσιμη."
 
 #: resources/main-window.ui:1309
 msgid "Searching for other computers"
@@ -155,8 +157,8 @@ msgstr "Απαιτείται επανεκκίνηση"
 #: resources/main-window.ui:1457
 msgid "Warpinator needs to restart before the new save directory can be used"
 msgstr ""
-"Το Warpinator πρέπει να κάνει επανεκκίνηση για να χρησιμοποιηθεί ο νέος "
-"κατάλογος αποθήκευσης"
+"Το Warpinator πρέπει να κάνει επανεκκίνηση για να μπορέσει να χρησιμοποιηθεί "
+"ο νέος κατάλογος αποθήκευσης"
 
 #: resources/main-window.ui:1467
 msgid "Restart"
@@ -164,7 +166,7 @@ msgstr "Επανεκκίνηση"
 
 #: resources/main-window.ui:1537
 msgid "Disk Full"
-msgstr "Ο δίσκος έχει γεμίσει"
+msgstr "Πλήρης δίσκος"
 
 #: resources/main-window.ui:1574
 msgid ""
@@ -172,13 +174,13 @@ msgid ""
 "delete some files, decrease the minimum free space in preferences or choose "
 "a new location."
 msgstr ""
-"Δεν υπάρχει αρκετός διαθέσιμος χώρος στην τοποθεσία αποθήκευσης. Θα "
-"χρειαστεί να διαγράψετε κάποια αρχεία, να μειώσετε το ελάχιστο όριο "
-"ελεύθερου χώρου, ή να επιλέξετε μια διαφορετική τοποθεσία"
+"Ο διαθέσιμος χώρος στην τοποθεσία αποθήκευσης δεν επαρκεί. Θα χρειαστεί να "
+"διαγράψετε μερικά αρχεία, να μειώσετε το ελάχιστο όριο ελεύθερου χώρου από "
+"τις προτιμήσεις ή να επιλέξετε μια άλλη τοποθεσία."
 
 #: resources/main-window.ui:1591
 msgid "Empty trash"
-msgstr "Άδειασμα κάδου απορριμμάτων"
+msgstr "Άδειασμα απορριμμάτων"
 
 #: resources/main-window.ui:1605 src/warpinator.py:610 src/warpinator.py:1747
 msgid "Open save folder"
@@ -201,7 +203,7 @@ msgstr "Σε αυτόν τον υπολογιστή:"
 #. The user enters an IP address and port in an entry below this
 #: resources/manual-connect.ui:38
 msgid "Enter the address of the device you want to connect to"
-msgstr "Εισάγετε τη διεύθυνση της συσκευής στην οποία θέλετε να συνδεθείτε"
+msgstr "Εισαγάγετε τη διεύθυνση της συσκευής στην οποία θέλετε να συνδεθείτε"
 
 #: resources/manual-connect.ui:70
 msgid "Connect"
@@ -228,7 +230,7 @@ msgstr "Αναμονή έγκρισης"
 
 #: resources/op-item.ui:162
 msgid "Not enough disk space!"
-msgstr "Δεν υπάρχει αρκετός χώρος στο δίσκο!"
+msgstr "Μη επαρκής χώρος στον δίσκο!"
 
 #: resources/op-item.ui:225
 msgid "Calculating"
@@ -236,39 +238,39 @@ msgstr "Υπολογισμός"
 
 #: resources/op-item.ui:290
 msgid "Accept this request"
-msgstr "Αποδοχή αυτού του αιτήματος"
+msgstr "Αποδοχή αιτήματος"
 
 #: resources/op-item.ui:305
 msgid "Refuse this request"
-msgstr "Άρνηση αυτού του αιτήματος"
+msgstr "Άρνηση αιτήματος"
 
 #: resources/op-item.ui:320
 msgid "Cancel this request"
-msgstr "Ακύρωση αυτού του αιτήματος"
+msgstr "Ακύρωση αιτήματος"
 
 #: resources/op-item.ui:335
 msgid "Restart this operation"
-msgstr "Επανέναρξη αυτής της εργασίας"
+msgstr "Επανέναρξη εργασίας"
 
 #: resources/op-item.ui:350
 msgid "Pause this operation"
-msgstr "Παύση αυτής της εργασίας"
+msgstr "Παύση εργασίας"
 
 #: resources/op-item.ui:365
 msgid "Resume this operation"
-msgstr "Συνέχεια αυτής της εργασίας"
+msgstr "Συνέχιση εργασίας"
 
 #: resources/op-item.ui:380
 msgid "Cancel this operation"
-msgstr "Ακύρωση αυτής της εργασίας"
+msgstr "Ακύρωση εργασίας"
 
 #: resources/op-item.ui:395
 msgid "Remove this operation from the list"
-msgstr "Αφαίρεση αυτής της εργασίας από τη λίστα"
+msgstr "Αφαίρεση εργασίας από τη λίστα"
 
 #: resources/op-item.ui:410
 msgid "Open the containing folder"
-msgstr "Άνοιγμα του φακέλου περιεχομένου"
+msgstr "Άνοιγμα περιέχοντος φακέλου"
 
 #: resources/op-item.ui:425
 msgid "Copy message"
@@ -293,13 +295,13 @@ msgstr "Νέα εισερχόμενα αρχεία"
 msgid ""
 "%(sender_name)s would like to send you %(file_count)d file (%(file_name)s)."
 msgstr ""
-"Ο %(sender_name)s θα ήθελε να σας στείλει %(file_count)d αρχείο "
+"Ο/Η %(sender_name)s επιθυμεί να σας στείλει %(file_count)d αρχείο "
 "(%(file_name)s)."
 
 #: src/notifications.py:31
 #, python-format
 msgid "%(sender_name)s would like to send you %(file_count)d files"
-msgstr "Ο %(sender_name)s θα ήθελε να σας στείλει %(file_count)d αρχεία"
+msgstr "Ο/Η %(sender_name)s επιθυμεί να σας στείλει %(file_count)d αρχεία"
 
 #: src/notifications.py:41
 msgid "Accept"
@@ -312,16 +314,17 @@ msgstr "Απόρριψη"
 #: src/notifications.py:56
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d file (%(file_name)s)."
-msgstr "Ο %(sender_name)s σας στέλνει %(file_count)d αρχείο (%(file_name)s)."
+msgstr ""
+"Ο/Η %(sender_name)s σάς στέλνει %(file_count)d αρχείο (%(file_name)s)."
 
 #: src/notifications.py:57
 #, python-format
 msgid "%(sender_name)s is sending you %(file_count)d files"
-msgstr "Ο %(sender_name)s σας στέλνει %(file_count)d αρχεία"
+msgstr "Ο/Η %(sender_name)s σάς στέλνει %(file_count)d αρχεία"
 
 #: src/notifications.py:93
 msgid "Transfer complete"
-msgstr "Ολοκλήρωση μεταφοράς"
+msgstr "Η μεταφορά ολοκληρώθηκε"
 
 #: src/notifications.py:96
 #, python-format
@@ -331,17 +334,17 @@ msgstr "Η μεταφορά στο %s ολοκληρώθηκε, αλλά με σ
 #: src/notifications.py:98
 #, python-format
 msgid "The transfer to %s has finished successfully"
-msgstr "Η μεταφορά σε %s ολοκληρώθηκε με επιτυχία"
+msgstr "Η μεταφορά στο %s ολοκληρώθηκε με επιτυχία"
 
 #: src/notifications.py:101
 #, python-format
 msgid "The transfer from %s has finished, but with errors"
-msgstr "Η μεταφορά από %s ολοκληρώθηκε, αλλά με σφάλματα"
+msgstr "Η μεταφορά από το %s ολοκληρώθηκε, αλλά με σφάλματα"
 
 #: src/notifications.py:103
 #, python-format
 msgid "The transfer from %s has finished successfully"
-msgstr "Η μεταφορά από %s ολοκληρώθηκε με επιτυχία"
+msgstr "Η μεταφορά από το %s ολοκληρώθηκε με επιτυχία"
 
 #: src/notifications.py:137 src/warpinator.py:181 src/warpinator.py:184
 msgid "Transfer failed"
@@ -364,12 +367,12 @@ msgstr "Η μεταφορά ακυρώθηκε"
 #: src/notifications.py:174
 #, python-format
 msgid "Your transfer to %s was cancelled"
-msgstr "Η μεταφορά σας σε %s ακυρώθηκε"
+msgstr "Η μεταφορά σας στο %s ακυρώθηκε"
 
 #: src/notifications.py:176
 #, python-format
 msgid "An incoming transfer from %s was cancelled"
-msgstr "Μια εισερχόμενη μεταφορά από %s ακυρώθηκε"
+msgstr "Μια εισερχόμενη μεταφορά από το %s ακυρώθηκε"
 
 #: src/notifications.py:204
 msgid "Sending files"
@@ -383,12 +386,12 @@ msgstr "Αποστολή %d αρχείων στο %s"
 #: src/notifications.py:209
 #, python-format
 msgid "Sending '%s' to %s"
-msgstr "Αποστολή του αρχείου '%s' στο %s"
+msgstr "Αποστολή του αρχείου «%s» στο %s"
 
 #: src/notifications.py:236
 #, python-format
 msgid "New message from %s"
-msgstr "Νέο μήνυμα από %s"
+msgstr "Νέο μήνυμα από το %s"
 
 #: src/notifications.py:241
 msgid "Copy"
@@ -429,30 +432,30 @@ msgstr "Γενικά"
 
 #: src/prefs.py:295
 msgid "Desktop"
-msgstr "Επιφάνεια Εργασίας"
+msgstr "Επιφάνεια εργασίας"
 
 #: src/prefs.py:297
 msgid "Show an icon in the notification area"
-msgstr "Εμφάνιση εικόνας στη περιοχή ειδοποιήσεων"
+msgstr "Εμφάνιση εικονιδίου στην περιοχή ειδοποιήσεων"
 
 #: src/prefs.py:301
 msgid "Start with main window open"
-msgstr "Εκκίνηση με το κύριο παράθυρο ανοιχτό"
+msgstr "Εκκίνηση με το κύριο παράθυρο ανοικτό"
 
 #: src/prefs.py:306
 msgid "Start automatically"
-msgstr "Εκκίνηση αυτόματα"
+msgstr "Αυτόματη εκκίνηση"
 
 #: src/prefs.py:313
 msgid "Use compression when possible."
-msgstr "Χρήση συμπίεσης όταν είναι δυνατόν."
+msgstr "Χρήση συμπίεσης όταν είναι εφικτό"
 
 #: src/prefs.py:315
 msgid ""
 "Warning: This may have a negative impact on performance on some faster "
 "networks."
 msgstr ""
-"Προειδοποίηση: αυτό μπορεί να έχει αρνητικές συνέπειες στην επίδοση, σε "
+"Προειδοποίηση: Αυτό μπορεί να έχει αρνητικές επιπτώσεις στις επιδόσεις, σε "
 "ορισμένα γρήγορα δίκτυα."
 
 #: src/prefs.py:318
@@ -465,17 +468,17 @@ msgstr "Δεσμευμένος ελεύθερος χώρος"
 
 #: src/prefs.py:328
 msgid "Require approval before accepting files"
-msgstr "Απαίτηση έγκρισης πριν την αποδοχή αρχείων"
+msgstr "Απαίτηση έγκρισης πριν από την αποδοχή αρχείων"
 
 #: src/prefs.py:333
 msgid "Require approval when files would be overwritten"
-msgstr "Απαίτηση έγκρισης όταν τα αρχεία θα γράφονται από πάνω"
+msgstr "Απαίτηση έγκρισης όταν πρόκειται να γίνει αντικατάσταση αρχείων"
 
 #: src/prefs.py:338
 msgid ""
 "Display a notification when someone sends (or tries to send) you files"
 msgstr ""
-"Εμφάνιση ειδοποίησης όταν κάποιος στέλνει (ή προσπαθεί να στείλε) αρχεία σε "
+"Εμφάνιση ειδοποίησης όταν κάποιος στέλνει (ή προσπαθεί να στείλει) αρχεία σε "
 "εσάς"
 
 #: src/prefs.py:343
@@ -494,19 +497,19 @@ msgstr "Αυτόματα"
 #: src/prefs.py:435
 #, python-format
 msgid "%s - not found"
-msgstr "Το %s δε βρέθηκε"
+msgstr "%s - δεν βρέθηκε"
 
 #: src/prefs.py:437
 msgid "Network interface to use"
-msgstr "Διεπαφή δικτύου για χρήση"
+msgstr "Διεπαφή δικτύου προς χρήση"
 
 #: src/prefs.py:445
 msgid "Incoming port for transfers"
-msgstr "Θύρα για εισερχόμενες μεταφορές"
+msgstr "Θύρα εισερχομένων για μεταφορές"
 
 #: src/prefs.py:452
 msgid "Incoming port for registration"
-msgstr "Θύρα εισαγωγής για καταχώρηση"
+msgstr "Θύρα εισερχομένων για καταχώριση"
 
 #: src/prefs.py:467
 msgid "Apply network changes"
@@ -514,24 +517,24 @@ msgstr "Εφαρμογή αλλαγών δικτύου"
 
 #: src/prefs.py:476
 msgid "Update firewall rules"
-msgstr "Ενημέρωση κανόνων firewall"
+msgstr "Ενημέρωση κανόνων τείχους προστασίας"
 
 #: src/prefs.py:488
 msgid ""
 "Any port numbers will work for the application, but using the same ports for "
 "all computers can make it simpler to add firewall exceptions if necessary."
 msgstr ""
-"Οποιοιδήποτε αριθμοί θύρας θα λειτουργήσουν στην εφαρμογή, αλλά η χρήση των "
-"ίδιων θυρών σε όλους τους υπολογιστές μπορεί να απλοποιήσει τη διαδικασία "
-"προσθήκης εξαιρέσεων στο τείχος προστασίας, αν χρειαστεί."
+"Η εφαρμογή θα λειτουργήσει με οποιουσδήποτε αριθμούς θύρας, αλλά η χρήση των "
+"ίδιων θυρών για όλους τους υπολογιστές μπορεί να απλοποιήσει την προσθήκη "
+"εξαιρέσεων στο τείχος προστασίας, εφόσον χρειάζεται."
 
 #: src/prefs.py:564
 msgid "Only available in secure mode."
-msgstr "Διατίθεται μόνο σε ασφαλή λειτουργία."
+msgstr "Διατίθεται μόνο στην ασφαλή λειτουργία."
 
 #: src/prefs.py:641
 msgid "A group code is required."
-msgstr "Ένας κωδικός ομάδας χρειάζεται"
+msgstr "Απαιτείται κωδικός ομάδας."
 
 #: src/prefs.py:646
 msgid "The group code is too short."
@@ -559,7 +562,7 @@ msgstr "Η σύνδεση χάθηκε"
 
 #: src/server.py:697
 msgid "An error occurred on the remote machine"
-msgstr "Εμφανίστηκε σφάλμα στον απομακρυσμένο υπολογιστή"
+msgstr "Προέκυψε σφάλμα στον απομακρυσμένο υπολογιστή"
 
 #: src/util.py:327
 msgid "Cancel"
@@ -571,7 +574,7 @@ msgstr "Προσθήκη"
 
 #: src/util.py:350
 msgid "Select file(s) to send"
-msgstr "Επιλογή αρχείου(ών) για αποστολή"
+msgstr "Επιλογή αρχείων προς αποστολή"
 
 #: src/util.py:721
 msgid "A few seconds remaining"
@@ -600,16 +603,16 @@ msgstr[1] "%d ώρες"
 #, python-format
 msgid "approximately %d hour"
 msgid_plural "approximately %d hours"
-msgstr[0] "Περίπου %d ώρα"
-msgstr[1] "Περίπου %d ώρες"
+msgstr[0] "περίπου %d ώρα"
+msgstr[1] "περίπου %d ώρες"
 
 #: src/util.py:828 src/warpinator.py:632
 msgid "About"
-msgstr "Σχετικά"
+msgstr "Πληροφορίες"
 
 #: src/warpinator.py:154
 msgid "Paused"
-msgstr "Έγινε παύση"
+msgstr "Σε παύση"
 
 #: src/warpinator.py:157
 msgid "Waiting for approval"
@@ -621,11 +624,11 @@ msgstr "Αναμονή για την έγκρισή σας"
 
 #: src/warpinator.py:162
 msgid "Not enough disk space"
-msgstr "Δεν υπάρχει αρκετός χώρος στο δίσκο"
+msgstr "Μη επαρκής χώρος στον δίσκο"
 
 #: src/warpinator.py:165
 msgid "Files may be overwritten"
-msgstr "Τα αρχεία μπορεί να γραφτούν από πάνω"
+msgstr "Τα αρχεία ενδέχεται να αντικατασταθούν"
 
 #: src/warpinator.py:168
 msgid "Request cancelled"
@@ -634,21 +637,21 @@ msgstr "Το αίτημα ακυρώθηκε"
 #: src/warpinator.py:170 src/warpinator.py:172
 #, python-format
 msgid "Request cancelled by %s"
-msgstr "Το αίτημα ακυρώθηκε από %s"
+msgstr "Το αίτημα ακυρώθηκε από το %s"
 
 #: src/warpinator.py:177 src/warpinator.py:179
 #, python-format
 msgid "Transfer cancelled by %s"
-msgstr "Η μεταφορά ακυρώθηκε από %s"
+msgstr "Η μεταφορά ακυρώθηκε από το %s"
 
 #: src/warpinator.py:186
 #, python-format
 msgid "File '%s' not found"
-msgstr "Το αρχείο '%s' δε βρέθηκε"
+msgstr "Το αρχείο «%s» δεν βρέθηκε"
 
 #: src/warpinator.py:188
 msgid "Some files not found"
-msgstr "Μερικά αρχεία δε βρέθηκαν"
+msgstr "Ορισμένα αρχεία δεν βρέθηκαν"
 
 #: src/warpinator.py:215
 msgid "Completed"
@@ -656,11 +659,11 @@ msgstr "Ολοκληρώθηκε"
 
 #: src/warpinator.py:217
 msgid "Completed, but with errors"
-msgstr "Ολοκληρώθηκε, αλλά με λάθη"
+msgstr "Ολοκληρώθηκε, αλλά με σφάλματα"
 
 #: src/warpinator.py:385 src/warpinator.py:1152
 msgid "Connecting"
-msgstr "Γίνεται σύνδεση"
+msgstr "Σύνδεση"
 
 #: src/warpinator.py:387
 #, python-format
@@ -680,7 +683,7 @@ msgstr "Αδυναμία σύνδεσης στο %s"
 #: src/warpinator.py:407
 #, python-format
 msgid "Waiting for %s to complete the connection."
-msgstr "Αναμονή για το %s να ολοκληρώσει τη σύνδεση."
+msgstr "Αναμονή για ολοκλήρωση της σύνδεσης από το %s."
 
 #: src/warpinator.py:436
 #, python-format
@@ -703,11 +706,11 @@ msgstr "Περιήγηση..."
 
 #: src/warpinator.py:616
 msgid "Connect manually"
-msgstr "Συνδεθείτε χειροκίνητα"
+msgstr "Μη αυτόματη σύνδεση"
 
 #: src/warpinator.py:621
 msgid "Restart service"
-msgstr "Επανεκκίνηση της υπηρεσίας"
+msgstr "Επανεκκίνηση υπηρεσίας"
 
 #: src/warpinator.py:628 data/org.x.Warpinator.appdata.xml.in.in:57
 msgid "Preferences"
@@ -723,7 +726,7 @@ msgstr "Δεν φαίνεται να είστε συνδεδεμένοι σε δ
 
 #: src/warpinator.py:747
 msgid "Startup was unsuccessful, please check your logs."
-msgstr "Η εκκίνηση απέτυχε, παρακαλώ ελέγξτε τα αρχεία καταγραφής."
+msgstr "Η εκκίνηση απέτυχε, ελέγξτε τα αρχεία καταγραφής."
 
 #: src/warpinator.py:857
 #, python-format
@@ -732,7 +735,7 @@ msgid ""
 "minute. To enable Secure Mode, set a unique group code."
 msgstr ""
 "Το Warpinator εκτελείται με περιορισμένη λειτουργικότητα και θα τερματιστεί "
-"σε %d λεπτό. Για να ενεργοποιήσετε την Ασφαλή Λειτουργία, ορίστε έναν "
+"σε %d λεπτό. Για να ενεργοποιήσετε την Ασφαλή λειτουργία, ορίστε έναν "
 "μοναδικό κωδικό ομάδας."
 
 #: src/warpinator.py:859
@@ -742,25 +745,25 @@ msgid ""
 "minutes. To enable Secure Mode, set a unique group code."
 msgstr ""
 "Το Warpinator εκτελείται με περιορισμένη λειτουργικότητα και θα τερματιστεί "
-"σε %d λεπτά. Για να ενεργοποιήσετε την Ασφαλή Λειτουργία, ορίστε έναν "
+"σε %d λεπτά. Για να ενεργοποιήσετε την Ασφαλή λειτουργία, ορίστε έναν "
 "μοναδικό κωδικό ομάδας."
 
 #: src/warpinator.py:920
 #, python-format
 msgid "Not enough disk space remaining to receive files (%s is reserved)."
 msgstr ""
-"Δεν υπάρχει αρκετός ελεύθερος χώρος για τη λήψη αρχείων (Το %s είναι "
-"δεσμευμένο)"
+"Δεν απομένει επαρκής ελεύθερος χώρος για τη λήψη αρχείων (δεσμευμένος χώρος: "
+"%s)."
 
 #: src/warpinator.py:1001
 #, python-format
 msgid "Waiting for %d operation to complete"
-msgstr "Αναμονή για την ολοκλήρωση %d λειτουργίας"
+msgstr "Αναμονή για την ολοκλήρωση %d εργασίας"
 
 #: src/warpinator.py:1002
 #, python-format
 msgid "Waiting for %d operations to complete"
-msgstr "Αναμονή για την ολοκλήρωση %d λειτουργιών"
+msgstr "Αναμονή για την ολοκλήρωση %d εργασιών"
 
 #: src/warpinator.py:1128
 msgid "Offline"
@@ -772,11 +775,11 @@ msgstr "Αδυναμία σύνδεσης"
 
 #: src/warpinator.py:1144
 msgid "Waiting for two-way connection"
-msgstr "Αναμονή για αμφίδρομη σύνδεση ανάμεσα στους υπολογιστές"
+msgstr "Αναμονή για αμφίδρομη σύνδεση"
 
 #: src/warpinator.py:1246
 msgid "Manual connection"
-msgstr "Χειροκίνητη σύνδεση"
+msgstr "Μη αυτόματη σύνδεση"
 
 #: src/warpinator.py:1321
 msgid "Or connect to one of the addresses below:"
@@ -796,7 +799,7 @@ msgstr "Αποστολή σε όλους"
 
 #: data/warpinator-send.nemo_action.in:4
 msgid "Send with Warpinator"
-msgstr "Αποστολή με Warpinator"
+msgstr "Αποστολή με το Warpinator"
 
 #: data/warpinator-send.nemo_action.in:5
 msgid "Send a file to someone using Warpinator"
@@ -809,8 +812,8 @@ msgstr "Ανοίξτε μια θύρα στο τείχος προστασίας 
 #: data/org.x.warpinator.policy.in.in:13
 msgid "To modify firewall settings, you need to authenticate."
 msgstr ""
-"Για να αλλάξετε ρυθμίσεις του τείχους προστασίας, πρέπει να επαληθεύσετε την "
-"ταυτότητά σας."
+"Για να αλλάξετε τις ρυθμίσεις του τείχους προστασίας, πρέπει να επαληθεύσετε "
+"την ταυτότητά σας."
 
 #. DO NOT TRANSLATE Warpinator
 #: data/org.x.Warpinator.appdata.xml.in.in:10
@@ -831,11 +834,11 @@ msgstr ""
 
 #: data/org.x.Warpinator.appdata.xml.in.in:14
 msgid "Features:"
-msgstr "Χαρακτηριστικά:"
+msgstr "Δυνατότητες:"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:16
 msgid "An easy-to-use graphical interface."
-msgstr "Μια εύκολη στη χρήση γραφική διεπαφή."
+msgstr "Ένα εύχρηστο γραφικό περιβάλλον."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:17
 msgid "Automatic discovery of devices on your network."
@@ -843,7 +846,7 @@ msgstr "Αυτόματος εντοπισμός συσκευών στο δίκτ
 
 #: data/org.x.Warpinator.appdata.xml.in.in:18
 msgid "Fully secure and encrypted connections between devices."
-msgstr "Πλήρως ασφαλείς και κρυπτογραφημένες συνδέσεις μεταξύ συσκευών."
+msgstr "Πλήρως ασφαλείς και κρυπτογραφημένες συνδέσεις μεταξύ των συσκευών."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:19
 msgid "Multiple simultaneous transfers."
@@ -858,8 +861,8 @@ msgid ""
 "Grouping of devices using a shared key, with multiple groups possible on the "
 "same network."
 msgstr ""
-"Ομαδοποίηση συσκευών με χρήση κοινόχρηστου κλειδιού, με πολλές ομάδες "
-"δυνατές στο ίδιο δίκτυο."
+"Ομαδοποίηση συσκευών με χρήση ενός κοινόχρηστου κλειδιού, με δυνατότητα "
+"ύπαρξης πολλαπλών ομάδων στο ίδιο δίκτυο."
 
 #: data/org.x.Warpinator.appdata.xml.in.in:22
 msgid "Manual connections for restricted network environments."
@@ -867,16 +870,15 @@ msgstr "Μη αυτόματες συνδέσεις για περιορισμέν
 
 #: data/org.x.Warpinator.appdata.xml.in.in:45
 msgid "The main view showing connected devices and their status"
-msgstr ""
-"Η κύρια προβολή δείχνει τις συνδεδεμένες συσκευές και την κατάστασή τους"
+msgstr "Η κύρια προβολή με τις συνδεδεμένες συσκευές και την κατάστασή τους"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:49
 msgid ""
 "Individual connection page showing individual incoming or outgoing transfers"
 msgstr ""
-"Μεμονωμένη σελίδα σύνδεσης που εμφανίζει μεμονωμένες εισερχόμενες ή "
+"Σελίδα μεμονωμένης σύνδεσης που εμφανίζει μεμονωμένες εισερχόμενες ή "
 "εξερχόμενες μεταφορές"
 
 #: data/org.x.Warpinator.appdata.xml.in.in:53
 msgid "Manual connection dialog"
-msgstr "Διάλογος μη αυτόματης σύνδεσης"
+msgstr "Παράθυρο διαλόγου μη αυτόματης σύνδεσης"
