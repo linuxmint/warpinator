@@ -17,3 +17,5 @@ python_build
 __pycache__
 a.out
 *.so
+src/grpc*/**/temp.*
+src/grpc*/**/lib.*
